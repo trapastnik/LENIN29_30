@@ -19,9 +19,9 @@ const TEMPLATE = `
     transition: transform .16s, box-shadow .16s;
   }
   :host([expanded]) { cursor: default; }
-  :host(:not([expanded]):hover) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  :host(:not([expanded]):active) {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
   }
   .camp-stripe {
     height: 10px;

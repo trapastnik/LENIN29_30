@@ -84,7 +84,7 @@ const TEMPLATE = `
     cursor: pointer;
     min-width: auto; min-height: auto;
   }
-  button.ctrl:hover { background: rgba(250, 240, 210, 0.22); }
+  button.ctrl:active { background: rgba(250, 240, 210, 0.28); }
 </style>
 <div id="viewport">
   <div id="container"></div>

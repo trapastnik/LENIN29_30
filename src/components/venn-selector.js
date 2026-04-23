@@ -115,8 +115,8 @@ const TEMPLATE = `
     min-height: 28px; min-width: 72px;
     user-select: none;
   }
-  .group-button:hover {
-    background: rgba(245, 240, 224, 0.08);
+  .group-button:active {
+    background: rgba(245, 240, 224, 0.14);
   }
 
   .chip {
@@ -132,9 +132,9 @@ const TEMPLATE = `
     border-radius: 14px;
     transition: background .14s, transform .14s;
   }
-  .chip:hover {
-    background: rgba(255, 255, 255, 0.07);
-    transform: translate(2px, -50%);
+  .chip:active {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translate(1px, -50%);
   }
   .chip .dot {
     width: 10px; height: 10px;
@@ -181,7 +181,7 @@ const TEMPLATE = `
     text-transform: uppercase;
     min-height: 30px;
   }
-  .all-btn:hover { background: rgba(196, 154, 46, 0.12); }
+  .all-btn:active { background: rgba(196, 154, 46, 0.2); }
 </style>
 
 <div class="ornament">Пересекающиеся области показывают возможные идеологические связи и участие партий в нескольких направлениях политической жизни.</div>

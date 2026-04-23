@@ -135,9 +135,9 @@ API через атрибуты:
 
 `src/styles/tokens.css` — CSS-переменные: цвета лагерей (`--camp-red`, `--camp-white` и т.д.), палитра бумаги/чернил, шрифты. Значения — **плейсхолдеры**, финализируются после Claude Design pass #6.
 
-`src/styles/base.css` — reset + touch-baseline (`touch-action: manipulation`, отключение hover-only).
+`src/styles/base.css` — reset + touch-baseline (`touch-action: manipulation`). Проект — физический тач-киоск: `:hover` **не используется ни в CSS, ни в JS** (нет `onMouseEnter/Leave` etc.). Интерактивная обратная связь — через `.active` классы и `:active` псевдокласс.
 
-`src/styles/pages.css` — общие стили страниц: header, grid, modal. Класс `body.scrollable` выключает grid-layout и включает `overflow: auto` для режимов с длинным контентом.
+`src/styles/pages.css` — общие стили страниц: header (sticky, `position: sticky; top: 0`), grid, modal. Класс `body.scrollable` включает прокрутку через html (`html:has(body.scrollable) { overflow: auto }`); сама body остаётся `overflow: visible`, чтобы sticky-header работал корректно. Фон-мотив рендерится как `body::before` с `position: fixed` — полосы заполняют viewport при любом scroll.
 
 ## Связь с МТК 30
 

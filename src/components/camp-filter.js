@@ -32,7 +32,7 @@ const TEMPLATE = `
     cursor: pointer;
     transition: all .18s;
   }
-  button:hover { background: rgba(210, 183, 115, 0.12); }
+  button:active { background: rgba(210, 183, 115, 0.18); }
   button.active {
     background: var(--brass, #D2B773);
     color: var(--iron-grey, #555D61);

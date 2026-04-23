@@ -63,9 +63,9 @@
       transition: transform .16s, box-shadow .16s;
       position: relative;
     }
-    .group-btn:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+    .group-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
     }
     .group-btn .kicker {
       font-family: var(--font-mono);
@@ -118,7 +118,7 @@
       cursor: pointer;
       min-width: auto; min-height: 44px;
     }
-    #group-detail .back-btn:hover { background: rgba(250, 240, 210, 0.18); }
+    #group-detail .back-btn:active { background: rgba(250, 240, 210, 0.26); }
     #group-detail .group-name {
       font-family: var(--font-display);
       font-style: italic;
@@ -154,7 +154,7 @@
       transition: transform .12s, background .12s;
       min-height: 120px;
     }
-    .state-plate:hover { background: var(--paper); transform: translateX(3px); }
+    .state-plate:active { background: var(--paper); transform: translateX(2px); }
     .state-plate .name {
       font-family: var(--font-display);
       font-style: italic;

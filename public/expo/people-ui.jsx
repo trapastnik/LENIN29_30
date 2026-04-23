@@ -115,11 +115,8 @@ function PersonCard({ person, lang, onOpen, delay }) {
       width: '100%', textAlign: 'left', border: 'none',
       padding: 0, background: 'transparent',
       transform: `rotate(${person._rot || 0}deg)`,
-      transition: 'transform 300ms cubic-bezier(.2,.7,.3,1.1)',
       animation: `fadeUp 600ms ${delay}ms both`,
     }}
-    onMouseEnter={e => e.currentTarget.style.transform = 'rotate(0deg) translateY(-4px) scale(1.03)'}
-    onMouseLeave={e => e.currentTarget.style.transform = `rotate(${person._rot || 0}deg)`}
     >
       <div style={{
         ...paperFill(),

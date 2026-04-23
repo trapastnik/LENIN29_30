@@ -177,7 +177,6 @@ function DeskMap({ year, x, y, width = 1100, rotate = -3 }) {
   // упрощённый контур европейской части СССР
   const height = width * 0.62;
   const [region, setRegion] = React.useState(null); // id выбранного региона или null
-  const [hovered, setHovered] = React.useState(null);
 
   // Esc → выход из зума
   React.useEffect(() => {
@@ -516,24 +515,20 @@ function DeskMap({ year, x, y, width = 1100, rotate = -3 }) {
         {!region && MAP_REGIONS.map(r => {
           const cx = r.bbox.x + r.bbox.w / 2;
           const cy = r.bbox.y + r.bbox.h / 2;
-          const isHover = hovered === r.id;
           return (
             <g key={r.id}
-              onMouseEnter={() => setHovered(r.id)}
-              onMouseLeave={() => setHovered(null)}
-              onClick={() => { setRegion(r.id); setHovered(null); }}
+              onClick={() => { setRegion(r.id); }}
               style={{ cursor: 'zoom-in' }}
             >
               <rect x={r.bbox.x} y={r.bbox.y} width={r.bbox.w} height={r.bbox.h}
-                fill={isHover ? '#8a1818' : '#000'}
-                fillOpacity={isHover ? 0.09 : 0}
-                stroke={isHover ? '#8a1818' : '#3a1c08'}
-                strokeWidth={isHover ? 2 : 0.8}
+                fill="#000"
+                fillOpacity={0}
+                stroke="#3a1c08"
+                strokeWidth={0.8}
                 strokeDasharray="4 4"
-                strokeOpacity={isHover ? 0.85 : 0.18}
-                style={{ transition: 'all 200ms' }}
+                strokeOpacity={0.18}
               />
-              {isHover && (
+              {false && (
                 <>
                   <rect x={cx - 80} y={cy - 16} width="160" height="32"
                     fill="#f0dcae" stroke="#3a1c08" strokeWidth="1" opacity="0.95"/>
@@ -599,12 +594,9 @@ function DeskMap({ year, x, y, width = 1100, rotate = -3 }) {
               cursor: 'pointer',
               boxShadow: '0 6px 16px rgba(0,0,0,.45)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'transform 180ms',
               zIndex: 20,
             }}
-            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08) rotate(90deg)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1) rotate(0deg)'}
-            title={year.lang === 'ru' ? 'Закрыть' : 'Close'}
+            aria-label={year.lang === 'ru' ? 'Закрыть' : 'Close'}
           >×</button>
 
           {/* карточка событий региона */}

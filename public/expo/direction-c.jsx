@@ -312,7 +312,79 @@ const EXTRA_EN = {
   },
 };
 
+function DocumentModal({ item, onClose, lang }) {
+  if (!item) return null;
+  const { type, props } = item;
+  const renderBig = () => {
+    if (type === 'news') return <NewspaperClipping {...props} width={720} rotate={0} />;
+    if (type === 'tel')  return <TelegramSlip   {...props} width={640} rotate={0} />;
+    if (type === 'let')  return <LetterCard     {...props} width={760} rotate={0} />;
+    return null;
+  };
+  const label = lang === 'ru'
+    ? 'Кликните вне документа или нажмите Esc, чтобы закрыть'
+    : 'Click outside or press Esc to close';
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'absolute', inset: 0, zIndex: 20,
+        background: 'rgba(10,6,2,0.78)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        cursor: 'zoom-out',
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: 'relative',
+          transform: 'scale(1.0)',
+          cursor: 'default',
+          filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.75))',
+        }}
+      >
+        {renderBig()}
+      </div>
+      <div style={{
+        position: 'absolute', bottom: 40, left: '50%',
+        transform: 'translateX(-50%)',
+        fontFamily: fc.mono, fontSize: 13, letterSpacing: '0.3em',
+        textTransform: 'uppercase', color: '#d0b080',
+        pointerEvents: 'none',
+      }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
 function DirectionC({ lang, time, duration, years }) {
+  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [pauseOnOpen, setPauseOnOpen] = React.useState(() => {
+    try { return localStorage.getItem('expo:dirC:pause') !== 'false'; } catch { return true; }
+  });
+
+  React.useEffect(() => {
+    try { localStorage.setItem('expo:dirC:pause', String(pauseOnOpen)); } catch {}
+  }, [pauseOnOpen]);
+
+  // Esc → закрыть модалку
+  React.useEffect(() => {
+    if (!selectedItem) return;
+    const onKey = (e) => { if (e.key === 'Escape') { e.stopPropagation(); setSelectedItem(null); } };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [selectedItem]);
+
+  // Замораживаем time, пока модалка открыта и тоггл включён.
+  const frozenTimeRef = React.useRef(time);
+  if (!(selectedItem && pauseOnOpen)) {
+    frozenTimeRef.current = time;
+  }
+  const stripTime = (selectedItem && pauseOnOpen) ? frozenTimeRef.current : time;
+
   const yearSpan = duration / years.length;
   const yearIdx = Math.min(years.length - 1, Math.floor(time / yearSpan));
   const inYearT = (time - yearIdx * yearSpan) / yearSpan;
@@ -377,17 +449,20 @@ function DirectionC({ lang, time, duration, years }) {
 
       {/* 3 ленты */}
       <Strip
-        y={280} height={200} speed={60} time={time}
+        y={280} height={200} speed={60} time={stripTime}
         items={newsItems} cardStep={420}
         renderItem={(item, i) => (
-          <div style={{ position: 'absolute', top: 20, left: 20 }}>
+          <div
+            onClick={() => setSelectedItem({ type: 'news', props: item })}
+            style={{ position: 'absolute', top: 20, left: 20, cursor: 'zoom-in' }}
+          >
             <NewspaperClipping {...item} rotate={-2 + (i % 3)} />
           </div>
         )}
       />
 
       <Strip
-        y={500} height={200} speed={95} time={time}
+        y={500} height={200} speed={95} time={stripTime}
         items={telItems} cardStep={360}
         renderItem={(item, i) => {
           // Псевдослучайная вариация в рамках ±20–25% — размер, сдвиг, поворот.
@@ -397,7 +472,10 @@ function DirectionC({ lang, time, duration, years }) {
           const rot = [-4, 2, -1, 5, -3, 1, 3, -2][i % 8];               // ±5°
           const w = Math.round(320 * s);
           return (
-            <div style={{ position: 'absolute', top: dy, left: dx }}>
+            <div
+              onClick={() => setSelectedItem({ type: 'tel', props: item })}
+              style={{ position: 'absolute', top: dy, left: dx, cursor: 'zoom-in' }}
+            >
               <TelegramSlip {...item} width={w} rotate={rot} />
             </div>
           );
@@ -405,10 +483,13 @@ function DirectionC({ lang, time, duration, years }) {
       />
 
       <Strip
-        y={740} height={230} speed={45} time={time}
+        y={740} height={230} speed={45} time={stripTime}
         items={letItems} cardStep={460}
         renderItem={(item, i) => (
-          <div style={{ position: 'absolute', top: 20, left: 20 }}>
+          <div
+            onClick={() => setSelectedItem({ type: 'let', props: item })}
+            style={{ position: 'absolute', top: 20, left: 20, cursor: 'zoom-in' }}
+          >
             <LetterCard {...item} rotate={2 - (i % 3) * 2} />
           </div>
         )}
@@ -440,6 +521,44 @@ function DirectionC({ lang, time, duration, years }) {
         background: 'linear-gradient(180deg, #1a0c04 0%, transparent 100%)', pointerEvents: 'none' }}/>
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 370,
         background: 'linear-gradient(0deg, #1a0c04 30%, transparent 100%)', pointerEvents: 'none' }}/>
+
+      {/* Тоггл «пауза при открытии» — правый-нижний, над нижней цитатой */}
+      <label
+        style={{
+          position: 'absolute', right: 40, bottom: 210, zIndex: 4,
+          display: 'flex', alignItems: 'center', gap: 10,
+          fontFamily: fc.mono, fontSize: 11, letterSpacing: '0.22em',
+          textTransform: 'uppercase', color: tc.ochre,
+          padding: '10px 14px',
+          background: 'rgba(10,6,2,0.55)',
+          border: '1px solid rgba(200,150,80,0.25)',
+          cursor: 'pointer', userSelect: 'none',
+        }}
+      >
+        <span
+          role="checkbox"
+          aria-checked={pauseOnOpen}
+          onClick={() => setPauseOnOpen(v => !v)}
+          style={{
+            width: 28, height: 16, borderRadius: 8,
+            background: pauseOnOpen ? '#c08040' : 'rgba(120,80,40,0.35)',
+            border: '1px solid #8a6a30',
+            position: 'relative', transition: 'background 150ms',
+          }}
+        >
+          <span style={{
+            position: 'absolute', top: 1, left: pauseOnOpen ? 13 : 1,
+            width: 12, height: 12, borderRadius: '50%',
+            background: '#f0dcae', transition: 'left 150ms',
+          }}/>
+        </span>
+        <span onClick={() => setPauseOnOpen(v => !v)}>
+          {lang === 'ru' ? 'Пауза при открытии' : 'Pause on open'}
+        </span>
+      </label>
+
+      {/* Модалка с увеличенным документом */}
+      <DocumentModal item={selectedItem} onClose={() => setSelectedItem(null)} lang={lang} />
     </div>
   );
 }

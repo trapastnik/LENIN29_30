@@ -16,7 +16,7 @@ body {
    и чтобы они оставались под контентом (z-index: 0). */
 body::before {
   content: '';
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
@@ -45,11 +45,19 @@ body::before {
     radial-gradient(ellipse 120% 85% at 50% 40%, rgba(67, 80, 89, 0.35) 0%, rgba(30, 40, 46, 0.9) 100%);
 }
 body > * { position: relative; z-index: 1; }
-/* На страницах/режимах с прокруткой — body класс "scrollable". */
-body.scrollable {
-  display: block;
+/* На страницах/режимах с прокруткой — body класс "scrollable".
+   Scroll — на html (base.css имеет overflow: hidden, переопределяем через :has).
+   Важно: body overflow оставляем visible, иначе sticky привязывается к body
+   и не работает как ожидается при scroll на html. */
+html:has(body.scrollable) {
   overflow: auto;
   height: auto;
+}
+body.scrollable {
+  display: block;
+  overflow: visible;
+  height: auto;
+  min-height: 100vh;
 }
 
 /* Шапка страницы — бренд Ленин-центра.
@@ -58,13 +66,15 @@ body.scrollable {
 header.page-header {
   padding: 28px 48px 24px;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.12));
+    linear-gradient(180deg, rgba(15, 20, 24, 0.96), rgba(15, 20, 24, 0.88));
   border-bottom: 1.5px solid var(--brass);
   display: flex;
   align-items: center;
   gap: 28px;
   flex-wrap: wrap;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 5;
   overflow: hidden;
 }
 /* Крупная латунная цифра раздела слева — бренд-мотив. Задаётся через
@@ -136,7 +146,7 @@ header.page-header > * { position: relative; z-index: 1; }
   background: transparent;
   transition: background .15s, color .15s;
 }
-.back-link:hover { background: var(--brass); color: var(--iron-grey); }
+.back-link:active { background: var(--brass); color: var(--iron-grey); }
 
 main {
   padding: 20px 32px 20px;
@@ -209,4 +219,4 @@ body.scrollable main {
   cursor: pointer;
   transition: transform .15s;
 }
-.modal-close:hover { transform: scale(1.05); }
+.modal-close:active { transform: scale(0.96); }

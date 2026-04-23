@@ -425,10 +425,7 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
               color: theme.ink,
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 8,
-              transition: 'all .2s',
             }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(58,37,23,.08)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
           >
             <span>{lang === 'ru' ? link.ru : link.en}</span>
             <span style={{ opacity: .55 }}>→</span>
