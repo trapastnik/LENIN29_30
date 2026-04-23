@@ -123,9 +123,31 @@ curl -I http://212.113.117.186:8090/content/maps/komuch/layers.svg  # 200
 ```bash
 cd mtk29/
 npm run build
-rsync -avz --delete dist/ ostrov:/var/www/mtk29/
+rsync -avz --delete --chmod=F644,D755 dist/ ostrov:/var/www/mtk29/
+# --chmod гарантирует читаемость файлов для nginx-контейнера
 # nginx кешует недолго, изменения видно сразу
 ```
+
+### Поднят контейнер nginx:alpine
+
+```bash
+# /var/www/mtk29/docker-compose.yml
+services:
+  web:
+    image: nginx:alpine
+    container_name: mtk29-web
+    volumes:
+      - .:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8091:80"
+    restart: always
+```
+
+nginx.conf — рядом, отдаёт `/expo/` через редирект на корень, MIME для шрифтов/JSON,
+кеш статики 7 дней, HTML без кеша.
+
+Stage-URL: http://212.113.117.186:8091/
 
 ## Deploy на целевой киоск (prod)
 
