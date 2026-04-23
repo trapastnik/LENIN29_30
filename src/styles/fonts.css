@@ -1,0 +1,102 @@
+/* Фирменные шрифты Ленин-центра.
+   Источник правил: docs/brand/Fonts-requirements.docx
+   Лицензиары:
+     · Nolde (Regular)               — ИП Багдасарян Гаянэ Александровна
+     · 20_kopeek (Regular/Bold/Italic) — ИП Гордон Юрий Моисеевич
+     · 21_Cent  (Regular/Italic)     — ИП Гордон Юрий Моисеевич
+   Все файлы лежат в public/fonts/{nolde,kopeek,cent}. */
+
+/* ── Nolde Regular — заголовки, крупные цифры, буквицы ─────────────────── */
+@font-face {
+  font-family: 'Nolde';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/nolde/nolde.otf') format('opentype');
+}
+
+/* ── 20 Kopeek — короткие надписи, акценты, плашки ────────────────────── */
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-book.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-book-italic.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-demibold.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-demibold-italic.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-bold.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url('/fonts/kopeek/20-kopeek-bold-italic.otf') format('opentype');
+}
+
+/* ── 21 Cent — длинные тексты, параграфы ──────────────────────────────── */
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/cent/21Cent.woff') format('woff'),
+       url('/fonts/cent/21Cent.ttf')  format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url('/fonts/cent/21Cent-Italic.woff') format('woff'),
+       url('/fonts/cent/21Cent-Italic.ttf')  format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/cent/21Cent-Bold.woff') format('woff'),
+       url('/fonts/cent/21Cent-Bold.ttf')  format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url('/fonts/cent/21Cent-BoldItalic.woff') format('woff'),
+       url('/fonts/cent/21Cent-BoldItalic.ttf')  format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/cent/21Cent-Black.woff') format('woff'),
+       url('/fonts/cent/21Cent-Black.ttf')  format('truetype');
+}

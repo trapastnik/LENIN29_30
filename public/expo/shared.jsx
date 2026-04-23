@@ -27,8 +27,8 @@ const theme = {
 };
 
 const fonts = {
-  display: '"Playfair Display", Georgia, serif',
-  body:    '"PT Serif", Georgia, serif',
+  display: '"Nolde", "Playfair Display", Georgia, serif',
+  body:    '"21 Cent", "PT Serif", Georgia, serif',
   mono:    '"JetBrains Mono", "Courier New", ui-monospace, monospace',
   stamp:   '"Special Elite", "Courier New", monospace',
   rus:     '"Playfair Display", "PT Serif", Georgia, serif',

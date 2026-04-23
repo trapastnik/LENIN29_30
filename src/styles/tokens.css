@@ -37,12 +37,18 @@
   --camp-national:     var(--brass);                 /* Национальные ← латунь */
   --camp-intervention: #2F4A6B;                      /* грозовой синий */
 
-  /* ── Шрифты ──────────────────────────────────────────────── */
-  --font-display: "Playfair Display", "Source Serif Pro", Georgia, serif;
-  --font-body:    "PT Serif", "Source Serif Pro", Georgia, serif;
-  --font-sans:    "Inter", "Source Sans 3", -apple-system, "Helvetica Neue", sans-serif;
-  --font-mono:    "JetBrains Mono", "Courier New", ui-monospace, monospace;
-  --font-stamp:   "Special Elite", "Courier New", monospace;
+  /* ── Шрифты (фирменные, по docs/brand/Fonts-requirements.docx) ─── */
+  /* Nolde — заголовки, крупные цифры, буквицы, мультимедиа-заголовки. */
+  --font-display: "Nolde", "Playfair Display", Georgia, serif;
+  /* 21 Cent — основной длинный текст, параграфы, body. */
+  --font-body:    "21 Cent", "PT Serif", Georgia, serif;
+  /* 20 Kopeek — короткие надписи, акценты, кнопки, метки с «косой чертой». */
+  --font-accent:  "20 Kopeek", "21 Cent", Georgia, serif;
+  /* Legacy-алиас для mono-меток. Заменяем на 20 Kopeek (по бренду это — акцентные
+     короткие надписи). Для настоящего моно-текста остаётся system-fallback. */
+  --font-mono:    "20 Kopeek", "JetBrains Mono", "Courier New", monospace;
+  /* Штамп — оставляем Special Elite до появления бренд-альтернативы. */
+  --font-stamp:   "Special Elite", "20 Kopeek", monospace;
 
   /* ── Touch/тайпография — из плана ────────────────────────── */
   --touch-hit:    120px;
