@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29 · Государственные образования · 1917—1922</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <style>
+    .view-toggle {
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid var(--brass);
+      border-radius: 30px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+    }
+    .view-toggle button {
+      padding: 14px 22px;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-light);
+      background: transparent;
+      border: none;
+      min-height: 48px;
+      min-width: auto;
+    }
+    .view-toggle button.active {
+      background: var(--paper-light);
+      color: var(--ink);
+    }
+
+    .hidden { display: none !important; }
+
+    /* ───── Экран 1: выбор группы (крупные блоки) ───── */
+    #groups-mode { display: flex; flex-direction: column; gap: 28px; }
+
+    .group-picker {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 24px;
+      flex: 1;
+      min-height: 0;
+    }
+    .group-btn {
+      padding: 40px 36px;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1.5px solid var(--brass);
+      border-top-width: 12px;
+      border-top-color: var(--camp-color);
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform .16s, box-shadow .16s;
+      position: relative;
+    }
+    .group-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+    }
+    .group-btn .kicker {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .group-btn h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--camp-color);
+    }
+    .group-btn .count {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .group-btn .arrow {
+      position: absolute;
+      bottom: 28px; right: 36px;
+      font-size: 34px;
+      color: var(--camp-color);
+      line-height: 1;
+    }
+
+    /* ───── Экран 2: drill-down в группу ───── */
+    #group-detail .crumbs {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 22px;
+    }
+    #group-detail .back-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-light);
+      background: rgba(250, 240, 210, 0.08);
+      border: 1px solid var(--brass);
+      border-radius: 30px;
+      cursor: pointer;
+      min-width: auto; min-height: 44px;
+    }
+    #group-detail .back-btn:hover { background: rgba(250, 240, 210, 0.18); }
+    #group-detail .group-name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--camp-color, var(--paper-light));
+    }
+    #group-detail .group-name .cnt {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      color: var(--paper-warm);
+      font-weight: 400;
+      font-style: normal;
+      margin-left: 14px;
+    }
+    #group-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 18px;
+    }
+    .state-plate {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 22px 24px;
+      background: var(--paper-light);
+      color: var(--ink);
+      border: 1px solid rgba(168, 135, 90, 0.45);
+      border-left: 6px solid var(--camp-color);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform .12s, background .12s;
+      min-height: 120px;
+    }
+    .state-plate:hover { background: var(--paper); transform: translateX(3px); }
+    .state-plate .name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .state-plate .abbr {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .state-plate.has-map .abbr::after {
+      content: '  ·  карта';
+      color: var(--camp-red-deep);
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header" data-section-num="03">
+    <div class="page-title">
+      <div class="kicker">Раздел · 03</div>
+      <h1>Государственные образования</h1>
+    </div>
+    <div class="view-toggle" role="tablist">
+      <button id="btn-groups" class="active">По группам</button>
+      <button id="btn-grid">Сетка</button>
+    </div>
+    <a class="back-link" href="/" id="back-link">← К экспозиции</a>
+  </header>
+
+  <main id="page-root">
+    <div id="groups-mode">
+      <div id="group-picker" class="group-picker"></div>
+      <div id="group-detail" class="hidden">
+        <div class="crumbs">
+          <button class="back-btn" id="back-to-groups">← К группам</button>
+          <div class="group-name" id="group-title"></div>
+        </div>
+        <div id="group-items"></div>
+      </div>
+    </div>
+    <div id="grid-mode" class="hidden"></div>
+
+    <div id="modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop"></div>
+      <div class="modal-sheet">
+        <button class="modal-close" aria-label="Закрыть">×</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      if (window.parent === window) return;
+      const a = document.getElementById('back-link');
+      if (!a) return;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        window.parent.postMessage('mtk29:close-section', '*');
+      });
+    })();
+  </script>
+  <script type="module">
+    import { CollectionPage } from '/src/pages/collection-page.js';
+    import { fetchJSON } from '/src/data/loader.js';
+    import '/src/components/state-card.js';
+
+    const idx = await fetchJSON('/content/states/_index.json');
+
+    // ───── Drill-down режим (ТЗ) ─────
+    const pickerEl = document.getElementById('group-picker');
+    const detailEl = document.getElementById('group-detail');
+    const itemsEl = document.getElementById('group-items');
+    const titleEl = document.getElementById('group-title');
+    const backBtn = document.getElementById('back-to-groups');
+    let activeCamp = null;
+
+    function countFor(campId) {
+      return idx.items.filter(i => i.camp === campId).length;
+    }
+
+    function renderPicker() {
+      pickerEl.innerHTML = '';
+      for (const c of idx.camps) {
+        const b = document.createElement('button');
+        b.className = 'group-btn';
+        b.style.setProperty('--camp-color', `var(--camp-${c.id})`);
+        b.innerHTML = `
+          <div class="kicker">Группа</div>
+          <h3>${c.title_ru}</h3>
+          <div class="count">${countFor(c.id)} образований</div>
+          <div class="arrow">→</div>
+        `;
+        b.addEventListener('click', () => openGroup(c.id));
+        pickerEl.appendChild(b);
+      }
+    }
+
+    function openGroup(campId) {
+      activeCamp = campId;
+      const camp = idx.camps.find(c => c.id === campId);
+      const list = idx.items.filter(i => i.camp === campId);
+      detailEl.style.setProperty('--camp-color', `var(--camp-${campId})`);
+      titleEl.innerHTML = `${camp.title_ru}<span class="cnt">· ${list.length} ${list.length === 1 ? 'образование' : 'образований'}</span>`;
+      itemsEl.innerHTML = '';
+      for (const it of list) {
+        const row = document.createElement('div');
+        row.className = 'state-plate' + (it.map_id ? ' has-map' : '');
+        row.style.setProperty('--camp-color', `var(--camp-${it.camp})`);
+        row.innerHTML = `
+          <div class="name">${it.title_ru}</div>
+          <div class="abbr">${it.abbr_ru || '\u00A0'}</div>
+        `;
+        row.addEventListener('click', () => openModal(it));
+        itemsEl.appendChild(row);
+      }
+      pickerEl.classList.add('hidden');
+      detailEl.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    function backToGroups() {
+      detailEl.classList.add('hidden');
+      pickerEl.classList.remove('hidden');
+      activeCamp = null;
+    }
+    backBtn.addEventListener('click', backToGroups);
+
+    // ───── Сетка-вид (старый) ─────
+    const gridWrap = document.getElementById('grid-mode');
+    const gridPage = new CollectionPage({
+      kind: 'states',
+      indexUrl: '/content/states/_index.json',
+      cardTag: 'state-card',
+      idAttr: 'state-id',
+    });
+    gridPage.init(gridWrap);
+
+    // ───── Переключатель ─────
+    const btnGroups = document.getElementById('btn-groups');
+    const btnGrid = document.getElementById('btn-grid');
+    const groupsMode = document.getElementById('groups-mode');
+    btnGroups.addEventListener('click', () => {
+      btnGroups.classList.add('active'); btnGrid.classList.remove('active');
+      groupsMode.classList.remove('hidden'); gridWrap.classList.add('hidden');
+      document.body.classList.add('scrollable');
+    });
+    btnGrid.addEventListener('click', () => {
+      btnGrid.classList.add('active'); btnGroups.classList.remove('active');
+      gridWrap.classList.remove('hidden'); groupsMode.classList.add('hidden');
+      document.body.classList.add('scrollable');
+    });
+
+    // ───── Модалка ─────
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    function openModal(item) {
+      modalBody.innerHTML = '';
+      const card = document.createElement('state-card');
+      card.setAttribute('stub', JSON.stringify(item));
+      card.setAttribute('state-id', item.id);
+      card.setAttribute('expanded', '');
+      modalBody.appendChild(card);
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    modal.querySelector('.modal-close').addEventListener('click', closeModal);
+    modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modalBody.innerHTML = '';
+    }
+
+    // init
+    document.body.classList.add('scrollable');
+    renderPicker();
+    // ESC на drill-down возвращает к группам (если модалка не открыта)
+    window.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (!modal.classList.contains('hidden')) return;
+      if (!detailEl.classList.contains('hidden')) backToGroups();
+    });
+  </script>
+</body>
+</html>

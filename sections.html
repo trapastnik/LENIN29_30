@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29 · Гражданская война · 1917—1922</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <style>
+    body {
+      overflow: auto;
+      background:
+        repeating-linear-gradient(91deg, rgba(0,0,0,.14) 0 2px, transparent 2px 24px),
+        radial-gradient(ellipse 120% 85% at 50% 40%, rgba(90,58,34,.3) 0%, rgba(40,24,12,.95) 100%),
+        linear-gradient(180deg, #3a2517 0%, #2a1808 100%);
+      color: var(--paper-light);
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 40px 64px 28px;
+      text-align: center;
+    }
+    header .kicker {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--paper-warm);
+      margin-bottom: 12px;
+    }
+    header h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 64px;
+      font-weight: 700;
+      color: var(--paper-light);
+    }
+    header p {
+      margin: 16px auto 0;
+      max-width: 780px;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--paper-warm);
+    }
+    main {
+      flex: 1;
+      padding: 40px 64px 80px;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .section-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 36px 32px;
+      min-height: 240px;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--brass);
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      text-decoration: none;
+      transition: transform .16s, box-shadow .16s;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .section-card.placeholder {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .section-card .num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .section-card h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+    .section-card p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+    .section-card .cta {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--camp-red-deep);
+    }
+    .demo-link {
+      margin-top: 28px;
+      text-align: center;
+    }
+    .demo-link a {
+      display: inline-block;
+      padding: 12px 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-warm);
+      text-decoration: none;
+      border: 1px dashed var(--brass);
+      border-radius: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="kicker">Музей В.И. Ленина</div>
+    <h1>Гражданская война · 1917—1922</h1>
+    <p>Интерактив в сборке. Каркас разделов ТЗ МТК 29 + технология карт из map_v6. Следующий этап — импорт нового Claude Design pass с кинематографичной главной сценой A/B/C.</p>
+  </header>
+  <main>
+    <div class="sections">
+      <a class="section-card placeholder" href="#">
+        <span class="num">Раздел · 01</span>
+        <h2>Хроника событий</h2>
+        <p>100-150 ключевых событий 1917-1922 с двойным треком «политика / война», быстрой навигацией по годам и верньером-скраббером.</p>
+        <span class="cta">В разработке →</span>
+      </a>
+      <a class="section-card" href="/parties.html">
+        <span class="num">Раздел · 02</span>
+        <h2>Политические партии</h2>
+        <p>20 справок о партиях и организациях Гражданской войны. 5 групп: Красные, Революционная демократия, Белые, Зелёные и анархисты, Национальные движения.</p>
+        <span class="cta">Открыть раздел →</span>
+      </a>
+      <a class="section-card" href="/states.html">
+        <span class="num">Раздел · 03</span>
+        <h2>Государственные образования</h2>
+        <p>24 образования на территории бывшей Российской империи. Каждая карточка содержит флаг, герб, датировку и карту территории.</p>
+        <span class="cta">Открыть раздел →</span>
+      </a>
+      <a class="section-card placeholder" href="#">
+        <span class="num">Раздел · 04</span>
+        <h2>Персоналии</h2>
+        <p>38 биографий — от Ленина и Троцкого до Колчака и Махно. Алфавитный указатель, флажки политических лагерей, галереи.</p>
+        <span class="cta">В разработке →</span>
+      </a>
+    </div>
+
+    <div class="demo-link">
+      <a href="/demo.html">→ demo: &lt;map-unit&gt; Комуч</a>
+    </div>
+  </main>
+</body>
+</html>

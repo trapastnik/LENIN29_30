@@ -1,0 +1,65 @@
+/* Дизайн-токены — Ленин-центр (официальный гайдбук 2026).
+   Источник: docs/brand/Lenin-guideline-2026.pdf + docs/brand.md
+   До покупки лицензий Nolde / 20_kopeek / 21_Cent используем бесплатные аналоги:
+   Playfair Display / PT Serif / Inter / JetBrains Mono. */
+
+:root {
+  /* ── Бренд-палитра ───────────────────────────────────────── */
+  --ink-black:    #000000;            /* RAL 9005 «Чёрный янтарь» */
+  --paper-white:  #F7F9EF;            /* RAL 9010 «Чистый белый» (тёплый) */
+  --paper-pure:   #FFFFFF;            /* чистый белый для мультимедиа */
+  --brass:        #D2B773;            /* RAL 1002 «Латунь» — акцент, заголовки */
+  --signal-red:   #A02128;            /* RAL 3001 «Сигнальный красный» */
+  --slate-blue:   #5D6970;            /* RAL 7031 «Сине-серый» — основной фон */
+  --slate-window: #9DA3A6;            /* RAL 7040 «Серое окно» — вторичный фон */
+  --iron-grey:    #555D61;            /* RAL 7011 «Железо-серый» — 3 этаж (наш) */
+  --graphite:     #435059;            /* «Графитовый» для тёмных мультимедиа-полей */
+  --telegrey-4:   #CFD0CF;            /* RAL 7047 «Телегрей 4» */
+
+  /* ── Семантические токены ────────────────────────────────── */
+  --page-bg:           var(--iron-grey);            /* фон наших страниц-разделов */
+  --page-bg-deep:      var(--graphite);             /* тёмные панели, venn-board */
+  --paper:             var(--paper-white);          /* карточки на светлом */
+  --accent:            var(--brass);                /* ведущий акцент */
+  --accent-alt:        var(--signal-red);           /* вторичный акцент */
+  --ink:               var(--ink-black);            /* текст на светлом */
+  --ink-on-dark:       var(--paper-white);          /* текст на тёмном */
+  --ink-soft:          #2a2f33;                     /* полутон на светлом */
+  --ink-faint:         #6c737a;                     /* тонкая мета на светлом */
+  --rule:              rgba(255,255,255,0.12);      /* тонкая линия разделителя */
+
+  /* ── Палитра лагерей (выровнено с брендом где возможно) ─── */
+  --camp-red:          var(--signal-red);            /* Красные ← сигнальный красный */
+  --camp-red-deep:     #6a0f14;
+  --camp-white:        var(--telegrey-4);            /* Белые ← Телегрей 4 */
+  --camp-rev-dem:      #8C4A99;                      /* пурпур (вне бренд-палитры, идентифицирует лагерь) */
+  --camp-green:        #5A8E55;                      /* оливковый */
+  --camp-national:     var(--brass);                 /* Национальные ← латунь */
+  --camp-intervention: #2F4A6B;                      /* грозовой синий */
+
+  /* ── Шрифты ──────────────────────────────────────────────── */
+  --font-display: "Playfair Display", "Source Serif Pro", Georgia, serif;
+  --font-body:    "PT Serif", "Source Serif Pro", Georgia, serif;
+  --font-sans:    "Inter", "Source Sans 3", -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono:    "JetBrains Mono", "Courier New", ui-monospace, monospace;
+  --font-stamp:   "Special Elite", "Courier New", monospace;
+
+  /* ── Touch/тайпография — из плана ────────────────────────── */
+  --touch-hit:    120px;
+  --touch-margin: 160px;
+  --fs-body:      32px;
+  --fs-heading:   48px;
+  --fs-display:   96px;
+
+  /* ── Бренд-мотив: угол наклонных полос ───────────────────── */
+  --brand-skew:   -15deg;              /* соответствует 75° от вертикали */
+
+  /* ── Слои карт (совпадают с HSV-парами из map_v6.ipynb) ─── */
+  --layer-background:   transparent;
+  --layer-borders-dark: #1a1a1a;
+  --layer-arrows-red:   var(--signal-red);
+  --layer-arrows-pink:  #cc0066;
+  --layer-front-blue:   #0033cc;
+  --layer-front-green:  #006600;
+  --layer-rivers-cyan:  #5ba8a0;
+}

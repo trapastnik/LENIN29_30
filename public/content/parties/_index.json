@@ -1,0 +1,45 @@
+{
+  "camps": [
+    { "id": "red",      "title_ru": "Красные",                  "icon": "star",   "general_id": "reds-general" },
+    { "id": "rev-dem",  "title_ru": "Революционная демократия", "icon": "people", "general_id": "revdem-general" },
+    { "id": "white",    "title_ru": "Белые",                    "icon": "shield", "general_id": "whites-general" },
+    { "id": "green",    "title_ru": "Зелёные",                  "icon": "anarchy","general_id": "greens-general" },
+    { "id": "national", "title_ru": "Национальные движения",    "icon": "flag",   "general_id": "national-movements" }
+  ],
+  "venn_background": "venn-bg.png",
+  "venn_aspect": "16 / 9",
+  "venn_headers": [
+    { "camp": "red",      "x": 15.0, "y": 23.3 },
+    { "camp": "rev-dem",  "x": 43.5, "y": 36.8 },
+    { "camp": "white",    "x": 81.3, "y": 22.3 },
+    { "camp": "green",    "x": 14.5, "y": 70.3 },
+    { "camp": "national", "x": 85.4, "y": 66.1 }
+  ],
+  "items": [
+    { "id": "reds-general",         "title_ru": "Красные",                                         "camp": "red",      "_is_general": true },
+    { "id": "bolsheviks",           "title_ru": "Большевики",                                      "camp": "red",      "x": 14.1, "y": 37.1 },
+    { "id": "left-srs",             "title_ru": "Левые эсеры",                                     "camp": "red",      "x": 14.1, "y": 42.5 },
+
+    { "id": "revdem-general",       "title_ru": "Революционная демократия",                        "camp": "rev-dem",  "_is_general": true },
+    { "id": "srs",                  "title_ru": "Социалисты-революционеры",                        "camp": "rev-dem",  "x": 24.1, "y": 53.0 },
+    { "id": "mensheviks",           "title_ru": "Меньшевики",                                      "camp": "rev-dem",  "x": 24.1, "y": 58.8 },
+    { "id": "narodnie-socialists",  "title_ru": "Трудовая народно-социалистическая партия",        "camp": "rev-dem",  "x": 43.1, "y": 59.5 },
+    { "id": "committee-salvation",  "title_ru": "Комитет спасения Родины и революции",             "camp": "rev-dem",  "x": 43.1, "y": 63.9 },
+    { "id": "union-constituent",    "title_ru": "Союз защиты Учредительного собрания",             "camp": "rev-dem",  "x": 43.1, "y": 71.5 },
+
+    { "id": "whites-general",       "title_ru": "Белые",                                           "camp": "white",    "_is_general": true },
+    { "id": "cadets",               "title_ru": "Конституционно-демократическая партия",           "camp": "white",    "x": 54.0, "y": 29.5 },
+    { "id": "alekseev-org",         "title_ru": "Алексеевская организация · Добровольческая армия", "camp": "white",   "x": 54.0, "y": 34.5 },
+    { "id": "right-center",         "title_ru": "Правый центр",                                    "camp": "white",    "x": 82.9, "y": 37.0 },
+    { "id": "national-center",      "title_ru": "Национальный центр",                              "camp": "white",    "x": 82.9, "y": 41.0 },
+
+    { "id": "union-defence",        "title_ru": "Союз защиты Родины и свободы",                    "camp": "rev-dem",  "x": 63.8, "y": 48.0 },
+    { "id": "union-renewal",        "title_ru": "Союз возрождения России",                         "camp": "rev-dem",  "x": 70.3, "y": 51.3 },
+
+    { "id": "greens-general",       "title_ru": "Зелёные",                                         "camp": "green",    "_is_general": true },
+    { "id": "anarchists",           "title_ru": "Анархисты",                                       "camp": "green",    "x": 14.1, "y": 82.9 },
+
+    { "id": "national-movements",   "title_ru": "Национальные движения",                           "camp": "national", "_is_general": true },
+    { "id": "muslim-socialists",    "title_ru": "Мусульманские социалистические комитеты",         "camp": "national", "x": 49.6, "y": 83.5 }
+  ]
+}

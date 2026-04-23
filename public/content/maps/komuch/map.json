@@ -1,0 +1,20 @@
+{
+  "id": "komuch",
+  "kind": "map",
+  "title_ru": "Комуч — Восточный фронт, 1918",
+  "title_en": "",
+  "period": { "from": "1918-06", "to": "1918-11" },
+  "viewBox": "0 0 1500 1000",
+  "layers": [
+    { "id": "background",   "label_ru": "Фон (архивный растр)",     "default": true,  "kind": "raster" },
+    { "id": "borders_dark", "label_ru": "Границы, ж/д",             "default": true,  "kind": "vector" },
+    { "id": "arrows_red",   "label_ru": "Красные стрелки (РККА)",   "default": true,  "kind": "vector", "anim": "wipe" },
+    { "id": "arrows_pink",  "label_ru": "Розовые стрелки",          "default": false, "kind": "vector", "anim": "wipe" },
+    { "id": "front_blue",   "label_ru": "Синие линии фронта",       "default": true,  "kind": "vector", "anim": "fade" },
+    { "id": "front_green",  "label_ru": "Зелёные линии",            "default": true,  "kind": "vector", "anim": "fade" },
+    { "id": "rivers_cyan",  "label_ru": "Реки",                      "default": true,  "kind": "vector" }
+  ],
+  "svg": "layers.svg",
+  "background_raster": "background.jpg",
+  "source_credits_ru": "Прототип из map_v6 / Музей В.И. Ленина"
+}

@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Музей В.И. Ленина · Гражданская война · 1918—1922</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Special+Elite&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: #0a0502;
+    color: #f0dcae;
+    font-family: 'PT Serif', Georgia, serif;
+    overflow: hidden;
+  }
+  #root { position: absolute; inset: 0; }
+  /* скрываем курсор в тач-режиме */
+  * { cursor: default; }
+  button { cursor: pointer; }
+  /* scrollbar kill */
+  *::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="data.js"></script>
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="direction-a.jsx"></script>
+<script type="text/babel" src="direction-b.jsx"></script>
+<script type="text/babel" src="direction-c.jsx"></script>
+
+<script type="text/babel">
+const { theme, fonts, Vernier, TopBar, DirectionA, DirectionB, DirectionC } = window;
+
+const DIRECTIONS = [
+  { id: 'A', ru: 'Стол коменданта',  en: 'Commander\'s Desk' },
+  { id: 'B', ru: 'Карта фронтов',    en: 'Fronts Map' },
+  { id: 'C', ru: 'Поток документов', en: 'Document Stream' },
+];
+
+// общая длительность таймлайна (сек)
+const DURATION = 60;
+
+// Разделы-оверлеи, открываются поверх сцены без перезагрузки.
+// Iframe'ы монтируются лениво и остаются в DOM → повторный клик мгновенен.
+const SECTION_SRCS = {
+  parties: '/parties.html',
+  states:  '/states.html',
+  people:  '/expo/people.html',
+};
+
+function Expo() {
+  const [lang, setLang] = React.useState(() => {
+    try { return localStorage.getItem('expo:lang') || 'ru'; } catch { return 'ru'; }
+  });
+  const [direction, setDirection] = React.useState(() => {
+    try { return localStorage.getItem('expo:direction') || 'A'; } catch { return 'A'; }
+  });
+  const [time, setTime] = React.useState(() => {
+    try { return parseFloat(localStorage.getItem('expo:t') || '0') || 0; } catch { return 0; }
+  });
+  const [playing, setPlaying] = React.useState(true);
+  const [scale, setScale] = React.useState(1);
+  const [activeSection, setActiveSection] = React.useState(null);
+  // Какие разделы уже подгружены (один раз) — iframe'ы остаются в DOM.
+  const [loadedSections, setLoadedSections] = React.useState(new Set());
+
+  const openSection = React.useCallback((id) => {
+    setActiveSection(id);
+    setLoadedSections(prev => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  }, []);
+  const closeSection = React.useCallback(() => setActiveSection(null), []);
+
+  // Esc и postMessage('mtk29:close-section') закрывают оверлей.
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setActiveSection(null); };
+    const onMsg = (e) => { if (e.data === 'mtk29:close-section') setActiveSection(null); };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('message', onMsg);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('message', onMsg);
+    };
+  }, []);
+
+  // persist
+  React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
+  React.useEffect(() => { try { localStorage.setItem('expo:direction', direction); } catch {} }, [direction]);
+  React.useEffect(() => { try { localStorage.setItem('expo:t', String(time)); } catch {} }, [time]);
+
+  // autoscale 1920x1080 base
+  const stageRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!stageRef.current) return;
+    const el = stageRef.current;
+    const measure = () => {
+      const s = Math.min(el.clientWidth / 1920, el.clientHeight / 1080);
+      setScale(Math.max(0.1, s));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener('resize', measure);
+    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
+  }, []);
+
+  // tick
+  const rafRef = React.useRef(null);
+  const lastTsRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!playing) { lastTsRef.current = null; return; }
+    const step = (ts) => {
+      if (lastTsRef.current == null) lastTsRef.current = ts;
+      const dt = (ts - lastTsRef.current) / 1000;
+      lastTsRef.current = ts;
+      setTime(t => {
+        let next = t + dt;
+        if (next >= DURATION) next = next % DURATION;
+        return next;
+      });
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); lastTsRef.current = null; };
+  }, [playing]);
+
+  // keyboard
+  React.useEffect(() => {
+    const onKey = (e) => {
+      if (e.code === 'Space') { e.preventDefault(); setPlaying(p => !p); }
+      else if (e.code === 'ArrowLeft') setTime(t => Math.max(0, t - 1));
+      else if (e.code === 'ArrowRight') setTime(t => Math.min(DURATION, t + 1));
+      else if (e.key === '1') setDirection('A');
+      else if (e.key === '2') setDirection('B');
+      else if (e.key === '3') setDirection('C');
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const years = window.EXPO_DATA.years;
+
+  return (
+    <div ref={stageRef} style={{
+      position: 'absolute', inset: 0,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: '#050301',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        width: 1920, height: 1080,
+        position: 'relative',
+        transform: `scale(${scale})`,
+        transformOrigin: 'center',
+        flexShrink: 0,
+        boxShadow: '0 0 120px rgba(0,0,0,.9)',
+      }}>
+        {/* сцена направления — слои поверх друг друга, невидимые скрываем */}
+        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'A' ? 'visible' : 'hidden' }}>
+          <DirectionA lang={lang} time={time} duration={DURATION} years={years}/>
+        </div>
+        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'B' ? 'visible' : 'hidden' }}>
+          <DirectionB lang={lang} time={time} duration={DURATION} years={years}/>
+        </div>
+        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'C' ? 'visible' : 'hidden' }}>
+          <DirectionC lang={lang} time={time} duration={DURATION} years={years}/>
+        </div>
+
+        {/* верхний бар */}
+        <TopBar
+          lang={lang} setLang={setLang}
+          direction={direction} setDirection={setDirection}
+          directions={DIRECTIONS}
+          onOpenSection={openSection}
+        />
+
+        {/* верньер */}
+        <Vernier
+          time={time} duration={DURATION}
+          playing={playing}
+          onPlayPause={() => setPlaying(p => !p)}
+          onSeek={t => setTime(t)}
+          onHover={() => {}}
+          years={[1918, 1919, 1920, 1921, 1922]}
+        />
+
+        {/* подсказка для тач-взаимодействия */}
+        <div style={{
+          position: 'absolute', bottom: 28, left: '50%',
+          transform: 'translateX(-50%)',
+          fontFamily: fonts.mono,
+          fontSize: 13,
+          letterSpacing: '0.3em',
+          color: theme.inkFaint,
+          textTransform: 'uppercase',
+          pointerEvents: 'none',
+        }}>
+          {lang === 'ru'
+            ? '◂ ПЕРЕТАЩИТЕ ВЕРНЬЕР ДЛЯ ДВИЖЕНИЯ ПО ГОДАМ ▸    ·    НАЖМИТЕ РАЗДЕЛ СВЕРХУ, ЧТОБЫ СМЕНИТЬ ВИД'
+            : '◂ DRAG THE VERNIER TO SCRUB THROUGH THE YEARS ▸    ·    TAP A SECTION ABOVE TO CHANGE THE VIEW'}
+        </div>
+      </div>
+
+      {/* Оверлей с разделами: iframe'ы остаются в DOM после первого открытия. */}
+      {Object.entries(SECTION_SRCS).map(([id, src]) => (
+        loadedSections.has(id) ? (
+          <div key={id} style={{
+            position: 'fixed', inset: 0,
+            zIndex: 200,
+            background: '#050301',
+            display: activeSection === id ? 'block' : 'none',
+          }}>
+            <iframe
+              src={src}
+              title={id}
+              style={{
+                position: 'absolute', inset: 0,
+                width: '100%', height: '100%',
+                border: 0, background: 'transparent',
+                display: 'block',
+              }}
+            />
+            <button
+              onClick={closeSection}
+              style={{
+                position: 'absolute', top: 24, left: 24,
+                zIndex: 10,
+                width: 64, height: 64,
+                borderRadius: 32,
+                border: `1.5px solid ${theme.paperWarm}`,
+                background: 'rgba(10,6,3,0.85)',
+                color: theme.paperLight,
+                fontSize: 32, lineHeight: 1,
+                cursor: 'pointer',
+                fontFamily: fonts.display,
+              }}
+              aria-label="Закрыть"
+              title="Закрыть (Esc)"
+            >×</button>
+          </div>
+        ) : null
+      ))}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Expo/>);
+</script>
+</body>
+</html>

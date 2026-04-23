@@ -1,0 +1,43 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+.vite/
+
+# Python venv (for scripts/)
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Локальные логи и tmp
+/tmp/
+*.log
+
+# Claude artefacts (если когда-то оставим .claude в корне проекта)
+.claude/settings.local.json
+
+# Секреты / локальные конфиги
+.env
+.env.local
+*.pem
+*.key
+
+# Большие бинари, которые не должны попадать в основной репо.
+# Венн-фон сам по себе крупный (1.4 МБ) — оставляем, без него диаграмма не работает.
+# А вот дубликаты / tmp-скриншоты трейсера — нет.
+/tmp/venn-debug/
+
+# Оставляем: содержимое public/content/, public/expo/, public/decor/, public/fonts/
+# Это корневые ресурсы проекта, без них не собирается.

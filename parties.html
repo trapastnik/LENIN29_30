@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29 · Политические партии и организации · 1917—1922</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <style>
+    .view-toggle {
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid var(--brass);
+      border-radius: 30px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+    }
+    .view-toggle button {
+      padding: 14px 22px;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-light);
+      background: transparent;
+      border: none;
+      min-height: 48px;
+      min-width: auto;
+    }
+    .view-toggle button.active {
+      background: var(--paper-light);
+      color: var(--ink);
+    }
+    #venn-mode {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      container-type: size;
+    }
+    #venn-mode venn-selector {
+      width: min(100cqw, calc(100cqh * 1672 / 941));
+      height: auto;
+      aspect-ratio: 1672 / 941;
+    }
+    #grid-mode { flex: 1; min-height: 0; overflow: auto; }
+    #grid-mode #grid { padding-bottom: 40px; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header class="page-header" data-section-num="02">
+    <div class="page-title">
+      <div class="kicker">Раздел · 02</div>
+      <h1>Политические партии и организации</h1>
+    </div>
+    <div class="view-toggle" role="tablist">
+      <button id="btn-venn" class="active">Диаграмма</button>
+      <button id="btn-grid">Список</button>
+    </div>
+    <a class="back-link" href="/" id="back-link">← К экспозиции</a>
+  </header>
+
+  <main id="page-root">
+    <div id="venn-mode"></div>
+    <div id="grid-mode" class="hidden"></div>
+
+    <div id="modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop"></div>
+      <div class="modal-sheet">
+        <button class="modal-close" aria-label="Закрыть">×</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Если мы внутри iframe оверлея — back-link закрывает оверлей без перезагрузки.
+    (function () {
+      if (window.parent === window) return;
+      const a = document.getElementById('back-link');
+      if (!a) return;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        window.parent.postMessage('mtk29:close-section', '*');
+      });
+    })();
+  </script>
+  <script type="module">
+    import { fetchJSON } from '/src/data/loader.js';
+    import '/src/components/party-card.js';
+    import '/src/components/venn-selector.js';
+    import '/src/components/camp-filter.js';
+
+    const idx = await fetchJSON('/content/parties/_index.json');
+
+    // --- Венн-вид ---
+    const vennWrap = document.getElementById('venn-mode');
+    const venn = document.createElement('venn-selector');
+    venn.camps = idx.camps;
+    venn.background = '/content/parties/' + (idx.venn_background || 'venn-bg.png');
+    venn.headers = idx.venn_headers;
+    venn.items = idx.items;
+    vennWrap.appendChild(venn);
+    venn.addEventListener('party-select', e => openModal(e.detail.item));
+    venn.addEventListener('view-all', () => {
+      document.getElementById('btn-grid').click();
+    });
+
+    // --- Сетка-вид ---
+    const gridWrap = document.getElementById('grid-mode');
+    gridWrap.innerHTML = `
+      <div id="filter-wrap"></div>
+      <div id="grid"></div>
+    `;
+    const filter = document.createElement('camp-filter');
+    filter.setAttribute('camps', JSON.stringify(idx.camps));
+    filter.setAttribute('active', '');
+    gridWrap.querySelector('#filter-wrap').appendChild(filter);
+
+    const gridEl = gridWrap.querySelector('#grid');
+    let activeCamp = null;
+    function renderGrid() {
+      const list = activeCamp ? idx.items.filter(i => i.camp === activeCamp) : idx.items;
+      gridEl.innerHTML = '';
+      for (const item of list) {
+        const card = document.createElement('party-card');
+        card.setAttribute('stub', JSON.stringify(item));
+        card.setAttribute('party-id', item.id);
+        card.addEventListener('click', () => openModal(item));
+        gridEl.appendChild(card);
+      }
+    }
+    filter.addEventListener('camp-change', e => {
+      activeCamp = e.detail.camp;
+      renderGrid();
+    });
+    renderGrid();
+
+    // --- Переключатель видов ---
+    const btnVenn = document.getElementById('btn-venn');
+    const btnGrid = document.getElementById('btn-grid');
+    btnVenn.addEventListener('click', () => {
+      btnVenn.classList.add('active');
+      btnGrid.classList.remove('active');
+      vennWrap.classList.remove('hidden');
+      gridWrap.classList.add('hidden');
+      document.body.classList.remove('scrollable');
+    });
+    btnGrid.addEventListener('click', () => {
+      btnGrid.classList.add('active');
+      btnVenn.classList.remove('active');
+      gridWrap.classList.remove('hidden');
+      vennWrap.classList.add('hidden');
+      document.body.classList.add('scrollable');
+    });
+
+    // --- Модалка ---
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    function openModal(item) {
+      modalBody.innerHTML = '';
+      const card = document.createElement('party-card');
+      card.setAttribute('stub', JSON.stringify(item));
+      card.setAttribute('party-id', item.id);
+      card.setAttribute('expanded', '');
+      modalBody.appendChild(card);
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modalBody.innerHTML = '';
+    }
+    modal.querySelector('.modal-close').addEventListener('click', closeModal);
+    modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>

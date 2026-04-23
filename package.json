@@ -1,0 +1,15 @@
+{
+  "name": "mtk29",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "МТК 29 — Интерактивная инсталляция 'Россия в Гражданской войне'. Музей В.И. Ленина.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

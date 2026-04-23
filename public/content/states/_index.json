@@ -1,0 +1,37 @@
+{
+  "camps": [
+    { "id": "red",          "title_ru": "Красные"   },
+    { "id": "white",        "title_ru": "Белые"     },
+    { "id": "rev-dem",      "title_ru": "Революционная демократия" },
+    { "id": "intervention", "title_ru": "Интервенция" }
+  ],
+  "items": [
+    { "id": "rsfsr",            "title_ru": "РСФСР",                              "abbr_ru": "РСФСР",  "camp": "red" },
+    { "id": "ussr",             "title_ru": "СССР",                               "abbr_ru": "СССР",   "camp": "red" },
+    { "id": "ukrainian-ssr",    "title_ru": "Украинская ССР",                     "abbr_ru": "УССР",   "camp": "red" },
+    { "id": "belorussian-ssr",  "title_ru": "Белорусская ССР",                    "abbr_ru": "БССР",   "camp": "red" },
+    { "id": "zsfsr",            "title_ru": "Закавказская СФСР",                  "abbr_ru": "ЗСФСР",  "camp": "red" },
+    { "id": "azerbaijani-ssr",  "title_ru": "Азербайджанская ССР",                 "camp": "red" },
+    { "id": "armenian-ssr",     "title_ru": "Армянская ССР",                      "camp": "red" },
+    { "id": "georgian-ssr",     "title_ru": "Грузинская ССР",                     "camp": "red" },
+    { "id": "bashkir-assr",     "title_ru": "Башкирская АССР",                    "camp": "red" },
+    { "id": "fer",              "title_ru": "Дальневосточная Республика",         "abbr_ru": "ДВР",    "camp": "red" },
+    { "id": "turkestan-sfr",    "title_ru": "Туркестанская СФР / АСР",            "camp": "red" },
+
+    { "id": "vsyur",                "title_ru": "Вооружённые силы Юга России",       "abbr_ru": "ВСЮР",  "camp": "white" },
+    { "id": "great-don-host",       "title_ru": "Всевеликое Войско Донское",         "camp": "white" },
+    { "id": "orenburg-cossack-host","title_ru": "Оренбургское казачье войско",       "camp": "white" },
+    { "id": "south-russia-gov",     "title_ru": "Правительство Юга России",          "camp": "white" },
+    { "id": "priamur-state",        "title_ru": "Приамурское государственное образование",  "camp": "white" },
+    { "id": "russian-state-kolchak","title_ru": "Российское Государство · А.В. Колчак", "camp": "white" },
+    { "id": "northern-region",      "title_ru": "Северная область",                  "camp": "white" },
+
+    { "id": "komuch",          "title_ru": "Комитет членов Учредительного собрания", "abbr_ru": "Комуч", "camp": "rev-dem", "map_id": "komuch" },
+    { "id": "politcenter",     "title_ru": "Политцентр",                              "camp": "rev-dem" },
+    { "id": "ufa-directory",   "title_ru": "Временное Всероссийское правительство · Уфимская директория", "camp": "rev-dem" },
+
+    { "id": "allies-entente",     "title_ru": "Союзники · Антанта",                  "camp": "intervention" },
+    { "id": "czechoslovak-corps", "title_ru": "Чехословацкий корпус",                "camp": "intervention" },
+    { "id": "central-powers",     "title_ru": "Центральные державы",                 "camp": "intervention" }
+  ]
+}

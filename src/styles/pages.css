@@ -1,0 +1,212 @@
+/* Общие стили страниц-коллекций (parties, states, persons) */
+
+/* Базовый фон страниц — бренд Ленин-центра: железо-серый с бренд-полосами
+   (крупный красный параллелограмм, серый параллелограмм, тонкие латунные
+   диагонали) по мотиву страниц 4, 8 и 14 гайдбука. */
+body {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--iron-grey);
+  color: var(--paper-white);
+}
+/* Крупные бренд-полосы. Рисуем через псевдо-элементы чтобы не мешать layout
+   и чтобы они оставались под контентом (z-index: 0). */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    /* Правая красная диагональная полоса (главный акцент) */
+    linear-gradient(105deg,
+      transparent 0, transparent 72%,
+      var(--signal-red) 72%, var(--signal-red) 86%,
+      transparent 86.2%),
+    /* Левая серая полоса (вторичная) */
+    linear-gradient(105deg,
+      transparent 0, transparent 2%,
+      rgba(157, 163, 166, 0.18) 2%, rgba(157, 163, 166, 0.18) 14%,
+      transparent 14.2%),
+    /* Тонкая латунная диагональ — один из ключевых мотивов */
+    linear-gradient(105deg,
+      transparent 0, transparent 62%,
+      var(--brass) 62%, var(--brass) 62.2%,
+      transparent 62.4%),
+    /* Вторая тонкая латунная линия */
+    linear-gradient(105deg,
+      transparent 0, transparent 89%,
+      rgba(210, 183, 115, 0.55) 89%, rgba(210, 183, 115, 0.55) 89.15%,
+      transparent 89.35%),
+    /* Лёгкая виньетка */
+    radial-gradient(ellipse 120% 85% at 50% 40%, rgba(67, 80, 89, 0.35) 0%, rgba(30, 40, 46, 0.9) 100%);
+}
+body > * { position: relative; z-index: 1; }
+/* На страницах/режимах с прокруткой — body класс "scrollable". */
+body.scrollable {
+  display: block;
+  overflow: auto;
+  height: auto;
+}
+
+/* Шапка страницы — бренд Ленин-центра.
+   Фон — железо-серый, тонкая латунная линия снизу, заголовок — серифный курсив
+   цвета латуни. Слева крупная буквица-номер раздела + косая чёрточка `/`. */
+header.page-header {
+  padding: 28px 48px 24px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.12));
+  border-bottom: 1.5px solid var(--brass);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+/* Крупная латунная цифра раздела слева — бренд-мотив. Задаётся через
+   атрибут data-section-num на <header> (01/02/03/04). */
+header.page-header::before {
+  content: attr(data-section-num);
+  position: absolute;
+  left: -16px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 220px;
+  line-height: 0.82;
+  color: var(--brass);
+  opacity: 0.10;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Тонкая косая латунная чёрточка справа от номера. */
+header.page-header::after {
+  content: '';
+  position: absolute;
+  left: 172px; top: 16px; bottom: 16px;
+  width: 2px;
+  background: var(--brass);
+  transform: skewX(var(--brand-skew));
+  opacity: 0.45;
+  pointer-events: none;
+}
+header.page-header > * { position: relative; z-index: 1; }
+
+.page-title {
+  flex: 1;
+  min-width: 320px;
+}
+.page-title h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--brass);
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.page-title .kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--paper-white);
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-decoration: none;
+  border: 1.5px solid var(--brass);
+  border-radius: 30px;
+  background: transparent;
+  transition: background .15s, color .15s;
+}
+.back-link:hover { background: var(--brass); color: var(--iron-grey); }
+
+main {
+  padding: 20px 32px 20px;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+body.scrollable main {
+  overflow: visible;
+  display: block;
+  min-height: 0;
+  max-height: none;
+}
+
+#filter-wrap {
+  margin-bottom: 28px;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+/* Модалка: открытая карточка */
+.modal.hidden { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(15, 22, 28, 0.88);
+  backdrop-filter: blur(6px);
+}
+.modal-sheet {
+  position: relative;
+  width: min(1200px, calc(100vw - 64px));
+  max-height: calc(100vh - 64px);
+  overflow: auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+}
+.modal-sheet > party-card,
+.modal-sheet > state-card,
+.modal-sheet #modal-body {
+  display: block;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 10;
+  width: 56px; height: 56px;
+  min-width: 56px; min-height: 56px;
+  border-radius: 50%;
+  background: var(--signal-red);
+  color: var(--paper-white);
+  font-size: 28px;
+  line-height: 1;
+  border: 2px solid var(--brass);
+  cursor: pointer;
+  transition: transform .15s;
+}
+.modal-close:hover { transform: scale(1.05); }
