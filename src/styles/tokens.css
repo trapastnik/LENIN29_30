@@ -44,11 +44,11 @@
   --font-body:    "21 Cent", "PT Serif", Georgia, serif;
   /* 20 Kopeek — короткие надписи, акценты, кнопки, метки с «косой чертой». */
   --font-accent:  "20 Kopeek", "21 Cent", Georgia, serif;
-  /* Legacy-алиас для mono-меток. Заменяем на 20 Kopeek (по бренду это — акцентные
-     короткие надписи). Для настоящего моно-текста остаётся system-fallback. */
+  /* Mono / акцентные капс-надписи — тоже 20 Kopeek (по бренду). */
   --font-mono:    "20 Kopeek", "JetBrains Mono", "Courier New", monospace;
-  /* Штамп — оставляем Special Elite до появления бренд-альтернативы. */
-  --font-stamp:   "Special Elite", "20 Kopeek", monospace;
+  /* Штамп (телеграммы, печати) — 20 Kopeek; Special Elite оставлен только как
+     косметический fallback, в проект не загружается. */
+  --font-stamp:   "20 Kopeek", "Special Elite", monospace;
 
   /* ── Touch/тайпография — из плана ────────────────────────── */
   --touch-hit:    120px;

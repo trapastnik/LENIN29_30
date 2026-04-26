@@ -1,0 +1,2296 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Бренд-визуалы · МТК 29</title>
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <style>
+    /* — Layout каталога — */
+    body { display: block; overflow: visible; height: auto; min-height: 100vh; }
+    html { overflow: auto; height: auto; }
+    body::before { position: fixed; }
+
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 48px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    /* — Заголовок раздела каталога — */
+    .cat-section { position: relative; padding-top: 14px; }
+    .cat-section h2 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--brass);
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    .cat-section .lede {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+      opacity: 0.55;
+      margin: 0 0 24px;
+    }
+
+    /* — Универсальная бумага под примеры — */
+    .paper {
+      background: var(--paper-white);
+      color: var(--ink);
+      padding: 24px;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.4);
+    }
+    .dark-pane {
+      background: rgba(8,12,15,0.55);
+      border: 1px solid rgba(210,183,115,0.18);
+      padding: 24px;
+      border-radius: 6px;
+    }
+
+    /* — Кейсы — */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    .stack  { display: flex; flex-direction: column; gap: 16px; }
+    .row    { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+
+    /* — Палитра-плитки — */
+    .swatch {
+      display: flex; flex-direction: column;
+      border-radius: 4px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,.45);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    .swatch .fill { height: 86px; }
+    .swatch .meta { padding: 8px 10px; background: rgba(20,24,28,0.85); color: var(--paper-white); }
+    .swatch .meta b { display: block; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brass); margin-bottom: 4px; }
+    .swatch .meta span { opacity: 0.65; }
+
+    /* — Шрифт-карточки — */
+    .type-card { background: rgba(8,12,15,0.55); border: 1px solid rgba(210,183,115,0.18); padding: 20px 22px; border-radius: 6px; }
+    .type-card .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 10px;
+    }
+    .type-card .sample-display {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--brass);
+      margin: 4px 0 8px;
+    }
+    .type-card .sample-body {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.45;
+      color: var(--paper-white);
+    }
+    .type-card .sample-mono {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+    }
+
+    /* — Большая цифра-мотив — */
+    .big-numeral {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 220px;
+      line-height: 0.82;
+      color: var(--brass);
+      letter-spacing: -0.04em;
+    }
+
+    /* — Слэш-метка / kicker — */
+    .slash-kicker {
+      display: inline-flex; align-items: baseline; gap: 12px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 30px;
+      color: var(--paper-white);
+    }
+    .slash-kicker::before {
+      content: '/';
+      color: var(--brass);
+      font-weight: 900;
+      font-size: 36px;
+      transform: skewX(-15deg);
+      display: inline-block;
+    }
+
+    /* — Полосы-параллелограммы (демо) — */
+    .stripes-demo {
+      position: relative; height: 220px;
+      background: var(--iron-grey);
+      border-radius: 6px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .stripes-demo::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(105deg, transparent 0, transparent 72%, var(--signal-red) 72%, var(--signal-red) 86%, transparent 86.2%),
+        linear-gradient(105deg, transparent 0, transparent 2%, rgba(157,163,166,0.18) 2%, rgba(157,163,166,0.18) 14%, transparent 14.2%),
+        linear-gradient(105deg, transparent 0, transparent 62%, var(--brass) 62%, var(--brass) 62.2%, transparent 62.4%),
+        linear-gradient(105deg, transparent 0, transparent 89%, rgba(210,183,115,0.55) 89%, rgba(210,183,115,0.55) 89.15%, transparent 89.35%);
+    }
+    .stripes-label {
+      position: absolute; left: 24px; bottom: 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    /* — Мини-page-header — */
+    .mini-page-header {
+      position: relative;
+      padding: 22px 32px;
+      background: linear-gradient(180deg, rgba(15,20,24,0.96), rgba(15,20,24,0.88));
+      border: 1px solid rgba(210,183,115,0.4);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex; align-items: center; gap: 22px;
+    }
+    .mini-page-header::before {
+      content: attr(data-num);
+      position: absolute; left: -8px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 150px; line-height: 0.82;
+      color: var(--brass); opacity: 0.10;
+      letter-spacing: -0.04em;
+      z-index: 0;
+    }
+    .mini-page-header::after {
+      content: '';
+      position: absolute; left: 130px; top: 12px; bottom: 12px;
+      width: 2px; background: var(--brass);
+      transform: skewX(-15deg);
+      opacity: 0.45;
+      z-index: 0;
+    }
+    .mini-page-header > * { position: relative; z-index: 1; }
+    .mini-page-header h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 28px;
+      color: var(--brass);
+      flex: 1;
+    }
+    .mini-page-header .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    /* — Кнопки — */
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      min-height: 48px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background .12s, color .12s, transform .08s;
+      border: 1.5px solid var(--brass);
+      background: transparent;
+      color: var(--brass);
+    }
+    .btn:active { background: var(--brass); color: var(--iron-grey); transform: scale(.98); }
+    .btn-solid { background: var(--brass); color: var(--iron-grey); }
+    .btn-solid:active { background: #b89c5a; }
+    .btn-red { border-color: var(--signal-red); color: var(--signal-red); }
+    .btn-red:active { background: var(--signal-red); color: var(--paper-white); }
+    .btn-square {
+      width: 64px; height: 64px;
+      border-radius: 32px;
+      padding: 0; min-height: 64px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 32px;
+      background: rgba(10,6,3,0.85);
+      color: var(--paper-white);
+    }
+
+    /* — Camp-цвета — */
+    .camp-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px;
+      background: rgba(8,12,15,0.55);
+      border-radius: 30px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+    }
+    .camp-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--camp-color); box-shadow: 0 0 8px var(--camp-color); }
+
+    /* — Бумажные карточки документов — */
+
+    /* ── Имперская газета (до окт. 1918, старая орфография) ──
+       Оригинал — «Биржевыя Вѣдомости», 1904 (Wikimedia Commons).
+       Шапка: 3 колонки (номер | заглавие | контора), двойные линии-разделители,
+       заглавие во всю ширину, под ним подзаголовок и тип-выпуска. */
+    .doc-imperial {
+      position: relative;
+      width: 100%; max-width: 460px;
+      padding: 16px 22px 22px;
+      background: #ece0c0;
+      border: 1px solid #8a6a30;
+      box-shadow: 0 8px 20px rgba(0,0,0,.5);
+      font-family: var(--font-body);
+      color: #2a1810;
+      transform: rotate(-1deg);
+    }
+    .doc-imperial .masthead {
+      border-top: 3px double #2a1810;
+      border-bottom: 3px double #2a1810;
+      padding: 8px 0;
+      margin-bottom: 10px;
+    }
+    .doc-imperial .masthead .title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 900;
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-align: center;
+      color: #2a1810;
+      margin-bottom: 4px;
+    }
+    .doc-imperial .masthead .subtitle {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: #4a2810;
+      margin-bottom: 4px;
+    }
+    .doc-imperial .masthead .edition {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      color: #2a1810;
+      margin: 4px 0;
+      letter-spacing: 0.04em;
+    }
+    .doc-imperial .masthead-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-top: 6px;
+      border-top: 1px solid #6a4a20;
+      font-family: var(--font-body);
+      font-size: 9px;
+      line-height: 1.35;
+      color: #3a2010;
+    }
+    .doc-imperial .masthead-grid .col-l { text-align: left; }
+    .doc-imperial .masthead-grid .col-c { text-align: center; font-style: italic; }
+    .doc-imperial .masthead-grid .col-r { text-align: right; }
+    .doc-imperial .masthead-grid b {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+    .doc-imperial .meta {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #7a5020;
+      margin-bottom: 8px;
+    }
+    .doc-imperial .headline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin: 6px 0 4px;
+    }
+    .doc-imperial .deck {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6a4020;
+      margin-bottom: 8px;
+    }
+    .doc-imperial .body {
+      font-family: var(--font-body);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #3a2010;
+      column-count: 2;
+      column-gap: 10px;
+      column-rule: 1px solid #a88050;
+      text-align: justify;
+    }
+    .doc-imperial .body::first-letter {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      float: left;
+      line-height: 0.9;
+      padding-right: 4px;
+      color: #6a3010;
+    }
+    .doc-imperial .ornament {
+      text-align: center;
+      color: #8a6a30;
+      font-size: 12px;
+      letter-spacing: 0.5em;
+      margin-top: 8px;
+    }
+
+    /* ── Советская газета («Правда», 1919) ──
+       Оригинал — «Правда» №115, 29 мая 1919 (Wikimedia Commons / РИА Новости).
+       Газета чёрно-белая, без красного цвета. Шапка: цена слева, заглавие
+       очень крупным sans-serif heavy, справа партийная атрибуция;
+       подзаголовок длинной строкой «Орган Центр. Ком…»; ниже — № и дата.
+       Лозунг «Пролетарии всех стран» в шапке появляется позже — оставлен
+       как опциональная плашка. */
+    .doc-soviet {
+      position: relative;
+      width: 100%; max-width: 460px;
+      padding: 14px 18px 18px;
+      background: #ddd8c8;
+      border: 1px solid #1a1a1a;
+      box-shadow: 0 8px 20px rgba(0,0,0,.5);
+      font-family: var(--font-body);
+      color: #1a1a1a;
+      transform: rotate(1deg);
+    }
+    .doc-soviet .price-row {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 9px;
+      line-height: 1.35;
+      color: #2a2a2a;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #6a4a20;
+    }
+    .doc-soviet .price-row .price b,
+    .doc-soviet .price-row .party b {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      margin-bottom: 1px;
+    }
+    .doc-soviet .price-row .party { text-align: right; max-width: 50%; }
+    .doc-soviet .title {
+      /* Heavy condensed sans-serif — историческое начертание шапки «Правды».
+         Используем системный Impact-стек (вне бренд-палитры): оригинал
+         тоже не использует серифные шрифты Ленин-центра. */
+      font-family: 'Helvetica Neue', 'Arial Black', Impact, sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 78px;
+      line-height: 0.85;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-align: center;
+      color: #1a1a1a;
+      margin: 6px 0 8px;
+      transform: scaleY(1.15);
+      transform-origin: center top;
+    }
+    .doc-soviet .org {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.02em;
+      color: #1a1a1a;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 4px 0;
+      margin: 8px 0;
+    }
+    .doc-soviet .meta {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--font-body);
+      font-size: 10px;
+      color: #1a1a1a;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #1a1a1a;
+    }
+    .doc-soviet .meta b {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    .doc-soviet .headline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: #1a1a1a;
+      margin: 12px 0 8px;
+    }
+    .doc-soviet .deck {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-style: italic;
+      color: #2a2a2a;
+      margin-bottom: 8px;
+    }
+    .doc-soviet .body {
+      font-family: var(--font-body);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #1a1a1a;
+      text-align: justify;
+    }
+    .doc-soviet .signoff {
+      margin-top: 10px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 11px;
+      color: #1a1a1a;
+      text-align: right;
+    }
+
+    .doc-telegram {
+      position: relative;
+      width: 100%; max-width: 320px;
+      padding: 18px 16px 16px;
+      background: #f0dca8;
+      border: 1px solid #8a6a30;
+      box-shadow: 0 6px 16px rgba(0,0,0,.5);
+      font-family: var(--font-stamp);
+      color: #2a1010;
+      transform: rotate(2deg);
+    }
+    .doc-telegram::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(100,70,20,.6) 6px 7px, transparent 7px 13px);
+    }
+    .doc-telegram .meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #6a4a20;
+      margin-bottom: 6px;
+    }
+    .doc-telegram .text {
+      font-size: 13px;
+      text-transform: uppercase;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+    }
+    .doc-telegram .stamp {
+      position: absolute; bottom: 6px; right: 8px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: #8a5030;
+      transform: rotate(-4deg);
+      border: 1px solid #8a3010;
+      padding: 2px 6px;
+    }
+
+    .doc-letter {
+      width: 100%; max-width: 380px;
+      padding: 22px 26px;
+      background: #f0e6cc;
+      border: 1px solid #8a6a30;
+      box-shadow: 0 10px 24px rgba(0,0,0,.55);
+      font-family: var(--font-display);
+      color: #2a1810;
+      font-style: italic;
+      transform: rotate(-3deg);
+    }
+    .doc-letter .body { font-size: 15px; line-height: 1.55; }
+    .doc-letter .from { margin-top: 12px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: #6a4a20; text-transform: uppercase; }
+
+    /* — Карточки бренд-стиля (party/state) — */
+    .brand-card {
+      background: var(--paper-white);
+      border-radius: 6px;
+      box-shadow: 0 4px 14px rgba(0,0,0,.35);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .14s;
+    }
+    .brand-card:active { transform: translateY(1px); }
+    .brand-card .stripe { height: 10px; background: var(--camp-color, var(--brass)); }
+    .brand-card .head { padding: 18px 22px 12px; }
+    .brand-card .head h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 24px;
+      color: var(--ink);
+    }
+    .brand-card .head .dates { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-faint); margin-top: 4px; }
+    .brand-card .body-text { padding: 0 22px 18px; font-family: var(--font-body); font-size: 14px; color: var(--ink-soft); }
+
+    /* — Модалка — */
+    .modal-demo {
+      position: relative; height: 320px;
+      background: rgba(15,22,28,0.88);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-demo::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 0, transparent 72%, var(--signal-red) 72%, var(--signal-red) 86%, transparent 86.2%);
+      opacity: 0.4;
+    }
+    .modal-demo .sheet {
+      position: relative; z-index: 1;
+      background: var(--paper-white);
+      color: var(--ink);
+      width: min(80%, 480px);
+      padding: 22px 26px;
+      border-radius: 6px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.55);
+    }
+    .modal-demo .close {
+      position: absolute; top: 10px; right: 10px;
+      width: 36px; height: 36px; border-radius: 18px;
+      background: var(--signal-red); color: var(--paper-white);
+      border: 2px solid var(--brass);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* — Камертоны — */
+    .ruler {
+      position: relative;
+      background: rgba(8,12,15,0.55);
+      border: 1px dashed rgba(210,183,115,0.4);
+      border-radius: 6px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+    }
+    .touch-target {
+      width: var(--touch-hit);
+      height: var(--touch-hit);
+      border: 1.5px dashed var(--brass);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+    }
+
+    /* — Список токенов в коде — */
+    .token-strip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--paper-white);
+      opacity: 0.7;
+      margin-top: 8px;
+    }
+    .token-strip code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+      color: var(--brass);
+    }
+
+    /* — Typography Lab — */
+    .font-lab {
+      background: rgba(8, 12, 15, 0.55);
+      border: 1px solid rgba(210, 183, 115, 0.18);
+      border-radius: 6px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .font-lab .lab-head {
+      padding: 14px 22px;
+      border-bottom: 1px solid rgba(210, 183, 115, 0.18);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .font-lab .lab-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+    .font-lab .lab-token {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--paper-white);
+      opacity: 0.55;
+      background: rgba(0,0,0,0.35);
+      padding: 1px 8px;
+      border-radius: 3px;
+    }
+    .font-lab .lab-sample {
+      padding: 32px 28px;
+      background: var(--iron-grey);
+      color: var(--paper-white);
+      min-height: 100px;
+      display: flex; align-items: center;
+      transition: background 0.18s, color 0.18s;
+      cursor: text;
+      outline: none;
+    }
+    .font-lab .lab-sample:focus {
+      box-shadow: inset 0 0 0 2px rgba(210,183,115,0.4);
+    }
+    .font-lab .lab-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid rgba(210, 183, 115, 0.18);
+    }
+    .font-lab .ctrl {
+      padding: 14px 22px;
+      border-right: 1px solid rgba(210, 183, 115, 0.10);
+      border-bottom: 1px solid rgba(210, 183, 115, 0.10);
+    }
+    .font-lab .ctrl:nth-child(2n) { border-right: 0; }
+    .font-lab .ctrl > label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 10px;
+    }
+    .font-lab .ctrl > label output {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: none;
+      color: var(--paper-white);
+      background: rgba(0,0,0,0.4);
+      padding: 1px 8px;
+      border-radius: 3px;
+    }
+    .font-lab input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(210,183,115,0.25);
+      border-radius: 2px;
+      outline: none;
+    }
+    .font-lab input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px;
+      background: var(--brass);
+      border-radius: 50%;
+      cursor: grab;
+      border: 2px solid #1a1a1a;
+    }
+    .font-lab input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px;
+      background: var(--brass);
+      border-radius: 50%;
+      cursor: grab;
+      border: 2px solid #1a1a1a;
+    }
+    .font-lab .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .font-lab .pill-row button {
+      min-height: auto; min-width: auto;
+      padding: 6px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(210,183,115,0.45);
+      background: transparent;
+      color: var(--paper-white);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+    }
+    .font-lab .pill-row button.active {
+      background: var(--brass);
+      color: var(--iron-grey);
+      border-color: var(--brass);
+    }
+    .font-lab .pill-row button:active {
+      transform: scale(0.97);
+    }
+    .font-lab .bg-swatches {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .font-lab .bg-swatches button {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(210,183,115,0.4);
+      cursor: pointer;
+      padding: 0;
+      min-width: auto; min-height: auto;
+      transition: transform 0.12s, border-color 0.12s;
+    }
+    .font-lab .bg-swatches button.active {
+      border-color: var(--brass);
+      transform: scale(1.15);
+      box-shadow: 0 0 0 2px rgba(210,183,115,0.4);
+    }
+
+    /* ════════════════════════════════════════════════════════════════
+       Дополнительные примитивы из бренд-гайда (PDF страницы 1-11):
+       ──────────────────────────────────────────────────────────────── */
+
+    /* — 14. Логотип LENIN CENTRE — */
+    .lenin-logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      font-family: 'Helvetica Neue', 'Arial', sans-serif;
+      color: var(--paper-white);
+      line-height: 1;
+      user-select: none;
+    }
+    .lenin-logo .name {
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: 0.18em;
+      padding: 0 0 4px;
+    }
+    .lenin-logo .sub {
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.5em;
+      text-align: center;
+      padding-top: 6px;
+      border-top: 1.5px solid var(--brass);
+      color: var(--paper-white);
+    }
+    .logo-stage {
+      padding: 32px 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* — 15. Section-cover (раздел-обложка с гигантской цифрой) — */
+    .chapter-cover {
+      position: relative;
+      height: 360px;
+      background: var(--iron-grey);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex; align-items: center;
+      padding: 40px 60px;
+    }
+    .chapter-cover .num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 320px;
+      line-height: 0.82;
+      letter-spacing: -0.04em;
+      color: var(--brass);
+      flex: 0 0 auto;
+      margin-right: 40px;
+    }
+    .chapter-cover .label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-weight: 300;
+      font-size: 36px;
+      letter-spacing: 0.01em;
+      color: var(--paper-white);
+      align-self: end;
+      padding-bottom: 32px;
+    }
+    .chapter-cover .diagonals {
+      position: absolute; right: 60px; top: 0; bottom: 0;
+      width: 240px;
+      pointer-events: none;
+    }
+    .chapter-cover .diagonals::before,
+    .chapter-cover .diagonals::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: -20px;
+      width: 1px;
+      background: var(--brass);
+      opacity: 0.7;
+      transform-origin: top;
+      transform: rotate(15deg);
+    }
+    .chapter-cover .diagonals::before { left: 35%; }
+    .chapter-cover .diagonals::after  { left: 70%; opacity: 0.45; }
+
+    /* — 16. Свободные параллелограммы (страница 4 PDF) — */
+    .parallelo-stage {
+      position: relative;
+      height: 460px;
+      background: var(--iron-grey);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .parallelo {
+      position: absolute;
+      transform: skewX(-15deg);
+    }
+    .parallelo--red    { background: var(--signal-red); }
+    .parallelo--slate  { background: var(--slate-blue); }
+    .parallelo--window { background: var(--slate-window); }
+    .parallelo-stage .gold-line {
+      position: absolute;
+      width: 1px;
+      background: var(--brass);
+      transform: rotate(15deg);
+      transform-origin: top;
+      opacity: 0.7;
+    }
+
+    /* — 17. Композиция год + диагональ + slash-meta + callout-плашка — */
+    .year-composition {
+      position: relative;
+      height: 480px;
+      background: var(--iron-grey);
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 40px 50px;
+    }
+    .year-composition .skewed-row {
+      position: absolute;
+      left: -20px; right: -20px; top: 30px;
+      transform: rotate(-12deg);
+      pointer-events: none;
+    }
+    .year-composition .city-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 96px;
+      line-height: 1;
+      color: var(--brass);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .year-composition .red-band {
+      position: absolute;
+      left: -20px; right: -20px;
+      height: 140px;
+      top: 150px;
+      background: var(--signal-red);
+      transform: rotate(-12deg);
+      transform-origin: center;
+    }
+    .year-composition .slash-marks {
+      position: absolute;
+      left: 50px;
+      top: 50%;
+      transform: translateY(-30%);
+      display: flex; flex-direction: column; gap: 16px;
+      z-index: 3;
+    }
+    .year-composition .slash-marks .item {
+      display: flex; gap: 10px; align-items: baseline;
+      font-family: var(--font-display);
+      color: var(--paper-white);
+    }
+    .year-composition .slash-marks .item::before {
+      content: '/';
+      color: var(--brass);
+      font-weight: 900;
+      font-size: 22px;
+      transform: skewX(-15deg);
+      display: inline-block;
+    }
+    .year-composition .slash-marks .item .y {
+      font-style: italic;
+      font-weight: 700;
+      font-size: 24px;
+    }
+    .year-composition .slash-marks .item .t {
+      font-weight: 700;
+      font-size: 17px;
+      max-width: 160px;
+      line-height: 1.1;
+    }
+    .year-composition .callout {
+      position: absolute;
+      right: 200px; top: 200px;
+      background: var(--signal-red);
+      color: var(--paper-white);
+      padding: 14px 18px;
+      max-width: 240px;
+      transform: rotate(-12deg);
+      z-index: 4;
+    }
+    .year-composition .callout .date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .year-composition .callout .text {
+      font-family: var(--font-body);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .year-composition .big-year {
+      position: absolute;
+      right: 30px; bottom: -50px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-style: italic;
+      font-size: 280px;
+      line-height: 0.82;
+      color: var(--paper-white);
+      transform: rotate(-12deg);
+      transform-origin: bottom right;
+      opacity: 0.95;
+      z-index: 2;
+    }
+
+    /* — 18. Контурные римские цифры XIX—XX — */
+    .roman-stage {
+      position: relative;
+      height: 420px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+    }
+    .roman-stage .half-l {
+      flex: 1;
+      background: var(--iron-grey);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      transform: skewX(-15deg);
+      transform-origin: top right;
+      margin-right: -40px;
+    }
+    .roman-stage .half-r {
+      flex: 1;
+      background: var(--signal-red);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      transform: skewX(-15deg);
+      transform-origin: top left;
+      margin-left: -40px;
+    }
+    .roman-stage .roman {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 280px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      transform: skewX(15deg);
+      -webkit-text-stroke: 2px var(--brass);
+      color: transparent;
+    }
+    .roman-stage .roman--white { -webkit-text-stroke-color: var(--paper-white); }
+    .roman-stage .dates {
+      position: absolute;
+      top: 50px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 30px;
+      color: var(--paper-white);
+      text-align: center;
+      line-height: 1.2;
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    /* — 19. Мульти-год диагональный (страница 11 PDF) — */
+    .multi-year {
+      position: relative;
+      height: 460px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: var(--iron-grey);
+    }
+    .multi-year .pane {
+      position: relative;
+      overflow: hidden;
+      transform: skewX(-15deg);
+    }
+    .multi-year .pane.s { background: var(--iron-grey); }
+    .multi-year .pane.r { background: var(--signal-red); }
+    .multi-year .pane.w { background: var(--slate-window); }
+    .multi-year .stack-year {
+      position: absolute;
+      inset: 0;
+      transform: skewX(15deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .multi-year .stack-year .inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: rotate(-15deg);
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .multi-year .stack-year .yy {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-style: italic;
+      font-size: 150px;
+      line-height: 0.85;
+      color: var(--paper-white);
+      flex-shrink: 0;
+    }
+    .multi-year .stack-year .label {
+      writing-mode: vertical-rl;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--paper-white);
+      line-height: 1.05;
+      max-height: 130px;
+      overflow: hidden;
+    }
+
+    /* — Эксперимент: html-in-canvas (Three.js + drawElement / html2canvas) — */
+    .xr-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .xr-card {
+      background: #0a0d10;
+      border: 1px solid rgba(210, 183, 115, 0.18);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .xr-card .xr-meta {
+      padding: 12px 18px;
+      display: flex; align-items: baseline; justify-content: space-between;
+      border-bottom: 1px solid rgba(210, 183, 115, 0.18);
+    }
+    .xr-card .xr-meta .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+    .xr-card .xr-meta .tech {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--paper-white);
+      opacity: 0.55;
+    }
+    .xr-card canvas { display: block; width: 100%; height: 320px; background: #000; }
+    .xr-card .xr-caption {
+      padding: 10px 18px 14px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--paper-white);
+      opacity: 0.78;
+    }
+    .xr-stub {
+      position: absolute;
+      left: -99999px; top: 0;
+      width: 600px; min-height: 600px;
+      pointer-events: none;
+    }
+    /* — Источник: «Правда» для xr-cloth — */
+    .xr-pravda {
+      width: 600px; padding: 22px 28px;
+      background: #ddd8c8;
+      border: 1px solid #1a1a1a;
+      font-family: var(--font-body);
+      color: #1a1a1a;
+    }
+    .xr-pravda .price-row {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #2a2a2a;
+      padding-bottom: 6px; border-bottom: 1px solid #6a4a20;
+    }
+    .xr-pravda .price-row b { display: block; font-family: var(--font-display); font-size: 13px; }
+    .xr-pravda .title {
+      font-family: 'Helvetica Neue', 'Arial Black', Impact, sans-serif;
+      font-weight: 900; font-style: italic;
+      font-size: 130px; line-height: 0.85; letter-spacing: 0.02em;
+      text-transform: uppercase; text-align: center;
+      margin: 8px 0 10px; transform: scaleY(1.15); transform-origin: center top;
+    }
+    .xr-pravda .org {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 16px; font-weight: 700; text-align: center;
+      border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+      padding: 6px 0; margin: 10px 0;
+    }
+    .xr-pravda .meta {
+      display: flex; justify-content: space-between;
+      font-size: 12px; padding-bottom: 6px; border-bottom: 2px solid #1a1a1a;
+    }
+    .xr-pravda .meta b { font-family: var(--font-display); font-size: 14px; }
+    .xr-pravda .headline {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: 36px; line-height: 1.05; margin: 14px 0 10px;
+    }
+    .xr-pravda .deck {
+      font-family: var(--font-body); font-size: 12px; font-style: italic; margin-bottom: 10px;
+    }
+    .xr-pravda .body { font-family: var(--font-body); font-size: 14px; line-height: 1.5; text-align: justify; }
+
+    /* — Источник: агитплакат для xr-scroll — */
+    .xr-poster {
+      width: 600px; height: 800px;
+      padding: 40px 36px;
+      background: #ece0c0;
+      color: #2a1810;
+      font-family: var(--font-display);
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .xr-poster::before {
+      content: '';
+      position: absolute; inset: 24px;
+      border: 3px double #6a3010;
+      pointer-events: none;
+    }
+    .xr-poster .top {
+      font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--signal-red); margin-top: 20px;
+    }
+    .xr-poster .star {
+      width: 90px; height: 90px;
+      background: var(--signal-red);
+      clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      margin: 12px 0;
+    }
+    .xr-poster .slogan {
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 900; font-size: 78px;
+      line-height: 0.95; color: var(--signal-red);
+      letter-spacing: -0.01em;
+    }
+    .xr-poster .sub {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 32px; line-height: 1.1; color: #2a1810; margin-top: 12px;
+    }
+    .xr-poster .credit {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: #6a4020; margin-bottom: 24px;
+    }
+
+    /* — Источник: партийная карточка для xr-wall — */
+    .xr-card-source {
+      width: 540px;
+      background: #F7F9EF;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: #1a1a1a;
+    }
+    .xr-card-source .stripe { height: 14px; background: var(--signal-red); }
+    .xr-card-source .head { padding: 24px 28px 16px; }
+    .xr-card-source .head h4 { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 32px; }
+    .xr-card-source .head .dates { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; color: #6a4020; margin-top: 6px; }
+    .xr-card-source .body { padding: 0 28px 24px; font-family: var(--font-body); font-size: 16px; line-height: 1.45; }
+    .xr-card-source .leaders {
+      padding: 12px 28px 24px; font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 0.12em; color: #2a2010;
+    }
+    .xr-card-source .leaders b { color: var(--signal-red); }
+
+    /* — Источник: страница дневника для xr-book — */
+    .xr-diary {
+      width: 600px; padding: 36px 40px;
+      background: #f0e6cc;
+      border: 1px solid #8a6a30;
+      font-family: var(--font-body);
+      color: #2a1810;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .xr-diary .date {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em;
+      color: #6a4020; text-transform: uppercase; margin-bottom: 16px;
+      font-style: normal;
+    }
+    .xr-diary .hand { font-size: 19px; }
+    .xr-diary .signature {
+      font-family: var(--font-display); font-weight: 700; font-style: italic;
+      text-align: right; margin-top: 28px; font-size: 22px;
+    }
+
+    /* — Footnote/sources — */
+    .source {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      opacity: 0.6;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header" data-section-num="00">
+    <div class="page-title">
+      <div class="kicker">Бренд-каталог · МТК 29</div>
+      <h1>Визуальные примитивы</h1>
+    </div>
+    <a class="back-link" href="/" id="back-link">← На стартовую</a>
+  </header>
+
+  <main>
+    <!-- ── 01. Палитра ─────────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">01 · Палитра</p>
+      <h2>Цвета бренда Ленин-центра</h2>
+      <p class="token-strip">Источник: <code>docs/brand.md</code> · переменные в <code>src/styles/tokens.css</code></p>
+
+      <div class="grid-4" style="margin-top: 18px;">
+        <div class="swatch"><div class="fill" style="background: var(--ink-black);"></div><div class="meta"><b>--ink-black</b><span>#000000 · RAL 9005</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--paper-white);"></div><div class="meta"><b>--paper-white</b><span>#F7F9EF · RAL 9010</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--brass);"></div><div class="meta"><b>--brass</b><span>#D2B773 · RAL 1002</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--signal-red);"></div><div class="meta"><b>--signal-red</b><span>#A02128 · RAL 3001</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--slate-blue);"></div><div class="meta"><b>--slate-blue</b><span>#5D6970 · RAL 7031</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--slate-window);"></div><div class="meta"><b>--slate-window</b><span>#9DA3A6 · RAL 7040</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--iron-grey);"></div><div class="meta"><b>--iron-grey</b><span>#555D61 · RAL 7011 · 3 этаж</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--graphite);"></div><div class="meta"><b>--graphite</b><span>#435059 · мультимедиа</span></div></div>
+        <div class="swatch"><div class="fill" style="background: var(--telegrey-4);"></div><div class="meta"><b>--telegrey-4</b><span>#CFD0CF · RAL 7047</span></div></div>
+      </div>
+    </section>
+
+    <!-- ── 02. Палитра лагерей ─────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">02 · Лагеря</p>
+      <h2>Цветовое кодирование сторон</h2>
+
+      <div class="stack" style="gap: 10px;">
+        <div class="camp-row" style="--camp-color: var(--camp-red);"><span class="camp-dot"></span><span>Красные · РСФСР, РККА</span></div>
+        <div class="camp-row" style="--camp-color: var(--camp-white);"><span class="camp-dot"></span><span>Белые · Колчак, Деникин, Врангель, Юденич</span></div>
+        <div class="camp-row" style="--camp-color: var(--camp-rev-dem);"><span class="camp-dot"></span><span>Революционная демократия · эсеры, меньшевики, Комуч</span></div>
+        <div class="camp-row" style="--camp-color: var(--camp-green);"><span class="camp-dot"></span><span>Зелёные · крестьянские восстания, Махно, Антонов</span></div>
+        <div class="camp-row" style="--camp-color: var(--camp-national);"><span class="camp-dot"></span><span>Национальные движения · УНР, Польша, Финляндия</span></div>
+        <div class="camp-row" style="--camp-color: var(--camp-intervention);"><span class="camp-dot"></span><span>Интервенция · Антанта, Япония, Германия</span></div>
+      </div>
+      <p class="token-strip"><code>--camp-red</code>, <code>--camp-white</code>, <code>--camp-rev-dem</code>, <code>--camp-green</code>, <code>--camp-national</code>, <code>--camp-intervention</code></p>
+    </section>
+
+    <!-- ── 03. Типографика ─────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">03 · Типографика</p>
+      <h2>Фирменные шрифты Ленин-центра</h2>
+
+      <div class="grid-3">
+        <div class="type-card">
+          <div class="label">Nolde · заголовки</div>
+          <div class="sample-display">Гражданская</div>
+          <p class="token-strip">Заголовки H1, крупные цифры, буквицы.<br><code>--font-display</code></p>
+        </div>
+        <div class="type-card">
+          <div class="label">21 Cent · текст</div>
+          <p class="sample-body">«Совѣтская Россія выходитъ изъ Великой войны. Потери — около милліона квадратныхъ километровъ.» — Известiя, 3 марта 1918.</p>
+          <p class="token-strip">Длинный основной текст, параграфы.<br><code>--font-body</code></p>
+        </div>
+        <div class="type-card">
+          <div class="label">20 Kopeek · акценты</div>
+          <p class="sample-mono">Раздел · 02 · Партии и организации</p>
+          <p class="token-strip">Короткие надписи, плашки, метки, mono-стиль.<br><code>--font-mono</code> · <code>--font-stamp</code></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04. Иерархия заголовков ─────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">04 · Иерархия</p>
+      <h2>Заголовки и kicker'ы</h2>
+
+      <div class="dark-pane">
+        <div class="kicker" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--paper-white); opacity: 0.7; margin-bottom: 10px;">Раздел · 03</div>
+        <h1 style="margin: 0 0 18px; font-family: var(--font-display); font-style: italic; font-size: 64px; color: var(--brass); line-height: 1; letter-spacing: -0.01em;">Государственные образования</h1>
+
+        <div class="slash-kicker" style="margin: 28px 0 4px;">Лагерь Красных</div>
+        <p style="font-family: var(--font-body); font-size: 16px; color: var(--paper-white); opacity: 0.9; margin: 6px 0 0;">11 образований — РСФСР, УССР, БССР, ЗСФСР, Армянская и Грузинская ССР...</p>
+      </div>
+    </section>
+
+    <!-- ── 05. Большие цифры ───────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">05 · Цифры-мотив</p>
+      <h2>Крупные годы и буквица-номер</h2>
+
+      <div class="grid-2">
+        <div class="dark-pane" style="display: flex; align-items: center; justify-content: center; padding: 28px;">
+          <span class="big-numeral">1918</span>
+        </div>
+        <div class="dark-pane" style="display: flex; align-items: center; justify-content: center; gap: 24px; padding: 28px;">
+          <span class="big-numeral" style="font-size: 280px;">02</span>
+          <span style="font-family: var(--font-display); font-style: italic; font-size: 28px; color: var(--paper-white); max-width: 180px;">Политические партии и организации</span>
+        </div>
+      </div>
+      <p class="token-strip">Цифры-год — <code>Nolde Black Italic, 220px+</code>, цвет <code>--brass</code>; на page-headers — opacity 0.10 как фон-водяной-знак.</p>
+    </section>
+
+    <!-- ── 06. Бренд-полосы ─────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">06 · Графический мотив</p>
+      <h2>Наклонные параллелограммы</h2>
+
+      <div class="grid-2">
+        <div>
+          <div class="stripes-demo">
+            <div class="stripes-label">Основной фон страниц</div>
+          </div>
+          <p class="token-strip">Угол <code>105deg</code>, скос <code>--brand-skew: -15deg</code>. Красный 72→86%, серый 2→14%, латунные линии 62%, 89%.</p>
+        </div>
+
+        <div>
+          <div style="position: relative; height: 220px; background: var(--graphite); border-radius: 6px; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(105deg, transparent 0, transparent 30%, var(--signal-red) 30%, var(--signal-red) 55%, transparent 55.2%);"></div>
+            <div style="position: absolute; inset: 0; background: linear-gradient(105deg, transparent 0, transparent 50%, var(--brass) 50%, var(--brass) 50.3%, transparent 50.6%);"></div>
+            <div class="stripes-label">Hero-вариант (раздел-заставка)</div>
+          </div>
+          <p class="token-strip">Усиленный мотив: широкая красная плашка + одна латунная диагональ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 07. Page-headers ─────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">07 · Шапки разделов</p>
+      <h2>Page-header с буквицей-номером</h2>
+
+      <div class="stack">
+        <div class="mini-page-header" data-num="02">
+          <div>
+            <div class="kicker">Раздел · 02</div>
+            <h3>Политические партии</h3>
+          </div>
+          <button class="btn">← К экспозиции</button>
+        </div>
+        <div class="mini-page-header" data-num="03">
+          <div>
+            <div class="kicker">Раздел · 03</div>
+            <h3>Государственные образования</h3>
+          </div>
+          <button class="btn btn-solid">Сетка</button>
+        </div>
+      </div>
+      <p class="token-strip">Буквица — <code>::before content: attr(data-num)</code>, <code>opacity: 0.10</code>. Косая черта — <code>::after</code>, <code>skewX(--brand-skew)</code>.</p>
+    </section>
+
+    <!-- ── 08. Кнопки ──────────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">08 · Кнопки</p>
+      <h2>Тач-кнопки (min 48px touch hit)</h2>
+
+      <div class="dark-pane">
+        <div class="row">
+          <button class="btn">Outline · brass</button>
+          <button class="btn btn-solid">Solid · brass</button>
+          <button class="btn btn-red">Outline · red</button>
+          <button class="btn btn-square" aria-label="Закрыть">×</button>
+        </div>
+      </div>
+      <p class="token-strip">Радиус <code>30px</code> (pill); шрифт — <code>--font-mono</code>, tracking <code>0.22em</code>, uppercase. Hover отсутствует (tach-киоск); фидбек только <code>:active</code>.</p>
+    </section>
+
+    <!-- ── 09. Бумажные документы ──────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">09 · Документы</p>
+      <h2>Архивные плашки (Direction C)</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">
+        Газеты разделены по <code>orthography</code>: до 10.X.1918 — старая (ять, ѣ, і, ъ);
+        после декрета Совнаркома — новая, со стилистикой советской печати.
+      </p>
+
+      <div class="grid-2" style="align-items: start; gap: 28px;">
+
+        <!-- Имперская «Биржевыя Вѣдомости» — реконструкция шапки 1904-1917 -->
+        <div class="doc-imperial">
+          <div class="masthead">
+            <div class="title">Биржевыя Вѣдомости</div>
+            <div class="subtitle">Иллюстрированная политическая, общественная и литературная газета.</div>
+            <div class="edition">Выходитъ два раза въ день — Вечерній выпускъ.</div>
+            <div class="masthead-grid">
+              <div class="col-l">
+                <b>№ 16 412</b>
+                Годъ XXIV<br>
+                Среда, 28 февраля<br>(13 марта) 1918 г.
+              </div>
+              <div class="col-c">
+                Подписная цѣна:<br>съ доставкой и пересылкой<br>9 руб. въ годъ
+              </div>
+              <div class="col-r">
+                <b>Главная контора</b>
+                и редакція<br>С.-Петербургъ,<br>Галерная, № 40
+              </div>
+            </div>
+          </div>
+          <div class="headline">Брестскій миръ подписанъ</div>
+          <div class="deck">Отъ собственнаго корреспондента</div>
+          <div class="body">Совѣтская Россія выходитъ изъ Великой войны. По условіямъ договора отдаются Польша, Прибалтика, Финляндія, часть Бѣлоруссіи и Закавказье — около милліона квадратныхъ верстъ. Германскіе инструктора уже на пути въ Петроградъ для контроля за исполненіемъ. Многіе говорятъ о позорѣ; иные — о вынужденномъ передышкѣ передъ лицомъ катастрофы.</div>
+          <div class="ornament">❦ · · · ❦</div>
+        </div>
+
+        <!-- Советская «Правда» — реконструкция шапки № 115, 29 мая 1919 -->
+        <div class="doc-soviet">
+          <div class="price-row">
+            <div class="price"><b>Цѣна № в Москве 60 коп.</b>На станц. ж. д. и в провинціи 75 к.</div>
+            <div class="party"><b>Россійская Коммунистическая Партія</b>(большевиковъ)</div>
+          </div>
+          <div class="title">Правда</div>
+          <div class="org">Органъ Центр. Ком., Моск. Ком. и Моск. Окр. Ком. Р.К.П. (больш.)</div>
+          <div class="meta">
+            <span><b>№ 115.</b></span>
+            <span>Четвергъ 29 мая 1919 г.</span>
+            <span>Ежедн. изданіе.</span>
+          </div>
+          <div class="headline">Привѣтъ венгерскимъ рабочимъ!</div>
+          <div class="deck">Московскій Губернскій Комитетъ Р. К. П., въ четвергъ 29 мая, открытое засѣданіе Губернскаго Комитета.</div>
+          <div class="body">Товарищи! Когда на западѣ ломаются цѣпи капитала, когда раздаются изъ Будапешта вѣсти о возстаніи пролетаріата, когда рабочій классъ Венгріи поднимаетъ красное знамя, — мы шлёмъ нашъ горячій братскій привѣтъ труженикамъ и борцамъ Венгерской Совѣтской Республики.</div>
+          <div class="signoff">— Редакція «Правды»</div>
+        </div>
+
+        <!-- Телеграмма -->
+        <div class="doc-telegram">
+          <div class="meta">ТЕЛЕГРАММА · 22.VII.1918</div>
+          <div class="text">ЧЕХИ · ЗАНЯЛИ · СИМБИРСКЪ · СРОЧНО · ПОДМОГА</div>
+          <div class="stamp">ПРИНЯТО</div>
+        </div>
+
+        <!-- Письмо -->
+        <div class="doc-letter">
+          <div class="body">«Николай, голодъ страшный. Хлѣба нѣтъ, картошки нѣтъ, дѣти пухнутъ. Пишу въ тиши, подъ лампой.»</div>
+          <div class="from">— Петроградъ, февраль 1918</div>
+        </div>
+      </div>
+
+      <p class="token-strip" style="margin-top: 20px;">
+        Реконструкции по оригиналам:
+        <a href="https://commons.wikimedia.org/wiki/File:Birzheviye_Vedomosti_15_July_1904.jpg" target="_blank" style="color: var(--brass);">«Биржевыя Вѣдомости», 1904</a>
+        и
+        <a href="https://commons.wikimedia.org/wiki/File:RIAN_archive_859264_Pravda_newspaper,_29_May,_1919.jpg" target="_blank" style="color: var(--brass);">«Правда» №115, 29.V.1919</a>
+        (Wikimedia Commons / РИА Новости). Газеты того времени были чёрно-белые: красный цвет оригинал не использовал — это уже наша бренд-стилизация для случаев, когда нужен агитпроп-эффект.
+        Шапка «Правды» — heavy condensed sans-serif, формально вне Ленин-палитры; для исторической точности оставлен системный Impact-стек.
+      </p>
+    </section>
+
+    <!-- ── 10. Карточки разделов (party/state) ─────────────────── -->
+    <section class="cat-section">
+      <p class="lede">10 · Карточки разделов</p>
+      <h2>Party-card / State-card</h2>
+
+      <div class="grid-3">
+        <div class="brand-card" style="--camp-color: var(--camp-red);">
+          <div class="stripe"></div>
+          <div class="head"><h4>Большевики · РКП(б)</h4><div class="dates">1912 — 1925</div></div>
+          <div class="body-text">Крайне левое крыло РСДРП. Инициатор Октябрьского восстания, движущая сила советского правительства.</div>
+        </div>
+        <div class="brand-card" style="--camp-color: var(--camp-rev-dem);">
+          <div class="stripe"></div>
+          <div class="head"><h4>Эсеры · ПСР</h4><div class="dates">1902 — 1923</div></div>
+          <div class="body-text">Партия социалистов-революционеров. Опора на крестьянство, террор как метод. В 1917 — на пике, к 1922 — разгромлены.</div>
+        </div>
+        <div class="brand-card" style="--camp-color: var(--camp-white);">
+          <div class="stripe"></div>
+          <div class="head"><h4>Кадеты · ПНС</h4><div class="dates">1905 — 1920</div></div>
+          <div class="body-text">Конституционно-демократическая партия. Либеральная буржуазия, основа Временного правительства, в Гражданскую — за белых.</div>
+        </div>
+      </div>
+      <p class="token-strip">Цветная полоска сверху по camp. Бумага <code>--paper-white</code>, заголовок Nolde Italic, дата 20 Kopeek caps.</p>
+    </section>
+
+    <!-- ── 11. Фильтр по лагерю ────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">11 · Фильтр по лагерю</p>
+      <h2>Camp-filter pill</h2>
+
+      <div class="dark-pane">
+        <div style="display: inline-flex; flex-wrap: wrap; gap: 8px; padding: 8px; border: 1px solid var(--brass); border-radius: 30px;">
+          <button class="btn btn-solid" style="border: 0;">Все</button>
+          <button class="btn"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--camp-red); margin-right: 8px; vertical-align: middle;"></span>Красные</button>
+          <button class="btn"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--camp-rev-dem); margin-right: 8px; vertical-align: middle;"></span>Революционная демократия</button>
+          <button class="btn"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--camp-white); margin-right: 8px; vertical-align: middle;"></span>Белые</button>
+          <button class="btn"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--camp-green); margin-right: 8px; vertical-align: middle;"></span>Зелёные</button>
+          <button class="btn"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--camp-national); margin-right: 8px; vertical-align: middle;"></span>Национальные движения</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 12. Модалка ─────────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">12 · Модалка</p>
+      <h2>Раскрытие документа / карточки</h2>
+
+      <div class="modal-demo">
+        <div class="sheet">
+          <h4 style="margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px;">Карточка раскрыта</h4>
+          <p style="font-family: var(--font-body); margin: 10px 0 0; color: var(--ink-soft);">Backdrop с blur, белая плашка по центру. Закрытие по Esc, клику вне или по красному крестику в углу.</p>
+          <button class="close" aria-label="Закрыть">×</button>
+        </div>
+      </div>
+      <p class="token-strip">Backdrop: <code>rgba(15,22,28,.88)</code> + <code>backdrop-filter: blur(6px)</code>. Sheet — <code>--paper-white</code>. Кнопка-закрытия — <code>--signal-red</code> с обводкой <code>--brass</code>.</p>
+    </section>
+
+    <!-- ── 13. Камертоны (touch + skew) ────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">13 · Тач-метрики</p>
+      <h2>Минимальные размеры и углы</h2>
+
+      <div class="grid-2">
+        <div class="ruler">
+          <div style="margin-bottom: 16px;">Touch-hit: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--touch-hit: 120px</code></div>
+          <div class="touch-target">120 × 120</div>
+          <p style="margin-top: 16px; opacity: 0.7;">Минимум для всех тач-целей. Чувствительная зона круглая или прямоугольная.</p>
+        </div>
+        <div class="ruler">
+          <div style="margin-bottom: 24px;">Brand-skew: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--brand-skew: -15deg</code></div>
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); transform: skewX(-15deg);"></span>
+            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); opacity: 0.5;"></span>
+          </div>
+          <p style="margin-top: 16px; opacity: 0.7;">Слева — наклонная (бренд), справа — вертикаль для сравнения. Угол ≈ 75° от горизонтали (15° от вертикали).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 14. Логотип LENIN CENTRE ─────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">14 · Логотип</p>
+      <h2>LENIN CENTRE</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">Sans-serif в широком трекинге, тонкая золотая линия-разделитель.
+        Применяется на тёмных фонах. Источник — обложка гайдбука 10.04.2026.</p>
+
+      <div class="grid-3">
+        <div class="logo-stage" style="background: var(--iron-grey);">
+          <div class="lenin-logo">
+            <div class="name">LENIN</div>
+            <div class="sub">CENTRE</div>
+          </div>
+        </div>
+        <div class="logo-stage" style="background: var(--signal-red);">
+          <div class="lenin-logo">
+            <div class="name">LENIN</div>
+            <div class="sub">CENTRE</div>
+          </div>
+        </div>
+        <div class="logo-stage" style="background: var(--ink-black);">
+          <div class="lenin-logo">
+            <div class="name">LENIN</div>
+            <div class="sub">CENTRE</div>
+          </div>
+        </div>
+      </div>
+      <p class="token-strip">Файл-плейсхолдер: <code>public/decor/lenin-centre-logo.svg</code> (TODO).</p>
+    </section>
+
+    <!-- ── 15. Раздел-обложка с гигантской цифрой ──────────────── -->
+    <section class="cat-section">
+      <p class="lede">15 · Обложки разделов</p>
+      <h2>Гигантская цифра-номер раздела</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">PDF-страницы «1. Элементы стиля» и «2. Носители стиля». Огромная
+        латунная цифра занимает левую часть, sans-serif-подзаголовок — справа внизу. Тонкие диагональные
+        линии-латунь идут параллельно бренд-углу.</p>
+
+      <div class="stack" style="gap: 16px;">
+        <div class="chapter-cover">
+          <div class="num">1</div>
+          <div class="label">Элементы стиля</div>
+          <div class="diagonals"></div>
+        </div>
+        <div class="chapter-cover">
+          <div class="num">2</div>
+          <div class="label">Носители стиля</div>
+          <div class="diagonals"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 16. Свободные параллелограммы ────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">16 · Композиция параллелограммов</p>
+      <h2>Свободные параллелограммы как декор</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">PDF-страница 4 «Основные графические элементы». В отличие от
+        фоновых полос — это самостоятельные плашки разного размера и цвета, разбросанные по композиции;
+        одиночные тонкие латунные линии под бренд-углом.</p>
+
+      <div class="parallelo-stage">
+        <div class="parallelo parallelo--red"    style="left: 22%; top: 16%; width: 220px; height: 96px;"></div>
+        <div class="parallelo parallelo--red"    style="left: 70%; top: 8%;  width: 180px; height: 100px;"></div>
+        <div class="parallelo parallelo--slate"  style="left: 50%; top: 36%; width: 240px; height: 110px;"></div>
+        <div class="parallelo parallelo--window" style="left: 10%; top: 56%; width: 360px; height: 130px;"></div>
+        <div class="parallelo parallelo--red"    style="left: 56%; top: 60%; width: 320px; height: 110px;"></div>
+        <div class="gold-line" style="left: 38%; top: 8%;  height: 92%;"></div>
+        <div class="gold-line" style="left: 50%; top: 0%;  height: 100%; opacity: 0.4;"></div>
+      </div>
+    </section>
+
+    <!-- ── 17. Композиция год + диагональный текст ──────────────── -->
+    <section class="cat-section">
+      <p class="lede">17 · Большая композиция</p>
+      <h2>Год + город под наклоном + слэш-метки + callout</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">PDF-страница 8 «Типографика». Главный композиционный приём
+        гайдбука: всё крутится вокруг крупной курсивной цифры-года в углу под углом ≈75°, латунный заголовок
+        Nolde на красной полосе, слэш-метки слева, биографическая красная плашка по центру.</p>
+
+      <div class="year-composition">
+        <div class="red-band"></div>
+        <div class="skewed-row">
+          <div class="city-name">САНКТ-ПЕТЕРБУРГ</div>
+        </div>
+
+        <div class="slash-marks">
+          <div class="item"><span class="y">1861</span><span class="t">Отмена крѣпостного права</span></div>
+          <div class="item"><span class="y">1864</span><span class="t">Окончание Кавказской войны</span></div>
+          <div class="item"><span class="y">1867</span><span class="t">Продажа Аляски Америке</span></div>
+        </div>
+
+        <div class="callout">
+          <div class="date">22 апрѣля 1870 г. · Рожденіе</div>
+          <div class="text">Владиміръ Ильичъ Ульяновъ родился въ Симбирскѣ въ семьѣ инспектора народныхъ училищъ Симбирской губерніи Ильи Николаевича Ульянова.</div>
+        </div>
+
+        <div class="big-year">1867</div>
+      </div>
+    </section>
+
+    <!-- ── 18. Контурные римские цифры XIX—XX ──────────────────── -->
+    <section class="cat-section">
+      <p class="lede">18 · Контурные римские цифры</p>
+      <h2>XIX — XX (граница эпох)</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">PDF-страница 10 «Графика в экспозиции». Гигантские римские
+        цифры даны только обводкой латунью на двухчастном фоне (iron-grey слева, signal-red справа), курсивный
+        заголовок-даты сверху по центру. Ключевой мотив для разграничения эпох.</p>
+
+      <div class="roman-stage">
+        <div class="half-l">
+          <span class="roman">XIX</span>
+        </div>
+        <div class="half-r">
+          <span class="roman roman--white">XX</span>
+        </div>
+        <div class="dates">22 апреля 1870 — 21 января 1924</div>
+      </div>
+    </section>
+
+    <!-- ── 19. Мульти-год диагональный ──────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">19 · Лента дат</p>
+      <h2>Цепь годов под общим углом</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">PDF-страница 11 «Графика в экспозиции». Несколько событий
+        выстроены в горизонтальную ленту — каждое в своей цветной плашке-параллелограмме, год белым курсивным Nolde,
+        подпись вертикально по диагонали. Подходит для таймлинии разделов или этапов биографии.</p>
+
+      <div class="multi-year">
+        <div class="pane s">
+          <div class="stack-year"><div class="inner"><span class="label">Отмена крѣпостного права</span><span class="yy">1861</span></div></div>
+        </div>
+        <div class="pane r">
+          <div class="stack-year"><div class="inner"><span class="label">Окончание Кавказской войны</span><span class="yy">1864</span></div></div>
+        </div>
+        <div class="pane w">
+          <div class="stack-year"><div class="inner"><span class="label">Продажа Аляски Америкѣ</span><span class="yy">1867</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 20. Карта ──────────────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">20 · Карты</p>
+      <h2>Live <code style="font-family: var(--font-mono); font-size: 20px; background: rgba(0,0,0,.35); padding: 2px 10px; border-radius: 4px; color: var(--brass);">&lt;map-unit&gt;</code></h2>
+
+      <p style="font-family: var(--font-body); color: var(--paper-white); opacity: 0.85; max-width: 720px; margin: 0 0 12px;">Многослойный SVG из map_v6 (HSV-классификация + potrace). Поддерживает pan/zoom, переключение слоёв, fade/wipe-анимации. Используется в state-card и в Direction A/B.</p>
+
+      <div style="height: 360px; border: 1px solid rgba(210,183,115,0.3); border-radius: 6px; overflow: hidden; background: var(--graphite);">
+        <map-unit map-id="komuch" show-panel="true" style="display: block; width: 100%; height: 100%;"></map-unit>
+      </div>
+      <p class="token-strip">Источник: <code>src/components/map-unit.js</code>. Контент в <code>public/content/maps/&lt;id&gt;/</code> (background.jpg, layers, sequence.json).</p>
+    </section>
+
+    <!-- ── 21. Typography Lab ──────────────────────────────────── -->
+    <section class="cat-section">
+      <p class="lede">21 · Лаборатория типографики</p>
+      <h2>Подбор кегля, начертания и фона</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">
+        Сэмпл-текст можно редактировать (кликом). Слайдер меняет кегль,
+        кнопки — жирность и курсив, кружки — фон из бренд-палитры.
+      </p>
+
+      <div class="stack" style="gap: 22px;">
+
+        <!-- ── Nolde ── -->
+        <div class="font-lab" data-font="display">
+          <div class="lab-head">
+            <span class="lab-label">Nolde · Заголовки</span>
+            <span class="lab-token">--font-display</span>
+          </div>
+          <div class="lab-sample" contenteditable="true" style="font-family: var(--font-display); font-size: 64px; font-weight: 400; font-style: italic;">Гражданская война</div>
+          <div class="lab-controls">
+            <div class="ctrl">
+              <label>Кегль <output>64px</output></label>
+              <input type="range" min="14" max="180" value="64" data-prop="size">
+            </div>
+            <div class="ctrl">
+              <label>Жирность</label>
+              <div class="pill-row" data-prop="weight">
+                <button data-val="400" class="active">400 · Regular</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Курсив</label>
+              <div class="pill-row" data-prop="italic">
+                <button data-val="normal">Normal</button>
+                <button data-val="italic" class="active">Italic</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Фон</label>
+              <div class="bg-swatches" data-prop="bg">
+                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
+                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
+                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
+                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
+                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
+                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
+                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
+                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
+                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 21 Cent ── -->
+        <div class="font-lab" data-font="body">
+          <div class="lab-head">
+            <span class="lab-label">21 Cent · Основной текст</span>
+            <span class="lab-token">--font-body</span>
+          </div>
+          <div class="lab-sample" contenteditable="true" style="font-family: var(--font-body); font-size: 22px; font-weight: 400; font-style: normal; line-height: 1.4;">Совѣтская Россія выходитъ изъ Великой войны. Потери — около милліона квадратныхъ верстъ.</div>
+          <div class="lab-controls">
+            <div class="ctrl">
+              <label>Кегль <output>22px</output></label>
+              <input type="range" min="12" max="80" value="22" data-prop="size">
+            </div>
+            <div class="ctrl">
+              <label>Жирность</label>
+              <div class="pill-row" data-prop="weight">
+                <button data-val="400" class="active">400 · Regular</button>
+                <button data-val="700">700 · Bold</button>
+                <button data-val="900">900 · Black</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Курсив</label>
+              <div class="pill-row" data-prop="italic">
+                <button data-val="normal" class="active">Normal</button>
+                <button data-val="italic">Italic</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Фон</label>
+              <div class="bg-swatches" data-prop="bg">
+                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
+                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
+                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
+                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
+                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
+                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
+                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
+                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
+                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 20 Kopeek ── -->
+        <div class="font-lab" data-font="mono">
+          <div class="lab-head">
+            <span class="lab-label">20 Kopeek · Акценты, плашки, метки</span>
+            <span class="lab-token">--font-mono / --font-stamp</span>
+          </div>
+          <div class="lab-sample" contenteditable="true" style="font-family: var(--font-mono); font-size: 20px; font-weight: 400; font-style: normal; letter-spacing: 0.18em; text-transform: uppercase;">Раздел · 02 · Партии и организации</div>
+          <div class="lab-controls">
+            <div class="ctrl">
+              <label>Кегль <output>20px</output></label>
+              <input type="range" min="10" max="80" value="20" data-prop="size">
+            </div>
+            <div class="ctrl">
+              <label>Жирность</label>
+              <div class="pill-row" data-prop="weight">
+                <button data-val="400" class="active">400 · Book</button>
+                <button data-val="600">600 · Demi</button>
+                <button data-val="700">700 · Bold</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Курсив</label>
+              <div class="pill-row" data-prop="italic">
+                <button data-val="normal" class="active">Normal</button>
+                <button data-val="italic">Italic</button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <label>Фон</label>
+              <div class="bg-swatches" data-prop="bg">
+                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
+                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
+                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
+                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
+                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
+                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
+                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
+                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
+                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="token-strip" style="margin-top: 18px;">
+        Доступные начертания соответствуют файлам в <code>public/fonts/{nolde,kopeek,cent}/</code>.
+        Nolde — только Regular 400 (курсив будет синтезирован браузером).
+      </p>
+    </section>
+
+    <!-- ── 22. Экспериментальные блоки (html-in-canvas R&D) ─────── -->
+    <section class="cat-section">
+      <p class="lede">22 · R&D · live-DOM на 3D</p>
+      <h2>HTML-in-Canvas — газеты, афиши, документы как тактильные объекты</h2>
+      <p class="token-strip" style="margin: 0 0 18px;">
+        Технология: живой DOM с CSS/JS захватывается в текстуру и натягивается на 3D-меш Three.js.
+        Через нативное Chromium API <code>ctx.drawElement()</code> (флаг
+        <code>chrome://flags/#canvas-draw-element</code>) обновляется покадрово; в продакшене сейчас
+        <code>html2canvas</code>-fallback с захватом раз в 1.5 сек.
+        Базируется на R&D-брифе XR LAB · 23.04.2026 (cloth / scroll / wall / book / orbit / game).
+      </p>
+
+      <div class="xr-grid">
+        <div class="xr-card" data-xr-scene="cloth" data-xr-source="src-pravda">
+          <div class="xr-meta"><span class="label">Газета на ткани</span><span class="tech">PlaneGeometry + волновая деформация</span></div>
+          <canvas width="640" height="320"></canvas>
+          <div class="xr-caption">Советская «Правда» как мягкое полотно — для витрин раздела «Поток документов» (Direction C).</div>
+        </div>
+
+        <div class="xr-card" data-xr-scene="scroll" data-xr-source="src-poster">
+          <div class="xr-meta"><span class="label">Афиша-свиток</span><span class="tech">CylinderGeometry, частичный угол</span></div>
+          <canvas width="640" height="320"></canvas>
+          <div class="xr-caption">Агитплакат намотан на цилиндр и медленно вращается — для зала «Гражданская война / агитпроп».</div>
+        </div>
+
+        <div class="xr-card" data-xr-scene="wall" data-xr-source="src-card">
+          <div class="xr-meta"><span class="label">Стеклянная стена</span><span class="tech">PlaneGeometry + reflection mesh</span></div>
+          <canvas width="640" height="320"></canvas>
+          <div class="xr-caption">Карточка партии как стеклянная плашка с зеркальным отражением — для архивного зала.</div>
+        </div>
+
+        <div class="xr-card" data-xr-scene="book" data-xr-source="src-diary">
+          <div class="xr-meta"><span class="label">Книжная страница</span><span class="tech">PlaneGeometry + изгиб по кривой</span></div>
+          <canvas width="640" height="320"></canvas>
+          <div class="xr-caption">Дневник / письмо с лёгким изгибом страницы — для блока биографий и личных документов.</div>
+        </div>
+      </div>
+
+      <p class="token-strip" style="margin-top: 18px;">
+        Сцены лениво инициализируются при попадании в viewport. Текстура 1024×1024, anisotropy 8,
+        захват каждые 1.5 секунды (компромисс CPU vs свежесть). Источник прячется на
+        <code>position: absolute; left: -99999px</code> — остаётся в layout, но не виден.
+      </p>
+
+      <!-- Скрытые DOM-источники (рендерятся за экраном, html2canvas захватывает их в текстуру) -->
+      <div class="xr-stub" id="src-pravda" aria-hidden="true">
+        <div class="xr-pravda">
+          <div class="price-row">
+            <div><b>Цѣна № в Москве 60 коп.</b>На станц. ж. д. и в провинціи 75 к.</div>
+            <div style="text-align: right; max-width: 50%;"><b>Россійская Коммунистическая Партія</b>(большевиковъ)</div>
+          </div>
+          <div class="title">Правда</div>
+          <div class="org">Органъ Центр. Ком. Р.К.П. (больш.)</div>
+          <div class="meta">
+            <span><b>№ 115.</b></span>
+            <span>Четвергъ 29 мая 1919 г.</span>
+            <span>Ежедн. изданіе.</span>
+          </div>
+          <div class="headline">Привѣтъ венгерскимъ рабочимъ!</div>
+          <div class="deck">Московскій Губернскій Комитетъ Р. К. П., 29 мая, открытое засѣданіе.</div>
+          <div class="body">Когда на западѣ ломаются цѣпи капитала, когда раздаются изъ Будапешта вѣсти о возстаніи пролетаріата, мы шлёмъ горячій братскій привѣтъ труженикамъ Венгерской Совѣтской Республики.</div>
+        </div>
+      </div>
+
+      <div class="xr-stub" id="src-poster" aria-hidden="true">
+        <div class="xr-poster">
+          <div class="top">РОСТА · 1920</div>
+          <div class="star"></div>
+          <div class="slogan">ТЫ записался добровольцемъ?</div>
+          <div class="sub">Все на защиту революціи!</div>
+          <div class="credit">Художникъ Д. Моор</div>
+        </div>
+      </div>
+
+      <div class="xr-stub" id="src-card" aria-hidden="true">
+        <div class="xr-card-source">
+          <div class="stripe"></div>
+          <div class="head">
+            <h4>Большевики · РКП(б)</h4>
+            <div class="dates">1912 — 1925</div>
+          </div>
+          <div class="body">Крайне левое крыло РСДРП, с марта 1918 — самостоятельная партия. Инициатор Октябрьского восстания, движущая сила советского правительства и Красной Армии в годы Гражданской войны.</div>
+          <div class="leaders"><b>Лидеры:</b> Ленин В.И. · Троцкий Л.Д. · Свердлов Я.М. · Сталин И.В.</div>
+        </div>
+      </div>
+
+      <div class="xr-stub" id="src-diary" aria-hidden="true">
+        <div class="xr-diary">
+          <div class="date">Петроградъ · 14 февраля 1918 г.</div>
+          <div class="hand">«Николай, голодъ страшный. Хлѣба нѣтъ, картошки нѣтъ, дѣти пухнутъ. Пишу въ тиши, подъ лампой — ужъ четвёртый день безъ свѣта. Заводы стоятъ, на улицѣ снѣгъ съ грязью, на углу Невскаго очередь за керосиномъ съ четырёхъ утра.</div>
+          <div class="hand">Германецъ въ Псковѣ. Совѣтъ объявилъ "Соціалистическое отечество въ опасности". Возможно, придётся уѣзжать. Береги себя и Лизу. Цѣлую крѣпко.»</div>
+          <div class="signature">— Анна</div>
+        </div>
+      </div>
+    </section>
+
+    <p class="source">Источник: docs/brand.md · docs/brand/Lenin-guideline-2026.pdf · src/styles/tokens.css · TESTS/fabric canvas/html-in-canvas-brief.md</p>
+  </main>
+
+  <script type="module">
+    import '/src/components/map-unit.js';
+  </script>
+
+  <!-- ── R&D · html-in-canvas: Three.js + html2canvas (single shared renderer) ── -->
+  <script>
+    // ОДИН WebGLRenderer на все 4 .xr-card. Безопасно для Safari — не упирается
+    // в лимит контекстов. Активная карточка получает sharedCanvas (живая 3D-сцена),
+    // остальные показывают статичный html2canvas-снимок исходника.
+    // Активность переключается по IntersectionObserver: «доминирующая в viewport» = живая.
+
+    let xrLibsPromise = null;
+    function loadXRLibs() {
+      if (xrLibsPromise) return xrLibsPromise;
+      const load = (src) => new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src; s.async = true;
+        s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      xrLibsPromise = Promise.all([
+        load('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'),
+        load('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+      ]);
+      return xrLibsPromise;
+    }
+
+    let captureLock = Promise.resolve();
+    function withCaptureLock(fn) {
+      const next = captureLock.then(fn, fn);
+      captureLock = next.catch(() => {});
+      return next;
+    }
+
+    const xr = {
+      ready: false,
+      booting: null,
+      sharedCanvas: null,
+      renderer: null,
+      texCanvas: null, texCtx: null, texture: null,
+      activeCard: null,
+      sceneCtx: null, // { scene, camera, mesh, update, t0 }
+      ratios: new WeakMap(),
+    };
+
+    async function bootXR() {
+      if (xr.ready) return true;
+      if (xr.booting) return xr.booting;
+      xr.booting = (async () => {
+        await loadXRLibs();
+        const sharedCanvas = document.createElement('canvas');
+        sharedCanvas.className = 'xr-shared-canvas';
+        sharedCanvas.style.cssText = 'display:block;width:100%;height:320px;background:transparent;';
+        const origErr = console.error;
+        console.error = () => {};
+        let renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({ canvas: sharedCanvas, antialias: true, alpha: true });
+        } catch (e) {
+          console.error = origErr;
+          xr.ready = true;
+          return false; // нет WebGL — все карточки останутся на статичных снимках
+        }
+        console.error = origErr;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        const texCanvas = document.createElement('canvas');
+        texCanvas.width = texCanvas.height = 1024;
+        const texCtx = texCanvas.getContext('2d');
+        const texture = new THREE.CanvasTexture(texCanvas);
+        texture.anisotropy = 8;
+        Object.assign(xr, { sharedCanvas, renderer, texCanvas, texCtx, texture });
+        xr.ready = true;
+        startTick();
+        return true;
+      })();
+      return xr.booting;
+    }
+
+    function startTick() {
+      const loop = () => {
+        const ctx = xr.sceneCtx;
+        if (ctx && xr.activeCard && xr.renderer) {
+          const t = (performance.now() - ctx.t0) / 1000;
+          ctx.update && ctx.update(t);
+          xr.renderer.render(ctx.scene, ctx.camera);
+        }
+        requestAnimationFrame(loop);
+      };
+      loop();
+    }
+
+    async function ensureSnapshot(card) {
+      if (card._xrSnap) return card._xrSnap;
+      const sourceEl = document.getElementById(card.dataset.xrSource);
+      if (!sourceEl) return null;
+      try {
+        const snap = await withCaptureLock(() =>
+          html2canvas(sourceEl, { backgroundColor: null, scale: 1.4, logging: false })
+        );
+        snap.className = 'xr-static-snap';
+        snap.style.cssText = 'display:block;width:100%;height:320px;object-fit:cover;background:#0c0a08;';
+        card._xrSnap = snap;
+        // подменяем placeholder-canvas карточки на снимок
+        const own = card.querySelector(':scope > canvas');
+        if (own) card.replaceChild(snap, own); else card.insertBefore(snap, card.querySelector('.xr-caption'));
+        return snap;
+      } catch { return null; }
+    }
+
+    function buildSceneFor(card) {
+      const T = THREE;
+      const scene = new T.Scene(); scene.background = null;
+      scene.add(new T.AmbientLight(0xffffff, 0.55));
+      const key = new T.DirectionalLight(0xffffff, 1.0); key.position.set(3, 4, 5); scene.add(key);
+      const rim = new T.DirectionalLight(0xa02128, 0.35); rim.position.set(-4, -2, -3); scene.add(rim);
+
+      const W = xr.sharedCanvas.clientWidth || 480;
+      const H = xr.sharedCanvas.clientHeight || 320;
+      const camera = new T.PerspectiveCamera(42, W / H, 0.1, 100);
+      const sceneType = card.dataset.xrScene;
+      const tex = xr.texture;
+      let mesh, update;
+
+      if (sceneType === 'cloth') {
+        camera.position.set(0, 0, 4.5);
+        const g = new T.PlaneGeometry(3.2, 2, 40, 26);
+        g.userData.orig = g.attributes.position.array.slice();
+        mesh = new T.Mesh(g, new T.MeshStandardMaterial({ map: tex, side: T.DoubleSide, roughness: 0.45, metalness: 0.05 }));
+        scene.add(mesh);
+        update = (t) => {
+          const p = g.attributes.position.array, o = g.userData.orig;
+          for (let i = 0; i < p.length; i += 3) {
+            p[i] = o[i]; p[i + 1] = o[i + 1];
+            p[i + 2] = Math.sin(o[i] * 1.2 + t * 1.1) * 0.08 + Math.cos(o[i + 1] * 1.5 + t * 0.7) * 0.06;
+          }
+          g.attributes.position.needsUpdate = true; g.computeVertexNormals();
+          mesh.rotation.y = Math.sin(t * 0.3) * 0.25;
+        };
+      } else if (sceneType === 'scroll') {
+        camera.position.set(0, 0, 5);
+        const g = new T.CylinderGeometry(1.1, 1.1, 2.6, 48, 20, true, Math.PI * 0.15, Math.PI * 1.7);
+        mesh = new T.Mesh(g, new T.MeshStandardMaterial({ map: tex, side: T.DoubleSide, roughness: 0.35, metalness: 0.1 }));
+        scene.add(mesh);
+        update = (t) => { mesh.rotation.y = t * 0.4; mesh.rotation.x = Math.sin(t * 0.3) * 0.1; };
+      } else if (sceneType === 'wall') {
+        camera.position.set(0, 0, 4);
+        const g = new T.PlaneGeometry(3, 2, 1, 1);
+        const mat = new T.MeshStandardMaterial({ map: tex, side: T.DoubleSide, roughness: 0.1, metalness: 0.7, transparent: true, opacity: 0.95, emissive: 0x002233, emissiveIntensity: 0.35 });
+        mesh = new T.Mesh(g, mat); scene.add(mesh);
+        const refl = new T.Mesh(g.clone(), mat.clone());
+        refl.position.y = -2.05; refl.scale.y = -1; refl.material.opacity = 0.25; scene.add(refl);
+        update = (t) => {
+          mesh.rotation.y = Math.sin(t * 0.4) * 0.3; mesh.rotation.x = -0.1;
+          refl.rotation.y = mesh.rotation.y; refl.rotation.x = -mesh.rotation.x;
+        };
+      } else if (sceneType === 'book') {
+        camera.position.set(0, 0, 4);
+        const g = new T.PlaneGeometry(2.8, 2.2, 20, 1);
+        g.userData.orig = g.attributes.position.array.slice();
+        mesh = new T.Mesh(g, new T.MeshStandardMaterial({ map: tex, side: T.DoubleSide, roughness: 0.65, metalness: 0.02 }));
+        scene.add(mesh);
+        update = (t) => {
+          const p = g.attributes.position.array, o = g.userData.orig;
+          for (let i = 0; i < p.length; i += 3) {
+            const ox = o[i];
+            p[i] = ox; p[i + 1] = o[i + 1];
+            p[i + 2] = -ox * ox * 0.18;
+          }
+          g.attributes.position.needsUpdate = true; g.computeVertexNormals();
+          mesh.rotation.y = Math.sin(t * 0.35) * 0.18;
+        };
+      }
+      return { scene, camera, mesh, update, t0: performance.now() };
+    }
+
+    let activateLock = Promise.resolve();
+    function activateScene(card) {
+      activateLock = activateLock.then(async () => {
+        if (!card || xr.activeCard === card || !xr.renderer) return;
+        // 1. Возвращаем предыдущей её снимок, забираем sharedCanvas
+        const prev = xr.activeCard;
+        if (prev) {
+          await ensureSnapshot(prev); // на всякий случай
+          if (xr.sharedCanvas.parentElement === prev) {
+            prev.replaceChild(prev._xrSnap, xr.sharedCanvas);
+          }
+        }
+        // 2. Гарантируем snapshot для новой карточки (он либо уже стоит, либо будет нужен при выходе)
+        await ensureSnapshot(card);
+        // 3. Меняем snapshot новой карточки на sharedCanvas
+        if (card._xrSnap && card._xrSnap.parentElement === card) {
+          card.replaceChild(xr.sharedCanvas, card._xrSnap);
+        } else {
+          card.insertBefore(xr.sharedCanvas, card.querySelector('.xr-caption'));
+        }
+        // 4. Подгоняем размер renderer под актуальный layout sharedCanvas
+        await new Promise(r => requestAnimationFrame(r));
+        const W = xr.sharedCanvas.clientWidth || 480, H = xr.sharedCanvas.clientHeight || 320;
+        xr.renderer.setSize(W, H, false);
+        // 5. Заливаем свежий снимок исходника в текстуру
+        const sourceEl = document.getElementById(card.dataset.xrSource);
+        if (sourceEl) {
+          await withCaptureLock(async () => {
+            try {
+              const snap = await html2canvas(sourceEl, { backgroundColor: null, scale: 1.6, logging: false });
+              xr.texCtx.clearRect(0, 0, 1024, 1024);
+              const ar = snap.width / snap.height;
+              let dw = 1024, dh = 1024;
+              if (ar > 1) dh = 1024 / ar; else dw = 1024 * ar;
+              xr.texCtx.drawImage(snap, (1024 - dw) / 2, (1024 - dh) / 2, dw, dh);
+              xr.texture.needsUpdate = true;
+            } catch {}
+          });
+        }
+        // 6. Собираем новую сцену для типа карточки
+        xr.sceneCtx = buildSceneFor(card);
+        xr.activeCard = card;
+      }).catch(err => console.warn('xr activate', err));
+      return activateLock;
+    }
+
+    // IntersectionObserver: для каждой карточки храним actuall ratio,
+    // активируем ту, что больше всего видна (если ratio > 0.25).
+    if ('IntersectionObserver' in window) {
+      const cards = Array.from(document.querySelectorAll('.xr-card'));
+      const io = new IntersectionObserver(async (entries) => {
+        entries.forEach(e => xr.ratios.set(e.target, e.intersectionRatio));
+        // ищем доминирующую
+        let best = null, bestR = 0.25;
+        cards.forEach(c => {
+          const r = xr.ratios.get(c) || 0;
+          if (r > bestR) { bestR = r; best = c; }
+        });
+        if (!best) return;
+        // Загружаем библиотеки + поднимаем рендерер при первой нужной активации
+        const ok = await bootXR();
+        // Заранее снимем статичные снимки для всех карточек (фоном, не блокируя)
+        cards.forEach(c => { if (!c._xrSnap) ensureSnapshot(c); });
+        if (ok === false) return; // WebGL вообще нет — все на снимках
+        activateScene(best);
+      }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+      cards.forEach(c => io.observe(c));
+    }
+  </script>
+
+  <script>
+    // — Typography Lab: проводка слайдеров и кнопок —
+    document.querySelectorAll('.font-lab').forEach((lab) => {
+      const sample = lab.querySelector('.lab-sample');
+
+      // 1. Кегль (слайдер)
+      const sizeInput = lab.querySelector('[data-prop="size"]');
+      const sizeOutput = sizeInput.previousElementSibling.querySelector('output');
+      sizeInput.addEventListener('input', () => {
+        sample.style.fontSize = sizeInput.value + 'px';
+        sizeOutput.textContent = sizeInput.value + 'px';
+      });
+
+      // 2. Жирность / курсив / фон — pill-кнопки
+      function bindPills(prop, apply) {
+        const group = lab.querySelector(`[data-prop="${prop}"]`);
+        if (!group) return;
+        group.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            group.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+            apply(btn);
+          });
+        });
+      }
+
+      bindPills('weight', (btn) => { sample.style.fontWeight = btn.dataset.val; });
+      bindPills('italic', (btn) => { sample.style.fontStyle = btn.dataset.val; });
+      bindPills('bg',     (btn) => {
+        sample.style.background = btn.dataset.bg;
+        sample.style.color = btn.dataset.fg;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -26,12 +26,17 @@ const theme = {
   blueMap:     '#4a6178',    // карта
 };
 
+// Фирменные шрифты Ленин-центра. Совпадают с tokens.css (--font-*).
+// Назначение по docs/brand.md:
+//   Nolde     — заголовки, крупные цифры, буквицы
+//   21 Cent   — длинные тексты, параграфы
+//   20 Kopeek — короткие надписи, акценты, кнопки, метки, mono-стиль
 const fonts = {
   display: '"Nolde", "Playfair Display", Georgia, serif',
   body:    '"21 Cent", "PT Serif", Georgia, serif',
-  mono:    '"JetBrains Mono", "Courier New", ui-monospace, monospace',
-  stamp:   '"Special Elite", "Courier New", monospace',
-  rus:     '"Playfair Display", "PT Serif", Georgia, serif',
+  mono:    '"20 Kopeek", "JetBrains Mono", "Courier New", monospace',
+  stamp:   '"20 Kopeek", "Special Elite", monospace',
+  rus:     '"21 Cent", "PT Serif", Georgia, serif',
 };
 
 // ── Paper texture (layered) ────────────────────────────────────────────────
