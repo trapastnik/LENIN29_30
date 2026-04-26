@@ -464,6 +464,25 @@ function PersonalitiesApp() {
 
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
 
+  // Sync языка с родителем-экспозицией и другими открытыми iframes.
+  React.useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === 'expo:lang' && e.newValue && e.newValue !== lang) setLang(e.newValue);
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [lang]);
+
+  // Когда родитель снова открывает наш раздел — сбрасываем drill-down (открытую карточку),
+  // чтобы пользователь видел сам список, а не последнюю карточку.
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data === 'mtk29:section-opened') { setOpenId(null); setLightboxIdx(null); }
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
   // Esc: сначала закрывает лайтбокс, затем модалку. Стрелки — навигация по фото.
   React.useEffect(() => {
     const onKey = (e) => {

@@ -81,6 +81,17 @@ function Expo() {
       next.add(id);
       return next;
     });
+    // Сообщаем iframe-разделу что его открыли — он сбросит внутренние модалки
+    // (например, открытую карточку персоналии), чтобы пользователь видел
+    // главный список, а не последний дрилл-даун.
+    requestAnimationFrame(() => {
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach((f) => {
+        if (f.title === id && f.contentWindow) {
+          try { f.contentWindow.postMessage('mtk29:section-opened', '*'); } catch {}
+        }
+      });
+    });
   }, []);
   const closeSection = React.useCallback(() => setActiveSection(null), []);
 
@@ -96,10 +107,20 @@ function Expo() {
     };
   }, []);
 
-  // persist
+  // persist + sync lang между этим окном и iframes (storage event срабатывает
+  // только в чужих окнах одного origin, поэтому iframes сами увидят перемену)
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
   React.useEffect(() => { try { localStorage.setItem('expo:direction', direction); } catch {} }, [direction]);
   React.useEffect(() => { try { localStorage.setItem('expo:t', String(time)); } catch {} }, [time]);
+
+  // Слушаем смены языка из iframes (parties/states/people) — они тоже пишут expo:lang.
+  React.useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === 'expo:lang' && e.newValue && e.newValue !== lang) setLang(e.newValue);
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [lang]);
 
   // autoscale 1920x1080 base
   const stageRef = React.useRef(null);
