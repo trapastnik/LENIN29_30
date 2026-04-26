@@ -363,7 +363,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
         </div>
 
         {/* правая — скроллится */}
-        <div className="ppl-scroll" style={{
+        <div className="brand-scroll" style={{
           color: theme.paperLit, paddingTop: 4, paddingRight: 18,
           overflowY: 'auto', overflowX: 'hidden',
         }}>
@@ -513,7 +513,7 @@ function PersonalitiesApp() {
   const opened = openId ? people.find(p => p.id === openId) : null;
 
   return (
-    <div className="ppl-scroll" style={{
+    <div className="brand-scroll" style={{
       position: 'absolute', inset: 0,
       ...tableBg(),
       overflow: opened ? 'hidden' : 'auto',
@@ -526,22 +526,22 @@ function PersonalitiesApp() {
         @keyframes popIn { from { opacity: 0; transform: scale(.92); } }
 
         /* видимый скроллбар на тач-столе — пользователь должен понимать, что блок скроллится */
-        .ppl-scroll {
+        .brand-scroll {
           scrollbar-width: auto;
           scrollbar-color: ${theme.brass} rgba(0,0,0,0.45);
         }
-        .ppl-scroll::-webkit-scrollbar { width: 14px; height: 14px; }
-        .ppl-scroll::-webkit-scrollbar-track {
+        .brand-scroll::-webkit-scrollbar { width: 14px; height: 14px; }
+        .brand-scroll::-webkit-scrollbar-track {
           background: rgba(0,0,0,0.45);
           border-left: 1px solid ${theme.inkFade};
         }
-        .ppl-scroll::-webkit-scrollbar-thumb {
+        .brand-scroll::-webkit-scrollbar-thumb {
           background: ${theme.brass};
           border: 3px solid rgba(0,0,0,0.45);
           border-radius: 8px;
           min-height: 60px;
         }
-        .ppl-scroll::-webkit-scrollbar-thumb:active { background: ${theme.ochre}; }
+        .brand-scroll::-webkit-scrollbar-thumb:active { background: ${theme.ochre}; }
       `}</style>
 
       {/* TOP BAR */}

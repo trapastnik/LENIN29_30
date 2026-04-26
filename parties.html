@@ -45,6 +45,7 @@
       aspect-ratio: 1672 / 941;
     }
     #grid-mode { flex: 1; min-height: 0; overflow: auto; }
+    /* подсветим скроллбар брассом — единый стиль .brand-scroll из tokens.css */
     #grid-mode #grid { padding-bottom: 40px; }
     .hidden { display: none !important; }
   </style>
@@ -64,7 +65,7 @@
 
   <main id="page-root">
     <div id="venn-mode"></div>
-    <div id="grid-mode" class="hidden"></div>
+    <div id="grid-mode" class="hidden brand-scroll"></div>
 
     <div id="modal" class="modal hidden" aria-hidden="true">
       <div class="modal-backdrop"></div>

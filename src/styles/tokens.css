@@ -57,6 +57,31 @@
   /* ── Бренд-мотив: угол наклонных полос ───────────────────── */
   --brand-skew:   -15deg;              /* соответствует 75° от вертикали */
 
+  /* ── Скроллбары (видимые на тач-столе — пользователь должен видеть, что блок скроллится) ─── */
+  --scroll-thumb:       var(--brass);
+  --scroll-thumb-active: #b88e3a;
+  --scroll-track:       rgba(0,0,0,0.45);
+  --scroll-width:       14px;
+}
+
+/* Универсальный класс для скроллящихся областей — везде один и тот же brass-thumb. */
+.brand-scroll {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar { width: var(--scroll-width); height: var(--scroll-width); }
+.brand-scroll::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 3px solid var(--scroll-track);
+  border-radius: 8px;
+  min-height: 60px;
+}
+.brand-scroll::-webkit-scrollbar-thumb:active { background: var(--scroll-thumb-active); }
+
+:root {
   /* ── Слои карт (совпадают с HSV-парами из map_v6.ipynb) ─── */
   --layer-background:   transparent;
   --layer-borders-dark: #1a1a1a;

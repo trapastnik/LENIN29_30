@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Персоналии · Гражданская война 1918—1922</title>
 <link rel="stylesheet" href="/src/styles/fonts.css">
+<link rel="stylesheet" href="/src/styles/tokens.css">
 <style>
   * { box-sizing: border-box; }
   html, body {
@@ -16,8 +17,9 @@
     overflow: hidden;
   }
   #root { position: absolute; inset: 0; }
-  *::-webkit-scrollbar { display: none; }
-  * { scrollbar-width: none; cursor: default; }
+  /* скрываем скроллбар везде, кроме блоков с .brand-scroll (см. tokens.css) */
+  :not(.brand-scroll)::-webkit-scrollbar { display: none; }
+  :not(.brand-scroll) { scrollbar-width: none; cursor: default; }
   button, a { cursor: pointer; }
 </style>
 </head>

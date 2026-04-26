@@ -29,6 +29,9 @@ button {
   min-height: var(--touch-hit);
 }
 
-::-webkit-scrollbar { display: none; }
-* { scrollbar-width: none; }
+/* Глобально скрываем скроллбар; показываем только на блоках с `.brand-scroll`
+   (см. tokens.css). Это нужно для тач-стола: основная сцена не должна
+   иметь полос, а конкретный список / правая колонка модалки — должны. */
+:not(.brand-scroll)::-webkit-scrollbar { display: none; }
+:not(.brand-scroll) { scrollbar-width: none; }
 
