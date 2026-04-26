@@ -20,11 +20,12 @@ const theme = {
   brass:    '#b78838',
 };
 
+// Фирменные шрифты Ленин-центра (см. docs/brand.md, tokens.css).
 const fonts = {
-  display: "'Playfair Display', 'PT Serif', Georgia, serif",
-  body:    "'PT Serif', Georgia, serif",
-  stamp:   "'Special Elite', 'Courier New', monospace",
-  mono:    "'JetBrains Mono', monospace",
+  display: "'Nolde', 'Playfair Display', Georgia, serif",
+  body:    "'21 Cent', 'PT Serif', Georgia, serif",
+  stamp:   "'20 Kopeek', 'Special Elite', monospace",
+  mono:    "'20 Kopeek', 'JetBrains Mono', 'Courier New', monospace",
 };
 
 // Стол/бумага — тёмное сукно + виньетка
@@ -140,27 +141,32 @@ function PersonCard({ person, lang, onOpen, delay }) {
           border: `1px solid ${theme.inkSoft}`,
           marginBottom: 10,
         }}>
-          <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice"
-            style={{ width: '100%', height: '100%', display: 'block' }}>
-            <defs>
-              <radialGradient id={`pbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                <stop offset="0%" stopColor="#9a7a4c"/>
-                <stop offset="55%" stopColor="#4a2e14"/>
-                <stop offset="100%" stopColor="#150804"/>
-              </radialGradient>
-              <linearGradient id={`psil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0d0602"/>
-                <stop offset="100%" stopColor="#2a1a0a"/>
-              </linearGradient>
-            </defs>
-            <rect x="0" y="0" width="100" height="125" fill={`url(#pbg-${person.id})`}/>
-            {/* силуэт */}
-            <path d="M 15 125 Q 15 82 32 74 Q 40 72 42 66 Q 34 62 34 47 Q 34 28 50 28 Q 66 28 66 47 Q 66 62 58 66 Q 60 72 68 74 Q 85 82 85 125 Z"
-              fill={`url(#psil-${person.id})`}/>
-            {/* шинель/воротник-намёк */}
-            <path d="M 15 125 L 15 110 Q 50 95 85 110 L 85 125 Z"
-              fill={meta.flag} opacity=".55"/>
-          </svg>
+          {person.portrait ? (
+            <img src={person.portrait} alt="" loading="lazy" style={{
+              width: '100%', height: '100%', objectFit: 'cover',
+              display: 'block', filter: 'sepia(0.18) contrast(1.05)',
+            }}/>
+          ) : (
+            <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice"
+              style={{ width: '100%', height: '100%', display: 'block' }}>
+              <defs>
+                <radialGradient id={`pbg-${person.id}`} cx="50%" cy="35%" r="70%">
+                  <stop offset="0%" stopColor="#9a7a4c"/>
+                  <stop offset="55%" stopColor="#4a2e14"/>
+                  <stop offset="100%" stopColor="#150804"/>
+                </radialGradient>
+                <linearGradient id={`psil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#0d0602"/>
+                  <stop offset="100%" stopColor="#2a1a0a"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="100" height="125" fill={`url(#pbg-${person.id})`}/>
+              <path d="M 15 125 Q 15 82 32 74 Q 40 72 42 66 Q 34 62 34 47 Q 34 28 50 28 Q 66 28 66 47 Q 66 62 58 66 Q 60 72 68 74 Q 85 82 85 125 Z"
+                fill={`url(#psil-${person.id})`}/>
+              <path d="M 15 125 L 15 110 Q 50 95 85 110 L 85 125 Z"
+                fill={meta.flag} opacity=".55"/>
+            </svg>
+          )}
           {/* грейн */}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -196,15 +202,66 @@ function PersonCard({ person, lang, onOpen, delay }) {
   );
 }
 
+// Лайтбокс — фото на весь экран по тапу в галерее
+function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext }) {
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 200,
+      background: 'rgba(2,1,0,.96)',
+      display: 'flex', flexDirection: 'column',
+      animation: 'fadeIn 200ms ease',
+    }} onClick={onClose}>
+      <div style={{
+        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '40px 80px 20px', minHeight: 0,
+      }}>
+        <img src={photo.src} alt="" style={{
+          maxWidth: '100%', maxHeight: '100%', objectFit: 'contain',
+          filter: 'sepia(0.08) contrast(1.04)',
+          boxShadow: '0 30px 80px rgba(0,0,0,.9)',
+        }} onClick={e => e.stopPropagation()}/>
+      </div>
+      <div style={{
+        padding: '14px 80px 32px',
+        fontFamily: fonts.body, fontSize: 16, lineHeight: 1.5,
+        color: theme.paperLit, textAlign: 'center', maxWidth: 1100, margin: '0 auto',
+      }} onClick={e => e.stopPropagation()}>{photo[lang]}</div>
+
+      {/* кнопки */}
+      <button onClick={(e) => { e.stopPropagation(); onClose(); }} style={{
+        position: 'absolute', top: 24, right: 24,
+        background: 'transparent', border: `1px solid ${theme.paperDim}`,
+        color: theme.paper, width: 56, height: 56,
+        fontFamily: fonts.mono, fontSize: 22,
+      }}>×</button>
+      {hasPrev && <button onClick={(e) => { e.stopPropagation(); onPrev(); }} style={{
+        position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+        background: 'transparent', border: `1px solid ${theme.paperDim}`,
+        color: theme.paper, width: 56, height: 56,
+        fontFamily: fonts.mono, fontSize: 22,
+      }}>‹</button>}
+      {hasNext && <button onClick={(e) => { e.stopPropagation(); onNext(); }} style={{
+        position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+        background: 'transparent', border: `1px solid ${theme.paperDim}`,
+        color: theme.paper, width: 56, height: 56,
+        fontFamily: fonts.mono, fontSize: 22,
+      }}>›</button>}
+    </div>
+  );
+}
+
 // Модальная карточка с подробностями
-function PersonDetail({ person, lang, onClose }) {
+function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
   const d = person[lang];
   const meta = SIDE_META[person.side];
+  const photos = person.photos || [];
   if (!person) return null;
   return (
     <div style={{
       position: 'absolute', inset: 0,
-      background: 'rgba(5,3,1,.88)',
+      background: 'rgba(2,1,0,.78)',
+      backdropFilter: 'blur(10px) saturate(0.6)',
+      WebkitBackdropFilter: 'blur(10px) saturate(0.6)',
       zIndex: 100,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       animation: 'fadeIn 250ms ease',
@@ -212,85 +269,112 @@ function PersonDetail({ person, lang, onClose }) {
     }}
     onClick={onClose}
     >
-      <div style={{
-        width: 1100, maxWidth: '100%',
-        display: 'grid', gridTemplateColumns: '340px 1fr',
-        gap: 28,
+      <div className="person-detail-card" style={{
+        width: 1280, maxWidth: '100%', height: '90vh',
+        display: 'grid', gridTemplateColumns: '380px 1fr',
+        gap: 28, position: 'relative',
+        padding: 22, background: 'rgba(10,5,2,.65)',
+        border: `1px solid ${theme.brass}`,
+        boxShadow: '0 0 0 1px rgba(0,0,0,.6), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(183,136,56,.18)',
         animation: 'popIn 400ms cubic-bezier(.2,.7,.3,1.1)',
       }}
       onClick={e => e.stopPropagation()}
       >
-        {/* левая — портрет + флаг */}
+        {/* левая — портрет + имя + флаг (фиксированная, не скроллится) */}
         <div style={{
           ...paperFill(),
           border: `1px solid ${theme.inkFade}`,
-          padding: 16,
+          padding: 18,
           boxShadow: '0 20px 50px rgba(0,0,0,.8)',
           position: 'relative',
+          display: 'flex', flexDirection: 'column',
+          overflow: 'hidden',
         }}>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden' }}>
-            <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice" style={{ width: '100%', height: '100%' }}>
-              <defs>
-                <radialGradient id={`mbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                  <stop offset="0%" stopColor="#a88656"/>
-                  <stop offset="55%" stopColor="#4a2e14"/>
-                  <stop offset="100%" stopColor="#150804"/>
-                </radialGradient>
-                <linearGradient id={`msil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#0d0602"/>
-                  <stop offset="100%" stopColor="#2a1a0a"/>
-                </linearGradient>
-              </defs>
-              <rect width="100" height="130" fill={`url(#mbg-${person.id})`}/>
-              <path d="M 15 130 Q 15 85 32 77 Q 40 74 42 68 Q 34 64 34 48 Q 34 28 50 28 Q 66 28 66 48 Q 66 64 58 68 Q 60 74 68 77 Q 85 85 85 130 Z"
-                fill={`url(#msil-${person.id})`}/>
-              <path d="M 15 130 L 15 113 Q 50 96 85 113 L 85 130 Z"
-                fill={meta.flag} opacity=".6"/>
-            </svg>
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#1a0d05', flexShrink: 0 }}>
+            {person.portrait ? (
+              <img src={person.portrait} alt="" style={{
+                width: '100%', height: '100%', objectFit: 'cover',
+                display: 'block', filter: 'sepia(0.15) contrast(1.04)',
+              }}/>
+            ) : (
+              <>
+                <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice" style={{ width: '100%', height: '100%' }}>
+                  <defs>
+                    <radialGradient id={`mbg-${person.id}`} cx="50%" cy="35%" r="70%">
+                      <stop offset="0%" stopColor="#a88656"/>
+                      <stop offset="55%" stopColor="#4a2e14"/>
+                      <stop offset="100%" stopColor="#150804"/>
+                    </radialGradient>
+                    <linearGradient id={`msil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#0d0602"/>
+                      <stop offset="100%" stopColor="#2a1a0a"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="100" height="130" fill={`url(#mbg-${person.id})`}/>
+                  <path d="M 15 130 Q 15 85 32 77 Q 40 74 42 68 Q 34 64 34 48 Q 34 28 50 28 Q 66 28 66 48 Q 66 64 58 68 Q 60 74 68 77 Q 85 85 85 130 Z"
+                    fill={`url(#msil-${person.id})`}/>
+                  <path d="M 15 130 L 15 113 Q 50 96 85 113 L 85 130 Z"
+                    fill={meta.flag} opacity=".6"/>
+                </svg>
+                <div style={{
+                  position: 'absolute', top: 10, left: 10,
+                  fontFamily: fonts.mono, fontSize: 10, color: '#f0dcae',
+                  letterSpacing: '0.2em', textShadow: '0 1px 2px #000',
+                }}>
+                  {lang === 'ru' ? '[фотография отсутствует]' : '[photograph missing]'}
+                </div>
+              </>
+            )}
             <div style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',
               background: 'repeating-linear-gradient(91deg, rgba(0,0,0,.1) 0 1px, transparent 1px 3px)',
             }}/>
-            <div style={{
-              position: 'absolute', top: 10, left: 10,
-              fontFamily: fonts.mono, fontSize: 10, color: '#f0dcae',
-              letterSpacing: '0.2em', textShadow: '0 1px 2px #000',
-            }}>
-              {lang === 'ru' ? '[фотографія отсутствуетъ]' : '[photograph missing]'}
-            </div>
           </div>
-          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
             <SideFlag side={person.side} lang={lang}/>
             <div style={{ fontFamily: fonts.mono, fontSize: 11, color: theme.inkFade, letterSpacing: '0.15em' }}>
               {person.years}
             </div>
           </div>
+          <div style={{
+            marginTop: 14, fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
+            color: theme.inkFade, textTransform: 'uppercase',
+          }}>{d.name}</div>
+          <div style={{
+            fontFamily: fonts.display, fontStyle: 'italic',
+            fontSize: 38, lineHeight: 0.95, color: theme.ink, marginTop: 2,
+            letterSpacing: '-0.01em',
+          }}>{d.sur}</div>
+          <div style={{
+            marginTop: 10, fontFamily: fonts.stamp, fontSize: 13,
+            color: meta.color, letterSpacing: '0.06em',
+          }}>· {d.tag}</div>
+          <div style={{ flex: 1 }}/>
+          <button onClick={onClose} style={{
+            marginTop: 18, background: 'transparent',
+            border: `1px solid ${theme.inkFade}`,
+            color: theme.ink, padding: '12px 22px',
+            fontFamily: fonts.mono, fontSize: 12,
+            letterSpacing: '0.3em', textTransform: 'uppercase',
+            flexShrink: 0,
+          }}>
+            {lang === 'ru' ? '← назад' : '← back'}
+          </button>
         </div>
 
-        {/* правая — текст */}
-        <div style={{ color: theme.paperLit, paddingTop: 8 }}>
+        {/* правая — скроллится */}
+        <div className="ppl-scroll" style={{
+          color: theme.paperLit, paddingTop: 4, paddingRight: 18,
+          overflowY: 'auto', overflowX: 'hidden',
+        }}>
           <div style={{
             fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.3em',
             color: meta.accent, textTransform: 'uppercase',
           }}>{d.role}</div>
-          <div style={{
-            fontFamily: fonts.display, fontSize: 22,
-            color: theme.paper, marginTop: 14, fontWeight: 400,
-          }}>{d.name}</div>
-          <div style={{
-            fontFamily: fonts.display, fontStyle: 'italic',
-            fontSize: 82, lineHeight: 0.9, color: theme.paperLit,
-            marginTop: 2, letterSpacing: '-0.02em',
-          }}>{d.sur}</div>
 
           <div style={{
-            marginTop: 16, fontFamily: fonts.stamp, fontSize: 16,
-            color: meta.accent, letterSpacing: '0.08em',
-          }}>· {d.tag}</div>
-
-          <div style={{
-            marginTop: 26, fontFamily: fonts.body, fontSize: 19,
-            color: theme.paperLit, lineHeight: 1.55, maxWidth: 680,
+            marginTop: 22, fontFamily: fonts.body, fontSize: 19,
+            color: theme.paperLit, lineHeight: 1.55, maxWidth: 720,
             textWrap: 'pretty', fontStyle: 'italic',
           }}>{d.bio}</div>
 
@@ -298,7 +382,7 @@ function PersonDetail({ person, lang, onClose }) {
             <div style={{
               marginTop: 28, display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '10px 28px', maxWidth: 680,
+              gap: '10px 28px', maxWidth: 720,
             }}>
               {d.facts.map((f, i) => (
                 <div key={i} style={{
@@ -312,17 +396,60 @@ function PersonDetail({ person, lang, onClose }) {
             </div>
           )}
 
-          <button onClick={onClose} style={{
-            marginTop: 44, background: 'transparent',
-            border: `1px solid ${theme.paperDim}`,
-            color: theme.paper, padding: '10px 22px',
-            fontFamily: fonts.mono, fontSize: 12,
-            letterSpacing: '0.3em', textTransform: 'uppercase',
-          }}>
-            {lang === 'ru' ? '← назадъ' : '← back'}
-          </button>
+          {photos.length > 0 && (
+            <div style={{ marginTop: 36 }}>
+              <div style={{
+                fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+                color: theme.ochre, textTransform: 'uppercase', marginBottom: 14,
+              }}>
+                {lang === 'ru' ? 'Фотодокументы и предметы — нажмите для увеличения' : 'Photographs and objects — tap to enlarge'}
+              </div>
+              <div style={{
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: 18, maxWidth: 820,
+              }}>
+                {photos.map((ph, i) => (
+                  <figure key={i} style={{ margin: 0 }}>
+                    <button onClick={() => setLightboxIdx(i)} style={{
+                      display: 'block', width: '100%', padding: 0, border: 'none',
+                      background: 'transparent', cursor: 'pointer',
+                    }}>
+                      <div style={{
+                        width: '100%', aspectRatio: '1/1', overflow: 'hidden',
+                        background: '#1a0d05',
+                        border: `1px solid ${theme.inkSoft}`,
+                      }}>
+                        <img src={ph.src} alt="" loading="lazy" style={{
+                          width: '100%', height: '100%', objectFit: 'cover',
+                          display: 'block', filter: 'sepia(0.12) contrast(1.04)',
+                        }}/>
+                      </div>
+                    </button>
+                    <figcaption style={{
+                      marginTop: 8, fontFamily: fonts.body, fontSize: 12,
+                      color: theme.paperDim, lineHeight: 1.4,
+                    }}>{ph[lang]}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div style={{ height: 40 }}/>
         </div>
       </div>
+
+      {lightboxIdx !== null && photos[lightboxIdx] && (
+        <PhotoLightbox
+          photo={photos[lightboxIdx]}
+          lang={lang}
+          onClose={() => setLightboxIdx(null)}
+          onPrev={() => setLightboxIdx(i => Math.max(0, i - 1))}
+          onNext={() => setLightboxIdx(i => Math.min(photos.length - 1, i + 1))}
+          hasPrev={lightboxIdx > 0}
+          hasNext={lightboxIdx < photos.length - 1}
+        />
+      )}
     </div>
   );
 }
@@ -333,16 +460,29 @@ function PersonalitiesApp() {
   });
   const [filter, setFilter] = React.useState('all');
   const [openId, setOpenId] = React.useState(null);
+  const [lightboxIdx, setLightboxIdx] = React.useState(null);
 
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
 
+  // Esc: сначала закрывает лайтбокс, затем модалку. Стрелки — навигация по фото.
   React.useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') setOpenId(null);
+      if (e.key === 'Escape') {
+        if (lightboxIdx !== null) setLightboxIdx(null);
+        else if (openId) setOpenId(null);
+      } else if (lightboxIdx !== null) {
+        const opened = window.People.find(p => p.id === openId);
+        const photos = opened?.photos || [];
+        if (e.key === 'ArrowLeft' && lightboxIdx > 0) setLightboxIdx(i => i - 1);
+        else if (e.key === 'ArrowRight' && lightboxIdx < photos.length - 1) setLightboxIdx(i => i + 1);
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [lightboxIdx, openId]);
+
+  // При смене персоны — лайтбокс закрываем
+  React.useEffect(() => { if (!openId) setLightboxIdx(null); }, [openId]);
 
   // псевдослучайный наклон, стабильный по id
   const people = React.useMemo(() => window.People.map((p, i) => ({
@@ -354,10 +494,10 @@ function PersonalitiesApp() {
   const opened = openId ? people.find(p => p.id === openId) : null;
 
   return (
-    <div style={{
+    <div className="ppl-scroll" style={{
       position: 'absolute', inset: 0,
       ...tableBg(),
-      overflow: 'auto',
+      overflow: opened ? 'hidden' : 'auto',
       color: theme.paper,
       paddingBottom: 80,
     }}>
@@ -365,6 +505,24 @@ function PersonalitiesApp() {
         @keyframes fadeUp { from { opacity: 0; transform: rotate(0deg) translateY(22px); } }
         @keyframes fadeIn { from { opacity: 0; } }
         @keyframes popIn { from { opacity: 0; transform: scale(.92); } }
+
+        /* видимый скроллбар на тач-столе — пользователь должен понимать, что блок скроллится */
+        .ppl-scroll {
+          scrollbar-width: auto;
+          scrollbar-color: ${theme.brass} rgba(0,0,0,0.45);
+        }
+        .ppl-scroll::-webkit-scrollbar { width: 14px; height: 14px; }
+        .ppl-scroll::-webkit-scrollbar-track {
+          background: rgba(0,0,0,0.45);
+          border-left: 1px solid ${theme.inkFade};
+        }
+        .ppl-scroll::-webkit-scrollbar-thumb {
+          background: ${theme.brass};
+          border: 3px solid rgba(0,0,0,0.45);
+          border-radius: 8px;
+          min-height: 60px;
+        }
+        .ppl-scroll::-webkit-scrollbar-thumb:active { background: ${theme.ochre}; }
       `}</style>
 
       {/* TOP BAR */}
@@ -466,7 +624,9 @@ function PersonalitiesApp() {
         ))}
       </div>
 
-      {opened && <PersonDetail person={opened} lang={lang} onClose={() => setOpenId(null)}/>}
+      {opened && <PersonDetail person={opened} lang={lang}
+        onClose={() => setOpenId(null)}
+        lightboxIdx={lightboxIdx} setLightboxIdx={setLightboxIdx}/>}
     </div>
   );
 }
