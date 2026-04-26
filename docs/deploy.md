@@ -128,9 +128,16 @@ git push origin main
 # На сервере — pull + build + копирование в nginx-папку
 ssh ostrov 'cd /root/mtk29-src && git pull --ff-only && npm install
             && npm run build
-            && rsync -a --delete dist/ /var/www/mtk29/
+            && rsync -a --delete --exclude=nginx.conf dist/ /var/www/mtk29/
+            && cp deploy/nginx.conf /var/www/mtk29/nginx.conf
+            && docker exec mtk29-web nginx -s reload
             && find /var/www/mtk29 -name .DS_Store -delete'
 ```
+
+`--exclude=nginx.conf` обязательно — иначе rsync `--delete` снесёт конфиг
+nginx, который маунтится в контейнер. После копирования свежего
+`deploy/nginx.conf` обязательно `nginx -s reload` (иначе изменения
+в правилах кеширования не применятся).
 
 **Никогда** не делать `rsync dist/ ostrov:/var/www/mtk29/` напрямую с локальной машины — теряется история деплоев, нельзя откатиться.
 
