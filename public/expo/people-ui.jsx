@@ -6,6 +6,15 @@ const SIDE_META = {
   green: { ru: 'Третья сила',en: 'Third force',  color: '#4d5a28', accent: '#6a7a3a', flag: '#3a4418' },
 };
 
+// Бренд-токены (PDF-гайд RAL, через theme.js). Используются для бренд-акцентов
+// (флаг лагеря, page-header, бренд-pill); локальные `theme.X` — наши тёплые
+// решения поверх (старина, дерево, виньетка карточки).
+const BRAND = (typeof window !== 'undefined' && window.BRAND_THEME) || {
+  inkBlack: '#000000', paperWhite: '#F7F9EF', brass: '#D2B773',
+  signalRed: '#A02128', slateBlue: '#5D6970', slateWindow: '#9DA3A6',
+  ironGrey: '#555D61', graphite: '#435059', telegrey4: '#CFD0CF',
+};
+
 const theme = {
   bg:       '#120803',
   bgDeep:   '#0a0502',
@@ -17,7 +26,7 @@ const theme = {
   inkFade:  '#6a4a20',
   ochre:    '#c88a40',
   redDeep:  '#8a1010',
-  brass:    '#b78838',
+  brass:    '#b78838',  // патинированная латунь (бренд: BRAND.brass #D2B773)
 };
 
 // Фирменные шрифты Ленин-центра (см. docs/brand.md, tokens.css).
