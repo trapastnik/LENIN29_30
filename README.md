@@ -86,4 +86,4 @@ mtk29/
 ## Ссылки
 
 - Репо: https://github.com/trapastnik/LENIN29_30
-- Сервер: http://212.113.117.186:8089/ (nginx на ostrov)
+- Сервер: http://212.113.117.186:8091/ (nginx на ostrov)

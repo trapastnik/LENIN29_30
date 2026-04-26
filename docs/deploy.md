@@ -6,7 +6,7 @@
 |---|---|---|---|
 | Dev | локально на Mac | http://127.0.0.1:5173 | разработка (`npm run dev`) |
 | Preview | локально на Mac | http://127.0.0.1:4173 | проверка прод-бандла (`npm run preview`) |
-| Stage | ostrov (VPS) | http://212.113.117.186:8089 | показ заказчику (nginx на ostrov) |
+| Stage | ostrov (VPS) | http://212.113.117.186:8091/ | показ заказчику (nginx:alpine в docker, контейнер `mtk29-web`) |
 | Prod | целевой киоск | `file:///opt/mtk29/dist/index.html` | финал, chromium --kiosk |
 
 ## Прод-сборка
@@ -32,36 +32,36 @@ npm run build        # → dist/ (~17 МБ)
 Адреса:
 - SSH: `ssh ostrov` (алиас: root@212.113.117.186:49222)
 - Путь: `/var/www/mtk29/`
-- URL: http://212.113.117.186:8090 (или как настроим)
+- URL: http://212.113.117.186:8091 (или как настроим)
 
 На сервере уже есть `/var/www/map/` с legacy `viewer.html` (map_v6) — **не трогаем**, остаётся для обратной совместимости.
 
 ### Первый деплой
 
 ```bash
-# Локально
+# Локально — закоммитить и запушить
 cd mtk29/
-npm run build
+git push origin main
 
-# Создать папку на сервере
-ssh ostrov "mkdir -p /var/www/mtk29"
+# На сервере — клонировать в /root/mtk29-src/, поставить deps, собрать
+ssh ostrov 'git clone https://github.com/trapastnik/LENIN29_30.git /root/mtk29-src
+            && cd /root/mtk29-src && npm install && npm run build
+            && mkdir -p /var/www/mtk29
+            && rsync -a --delete dist/ /var/www/mtk29/'
 
-# Загрузить dist
-rsync -avz --delete dist/ ostrov:/var/www/mtk29/
-
-# Настроить nginx (см. ниже)
+# Поднять docker-compose контейнер mtk29-web (см. ниже)
 ```
 
 ### Nginx конфиг
 
-На сервере уже запущен nginx:alpine в docker (конфиг отдаёт `/var/www/map/` на `:8089`). Добавим второй сервер на `:8090` для mtk29.
+На сервере nginx:alpine крутится в docker-compose отдельно для каждого проекта. Старый map_v6 — на `:8089` через `/var/www/map/`. Для mtk29 — отдельный контейнер `mtk29-web` на `:8091` (см. ниже).
 
-`/etc/nginx/conf.d/mtk29.conf` (или часть основного конфига):
+`/var/www/mtk29/nginx.conf`:
 
 ```nginx
 server {
-  listen 8090 default_server;
-  listen [::]:8090 default_server;
+  listen 80 default_server;
+  listen [::]:80 default_server;
   server_name _;
 
   root /var/www/mtk29;
@@ -108,25 +108,31 @@ ssh ostrov "docker exec nginx-map nginx -s reload"
 # или, если nginx systemd: ssh ostrov "systemctl reload nginx"
 ```
 
-Открыть порт 8090 в firewall/iptables если закрыт.
+Порт 8091 проброшен на хост через docker-compose; firewall открывает его наружу.
 
 Проверка:
 ```bash
-curl -I http://212.113.117.186:8090/               # 302 Location: /expo/
-curl -I http://212.113.117.186:8090/expo/          # 200
-curl -I http://212.113.117.186:8090/parties.html   # 200
-curl -I http://212.113.117.186:8090/content/maps/komuch/layers.svg  # 200
+curl -I http://212.113.117.186:8091/               # 302 Location: /expo/
+curl -I http://212.113.117.186:8091/expo/          # 200
+curl -I http://212.113.117.186:8091/parties.html   # 200
+curl -I http://212.113.117.186:8091/content/maps/komuch/layers.svg  # 200
 ```
 
-### Обновление
+### Обновление (только через git, см. memory `feedback_deploy_via_git.md`)
 
 ```bash
+# Локально — закоммитить и запушить (без локального rsync!)
 cd mtk29/
-npm run build
-rsync -avz --delete --chmod=F644,D755 dist/ ostrov:/var/www/mtk29/
-# --chmod гарантирует читаемость файлов для nginx-контейнера
-# nginx кешует недолго, изменения видно сразу
+git push origin main
+
+# На сервере — pull + build + копирование в nginx-папку
+ssh ostrov 'cd /root/mtk29-src && git pull --ff-only && npm install
+            && npm run build
+            && rsync -a --delete dist/ /var/www/mtk29/
+            && find /var/www/mtk29 -name .DS_Store -delete'
 ```
+
+**Никогда** не делать `rsync dist/ ostrov:/var/www/mtk29/` напрямую с локальной машины — теряется история деплоев, нельзя откатиться.
 
 ### Поднят контейнер nginx:alpine
 
