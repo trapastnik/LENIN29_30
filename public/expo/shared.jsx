@@ -438,6 +438,23 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
         ))}
       </div>
 
+      {/* служебная ссылка на бренд-каталог — центральный артефакт визуальной системы */}
+      <a href="/brand.html" target="_blank" rel="noopener" style={{
+        fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.32em',
+        color: theme.ink, opacity: 0.55, textDecoration: 'none',
+        textTransform: 'uppercase',
+        border: `1px dashed ${theme.ink}`,
+        padding: '8px 14px', borderRadius: 30,
+        whiteSpace: 'nowrap',
+      }}
+        onClick={(e) => {
+          // в тач-стол-режиме открываем во вкладке родителя, чтобы вернуться можно было свайпом
+          if (window.parent !== window) e.stopPropagation();
+        }}
+      >
+        ◇ {lang === 'ru' ? 'Бренд-каталог' : 'Brand kit'}
+      </a>
+
       {/* RU/EN */}
       <div style={{
         display: 'flex', gap: 0,
