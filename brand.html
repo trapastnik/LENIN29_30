@@ -10,8 +10,12 @@
   <link rel="stylesheet" href="/src/styles/pages.css">
   <style>
     /* — Layout каталога — */
-    body { display: block; overflow: visible; height: auto; min-height: 100vh; }
-    html { overflow: auto; height: auto; }
+    /* Высокий specificity (`html.brand-scroll`) нужен потому что Vite
+       при сборке ставит <link href="base.css"> ПОСЛЕ нашего <style>,
+       а base.css имеет универсальное `html, body { overflow: hidden }`,
+       которое перекрывало бы наши правила без класса. */
+    html.brand-scroll { overflow: auto; height: auto; }
+    html.brand-scroll body { display: block; overflow: visible; height: auto; min-height: 100vh; }
     body::before { position: fixed; }
 
     main {
