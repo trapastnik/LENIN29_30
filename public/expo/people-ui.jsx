@@ -283,7 +283,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
   if (!person) return null;
   return (
     <div style={{
-      position: 'absolute', inset: 0,
+      // fixed — модалка приколочена к viewport iframe и не зависит
+      // от scrollTop фонового списка персоналий ни при каких условиях.
+      position: 'fixed', inset: 0,
       background: 'rgba(2,1,0,.78)',
       backdropFilter: 'blur(10px) saturate(0.6)',
       WebkitBackdropFilter: 'blur(10px) saturate(0.6)',
@@ -291,7 +293,6 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       animation: 'fadeIn 250ms ease',
       padding: 40,
-      // tач-стол: свайп по модалке не должен проваливаться в скролл фона
       overscrollBehavior: 'contain',
     }}
     onClick={onClose}
