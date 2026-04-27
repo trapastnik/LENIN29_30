@@ -384,10 +384,14 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
           }}>{d.role}</div>
 
           <div style={{
-            marginTop: 22, fontFamily: fonts.body, fontSize: 19,
-            color: theme.paperLit, lineHeight: 1.55, maxWidth: 720,
-            textWrap: 'pretty', fontStyle: 'italic',
-          }}>{d.bio}</div>
+            marginTop: 22, fontFamily: fonts.body, fontSize: 18,
+            color: theme.paperLit, lineHeight: 1.6, maxWidth: 720,
+            textWrap: 'pretty',
+          }}>
+            {d.bio.split(/\n\s*\n/).map((p, i) => (
+              <p key={i} style={{ margin: i === 0 ? '0 0 0.85em' : '0.85em 0' }}>{p}</p>
+            ))}
+          </div>
 
           {d.facts && d.facts.length > 0 && (
             <div style={{
