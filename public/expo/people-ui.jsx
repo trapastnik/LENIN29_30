@@ -124,9 +124,14 @@ function PersonCard({ person, lang, onOpen, delay }) {
   return (
     <button onClick={onOpen} style={{
       position: 'relative',
+      // isolate: каждая карточка в своём stacking-context — соседи не
+      // съедают её клик, даже когда transform-rotate их слегка пересекает
+      isolation: 'isolate', zIndex: 1,
       width: '100%', textAlign: 'left', border: 'none',
       padding: 0, background: 'transparent',
-      transform: `rotate(${person._rot || 0}deg)`,
+      // Угол ротации уменьшен вдвое (raw `_rot` теперь делим), чтобы
+      // соседние карточки в гриде не перекрывали друг друга в углах
+      transform: `rotate(${(person._rot || 0) * 0.5}deg)`,
       animation: `fadeUp 600ms ${delay}ms both`,
     }}
     >
@@ -286,6 +291,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       animation: 'fadeIn 250ms ease',
       padding: 40,
+      // tач-стол: свайп по модалке не должен проваливаться в скролл фона
+      overscrollBehavior: 'contain',
     }}
     onClick={onClose}
     >
@@ -429,6 +436,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
           <div className="brand-scroll" style={{
             color: theme.paperLit, paddingTop: 4, paddingRight: 18,
             overflowY: 'auto', overflowX: 'hidden', minHeight: 0,
+            overscrollBehavior: 'contain',
           }}>
             <div style={{
               fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.3em',
@@ -634,6 +642,8 @@ function PersonalitiesApp() {
       position: 'absolute', inset: 0,
       ...tableBg(),
       overflow: opened ? 'hidden' : 'auto',
+      // тач-стол: scroll-chain не должен уносить открытую карточку
+      overscrollBehavior: 'contain',
       color: theme.paper,
       paddingBottom: 80,
     }}>
