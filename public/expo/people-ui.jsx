@@ -39,16 +39,184 @@ const fonts = {
   mono:    "'20 Kopeek', 'JetBrains Mono', 'Courier New', monospace",
 };
 
-// Стол/бумага — тёмное сукно + виньетка
-function tableBg() {
-  return {
-    background: [
-      'repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 5px)',
-      'repeating-linear-gradient(0deg, rgba(0,0,0,.1) 0 2px, transparent 2px 9px)',
-      'radial-gradient(ellipse 80% 70% at 50% 45%, #3a1f0e 0%, #1a0804 100%)',
-    ].join(','),
-  };
+// Бренд-фоны (только из RAL-палитры по PDF-гайду; см. project_style_layers).
+// Названия и значения соответствуют brand.html секциям 1, 6, 17.
+const BG_VARIANTS = {
+  iron: {
+    ru: 'Железо-серый', en: 'Iron grey',
+    desc: 'RAL 7011 · «третий этаж»',
+    style: { background: '#555D61' },
+  },
+  graphite: {
+    ru: 'Графит', en: 'Graphite',
+    desc: '#435059 · мультимедиа',
+    style: { background: '#435059' },
+  },
+  slate: {
+    ru: 'Сине-серый', en: 'Slate blue',
+    desc: 'RAL 7031 · «второй этаж»',
+    style: { background: '#5D6970' },
+  },
+  black: {
+    ru: 'Чёрный янтарь', en: 'Ink black',
+    desc: 'RAL 9005',
+    style: { background: '#000000' },
+  },
+  // «Подложка из косых линий» по brand.html секции 6 (страница 4 PDF)
+  stripes: {
+    ru: 'Бренд-полосы', en: 'Brand stripes',
+    desc: 'iron-grey + параллелограммы 105°',
+    style: {
+      background: [
+        'linear-gradient(105deg, transparent 0, transparent 72%, #A02128 72%, #A02128 86%, transparent 86.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 2%, rgba(157,163,166,0.18) 2%, rgba(157,163,166,0.18) 14%, transparent 14.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 62%, #D2B773 62%, #D2B773 62.2%, transparent 62.4%)',
+        'linear-gradient(105deg, transparent 0, transparent 89%, rgba(210,183,115,0.55) 89%, rgba(210,183,115,0.55) 89.15%, transparent 89.35%)',
+        '#555D61',
+      ].join(','),
+      backgroundAttachment: 'fixed',
+    },
+  },
+  // «Большая композиция стр. 8 PDF» — slate-blue + красные параллелограммы
+  parallelograms: {
+    ru: 'Параллелограммы', en: 'Parallelograms',
+    desc: 'slate-blue + красные плашки',
+    style: {
+      background: [
+        'linear-gradient(105deg, transparent 0, transparent 18%, #A02128 18%, #A02128 38%, transparent 38.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 56%, rgba(0,0,0,0.18) 56%, rgba(0,0,0,0.18) 70%, transparent 70.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 80%, #D2B773 80%, #D2B773 80.18%, transparent 80.4%)',
+        '#5D6970',
+      ].join(','),
+      backgroundAttachment: 'fixed',
+    },
+  },
+};
+
+function bgForVariant(variant) {
+  const v = BG_VARIANTS[variant] || BG_VARIANTS.iron;
+  return v.style;
 }
+
+// Плавающая панель настроек внешнего вида — всегда видна справа.
+// Содержит 3 группы переключателей: ШАПКА / ФОН СПИСКА / БОЛЬШАЯ КАРТОЧКА.
+// Свёртывается в узкую полосу-«вкладку» по тапу на шеврон.
+function SettingsPanel({ lang,
+  headerVariant, setHeaderVariant,
+  bgVariant, setBgVariant,
+  cardVariant, setCardVariant,
+}) {
+  const [open, setOpen] = React.useState(() => {
+    try { return localStorage.getItem('expo:settingsOpen') !== '0'; } catch { return true; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:settingsOpen', open ? '1' : '0'); } catch {} }, [open]);
+
+  const groups = [
+    { ru: 'Шапка',    en: 'Header', variants: HEADER_VARIANTS, value: headerVariant, set: setHeaderVariant },
+    { ru: 'Фон',      en: 'Bg',     variants: BG_VARIANTS,     value: bgVariant,     set: setBgVariant },
+    { ru: 'Карточка', en: 'Card',   variants: CARD_VARIANTS,   value: cardVariant,   set: setCardVariant },
+  ];
+
+  // pill-кнопка варианта
+  const pill = (id, label, active, onClick, swatch) => (
+    <button key={id} onClick={onClick} style={{
+      display: 'flex', alignItems: 'center', gap: 8,
+      width: '100%', textAlign: 'left',
+      padding: '7px 10px',
+      background: active ? '#D2B773' : 'transparent',
+      color: active ? '#000' : '#F7F9EF',
+      border: `1px solid ${active ? '#D2B773' : 'rgba(210,183,115,0.45)'}`,
+      borderRadius: 30,
+      fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.18em',
+      textTransform: 'uppercase', cursor: 'pointer',
+    }}>
+      {swatch && <span style={{
+        width: 10, height: 10, borderRadius: 2, flexShrink: 0,
+        background: swatch, border: '1px solid rgba(0,0,0,0.35)',
+      }}/>}
+      <span style={{ flex: 1, lineHeight: 1.15 }}>{label}</span>
+    </button>
+  );
+
+  return (
+    <div style={{
+      position: 'fixed', top: 96, right: open ? 12 : 0, zIndex: 90,
+      transition: 'right 220ms ease',
+      pointerEvents: 'auto',
+    }}>
+      {/* Tab to collapse/expand */}
+      <button onClick={() => setOpen(o => !o)} title={lang === 'ru' ? 'Настройки' : 'Settings'} style={{
+        position: 'absolute', top: 0, right: open ? 'auto' : 0,
+        left: open ? -32 : 'auto',
+        width: 32, height: 56,
+        background: '#000', color: '#D2B773',
+        border: '1px solid #D2B773',
+        borderRight: open ? 'none' : '1px solid #D2B773',
+        borderTopLeftRadius: 6, borderBottomLeftRadius: 6,
+        fontFamily: fonts.mono, fontSize: 18, lineHeight: 1,
+        cursor: 'pointer',
+      }}>{open ? '›' : '‹'}</button>
+
+      {open && (
+        <div style={{
+          width: 230,
+          background: 'rgba(0,0,0,0.92)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          border: '1px solid #D2B773',
+          borderRadius: 6,
+          padding: '14px 12px',
+          boxShadow: '0 20px 50px rgba(0,0,0,0.65)',
+          maxHeight: 'calc(100vh - 120px)',
+          overflowY: 'auto',
+        }} className="brand-scroll">
+          <div style={{
+            fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.32em',
+            color: '#D2B773', textTransform: 'uppercase',
+            marginBottom: 10, paddingBottom: 8,
+            borderBottom: '1px solid rgba(210,183,115,0.35)',
+          }}>
+            {lang === 'ru' ? '◇ Стиль' : '◇ Style'}
+          </div>
+          {groups.map((g, gi) => (
+            <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 14 : 0 }}>
+              <div style={{
+                fontFamily: fonts.mono, fontSize: 9, letterSpacing: '0.28em',
+                color: 'rgba(247,249,239,0.55)', textTransform: 'uppercase',
+                marginBottom: 6,
+              }}>{g[lang]}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                {Object.entries(g.variants).map(([id, v]) =>
+                  pill(id, v[lang], g.value === id, () => g.set(id),
+                    // swatch — bg цвет варианта (для card / header это hex)
+                    v.bg || (v.style && (typeof v.style.background === 'string' ? v.style.background : null)) || null)
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Бренд-варианты цвета большой карточки (PersonDetail) — только из RAL
+const CARD_VARIANTS = {
+  paper:    { ru: 'Бумага',    en: 'Paper',     bg: '#F7F9EF', ink: '#000000', accent: '#A02128', muted: 'rgba(0,0,0,0.55)', rule: 'rgba(0,0,0,0.18)' },
+  black:    { ru: 'Чёрный',    en: 'Black',     bg: '#000000', ink: '#F7F9EF', accent: '#D2B773', muted: 'rgba(247,249,239,0.62)', rule: 'rgba(210,183,115,0.35)' },
+  graphite: { ru: 'Графит',    en: 'Graphite',  bg: '#435059', ink: '#F7F9EF', accent: '#D2B773', muted: 'rgba(247,249,239,0.62)', rule: 'rgba(210,183,115,0.35)' },
+  slate:    { ru: 'Сине-серый',en: 'Slate',     bg: '#5D6970', ink: '#F7F9EF', accent: '#D2B773', muted: 'rgba(247,249,239,0.62)', rule: 'rgba(210,183,115,0.35)' },
+  ironGrey: { ru: 'Железо',    en: 'Iron grey', bg: '#555D61', ink: '#F7F9EF', accent: '#D2B773', muted: 'rgba(247,249,239,0.62)', rule: 'rgba(210,183,115,0.35)' },
+};
+
+// Бренд-варианты цвета SHAPKA — только из RAL
+const HEADER_VARIANTS = {
+  black:    { ru: 'Чёрный',    en: 'Black',     bg: 'rgba(0,0,0,0.94)',         border: 'rgba(210,183,115,0.35)' },
+  graphite: { ru: 'Графит',    en: 'Graphite',  bg: 'rgba(67,80,89,0.96)',      border: 'rgba(210,183,115,0.35)' },
+  ironGrey: { ru: 'Железо',    en: 'Iron grey', bg: 'rgba(85,93,97,0.96)',      border: 'rgba(210,183,115,0.35)' },
+  slate:    { ru: 'Сине-серый',en: 'Slate',     bg: 'rgba(93,105,112,0.96)',    border: 'rgba(210,183,115,0.35)' },
+  paper:    { ru: 'Бумага',    en: 'Paper',     bg: 'rgba(247,249,239,0.97)',   border: 'rgba(0,0,0,0.4)',       inkOnLight: true },
+};
 
 function paperFill() {
   return {
@@ -165,22 +333,20 @@ function PersonCard({ person, lang, onOpen, delay }) {
           ) : (
             <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice"
               style={{ width: '100%', height: '100%', display: 'block' }}>
+              {/* Чёрно-белый плейсхолдер: bg = bell от slate-window до ink-black,
+                  силуэт чёрный, плечо — без цвета лагеря (серое). */}
               <defs>
                 <radialGradient id={`pbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                  <stop offset="0%" stopColor="#9a7a4c"/>
-                  <stop offset="55%" stopColor="#4a2e14"/>
-                  <stop offset="100%" stopColor="#150804"/>
+                  <stop offset="0%" stopColor="#9DA3A6"/>
+                  <stop offset="55%" stopColor="#555D61"/>
+                  <stop offset="100%" stopColor="#000000"/>
                 </radialGradient>
-                <linearGradient id={`psil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#0d0602"/>
-                  <stop offset="100%" stopColor="#2a1a0a"/>
-                </linearGradient>
               </defs>
               <rect x="0" y="0" width="100" height="125" fill={`url(#pbg-${person.id})`}/>
               <path d="M 15 125 Q 15 82 32 74 Q 40 72 42 66 Q 34 62 34 47 Q 34 28 50 28 Q 66 28 66 47 Q 66 62 58 66 Q 60 72 68 74 Q 85 82 85 125 Z"
-                fill={`url(#psil-${person.id})`}/>
+                fill="#000000"/>
               <path d="M 15 125 L 15 110 Q 50 95 85 110 L 85 125 Z"
-                fill={meta.flag} opacity=".55"/>
+                fill="#435059"/>
             </svg>
           )}
           {/* грейн */}
@@ -267,7 +433,8 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
 }
 
 // Модальная карточка с подробностями
-function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
+function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, cardCfg }) {
+  const card = cardCfg || CARD_VARIANTS.paper;
   const d = person[lang];
   const meta = SIDE_META[person.side];
   const photos = person.photos || [];
@@ -286,7 +453,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
       // fixed — модалка приколочена к viewport iframe и не зависит
       // от scrollTop фонового списка персоналий ни при каких условиях.
       position: 'fixed', inset: 0,
-      background: 'rgba(2,1,0,.78)',
+      background: 'rgba(0,0,0,0.78)',  // BRAND.inkBlack overlay
       backdropFilter: 'blur(10px) saturate(0.6)',
       WebkitBackdropFilter: 'blur(10px) saturate(0.6)',
       zIndex: 100,
@@ -301,22 +468,24 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
         width: 1280, maxWidth: '100%', height: '90vh',
         display: 'grid', gridTemplateColumns: '380px 1fr',
         gap: 28, position: 'relative',
-        padding: 22, background: 'rgba(10,5,2,.65)',
-        border: `1px solid ${theme.brass}`,
-        boxShadow: '0 0 0 1px rgba(0,0,0,.6), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(183,136,56,.18)',
+        padding: 22, background: 'rgba(0,0,0,0.65)',  // BRAND.inkBlack frame
+        border: `1px solid #D2B773`,                  // BRAND.brass
+        boxShadow: '0 0 0 1px rgba(0,0,0,.6), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(210,183,115,.18)',
         animation: 'popIn 400ms cubic-bezier(.2,.7,.3,1.1)',
       }}
       onClick={e => e.stopPropagation()}
       >
-        {/* левая — портрет + имя + флаг (фиксированная, не скроллится) */}
+        {/* левая — портрет + имя + флаг (фиксированная, не скроллится).
+             Цвет — из CARD_VARIANTS (бренд RAL). */}
         <div style={{
-          ...paperFill(),
-          border: `1px solid ${theme.inkFade}`,
+          background: card.bg,
+          border: `1px solid ${card.rule}`,
           padding: 18,
           boxShadow: '0 20px 50px rgba(0,0,0,.8)',
           position: 'relative',
           display: 'flex', flexDirection: 'column',
           overflow: 'hidden',
+          color: card.ink,
         }}>
           <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#1a0d05', flexShrink: 0 }}>
             {person.portrait ? (
@@ -327,22 +496,19 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
             ) : (
               <>
                 <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice" style={{ width: '100%', height: '100%' }}>
+                  {/* Чёрно-белый placeholder (бренд: slate-window → iron-grey → black). */}
                   <defs>
                     <radialGradient id={`mbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                      <stop offset="0%" stopColor="#a88656"/>
-                      <stop offset="55%" stopColor="#4a2e14"/>
-                      <stop offset="100%" stopColor="#150804"/>
+                      <stop offset="0%" stopColor="#9DA3A6"/>
+                      <stop offset="55%" stopColor="#555D61"/>
+                      <stop offset="100%" stopColor="#000000"/>
                     </radialGradient>
-                    <linearGradient id={`msil-${person.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#0d0602"/>
-                      <stop offset="100%" stopColor="#2a1a0a"/>
-                    </linearGradient>
                   </defs>
                   <rect width="100" height="130" fill={`url(#mbg-${person.id})`}/>
                   <path d="M 15 130 Q 15 85 32 77 Q 40 74 42 68 Q 34 64 34 48 Q 34 28 50 28 Q 66 28 66 48 Q 66 64 58 68 Q 60 74 68 77 Q 85 85 85 130 Z"
-                    fill={`url(#msil-${person.id})`}/>
+                    fill="#000000"/>
                   <path d="M 15 130 L 15 113 Q 50 96 85 113 L 85 130 Z"
-                    fill={meta.flag} opacity=".6"/>
+                    fill="#435059"/>
                 </svg>
                 <div style={{
                   position: 'absolute', top: 10, left: 10,
@@ -360,22 +526,22 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
           </div>
           <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
             <SideFlag side={person.side} lang={lang}/>
-            <div style={{ fontFamily: fonts.mono, fontSize: 11, color: theme.inkFade, letterSpacing: '0.15em' }}>
+            <div style={{ fontFamily: fonts.mono, fontSize: 11, color: card.muted, letterSpacing: '0.15em' }}>
               {person.years}
             </div>
           </div>
           <div style={{
             marginTop: 14, fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
-            color: theme.inkFade, textTransform: 'uppercase',
+            color: card.muted, textTransform: 'uppercase',
           }}>{d.name}</div>
           <div style={{
             fontFamily: fonts.display, fontStyle: 'italic',
-            fontSize: 38, lineHeight: 0.95, color: theme.ink, marginTop: 2,
+            fontSize: 38, lineHeight: 0.95, color: card.ink, marginTop: 2,
             letterSpacing: '-0.01em',
           }}>{d.sur}</div>
           <div style={{
             marginTop: 10, fontFamily: fonts.stamp, fontSize: 13,
-            color: meta.color, letterSpacing: '0.06em',
+            color: card.accent, letterSpacing: '0.06em',
           }}>· {d.tag}</div>
           <div style={{ flex: 1 }}/>
 
@@ -387,13 +553,13 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
             }}>
               <div style={{
                 fontFamily: fonts.mono, fontSize: 9, letterSpacing: '0.32em',
-                color: theme.inkFade, textTransform: 'uppercase',
+                color: card.muted, textTransform: 'uppercase',
               }}>
                 {lang === 'ru' ? 'Раскладка' : 'Layout'}
               </div>
               <div style={{
                 display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0,
-                border: `1px solid ${theme.inkFade}`,
+                border: `1px solid ${card.rule}`,
               }}>
                 {[
                   { id: 'flow',    ru: 'Подряд',  en: 'Flow' },
@@ -405,8 +571,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
                       padding: '10px 8px',
                       fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.18em',
                       textTransform: 'uppercase',
-                      background: active ? theme.ink : 'transparent',
-                      color: active ? theme.paperLit : theme.ink,
+                      background: active ? card.ink : 'transparent',
+                      color: active ? card.bg : card.ink,
                       border: 'none', cursor: 'pointer',
                     }}>{m[lang]}</button>
                   );
@@ -417,8 +583,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
 
           <button onClick={onClose} style={{
             marginTop: 14, background: 'transparent',
-            border: `1px solid ${theme.inkFade}`,
-            color: theme.ink, padding: '12px 22px',
+            border: `1px solid ${card.rule}`,
+            color: card.ink, padding: '12px 22px',
             fontFamily: fonts.mono, fontSize: 12,
             letterSpacing: '0.3em', textTransform: 'uppercase',
             flexShrink: 0,
@@ -587,6 +753,24 @@ function PersonalitiesApp() {
   const [filter, setFilter] = React.useState('all');
   const [openId, setOpenId] = React.useState(null);
   const [lightboxIdx, setLightboxIdx] = React.useState(null);
+  const [bgVariant, setBgVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleBg') || 'iron'; } catch { return 'iron'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleBg', bgVariant); } catch {} }, [bgVariant]);
+
+  const [headerVariant, setHeaderVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleHeader') || 'black'; } catch { return 'black'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleHeader', headerVariant); } catch {} }, [headerVariant]);
+  const headerCfg = HEADER_VARIANTS[headerVariant] || HEADER_VARIANTS.black;
+  const headerInk = headerCfg.inkOnLight ? '#000' : '#F7F9EF';
+  const headerInkDim = headerCfg.inkOnLight ? 'rgba(0,0,0,0.55)' : 'rgba(247,249,239,0.62)';
+
+  const [cardVariant, setCardVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleCard') || 'paper'; } catch { return 'paper'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleCard', cardVariant); } catch {} }, [cardVariant]);
+  const cardCfg = CARD_VARIANTS[cardVariant] || CARD_VARIANTS.paper;
 
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
 
@@ -641,7 +825,7 @@ function PersonalitiesApp() {
   return (
     <div className="brand-scroll" style={{
       position: 'absolute', inset: 0,
-      ...tableBg(),
+      ...bgForVariant(bgVariant),
       overflow: opened ? 'hidden' : 'auto',
       // тач-стол: scroll-chain не должен уносить открытую карточку
       overscrollBehavior: 'contain',
@@ -673,14 +857,15 @@ function PersonalitiesApp() {
       `}</style>
 
       {/* HEADER (TOP BAR + FILTERS) — единый sticky-блок,
-           не двигается при скролле списка */}
+           не двигается при скролле списка. Цвет — из BRAND-палитры,
+           переключатель ниже фильтров. */}
       <div style={{
         position: 'sticky', top: 0, zIndex: 20,
-        background: 'rgba(10,5,2,0.96)',
+        background: headerCfg.bg,
         backdropFilter: 'blur(6px) saturate(0.9)',
         WebkitBackdropFilter: 'blur(6px) saturate(0.9)',
         boxShadow: '0 2px 0 rgba(0,0,0,0.4), 0 14px 24px rgba(0,0,0,0.45)',
-        borderBottom: `1px solid ${theme.inkFade}55`,
+        borderBottom: `1px solid ${headerCfg.border}`,
       }}>
       <div style={{
         padding: '24px 40px 18px',
@@ -689,13 +874,13 @@ function PersonalitiesApp() {
         <div>
           <div style={{
             fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.35em',
-            color: theme.ochre, textTransform: 'uppercase',
+            color: '#D2B773', textTransform: 'uppercase',  // BRAND.brass — RAL 1002
           }}>
             {lang === 'ru' ? 'Музей В.И. Ленина · Гражданская война' : 'Lenin Museum · Russian Civil War'}
           </div>
           <div style={{
             fontFamily: fonts.display, fontStyle: 'italic',
-            fontSize: 52, lineHeight: 1, color: theme.paperLit, marginTop: 6,
+            fontSize: 52, lineHeight: 1, color: headerInk, marginTop: 6,
             letterSpacing: '-0.01em',
           }}>{lang === 'ru' ? 'Персоналіи. 1918—1922' : 'People. 1918—1922'}</div>
         </div>
@@ -703,8 +888,8 @@ function PersonalitiesApp() {
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <a href="index.html" style={{
             fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
-            color: theme.paperDim, textDecoration: 'none',
-            border: `1px solid ${theme.inkFade}`, padding: '8px 16px',
+            color: headerInkDim, textDecoration: 'none',
+            border: `1px solid ${headerInkDim}`, padding: '8px 16px',
             textTransform: 'uppercase',
           }}
             onClick={e => {
@@ -718,8 +903,8 @@ function PersonalitiesApp() {
           </a>
           <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
             fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
-            color: theme.paperLit, background: 'transparent',
-            border: `1px solid ${theme.ochre}`, padding: '8px 16px',
+            color: headerInk, background: 'transparent',
+            border: `1px solid #D2B773`, padding: '8px 16px',  // BRAND.brass border
             textTransform: 'uppercase',
           }}>
             {lang === 'ru' ? 'EN' : 'RU'}
@@ -727,25 +912,29 @@ function PersonalitiesApp() {
         </div>
       </div>
 
-      {/* FILTERS — внутри того же sticky-блока, прибиты к шапке */}
+      {/* FILTERS — внутри того же sticky-блока, прибиты к шапке.
+           Цвета лагерей — bg signalRed/telegrey4/brass из BRAND. */}
       <div style={{
         padding: '0 40px 18px', display: 'flex', gap: 10, flexWrap: 'wrap',
         alignItems: 'center',
       }}>
         {[
-          { id: 'all',   ru: 'Всѣ',         en: 'All',         count: people.length },
-          { id: 'red',   ru: 'Красные',     en: 'Reds',        count: people.filter(p => p.side==='red').length,   color: SIDE_META.red.flag },
-          { id: 'white', ru: 'Бѣлые',       en: 'Whites',      count: people.filter(p => p.side==='white').length, color: SIDE_META.white.flag },
-          { id: 'green', ru: 'Третья сила', en: 'Third force', count: people.filter(p => p.side==='green').length, color: SIDE_META.green.flag },
+          { id: 'all',   ru: 'Всѣ',         en: 'All',         count: people.length, brand: '#D2B773' /* BRAND.brass */ },
+          { id: 'red',   ru: 'Красные',     en: 'Reds',        count: people.filter(p => p.side==='red').length,   brand: '#A02128' /* BRAND.signalRed */ },
+          { id: 'white', ru: 'Бѣлые',       en: 'Whites',      count: people.filter(p => p.side==='white').length, brand: '#CFD0CF' /* BRAND.telegrey4 */ },
+          { id: 'green', ru: 'Третья сила', en: 'Third force', count: people.filter(p => p.side==='green').length, brand: '#5D6970' /* BRAND.slateBlue */ },
         ].map(f => {
           const active = filter === f.id;
+          // На активном фоне signalRed/slateBlue текст белый, на brass/telegrey4 — чёрный
+          const lightBg = (f.brand === '#D2B773' || f.brand === '#CFD0CF');
+          const activeText = lightBg ? '#000' : '#F7F9EF';
           return (
             <button key={f.id} onClick={() => setFilter(f.id)} style={{
               fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.2em',
               padding: '10px 18px',
-              background: active ? (f.color || theme.ochre) : 'transparent',
-              color: active ? '#f0dcae' : theme.paperDim,
-              border: `1px solid ${active ? (f.color || theme.ochre) : theme.inkFade}`,
+              background: active ? f.brand : 'transparent',
+              color: active ? activeText : headerInkDim,
+              border: `1px solid ${active ? f.brand : headerInkDim}`,
               textTransform: 'uppercase',
               display: 'flex', alignItems: 'center', gap: 8,
             }}>
@@ -757,11 +946,12 @@ function PersonalitiesApp() {
         <div style={{ flex: 1 }}/>
         <div style={{
           fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em',
-          color: theme.inkFade, textTransform: 'uppercase',
+          color: headerInkDim, textTransform: 'uppercase',
         }}>
           {lang === 'ru' ? 'Нажмите карточку — откроется справка' : 'Tap a card — opens a dossier'}
         </div>
       </div>
+
       </div>
 
       {/* GRID */}
@@ -781,7 +971,16 @@ function PersonalitiesApp() {
 
       {opened && <PersonDetail person={opened} lang={lang}
         onClose={() => setOpenId(null)}
-        lightboxIdx={lightboxIdx} setLightboxIdx={setLightboxIdx}/>}
+        lightboxIdx={lightboxIdx} setLightboxIdx={setLightboxIdx}
+        cardCfg={cardCfg}/>}
+
+      {/* Плавающая панель стилей — справа, всегда видна */}
+      <SettingsPanel
+        lang={lang}
+        headerVariant={headerVariant} setHeaderVariant={setHeaderVariant}
+        bgVariant={bgVariant} setBgVariant={setBgVariant}
+        cardVariant={cardVariant} setCardVariant={setCardVariant}
+      />
     </div>
   );
 }
