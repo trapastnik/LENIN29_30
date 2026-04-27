@@ -178,9 +178,6 @@ window.People = [
   { id: 'avksentiev', side: 'green', years: '1878 — 1943',
     portrait: '/content/people/avksentiev/avksentiev-00.jpg',
     photos: [
-      { src: '/content/people/avksentiev/avksentiev-00.jpg',
-        ru: 'Н. Д. Авксентьев. 1910-е гг. ГМПИР. Ф.IX ВС-13603.',
-        en: 'N. D. Avksentyev. 1910s. State Museum of the Political History of Russia (GMPIR). F.IX VS-13603.' },
       { src: '/content/people/avksentiev/avksentiev-01.jpg',
         ru: 'Открытка «Представитель партии социалистов-революционеров Николай Авксентьев». Санкт-Петербург. Начало XX в. ГМПИР. Ф.XV ВС-236.',
         en: 'Postcard «Representative of the Socialist-Revolutionary Party Nikolai Avksentyev». St Petersburg, early 20th century. GMPIR. F.XV VS-236.' },

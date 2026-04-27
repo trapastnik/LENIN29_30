@@ -154,7 +154,7 @@ function PersonCard({ person, lang, onOpen, delay }) {
         }}>
           {person.portrait ? (
             <img src={person.portrait} alt="" loading="lazy" style={{
-              width: '100%', height: '100%', objectFit: 'cover',
+              width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
               display: 'block', filter: 'sepia(0.18) contrast(1.05)',
             }}/>
           ) : (
@@ -313,7 +313,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
           <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#1a0d05', flexShrink: 0 }}>
             {person.portrait ? (
               <img src={person.portrait} alt="" style={{
-                width: '100%', height: '100%', objectFit: 'cover',
+                width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
                 display: 'block', filter: 'sepia(0.15) contrast(1.04)',
               }}/>
             ) : (
@@ -488,7 +488,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
                           border: `1px solid ${theme.inkSoft}`,
                         }}>
                           <img src={ph.src} alt="" loading="lazy" style={{
-                            width: '100%', height: '100%', objectFit: 'cover',
+                            width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
                             display: 'block', filter: 'sepia(0.12) contrast(1.04)',
                           }}/>
                         </div>
@@ -518,7 +518,10 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
                 {lang === 'ru' ? 'Фотодокументы — нажмите для увеличения' : 'Photographs — tap to enlarge'}
               </div>
               <div style={{
-                display: 'grid', gridTemplateColumns: `repeat(${photos.length}, 1fr)`,
+                display: 'grid',
+                // Фиксированный шаг под максимум 5 фото — если фото меньше,
+                // они занимают левую часть, не растягиваются на всю ширину
+                gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
                 gap: 12,
               }}>
                 {photos.map((ph, i) => (
@@ -533,7 +536,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
                         border: `1px solid ${theme.inkSoft}`,
                       }}>
                         <img src={ph.src} alt="" loading="lazy" style={{
-                          width: '100%', height: '100%', objectFit: 'cover',
+                          width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
                           display: 'block', filter: 'sepia(0.12) contrast(1.04)',
                         }}/>
                       </div>
