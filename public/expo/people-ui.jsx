@@ -140,7 +140,9 @@ function SettingsPanel({ lang,
 
   return (
     <div style={{
-      position: 'fixed', top: 96, right: open ? 12 : 0, zIndex: 90,
+      // z-index выше overlay модалки персоналии (100) и лайтбокса (200),
+      // чтобы панель оставалась видна и работала во всех слоях.
+      position: 'fixed', top: 96, right: open ? 12 : 0, zIndex: 250,
       transition: 'right 220ms ease',
       pointerEvents: 'auto',
     }}>
