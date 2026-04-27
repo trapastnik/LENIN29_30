@@ -16,17 +16,19 @@ const BRAND = (typeof window !== 'undefined' && window.BRAND_THEME) || {
 };
 
 const theme = {
-  bg:       '#120803',
+  // Главные бренд-акценты — RAL по PDF-гайду
+  ink:      BRAND.inkBlack,    // RAL 9005
+  brass:    BRAND.brass,       // RAL 1002
+  redDeep:  BRAND.signalRed,   // RAL 3001 — лагерь «Красные»
+  // Тёплая «материальная» палитра карточки персоналии (старая бумага, виньетка)
+  bg:       '#120803',         // тёмное сукно стола
   bgDeep:   '#0a0502',
-  paper:    '#e8d4a8',
-  paperLit: '#f2e1b4',
-  paperDim: '#c8b488',
-  ink:      '#1a0c06',
-  inkSoft:  '#3a2010',
-  inkFade:  '#6a4a20',
-  ochre:    '#c88a40',
-  redDeep:  '#8a1010',
-  brass:    '#b78838',  // патинированная латунь (бренд: BRAND.brass #D2B773)
+  paper:    '#e8d4a8',         // тёплая бумага карточки
+  paperLit: '#f2e1b4',         // светлая
+  paperDim: '#c8b488',         // тень
+  inkSoft:  '#3a2010',         // длинный текст
+  inkFade:  '#6a4a20',         // мета
+  ochre:    '#c88a40',         // акцент-охра
 };
 
 // Фирменные шрифты Ленин-центра (см. docs/brand.md, tokens.css).
