@@ -672,11 +672,18 @@ function PersonalitiesApp() {
         .brand-scroll::-webkit-scrollbar-thumb:active { background: ${theme.ochre}; }
       `}</style>
 
-      {/* TOP BAR */}
+      {/* HEADER (TOP BAR + FILTERS) — единый sticky-блок,
+           не двигается при скролле списка */}
       <div style={{
         position: 'sticky', top: 0, zIndex: 20,
+        background: 'rgba(10,5,2,0.96)',
+        backdropFilter: 'blur(6px) saturate(0.9)',
+        WebkitBackdropFilter: 'blur(6px) saturate(0.9)',
+        boxShadow: '0 2px 0 rgba(0,0,0,0.4), 0 14px 24px rgba(0,0,0,0.45)',
+        borderBottom: `1px solid ${theme.inkFade}55`,
+      }}>
+      <div style={{
         padding: '24px 40px 18px',
-        background: 'linear-gradient(180deg, rgba(10,5,2,.97) 0%, rgba(10,5,2,.78) 70%, transparent 100%)',
         display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24,
       }}>
         <div>
@@ -720,7 +727,7 @@ function PersonalitiesApp() {
         </div>
       </div>
 
-      {/* FILTERS */}
+      {/* FILTERS — внутри того же sticky-блока, прибиты к шапке */}
       <div style={{
         padding: '0 40px 18px', display: 'flex', gap: 10, flexWrap: 'wrap',
         alignItems: 'center',
@@ -754,6 +761,7 @@ function PersonalitiesApp() {
         }}>
           {lang === 'ru' ? 'Нажмите карточку — откроется справка' : 'Tap a card — opens a dossier'}
         </div>
+      </div>
       </div>
 
       {/* GRID */}
