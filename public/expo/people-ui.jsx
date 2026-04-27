@@ -266,6 +266,15 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
   const d = person[lang];
   const meta = SIDE_META[person.side];
   const photos = person.photos || [];
+
+  // Режим раскладки правой колонки:
+  //   'flow'    — текст и фото-галерея в одном скроллящемся блоке (как было)
+  //   'gallery' — текст скроллится сверху, фото-полоса прибита снизу
+  const [viewMode, setViewMode] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleViewMode') || 'flow'; } catch { return 'flow'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleViewMode', viewMode); } catch {} }, [viewMode]);
+
   if (!person) return null;
   return (
     <div style={{
@@ -361,8 +370,45 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
             color: meta.color, letterSpacing: '0.06em',
           }}>· {d.tag}</div>
           <div style={{ flex: 1 }}/>
+
+          {/* Переключатель режима показа — только если есть фото */}
+          {photos.length > 0 && (
+            <div style={{
+              marginTop: 18, display: 'flex', flexDirection: 'column', gap: 6,
+              flexShrink: 0,
+            }}>
+              <div style={{
+                fontFamily: fonts.mono, fontSize: 9, letterSpacing: '0.32em',
+                color: theme.inkFade, textTransform: 'uppercase',
+              }}>
+                {lang === 'ru' ? 'Раскладка' : 'Layout'}
+              </div>
+              <div style={{
+                display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0,
+                border: `1px solid ${theme.inkFade}`,
+              }}>
+                {[
+                  { id: 'flow',    ru: 'Подряд',  en: 'Flow' },
+                  { id: 'gallery', ru: 'Галерея', en: 'Gallery' },
+                ].map(m => {
+                  const active = viewMode === m.id;
+                  return (
+                    <button key={m.id} onClick={() => setViewMode(m.id)} style={{
+                      padding: '10px 8px',
+                      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
+                      background: active ? theme.ink : 'transparent',
+                      color: active ? theme.paperLit : theme.ink,
+                      border: 'none', cursor: 'pointer',
+                    }}>{m[lang]}</button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <button onClick={onClose} style={{
-            marginTop: 18, background: 'transparent',
+            marginTop: 14, background: 'transparent',
             border: `1px solid ${theme.inkFade}`,
             color: theme.ink, padding: '12px 22px',
             fontFamily: fonts.mono, fontSize: 12,
@@ -373,84 +419,128 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
           </button>
         </div>
 
-        {/* правая — скроллится */}
-        <div className="brand-scroll" style={{
-          color: theme.paperLit, paddingTop: 4, paddingRight: 18,
-          overflowY: 'auto', overflowX: 'hidden',
+        {/* правая — режим 'flow' (всё в одной скролл-области) или
+                       'gallery' (текст скроллится, фото-полоса прибита снизу) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateRows: viewMode === 'gallery' && photos.length > 0 ? '1fr auto' : '1fr',
+          gap: 16, minHeight: 0, overflow: 'hidden',
         }}>
-          <div style={{
-            fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.3em',
-            color: meta.accent, textTransform: 'uppercase',
-          }}>{d.role}</div>
-
-          <div style={{
-            marginTop: 22, fontFamily: fonts.body, fontSize: 18,
-            color: theme.paperLit, lineHeight: 1.6, maxWidth: 720,
-            textWrap: 'pretty',
+          <div className="brand-scroll" style={{
+            color: theme.paperLit, paddingTop: 4, paddingRight: 18,
+            overflowY: 'auto', overflowX: 'hidden', minHeight: 0,
           }}>
-            {d.bio.split(/\n\s*\n/).map((p, i) => (
-              <p key={i} style={{ margin: i === 0 ? '0 0 0.85em' : '0.85em 0' }}>{p}</p>
-            ))}
-          </div>
-
-          {d.facts && d.facts.length > 0 && (
             <div style={{
-              marginTop: 28, display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '10px 28px', maxWidth: 720,
+              fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.3em',
+              color: meta.accent, textTransform: 'uppercase',
+            }}>{d.role}</div>
+
+            <div style={{
+              marginTop: 22, fontFamily: fonts.body, fontSize: 18,
+              color: theme.paperLit, lineHeight: 1.6, maxWidth: 720,
+              textWrap: 'pretty',
             }}>
-              {d.facts.map((f, i) => (
-                <div key={i} style={{
-                  fontFamily: fonts.mono, fontSize: 13,
-                  color: theme.paper, lineHeight: 1.4,
-                  paddingLeft: 14, position: 'relative',
-                  borderLeft: `2px solid ${meta.accent}`,
-                  paddingTop: 2, paddingBottom: 2,
-                }}>{f}</div>
+              {d.bio.split(/\n\s*\n/).map((p, i) => (
+                <p key={i} style={{ margin: i === 0 ? '0 0 0.85em' : '0.85em 0' }}>{p}</p>
               ))}
             </div>
-          )}
 
-          {photos.length > 0 && (
-            <div style={{ marginTop: 36 }}>
+            {d.facts && d.facts.length > 0 && (
               <div style={{
-                fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
-                color: theme.ochre, textTransform: 'uppercase', marginBottom: 14,
+                marginTop: 28, display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '10px 28px', maxWidth: 720,
               }}>
-                {lang === 'ru' ? 'Фотодокументы и предметы — нажмите для увеличения' : 'Photographs and objects — tap to enlarge'}
+                {d.facts.map((f, i) => (
+                  <div key={i} style={{
+                    fontFamily: fonts.mono, fontSize: 13,
+                    color: theme.paper, lineHeight: 1.4,
+                    paddingLeft: 14, position: 'relative',
+                    borderLeft: `2px solid ${meta.accent}`,
+                    paddingTop: 2, paddingBottom: 2,
+                  }}>{f}</div>
+                ))}
+              </div>
+            )}
+
+            {/* Фото-сетка во flow-режиме (полная, с подписями под каждым) */}
+            {viewMode === 'flow' && photos.length > 0 && (
+              <div style={{ marginTop: 36 }}>
+                <div style={{
+                  fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+                  color: theme.ochre, textTransform: 'uppercase', marginBottom: 14,
+                }}>
+                  {lang === 'ru' ? 'Фотодокументы и предметы — нажмите для увеличения' : 'Photographs and objects — tap to enlarge'}
+                </div>
+                <div style={{
+                  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                  gap: 18, maxWidth: 820,
+                }}>
+                  {photos.map((ph, i) => (
+                    <figure key={i} style={{ margin: 0 }}>
+                      <button onClick={() => setLightboxIdx(i)} style={{
+                        display: 'block', width: '100%', padding: 0, border: 'none',
+                        background: 'transparent', cursor: 'pointer',
+                      }}>
+                        <div style={{
+                          width: '100%', aspectRatio: '1/1', overflow: 'hidden',
+                          background: '#1a0d05',
+                          border: `1px solid ${theme.inkSoft}`,
+                        }}>
+                          <img src={ph.src} alt="" loading="lazy" style={{
+                            width: '100%', height: '100%', objectFit: 'cover',
+                            display: 'block', filter: 'sepia(0.12) contrast(1.04)',
+                          }}/>
+                        </div>
+                      </button>
+                      <figcaption style={{
+                        marginTop: 8, fontFamily: fonts.body, fontSize: 12,
+                        color: theme.paperDim, lineHeight: 1.4,
+                      }}>{ph[lang]}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Прибитая фото-полоса в gallery-режиме */}
+          {viewMode === 'gallery' && photos.length > 0 && (
+            <div style={{
+              borderTop: `1px solid ${theme.inkFade}55`,
+              paddingTop: 14,
+              minHeight: 0,
+            }}>
+              <div style={{
+                fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.3em',
+                color: theme.ochre, textTransform: 'uppercase', marginBottom: 10,
+              }}>
+                {lang === 'ru' ? 'Фотодокументы — нажмите' : 'Photographs — tap'}
               </div>
               <div style={{
-                display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                gap: 18, maxWidth: 820,
+                display: 'grid', gridTemplateColumns: `repeat(${photos.length}, 1fr)`,
+                gap: 12,
               }}>
                 {photos.map((ph, i) => (
-                  <figure key={i} style={{ margin: 0 }}>
-                    <button onClick={() => setLightboxIdx(i)} style={{
-                      display: 'block', width: '100%', padding: 0, border: 'none',
-                      background: 'transparent', cursor: 'pointer',
+                  <button key={i} onClick={() => setLightboxIdx(i)} style={{
+                    display: 'block', width: '100%', padding: 0, border: 'none',
+                    background: 'transparent', cursor: 'pointer',
+                  }} title={ph[lang]}>
+                    <div style={{
+                      width: '100%', aspectRatio: '1/1', overflow: 'hidden',
+                      background: '#1a0d05',
+                      border: `1px solid ${theme.inkSoft}`,
                     }}>
-                      <div style={{
-                        width: '100%', aspectRatio: '1/1', overflow: 'hidden',
-                        background: '#1a0d05',
-                        border: `1px solid ${theme.inkSoft}`,
-                      }}>
-                        <img src={ph.src} alt="" loading="lazy" style={{
-                          width: '100%', height: '100%', objectFit: 'cover',
-                          display: 'block', filter: 'sepia(0.12) contrast(1.04)',
-                        }}/>
-                      </div>
-                    </button>
-                    <figcaption style={{
-                      marginTop: 8, fontFamily: fonts.body, fontSize: 12,
-                      color: theme.paperDim, lineHeight: 1.4,
-                    }}>{ph[lang]}</figcaption>
-                  </figure>
+                      <img src={ph.src} alt="" loading="lazy" style={{
+                        width: '100%', height: '100%', objectFit: 'cover',
+                        display: 'block', filter: 'sepia(0.12) contrast(1.04)',
+                      }}/>
+                    </div>
+                  </button>
                 ))}
               </div>
             </div>
           )}
-
-          <div style={{ height: 40 }}/>
         </div>
       </div>
 
