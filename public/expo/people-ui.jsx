@@ -515,28 +515,37 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx }) {
                 fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.3em',
                 color: theme.ochre, textTransform: 'uppercase', marginBottom: 10,
               }}>
-                {lang === 'ru' ? 'Фотодокументы — нажмите' : 'Photographs — tap'}
+                {lang === 'ru' ? 'Фотодокументы — нажмите для увеличения' : 'Photographs — tap to enlarge'}
               </div>
               <div style={{
                 display: 'grid', gridTemplateColumns: `repeat(${photos.length}, 1fr)`,
                 gap: 12,
               }}>
                 {photos.map((ph, i) => (
-                  <button key={i} onClick={() => setLightboxIdx(i)} style={{
-                    display: 'block', width: '100%', padding: 0, border: 'none',
-                    background: 'transparent', cursor: 'pointer',
-                  }} title={ph[lang]}>
-                    <div style={{
-                      width: '100%', aspectRatio: '1/1', overflow: 'hidden',
-                      background: '#1a0d05',
-                      border: `1px solid ${theme.inkSoft}`,
-                    }}>
-                      <img src={ph.src} alt="" loading="lazy" style={{
-                        width: '100%', height: '100%', objectFit: 'cover',
-                        display: 'block', filter: 'sepia(0.12) contrast(1.04)',
-                      }}/>
-                    </div>
-                  </button>
+                  <figure key={i} style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
+                    <button onClick={() => setLightboxIdx(i)} style={{
+                      display: 'block', width: '100%', padding: 0, border: 'none',
+                      background: 'transparent', cursor: 'pointer',
+                    }} title={ph[lang]}>
+                      <div style={{
+                        width: '100%', aspectRatio: '1/1', overflow: 'hidden',
+                        background: '#1a0d05',
+                        border: `1px solid ${theme.inkSoft}`,
+                      }}>
+                        <img src={ph.src} alt="" loading="lazy" style={{
+                          width: '100%', height: '100%', objectFit: 'cover',
+                          display: 'block', filter: 'sepia(0.12) contrast(1.04)',
+                        }}/>
+                      </div>
+                    </button>
+                    <figcaption style={{
+                      marginTop: 6, fontFamily: fonts.body, fontSize: 11,
+                      color: theme.paperDim, lineHeight: 1.35,
+                      // обрезаем до 3 строк — полная подпись доступна в лайтбоксе
+                      display: '-webkit-box', WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 3, overflow: 'hidden',
+                    }}>{ph[lang]}</figcaption>
+                  </figure>
                 ))}
               </div>
             </div>
