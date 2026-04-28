@@ -25,6 +25,7 @@ export default defineConfig({
         states:   'states.html',      // Раздел 3 · Гос-образования (Группы + Сетка)
         sections: 'sections.html',    // Старый каталог 4 разделов
         brand:    'brand.html',       // Каталог визуальных примитивов (бренд-система)
+        calendar: 'calendar.html',    // R&D · live-DOM на 3D — перекидной календарь 1917—1924
       },
     },
   },

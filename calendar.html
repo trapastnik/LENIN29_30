@@ -1,0 +1,1655 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Перекидной календарь · 1917—1924 · МТК 29</title>
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <script src="/expo/pin-gate.js?v=20260427"></script>
+  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html' });</script>
+  <style>
+    /* ── Layout страницы ───────────────────────────────────────── */
+    html, body { overflow: hidden; height: 100%; }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink-on-dark);
+      background: var(--iron-grey);
+      background-image:
+        radial-gradient(ellipse at 30% 20%, #5e676b 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, #3c4347 0%, transparent 60%),
+        linear-gradient(180deg, #4a5256 0%, #555d61 35%, #3f464a 100%);
+    }
+
+    .page-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 22px 36px 14px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), transparent);
+      pointer-events: none;
+    }
+    .page-header .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--brass);
+      pointer-events: auto;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--paper-white);
+      margin: 4px 0 0;
+      letter-spacing: -0.005em;
+      pointer-events: auto;
+    }
+    .page-header .back {
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      text-decoration: none;
+      padding: 10px 14px;
+      border: 1px solid rgba(210,183,115,0.35);
+      border-radius: 4px;
+      pointer-events: auto;
+    }
+
+    /* ── Сцена с 3D-канвасом ──────────────────────────────────── */
+    #stage {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #cal-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    /* (CSS-подложка-стол убрана — 3D-сцена сама рисует подставку и тени) */
+
+    /* ── Панель управления (touch-kiosk, без hover) ───────────── */
+    #controls {
+      position: fixed; left: 50%; bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 15;
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      justify-content: center;
+      max-width: calc(100vw - 32px);
+      padding: 12px 18px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(210,183,115,0.28);
+      border-radius: 8px;
+      user-select: none;
+    }
+    #controls button {
+      min-width: 110px; min-height: 60px;
+      padding: 0 18px;
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-white);
+      background: transparent;
+      border: 1px solid var(--brass);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #controls button:active { background: rgba(210,183,115,0.18); }
+    #controls button.primary {
+      background: var(--signal-red);
+      border-color: var(--signal-red);
+      color: var(--paper-white);
+    }
+    #controls button.primary:active { background: #871921; }
+    /* Кнопка переключения режима (вне #controls, чтобы position:fixed
+       не сломался transform-родителем). */
+    #mode {
+      position: fixed;
+      top: 96px;
+      right: 18px;
+      z-index: 25;
+      min-width: 118px; min-height: 56px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(210,183,115,0.5);
+      border-radius: 6px;
+      color: rgba(247,249,239,0.92);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      line-height: 1.25;
+      white-space: pre-line;
+      text-align: center;
+    }
+    #mode:active { background: rgba(210,183,115,0.2); }
+
+    /* ── Scrub-слайдер: ручной разбор кадров перелистывания ───────────── */
+    #scrub-bar {
+      position: fixed;
+      left: 50%; bottom: 130px;
+      transform: translateX(-50%);
+      z-index: 24;
+      width: 380px; max-width: calc(100vw - 80px);
+      padding: 12px 18px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(210,183,115,0.35);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      user-select: none;
+    }
+    #scrub-bar .scrub-label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(247,249,239,0.78);
+      margin-bottom: 8px;
+    }
+    #scrub-bar .scrub-label #scrub-phase {
+      color: var(--brass);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    #scrub-bar input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 26px;
+      background: transparent;
+      cursor: pointer;
+    }
+    #scrub-bar input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      background: linear-gradient(90deg, var(--brass) 0%, var(--brass) var(--scrub-pct, 0%), rgba(255,255,255,0.16) var(--scrub-pct, 0%));
+      border-radius: 2px;
+    }
+    #scrub-bar input[type="range"]::-moz-range-track {
+      height: 4px;
+      background: rgba(255,255,255,0.16);
+      border-radius: 2px;
+    }
+    #scrub-bar input[type="range"]::-moz-range-progress {
+      height: 4px;
+      background: var(--brass);
+      border-radius: 2px;
+    }
+    #scrub-bar input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      margin-top: -9px;
+      border-radius: 50%;
+      background: var(--paper-white);
+      border: 2px solid var(--signal-red);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      cursor: grab;
+    }
+    #scrub-bar input[type="range"]:active::-webkit-slider-thumb { cursor: grabbing; }
+    #scrub-bar input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--paper-white);
+      border: 2px solid var(--signal-red);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      cursor: grab;
+    }
+    #controls .counter {
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      min-width: 84px; text-align: center;
+    }
+    #controls .counter b {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 28px;
+      color: var(--paper-white);
+      letter-spacing: 0;
+    }
+
+    /* ── Boot-сообщение ───────────────────────────────────────── */
+    #boot {
+      position: fixed; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--brass);
+      opacity: 0.7;
+      z-index: 5;
+    }
+    #boot.hidden { display: none; }
+
+    /* ── CSS3D-перекидной календарь ─────────────────────────────
+       Архитектура (по образцу настольного перекидного):
+         · СПИРАЛЬ горизонтально — общая ось вверху
+         · СТОПКА БУДУЩИХ листов лежит ВВЕРХУ, на спирали (видны их корешки)
+         · ТЕКУЩИЙ лист свисает ВНИЗ от спирали, лицом к зрителю
+         · Перекидывание: текущий лист уходит ВПЕРЁД-ВНИЗ-НАЗАД-ВВЕРХ
+           по дуге 360° вокруг спирали и кладётся СЗАДИ её, в стопку упавших.
+    */
+    #stage3d {
+      position: fixed; inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 100px 0 130px;             /* под хедер сверху, под контролы снизу */
+      box-sizing: border-box;
+      perspective: 1900px;
+      perspective-origin: 50% 50%;
+    }
+    #stage3d.active { display: flex; }
+
+    #stage3d .frame {
+      position: relative;
+      width: 360px;
+      transform-style: preserve-3d;
+    }
+
+    /* Корешок-стопка ВВЕРХУ — будущие листы, видим их верхние кромки.
+       Это декорация: 6 узких полосок, имитирующих толщину пачки. */
+    #stage3d .frame .pile {
+      position: relative;
+      width: 360px; height: 28px;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+    #stage3d .frame .pile i {
+      position: absolute;
+      left: 0; right: 0; height: 6px;
+      background:
+        linear-gradient(180deg, #f6efd8, #e8dec2);
+      border-bottom: 1px solid rgba(0,0,0,0.18);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+    }
+    /* шесть слоёв пачки — каждый чуть-чуть смещён по Z и Y, видна толщина */
+    #stage3d .frame .pile i:nth-child(1) { bottom: 0;  transform: translateZ(0); }
+    #stage3d .frame .pile i:nth-child(2) { bottom: 4;  transform: translateZ(-1.6px); opacity: .92; }
+    #stage3d .frame .pile i:nth-child(3) { bottom: 8;  transform: translateZ(-3.2px); opacity: .85; }
+    #stage3d .frame .pile i:nth-child(4) { bottom: 12; transform: translateZ(-4.8px); opacity: .78; }
+    #stage3d .frame .pile i:nth-child(5) { bottom: 16; transform: translateZ(-6.4px); opacity: .70; }
+    #stage3d .frame .pile i:nth-child(6) { bottom: 20; transform: translateZ(-8px);   opacity: .60; }
+
+    /* Спираль — горизонтальные кольца, сразу под пачкой. Это тот pivot,
+       вокруг которого крутятся листы при перекидывании. */
+    #stage3d .frame .coil {
+      position: relative;
+      width: 360px; height: 28px;
+      display: flex; justify-content: space-between;
+      padding: 0 18px;
+      box-sizing: border-box;
+      transform: translateZ(2px);
+      pointer-events: none;
+    }
+    #stage3d .frame .coil::before {
+      content: '';
+      position: absolute;
+      left: 8px; right: 8px; top: 12px;
+      height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, #8a8579, #d4cdb6, #8a8579);
+      transform: translateZ(-1px);
+    }
+    #stage3d .frame .coil i {
+      position: relative;
+      width: 14px; height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 35% 30%, #e6dfc8, #8a8579 70%, #5a554a 100%);
+      box-shadow: inset 0 -2px 2px rgba(0,0,0,0.4), 0 2px 3px rgba(0,0,0,0.4);
+    }
+
+    /* Контейнер для 12 листов; каждый лист — pivot ВВЕРХУ (на оси спирали),
+       висит ВНИЗ. Мягкость («бумажная мягкость») достигается:
+         · keyframes-анимация paper-wobble: skewY/scaleY pulse во время полёта,
+           создаёт ощущение, что лист гнётся как реальная бумага.
+         · переменная скорость (cubic-bezier с пологим стартом) — лист
+           «провисает» в верхней дуге, ускоряется на падении назад.
+         · мягкая большая тень, как от листа, лежащего над поверхностью. */
+    #stage3d .frame .pages {
+      position: relative;
+      width: 360px; height: 495px;
+      transform-style: preserve-3d;
+    }
+    #stage3d .frame .pages .leaf-3d {
+      position: absolute; left: 0; top: 0;
+      width: 360px; height: 495px;
+      transform-origin: 50% 0%;
+      transition: transform 1.4s cubic-bezier(0.55, 0.02, 0.38, 1);
+      transform-style: preserve-3d;
+      will-change: transform;
+      filter: drop-shadow(0 14px 22px rgba(0,0,0,0.45));
+    }
+    /* лицевая и обратная стороны листа */
+    #stage3d .frame .pages .leaf-3d .leaf-front,
+    #stage3d .frame .pages .leaf-3d .leaf-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25), 0 1px 0 rgba(0,0,0,0.08) inset;
+    }
+    #stage3d .frame .pages .leaf-3d .leaf-back {
+      transform: rotateY(180deg);
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, #f0e8d2 0%, #e8dec2 100%);
+    }
+    #stage3d .frame .pages .leaf-3d .leaf-back::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 0;
+      height: 50px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.16), transparent);
+    }
+    #stage3d .frame .pages .leaf-3d .leaf-front .leaf {
+      width: 720px; height: 990px;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+    }
+    /* «Мягкая бумага» а-ля Apple iBooks page-curl (сильно усиленный wobble):
+       лист изгибается через большой skewY + scaleY + scaleX-pulse, плюс
+       сверху накладывается бегущая тень-«перегиб», что имитирует визуальный
+       curl бумаги. Включается классом .flipping. */
+    #stage3d .frame .pages .leaf-3d.flipping .leaf-front,
+    #stage3d .frame .pages .leaf-3d.flipping .leaf-back {
+      animation: paper-curl 1.4s cubic-bezier(0.42, 0.0, 0.58, 1) forwards;
+    }
+    @keyframes paper-curl {
+      /* верх листа отгибается первым → cильный skewY вначале */
+      0%   { transform: translateZ(0)    skewY(0)    scaleY(1)    scaleX(1)    rotateY(0); border-radius: 4px; }
+      12%  { transform: translateZ(6px)  skewY(6deg) scaleY(1.07) scaleX(0.985) rotateY(2deg); border-radius: 4px 4px 18px 18px; }
+      28%  { transform: translateZ(2px)  skewY(2deg) scaleY(0.94) scaleX(1.01)  rotateY(-1deg); border-radius: 18px 18px 4px 4px; }
+      45%  { transform: translateZ(4px)  skewY(4deg) scaleY(1.05) scaleX(0.99)  rotateY(0);   border-radius: 4px; }
+      62%  { transform: translateZ(2px)  skewY(-3deg) scaleY(0.96) scaleX(1.005) rotateY(0); border-radius: 4px 4px 14px 14px; }
+      78%  { transform: translateZ(0)    skewY(3deg) scaleY(1.04) scaleX(0.992) rotateY(0); border-radius: 4px; }
+      90%  { transform: translateZ(0)    skewY(-1deg) scaleY(0.98) scaleX(1)     rotateY(0); border-radius: 4px; }
+      100% { transform: translateZ(0)    skewY(0)    scaleY(1)    scaleX(1)    rotateY(0); border-radius: 4px; }
+    }
+    /* Back-лист — то же, но с rotateY(180) baseline */
+    #stage3d .frame .pages .leaf-3d.flipping .leaf-back {
+      animation-name: paper-curl-back;
+    }
+    @keyframes paper-curl-back {
+      0%   { transform: rotateY(180deg) translateZ(0)   skewY(0)    scaleY(1)    scaleX(1); }
+      12%  { transform: rotateY(180deg) translateZ(6px) skewY(6deg) scaleY(1.07) scaleX(0.985); }
+      28%  { transform: rotateY(180deg) translateZ(2px) skewY(2deg) scaleY(0.94) scaleX(1.01); }
+      45%  { transform: rotateY(180deg) translateZ(4px) skewY(4deg) scaleY(1.05) scaleX(0.99); }
+      62%  { transform: rotateY(180deg) translateZ(2px) skewY(-3deg) scaleY(0.96) scaleX(1.005); }
+      78%  { transform: rotateY(180deg) translateZ(0)   skewY(3deg) scaleY(1.04) scaleX(0.992); }
+      90%  { transform: rotateY(180deg) translateZ(0)   skewY(-1deg) scaleY(0.98) scaleX(1); }
+      100% { transform: rotateY(180deg) translateZ(0)   skewY(0)    scaleY(1)    scaleX(1); }
+    }
+    /* Бегущая тень "перегиба" — псевдо-элемент над .leaf-front с тёмной
+       полосой, движущейся по листу сверху вниз = иллюзия загибки. */
+    #stage3d .frame .pages .leaf-3d.flipping .leaf-front::before {
+      content: '';
+      position: absolute; left: 0; right: 0;
+      top: -50%; height: 200%;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(0,0,0,0.0) 35%,
+        rgba(0,0,0,0.22) 45%,
+        rgba(0,0,0,0.05) 55%,
+        transparent 65%,
+        transparent 100%);
+      animation: curl-shadow 1.4s cubic-bezier(0.42, 0.0, 0.58, 1) forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
+    @keyframes curl-shadow {
+      0%   { transform: translateY(-100%); opacity: 0; }
+      15%  { opacity: 0.8; }
+      50%  { transform: translateY(0%);   opacity: 1; }
+      85%  { opacity: 0.8; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+
+    /* ── Скрытые DOM-источники для html2canvas ───────────────── */
+    .stub {
+      position: absolute;
+      left: -99999px; top: 0;
+      pointer-events: none;
+      /* остаются в layout, но не видны пользователю */
+    }
+
+    /* — Шаблон страницы перекидного календаря (источник в DOM) — */
+    .leaf {
+      width: 720px; height: 990px;        /* 2:2.75 — пропорция настольного календаря */
+      background: var(--paper-white);
+      color: var(--ink-black);
+      padding: 56px 60px 48px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-body);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    }
+    /* Декор: две перфорации под спираль (визуальная подсказка перекидного) */
+    .leaf::before,
+    .leaf::after {
+      content: '';
+      position: absolute;
+      top: 24px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--iron-grey);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+    }
+    .leaf::before { left: 110px; }
+    .leaf::after  { right: 110px; }
+
+    .leaf .top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 14px;
+      border-bottom: 4px solid var(--camp);
+    }
+    .leaf .year {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 1;
+      color: var(--camp);
+      letter-spacing: -0.01em;
+    }
+    .leaf .month {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--camp);
+      text-align: right;
+    }
+
+    .leaf .day {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 900;
+      font-size: 360px;
+      line-height: 0.85;
+      color: var(--camp);
+      letter-spacing: -0.04em;
+      text-align: center;
+      margin: 18px 0 4px;
+    }
+    .leaf .weekday {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .leaf .event {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1.05;
+      color: var(--ink-black);
+      margin: 0 0 14px;
+      letter-spacing: -0.005em;
+    }
+    .leaf .lede {
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .leaf .footer {
+      position: absolute;
+      left: 60px; right: 60px;
+      bottom: 36px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.2);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+    .leaf .footer .brand {
+      color: var(--signal-red);
+      font-weight: 700;
+    }
+    .leaf .footer .meta { color: var(--ink-faint); }
+
+    /* Цветовой индекс лагеря (полоска слева) */
+    .leaf .stripe {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 14px;
+      background: var(--camp);
+    }
+  </style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <div class="kicker">МТК 29 · R&amp;D · live-DOM на 3D</div>
+    <h1>Перекидной календарь · 1917 — 1924</h1>
+  </div>
+  <a class="back" href="/brand.html">← к бренд-каталогу</a>
+</header>
+
+<div id="stage">
+  <canvas id="cal-canvas"></canvas>
+  <div id="boot">Захват DOM в текстуру…</div>
+</div>
+
+<!-- CSS3D-перекидной календарь: стопка ВВЕРХУ (пачка + спираль), под ней
+     висит текущий лист. При перекидывании лист идёт по дуге 360° вокруг
+     спирали и кладётся за стопку (упавший). -->
+<div id="stage3d">
+  <div class="frame">
+    <div class="pile"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="coil"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="pages">
+      <!-- .leaf-3d клонируются скриптом из #leaves -->
+    </div>
+  </div>
+</div>
+
+<div id="controls">
+  <button id="prev" type="button">‹ Назад</button>
+  <div class="counter">
+    <b id="counter-num">01</b>
+    <span>/ 12</span>
+  </div>
+  <button id="next" type="button" class="primary">Перевернуть ›</button>
+  <button id="auto" type="button">Авто</button>
+</div>
+
+<!-- Кнопка переключения технологии мягкости — вне #controls,
+     потому что transform на родителе ломает position:fixed children. -->
+<button id="mode" type="button" title="Переключить технологию мягкости листа">Режим</button>
+
+<!-- Slider scrub: позволяет вручную пройти текущее перелистывание по фазе 0..1
+     для покадрового просмотра. Отпустил при phase>=0.95 — фиксируется
+     перелистывание (currentIndex++); при phase<=0.05 — откатывается. -->
+<div id="scrub-bar">
+  <div class="scrub-label">
+    <span>покадрово ↦</span>
+    <span id="scrub-phase">0%</span>
+  </div>
+  <input id="scrub" type="range" min="0" max="1" step="0.005" value="0">
+</div>
+
+<!-- ── Скрытые источники: 12 листов перекидного календаря ──────────────────
+     html2canvas снимает каждый из них в свою CanvasTexture; ID листа стоит
+     на data-leaf, индекс — на data-i. Пропорции 720×990 совпадают с PlaneGeometry. -->
+<div class="stub" id="leaves" aria-hidden="true">
+
+  <div class="leaf" data-i="0" style="--camp: var(--camp-red);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1917</div>
+      <div class="month">Октябрь<br>по ст. ст.</div>
+    </div>
+    <div class="day">25</div>
+    <div class="weekday">Среда · Петроградъ</div>
+    <p class="event">Октябрьское вооружённое восстание</p>
+    <p class="lede">Военно-революционный комитет занимает мосты, вокзалы, телеграф. К утру 26-го Зимний дворец взят, II съезд Советов провозглашает власть Советов.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 01 · Лагерь: Красные</span></div>
+  </div>
+
+  <div class="leaf" data-i="1" style="--camp: var(--camp-rev-dem);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Январь<br>по ст. ст.</div>
+    </div>
+    <div class="day">5</div>
+    <div class="weekday">Пятница · Таврическій дворецъ</div>
+    <p class="event">Разгон Учредительного собрания</p>
+    <p class="lede">«Караул усталъ» — матросъ Желѣзняковъ закрываетъ единственное засѣданіе. Эсеры теряютъ парламентскую трибуну; конкуренція за власть переходитъ в военное русло.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 02 · Лагерь: Рев. демократія</span></div>
+  </div>
+
+  <div class="leaf" data-i="2" style="--camp: var(--camp-intervention);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Март</div>
+    </div>
+    <div class="day">3</div>
+    <div class="weekday">Воскресенье · Брестъ-Литовскъ</div>
+    <p class="event">Брестский мирный договор</p>
+    <p class="lede">РСФСР подписывает «похабный мир» с Центральными державами: ≈ 1 млн км², четверть населения и треть промышленности — за выход из Великой войны.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 03 · Германія / РСФСР</span></div>
+  </div>
+
+  <div class="leaf" data-i="3" style="--camp: var(--camp-white);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Май</div>
+    </div>
+    <div class="day">25</div>
+    <div class="weekday">Суббота · Транссибъ</div>
+    <p class="event">Мятеж Чехословацкого корпуса</p>
+    <p class="lede">40 эшелонов от Пензы до Владивостока поднимают восстание. На Волге и в Сибири открывается Восточный фронт; в Самаре формируется Комуч.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 04 · Восточный фронт</span></div>
+  </div>
+
+  <div class="leaf" data-i="4" style="--camp: var(--camp-red);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Июль</div>
+    </div>
+    <div class="day">17</div>
+    <div class="weekday">Среда · Екатеринбургъ</div>
+    <p class="event">Расстрел царской семьи</p>
+    <p class="lede">В подвале дома Ипатьева расстреляны Николай II, Александра Фёдоровна, цесаревич, четыре великих княжны, лейб-медикъ и трое слугъ. Точка невозврата.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 05 · Уралъ</span></div>
+  </div>
+
+  <div class="leaf" data-i="5" style="--camp: var(--camp-red-deep);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Август</div>
+    </div>
+    <div class="day">30</div>
+    <div class="weekday">Пятница · Заводъ Михельсона</div>
+    <p class="event">Покушение на Ленина</p>
+    <p class="lede">Эсерка Фанни Каплан стреляет в Ленина после митинга. На следующий день — декрет СНК о «красном терроре»; ВЧК получает массовый репрессивный мандат.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 06 · Москва</span></div>
+  </div>
+
+  <div class="leaf" data-i="6" style="--camp: var(--camp-white);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1918</div>
+      <div class="month">Ноябрь</div>
+    </div>
+    <div class="day">18</div>
+    <div class="weekday">Понедельник · Омскъ</div>
+    <p class="event">А. В. Колчак — Верховный правитель России</p>
+    <p class="lede">Военный переворот в Омске свергает Директорію. Всероссійскую власть антибольшевистская коалиція передаётъ адмиралу Колчаку — концентрація Бѣлаго движенія.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 07 · Сибирь</span></div>
+  </div>
+
+  <div class="leaf" data-i="7" style="--camp: var(--camp-white);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1919</div>
+      <div class="month">Октябрь</div>
+    </div>
+    <div class="day">13</div>
+    <div class="weekday">Понедельник · Орёлъ</div>
+    <p class="event">Поход Деникина на Москву — пик</p>
+    <p class="lede">ВСЮР занимаютъ Орёлъ — 360 верстъ до Москвы. Контрударъ Южнаго фронта подъ Кромами и Воронежемъ ломаетъ наступленіе; начинается отступленіе къ морю.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 08 · Южный фронт</span></div>
+  </div>
+
+  <div class="leaf" data-i="8" style="--camp: var(--camp-white);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1920</div>
+      <div class="month">Ноябрь</div>
+    </div>
+    <div class="day">16</div>
+    <div class="weekday">Вторникъ · Севастополь</div>
+    <p class="event">Эвакуация Русской армии Врангеля</p>
+    <p class="lede">126 кораблей увозят из Крыма около 146 тысяч человек — армию, гражданских беженцев, церковные святыни. Конец организованного Белого движения на юге.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 09 · Крым</span></div>
+  </div>
+
+  <div class="leaf" data-i="9" style="--camp: var(--camp-green);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1921</div>
+      <div class="month">Март</div>
+    </div>
+    <div class="day">8</div>
+    <div class="weekday">Вторник · Москва · Кронштадтъ</div>
+    <p class="event">X съезд РКП(б): НЭП и Кронштадт</p>
+    <p class="lede">Съезд утверждает переход от продразвёрстки к продналогу — старт новой экономической политики; одновременно подавляется восстание матросов в Кронштадте.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 10 · РСФСР</span></div>
+  </div>
+
+  <div class="leaf" data-i="10" style="--camp: var(--camp-red);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1922</div>
+      <div class="month">Декабрь</div>
+    </div>
+    <div class="day">30</div>
+    <div class="weekday">Суббота · Москва, Большой театръ</div>
+    <p class="event">Образование СССР</p>
+    <p class="lede">I Всесоюзный съезд Советов утверждает Декларацию и Договор об образовании Союза ССР: РСФСР, УССР, БССР, ЗСФСР сливаются в единое государство.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 11 · СССР</span></div>
+  </div>
+
+  <div class="leaf" data-i="11" style="--camp: var(--ink-black);">
+    <div class="stripe"></div>
+    <div class="top">
+      <div class="year">1924</div>
+      <div class="month">Январь</div>
+    </div>
+    <div class="day">21</div>
+    <div class="weekday">Понедельник · Горки</div>
+    <p class="event">Смерть В. И. Ленина</p>
+    <p class="lede">В 18:50 в Горкахъ скончался Владимиръ Ульяновъ. Тѣло перевезено въ Москву; начинается строительство деревяннаго мавзолея и формированіе посмертнаго культа.</p>
+    <div class="footer"><span class="brand">Ленин-центр · МТК 29</span><span class="meta">№ 12 · Эпилог</span></div>
+  </div>
+
+</div>
+
+<!-- ── R&D · html-in-canvas: 12-листовой календарь на одном WebGLRenderer ── -->
+<script>
+  // Polyfill для устаревших MediaQueryList.addListener / removeListener.
+  // Some sandboxed preview Chrome'ы и старые версии Three.js/html2canvas
+  // дёргают эти методы — без них ловим TypeError на boot.
+  (function () {
+    if (typeof MediaQueryList === 'undefined') return;
+    const proto = MediaQueryList.prototype;
+    if (typeof proto.addListener !== 'function') {
+      proto.addListener = function (cb) { return this.addEventListener('change', cb); };
+    }
+    if (typeof proto.removeListener !== 'function') {
+      proto.removeListener = function (cb) { return this.removeEventListener('change', cb); };
+    }
+  })();
+
+  // Подавляем известные cosmetic warning'и сторонних библиотек, чтобы
+  // не загромождать консоль. Это НЕ ошибки, не баги — просто шум:
+  //   • Three.js: UMD bundle deprecated в r150+ (мы на r158, работает)
+  //   • html2canvas: рекомендует willReadFrequently для getImageData
+  (function () {
+    const origWarn = console.warn;
+    const origLog = console.log;
+    const noisy = /build\/three\.(min\.)?js.*deprecated|willReadFrequently/i;
+    console.warn = function () {
+      const msg = String(arguments[0] || '');
+      if (noisy.test(msg)) return;
+      return origWarn.apply(console, arguments);
+    };
+    // некоторые версии Three.js шлют через console.log
+    console.log = function () {
+      const msg = String(arguments[0] || '');
+      if (noisy.test(msg)) return;
+      return origLog.apply(console, arguments);
+    };
+  })();
+
+  // ──────────────────────────────────────────────────────────────────
+  // Технология (см. brand.html § 22):
+  //   живой DOM с CSS/JS  →  html2canvas (~1.5 c)  →  THREE.CanvasTexture
+  //   →  natively через ctx.drawElement() при включённом флаге Chromium.
+  // На календаре — 12 листов, каждый имеет свою CanvasTexture (лежат в
+  // стопке одновременно, нужно показывать сразу несколько). Один общий
+  // WebGLRenderer / scene.
+  // ──────────────────────────────────────────────────────────────────
+
+  const TOTAL = 12;
+  const LEAF_W = 2.0;    // ширина листа в условных юнитах сцены
+  const LEAF_H = 2.75;   // высота листа (соответствует 720 / 990 ≈ 0.727 → 2/2.75)
+  const SPIRAL_RING_R = 0.085;
+  const FLIP_DURATION_MS = 900;
+  const AUTO_FLIP_INTERVAL_MS = 4200;
+
+  // Бумажный «толщинной» зазор между листами в стопке (по Z, до поворота)
+  const THICKNESS = 0.012;
+
+  let THREE_NS = null;
+  let html2canvasFn = null;
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('script load failed: ' + src));
+      document.head.appendChild(s);
+    });
+  }
+  // Пробуем урлы по очереди, пока один не загрузится
+  async function loadScriptWithFallback(urls) {
+    let lastErr;
+    for (const u of urls) {
+      try { await loadScript(u); return u; }
+      catch (e) { lastErr = e; }
+    }
+    throw lastErr;
+  }
+
+  // captureLock — html2canvas не любит параллельных вызовов (особенно с шрифтами)
+  let captureLock = Promise.resolve();
+  function withCaptureLock(fn) {
+    const next = captureLock.then(fn, fn);
+    captureLock = next.catch(() => {});
+    return next;
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 1. Захват одного источника (.leaf) в его собственный 1024×1408 canvas.
+  //    Соотношение совпадает с 720×990 = LEAF_W / LEAF_H = 2/2.75.
+  // ──────────────────────────────────────────────────────────────────
+  async function captureLeaf(sourceEl, texCanvas) {
+    const ctx = texCanvas.getContext('2d');
+    return withCaptureLock(async () => {
+      try {
+        const snap = await html2canvasFn(sourceEl, {
+          backgroundColor: null,
+          scale: 1.4,
+          logging: false,
+          useCORS: true,
+        });
+        ctx.clearRect(0, 0, texCanvas.width, texCanvas.height);
+        // вписываем с сохранением пропорций (cover)
+        const ar = snap.width / snap.height;
+        const tar = texCanvas.width / texCanvas.height;
+        let dw, dh, dx, dy;
+        if (ar > tar) {
+          dh = texCanvas.height; dw = dh * ar;
+          dx = (texCanvas.width - dw) / 2; dy = 0;
+        } else {
+          dw = texCanvas.width; dh = dw / ar;
+          dx = 0; dy = (texCanvas.height - dh) / 2;
+        }
+        ctx.drawImage(snap, dx, dy, dw, dh);
+        return true;
+      } catch (e) {
+        console.warn('captureLeaf', e);
+        return false;
+      }
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 2. Построение сцены: спираль из колец + 12 страниц-плоскостей.
+  // ──────────────────────────────────────────────────────────────────
+  function buildScene(leaves) {
+    const T = THREE_NS;
+    const scene = new T.Scene();
+
+    // Свет
+    scene.add(new T.AmbientLight(0xffffff, 0.55));
+    const key = new T.DirectionalLight(0xffffff, 0.9); key.position.set(2, 4, 5); scene.add(key);
+    const rim = new T.DirectionalLight(0xa02128, 0.3); rim.position.set(-3, -1, -2); scene.add(rim);
+    const fill = new T.DirectionalLight(0xd2b773, 0.35); fill.position.set(-2, 3, 4); scene.add(fill);
+
+    // ── Спираль над стопкой (одна линия колец, без подставки и стержня) ──
+    const coilGroup = new T.Group();
+    const ringGeo = new T.TorusGeometry(SPIRAL_RING_R, 0.012, 10, 24);
+    const ringMat = new T.MeshStandardMaterial({ color: 0xc8bfa7, roughness: 0.3, metalness: 0.9 });
+    const ringCount = 14;
+    for (let i = 0; i < ringCount; i++) {
+      const ring = new T.Mesh(ringGeo, ringMat);
+      const x = -LEAF_W * 0.42 + (LEAF_W * 0.84) * (i / (ringCount - 1));
+      ring.position.set(x, 0, 0);
+      coilGroup.add(ring);
+    }
+    // Спираль чуть впереди и над пивотом листа
+    coilGroup.position.set(0, LEAF_H / 2 + 0.01, 0.02);
+    scene.add(coilGroup);
+
+    // ── 12 страниц с pivot на верхней кромке ──────────────────────
+    // Каждый лист — собственная PlaneGeometry (24 сегмента по Y), чтобы при
+    // page-curl можно было индивидуально деформировать вершины каждого листа.
+    const pages = [];
+    const SEG_Y = 24;
+
+    leaves.forEach((leaf, i) => {
+      const pivot = new T.Group();
+      // -Z уходит ВГЛУБЬ от камеры. Текущий лист (i=0) на z=0, остальные
+      // отодвинуты назад в стопку.
+      pivot.position.set(0, LEAF_H / 2, -i * THICKNESS);
+
+      // Собственная geometry для каждого листа
+      const geo = new T.PlaneGeometry(LEAF_W, LEAF_H, 1, SEG_Y);
+      const orig = new Float32Array(geo.attributes.position.array);
+
+      // Один двусторонний материал: лицо — текстура, обратная — та же
+      // текстура (зеркально, как тонкая бумага). Один mesh ⇒ нет конфликтов.
+      const mat = new T.MeshStandardMaterial({
+        map: leaf.texture,
+        roughness: 0.62,
+        metalness: 0.02,
+        side: T.DoubleSide,
+      });
+      const mesh = new T.Mesh(geo, mat);
+      mesh.position.y = -LEAF_H / 2;
+      pivot.add(mesh);
+
+      scene.add(pivot);
+      pages.push({
+        pivot, mesh, leaf,
+        geometry: geo, orig,
+        phase: 0,            // 0 = висит вниз; 1 = полностью перевёрнут
+      });
+    });
+
+    // Камера
+    const camera = new T.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(0, 0.15, 5.4);
+    camera.lookAt(0, 0, 0);
+
+    return { scene, camera, pages };
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 3. Стейт перекидного календаря + page-curl анимация переворота.
+  // ──────────────────────────────────────────────────────────────────
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  // Page-curl деформация: верхние вершины опережают нижние, лист изгибается
+  // как мягкая бумага вокруг невидимой оси (= спираль наверху).
+  // phase: 0 = плоский, висит вниз; 1 = полностью перевёрнут на 360°
+  // CURL_OFFSET — насколько верх опережает низ (0..1). Чем больше, тем
+  //   заметнее изгиб (более «бумажная» волна).
+  const CURL_OFFSET = 0.45;
+  function deformPageCurl(page, phase) {
+    const pos = page.geometry.attributes.position;
+    const verts = pos.array;
+    const orig = page.orig;
+    const denom = 1 - CURL_OFFSET;
+    const TWO_PI = Math.PI * 2;
+    for (let i = 0; i < verts.length; i += 3) {
+      const oy = orig[i + 1];
+      // Нормированная Y: 0 — top (oy = +H/2), 1 — bottom (oy = -H/2)
+      const yn = (LEAF_H / 2 - oy) / LEAF_H;
+      // Локальная фаза: верх (yn=0) идёт по полной фазе,
+      // низ (yn=1) запаздывает на CURL_OFFSET.
+      let lp = (phase - yn * CURL_OFFSET) / denom;
+      if (lp < 0) lp = 0; else if (lp > 1) lp = 1;
+      // Угол: 0..2π (полный круг)
+      const angle = lp * TWO_PI;
+      // Расстояние вершины от pivot (top of leaf)
+      const dist = LEAF_H / 2 - oy;
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      // Вращение вокруг pivot (0, +H/2, 0). Отрицательный sin даёт отгиб
+      // НАЗАД, положительный — ВПЕРЁД к зрителю. Берём ВПЕРЁД (+).
+      verts[i]     = orig[i];
+      verts[i + 1] = LEAF_H / 2 - dist * cosA;
+      verts[i + 2] = +dist * sinA;
+    }
+    pos.needsUpdate = true;
+    page.geometry.computeVertexNormals();
+  }
+
+  function start(sharedCanvas, leaves) {
+    const T = THREE_NS;
+    // Берём контроль создания WebGL-контекста на себя — Three.js r158 при
+    // автоматическом выборе иногда падает на специфичных Chrome/macOS-сборках.
+    // Перебираем несколько комбинаций WebGL2/WebGL1 + опции, и передаём
+    // готовый контекст в Three.js явно через { context: gl }.
+    const ctxAttempts = [
+      { type: 'webgl2', opts: { antialias: true,  alpha: true,  powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false } },
+      { type: 'webgl2', opts: { antialias: false, alpha: false, powerPreference: 'default',          failIfMajorPerformanceCaveat: false } },
+      { type: 'webgl',  opts: { antialias: true,  alpha: true,  powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false } },
+      { type: 'webgl',  opts: { antialias: false, alpha: false, powerPreference: 'default',          failIfMajorPerformanceCaveat: false } },
+      { type: 'webgl',  opts: {} }, // совсем без опций
+    ];
+    let gl = null, ctxType = null, lastErr = null;
+    let workingCanvas = sharedCanvas;
+    for (const a of ctxAttempts) {
+      try {
+        const c = workingCanvas.getContext(a.type, a.opts);
+        if (c) { gl = c; ctxType = a.type; break; }
+      } catch (e) { lastErr = e; }
+      // Если getContext вернул null/бросил — даём канвасу свежий старт
+      const fresh = document.createElement('canvas');
+      fresh.id = workingCanvas.id;
+      fresh.style.cssText = workingCanvas.style.cssText;
+      if (workingCanvas.parentElement) {
+        workingCanvas.parentElement.replaceChild(fresh, workingCanvas);
+      }
+      workingCanvas = fresh;
+    }
+    if (!gl) {
+      throw new Error('WebGL контекст не выдан Chrome ни для webgl2, ни для webgl. Возможно багу Chrome/macOS на этой версии. ' + (lastErr ? '(' + lastErr.message + ')' : ''));
+    }
+    console.info('[calendar] WebGL context acquired:', ctxType);
+
+    // Передаём готовый контекст в Three.js
+    const renderer = new T.WebGLRenderer({ canvas: workingCanvas, context: gl, antialias: true, alpha: true });
+    sharedCanvas = workingCanvas;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    function resize() {
+      const r = sharedCanvas.getBoundingClientRect();
+      renderer.setSize(r.width, r.height, false);
+      const aspect = r.width / r.height;
+      ctx.camera.aspect = aspect;
+      // Авто-дистанция: лист шириной LEAF_W и высотой LEAF_H + спираль/пачка
+      // должны полностью помещаться по обоим осям с небольшим запасом.
+      const fovRad = ctx.camera.fov * Math.PI / 180;
+      const halfWReq = LEAF_W * 0.6;
+      const halfHReq = LEAF_H * 0.7;
+      const distForH = halfHReq / Math.tan(fovRad / 2);
+      const distForW = halfWReq / Math.tan(fovRad / 2) / aspect;
+      ctx.camera.position.z = Math.max(distForH, distForW, 5.0);
+      ctx.camera.updateProjectionMatrix();
+    }
+
+    const ctx = buildScene(leaves);
+    resize();
+    window.addEventListener('resize', resize);
+
+    // currentIndex = индекс верхнего из ещё-не-перевёрнутых листов.
+    // Листы 0..currentIndex-1 — упавшие за стопку (phase = 1, перевёрнуты).
+    // Лист currentIndex — наверху стопки (phase = 0, висит лицом к зрителю).
+    // Листы currentIndex+1..N-1 — лежат за ним, phase = 0.
+    let currentIndex = 0;
+    let flipping = null;       // { index, dir, t0 }
+    let autoTimer = null;
+
+    function applyState(state) {
+      ctx.pages.forEach((p, i) => {
+        // Z-стопка: камера на +Z, поэтому ближе к камере = бóльший Z.
+        //   Текущий (i=state)        → z=0 (передний план)
+        //   Будущие (i>state)        → z отрицательный, в глубину
+        //   Упавшие (i<state)        → ещё дальше в глубину (за стопкой будущих)
+        const stackedZ = -(i - state) * THICKNESS;                          // ≤0
+        const fallenZ  = -(ctx.pages.length) * THICKNESS - (state - i) * 0.014 - 0.05; // далеко в -Z
+        p.pivot.position.z = (i < state) ? fallenZ : stackedZ;
+        // Целевая фаза листа в статике
+        const targetPhase = (i < state) ? 1 : 0;
+        if (!flipping || flipping.index !== i) {
+          // На phase=0 геометрия уже в orig — не вызываем deform лишний раз
+          if (p.phase !== targetPhase) {
+            p.phase = targetPhase;
+            if (targetPhase !== 0) deformPageCurl(p, p.phase);
+            else restorePageOrig(p);
+          }
+        }
+        p.pivot.rotation.x = 0;
+      });
+      updateCounter();
+    }
+    // Сбросить вершины обратно в orig (без накладных computeVertexNormals)
+    function restorePageOrig(page) {
+      const verts = page.geometry.attributes.position.array;
+      const orig = page.orig;
+      for (let i = 0; i < verts.length; i++) verts[i] = orig[i];
+      page.geometry.attributes.position.needsUpdate = true;
+      page.geometry.computeVertexNormals();
+    }
+
+    function updateCounter() {
+      const visible = Math.min(currentIndex + 1, TOTAL);
+      counterNum.textContent = String(visible).padStart(2, '0');
+    }
+
+    function flipForward() {
+      if (flipping || currentIndex >= TOTAL - 1) return;
+      flipping = {
+        index: currentIndex,
+        dir: +1,                      // фаза 0 → 1
+        t0: performance.now(),
+        onDone: () => { currentIndex++; applyState(currentIndex); }
+      };
+    }
+    function flipBackward() {
+      if (flipping || currentIndex <= 0) return;
+      flipping = {
+        index: currentIndex - 1,
+        dir: -1,                      // фаза 1 → 0
+        t0: performance.now(),
+        onDone: () => { currentIndex--; applyState(currentIndex); }
+      };
+    }
+
+    // ── UI bindings ───────────────────────────────────────────────
+    const counterNum = document.getElementById('counter-num');
+    document.getElementById('next').addEventListener('click', () => { stopAuto(); flipForward(); });
+    document.getElementById('prev').addEventListener('click', () => { stopAuto(); flipBackward(); });
+
+    const autoBtn = document.getElementById('auto');
+    function startAuto() {
+      autoBtn.classList.add('primary');
+      autoBtn.textContent = 'Стоп';
+      const tick = () => {
+        if (currentIndex >= TOTAL - 1) {
+          // лёгкий «обратный обход» — возвращаемся к началу
+          // плавно: пока не на 0, делаем prev по таймеру
+          autoTimer = setTimeout(reverseLoop, AUTO_FLIP_INTERVAL_MS);
+          return;
+        }
+        flipForward();
+        autoTimer = setTimeout(tick, AUTO_FLIP_INTERVAL_MS);
+      };
+      const reverseLoop = () => {
+        if (currentIndex <= 0) {
+          autoTimer = setTimeout(tick, AUTO_FLIP_INTERVAL_MS);
+          return;
+        }
+        flipBackward();
+        autoTimer = setTimeout(reverseLoop, AUTO_FLIP_INTERVAL_MS * 0.65);
+      };
+      tick();
+    }
+    function stopAuto() {
+      if (autoTimer) clearTimeout(autoTimer);
+      autoTimer = null;
+      autoBtn.classList.remove('primary');
+      autoBtn.textContent = 'Авто';
+    }
+    autoBtn.addEventListener('click', () => {
+      autoTimer ? stopAuto() : startAuto();
+    });
+
+    // Свайп (тач-стол)
+    let dragX = null;
+    sharedCanvas.addEventListener('pointerdown', e => { dragX = e.clientX; });
+    sharedCanvas.addEventListener('pointerup',  e => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX;
+      dragX = null;
+      if (Math.abs(dx) > 60) {
+        stopAuto();
+        if (dx < 0) flipForward(); else flipBackward();
+      }
+    });
+    sharedCanvas.addEventListener('pointercancel', () => { dragX = null; });
+
+    // ── Scrub-API: ручное протягивание текущего перелистывания ───────
+    let scrubbing = false;
+    window.__calendarScrub = {
+      setPhase(phase) {
+        if (currentIndex >= TOTAL - 1) return;
+        if (flipping) return;          // если уже идёт авто-анимация — игнорируем
+        scrubbing = true;
+        const p = ctx.pages[currentIndex];
+        p.phase = phase;
+        deformPageCurl(p, phase);
+        // лёгкий лифт по +Z как и в авто-анимации
+        p.pivot.position.z = Math.sin(phase * Math.PI) * 0.10;
+      },
+      commit() {
+        if (!scrubbing || currentIndex >= TOTAL - 1) { scrubbing = false; return; }
+        // Запускаем "доигровывание" с текущей фазы до 1
+        const p = ctx.pages[currentIndex];
+        const fromPhase = p.phase || 0;
+        const remainDur = FLIP_DURATION_MS * (1 - fromPhase);
+        flipping = {
+          index: currentIndex,
+          dir: +1,
+          t0: performance.now() - fromPhase * FLIP_DURATION_MS,
+          onDone: () => { currentIndex++; applyState(currentIndex); }
+        };
+        scrubbing = false;
+      },
+      rollback() {
+        if (!scrubbing) return;
+        // Плавно откатываем фазу до 0 (нет автоматики, ставим сразу)
+        const p = ctx.pages[currentIndex];
+        p.phase = 0;
+        deformPageCurl(p, 0);
+        p.pivot.position.z = 0;
+        scrubbing = false;
+      }
+    };
+
+    // ── Главный цикл ───────────────────────────────────────────────
+    applyState(currentIndex);
+
+    function loop() {
+      const tNow = performance.now() / 1000;
+
+      if (flipping) {
+        const t = Math.min(1, (performance.now() - flipping.t0) / FLIP_DURATION_MS);
+        const e = easeInOutCubic(t);
+        // Фаза для деформации: dir +1 → 0..1, dir -1 → 1..0
+        const phase = flipping.dir > 0 ? e : (1 - e);
+        const p = ctx.pages[flipping.index];
+        p.phase = phase;
+        deformPageCurl(p, phase);
+        // Лёгкий «лифт» по +Z во время полёта — лист парит над стопкой
+        p.pivot.position.z = Math.sin(t * Math.PI) * 0.10;
+        if (t >= 1) {
+          const done = flipping.onDone;
+          flipping = null;
+          done && done();
+        }
+      }
+
+      // ходовая «качалка» всей сцены — едва-едва, как живая
+      ctx.scene.rotation.y = Math.sin(tNow * 0.18) * 0.04;
+
+      renderer.render(ctx.scene, ctx.camera);
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // ── Авто-обновление текстур каждые 1.5 сек (документация R&D-брифа) ─
+    // Обновляем только видимые в данный момент листы (currentIndex и
+    // соседей сверху), чтобы не нагружать CPU.
+    setInterval(() => {
+      const idxs = [currentIndex, currentIndex + 1, currentIndex - 1].filter(i => i >= 0 && i < TOTAL);
+      idxs.forEach(async i => {
+        const ok = await captureLeaf(leaves[i].source, leaves[i].texCanvas);
+        if (ok) leaves[i].texture.needsUpdate = true;
+      });
+    }, 1500);
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 4. Boot: грузим THREE + html2canvas, готовим 12 текстур, запускаем.
+  // ──────────────────────────────────────────────────────────────────
+  // Быстрая проверка WebGL — до загрузки тяжёлых либ.
+  function hasWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl');
+      return !!gl;
+    } catch { return false; }
+  }
+
+  // Какой режим запускать: ?mode=css | ?mode=3d.
+  // По умолчанию: 3d, если WebGL доступен; иначе css.
+  function getMode() {
+    const url = new URL(location.href);
+    const m = url.searchParams.get('mode');
+    if (m === 'css' || m === '3d') return m;
+    return hasWebGL() ? '3d' : 'css';
+  }
+  function setMode(m) {
+    const url = new URL(location.href);
+    url.searchParams.set('mode', m);
+    location.replace(url.toString());
+  }
+
+  // ── Обработчик кнопки "Режим" — переключает между CSS-curl и 3D-mesh-curl.
+  // Текст обновляется в setActiveMode() после фактической инициализации,
+  // чтобы отразить реальное (не "запрошенное") состояние.
+  let _activeMode = null;
+  function setActiveMode(m, fallbackFromRequested, reason) {
+    _activeMode = m;
+    const btn = document.getElementById('mode');
+    if (!btn) return;
+    btn.textContent = m === '3d' ? 'Режим:\n3D-mesh' : 'Режим:\nCSS-curl';
+    btn.title = m === '3d'
+      ? 'Сейчас: настоящий page-curl на per-vertex деформации (Three.js). Клик → CSS-curl.'
+      : 'Сейчас: CSS-имитация мягкости через skewY/scaleY keyframes. Клик → 3D-mesh.';
+    // Если 3D запрошен, но не запустился — показываем плашку с причиной + советом
+    if (fallbackFromRequested === '3d' && m === 'css') {
+      const note = document.createElement('div');
+      note.id = 'mode-note';
+      const isWebGLFail = reason && /WebGL/i.test(reason);
+      const advice = isWebGLFail
+        ? '<br><br><b>Что делать:</b><br>1. Закрой другие вкладки (особенно с 3D — Maps, YouTube)<br>2. <code style="background:rgba(0,0,0,0.3);padding:0 4px">chrome://settings/system</code> → включи «Use graphics acceleration» → Restart<br>3. Проверь <code style="background:rgba(0,0,0,0.3);padding:0 4px">chrome://gpu</code> — там должно быть «WebGL: Hardware accelerated»'
+        : '';
+      note.innerHTML = '<b>3D-mesh не запустился — fallback на CSS-curl.</b><br>'
+        + (reason ? '<span style="opacity:0.85">' + reason + '</span>' : 'Причина не определена.')
+        + advice;
+      note.style.cssText = `
+        position: fixed; top: 96px; right: 18px; z-index: 26;
+        max-width: 320px; padding: 12px 16px;
+        background: rgba(160, 33, 40, 0.94);
+        color: #F7F9EF;
+        font-family: var(--font-mono); font-size: 11px; line-height: 1.5;
+        letter-spacing: 0.04em;
+        border-radius: 6px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      `;
+      btn.style.top = '300px';
+      document.body.appendChild(note);
+      setTimeout(() => { note.style.transition = 'opacity 0.6s'; note.style.opacity = '0'; }, 14000);
+      setTimeout(() => { note.remove(); btn.style.top = '96px'; }, 14800);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mode');
+    if (btn) {
+      btn.style.whiteSpace = 'pre-line';
+      btn.style.lineHeight = '1.2';
+      btn.addEventListener('click', () => {
+        setMode(_activeMode === '3d' ? 'css' : '3d');
+      });
+    }
+
+    // ── Scrub-слайдер: общий обработчик, делегирует в активный mode
+    //   window.__calendarScrub = { setPhase, commit, rollback, canFlip }
+    const scrub = document.getElementById('scrub');
+    const phaseLbl = document.getElementById('scrub-phase');
+    if (scrub) {
+      const updateLabel = (v) => {
+        phaseLbl.textContent = Math.round(v * 100) + '%';
+        scrub.style.setProperty('--scrub-pct', (v * 100) + '%');
+      };
+      updateLabel(0);
+      scrub.addEventListener('input', () => {
+        const v = parseFloat(scrub.value);
+        updateLabel(v);
+        if (window.__calendarScrub && window.__calendarScrub.setPhase) {
+          window.__calendarScrub.setPhase(v);
+        }
+      });
+      const release = () => {
+        const v = parseFloat(scrub.value);
+        if (!window.__calendarScrub) return;
+        if (v >= 0.5 && window.__calendarScrub.commit) {
+          window.__calendarScrub.commit();
+        } else if (window.__calendarScrub.rollback) {
+          window.__calendarScrub.rollback();
+        }
+        scrub.value = '0';
+        updateLabel(0);
+      };
+      scrub.addEventListener('change', release);   // нативный change на release
+      scrub.addEventListener('pointerup', release);
+      scrub.addEventListener('touchend', release);
+    }
+  });
+
+  (async function boot() {
+    const boot = document.getElementById('boot');
+    const mode = getMode();
+
+    // Если режим явно css — сразу в CSS3D без попытки 3D.
+    // Иначе пытаемся 3D, и только если Three.js упадёт — переключаемся.
+    if (mode === 'css') {
+      boot.classList.add('hidden');
+      startCSS3D();
+      setActiveMode('css', null);
+      return;
+    }
+
+    try {
+      await Promise.all([
+        loadScriptWithFallback([
+          'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js',
+          'https://unpkg.com/three@0.158.0/build/three.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+        ]),
+        loadScriptWithFallback([
+          'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+          'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+        ]),
+      ]);
+      THREE_NS = window.THREE;
+      html2canvasFn = window.html2canvas;
+    } catch (e) {
+      boot.textContent = 'Не удалось загрузить Three.js / html2canvas — fallback CSS3D';
+      startCSS3D();
+      setActiveMode('css', '3d', 'CDN не отдал библиотеки: ' + (e?.message || e));
+      return;
+    }
+
+    // дождёмся подгрузки шрифтов, иначе html2canvas отсканирует fallback'ы
+    if (document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; } catch {}
+    }
+
+    const sources = Array.from(document.querySelectorAll('#leaves .leaf'));
+    if (sources.length !== TOTAL) {
+      boot.textContent = `Ожидалось ${TOTAL} листов, найдено ${sources.length}.`;
+      return;
+    }
+
+    // Создаём texCanvas + CanvasTexture для каждого листа
+    const leaves = sources.map((source) => {
+      const texCanvas = document.createElement('canvas');
+      texCanvas.width = 1024; texCanvas.height = 1408;  // 720:990 ≈ 1024:1408
+      const tctx = texCanvas.getContext('2d');
+      // первичная заливка бумажным цветом — чтобы первый кадр не был чёрным
+      tctx.fillStyle = '#F7F9EF';
+      tctx.fillRect(0, 0, texCanvas.width, texCanvas.height);
+      const texture = new THREE_NS.CanvasTexture(texCanvas);
+      texture.anisotropy = 8;
+      texture.needsUpdate = true;
+      return { source, texCanvas, texture };
+    });
+
+    // Снимаем все 12 листов до старта (последовательно, чтобы шрифты успели прогреться)
+    boot.textContent = 'Захват DOM в текстуру… 0 / 12';
+    for (let i = 0; i < leaves.length; i++) {
+      const ok = await captureLeaf(leaves[i].source, leaves[i].texCanvas);
+      if (ok) leaves[i].texture.needsUpdate = true;
+      boot.textContent = `Захват DOM в текстуру… ${i + 1} / 12`;
+    }
+
+    boot.classList.add('hidden');
+
+    // Готовим 3D-канвас под полный экран
+    const canvas = document.getElementById('cal-canvas');
+    try {
+      start(canvas, leaves);
+      setActiveMode('3d');
+    } catch (e) {
+      console.warn('WebGL недоступен — переключаюсь на CSS3D-fallback', e);
+      startCSS3D();
+      setActiveMode('css', '3d', 'Three.js упал на старте: ' + (e?.message || e));
+    }
+  })();
+
+  // ──────────────────────────────────────────────────────────────────
+  // CSS3D-fallback: та же стопка из 12 .leaf-источников, но через CSS
+  // perspective + rotateX. Никакого html2canvas — DOM остаётся живым.
+  // ──────────────────────────────────────────────────────────────────
+  function startCSS3D() {
+    document.getElementById('stage').style.display = 'none';
+    const stage3d = document.getElementById('stage3d');
+    stage3d.classList.add('active');
+    const pagesEl = stage3d.querySelector('.frame .pages');
+
+    // Клонируем 12 листов из #leaves внутрь .pages.
+    //   .leaf-3d — pivot top, висит вниз. Имеет front/back стороны.
+    const sources = Array.from(document.querySelectorAll('#leaves .leaf'));
+    const wrappers = sources.map((src) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'leaf-3d';
+      const front = document.createElement('div');
+      front.className = 'leaf-front';
+      front.appendChild(src.cloneNode(true));
+      const back = document.createElement('div');
+      back.className = 'leaf-back';
+      wrap.appendChild(front);
+      wrap.appendChild(back);
+      pagesEl.appendChild(wrap);
+      return wrap;
+    });
+
+    let currentIndex = 0;
+    let busy = false;
+    const FLIP_MS = 1400;
+
+    // Статичные положения листов в стопке.
+    //   · idx == state             → текущий, висит вниз перед спиралью (tz=0, rotateX=0)
+    //   · idx >  state (будущий)   → за текущим в стопке (tz отрицательный, rotateX=0)
+    //   · idx <  state (упавший)   → ЗА стопкой за спиралью (большой отрицательный tz, rotateX=0)
+    //
+    // Все листы при rotateX(0) висят вниз. Различаются только глубиной по Z.
+    // Перекидывание = крутка на -360° (полный круг через перед-низ-зад-верх) +
+    // одновременное смещение в стопку упавших (tz уходит далеко назад).
+    function staticZ(i, state) {
+      if (i < state) {
+        // упавшие — далеко за спиралью, вторая стопка
+        return -60 - (state - i) * 1.2;
+      }
+      if (i === state) return 0;
+      // будущие — за текущим в первой стопке
+      return -1.4 * (i - state);
+    }
+    function staticZIndex(i, state) {
+      // chrome painter уважает z-index только в одной плоскости 3D-родителя.
+      // Текущий — впереди (макс), затем будущие, упавшие — позади.
+      if (i === state) return 1000;
+      if (i > state) return 1000 - (i - state);     // будущие
+      return 100 - (state - i);                      // упавшие
+    }
+
+    function applyStatic(state) {
+      wrappers.forEach((w, i) => {
+        w.style.transform = `translateZ(${staticZ(i, state)}px) rotateX(0deg)`;
+        w.style.zIndex = staticZIndex(i, state);
+      });
+      counterNum.textContent = String(Math.min(state + 1, wrappers.length)).padStart(2, '0');
+    }
+
+    // Перекидывание ВПЕРЁД: лист idx=current уходит по дуге -360° (через ВЕРХ-НАЗАД).
+    function flipForward() {
+      if (busy || currentIndex >= wrappers.length - 1) return;
+      busy = true;
+      const w = wrappers[currentIndex];
+      const targetZ = staticZ(currentIndex, currentIndex + 1);
+      w.style.zIndex = 9999;
+      // Класс .flipping включает paper-wobble (skew/scale pulse) — это «мягкость»
+      w.classList.add('flipping');
+      w.style.transform = `translateZ(${targetZ}px) rotateX(-360deg)`;
+
+      // Параллельно следующий лист выезжает в передний план
+      const next = wrappers[currentIndex + 1];
+      next.style.transform = `translateZ(0px) rotateX(0deg)`;
+      next.style.zIndex = 1000;
+
+      setTimeout(() => {
+        // снимаем класс — анимация wobble останавливается
+        w.classList.remove('flipping');
+        // нормализуем угол (360 → 0)
+        w.style.transition = 'none';
+        w.style.transform = `translateZ(${targetZ}px) rotateX(0deg)`;
+        requestAnimationFrame(() => {
+          w.style.transition = '';
+          currentIndex++;
+          applyStatic(currentIndex);
+          busy = false;
+        });
+      }, FLIP_MS + 30);
+    }
+
+    function flipBackward() {
+      if (busy || currentIndex <= 0) return;
+      busy = true;
+      const idx = currentIndex - 1;
+      const w = wrappers[idx];
+      // Возвращаем упавший лист по обратной дуге +360° на передний план
+      w.style.transition = 'none';
+      w.style.transform = `translateZ(${staticZ(idx, currentIndex)}px) rotateX(360deg)`;
+      w.style.zIndex = 9999;
+      requestAnimationFrame(() => {
+        w.style.transition = '';
+        w.classList.add('flipping');
+        w.style.transform = `translateZ(0px) rotateX(0deg)`;
+      });
+      const cur = wrappers[currentIndex];
+      cur.style.transform = `translateZ(${staticZ(currentIndex, idx)}px) rotateX(0deg)`;
+      setTimeout(() => {
+        w.classList.remove('flipping');
+        currentIndex--;
+        applyStatic(currentIndex);
+        busy = false;
+      }, FLIP_MS + 30);
+    }
+    const applyState = () => applyStatic(currentIndex);
+
+    // ── Scrub-API для CSS3D: фаза (0..1) ↔ rotateX (0 → -360deg) ─────
+    let scrubbing = false;
+    window.__calendarScrub = {
+      setPhase(phase) {
+        if (currentIndex >= wrappers.length - 1) return;
+        if (busy) return;
+        scrubbing = true;
+        const w = wrappers[currentIndex];
+        // Без CSS-transition — мгновенное наложение позиции
+        w.style.transition = 'none';
+        w.style.zIndex = 9999;
+        const tz = Math.sin(phase * Math.PI) * 6;        // лёгкий лифт
+        const angle = -360 * phase;                       // ту же дугу что flipForward
+        w.style.transform = `translateZ(${tz}px) rotateX(${angle}deg)`;
+        w.classList.toggle('flipping', phase > 0.02);
+      },
+      commit() {
+        if (!scrubbing || currentIndex >= wrappers.length - 1) { scrubbing = false; return; }
+        // Доигрываем оставшуюся часть автоматически
+        const w = wrappers[currentIndex];
+        const targetZ = staticZ(currentIndex, currentIndex + 1);
+        // Восстанавливаем transition с укорочённой длительностью
+        const remaining = Math.max(200, FLIP_MS * 0.6);
+        w.style.transition = `transform ${remaining}ms cubic-bezier(0.55,0.02,0.38,1)`;
+        requestAnimationFrame(() => {
+          w.style.transform = `translateZ(${targetZ}px) rotateX(-360deg)`;
+        });
+        const next = wrappers[currentIndex + 1];
+        next.style.transition = `transform ${remaining}ms ease`;
+        next.style.transform = `translateZ(0px) rotateX(0deg)`;
+        next.style.zIndex = 1000;
+        setTimeout(() => {
+          w.classList.remove('flipping');
+          w.style.transition = 'none';
+          w.style.transform = `translateZ(${targetZ}px) rotateX(0deg)`;
+          requestAnimationFrame(() => {
+            w.style.transition = '';
+            currentIndex++;
+            applyStatic(currentIndex);
+            scrubbing = false;
+          });
+        }, remaining + 30);
+      },
+      rollback() {
+        if (!scrubbing) return;
+        const w = wrappers[currentIndex];
+        w.classList.remove('flipping');
+        w.style.transition = 'transform 0.4s ease';
+        requestAnimationFrame(() => {
+          w.style.transform = `translateZ(0px) rotateX(0deg)`;
+        });
+        setTimeout(() => { w.style.transition = ''; scrubbing = false; }, 450);
+      }
+    };
+
+    const counterNum = document.getElementById('counter-num');
+    document.getElementById('next').addEventListener('click', () => { stopAuto(); flipForward(); });
+    document.getElementById('prev').addEventListener('click', () => { stopAuto(); flipBackward(); });
+
+    let autoTimer = null;
+    const autoBtn = document.getElementById('auto');
+    function startAuto() {
+      autoBtn.classList.add('primary'); autoBtn.textContent = 'Стоп';
+      const tick = () => {
+        if (currentIndex >= wrappers.length - 1) {
+          autoTimer = setTimeout(reverseLoop, 4200); return;
+        }
+        flipForward();
+        autoTimer = setTimeout(tick, 4200);
+      };
+      const reverseLoop = () => {
+        if (currentIndex <= 0) { autoTimer = setTimeout(tick, 4200); return; }
+        flipBackward();
+        autoTimer = setTimeout(reverseLoop, 2700);
+      };
+      tick();
+    }
+    function stopAuto() {
+      if (autoTimer) clearTimeout(autoTimer);
+      autoTimer = null;
+      autoBtn.classList.remove('primary'); autoBtn.textContent = 'Авто';
+    }
+    autoBtn.addEventListener('click', () => autoTimer ? stopAuto() : startAuto());
+
+    // Свайп
+    let dragX = null;
+    stage3d.addEventListener('pointerdown', e => { dragX = e.clientX; });
+    stage3d.addEventListener('pointerup', e => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX; dragX = null;
+      if (Math.abs(dx) > 60) { stopAuto(); dx < 0 ? flipForward() : flipBackward(); }
+    });
+    stage3d.addEventListener('pointercancel', () => { dragX = null; });
+
+    applyState();
+  }
+</script>
+</body>
+</html>
