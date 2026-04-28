@@ -33,6 +33,14 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script src="theme.js?v=20260426c"></script>
+<script src="pin-gate.js?v=20260427"></script>
+<script>
+  // Главная экспозиция /expo/ закрыта пин-кодом. Без кода доступ только
+  // к разделу «Персоналии» — кнопка-эскейп на gate-оверлее.
+  if (window.MTK_PIN) {
+    window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html', escapeLabel: '→ К персоналиям' });
+  }
+</script>
 <script src="data.js?v=20260426c"></script>
 <script type="text/babel" src="shared.jsx?v=20260426c"></script>
 <script type="text/babel" src="direction-a.jsx?v=20260426c"></script>
