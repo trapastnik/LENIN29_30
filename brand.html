@@ -1952,35 +1952,65 @@
         <code>position: absolute; left: -99999px</code> — остаётся в layout, но не виден.
       </p>
 
-      <!-- ── Демо: перекидной календарь 1917–1924 на этой же технологии ── -->
-      <a href="/calendar.html"
-         style="display: flex; align-items: center; justify-content: space-between; gap: 24px;
-                margin-top: 28px; padding: 22px 28px;
-                background: linear-gradient(120deg, rgba(160,33,40,0.18), rgba(210,183,115,0.08));
-                border: 1px solid rgba(210,183,115,0.45);
-                border-radius: 6px;
-                text-decoration: none; color: inherit;">
-        <div>
+      <!-- ── Демо: две независимые реализации перекидного календаря ── -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px;">
+
+        <a href="/calendar.html"
+           style="display: flex; flex-direction: column; gap: 8px;
+                  padding: 22px 26px;
+                  background: linear-gradient(120deg, rgba(160,33,40,0.18), rgba(210,183,115,0.08));
+                  border: 1px solid rgba(210,183,115,0.45);
+                  border-radius: 6px;
+                  text-decoration: none; color: inherit;">
           <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.32em;
-                      text-transform: uppercase; color: var(--brass); margin-bottom: 6px;">
-            Демо · полная сцена
+                      text-transform: uppercase; color: var(--brass);">
+            Версия А · Three.js + html2canvas
           </div>
-          <div style="font-family: var(--font-display); font-style: italic; font-weight: 700;
-                      font-size: 28px; color: var(--paper-white); line-height: 1.05;">
+          <div style="font-family: var(--font-display); font-weight: 700;
+                      font-size: 26px; color: var(--paper-white); line-height: 1.05;">
             Перекидной календарь · 1917 — 1924
           </div>
-          <div style="font-family: var(--font-body); font-size: 14px; line-height: 1.45;
-                      color: var(--paper-white); opacity: 0.78; margin-top: 8px; max-width: 60ch;">
-            12 ключевых дат Гражданской войны на той же технологии: live-DOM → html2canvas → CanvasTexture →
-            Three.js mesh с per-vertex page-curl. Слайдер «покадрово», панель реализма (тень / физический материал /
-            двусторонняя бумага / звук), CSS-fallback для устройств без WebGL.
+          <div style="font-family: var(--font-body); font-size: 13px; line-height: 1.45;
+                      color: var(--paper-white); opacity: 0.78; margin-top: 4px;">
+            12 дат Гражданской войны. Live-DOM → html2canvas → CanvasTexture →
+            Three.js mesh с per-vertex page-curl. Панель реализма: тень / физический
+            материал / двусторонняя бумага / звук. CSS-fallback для устройств без WebGL.
           </div>
-        </div>
-        <div style="font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.22em;
-                    text-transform: uppercase; color: var(--brass); white-space: nowrap;">
-          Открыть →
-        </div>
-      </a>
+          <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em;
+                      text-transform: uppercase; color: var(--brass); margin-top: auto; padding-top: 10px;">
+            Открыть →
+          </div>
+        </a>
+
+        <a href="/prototypes/calendar-codex/"
+           style="display: flex; flex-direction: column; gap: 8px;
+                  padding: 22px 26px;
+                  background: linear-gradient(120deg, rgba(67,80,89,0.35), rgba(210,183,115,0.05));
+                  border: 1px solid rgba(210,183,115,0.45);
+                  border-radius: 6px;
+                  text-decoration: none; color: inherit;">
+          <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.32em;
+                      text-transform: uppercase; color: var(--brass);">
+            Версия Б · сырой WebGL (Codex)
+          </div>
+          <div style="font-family: var(--font-display); font-weight: 700;
+                      font-size: 26px; color: var(--paper-white); line-height: 1.05;">
+            Realistic Wire Variant
+          </div>
+          <div style="font-family: var(--font-body); font-size: 13px; line-height: 1.45;
+                      color: var(--paper-white); opacity: 0.78; margin-top: 4px;">
+            Альтернативный прототип на raw WebGL без Three.js. Реалистичная
+            проволочная спираль (двойные U-кольца + стержень), бумажная фактура,
+            потёртые края. Панель параметров — крутить физику переворота вживую
+            (длина волны, боковой изгиб, подъём края, микро-дрожь).
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em;
+                      text-transform: uppercase; color: var(--brass); margin-top: auto; padding-top: 10px;">
+            Открыть →
+          </div>
+        </a>
+
+      </div>
 
       <!-- Скрытые DOM-источники (рендерятся за экраном, html2canvas захватывает их в текстуру) -->
       <div class="xr-stub" id="src-pravda" aria-hidden="true">

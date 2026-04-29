@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendar 3D Paper Curl · Realistic Wire Variant</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(210, 183, 115, 0.12), transparent 34%),
+        radial-gradient(circle at 82% 72%, rgba(120, 25, 33, 0.22), transparent 38%),
+        linear-gradient(180deg, #202529 0%, #353b3e 48%, #191d20 100%);
+      color: #f7f1df;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      touch-action: none;
+    }
+
+    #scene {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+    }
+
+    #hardware-back,
+    #hardware-front {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    #hardware-back { z-index: 1; }
+    #hardware-front { z-index: 4; }
+
+    .hud {
+      position: fixed;
+      left: 28px;
+      top: 24px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .kicker {
+      font: 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #d2b773;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 500px;
+      font-size: 24px;
+      line-height: 1.08;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .panel {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 6;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 16px;
+      border: 1px solid rgba(210, 183, 115, 0.42);
+      background: rgba(0, 0, 0, 0.52);
+      backdrop-filter: blur(10px);
+      border-radius: 6px;
+      user-select: none;
+    }
+
+    button {
+      min-width: 116px;
+      min-height: 58px;
+      padding: 0 18px;
+      border: 1px solid #d2b773;
+      border-radius: 4px;
+      background: transparent;
+      color: #f7f1df;
+      font: 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button:active { background: rgba(210, 183, 115, 0.18); }
+    button.primary {
+      background: #a02128;
+      border-color: #a02128;
+    }
+
+    .count {
+      min-width: 92px;
+      text-align: center;
+      font: 12px/1.1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #d2b773;
+    }
+
+    .count b {
+      display: block;
+      margin-bottom: 2px;
+      font: italic 30px/1 Georgia, "Times New Roman", serif;
+      letter-spacing: 0;
+      color: #f7f1df;
+    }
+
+    .scrub-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 104px;
+      transform: translateX(-50%);
+      z-index: 6;
+      width: min(680px, calc(100vw - 36px));
+      padding: 10px 14px;
+      border: 1px solid rgba(210, 183, 115, 0.34);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.46);
+      backdrop-filter: blur(10px);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      color: #d2b773;
+      font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .scrub-panel input {
+      width: 100%;
+      accent-color: #a02128;
+      cursor: pointer;
+    }
+
+    .note {
+      position: fixed;
+      right: 24px;
+      top: 28px;
+      z-index: 6;
+      max-width: 360px;
+      color: rgba(247, 241, 223, 0.72);
+      font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.04em;
+      text-align: right;
+      pointer-events: none;
+    }
+
+    .tune-panel {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 7;
+      width: 300px;
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(210, 183, 115, 0.34);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.58);
+      backdrop-filter: blur(12px);
+      color: #f7f1df;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      user-select: none;
+    }
+
+    .tune-panel h2 {
+      margin: 0 0 12px;
+      font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #d2b773;
+    }
+
+    .tune-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 10px;
+      align-items: center;
+      position: relative;
+      padding: 8px 0;
+      border-top: 1px solid rgba(247, 241, 223, 0.12);
+      font-size: 10px;
+      line-height: 1.2;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tune-row input[type="range"] {
+      grid-column: 1 / -1;
+      width: 100%;
+      height: 22px;
+      border-radius: 999px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 10px;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .tune-row input[type="range"]::-webkit-slider-runnable-track {
+      height: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 999px;
+      background: transparent;
+    }
+
+    .tune-row input[type="range"]::-webkit-slider-thumb {
+      width: 24px;
+      height: 24px;
+      margin-top: -8px;
+      border: 0;
+      border-radius: 50%;
+      background: #f7f7f4;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .tune-row input[type="range"]::-moz-range-track {
+      height: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 999px;
+      background: transparent;
+    }
+
+    .tune-row input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      border-radius: 50%;
+      background: #f7f7f4;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    .tune-saved-marker {
+      grid-column: 1 / -1;
+      position: relative;
+      z-index: 2;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .tune-saved-marker::before {
+      content: "";
+      position: absolute;
+      left: var(--saved-pct, 50%);
+      top: -20px;
+      width: 4px;
+      height: 24px;
+      border-radius: 999px;
+      background: #d2b773;
+      box-shadow: 0 0 0 2px rgba(16, 14, 14, 0.62);
+      transform: translateX(-50%);
+    }
+
+    .tune-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #a02128;
+      cursor: pointer;
+    }
+
+    .tune-value {
+      min-width: 56px;
+      color: #d2b773;
+      text-align: right;
+    }
+
+    .tune-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tune-actions button {
+      min-width: 0;
+      min-height: 38px;
+      flex: 1;
+      padding: 0 10px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+
+    .tune-panel.is-collapsed {
+      width: 174px;
+    }
+
+    .tune-panel.is-collapsed .tune-row,
+    .tune-panel.is-collapsed #reset-tune,
+    .tune-panel.is-collapsed #save-tune {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .hud { left: 18px; top: 16px; }
+      h1, .note { display: none; }
+      .kicker { font-size: 9px; letter-spacing: 0.2em; }
+      .panel { bottom: 12px; padding: 10px; gap: 8px; }
+      .scrub-panel { bottom: 86px; }
+      .tune-panel {
+        left: 12px;
+        right: 12px;
+        bottom: 156px;
+        width: auto;
+        max-height: 38vh;
+      }
+      button { min-width: 82px; min-height: 52px; padding: 0 10px; font-size: 10px; }
+      .count { min-width: 72px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div class="hud">
+    <div class="kicker">WebGL prototype · realistic wire variant</div>
+    <h1>Плотная бумага, проволочная спираль и спокойный физический переворот</h1>
+  </div>
+  <canvas id="hardware-back"></canvas>
+  <canvas id="hardware-front"></canvas>
+  <div class="note">Вариант с отдельным слоем проволоки: кольца не являются частью листа и остаются неподвижными.</div>
+  <div class="tune-panel" id="tune-panel">
+    <h2>Параметры</h2>
+    <label class="tune-row">
+      <span>Смена слоя</span><span class="tune-value" data-value-for="layerSwitch"></span>
+      <input data-tune="layerSwitch" type="range" min="0.20" max="0.90" value="0.56" step="0.01">
+    </label>
+    <label class="tune-row">
+      <span>Активный z</span><span class="tune-value" data-value-for="activeZ"></span>
+      <input data-tune="activeZ" type="range" min="-0.10" max="0.46" value="-0.01" step="0.01">
+    </label>
+    <label class="tune-row">
+      <span>Старт раскрытия</span><span class="tune-value" data-value-for="revealStart"></span>
+      <input data-tune="revealStart" type="range" min="0.00" max="0.70" value="0.00" step="0.01">
+    </label>
+    <label class="tune-row">
+      <span>Финиш раскрытия</span><span class="tune-value" data-value-for="revealEnd"></span>
+      <input data-tune="revealEnd" type="range" min="0.10" max="1.00" value="0.85" step="0.01">
+    </label>
+    <label class="tune-row">
+      <span>Задержка диагонали</span><span class="tune-value" data-value-for="diagonalDelay"></span>
+      <input data-tune="diagonalDelay" type="range" min="0.00" max="0.18" value="0.015" step="0.005">
+    </label>
+    <label class="tune-row">
+      <span>Длина волны</span><span class="tune-value" data-value-for="flipSpan"></span>
+      <input data-tune="flipSpan" type="range" min="0.55" max="1.10" value="0.66" step="0.01">
+    </label>
+    <label class="tune-row">
+      <span>Боковой изгиб</span><span class="tune-value" data-value-for="sideCurl"></span>
+      <input data-tune="sideCurl" type="range" min="0.00" max="0.12" value="0.015" step="0.005">
+    </label>
+    <label class="tune-row">
+      <span>Подъем края</span><span class="tune-value" data-value-for="edgeLift"></span>
+      <input data-tune="edgeLift" type="range" min="0.00" max="0.08" value="0.00" step="0.005">
+    </label>
+    <label class="tune-row">
+      <span>Микро-дрожь</span><span class="tune-value" data-value-for="wobble"></span>
+      <input data-tune="wobble" type="range" min="0.000" max="0.014" value="0.0035" step="0.0005">
+    </label>
+    <label class="tune-row">
+      <span>Писать depth после слоя</span><span class="tune-value" data-value-for="behindWritesDepth"></span>
+      <input data-tune="behindWritesDepth" type="checkbox">
+    </label>
+    <div class="tune-actions">
+      <button id="save-tune" type="button">Сохранить</button>
+      <button id="reset-tune" type="button">Сброс</button>
+      <button id="hide-tune" type="button">Скрыть</button>
+    </div>
+  </div>
+  <div class="scrub-panel">
+    <span>Кадр</span>
+    <input id="scrub" type="range" min="0" max="100" value="0" step="1">
+    <span id="scrub-value">0%</span>
+  </div>
+  <div class="panel">
+    <button id="prev" type="button">‹ Назад</button>
+    <div class="count"><b id="num">01</b><span>/ 12</span></div>
+    <button id="next" class="primary" type="button">Вперёд ›</button>
+    <button id="auto" type="button">Авто</button>
+  </div>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('scene');
+      const hardwareBackCanvas = document.getElementById('hardware-back');
+      const hardwareFrontCanvas = document.getElementById('hardware-front');
+      const hardwareBack = hardwareBackCanvas.getContext('2d');
+      const hardwareFront = hardwareFrontCanvas.getContext('2d');
+      const gl = canvas.getContext('webgl', {
+        antialias: true,
+        alpha: true,
+        depth: true,
+        stencil: false,
+        powerPreference: 'high-performance',
+      });
+
+      if (!gl) {
+        document.body.innerHTML = '<p style="padding:40px;color:#f7f1df;font:18px Georgia">WebGL недоступен.</p>';
+        return;
+      }
+
+      const EVENTS = [
+        ['1917', 'Октябрь', '25', 'Петроградъ', 'Октябрьское восстание', 'ВРК занимает мосты, вокзалы и телеграф. Утром власть переходит к Советам.', '#a02128'],
+        ['1918', 'Январь', '5', 'Таврический дворецъ', 'Разгон Учредительного собрания', 'Политический спор окончательно уходит с парламентской трибуны в военное поле.', '#b36ba8'],
+        ['1918', 'Март', '3', 'Брестъ-Литовскъ', 'Брестский мир', 'Выход из Великой войны ценой территорий, промышленности и тяжёлого политического разлома.', '#627b88'],
+        ['1918', 'Май', '25', 'Транссибъ', 'Мятеж Чехословацкого корпуса', 'Эшелоны от Пензы до Владивостока открывают Восточный фронт.', '#d8d0b8'],
+        ['1918', 'Июль', '17', 'Екатеринбургъ', 'Расстрел царской семьи', 'Событие становится точкой невозврата для символического конца империи.', '#a02128'],
+        ['1918', 'Август', '30', 'Москва', 'Покушение на Ленина', 'После выстрелов у завода Михельсона государственное насилие получает новый масштаб.', '#74171e'],
+        ['1918', 'Ноябрь', '18', 'Омскъ', 'Колчак — Верховный правитель', 'Антибольшевистская коалиция концентрирует власть в руках адмирала.', '#d8d0b8'],
+        ['1919', 'Октябрь', '13', 'Орёлъ', 'Поход Деникина на Москву', 'ВСЮР подходят к критической черте, но контрудар ломает наступление.', '#d8d0b8'],
+        ['1920', 'Ноябрь', '16', 'Севастополь', 'Эвакуация армии Врангеля', 'Корабли уходят из Крыма, увозя армию и беженцев.', '#d8d0b8'],
+        ['1921', 'Март', '8', 'Москва · Кронштадтъ', 'НЭП и Кронштадт', 'Новый экономический курс появляется рядом с подавлением восстания.', '#5b8c62'],
+        ['1922', 'Декабрь', '30', 'Москва', 'Образование СССР', 'Союз республик оформляется декларацией и договором.', '#a02128'],
+        ['1924', 'Январь', '21', 'Горки', 'Смерть В. И. Ленина', 'Начинается посмертная политическая и музейная история образа Ленина.', '#151515'],
+      ];
+
+      const W = 2.0;
+      const H = 2.78;
+      const X_SEG = 16;
+      const Y_SEG = 34;
+      const pageCount = EVENTS.length;
+      const state = {
+        index: 0,
+        anim: null,
+        drag: null,
+        auto: false,
+        autoTimer: 0,
+        yaw: 0,
+        debugScrub: null,
+      };
+      const storageCurrentKey = 'calendar-3d-paper-realistic-current';
+      const storageSavedKey = 'calendar-3d-paper-realistic-saved';
+      const defaultSettings = {
+        layerSwitch: 0.56,
+        activeZ: -0.01,
+        revealStart: 0,
+        revealEnd: 0.85,
+        diagonalDelay: 0.015,
+        flipSpan: 0.66,
+        sideCurl: 0.015,
+        edgeLift: 0,
+        wobble: 0.0035,
+        behindWritesDepth: false,
+      };
+
+      function readStoredSettings(key) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          return { ...defaultSettings, ...parsed };
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function writeStoredSettings(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+          // В file:// localStorage обычно доступен, но этот прототип должен жить и без него.
+        }
+      }
+
+      let savedSettings = readStoredSettings(storageSavedKey) || { ...defaultSettings };
+      const settings = readStoredSettings(storageCurrentKey) || { ...savedSettings };
+
+      const vertSrc = `
+        attribute vec3 aPos;
+        attribute vec2 aUv;
+        attribute float aShade;
+        uniform mat4 uMvp;
+        varying vec2 vUv;
+        varying float vShade;
+        void main() {
+          vUv = aUv;
+          vShade = aShade;
+          gl_Position = uMvp * vec4(aPos, 1.0);
+        }
+      `;
+
+      const fragSrc = `
+        precision mediump float;
+        uniform sampler2D uTex;
+        uniform float uAlpha;
+        varying vec2 vUv;
+        varying float vShade;
+        void main() {
+          vec4 c = texture2D(uTex, vUv);
+          c.rgb *= vShade;
+          gl_FragColor = vec4(c.rgb, c.a * uAlpha);
+        }
+      `;
+
+      const colorVertSrc = `
+        attribute vec3 aPos;
+        attribute vec4 aColor;
+        uniform mat4 uMvp;
+        varying vec4 vColor;
+        void main() {
+          vColor = aColor;
+          gl_Position = uMvp * vec4(aPos, 1.0);
+        }
+      `;
+
+      const colorFragSrc = `
+        precision mediump float;
+        varying vec4 vColor;
+        void main() {
+          gl_FragColor = vColor;
+        }
+      `;
+
+      function shader(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+        return s;
+      }
+
+      function program(vs, fs) {
+        const p = gl.createProgram();
+        gl.attachShader(p, shader(gl.VERTEX_SHADER, vs));
+        gl.attachShader(p, shader(gl.FRAGMENT_SHADER, fs));
+        gl.linkProgram(p);
+        if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+        return p;
+      }
+
+      const pageProg = program(vertSrc, fragSrc);
+      const colorProg = program(colorVertSrc, colorFragSrc);
+      const loc = {
+        page: {
+          aPos: gl.getAttribLocation(pageProg, 'aPos'),
+          aUv: gl.getAttribLocation(pageProg, 'aUv'),
+          aShade: gl.getAttribLocation(pageProg, 'aShade'),
+          uMvp: gl.getUniformLocation(pageProg, 'uMvp'),
+          uTex: gl.getUniformLocation(pageProg, 'uTex'),
+          uAlpha: gl.getUniformLocation(pageProg, 'uAlpha'),
+        },
+        color: {
+          aPos: gl.getAttribLocation(colorProg, 'aPos'),
+          aColor: gl.getAttribLocation(colorProg, 'aColor'),
+          uMvp: gl.getUniformLocation(colorProg, 'uMvp'),
+        }
+      };
+
+      const pageBuffer = gl.createBuffer();
+      const colorBuffer = gl.createBuffer();
+      const textures = EVENTS.map((event, i) => createTexture(drawLeaf(event, i)));
+
+      function drawLeaf(event, i) {
+        const c = document.createElement('canvas');
+        c.width = 1024;
+        c.height = 1424;
+        const ctx = c.getContext('2d');
+        const [year, month, day, place, title, text, camp] = event;
+
+        const paper = ctx.createLinearGradient(0, 0, c.width, c.height);
+        paper.addColorStop(0, '#fbf3db');
+        paper.addColorStop(0.42, '#f7efd7');
+        paper.addColorStop(1, '#efe2c0');
+        ctx.fillStyle = paper;
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        // Бумажная фактура: тонкие волокна, пятна, слегка потёртые края.
+        ctx.globalAlpha = 0.16;
+        for (let n = 0; n < 1400; n++) {
+          const x = Math.random() * c.width;
+          const y = Math.random() * c.height;
+          const w = 4 + Math.random() * 26;
+          const a = Math.random() * 0.45;
+          ctx.fillStyle = Math.random() > 0.55 ? `rgba(88,68,42,${a})` : `rgba(255,255,245,${a})`;
+          ctx.fillRect(x, y, w, 1);
+        }
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'rgba(90,70,46,0.22)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, c.width - 3, c.height - 3);
+        ctx.strokeStyle = 'rgba(255,255,245,0.55)';
+        ctx.strokeRect(8, 8, c.width - 17, c.height - 17);
+
+        ctx.fillStyle = camp;
+        ctx.fillRect(0, 0, 22, c.height);
+        ctx.fillStyle = 'rgba(0,0,0,0.10)';
+        ctx.fillRect(22, 0, 5, c.height);
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        for (let y = 0; y < c.height; y += 7) ctx.fillRect(0, y, c.width, 1);
+
+        ctx.fillStyle = camp;
+        ctx.fillRect(92, 166, 840, 8);
+        ctx.fillStyle = '#2a211d';
+        ctx.font = 'italic 800 128px Georgia';
+        ctx.fillText(year, 92, 136);
+        ctx.font = '700 34px Menlo, monospace';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = camp;
+        ctx.fillText(month.toUpperCase(), 932, 116);
+
+        ctx.textAlign = 'center';
+        ctx.font = 'italic 900 470px Georgia';
+        ctx.fillStyle = camp;
+        ctx.fillText(day, 512, 620);
+        ctx.font = '700 24px Menlo, monospace';
+        ctx.fillStyle = 'rgba(42,33,29,0.58)';
+        ctx.fillText(place.toUpperCase(), 512, 680);
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#211a17';
+        ctx.font = 'italic 700 58px Georgia';
+        wrap(ctx, title, 92, 800, 840, 62);
+        ctx.fillStyle = 'rgba(42,33,29,0.72)';
+        ctx.font = '30px Georgia';
+        wrap(ctx, text, 92, 950, 830, 44);
+
+        ctx.fillStyle = 'rgba(0,0,0,0.22)';
+        ctx.fillRect(92, 1300, 840, 1);
+        ctx.fillStyle = '#a02128';
+        ctx.font = '700 18px Menlo, monospace';
+        ctx.fillText('ЛЕНИН-ЦЕНТР · МТК 29', 92, 1345);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = 'rgba(42,33,29,0.42)';
+        ctx.fillText('№ ' + String(i + 1).padStart(2, '0'), 932, 1345);
+        ctx.textAlign = 'left';
+
+        drawPunchHole(ctx, 178, 48);
+        drawPunchHole(ctx, 846, 48);
+        return c;
+      }
+
+      function drawPunchHole(ctx, x, y) {
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.42)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetY = 5;
+        const rim = ctx.createRadialGradient(x - 5, y - 6, 4, x, y, 28);
+        rim.addColorStop(0, '#74766f');
+        rim.addColorStop(0.45, '#394047');
+        rim.addColorStop(1, '#1f2429');
+        ctx.fillStyle = rim;
+        ctx.beginPath();
+        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        ctx.fillStyle = 'rgba(255,255,245,0.22)';
+        ctx.beginPath();
+        ctx.arc(x - 8, y - 9, 8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function wrap(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        for (const word of words) {
+          const test = line ? line + ' ' + word : word;
+          if (ctx.measureText(test).width > maxWidth && line) {
+            ctx.fillText(line, x, y);
+            line = word;
+            y += lineHeight;
+          } else {
+            line = test;
+          }
+        }
+        if (line) ctx.fillText(line, x, y);
+      }
+
+      function createTexture(c) {
+        const t = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, t);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        return t;
+      }
+
+      function ease(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function clamp01(t) {
+        return Math.max(0, Math.min(1, t));
+      }
+
+      function smoothstep(edge0, edge1, x) {
+        const t = clamp01((x - edge0) / (edge1 - edge0));
+        return t * t * (3 - 2 * t);
+      }
+
+      function animRawT() {
+        if (state.debugScrub) return state.debugScrub.t;
+        if (!state.anim) return 0;
+        return clamp01((performance.now() - state.anim.t0) / state.anim.ms);
+      }
+
+      function animPhase() {
+        const t = animRawT();
+        return t < 0.82 ? ease(t / 0.82) * 0.96 : 0.96 + ((t - 0.82) / 0.18) * 0.04;
+      }
+
+      function phaseForPage(i) {
+        if (state.debugScrub && i === state.debugScrub.page) {
+          const e = animPhase();
+          return state.debugScrub.dir > 0 ? e : 1 - e;
+        }
+        if (state.drag && i === state.index) return state.drag.phase;
+        if (state.anim && i === state.anim.page) {
+          const e = animPhase();
+          return state.anim.dir > 0 ? e : 1 - e;
+        }
+        return i < state.index ? 1 : 0;
+      }
+
+      function pageParams(i, now) {
+        const phase = phaseForPage(i);
+        const isMoving = !!state.drag && i === state.index || !!state.anim && i === state.anim.page || !!state.debugScrub && i === state.debugScrub.page;
+        const phaseClamped = Math.max(0, Math.min(1, phase));
+        const activeDir = state.debugScrub ? state.debugScrub.dir : (state.anim ? state.anim.dir : 0);
+        const activePage = state.debugScrub ? state.debugScrub.page : (state.anim ? state.anim.page : -1);
+        const revealEnd = Math.max(settings.revealStart + 0.01, settings.revealEnd);
+        const reveal = (state.anim || state.debugScrub)
+          ? smoothstep(settings.revealStart, revealEnd, animRawT())
+          : 0;
+        const visualIndex = activeDir && reveal > 0.5
+          ? state.index + activeDir
+          : state.index;
+        let baseZ = i < visualIndex
+          ? -0.54 - (visualIndex - i) * 0.026
+          : -(i - visualIndex) * 0.018;
+        if (activeDir > 0) {
+          if (i === activePage) {
+            baseZ = settings.activeZ;
+          } else if (i === state.index + 1) {
+            baseZ = -0.018 + 0.018 * reveal;
+          }
+        } else if (activeDir < 0) {
+          if (i === activePage) {
+            baseZ = settings.activeZ;
+          } else if (i === state.index) {
+            baseZ = -0.018 * reveal;
+          }
+        }
+        const stackTilt = (i - visualIndex) * 0.003;
+        const cornerLead = isMoving ? Math.sin(now * 0.45 + i) * 0.006 : 0;
+        const curlStrength = Math.sin(Math.min(1, phaseClamped) * Math.PI);
+        return { phase, isMoving, baseZ, stackTilt, cornerLead, curlStrength };
+      }
+
+      function pagePoint(i, u, v, now) {
+        const { phase, isMoving, baseZ, stackTilt, cornerLead, curlStrength } = pageParams(i, now);
+        const px = (u - 0.5) * W;
+        const dist = v * H;
+        const diagonalDelay = (u - 0.5) * settings.diagonalDelay + cornerLead;
+        let local = (phase - v * 0.24 - diagonalDelay) / settings.flipSpan;
+        local = Math.max(0, Math.min(1, local));
+
+        const angle = local * Math.PI * 2;
+        const sideCurl = Math.sin(u * Math.PI) * curlStrength * settings.sideCurl;
+        const edgeLift = (Math.abs(u - 0.5) * 2) * curlStrength * settings.edgeLift;
+        const wobble = isMoving
+          ? Math.sin((u * 2.2 + v * 1.6 + now * 2.4) * Math.PI) * curlStrength * settings.wobble
+          : 0;
+        const rotatedY = H / 2 - dist * Math.cos(angle);
+        const rotatedZ = dist * Math.sin(angle);
+        const px2 = px + Math.sin(v * Math.PI) * curlStrength * (u - 0.5) * 0.025;
+        const py2 = rotatedY + sideCurl + stackTilt;
+        const pz2 = baseZ + rotatedZ + edgeLift + wobble;
+        const shade = 0.70 + 0.26 * Math.cos(local * Math.PI * 2) + (1 - v) * 0.12;
+        return { x: px2, y: py2, z: pz2, shade };
+      }
+
+      function buildPageVertices(i, now) {
+        const verts = [];
+        const indices = [];
+
+        for (let y = 0; y <= Y_SEG; y++) {
+          for (let x = 0; x <= X_SEG; x++) {
+            const u = x / X_SEG;
+            const v = y / Y_SEG;
+            const p = pagePoint(i, u, v, now);
+            const shade = p.shade;
+            verts.push(p.x, p.y, p.z, u, v, Math.max(0.48, Math.min(1.14, shade)));
+          }
+        }
+
+        const row = X_SEG + 1;
+        for (let y = 0; y < Y_SEG; y++) {
+          for (let x = 0; x < X_SEG; x++) {
+            const a = y * row + x;
+            const b = a + 1;
+            const c = a + row;
+            const d = c + 1;
+            indices.push(a, c, b, b, c, d);
+          }
+        }
+
+        const out = [];
+        for (let n = 0; n < indices.length; n += 3) {
+          for (let k = 0; k < 3; k++) {
+            const o = indices[n + k] * 6;
+            out.push(verts[o], verts[o + 1], verts[o + 2], verts[o + 3], verts[o + 4], verts[o + 5]);
+          }
+        }
+        return out;
+      }
+
+      function buildColorQuad(x0, y0, z0, x1, y1, z1, rgba) {
+        const [r, g, b, a] = rgba;
+        return [
+          x0, y0, z0, r, g, b, a,  x1, y0, z0, r, g, b, a,  x0, y1, z1, r, g, b, a,
+          x1, y0, z0, r, g, b, a,  x1, y1, z1, r, g, b, a,  x0, y1, z1, r, g, b, a,
+        ];
+      }
+
+      function mat4Perspective(fovy, aspect, near, far) {
+        const f = 1 / Math.tan(fovy / 2);
+        return [
+          f / aspect, 0, 0, 0,
+          0, f, 0, 0,
+          0, 0, (far + near) / (near - far), -1,
+          0, 0, (2 * far * near) / (near - far), 0,
+        ];
+      }
+
+      function mat4LookAt(eye, center, up) {
+        const z = norm(sub(eye, center));
+        const x = norm(cross(up, z));
+        const y = cross(z, x);
+        return [
+          x[0], y[0], z[0], 0,
+          x[1], y[1], z[1], 0,
+          x[2], y[2], z[2], 0,
+          -dot(x, eye), -dot(y, eye), -dot(z, eye), 1,
+        ];
+      }
+
+      function mul(a, b) {
+        const r = new Array(16).fill(0);
+        for (let row = 0; row < 4; row++) {
+          for (let col = 0; col < 4; col++) {
+            for (let k = 0; k < 4; k++) r[col * 4 + row] += a[k * 4 + row] * b[col * 4 + k];
+          }
+        }
+        return r;
+      }
+
+      function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+      function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+      function cross(a, b) { return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+      function norm(a) {
+        const l = Math.hypot(a[0], a[1], a[2]) || 1;
+        return [a[0] / l, a[1] / l, a[2] / l];
+      }
+
+      function drawPage(i, mvp, now, writesDepth = true) {
+        const data = new Float32Array(buildPageVertices(i, now));
+        gl.depthMask(writesDepth);
+        gl.useProgram(pageProg);
+        gl.bindBuffer(gl.ARRAY_BUFFER, pageBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(loc.page.aPos);
+        gl.vertexAttribPointer(loc.page.aPos, 3, gl.FLOAT, false, 24, 0);
+        gl.enableVertexAttribArray(loc.page.aUv);
+        gl.vertexAttribPointer(loc.page.aUv, 2, gl.FLOAT, false, 24, 12);
+        gl.enableVertexAttribArray(loc.page.aShade);
+        gl.vertexAttribPointer(loc.page.aShade, 1, gl.FLOAT, false, 24, 20);
+        gl.uniformMatrix4fv(loc.page.uMvp, false, new Float32Array(mvp));
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, textures[i]);
+        gl.uniform1i(loc.page.uTex, 0);
+        gl.uniform1f(loc.page.uAlpha, 1);
+        gl.drawArrays(gl.TRIANGLES, 0, data.length / 6);
+        if (!writesDepth) gl.depthMask(true);
+      }
+
+      function activeMovingPage() {
+        if (state.debugScrub) return state.debugScrub.page;
+        if (state.anim) return state.anim.page;
+        return -1;
+      }
+
+      function visualTopIndex() {
+        return visualCounterIndex();
+      }
+
+      function drawPages(mvp, now) {
+        const active = activeMovingPage();
+        const top = visualTopIndex();
+        const activePhase = active >= 0 ? phaseForPage(active) : 0;
+        const activeBehind = active >= 0 && active !== top && activePhase >= settings.layerSwitch;
+        if (activeBehind) drawPage(active, mvp, now, settings.behindWritesDepth);
+        for (let i = pageCount - 1; i >= 0; i--) {
+          if (i === active || i === top) continue;
+          drawPage(i, mvp, now);
+        }
+        if (top >= 0) drawPage(top, mvp, now);
+        if (active >= 0 && active !== top && !activeBehind) {
+          drawPage(active, mvp, now);
+        }
+      }
+
+      function drawColor(data, mvp) {
+        const arr = new Float32Array(data);
+        gl.useProgram(colorProg);
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, arr, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(loc.color.aPos);
+        gl.vertexAttribPointer(loc.color.aPos, 3, gl.FLOAT, false, 28, 0);
+        gl.enableVertexAttribArray(loc.color.aColor);
+        gl.vertexAttribPointer(loc.color.aColor, 4, gl.FLOAT, false, 28, 12);
+        gl.uniformMatrix4fv(loc.color.uMvp, false, new Float32Array(mvp));
+        gl.drawArrays(gl.TRIANGLES, 0, arr.length / 7);
+      }
+
+      function pushCircle(out, cx, cy, z, r, rgba, segments = 18) {
+        const [cr, cg, cb, ca] = rgba;
+        for (let i = 0; i < segments; i++) {
+          const a0 = (i / segments) * Math.PI * 2;
+          const a1 = ((i + 1) / segments) * Math.PI * 2;
+          out.push(
+            cx, cy, z, cr, cg, cb, ca,
+            cx + Math.cos(a0) * r, cy + Math.sin(a0) * r, z, cr, cg, cb, ca,
+            cx + Math.cos(a1) * r, cy + Math.sin(a1) * r, z, cr, cg, cb, ca,
+          );
+        }
+      }
+
+      function pushSegment(out, ax, ay, az, bx, by, bz, width, rgba) {
+        const dx = bx - ax;
+        const dy = by - ay;
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = -dy / len * width * 0.5;
+        const ny = dx / len * width * 0.5;
+        const [r, g, b, a] = rgba;
+        out.push(
+          ax - nx, ay - ny, az, r, g, b, a,
+          ax + nx, ay + ny, az, r, g, b, a,
+          bx - nx, by - ny, bz, r, g, b, a,
+          ax + nx, ay + ny, az, r, g, b, a,
+          bx + nx, by + ny, bz, r, g, b, a,
+          bx - nx, by - ny, bz, r, g, b, a,
+        );
+      }
+
+      function pushPolyline(out, points, width, rgba) {
+        for (let i = 0; i < points.length - 1; i++) {
+          const a = points[i], b = points[i + 1];
+          pushSegment(out, a[0], a[1], a[2], b[0], b[1], b[2], width, rgba);
+        }
+      }
+
+      function cubic(a, b, c, d, t) {
+        const mt = 1 - t;
+        return mt * mt * mt * a + 3 * mt * mt * t * b + 3 * mt * t * t * c + t * t * t * d;
+      }
+
+      function uCurve(cx, dx, z, footY, topY, r) {
+        const pts = [];
+        const left = cx + dx - r;
+        const right = cx + dx + r;
+        for (let i = 0; i <= 10; i++) {
+          const t = i / 10;
+          pts.push([
+            cubic(left, left, cx + dx - r, cx + dx, t),
+            cubic(footY, topY + 0.11, topY, topY, t),
+            z,
+          ]);
+        }
+        for (let i = 1; i <= 10; i++) {
+          const t = i / 10;
+          pts.push([
+            cubic(cx + dx, cx + dx + r, right, right, t),
+            cubic(topY, topY, topY + 0.11, footY, t),
+            z,
+          ]);
+        }
+        return pts;
+      }
+
+      function drawWebGLWire(mvp) {
+        const data = [];
+        const ringCount = 11;
+        const startX = -W * 0.37;
+        const endX = W * 0.37;
+        const footY = H / 2 - 0.035;
+        const topY = H / 2 + 0.235;
+        const wireZ = 0.075;
+        const rodY = H / 2 + 0.205;
+
+        pushSegment(data, -W * 0.56, rodY, -0.045, W * 0.56, rodY, -0.045, 0.018, [0.50, 0.45, 0.34, 1]);
+
+        for (let i = 0; i < ringCount; i++) {
+          const x = startX + (endX - startX) * (i / (ringCount - 1));
+          for (const dx of [-0.018, 0.018]) {
+            const pts = uCurve(x, dx, wireZ, footY, topY, 0.017);
+            pushPolyline(data, pts, 0.018, [0.48, 0.45, 0.36, 1]);
+            pushPolyline(data, pts.map(p => [p[0] - 0.003, p[1] + 0.004, p[2] + 0.004]), 0.006, [0.96, 0.92, 0.78, 0.95]);
+          }
+          pushCircle(data, x - 0.018, footY - 0.004, wireZ + 0.004, 0.026, [0.18, 0.18, 0.16, 0.62], 16);
+          pushCircle(data, x + 0.018, footY - 0.004, wireZ + 0.004, 0.026, [0.18, 0.18, 0.16, 0.62], 16);
+        }
+
+        drawColor(data, mvp);
+      }
+
+      function drawTopPaperCover(mvp) {
+        if (!state.anim && !state.debugScrub && !state.drag) return;
+        const data = buildColorQuad(
+          -W * 0.53, H / 2 + 0.015, 0.062,
+          W * 0.53, H / 2 + 0.38, 0.062,
+          [0.12, 0.14, 0.14, 1],
+        );
+        drawColor(data, mvp);
+      }
+
+      function resize() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        const w = Math.floor(innerWidth * dpr);
+        const h = Math.floor(innerHeight * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+        }
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        for (const layer of [hardwareBackCanvas, hardwareFrontCanvas]) {
+          if (layer.width !== w || layer.height !== h) {
+            layer.width = w;
+            layer.height = h;
+            layer.style.width = innerWidth + 'px';
+            layer.style.height = innerHeight + 'px';
+          }
+        }
+      }
+
+      function projectPoint(mvp, p) {
+        const x = p[0], y = p[1], z = p[2];
+        const cx = mvp[0] * x + mvp[4] * y + mvp[8] * z + mvp[12];
+        const cy = mvp[1] * x + mvp[5] * y + mvp[9] * z + mvp[13];
+        const cw = mvp[3] * x + mvp[7] * y + mvp[11] * z + mvp[15];
+        const ndcX = cx / cw;
+        const ndcY = cy / cw;
+        return [
+          (ndcX * 0.5 + 0.5) * innerWidth,
+          (1 - (ndcY * 0.5 + 0.5)) * innerHeight,
+        ];
+      }
+
+      function clearHardware() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        for (const ctx of [hardwareBack, hardwareFront]) {
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, hardwareFrontCanvas.width, hardwareFrontCanvas.height);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+      }
+
+      function drawHardware(mvp) {
+        const topLeft = projectPoint(mvp, [-W / 2, H / 2, 0]);
+        const topRight = projectPoint(mvp, [W / 2, H / 2, 0]);
+        const pageW = Math.hypot(topRight[0] - topLeft[0], topRight[1] - topLeft[1]);
+        const pageX = topLeft[0];
+        const pageTop = topLeft[1];
+        const ringCount = 11;
+        const startX = pageX + pageW * 0.13;
+        const endX = pageX + pageW * 0.87;
+        const y = pageTop - pageW * 0.083;
+
+        // Стержень позади колец.
+        const rod = hardwareBack.createLinearGradient(pageX, y - 10, pageX, y);
+        rod.addColorStop(0, '#39352b');
+        rod.addColorStop(0.45, '#b7aa89');
+        rod.addColorStop(1, '#494234');
+        hardwareBack.strokeStyle = rod;
+        hardwareBack.lineWidth = Math.max(3, pageW * 0.011);
+        hardwareBack.lineCap = 'butt';
+        hardwareBack.beginPath();
+        hardwareBack.moveTo(pageX + pageW * 0.04, y - pageW * 0.015);
+        hardwareBack.lineTo(pageX + pageW * 0.96, y - pageW * 0.015);
+        hardwareBack.stroke();
+
+        for (let i = 0; i < ringCount; i++) {
+          const x = startX + (endX - startX) * (i / (ringCount - 1));
+          drawWireShadow(hardwareBack, x, y, pageW);
+        }
+      }
+
+      function movingPageIndex() {
+        if (state.debugScrub) return state.debugScrub.page;
+        if (state.anim) return state.anim.page;
+        if (state.drag) return state.index;
+        return -1;
+      }
+
+      function drawWireShadow(backCtx, x, y, pageW) {
+        const s = pageW / 520;
+        const ringH = 72 * s;
+        const gap = 10 * s;
+        const footY = y + 62 * s;
+
+        // Тени от проволоки на бумаге.
+        backCtx.save();
+        backCtx.strokeStyle = 'rgba(0,0,0,0.26)';
+        backCtx.lineWidth = 5.5 * s;
+        backCtx.lineCap = 'round';
+        backCtx.beginPath();
+        backCtx.moveTo(x - gap - 2 * s, y + ringH * 0.18);
+        backCtx.bezierCurveTo(x - gap - 9 * s, y + ringH * 0.38, x - gap - 8 * s, footY, x - gap - 1 * s, footY + 2 * s);
+        backCtx.moveTo(x + gap - 2 * s, y + ringH * 0.18);
+        backCtx.bezierCurveTo(x + gap - 9 * s, y + ringH * 0.38, x + gap - 8 * s, footY, x + gap - 1 * s, footY + 2 * s);
+        backCtx.stroke();
+        backCtx.restore();
+      }
+
+      function render(nowMs) {
+        resize();
+        const now = nowMs / 1000;
+        if (state.anim) {
+          const t = (performance.now() - state.anim.t0) / state.anim.ms;
+          if (t >= 1) {
+            state.index += state.anim.dir;
+            state.index = Math.max(0, Math.min(pageCount - 1, state.index));
+            state.anim = null;
+            updateNum();
+          }
+        }
+        updateNum(visualCounterIndex());
+        if (state.auto && nowMs > state.autoTimer && !state.anim && !state.drag) {
+          if (state.index >= pageCount - 1) flip(-1, 900);
+          else flip(+1, 1100);
+          state.autoTimer = nowMs + 3300;
+        }
+
+        gl.enable(gl.DEPTH_TEST);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        const aspect = canvas.width / canvas.height;
+        const proj = mat4Perspective(38 * Math.PI / 180, aspect, 0.1, 100);
+        state.yaw += ((state.drag ? state.drag.dx * 0.000018 : 0) - state.yaw) * 0.14;
+        if (!state.drag && Math.abs(state.yaw) < 0.0001) state.yaw = 0;
+        const eye = [Math.sin(state.yaw) * 0.8, 0.18, 5.45];
+        const view = mat4LookAt(eye, [0, 0.02, -0.12], [0, 1, 0]);
+        const mvp = mul(proj, view);
+        clearHardware();
+        drawHardware(mvp);
+
+        const shadow = buildColorQuad(-1.22, -1.62, -0.82, 1.22, -1.08, -0.72, [0, 0, 0, 0.30]);
+        drawColor(shadow, mvp);
+        drawPages(mvp, now);
+        drawWebGLWire(mvp);
+
+        requestAnimationFrame(render);
+      }
+
+      function flip(dir, ms = 1050) {
+        if (state.anim || state.drag) return;
+        state.debugScrub = null;
+        setScrubUI(0);
+        if (dir > 0 && state.index >= pageCount - 1) return;
+        if (dir < 0 && state.index <= 0) return;
+        state.anim = {
+          page: dir > 0 ? state.index : state.index - 1,
+          dir,
+          t0: performance.now(),
+          ms,
+        };
+      }
+
+      function updateNum() {
+        const i = arguments.length ? arguments[0] : state.index;
+        document.getElementById('num').textContent = String(i + 1).padStart(2, '0');
+      }
+
+      function visualCounterIndex() {
+        const revealEnd = Math.max(settings.revealStart + 0.01, settings.revealEnd);
+        if (state.debugScrub) {
+          const reveal = smoothstep(settings.revealStart, revealEnd, animRawT());
+          if (state.debugScrub.dir > 0 && reveal > 0.5) return Math.min(pageCount - 1, state.index + 1);
+          if (state.debugScrub.dir < 0 && reveal > 0.5) return Math.max(0, state.index - 1);
+        }
+        if (state.anim) {
+          const reveal = smoothstep(settings.revealStart, revealEnd, animRawT());
+          if (state.anim.dir > 0 && reveal > 0.5) return Math.min(pageCount - 1, state.index + 1);
+          if (state.anim.dir < 0 && reveal > 0.5) return Math.max(0, state.index - 1);
+        }
+        if (state.drag) {
+          if (state.drag.dx < -160) return Math.min(pageCount - 1, state.index + 1);
+          if (state.drag.dx > 160) return Math.max(0, state.index - 1);
+        }
+        return state.index;
+      }
+
+      document.getElementById('next').addEventListener('click', () => { state.auto = false; autoBtn.textContent = 'Авто'; autoBtn.classList.remove('primary'); flip(+1); });
+      document.getElementById('prev').addEventListener('click', () => { state.auto = false; autoBtn.textContent = 'Авто'; autoBtn.classList.remove('primary'); flip(-1); });
+      const autoBtn = document.getElementById('auto');
+      const scrub = document.getElementById('scrub');
+      const scrubValue = document.getElementById('scrub-value');
+      const tunePanel = document.getElementById('tune-panel');
+      const tuneInputs = [...document.querySelectorAll('[data-tune]')];
+      const resetTune = document.getElementById('reset-tune');
+      const saveTune = document.getElementById('save-tune');
+      const hideTune = document.getElementById('hide-tune');
+
+      function formatTuneValue(key, value) {
+        if (key === 'behindWritesDepth') return value ? 'да' : 'нет';
+        if (key === 'layerSwitch' || key === 'revealStart' || key === 'revealEnd') return Math.round(value * 100) + '%';
+        if (key === 'wobble') return value.toFixed(4);
+        return Number(value).toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+      }
+
+      function updateTuneValue(key) {
+        const out = document.querySelector(`[data-value-for="${key}"]`);
+        if (out) out.textContent = formatTuneValue(key, settings[key]);
+      }
+
+      function paintRange(input) {
+        if (input.type !== 'range') return;
+        const key = input.dataset.tune;
+        let marker = input.nextElementSibling;
+        if (!marker || !marker.classList.contains('tune-saved-marker')) {
+          marker = document.createElement('span');
+          marker.className = 'tune-saved-marker';
+          input.insertAdjacentElement('afterend', marker);
+        }
+        const min = Number(input.min);
+        const max = Number(input.max);
+        const value = Number(input.value);
+        const saved = Number(savedSettings[key]);
+        const valuePct = ((value - min) / (max - min)) * 100;
+        const savedPct = Math.max(0, Math.min(100, ((saved - min) / (max - min)) * 100));
+        const markerLeft = Math.max(0, savedPct - 0.45);
+        const markerRight = Math.min(100, savedPct + 0.45);
+        input.style.background = [
+          `linear-gradient(90deg, transparent 0 ${markerLeft}%, #d2b773 ${markerLeft}% ${markerRight}%, transparent ${markerRight}% 100%)`,
+          `linear-gradient(90deg, #a02128 0 ${valuePct}%, #e7e6e2 ${valuePct}% 100%)`,
+        ].join(', ');
+        marker.style.setProperty('--saved-pct', savedPct + '%');
+      }
+
+      function paintAllRanges() {
+        for (const input of tuneInputs) paintRange(input);
+      }
+
+      function syncTuneInput(input) {
+        const key = input.dataset.tune;
+        settings[key] = input.type === 'checkbox' ? input.checked : Number(input.value);
+        updateTuneValue(key);
+        paintRange(input);
+        writeStoredSettings(storageCurrentKey, settings);
+      }
+
+      function applyTuneInputs(storeCurrent = false) {
+        for (const input of tuneInputs) {
+          const key = input.dataset.tune;
+          if (input.type === 'checkbox') input.checked = !!settings[key];
+          else input.value = String(settings[key]);
+          updateTuneValue(key);
+          paintRange(input);
+        }
+        if (storeCurrent) writeStoredSettings(storageCurrentKey, settings);
+      }
+
+      function resetTuneInputs() {
+        Object.assign(settings, savedSettings);
+        applyTuneInputs(true);
+      }
+
+      for (const input of tuneInputs) {
+        input.addEventListener('input', () => syncTuneInput(input));
+      }
+      resetTune.addEventListener('click', resetTuneInputs);
+      saveTune.addEventListener('click', () => {
+        savedSettings = { ...settings };
+        writeStoredSettings(storageSavedKey, savedSettings);
+        writeStoredSettings(storageCurrentKey, settings);
+        paintAllRanges();
+        saveTune.textContent = 'Сохранено';
+        window.setTimeout(() => { saveTune.textContent = 'Сохранить'; }, 900);
+      });
+      hideTune.addEventListener('click', () => {
+        tunePanel.classList.toggle('is-collapsed');
+        hideTune.textContent = tunePanel.classList.contains('is-collapsed') ? 'Показать' : 'Скрыть';
+      });
+      applyTuneInputs(false);
+
+      function setScrubUI(value) {
+        scrub.value = String(value);
+        scrubValue.textContent = value + '%';
+      }
+      scrub.addEventListener('input', () => {
+        const t = Number(scrub.value) / 100;
+        scrubValue.textContent = scrub.value + '%';
+        state.auto = false;
+        state.anim = null;
+        autoBtn.textContent = 'Авто';
+        autoBtn.classList.remove('primary');
+        if (t <= 0) {
+          state.debugScrub = null;
+          return;
+        }
+        state.debugScrub = {
+          dir: state.index < pageCount - 1 ? +1 : -1,
+          page: state.index < pageCount - 1 ? state.index : state.index - 1,
+          t,
+        };
+      });
+      autoBtn.addEventListener('click', () => {
+        state.debugScrub = null;
+        setScrubUI(0);
+        state.auto = !state.auto;
+        autoBtn.textContent = state.auto ? 'Стоп' : 'Авто';
+        autoBtn.classList.toggle('primary', state.auto);
+        state.autoTimer = performance.now() + 300;
+      });
+
+      canvas.addEventListener('pointerdown', (e) => {
+        if (state.anim) return;
+        state.debugScrub = null;
+        setScrubUI(0);
+        canvas.setPointerCapture(e.pointerId);
+        state.drag = { x0: e.clientX, dx: 0, phase: 0 };
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        if (!state.drag) return;
+        const dx = e.clientX - state.drag.x0;
+        state.drag.dx = dx;
+        if (dx < 0 && state.index < pageCount - 1) state.drag.phase = Math.min(0.95, Math.abs(dx) / 360);
+        else if (dx > 0 && state.index > 0) state.drag.phase = 1 - Math.min(0.95, Math.abs(dx) / 360);
+      });
+      canvas.addEventListener('pointerup', () => {
+        if (!state.drag) return;
+        const d = state.drag;
+        const forward = d.dx < -120 && state.index < pageCount - 1;
+        const back = d.dx > 120 && state.index > 0;
+        state.drag = null;
+        state.auto = false;
+        autoBtn.textContent = 'Авто';
+        autoBtn.classList.remove('primary');
+        if (forward) flip(+1, 760);
+        else if (back) flip(-1, 760);
+      });
+      canvas.addEventListener('pointercancel', () => { state.drag = null; });
+
+      updateNum();
+      requestAnimationFrame(render);
+    })();
+  </script>
+</body>
+</html>
