@@ -26,6 +26,7 @@ export default defineConfig({
         sections: 'sections.html',    // Старый каталог 4 разделов
         brand:    'brand.html',       // Каталог визуальных примитивов (бренд-система)
         calendar: 'calendar.html',    // R&D · live-DOM на 3D — перекидной календарь 1917—1924
+        project:  'project.html',     // Лендинг ресурсов проекта 29/30 (карта 1914, фирстиль)
       },
     },
   },

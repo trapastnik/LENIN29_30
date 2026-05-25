@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29/30 · ресурсы проекта</title>
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <style>
+    body {
+      overflow: auto;
+      background:
+        repeating-linear-gradient(91deg, rgba(0,0,0,.14) 0 2px, transparent 2px 24px),
+        radial-gradient(ellipse 120% 85% at 50% 40%, rgba(90,58,34,.3) 0%, rgba(40,24,12,.95) 100%),
+        linear-gradient(180deg, #3a2517 0%, #2a1808 100%);
+      color: var(--paper-light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      padding: 40px 64px 28px;
+      text-align: center;
+    }
+    header .kicker {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--paper-warm);
+      margin-bottom: 12px;
+    }
+    header h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 64px;
+      font-weight: 700;
+      color: var(--paper-light);
+    }
+    header p {
+      margin: 16px auto 0;
+      max-width: 780px;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--paper-warm);
+    }
+    main {
+      flex: 1;
+      padding: 40px 64px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 36px 32px;
+      min-height: 240px;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--brass);
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      text-decoration: none;
+      transition: transform .16s, box-shadow .16s;
+    }
+    .card:active {
+      transform: translateY(2px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.65);
+    }
+    .card .tag {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .card h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+    .card p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+    .card .cta {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--camp-red-deep);
+    }
+    .footer-links {
+      margin-top: 36px;
+      text-align: center;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      display: inline-block;
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper-warm);
+      text-decoration: none;
+      border: 1px dashed var(--brass);
+      border-radius: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="kicker">Музей В.И. Ленина · МТК 29/30</div>
+    <h1>Ресурсы проекта</h1>
+    <p>Вспомогательные материалы и инструменты, окружающие интерактив МТК 29 и ролик МТК 30.</p>
+  </header>
+  <main>
+    <div class="cards">
+      <a class="card" href="/expo/">
+        <span class="tag">Интерактив · экспозиция</span>
+        <h2>МТК 29 · экспозиция</h2>
+        <p>Кинематографичная главная сцена проекта: стол коменданта, карта фронтов, поток документов. Верньер времени 1918—1922 и доступ ко всем разделам ТЗ.</p>
+        <span class="cta">Открыть проект →</span>
+      </a>
+      <a class="card" href="/prototypes/empire-1914/index.html">
+        <span class="tag">Картография · подложка</span>
+        <h2>Российская империя, 1914</h2>
+        <p>Векторная карта Российской империи с административно-территориальным делением. Просмотрщик с переключением слоёв (губернии, реки, железные дороги, населённые пункты, подписи) и pan/zoom.</p>
+        <span class="cta">Открыть карту →</span>
+      </a>
+      <a class="card" href="/brand.html">
+        <span class="tag">Дизайн-система</span>
+        <h2>Фирменный стиль</h2>
+        <p>Каталог визуальных примитивов проекта: типографика, палитра, штампы, рамки, орнаменты, элементы UI. Используется как референс при сборке новых разделов.</p>
+        <span class="cta">Открыть бренд-каталог →</span>
+      </a>
+    </div>
+
+    <div class="footer-links">
+      <a href="/sections.html">каталог разделов</a>
+    </div>
+  </main>
+</body>
+</html>
