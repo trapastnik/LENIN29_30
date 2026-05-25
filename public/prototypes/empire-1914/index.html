@@ -15,7 +15,7 @@
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-  #app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+  #app { display: grid; grid-template-columns: 340px 1fr; height: 100vh; }
   #sidebar {
     background: var(--panel);
     border-right: 1px solid var(--border);
@@ -58,10 +58,63 @@
     cursor: pointer; user-select: none;
   }
   .layer:hover { background: var(--panel-2); }
-  .layer input { margin: 0; cursor: pointer; accent-color: var(--accent); }
+  .layer input[type=checkbox] { margin: 0; cursor: pointer; accent-color: var(--accent); }
   .layer .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .layer .count { color: var(--muted); font-size: 10px; }
+  .layer .count, .layer .swatch-count { color: var(--muted); font-size: 10px; }
+  .layer .swatch {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
   .layer.hidden-match { display: none; }
+
+  /* Calibration panel */
+  .calib {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin: 8px;
+    padding: 10px 12px;
+  }
+  .calib h3 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .calib h3 button {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 2px 6px; font: inherit; font-size: 10px;
+    cursor: pointer;
+  }
+  .calib h3 button:hover { color: var(--text); border-color: var(--accent); }
+  .calib .row {
+    display: grid;
+    grid-template-columns: 56px 1fr 56px;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0;
+  }
+  .calib label { color: var(--muted); font-size: 11px; }
+  .calib input[type=range] { width: 100%; accent-color: var(--accent); }
+  .calib input[type=number] {
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 3px 5px; font: inherit; font-size: 11px;
+    width: 100%; text-align: right;
+  }
+  .calib .actions {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+  .calib .actions button {
+    flex: 1; padding: 5px;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border); border-radius: 5px;
+    font: inherit; font-size: 11px; cursor: pointer;
+  }
+  .calib .actions button:hover { border-color: var(--accent); }
 
   #stage {
     position: relative; overflow: hidden;
@@ -113,8 +166,22 @@
 <script>
 const SVG_PATH = "russian_empire_1914.svg";
 
+// map_v6 overlays — все на viewBox 0 0 1500 1000.
+const OVERLAYS = [
+  { id: "borders_dark",  name: "Границы (тёмные)",  swatch: "#3c3c3b", file: "overlays/borders_dark.svg" },
+  { id: "front_blue",    name: "Фронт · синие",     swatch: "#3a78c8", file: "overlays/front_blue.svg" },
+  { id: "front_green",   name: "Фронт · зелёные",   swatch: "#5a9a3a", file: "overlays/front_green.svg" },
+  { id: "arrows_red",    name: "Стрелки · красные", swatch: "#d34040", file: "overlays/arrows_red.svg" },
+  { id: "arrows_pink",   name: "Стрелки · розовые", swatch: "#e895a8", file: "overlays/arrows_pink.svg" },
+  { id: "rivers_cyan",   name: "Реки (cyan)",       swatch: "#63b9e9", file: "overlays/rivers_cyan.svg" },
+];
+
+// Стартовая калибровка: map_v6 (1500×1000, европейская часть) ставим в
+// левую-центральную область 1914-й карты (3600×2610). Пользователь докалибрует.
+const DEFAULT_CALIB = { tx: 700, ty: 600, scale: 1.4, opacity: 0.9 };
+const STORAGE_KEY = "empire-1914-overlay-calib";
+
 const prettify = (id) => {
-  // strip Illustrator-mangled ids like "_x31_3_2_" → "13_2"
   let s = id.replace(/_x([0-9a-fA-F]{2,4})_/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
   s = s.replace(/\._/g, " · ").replace(/_/g, " ").replace(/\s+/g, " ").trim();
   return s;
@@ -147,6 +214,20 @@ const filterInput = document.getElementById("filter");
 
 let svgEl = null;
 let topGroups = [];
+let overlayRoot = null;          // <g id="overlay-root"> внутри основной SVG
+let calib = loadCalib();          // { tx, ty, scale, opacity }
+const overlayCache = new Map();   // id → Promise<DocumentFragment>
+
+function loadCalib() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...DEFAULT_CALIB, ...JSON.parse(raw) };
+  } catch {}
+  return { ...DEFAULT_CALIB };
+}
+function saveCalib() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(calib)); } catch {}
+}
 
 async function load() {
   const res = await fetch(SVG_PATH);
@@ -156,15 +237,12 @@ async function load() {
   wrap.innerHTML = "";
   wrap.appendChild(svgEl);
 
-  // Make sure svg fills the stage proportionally.
   if (!svgEl.getAttribute("preserveAspectRatio")) {
     svgEl.setAttribute("preserveAspectRatio", "xMidYMid meet");
   }
   svgEl.style.width = "100%";
   svgEl.style.height = "100%";
 
-  // Find the container that actually holds the named layer groups.
-  // Illustrator wraps everything in <switch><g i:extraneous="self">…</g></switch>.
   const findLayerContainer = (node) => {
     const childGroupsWithId = Array.from(node.children).filter(
       (c) => c.tagName.toLowerCase() === "g" && c.id
@@ -181,8 +259,58 @@ async function load() {
   const found = findLayerContainer(svgEl);
   topGroups = found ? found.groups : [];
 
+  // overlay-root живёт в том же контейнере, что и нативные слои — последним,
+  // чтобы рисоваться поверх.
+  overlayRoot = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  overlayRoot.setAttribute("id", "overlay-root");
+  applyCalibToRoot();
+  (found ? found.container : svgEl).appendChild(overlayRoot);
+
   buildLayerList();
   setupPanZoom();
+}
+
+function applyCalibToRoot() {
+  if (!overlayRoot) return;
+  overlayRoot.setAttribute("transform",
+    `translate(${calib.tx}, ${calib.ty}) scale(${calib.scale})`);
+  overlayRoot.setAttribute("opacity", String(calib.opacity));
+}
+
+async function loadOverlaySvg(file) {
+  if (!overlayCache.has(file)) {
+    overlayCache.set(file, (async () => {
+      const r = await fetch(file);
+      const txt = await r.text();
+      const d = new DOMParser().parseFromString(txt, "image/svg+xml");
+      // Берём детей корневого <svg>, опуская <defs>, <metadata>, <title>, <desc>.
+      const root = d.documentElement;
+      const frag = document.createDocumentFragment();
+      for (const child of Array.from(root.children)) {
+        const tag = child.tagName.toLowerCase();
+        if (["defs", "metadata", "title", "desc"].includes(tag)) continue;
+        frag.appendChild(child.cloneNode(true));
+      }
+      return frag;
+    })());
+  }
+  return overlayCache.get(file);
+}
+
+async function toggleOverlay(o, enabled) {
+  let g = overlayRoot.querySelector(`g[data-overlay="${o.id}"]`);
+  if (enabled) {
+    if (!g) {
+      const frag = await loadOverlaySvg(o.file);
+      g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("data-overlay", o.id);
+      g.appendChild(frag.cloneNode(true));
+      overlayRoot.appendChild(g);
+    }
+    g.style.display = "";
+  } else if (g) {
+    g.style.display = "none";
+  }
 }
 
 function buildLayerList() {
@@ -198,11 +326,37 @@ function buildLayerList() {
   );
 
   layersBox.innerHTML = "";
+
+  // --- Наложения map_v6 (сверху, отдельной секцией) ---
+  appendGroupTitle("Наложения · Гражданская война (map_v6)");
+  for (const o of OVERLAYS) {
+    const row = document.createElement("label");
+    row.className = "layer";
+    row.dataset.name = o.name.toLowerCase();
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = false;
+    cb.addEventListener("change", () => toggleOverlay(o, cb.checked));
+
+    const sw = document.createElement("span");
+    sw.className = "swatch";
+    sw.style.background = o.swatch;
+
+    const name = document.createElement("span");
+    name.className = "name";
+    name.textContent = o.name;
+
+    row.append(cb, sw, name);
+    layersBox.appendChild(row);
+  }
+
+  // Калибровочная панель
+  layersBox.appendChild(buildCalibPanel());
+
+  // --- Нативные слои 1914-й карты ---
   for (const cat of cats) {
-    const title = document.createElement("div");
-    title.className = "group-title";
-    title.textContent = cat;
-    layersBox.appendChild(title);
+    appendGroupTitle(cat);
 
     for (const g of grouped.get(cat)) {
       const row = document.createElement("label");
@@ -230,11 +384,82 @@ function buildLayerList() {
   }
 }
 
+function appendGroupTitle(text) {
+  const t = document.createElement("div");
+  t.className = "group-title";
+  t.textContent = text;
+  layersBox.appendChild(t);
+}
+
+function buildCalibPanel() {
+  const panel = document.createElement("div");
+  panel.className = "calib";
+  panel.innerHTML = `
+    <h3>Калибровка наложений
+      <button id="calibCopy" title="Скопировать transform в буфер">copy</button>
+    </h3>
+    <div class="row"><label>Δx</label><input type="range" data-k="tx" min="-2000" max="3600" step="1"><input type="number" data-k="tx" step="1"></div>
+    <div class="row"><label>Δy</label><input type="range" data-k="ty" min="-1000" max="2610" step="1"><input type="number" data-k="ty" step="1"></div>
+    <div class="row"><label>scale</label><input type="range" data-k="scale" min="0.1" max="5" step="0.001"><input type="number" data-k="scale" step="0.01"></div>
+    <div class="row"><label>opacity</label><input type="range" data-k="opacity" min="0" max="1" step="0.01"><input type="number" data-k="opacity" step="0.05"></div>
+    <div class="actions">
+      <button id="calibSave">Сохранить</button>
+      <button id="calibReset">Сброс</button>
+    </div>
+  `;
+
+  // bind inputs
+  for (const inp of panel.querySelectorAll("input[data-k]")) {
+    const k = inp.dataset.k;
+    inp.value = calib[k];
+    inp.addEventListener("input", () => {
+      const v = parseFloat(inp.value);
+      if (!Number.isFinite(v)) return;
+      calib[k] = v;
+      // sync partner input (range/number) for same key
+      for (const peer of panel.querySelectorAll(`input[data-k="${k}"]`)) {
+        if (peer !== inp) peer.value = v;
+      }
+      applyCalibToRoot();
+    });
+  }
+
+  panel.querySelector("#calibSave").onclick = () => {
+    saveCalib();
+    flash(panel.querySelector("#calibSave"), "Сохранено ✓");
+  };
+  panel.querySelector("#calibReset").onclick = () => {
+    calib = { ...DEFAULT_CALIB };
+    for (const inp of panel.querySelectorAll("input[data-k]")) inp.value = calib[inp.dataset.k];
+    applyCalibToRoot();
+  };
+  panel.querySelector("#calibCopy").onclick = async () => {
+    const s = `translate(${calib.tx}, ${calib.ty}) scale(${calib.scale})`;
+    try { await navigator.clipboard.writeText(s); flash(panel.querySelector("#calibCopy"), "✓"); } catch {}
+  };
+
+  return panel;
+}
+
+function flash(btn, text) {
+  const orig = btn.textContent;
+  btn.textContent = text;
+  setTimeout(() => { btn.textContent = orig; }, 900);
+}
+
 document.getElementById("all").onclick = () =>
   layersBox.querySelectorAll('input[type=checkbox]').forEach((cb) => { cb.checked = true; cb.dispatchEvent(new Event("change")); });
 document.getElementById("none").onclick = () =>
   layersBox.querySelectorAll('input[type=checkbox]').forEach((cb) => { cb.checked = false; cb.dispatchEvent(new Event("change")); });
-document.getElementById("reset").onclick = () => { resetView(); document.getElementById("all").click(); };
+document.getElementById("reset").onclick = () => {
+  resetView();
+  // нативные слои — включить, overlay-чекбоксы — выключить (как при первом открытии)
+  layersBox.querySelectorAll('.layer input[type=checkbox]').forEach((cb) => {
+    const isOverlay = OVERLAYS.some((o) => cb.parentElement.dataset.name === o.name.toLowerCase());
+    cb.checked = !isOverlay;
+    cb.dispatchEvent(new Event("change"));
+  });
+};
 
 filterInput.addEventListener("input", () => {
   const q = filterInput.value.trim().toLowerCase();
@@ -250,7 +475,6 @@ let view = null;
 function setupPanZoom() {
   const vb = svgEl.viewBox.baseVal;
   if (!vb || (vb.width === 0 && vb.height === 0)) {
-    // fall back to width/height attrs
     const w = parseFloat(svgEl.getAttribute("width")) || 1000;
     const h = parseFloat(svgEl.getAttribute("height")) || 1000;
     svgEl.setAttribute("viewBox", `0 0 ${w} ${h}`);
