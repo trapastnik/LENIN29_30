@@ -17,6 +17,7 @@ npm run preview      # http://127.0.0.1:4173 — раздача dist/
 - [docs/architecture.md](docs/architecture.md) — стек, структура, принципы
 - [docs/content.md](docs/content.md) — как устроен контент-каталог
 - [docs/maps-pipeline.md](docs/maps-pipeline.md) — pipeline производства карт (map_v6 → наш batch)
+- [docs/claude-design-workflow.md](docs/claude-design-workflow.md) — как безопасно продолжать дизайн-проходы через Claude Design
 - [docs/deploy.md](docs/deploy.md) — деплой на сервер киоска
 
 ## Структура
