@@ -8,14 +8,16 @@
     --bg: #1b1b1f;
     --panel: #25252b;
     --panel-2: #2f2f37;
+    --panel-3: #34343d;
     --text: #e6e6ea;
     --muted: #9a9aa6;
     --accent: #7aa2ff;
+    --warn: #ffcc66;
     --border: #3a3a44;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-  #app { display: grid; grid-template-columns: 340px 1fr; height: 100vh; }
+  #app { display: grid; grid-template-columns: 360px 1fr; height: 100vh; }
   #sidebar {
     background: var(--panel);
     border-right: 1px solid var(--border);
@@ -42,7 +44,7 @@
   .toolbar button:hover { border-color: var(--accent); }
   #layers {
     overflow-y: auto;
-    padding: 6px 8px 16px;
+    padding: 6px 0 16px;
     flex: 1;
   }
   .group-title {
@@ -50,29 +52,67 @@
     text-transform: uppercase;
     font-size: 10px;
     letter-spacing: 0.08em;
-    padding: 12px 8px 4px;
+    padding: 12px 16px 4px;
   }
   .layer {
     display: flex; align-items: center; gap: 8px;
-    padding: 5px 8px; border-radius: 5px;
+    padding: 5px 16px; border-radius: 0;
     cursor: pointer; user-select: none;
   }
   .layer:hover { background: var(--panel-2); }
   .layer input[type=checkbox] { margin: 0; cursor: pointer; accent-color: var(--accent); }
   .layer .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .layer .count, .layer .swatch-count { color: var(--muted); font-size: 10px; }
+  .layer .count, .layer .group-name { color: var(--muted); font-size: 10px; }
   .layer .swatch {
     display: inline-block; width: 10px; height: 10px; border-radius: 2px;
     border: 1px solid rgba(255,255,255,0.18);
+    flex-shrink: 0;
   }
   .layer.hidden-match { display: none; }
+
+  /* Target selector */
+  .target-bar {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel-2);
+  }
+  .target-bar .target-label {
+    width: 100%; color: var(--muted); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .target-btn {
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--panel); color: var(--muted);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 4px 8px; font: inherit; font-size: 11px;
+    cursor: pointer;
+  }
+  .target-btn:hover { color: var(--text); border-color: var(--accent); }
+  .target-btn.active {
+    color: var(--bg); background: var(--warn); border-color: var(--warn);
+  }
+  .target-btn .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+  }
+  .target-btn.active .dot { background: var(--bg); }
+  .target-btn .x {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; margin-left: 2px;
+    border-radius: 50%; font-size: 12px; line-height: 1;
+    color: inherit; opacity: 0.6;
+  }
+  .target-btn .x:hover { background: rgba(0,0,0,0.2); opacity: 1; }
 
   /* Calibration panel */
   .calib {
     background: var(--panel-2);
     border: 1px solid var(--border);
     border-radius: 6px;
-    margin: 8px;
+    margin: 8px 12px;
     padding: 10px 12px;
   }
   .calib h3 {
@@ -81,8 +121,9 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: space-between; align-items: center; gap: 6px;
   }
+  .calib h3 .title-flex { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .calib h3 button {
     background: transparent; color: var(--muted);
     border: 1px solid var(--border); border-radius: 4px;
@@ -92,7 +133,7 @@
   .calib h3 button:hover { color: var(--text); border-color: var(--accent); }
   .calib .row {
     display: grid;
-    grid-template-columns: 56px 1fr 56px;
+    grid-template-columns: 60px 1fr 64px;
     align-items: center;
     gap: 8px;
     margin: 6px 0;
@@ -127,6 +168,8 @@
     cursor: grab;
   }
   #svgwrap.grabbing { cursor: grabbing; }
+  #svgwrap.editing { cursor: move; }
+  #svgwrap.editing.grabbing { cursor: grabbing; }
   #svgwrap svg { max-width: 100%; max-height: 100%; display: block; }
   #status {
     position: absolute; left: 12px; bottom: 12px;
@@ -135,11 +178,32 @@
     color: var(--muted); font-size: 11px;
     pointer-events: none;
   }
+  #editbadge {
+    position: absolute; right: 12px; top: 12px;
+    background: var(--warn); color: var(--bg);
+    padding: 6px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600;
+    pointer-events: none;
+    display: none;
+  }
+  #editbadge.on { display: block; }
   #loading {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
     color: var(--muted);
   }
+  .file-row {
+    display: flex; gap: 6px; padding: 6px 16px 0;
+  }
+  .file-row label.file-pick {
+    flex: 1; padding: 6px 10px;
+    background: var(--panel-2); color: var(--text);
+    border: 1px dashed var(--border); border-radius: 5px;
+    font: inherit; font-size: 11px; text-align: center;
+    cursor: pointer;
+  }
+  .file-row label.file-pick:hover { border-color: var(--accent); color: var(--accent); }
+  .file-row input { display: none; }
 </style>
 </head>
 <body>
@@ -147,8 +211,14 @@
   <aside id="sidebar">
     <header>
       <h1>Российская империя, 1914</h1>
-      <div class="sub">Векторная карта · переключение слоёв</div>
+      <div class="sub">Векторная карта · переключение слоёв · наложения</div>
     </header>
+
+    <div class="target-bar" id="targetBar">
+      <span class="target-label">Двигаем мышью</span>
+      <!-- target buttons injected here -->
+    </div>
+
     <div class="toolbar">
       <input id="filter" placeholder="Фильтр слоёв…" />
       <button id="all">Все</button>
@@ -159,27 +229,34 @@
   </aside>
   <main id="stage">
     <div id="svgwrap"><div id="loading">Загрузка SVG…</div></div>
-    <div id="status">колесо — зум · перетаскивание — панорама · двойной клик — сброс вида</div>
+    <div id="editbadge">редактирование</div>
+    <div id="status">колесо — зум · drag — панорама · dblclick — сброс вида</div>
   </main>
 </div>
 
 <script>
 const SVG_PATH = "russian_empire_1914.svg";
+const STORAGE_KEY = "empire-1914-overlay-state-v2";
 
-// map_v6 overlays — все на viewBox 0 0 1500 1000.
-const OVERLAYS = [
-  { id: "borders_dark",  name: "Границы (тёмные)",  swatch: "#3c3c3b", file: "overlays/borders_dark.svg" },
-  { id: "front_blue",    name: "Фронт · синие",     swatch: "#3a78c8", file: "overlays/front_blue.svg" },
-  { id: "front_green",   name: "Фронт · зелёные",   swatch: "#5a9a3a", file: "overlays/front_green.svg" },
-  { id: "arrows_red",    name: "Стрелки · красные", swatch: "#d34040", file: "overlays/arrows_red.svg" },
-  { id: "arrows_pink",   name: "Стрелки · розовые", swatch: "#e895a8", file: "overlays/arrows_pink.svg" },
-  { id: "rivers_cyan",   name: "Реки (cyan)",       swatch: "#63b9e9", file: "overlays/rivers_cyan.svg" },
+// Базовая map_v6-группа (6 слоёв на общем viewBox 1500×1000).
+const BASE_GROUPS = [
+  {
+    id: "map_v6",
+    label: "map_v6 · Гражданская война",
+    color: "#ffcc66",
+    overlays: [
+      { id: "borders_dark",  name: "Границы (тёмные)",  swatch: "#3c3c3b", file: "overlays/borders_dark.svg" },
+      { id: "front_blue",    name: "Фронт · синие",     swatch: "#3a78c8", file: "overlays/front_blue.svg" },
+      { id: "front_green",   name: "Фронт · зелёные",   swatch: "#5a9a3a", file: "overlays/front_green.svg" },
+      { id: "arrows_red",    name: "Стрелки · красные", swatch: "#d34040", file: "overlays/arrows_red.svg" },
+      { id: "arrows_pink",   name: "Стрелки · розовые", swatch: "#e895a8", file: "overlays/arrows_pink.svg" },
+      { id: "rivers_cyan",   name: "Реки (cyan)",       swatch: "#63b9e9", file: "overlays/rivers_cyan.svg" },
+    ],
+    calibDefault: { tx: 700, ty: 600, scale: 1.4, opacity: 0.9 },
+  },
 ];
 
-// Стартовая калибровка: map_v6 (1500×1000, европейская часть) ставим в
-// левую-центральную область 1914-й карты (3600×2610). Пользователь докалибрует.
-const DEFAULT_CALIB = { tx: 700, ty: 600, scale: 1.4, opacity: 0.9 };
-const STORAGE_KEY = "empire-1914-overlay-calib";
+const VIEW_TARGET = "__view__";
 
 const prettify = (id) => {
   let s = id.replace(/_x([0-9a-fA-F]{2,4})_/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
@@ -211,24 +288,85 @@ const CATEGORY_ORDER = [
 const wrap = document.getElementById("svgwrap");
 const layersBox = document.getElementById("layers");
 const filterInput = document.getElementById("filter");
+const targetBar = document.getElementById("targetBar");
+const editBadge = document.getElementById("editbadge");
 
 let svgEl = null;
 let topGroups = [];
-let overlayRoot = null;          // <g id="overlay-root"> внутри основной SVG
-let calib = loadCalib();          // { tx, ty, scale, opacity }
-const overlayCache = new Map();   // id → Promise<DocumentFragment>
+let layerContainer = null;
+let groups = [];                            // [{id, label, color, overlays, calib, rootEl}]
+let customSeq = 1;
+let editTarget = VIEW_TARGET;               // VIEW_TARGET | group.id
+const overlayBlobCache = new Map();         // file → DocumentFragment
 
-function loadCalib() {
+// --------------- persistence ---------------
+function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { ...DEFAULT_CALIB, ...JSON.parse(raw) };
+    if (raw) return JSON.parse(raw);
   } catch {}
-  return { ...DEFAULT_CALIB };
+  return null;
 }
-function saveCalib() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(calib)); } catch {}
+function saveState() {
+  const data = {
+    groups: groups.map((g) => ({
+      id: g.id, label: g.label, color: g.color,
+      calib: g.calib,
+      enabled: g.overlays.filter((o) => o.enabled).map((o) => o.id),
+      isCustom: !!g.isCustom,
+      customSvg: g.isCustom ? g.customSvg : undefined,  // serialised SVG text
+    })),
+    editTarget,
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
 }
 
+function initGroups() {
+  const saved = loadState();
+  groups = BASE_GROUPS.map((bg) => ({
+    ...bg,
+    calib: { ...bg.calibDefault },
+    overlays: bg.overlays.map((o) => ({ ...o, enabled: false })),
+    rootEl: null,
+  }));
+
+  if (saved && Array.isArray(saved.groups)) {
+    for (const sg of saved.groups) {
+      let g = groups.find((x) => x.id === sg.id);
+      if (!g && sg.isCustom && sg.customSvg) {
+        // recreate custom group from saved SVG text
+        g = makeCustomGroup({ label: sg.label, color: sg.color, svgText: sg.customSvg, id: sg.id });
+        groups.push(g);
+      }
+      if (g) {
+        if (sg.calib) g.calib = { ...g.calib, ...sg.calib };
+        if (Array.isArray(sg.enabled)) {
+          for (const oid of sg.enabled) {
+            const o = g.overlays.find((x) => x.id === oid);
+            if (o) o.enabled = true;
+          }
+        }
+      }
+    }
+    if (saved.editTarget) editTarget = saved.editTarget;
+  }
+}
+
+function makeCustomGroup({ label, color, svgText, id }) {
+  const gid = id || `custom-${customSeq++}`;
+  return {
+    id: gid,
+    label,
+    color: color || "#7aa2ff",
+    overlays: [{ id: `${gid}-main`, name: label, swatch: color || "#7aa2ff", svgText, enabled: true }],
+    calib: { tx: 0, ty: 0, scale: 1, opacity: 0.9 },
+    isCustom: true,
+    customSvg: svgText,
+    rootEl: null,
+  };
+}
+
+// --------------- loading & rendering ---------------
 async function load() {
   const res = await fetch(SVG_PATH);
   const text = await res.text();
@@ -258,106 +396,217 @@ async function load() {
   };
   const found = findLayerContainer(svgEl);
   topGroups = found ? found.groups : [];
+  layerContainer = found ? found.container : svgEl;
 
-  // overlay-root живёт в том же контейнере, что и нативные слои — последним,
-  // чтобы рисоваться поверх.
-  overlayRoot = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  overlayRoot.setAttribute("id", "overlay-root");
-  applyCalibToRoot();
-  (found ? found.container : svgEl).appendChild(overlayRoot);
+  initGroups();
 
+  // Create overlay-root for every group (lazy-render children when toggled).
+  for (const g of groups) ensureGroupRoot(g);
+
+  // Apply saved enabled state to DOM
+  for (const g of groups) {
+    for (const o of g.overlays) {
+      if (o.enabled) await mountOverlay(g, o);
+    }
+  }
+
+  buildTargetBar();
   buildLayerList();
   setupPanZoom();
+  setEditTarget(editTarget);
 }
 
-function applyCalibToRoot() {
-  if (!overlayRoot) return;
-  overlayRoot.setAttribute("transform",
-    `translate(${calib.tx}, ${calib.ty}) scale(${calib.scale})`);
-  overlayRoot.setAttribute("opacity", String(calib.opacity));
+function ensureGroupRoot(g) {
+  if (g.rootEl) return g.rootEl;
+  const el = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  el.setAttribute("data-group", g.id);
+  applyCalibToGroup(g, el);
+  layerContainer.appendChild(el);
+  g.rootEl = el;
+  return el;
 }
 
-async function loadOverlaySvg(file) {
-  if (!overlayCache.has(file)) {
-    overlayCache.set(file, (async () => {
-      const r = await fetch(file);
-      const txt = await r.text();
-      const d = new DOMParser().parseFromString(txt, "image/svg+xml");
-      // Берём детей корневого <svg>, опуская <defs>, <metadata>, <title>, <desc>.
-      const root = d.documentElement;
-      const frag = document.createDocumentFragment();
-      for (const child of Array.from(root.children)) {
-        const tag = child.tagName.toLowerCase();
-        if (["defs", "metadata", "title", "desc"].includes(tag)) continue;
-        frag.appendChild(child.cloneNode(true));
-      }
-      return frag;
-    })());
+function applyCalibToGroup(g, el = g.rootEl) {
+  if (!el) return;
+  const c = g.calib;
+  el.setAttribute("transform", `translate(${c.tx}, ${c.ty}) scale(${c.scale})`);
+  el.setAttribute("opacity", String(c.opacity));
+}
+
+async function fetchSvgFrag(file) {
+  if (!overlayBlobCache.has(file)) {
+    overlayBlobCache.set(file, fetch(file).then((r) => r.text()).then(svgTextToFrag));
   }
-  return overlayCache.get(file);
+  return overlayBlobCache.get(file);
+}
+function svgTextToFrag(txt) {
+  const d = new DOMParser().parseFromString(txt, "image/svg+xml");
+  const root = d.documentElement;
+  const frag = document.createDocumentFragment();
+  for (const child of Array.from(root.children)) {
+    const tag = child.tagName.toLowerCase();
+    if (["defs", "metadata", "title", "desc"].includes(tag)) continue;
+    frag.appendChild(child.cloneNode(true));
+  }
+  return frag;
 }
 
-async function toggleOverlay(o, enabled) {
-  let g = overlayRoot.querySelector(`g[data-overlay="${o.id}"]`);
-  if (enabled) {
-    if (!g) {
-      const frag = await loadOverlaySvg(o.file);
-      g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("data-overlay", o.id);
-      g.appendChild(frag.cloneNode(true));
-      overlayRoot.appendChild(g);
-    }
-    g.style.display = "";
-  } else if (g) {
-    g.style.display = "none";
+async function mountOverlay(g, o) {
+  const root = ensureGroupRoot(g);
+  let el = root.querySelector(`g[data-overlay="${o.id}"]`);
+  if (!el) {
+    const frag = o.file ? (await fetchSvgFrag(o.file)) : svgTextToFrag(o.svgText);
+    el = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    el.setAttribute("data-overlay", o.id);
+    el.appendChild(frag.cloneNode(true));
+    root.appendChild(el);
+  }
+  el.style.display = "";
+}
+function unmountOverlay(g, o) {
+  if (!g.rootEl) return;
+  const el = g.rootEl.querySelector(`g[data-overlay="${o.id}"]`);
+  if (el) el.style.display = "none";
+}
+
+async function toggleOverlay(g, o, enabled) {
+  o.enabled = enabled;
+  if (enabled) await mountOverlay(g, o);
+  else unmountOverlay(g, o);
+  saveState();
+}
+
+// --------------- target / edit mode ---------------
+function setEditTarget(id) {
+  editTarget = id;
+  for (const btn of targetBar.querySelectorAll(".target-btn")) {
+    btn.classList.toggle("active", btn.dataset.target === id);
+  }
+  const isEdit = id !== VIEW_TARGET;
+  wrap.classList.toggle("editing", isEdit);
+  if (isEdit) {
+    const g = groups.find((x) => x.id === id);
+    editBadge.textContent = `редактирование · ${g ? g.label : id}`;
+    editBadge.style.background = g ? g.color : "var(--warn)";
+    editBadge.classList.add("on");
+  } else {
+    editBadge.classList.remove("on");
+  }
+  // Render the calibration panel for the active group (if any)
+  rebuildCalibPanel();
+  saveState();
+}
+
+function buildTargetBar() {
+  // clear (keep label)
+  for (const c of [...targetBar.children]) {
+    if (!c.classList.contains("target-label")) c.remove();
+  }
+  const viewBtn = makeTargetBtn(VIEW_TARGET, "Карта 1914", "#9a9aa6", false);
+  targetBar.appendChild(viewBtn);
+  for (const g of groups) {
+    targetBar.appendChild(makeTargetBtn(g.id, g.label, g.color, g.isCustom));
   }
 }
+function makeTargetBtn(id, label, color, removable) {
+  const btn = document.createElement("button");
+  btn.className = "target-btn";
+  btn.dataset.target = id;
+  btn.innerHTML = `<span class="dot" style="color:${color}"></span><span>${label}</span>`;
+  btn.addEventListener("click", (e) => {
+    if (e.target.classList.contains("x")) return;
+    setEditTarget(id);
+  });
+  if (removable) {
+    const x = document.createElement("span");
+    x.className = "x";
+    x.textContent = "×";
+    x.title = "Удалить группу";
+    x.addEventListener("click", (e) => {
+      e.stopPropagation();
+      removeCustomGroup(id);
+    });
+    btn.appendChild(x);
+  }
+  return btn;
+}
 
+function removeCustomGroup(id) {
+  const g = groups.find((x) => x.id === id);
+  if (!g || !g.isCustom) return;
+  if (g.rootEl && g.rootEl.parentNode) g.rootEl.parentNode.removeChild(g.rootEl);
+  groups = groups.filter((x) => x !== g);
+  if (editTarget === id) editTarget = VIEW_TARGET;
+  buildTargetBar();
+  buildLayerList();
+  setEditTarget(editTarget);
+}
+
+// --------------- layer list & calibration panel ---------------
 function buildLayerList() {
+  layersBox.innerHTML = "";
+
+  // overlays section, grouped by group
+  appendGroupTitle("Наложения");
+  for (const g of groups) {
+    for (const o of g.overlays) {
+      const row = document.createElement("label");
+      row.className = "layer";
+      row.dataset.name = (o.name + " " + g.label).toLowerCase();
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!o.enabled;
+      cb.addEventListener("change", () => toggleOverlay(g, o, cb.checked));
+
+      const sw = document.createElement("span");
+      sw.className = "swatch";
+      sw.style.background = o.swatch;
+
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = o.name;
+
+      const grp = document.createElement("span");
+      grp.className = "group-name";
+      grp.textContent = g.id;
+
+      row.append(cb, sw, name, grp);
+      layersBox.appendChild(row);
+    }
+  }
+
+  // file picker row
+  const pickRow = document.createElement("div");
+  pickRow.className = "file-row";
+  pickRow.innerHTML = `
+    <label class="file-pick">+ Загрузить SVG как наложение
+      <input type="file" accept=".svg,image/svg+xml" multiple>
+    </label>
+  `;
+  pickRow.querySelector("input").addEventListener("change", async (e) => {
+    for (const f of e.target.files) await addCustomSvgFile(f);
+    e.target.value = "";
+  });
+  layersBox.appendChild(pickRow);
+
+  // Active-group calibration panel placeholder (filled by rebuildCalibPanel)
+  const slot = document.createElement("div");
+  slot.id = "calibSlot";
+  layersBox.appendChild(slot);
+
+  // --- Native layers ---
   const grouped = new Map();
   for (const g of topGroups) {
     const cat = categoryOf(g.id);
     if (!grouped.has(cat)) grouped.set(cat, []);
     grouped.get(cat).push(g);
   }
-
   const cats = [...grouped.keys()].sort(
     (a, b) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)
   );
-
-  layersBox.innerHTML = "";
-
-  // --- Наложения map_v6 (сверху, отдельной секцией) ---
-  appendGroupTitle("Наложения · Гражданская война (map_v6)");
-  for (const o of OVERLAYS) {
-    const row = document.createElement("label");
-    row.className = "layer";
-    row.dataset.name = o.name.toLowerCase();
-
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = false;
-    cb.addEventListener("change", () => toggleOverlay(o, cb.checked));
-
-    const sw = document.createElement("span");
-    sw.className = "swatch";
-    sw.style.background = o.swatch;
-
-    const name = document.createElement("span");
-    name.className = "name";
-    name.textContent = o.name;
-
-    row.append(cb, sw, name);
-    layersBox.appendChild(row);
-  }
-
-  // Калибровочная панель
-  layersBox.appendChild(buildCalibPanel());
-
-  // --- Нативные слои 1914-й карты ---
   for (const cat of cats) {
     appendGroupTitle(cat);
-
     for (const g of grouped.get(cat)) {
       const row = document.createElement("label");
       row.className = "layer";
@@ -382,6 +631,8 @@ function buildLayerList() {
       layersBox.appendChild(row);
     }
   }
+
+  rebuildCalibPanel();
 }
 
 function appendGroupTitle(text) {
@@ -391,54 +642,76 @@ function appendGroupTitle(text) {
   layersBox.appendChild(t);
 }
 
-function buildCalibPanel() {
+function rebuildCalibPanel() {
+  const slot = document.getElementById("calibSlot");
+  if (!slot) return;
+  slot.innerHTML = "";
+  if (editTarget === VIEW_TARGET) return;
+  const g = groups.find((x) => x.id === editTarget);
+  if (!g) return;
+  slot.appendChild(buildCalibPanel(g));
+}
+
+function buildCalibPanel(g) {
   const panel = document.createElement("div");
   panel.className = "calib";
   panel.innerHTML = `
-    <h3>Калибровка наложений
-      <button id="calibCopy" title="Скопировать transform в буфер">copy</button>
+    <h3>
+      <span class="title-flex">Калибровка · ${g.label}</span>
+      <button data-act="copy" title="Скопировать transform в буфер">copy</button>
     </h3>
-    <div class="row"><label>Δx</label><input type="range" data-k="tx" min="-2000" max="3600" step="1"><input type="number" data-k="tx" step="1"></div>
-    <div class="row"><label>Δy</label><input type="range" data-k="ty" min="-1000" max="2610" step="1"><input type="number" data-k="ty" step="1"></div>
-    <div class="row"><label>scale</label><input type="range" data-k="scale" min="0.1" max="5" step="0.001"><input type="number" data-k="scale" step="0.01"></div>
+    <div class="row"><label>Δx</label><input type="range" data-k="tx" min="-2000" max="4000" step="1"><input type="number" data-k="tx" step="1"></div>
+    <div class="row"><label>Δy</label><input type="range" data-k="ty" min="-2000" max="3000" step="1"><input type="number" data-k="ty" step="1"></div>
+    <div class="row"><label>scale</label><input type="range" data-k="scale" min="0.05" max="6" step="0.001"><input type="number" data-k="scale" step="0.01"></div>
     <div class="row"><label>opacity</label><input type="range" data-k="opacity" min="0" max="1" step="0.01"><input type="number" data-k="opacity" step="0.05"></div>
     <div class="actions">
-      <button id="calibSave">Сохранить</button>
-      <button id="calibReset">Сброс</button>
+      <button data-act="save">Сохранить</button>
+      <button data-act="reset">Сброс</button>
     </div>
   `;
 
-  // bind inputs
+  const syncInputs = () => {
+    for (const inp of panel.querySelectorAll("input[data-k]")) {
+      inp.value = g.calib[inp.dataset.k];
+    }
+  };
+  syncInputs();
+
   for (const inp of panel.querySelectorAll("input[data-k]")) {
     const k = inp.dataset.k;
-    inp.value = calib[k];
     inp.addEventListener("input", () => {
       const v = parseFloat(inp.value);
       if (!Number.isFinite(v)) return;
-      calib[k] = v;
-      // sync partner input (range/number) for same key
+      g.calib[k] = v;
       for (const peer of panel.querySelectorAll(`input[data-k="${k}"]`)) {
         if (peer !== inp) peer.value = v;
       }
-      applyCalibToRoot();
+      applyCalibToGroup(g);
     });
   }
+  panel.querySelector('[data-act=save]').onclick = () => {
+    saveState();
+    flash(panel.querySelector('[data-act=save]'), "Сохранено ✓");
+  };
+  panel.querySelector('[data-act=reset]').onclick = () => {
+    const base = BASE_GROUPS.find((x) => x.id === g.id);
+    g.calib = base ? { ...base.calibDefault } : { tx: 0, ty: 0, scale: 1, opacity: 0.9 };
+    syncInputs();
+    applyCalibToGroup(g);
+  };
+  panel.querySelector('[data-act=copy]').onclick = async () => {
+    const c = g.calib;
+    const s = `translate(${c.tx}, ${c.ty}) scale(${c.scale})`;
+    try { await navigator.clipboard.writeText(s); flash(panel.querySelector('[data-act=copy]'), "✓"); } catch {}
+  };
 
-  panel.querySelector("#calibSave").onclick = () => {
-    saveCalib();
-    flash(panel.querySelector("#calibSave"), "Сохранено ✓");
-  };
-  panel.querySelector("#calibReset").onclick = () => {
-    calib = { ...DEFAULT_CALIB };
-    for (const inp of panel.querySelectorAll("input[data-k]")) inp.value = calib[inp.dataset.k];
-    applyCalibToRoot();
-  };
-  panel.querySelector("#calibCopy").onclick = async () => {
-    const s = `translate(${calib.tx}, ${calib.ty}) scale(${calib.scale})`;
-    try { await navigator.clipboard.writeText(s); flash(panel.querySelector("#calibCopy"), "✓"); } catch {}
-  };
-
+  panel._sync = syncInputs;
+  g._calibPanel = panel;
   return panel;
+}
+
+function refreshCalibInputs(g) {
+  if (g._calibPanel && g._calibPanel._sync) g._calibPanel._sync();
 }
 
 function flash(btn, text) {
@@ -447,15 +720,38 @@ function flash(btn, text) {
   setTimeout(() => { btn.textContent = orig; }, 900);
 }
 
-document.getElementById("all").onclick = () =>
+// --------------- custom SVG loader ---------------
+async function addCustomSvgFile(file) {
+  const text = await file.text();
+  const label = file.name.replace(/\.svg$/i, "");
+  const color = pickColor();
+  const g = makeCustomGroup({ label, color, svgText: text });
+  groups.push(g);
+  ensureGroupRoot(g);
+  for (const o of g.overlays) await mountOverlay(g, o);
+  buildTargetBar();
+  buildLayerList();
+  setEditTarget(g.id);          // сразу включаем редактирование добавленной карты
+  saveState();
+}
+const CUSTOM_COLORS = ["#7aa2ff", "#8ad57d", "#ff8aa0", "#c39bff", "#ffb86c", "#5ee0c6"];
+function pickColor() {
+  const used = new Set(groups.map((g) => g.color));
+  return CUSTOM_COLORS.find((c) => !used.has(c)) || CUSTOM_COLORS[Math.floor(Math.random()*CUSTOM_COLORS.length)];
+}
+
+// --------------- toolbar buttons ---------------
+document.getElementById("all").onclick = () => {
   layersBox.querySelectorAll('input[type=checkbox]').forEach((cb) => { cb.checked = true; cb.dispatchEvent(new Event("change")); });
-document.getElementById("none").onclick = () =>
+};
+document.getElementById("none").onclick = () => {
   layersBox.querySelectorAll('input[type=checkbox]').forEach((cb) => { cb.checked = false; cb.dispatchEvent(new Event("change")); });
+};
 document.getElementById("reset").onclick = () => {
   resetView();
-  // нативные слои — включить, overlay-чекбоксы — выключить (как при первом открытии)
   layersBox.querySelectorAll('.layer input[type=checkbox]').forEach((cb) => {
-    const isOverlay = OVERLAYS.some((o) => cb.parentElement.dataset.name === o.name.toLowerCase());
+    // overlays off, native layers on (опираемся на наличие .swatch у overlay-row)
+    const isOverlay = cb.parentElement.querySelector(".swatch") !== null;
     cb.checked = !isOverlay;
     cb.dispatchEvent(new Event("change"));
   });
@@ -468,7 +764,7 @@ filterInput.addEventListener("input", () => {
   });
 });
 
-// --- Pan & zoom on the SVG via viewBox manipulation ---
+// --------------- pan/zoom + edit ---------------
 let baseViewBox = null;
 let view = null;
 
@@ -484,40 +780,84 @@ function setupPanZoom() {
   view = { ...baseViewBox };
   applyView();
 
-  wrap.addEventListener("wheel", (e) => {
-    e.preventDefault();
+  wrap.addEventListener("wheel", onWheel, { passive: false });
+  wrap.addEventListener("pointerdown", onPointerDown);
+  wrap.addEventListener("pointermove", onPointerMove);
+  wrap.addEventListener("pointerup", onPointerUp);
+  wrap.addEventListener("pointercancel", onPointerUp);
+  wrap.addEventListener("dblclick", () => {
+    if (editTarget === VIEW_TARGET) resetView();
+  });
+}
+
+function screenToWorld(clientX, clientY) {
+  const rect = svgEl.getBoundingClientRect();
+  const x = ((clientX - rect.left) / rect.width) * view.w + view.x;
+  const y = ((clientY - rect.top) / rect.height) * view.h + view.y;
+  return { x, y, rect };
+}
+
+function onWheel(e) {
+  e.preventDefault();
+  const factor = Math.exp(e.deltaY * 0.0015);
+  if (editTarget === VIEW_TARGET) {
+    // zoom main view around cursor
     const rect = svgEl.getBoundingClientRect();
     const mx = (e.clientX - rect.left) / rect.width;
     const my = (e.clientY - rect.top) / rect.height;
-    const scale = Math.exp(e.deltaY * 0.0015);
-    const newW = view.w * scale;
-    const newH = view.h * scale;
+    const newW = view.w * factor;
+    const newH = view.h * factor;
     view.x += (view.w - newW) * mx;
     view.y += (view.h - newH) * my;
     view.w = newW; view.h = newH;
     applyView();
-  }, { passive: false });
+  } else {
+    // scale active overlay group around cursor, in world coords
+    const g = groups.find((x) => x.id === editTarget);
+    if (!g) return;
+    const { x: wx, y: wy } = screenToWorld(e.clientX, e.clientY);
+    const s = g.calib.scale;
+    const s2 = clamp(s / factor, 0.02, 20);  // wheel up = zoom in
+    const k = s2 / s;
+    g.calib.scale = s2;
+    g.calib.tx = wx + (g.calib.tx - wx) * k;
+    g.calib.ty = wy + (g.calib.ty - wy) * k;
+    applyCalibToGroup(g);
+    refreshCalibInputs(g);
+  }
+}
 
-  let dragging = false, lastX = 0, lastY = 0;
-  wrap.addEventListener("pointerdown", (e) => {
-    dragging = true; lastX = e.clientX; lastY = e.clientY;
-    wrap.classList.add("grabbing");
-    wrap.setPointerCapture(e.pointerId);
-  });
-  wrap.addEventListener("pointermove", (e) => {
-    if (!dragging) return;
-    const rect = svgEl.getBoundingClientRect();
-    const dx = (e.clientX - lastX) * (view.w / rect.width);
-    const dy = (e.clientY - lastY) * (view.h / rect.height);
-    view.x -= dx; view.y -= dy;
-    lastX = e.clientX; lastY = e.clientY;
+let dragging = false, lastX = 0, lastY = 0, dragGroup = null;
+function onPointerDown(e) {
+  if (e.button !== 0) return;
+  dragging = true; lastX = e.clientX; lastY = e.clientY;
+  wrap.classList.add("grabbing");
+  wrap.setPointerCapture(e.pointerId);
+  dragGroup = editTarget === VIEW_TARGET ? null : groups.find((x) => x.id === editTarget);
+}
+function onPointerMove(e) {
+  if (!dragging) return;
+  const rect = svgEl.getBoundingClientRect();
+  const dxWorld = (e.clientX - lastX) * (view.w / rect.width);
+  const dyWorld = (e.clientY - lastY) * (view.h / rect.height);
+  if (dragGroup) {
+    dragGroup.calib.tx += dxWorld;
+    dragGroup.calib.ty += dyWorld;
+    applyCalibToGroup(dragGroup);
+    refreshCalibInputs(dragGroup);
+  } else {
+    view.x -= dxWorld;
+    view.y -= dyWorld;
     applyView();
-  });
-  wrap.addEventListener("pointerup", (e) => {
-    dragging = false; wrap.classList.remove("grabbing");
-    try { wrap.releasePointerCapture(e.pointerId); } catch {}
-  });
-  wrap.addEventListener("dblclick", resetView);
+  }
+  lastX = e.clientX; lastY = e.clientY;
+}
+function onPointerUp(e) {
+  if (!dragging) return;
+  dragging = false; wrap.classList.remove("grabbing");
+  try { wrap.releasePointerCapture(e.pointerId); } catch {}
+  if (dragGroup) saveState();
+  dragGroup = null;
 }
 
 function applyView() {
@@ -528,6 +868,13 @@ function resetView() {
   view = { ...baseViewBox };
   applyView();
 }
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+// keyboard: Esc → выйти из режима редактирования
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && editTarget !== VIEW_TARGET) setEditTarget(VIEW_TARGET);
+});
 
 load().catch((err) => {
   wrap.innerHTML = `<div id="loading">Ошибка загрузки SVG: ${err.message}</div>`;
