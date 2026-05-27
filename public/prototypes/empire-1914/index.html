@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Российская империя 1914 — просмотр слоёв</title>
+<title>Просмотр векторных карт</title>
 <style>
   :root {
     --bg: #1b1b1f;
@@ -30,6 +30,35 @@
   }
   #sidebar h1 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
   #sidebar .sub { color: var(--muted); font-size: 11px; }
+
+  /* Background-slot panel */
+  .bg-slot {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel-2);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bg-slot .bg-title-flex {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 1px;
+    overflow: hidden;
+  }
+  .bg-slot .bg-name {
+    font-size: 12px; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bg-slot .bg-meta { color: var(--muted); font-size: 10px; }
+  .bg-slot button, .bg-slot label.file-pick-icon {
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 4px 7px; font: inherit; font-size: 11px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 26px; flex-shrink: 0;
+  }
+  .bg-slot button:hover, .bg-slot label.file-pick-icon:hover { border-color: var(--accent); color: var(--accent); }
+  .bg-slot label.file-pick-icon input { display: none; }
+
   .toolbar {
     display: flex; gap: 6px; padding: 8px 12px;
     border-bottom: 1px solid var(--border);
@@ -187,11 +216,39 @@
     display: none;
   }
   #editbadge.on { display: block; }
-  #loading {
+  #emptyState {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 14px;
     color: var(--muted);
+    pointer-events: none;
   }
+  #emptyState.hidden { display: none; }
+  #emptyState .hint { font-size: 13px; }
+  #emptyState label.file-pick-big {
+    pointer-events: auto;
+    padding: 10px 18px;
+    background: var(--panel); color: var(--text);
+    border: 1px dashed var(--border); border-radius: 8px;
+    cursor: pointer; font-size: 12px;
+  }
+  #emptyState label.file-pick-big:hover { border-color: var(--accent); color: var(--accent); }
+  #emptyState label.file-pick-big input { display: none; }
+  #emptyState .reload {
+    pointer-events: auto;
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 12px; font: inherit; font-size: 11px;
+    cursor: pointer;
+  }
+  #emptyState .reload:hover { color: var(--text); border-color: var(--accent); }
+
+  #stage.drag-over::after {
+    content: ""; position: absolute; inset: 12px;
+    border: 2px dashed var(--accent); border-radius: 10px;
+    pointer-events: none;
+  }
+
   .file-row {
     display: flex; gap: 6px; padding: 6px 16px 0;
   }
@@ -204,15 +261,127 @@
   }
   .file-row label.file-pick:hover { border-color: var(--accent); color: var(--accent); }
   .file-row input { display: none; }
+
+  /* --- Search --- */
+  .searchbar {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    position: relative;
+  }
+  .searchbar input {
+    width: 100%;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 28px 7px 10px; font: inherit; font-size: 12px;
+  }
+  .searchbar input:focus { outline: none; border-color: var(--accent); }
+  .searchbar input:disabled { opacity: 0.5; cursor: not-allowed; }
+  .searchbar .clear {
+    position: absolute; right: 18px; top: 14px;
+    width: 18px; height: 18px; border: none; background: transparent;
+    color: var(--muted); cursor: pointer; font-size: 14px; line-height: 1;
+    display: none; padding: 0;
+  }
+  .searchbar .clear:hover { color: var(--text); }
+  .searchbar.has-query .clear { display: block; }
+  #searchResults {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--panel); border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    max-height: 60vh; overflow-y: auto;
+    z-index: 50;
+    display: none;
+  }
+  #searchResults.on { display: block; }
+  .result {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 12px;
+  }
+  .result:hover, .result.active { background: var(--panel-2); }
+  .result .cat {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    padding: 2px 5px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    min-width: 78px;
+    text-align: center;
+  }
+  .result .label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .result .label mark { background: rgba(255,204,102,0.35); color: inherit; padding: 0 1px; border-radius: 2px; }
+  .result.empty { color: var(--muted); cursor: default; }
+  .result.empty:hover { background: transparent; }
+
+  /* Highlight pulse + persistent marker (frame around the matched label) */
+  @keyframes search-pulse {
+    0%   { r: 5;  opacity: 0; }
+    15%  { r: 12; opacity: 1; }
+    100% { r: 70; opacity: 0; }
+  }
+  .search-pulse {
+    fill: none;
+    stroke: #ffcc66;
+    stroke-width: 3;
+    pointer-events: none;
+    animation: search-pulse 1.4s ease-out forwards;
+    vector-effect: non-scaling-stroke;
+  }
+  .search-marker .frame {
+    fill: none;
+    stroke: #ffcc66;
+    stroke-width: 2.5;
+    stroke-dasharray: 6 3;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+  .search-marker .frame-shadow {
+    fill: none;
+    stroke: #1b1b1f;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .search-marker .tick {
+    stroke: #ffcc66;
+    stroke-width: 2.5;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
 <div id="app">
   <aside id="sidebar">
     <header>
-      <h1>Российская империя, 1914</h1>
-      <div class="sub">Векторная карта · переключение слоёв · наложения</div>
+      <h1 id="hdrTitle">Просмотр векторных карт</h1>
+      <div class="sub" id="hdrSub">подложка · слои · наложения</div>
     </header>
+
+    <div class="searchbar" id="searchbar">
+      <input id="searchInput" placeholder="Поиск города, реки, губернии…" autocomplete="off" spellcheck="false" disabled>
+      <button class="clear" id="searchClear" title="Очистить">×</button>
+      <div id="searchResults"></div>
+    </div>
+
+    <div class="bg-slot" id="bgSlot">
+      <span class="bg-title-flex">
+        <span class="bg-name" id="bgName">— пусто —</span>
+        <span class="bg-meta" id="bgMeta"></span>
+      </span>
+      <label class="file-pick-icon" title="Открыть другую SVG как подложку">
+        ⤓
+        <input type="file" id="bgFilePick" accept=".svg,image/svg+xml">
+      </label>
+      <button id="bgClose" title="Убрать подложку">×</button>
+    </div>
 
     <div class="target-bar" id="targetBar">
       <span class="target-label">Двигаем мышью</span>
@@ -228,15 +397,30 @@
     <div id="layers"></div>
   </aside>
   <main id="stage">
-    <div id="svgwrap"><div id="loading">Загрузка SVG…</div></div>
+    <div id="svgwrap"></div>
     <div id="editbadge">редактирование</div>
-    <div id="status">колесо — зум · drag — панорама · dblclick — сброс вида</div>
+    <div id="emptyState" class="hidden">
+      <div class="hint">Подложка не загружена</div>
+      <label class="file-pick-big">Открыть SVG-карту
+        <input type="file" id="emptyFilePick" accept=".svg,image/svg+xml">
+      </label>
+      <button class="reload" id="loadDefaultBtn">Загрузить «Российская империя 1914»</button>
+    </div>
+    <div id="status">колесо — зум · drag — панорама · dblclick — сброс вида · перетащите SVG, чтобы загрузить</div>
   </main>
 </div>
 
 <script>
-const SVG_PATH = "russian_empire_1914.svg";
-const STORAGE_KEY = "empire-1914-overlay-state-v2";
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+// Конфиг встроенных подложек, доступных к выбору сразу.
+const PRESET_BACKGROUNDS = [
+  { id: "empire-1914", name: "Российская империя, 1914", file: "russian_empire_1914.svg" },
+];
+const DEFAULT_BG_ID = "empire-1914";
+
+const STATE_KEY = "map-viewer-state-v3";
+const MAX_PERSIST_BG_BYTES = 3_000_000;  // выше — не сохраняем custom-bg в localStorage
 
 // Базовая map_v6-группа (6 слоёв на общем viewBox 1500×1000).
 const BASE_GROUPS = [
@@ -258,12 +442,17 @@ const BASE_GROUPS = [
 
 const VIEW_TARGET = "__view__";
 
-const prettify = (id) => {
-  let s = id.replace(/_x([0-9a-fA-F]{2,4})_/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
-  s = s.replace(/\._/g, " · ").replace(/_/g, " ").replace(/\s+/g, " ").trim();
-  return s;
-};
-
+// --- 1914-style category mapping ---
+const ID_CATEGORY_HINTS = ["Ocean", "Province", "Guberniya", "Russian_Imperior", "Settlement", "Capital", "Lake__x26__Reservior"];
+const CATEGORY_ORDER = [
+  "Административные единицы",
+  "Границы и сетка",
+  "Гидрография",
+  "Транспорт",
+  "Населённые пункты",
+  "Подписи и легенда",
+  "Прочее",
+];
 const categoryOf = (id) => {
   const u = id.toUpperCase();
   if (/OCEAN|SEA|RIVER|LAKE|RESERVIOR|COAST|HYDRO/.test(u)) return "Гидрография";
@@ -274,53 +463,536 @@ const categoryOf = (id) => {
   if (/LEGEND|NAME|TEXT|MARK/.test(u)) return "Подписи и легенда";
   return "Прочее";
 };
+const prettify = (id) => {
+  let s = id.replace(/_x([0-9a-fA-F]{2,4})_/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+  s = s.replace(/\._/g, " · ").replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  return s;
+};
 
-const CATEGORY_ORDER = [
-  "Административные единицы",
-  "Границы и сетка",
-  "Гидрография",
-  "Транспорт",
-  "Населённые пункты",
-  "Подписи и легенда",
-  "Прочее",
-];
-
+// --- DOM refs ---
 const wrap = document.getElementById("svgwrap");
+const stage = document.getElementById("stage");
 const layersBox = document.getElementById("layers");
 const filterInput = document.getElementById("filter");
 const targetBar = document.getElementById("targetBar");
 const editBadge = document.getElementById("editbadge");
+const emptyState = document.getElementById("emptyState");
+const bgName = document.getElementById("bgName");
+const bgMeta = document.getElementById("bgMeta");
+const hdrTitle = document.getElementById("hdrTitle");
+const hdrSub = document.getElementById("hdrSub");
+const searchbarEl = document.getElementById("searchbar");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchClear = document.getElementById("searchClear");
 
-let svgEl = null;
-let topGroups = [];
-let layerContainer = null;
-let groups = [];                            // [{id, label, color, overlays, calib, rootEl}]
+// --- State ---
+let rootSvg = null;
+let bgContent = null;          // <g id="bg-content">
+let overlayRoot = null;        // <g id="overlay-root">
+let bgInfo = null;             // { id, name, source: 'preset'|'custom', file?, svgText?, layers: [{id, el, visible}], use1914Cats }
+let groups = [];               // overlay groups
 let customSeq = 1;
-let editTarget = VIEW_TARGET;               // VIEW_TARGET | group.id
-const overlayBlobCache = new Map();         // file → DocumentFragment
+let editTarget = VIEW_TARGET;
+const overlayBlobCache = new Map();
 
-// --------------- persistence ---------------
+// --- Persistence ---
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STATE_KEY);
     if (raw) return JSON.parse(raw);
   } catch {}
   return null;
 }
 function saveState() {
   const data = {
+    bg: bgInfo ? {
+      id: bgInfo.id,
+      name: bgInfo.name,
+      source: bgInfo.source,
+      file: bgInfo.file,
+      svgText: bgInfo.source === "custom" && bgInfo.svgText && bgInfo.svgText.length < MAX_PERSIST_BG_BYTES ? bgInfo.svgText : undefined,
+      layerVis: bgInfo.layers.map((l) => ({ id: l.id, v: l.visible })),
+    } : null,
     groups: groups.map((g) => ({
       id: g.id, label: g.label, color: g.color,
       calib: g.calib,
       enabled: g.overlays.filter((o) => o.enabled).map((o) => o.id),
       isCustom: !!g.isCustom,
-      customSvg: g.isCustom ? g.customSvg : undefined,  // serialised SVG text
+      customSvg: g.isCustom ? g.customSvg : undefined,
     })),
     editTarget,
   };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(data)); } catch {}
 }
 
+// --- Initialization ---
+function initSvgShell() {
+  rootSvg = document.createElementNS(SVG_NS, "svg");
+  rootSvg.setAttribute("xmlns", SVG_NS);
+  rootSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  rootSvg.setAttribute("viewBox", "0 0 1000 1000");
+  rootSvg.style.width = "100%";
+  rootSvg.style.height = "100%";
+  bgContent = document.createElementNS(SVG_NS, "g");
+  bgContent.setAttribute("id", "bg-content");
+  overlayRoot = document.createElementNS(SVG_NS, "g");
+  overlayRoot.setAttribute("id", "overlay-root");
+  rootSvg.append(bgContent, overlayRoot);
+  wrap.innerHTML = "";
+  wrap.appendChild(rootSvg);
+}
+
+async function boot() {
+  initSvgShell();
+  initGroups();
+  buildTargetBar();
+  buildLayerList();
+  setupPanZoom();
+
+  const saved = loadState();
+  if (saved && saved.editTarget) editTarget = saved.editTarget;
+
+  let bgLoaded = false;
+  if (saved && saved.bg) {
+    try {
+      if (saved.bg.source === "preset" && saved.bg.file) {
+        await loadBackgroundFromUrl(saved.bg.file, saved.bg.id, saved.bg.name);
+        bgLoaded = true;
+      } else if (saved.bg.source === "custom" && saved.bg.svgText) {
+        await setBackground({ id: saved.bg.id, name: saved.bg.name, source: "custom", svgText: saved.bg.svgText });
+        bgLoaded = true;
+      }
+      if (bgLoaded && Array.isArray(saved.bg.layerVis)) {
+        for (const v of saved.bg.layerVis) {
+          const l = bgInfo.layers.find((x) => x.id === v.id);
+          if (l) setLayerVisible(l, v.v);
+        }
+        buildLayerList();
+      }
+    } catch (e) {
+      console.warn("Не смогли восстановить фон:", e);
+    }
+  }
+  if (!bgLoaded) {
+    await loadBackgroundFromUrl(PRESET_BACKGROUNDS[0].file, PRESET_BACKGROUNDS[0].id, PRESET_BACKGROUNDS[0].name).catch(() => {});
+  }
+
+  // Re-mount overlays after background is in place
+  for (const g of groups) {
+    for (const o of g.overlays.filter((o) => o.enabled)) {
+      await mountOverlay(g, o);
+    }
+  }
+
+  setEditTarget(editTarget);
+  updateEmptyState();
+}
+
+// --- Background management ---
+async function loadBackgroundFromUrl(url, id, name) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
+  await setBackground({ id: id || url, name: name || url, source: "preset", file: url, svgText: text });
+}
+
+async function loadBackgroundFromFile(file) {
+  const text = await file.text();
+  const id = `custom-${Date.now()}`;
+  await setBackground({ id, name: file.name.replace(/\.svg$/i, ""), source: "custom", svgText: text });
+}
+
+async function setBackground({ id, name, source, file, svgText }) {
+  const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+  const importedSvg = doc.documentElement;
+  if (importedSvg.tagName.toLowerCase() !== "svg") {
+    throw new Error("Файл не похож на SVG");
+  }
+
+  // Determine viewBox: prefer existing, fall back to width/height.
+  let vb = importedSvg.getAttribute("viewBox");
+  if (!vb) {
+    const w = parseFloat(importedSvg.getAttribute("width")) || 1000;
+    const h = parseFloat(importedSvg.getAttribute("height")) || 1000;
+    vb = `0 0 ${w} ${h}`;
+  }
+  rootSvg.setAttribute("viewBox", vb);
+
+  // Clear current bg-content, copy non-meta children of imported svg into it
+  bgContent.replaceChildren();
+  // Preserve <defs>, <style> by copying ALL children (they affect rendering)
+  for (const child of Array.from(importedSvg.children)) {
+    bgContent.appendChild(document.importNode(child, true));
+  }
+
+  // Detect layer-like top-level groups inside bg-content
+  const layerGroups = findLayerGroups(bgContent);
+  const use1914Cats = layerGroups.some((g) => ID_CATEGORY_HINTS.some((h) => g.id.toLowerCase().includes(h.toLowerCase())));
+
+  bgInfo = {
+    id, name, source, file,
+    svgText: source === "custom" ? svgText : undefined,
+    layers: layerGroups.map((g) => ({ id: g.id, el: g, visible: g.style.display !== "none" })),
+    use1914Cats,
+  };
+
+  // Reset zoom view to fit the new background
+  initPanZoomForCurrentBg();
+
+  // Update sidebar header & bg-slot
+  bgName.textContent = name;
+  const layerCount = bgInfo.layers.length;
+  bgMeta.textContent = `${vb.split(/\s+/).slice(2).join("×")} · ${layerCount} ${pluralize(layerCount, "слой", "слоя", "слоёв")}`;
+  hdrTitle.textContent = name;
+  hdrSub.textContent = use1914Cats ? "категоризированные слои · наложения" : "слои подложки · наложения";
+  document.title = `${name} — просмотр SVG`;
+
+  buildLayerList();
+  updateEmptyState();
+  buildSearchIndex();
+  saveState();
+}
+
+function closeBackground() {
+  bgContent.replaceChildren();
+  bgInfo = null;
+  bgName.textContent = "— пусто —";
+  bgMeta.textContent = "";
+  hdrTitle.textContent = "Просмотр векторных карт";
+  hdrSub.textContent = "подложка не загружена";
+  document.title = "Просмотр векторных карт";
+  rootSvg.setAttribute("viewBox", "0 0 1000 1000");
+  baseViewBox = { x: 0, y: 0, w: 1000, h: 1000 };
+  view = { ...baseViewBox };
+  applyView();
+  buildLayerList();
+  updateEmptyState();
+  buildSearchIndex();
+  saveState();
+}
+
+// --- Search index over the current background SVG ---
+const TEXT_CATEGORY_MAP = {
+  "Capital":                "Столица",
+  "General-Guberniya_Center": "Ген.-губерн.",
+  "Guberniya_Center":       "Губерния",
+  "Settlement":             "Город",
+  "State":                  "Гос-во",
+  "River":                  "Река",
+  "Lake__x26__Reservior":   "Водоём",
+  "OCEAN__x26__SEA":        "Море",
+  "ISLAND__x26__PENN":      "Остров",
+};
+let searchIndex = [];           // [{text, norm, x, y, w, h, cat, layerId, el}]
+let activeResultIdx = -1;
+
+function normRu(s) {
+  return s.toLowerCase().replace(/ё/g, "е").trim();
+}
+function categorizeLayerForText(layerId) {
+  if (!layerId) return "Текст";
+  // strip "._Text" suffix
+  const base = layerId.replace(/\._?Text$/i, "");
+  if (TEXT_CATEGORY_MAP[base]) return TEXT_CATEGORY_MAP[base];
+  // fallback — pretty-print the id
+  return prettify(base);
+}
+
+function buildSearchIndex() {
+  searchIndex = [];
+  activeResultIdx = -1;
+  if (typeof clearSearchMarker === "function") clearSearchMarker();
+  if (!bgInfo) {
+    searchInput.disabled = true;
+    searchInput.value = "";
+    searchInput.placeholder = "Подложка не загружена";
+    searchbarEl.classList.remove("has-query");
+    searchResults.classList.remove("on");
+    return;
+  }
+  searchInput.disabled = false;
+  searchInput.placeholder = "Поиск города, реки, губернии…";
+
+  // Map each layer-el to its id for quick ancestor lookup
+  const layerByEl = new Map(bgInfo.layers.map((l) => [l.el, l.id]));
+
+  // Chromium's getCTM() does NOT return viewport (viewBox) coords as the spec
+  // promises — it returns something closer to screen pixels. Use the standard
+  // workaround: matrix-to-viewBox = inverse(rootSvg.screenCTM) ⨯ el.screenCTM.
+  const rootInv = rootSvg.getScreenCTM()?.inverse();
+
+  const texts = bgContent.querySelectorAll("text");
+  for (const t of texts) {
+    const content = (t.textContent || "").replace(/\s+/g, " ").trim();
+    if (!content || content.length > 80) continue;
+    // find ancestor layer id
+    let layerId = null;
+    let p = t.parentNode;
+    while (p && p !== bgContent) {
+      if (layerByEl.has(p)) { layerId = layerByEl.get(p); break; }
+      p = p.parentNode;
+    }
+    // skip legend & internal map-name text
+    if (layerId && /^LEGEND|Name\._Text$/i.test(layerId)) continue;
+
+    let bbox = null, ctm = null;
+    try {
+      bbox = t.getBBox();
+      const sCtm = t.getScreenCTM();
+      if (sCtm && rootInv) ctm = rootInv.multiply(sCtm);
+    } catch {}
+    if (!bbox || !isFinite(bbox.x) || !isFinite(bbox.y)) continue;
+    if (bbox.width === 0 && bbox.height === 0) continue;
+    if (!ctm) continue;
+
+    // Bbox у text возвращается в ЛОКАЛЬНОЙ системе элемента — без учёта
+    // его собственного transform="matrix(...)". Чтобы получить координаты
+    // в viewport (нашем rootSvg viewBox), перегоняем 4 угла через CTM.
+    const corners = [
+      [bbox.x,              bbox.y],
+      [bbox.x + bbox.width, bbox.y],
+      [bbox.x,              bbox.y + bbox.height],
+      [bbox.x + bbox.width, bbox.y + bbox.height],
+    ].map(([lx, ly]) => ({
+      x: ctm.a * lx + ctm.c * ly + ctm.e,
+      y: ctm.b * lx + ctm.d * ly + ctm.f,
+    }));
+    const xs = corners.map(p => p.x), ys = corners.map(p => p.y);
+    const x0 = Math.min(...xs), y0 = Math.min(...ys);
+    const w  = Math.max(...xs) - x0, h = Math.max(...ys) - y0;
+    if (!isFinite(x0) || !isFinite(y0)) continue;
+
+    searchIndex.push({
+      text: content,
+      norm: normRu(content),
+      x: x0, y: y0, w, h,
+      cat: categorizeLayerForText(layerId),
+      layerId,
+      el: t,
+    });
+  }
+}
+
+function highlightMatch(text, query) {
+  const i = normRu(text).indexOf(query);
+  if (i < 0) return text;
+  return text.slice(0, i) + "<mark>" + text.slice(i, i + query.length) + "</mark>" + text.slice(i + query.length);
+}
+
+// Ranking: prefix match wins; among prefix matches — shorter text first.
+function searchRank(item, q) {
+  const idx = item.norm.indexOf(q);
+  if (idx < 0) return Infinity;
+  // prefix=0, word-start=10, substring=100; plus text length penalty
+  let base = idx === 0 ? 0 : 100;
+  if (idx > 0 && /\s/.test(item.norm[idx - 1])) base = 10;
+  return base + Math.min(item.text.length, 50);
+}
+
+function renderSearchResults(q) {
+  searchResults.innerHTML = "";
+  if (!q) {
+    searchResults.classList.remove("on");
+    return;
+  }
+  const matches = searchIndex
+    .map((it) => ({ it, score: searchRank(it, q) }))
+    .filter((m) => Number.isFinite(m.score))
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 30);
+
+  if (!matches.length) {
+    const row = document.createElement("div");
+    row.className = "result empty";
+    row.innerHTML = `<span class="cat">—</span><span class="label">ничего не найдено</span>`;
+    searchResults.appendChild(row);
+  } else {
+    matches.forEach(({ it }, i) => {
+      const row = document.createElement("div");
+      row.className = "result";
+      if (i === 0) { row.classList.add("active"); activeResultIdx = 0; }
+      row.innerHTML = `<span class="cat">${it.cat}</span><span class="label">${highlightMatch(it.text, q)}</span>`;
+      row.addEventListener("mouseenter", () => {
+        for (const r of searchResults.children) r.classList.remove("active");
+        row.classList.add("active");
+        activeResultIdx = [...searchResults.children].indexOf(row);
+      });
+      row.addEventListener("click", () => goToResult(it));
+      searchResults.appendChild(row);
+    });
+  }
+  searchResults.classList.add("on");
+}
+
+function clearSearch() {
+  searchInput.value = "";
+  searchbarEl.classList.remove("has-query");
+  searchResults.classList.remove("on");
+  activeResultIdx = -1;
+  clearSearchMarker();
+}
+
+searchInput.addEventListener("input", () => {
+  const q = normRu(searchInput.value);
+  searchbarEl.classList.toggle("has-query", !!q);
+  renderSearchResults(q);
+});
+searchClear.addEventListener("click", () => { clearSearch(); searchInput.focus(); });
+searchInput.addEventListener("keydown", (e) => {
+  const rows = [...searchResults.querySelectorAll(".result:not(.empty)")];
+  if (e.key === "Escape") {
+    if (searchInput.value) { e.preventDefault(); clearSearch(); }
+    else searchInput.blur();
+    return;
+  }
+  if (!rows.length) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    activeResultIdx = Math.min(rows.length - 1, activeResultIdx + 1);
+    for (const r of rows) r.classList.remove("active");
+    rows[activeResultIdx]?.classList.add("active");
+    rows[activeResultIdx]?.scrollIntoView({ block: "nearest" });
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    activeResultIdx = Math.max(0, activeResultIdx - 1);
+    for (const r of rows) r.classList.remove("active");
+    rows[activeResultIdx]?.classList.add("active");
+    rows[activeResultIdx]?.scrollIntoView({ block: "nearest" });
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    const idx = activeResultIdx >= 0 ? activeResultIdx : 0;
+    rows[idx]?.click();
+  }
+});
+
+// Smooth animated viewBox tween + persistent frame around the matched label.
+function goToResult(it) {
+  const cx = it.x + it.w / 2;
+  const cy = it.y + it.h / 2;
+  // Choose zoom: ~7% of background width — comfortable for a label
+  const targetW = Math.min(baseViewBox.w * 0.12, Math.max(baseViewBox.w * 0.05, 400));
+  const targetH = targetW * (view.h / view.w);
+  const target = { x: cx - targetW / 2, y: cy - targetH / 2, w: targetW, h: targetH };
+  tweenView(target, 450, () => markAt(it, cx, cy));
+  // close dropdown but keep the query
+  searchResults.classList.remove("on");
+  searchInput.blur();
+}
+
+let tweenRaf = null;
+function tweenView(target, durationMs, onDone) {
+  if (tweenRaf) cancelAnimationFrame(tweenRaf);
+  const from = { ...view };
+  const t0 = performance.now();
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  function step(now) {
+    const t = Math.min(1, (now - t0) / durationMs);
+    const k = ease(t);
+    view.x = from.x + (target.x - from.x) * k;
+    view.y = from.y + (target.y - from.y) * k;
+    view.w = from.w + (target.w - from.w) * k;
+    view.h = from.h + (target.h - from.h) * k;
+    applyView();
+    if (t < 1) tweenRaf = requestAnimationFrame(step);
+    else { tweenRaf = null; onDone?.(); }
+  }
+  tweenRaf = requestAnimationFrame(step);
+}
+
+function markAt(it, cx, cy) {
+  clearSearchMarker();
+
+  const g = document.createElementNS(SVG_NS, "g");
+  g.setAttribute("class", "search-marker");
+
+  // Рамка вокруг подписи: чёрная подложка + жёлтый пунктир сверху, чтобы
+  // контрастно лежало и на светлом, и на тёмном фоне.
+  const padX = Math.max(2, it.w * 0.05);
+  const padY = Math.max(2, it.h * 0.15);
+  const fx = it.x - padX, fy = it.y - padY;
+  const fw = it.w + padX * 2, fh = it.h + padY * 2;
+
+  const shadow = document.createElementNS(SVG_NS, "rect");
+  shadow.setAttribute("x", fx); shadow.setAttribute("y", fy);
+  shadow.setAttribute("width", fw); shadow.setAttribute("height", fh);
+  shadow.setAttribute("rx", "2"); shadow.setAttribute("ry", "2");
+  shadow.setAttribute("class", "frame-shadow");
+  g.appendChild(shadow);
+
+  const frame = document.createElementNS(SVG_NS, "rect");
+  frame.setAttribute("x", fx); frame.setAttribute("y", fy);
+  frame.setAttribute("width", fw); frame.setAttribute("height", fh);
+  frame.setAttribute("rx", "2"); frame.setAttribute("ry", "2");
+  frame.setAttribute("class", "frame");
+  g.appendChild(frame);
+
+  // Короткие тики на середине каждой стороны — подкрепляют «вот сюда смотри»
+  const tickLen = Math.min(fw, fh) * 0.25;
+  const mid = (a, b) => a + b / 2;
+  const ticks = [
+    [mid(fx, fw), fy - tickLen, mid(fx, fw), fy],            // top
+    [mid(fx, fw), fy + fh, mid(fx, fw), fy + fh + tickLen],  // bottom
+    [fx - tickLen, mid(fy, fh), fx, mid(fy, fh)],            // left
+    [fx + fw, mid(fy, fh), fx + fw + tickLen, mid(fy, fh)],  // right
+  ];
+  for (const [x1, y1, x2, y2] of ticks) {
+    const line = document.createElementNS(SVG_NS, "line");
+    line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+    line.setAttribute("class", "tick");
+    g.appendChild(line);
+  }
+
+  // Pulse — поверх, исчезает за 1.4 с (даёт «огоньком ткнули» эффект)
+  const pulse = document.createElementNS(SVG_NS, "circle");
+  pulse.setAttribute("cx", cx); pulse.setAttribute("cy", cy);
+  pulse.setAttribute("r", "5");
+  pulse.setAttribute("class", "search-pulse");
+  g.appendChild(pulse);
+
+  rootSvg.appendChild(g);
+  setTimeout(() => pulse.remove(), 1500);
+}
+
+function clearSearchMarker() {
+  rootSvg.querySelectorAll(".search-marker").forEach((el) => el.remove());
+}
+
+function findLayerGroups(node) {
+  // Find the deepest single-child wrapper that holds multiple <g id> children
+  // (this is how Illustrator wraps stuff in <switch><g i:extraneous="self">…</g>)
+  const childGroupsWithId = Array.from(node.children).filter(
+    (c) => c.tagName.toLowerCase() === "g" && c.id
+  );
+  if (childGroupsWithId.length >= 2) return childGroupsWithId;
+  for (const c of node.children) {
+    if (["g", "switch"].includes(c.tagName.toLowerCase())) {
+      const found = findLayerGroups(c);
+      if (found.length >= 2) return found;
+    }
+  }
+  // Fallback: any direct child <g id> we find
+  return childGroupsWithId;
+}
+
+function setLayerVisible(layer, visible) {
+  layer.visible = visible;
+  layer.el.style.display = visible ? "" : "none";
+}
+
+function pluralize(n, one, few, many) {
+  const mod10 = n % 10, mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+}
+
+function updateEmptyState() {
+  emptyState.classList.toggle("hidden", !!bgInfo);
+}
+
+// --- Overlay groups (v2 logic) ---
 function initGroups() {
   const saved = loadState();
   groups = BASE_GROUPS.map((bg) => ({
@@ -334,13 +1006,15 @@ function initGroups() {
     for (const sg of saved.groups) {
       let g = groups.find((x) => x.id === sg.id);
       if (!g && sg.isCustom && sg.customSvg) {
-        // recreate custom group from saved SVG text
         g = makeCustomGroup({ label: sg.label, color: sg.color, svgText: sg.customSvg, id: sg.id });
         groups.push(g);
       }
       if (g) {
         if (sg.calib) g.calib = { ...g.calib, ...sg.calib };
         if (Array.isArray(sg.enabled)) {
+          // Сначала всё в false, потом включаем строго то, что есть в сохранённом списке —
+          // иначе свежие кастом-группы (где defaults: enabled=true) затрут выключения.
+          for (const o of g.overlays) o.enabled = false;
           for (const oid of sg.enabled) {
             const o = g.overlays.find((x) => x.id === oid);
             if (o) o.enabled = true;
@@ -348,80 +1022,69 @@ function initGroups() {
         }
       }
     }
-    if (saved.editTarget) editTarget = saved.editTarget;
   }
 }
 
 function makeCustomGroup({ label, color, svgText, id }) {
   const gid = id || `custom-${customSeq++}`;
+  const safeColor = color || "#7aa2ff";
+
+  // Парсим SVG, ищем внутренние слои (как у фоновой карты).
+  let internalLayers = [];
+  try {
+    const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+    const root = doc.documentElement;
+    if (root.tagName.toLowerCase() === "svg") {
+      internalLayers = findLayerGroups(root);
+    }
+  } catch {}
+
+  let overlays;
+  if (internalLayers.length >= 2) {
+    // Каждый внутренний слой — отдельный чекбокс.
+    overlays = internalLayers.map((g, i) => {
+      const internalId = g.id || `__idx-${i}`;
+      return {
+        id: `${gid}::${internalId}`,
+        internalId,
+        internalIndex: i,
+        name: g.id ? prettify(g.id) : `Слой ${i + 1}`,
+        swatch: safeColor,
+        enabled: true,
+      };
+    });
+  } else {
+    // Монолитный SVG — один чекбокс на весь файл.
+    overlays = [{
+      id: `${gid}::__all__`,
+      internalId: null,
+      internalIndex: null,
+      name: label,
+      swatch: safeColor,
+      enabled: true,
+    }];
+  }
+
   return {
     id: gid,
     label,
-    color: color || "#7aa2ff",
-    overlays: [{ id: `${gid}-main`, name: label, swatch: color || "#7aa2ff", svgText, enabled: true }],
+    color: safeColor,
+    overlays,
     calib: { tx: 0, ty: 0, scale: 1, opacity: 0.9 },
     isCustom: true,
     customSvg: svgText,
     rootEl: null,
+    mountedContent: false,    // SVG-контент ещё не вставлен в DOM
+    _layerEls: null,           // Map<internalId|__idxN, <g>> после монтирования
   };
-}
-
-// --------------- loading & rendering ---------------
-async function load() {
-  const res = await fetch(SVG_PATH);
-  const text = await res.text();
-  const doc = new DOMParser().parseFromString(text, "image/svg+xml");
-  svgEl = doc.documentElement;
-  wrap.innerHTML = "";
-  wrap.appendChild(svgEl);
-
-  if (!svgEl.getAttribute("preserveAspectRatio")) {
-    svgEl.setAttribute("preserveAspectRatio", "xMidYMid meet");
-  }
-  svgEl.style.width = "100%";
-  svgEl.style.height = "100%";
-
-  const findLayerContainer = (node) => {
-    const childGroupsWithId = Array.from(node.children).filter(
-      (c) => c.tagName.toLowerCase() === "g" && c.id
-    );
-    if (childGroupsWithId.length >= 2) return { container: node, groups: childGroupsWithId };
-    for (const c of node.children) {
-      if (["g", "switch"].includes(c.tagName.toLowerCase())) {
-        const found = findLayerContainer(c);
-        if (found) return found;
-      }
-    }
-    return null;
-  };
-  const found = findLayerContainer(svgEl);
-  topGroups = found ? found.groups : [];
-  layerContainer = found ? found.container : svgEl;
-
-  initGroups();
-
-  // Create overlay-root for every group (lazy-render children when toggled).
-  for (const g of groups) ensureGroupRoot(g);
-
-  // Apply saved enabled state to DOM
-  for (const g of groups) {
-    for (const o of g.overlays) {
-      if (o.enabled) await mountOverlay(g, o);
-    }
-  }
-
-  buildTargetBar();
-  buildLayerList();
-  setupPanZoom();
-  setEditTarget(editTarget);
 }
 
 function ensureGroupRoot(g) {
-  if (g.rootEl) return g.rootEl;
-  const el = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  if (g.rootEl && g.rootEl.parentNode) return g.rootEl;
+  const el = document.createElementNS(SVG_NS, "g");
   el.setAttribute("data-group", g.id);
   applyCalibToGroup(g, el);
-  layerContainer.appendChild(el);
+  overlayRoot.appendChild(el);
   g.rootEl = el;
   return el;
 }
@@ -439,32 +1102,99 @@ async function fetchSvgFrag(file) {
   }
   return overlayBlobCache.get(file);
 }
-function svgTextToFrag(txt) {
+function svgTextToFrag(txt, { keepDefs = false } = {}) {
   const d = new DOMParser().parseFromString(txt, "image/svg+xml");
   const root = d.documentElement;
   const frag = document.createDocumentFragment();
+  const skip = keepDefs ? ["metadata", "title", "desc"] : ["defs", "metadata", "title", "desc"];
   for (const child of Array.from(root.children)) {
     const tag = child.tagName.toLowerCase();
-    if (["defs", "metadata", "title", "desc"].includes(tag)) continue;
+    if (skip.includes(tag)) continue;
     frag.appendChild(child.cloneNode(true));
   }
   return frag;
 }
 
-async function mountOverlay(g, o) {
+// Лениво вставляет ВСЁ содержимое custom-SVG в rootEl группы, индексирует слои.
+function ensureCustomGroupMounted(g) {
   const root = ensureGroupRoot(g);
-  let el = root.querySelector(`g[data-overlay="${o.id}"]`);
+  if (g.mountedContent) return;
+  // keepDefs=true — иначе пути могут потерять filling/clip-path
+  const frag = svgTextToFrag(g.customSvg, { keepDefs: true });
+  root.appendChild(frag);
+
+  // Индекс по top-level слоям (с учётом того же Illustrator-wrapper'а).
+  const layerEls = findLayerGroups(root);
+  g._layerEls = new Map();
+  layerEls.forEach((el, i) => {
+    const key = el.id || `__idx-${i}`;
+    g._layerEls.set(key, el);
+    // Пометим для надёжного отбора потом (на случай дубликатов ID или вложений).
+    el.setAttribute("data-overlay-layer", key);
+    el.style.display = "none";  // по умолчанию скрываем, mountOverlay включит нужное
+  });
+  g.mountedContent = true;
+}
+
+async function mountOverlay(g, o) {
+  ensureGroupRoot(g);
+
+  if (g.isCustom) {
+    ensureCustomGroupMounted(g);
+    if (o.internalId === null) {
+      // Монолитный «весь файл» — показываем все обнаруженные слои.
+      for (const el of g._layerEls.values()) el.style.display = "";
+    } else {
+      const el = g._layerEls.get(o.internalId);
+      if (el) el.style.display = "";
+    }
+    return;
+  }
+
+  // File-based (map_v6): по одному <g data-overlay> на overlay-id.
+  let el = g.rootEl.querySelector(`g[data-overlay="${o.id}"]`);
   if (!el) {
-    const frag = o.file ? (await fetchSvgFrag(o.file)) : svgTextToFrag(o.svgText);
-    el = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const frag = await fetchSvgFrag(o.file);
+    el = document.createElementNS(SVG_NS, "g");
     el.setAttribute("data-overlay", o.id);
     el.appendChild(frag.cloneNode(true));
-    root.appendChild(el);
+    g.rootEl.appendChild(el);
+    // map_v6-файлы — potrace-выход с зашитым fill="#000000". Перекрашиваем
+    // под swatch, чтобы названия типа "rivers_cyan" не оставались чёрными.
+    if (o.swatch) recolorBlack(el, o.swatch);
   }
   el.style.display = "";
 }
+
+const BLACK_RE = /^(#000(000)?|black|rgb\(0,\s*0,\s*0\))$/i;
+function recolorBlack(rootEl, color) {
+  // fill
+  for (const el of rootEl.querySelectorAll('[fill]')) {
+    if (BLACK_RE.test(el.getAttribute('fill').trim())) el.setAttribute('fill', color);
+  }
+  // stroke (только реально-чёрный; "none" не трогаем)
+  for (const el of rootEl.querySelectorAll('[stroke]')) {
+    const v = el.getAttribute('stroke').trim();
+    if (BLACK_RE.test(v)) el.setAttribute('stroke', color);
+  }
+  // если самый внешний <g> имеет presentation-атрибут — тоже
+  if (rootEl.getAttribute('fill') && BLACK_RE.test(rootEl.getAttribute('fill').trim())) {
+    rootEl.setAttribute('fill', color);
+  }
+}
+
 function unmountOverlay(g, o) {
   if (!g.rootEl) return;
+  if (g.isCustom) {
+    if (!g.mountedContent) return;
+    if (o.internalId === null) {
+      for (const el of g._layerEls.values()) el.style.display = "none";
+    } else {
+      const el = g._layerEls.get(o.internalId);
+      if (el) el.style.display = "none";
+    }
+    return;
+  }
   const el = g.rootEl.querySelector(`g[data-overlay="${o.id}"]`);
   if (el) el.style.display = "none";
 }
@@ -476,7 +1206,7 @@ async function toggleOverlay(g, o, enabled) {
   saveState();
 }
 
-// --------------- target / edit mode ---------------
+// --- Target / edit mode ---
 function setEditTarget(id) {
   editTarget = id;
   for (const btn of targetBar.querySelectorAll(".target-btn")) {
@@ -492,18 +1222,15 @@ function setEditTarget(id) {
   } else {
     editBadge.classList.remove("on");
   }
-  // Render the calibration panel for the active group (if any)
   rebuildCalibPanel();
   saveState();
 }
 
 function buildTargetBar() {
-  // clear (keep label)
   for (const c of [...targetBar.children]) {
     if (!c.classList.contains("target-label")) c.remove();
   }
-  const viewBtn = makeTargetBtn(VIEW_TARGET, "Карта 1914", "#9a9aa6", false);
-  targetBar.appendChild(viewBtn);
+  targetBar.appendChild(makeTargetBtn(VIEW_TARGET, "Подложка", "#9a9aa6", false));
   for (const g of groups) {
     targetBar.appendChild(makeTargetBtn(g.id, g.label, g.color, g.isCustom));
   }
@@ -542,41 +1269,52 @@ function removeCustomGroup(id) {
   setEditTarget(editTarget);
 }
 
-// --------------- layer list & calibration panel ---------------
+// --- Layer list ---
 function buildLayerList() {
   layersBox.innerHTML = "";
 
-  // overlays section, grouped by group
   appendGroupTitle("Наложения");
+  if (!groups.length) {
+    const note = document.createElement("div");
+    note.style.cssText = "padding: 6px 16px; color: var(--muted); font-size: 11px;";
+    note.textContent = "Подгрузите SVG ниже.";
+    layersBox.appendChild(note);
+  }
   for (const g of groups) {
+    // Подзаголовок группы (помельче, цветной dot)
+    const sub = document.createElement("div");
+    sub.style.cssText = "padding: 8px 16px 2px; display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text);";
+    const dot = document.createElement("span");
+    dot.style.cssText = `display:inline-block; width:8px; height:8px; border-radius:50%; background:${g.color};`;
+    const lbl = document.createElement("span");
+    lbl.style.cssText = "flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;";
+    lbl.textContent = g.label;
+    const meta = document.createElement("span");
+    meta.style.cssText = "color: var(--muted); font-size: 10px;";
+    meta.textContent = `${g.overlays.length} ${pluralize(g.overlays.length, "слой", "слоя", "слоёв")}`;
+    sub.append(dot, lbl, meta);
+    layersBox.appendChild(sub);
+
     for (const o of g.overlays) {
       const row = document.createElement("label");
       row.className = "layer";
+      row.style.paddingLeft = "28px";  // отступ под подзаголовок группы
       row.dataset.name = (o.name + " " + g.label).toLowerCase();
-
       const cb = document.createElement("input");
       cb.type = "checkbox";
       cb.checked = !!o.enabled;
       cb.addEventListener("change", () => toggleOverlay(g, o, cb.checked));
-
       const sw = document.createElement("span");
       sw.className = "swatch";
       sw.style.background = o.swatch;
-
       const name = document.createElement("span");
       name.className = "name";
       name.textContent = o.name;
-
-      const grp = document.createElement("span");
-      grp.className = "group-name";
-      grp.textContent = g.id;
-
-      row.append(cb, sw, name, grp);
+      row.append(cb, sw, name);
       layersBox.appendChild(row);
     }
   }
 
-  // file picker row
   const pickRow = document.createElement("div");
   pickRow.className = "file-row";
   pickRow.innerHTML = `
@@ -590,49 +1328,58 @@ function buildLayerList() {
   });
   layersBox.appendChild(pickRow);
 
-  // Active-group calibration panel placeholder (filled by rebuildCalibPanel)
   const slot = document.createElement("div");
   slot.id = "calibSlot";
   layersBox.appendChild(slot);
 
-  // --- Native layers ---
-  const grouped = new Map();
-  for (const g of topGroups) {
-    const cat = categoryOf(g.id);
-    if (!grouped.has(cat)) grouped.set(cat, []);
-    grouped.get(cat).push(g);
-  }
-  const cats = [...grouped.keys()].sort(
-    (a, b) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)
-  );
-  for (const cat of cats) {
-    appendGroupTitle(cat);
-    for (const g of grouped.get(cat)) {
-      const row = document.createElement("label");
-      row.className = "layer";
-      row.dataset.name = prettify(g.id).toLowerCase();
-
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = true;
-      cb.addEventListener("change", () => {
-        g.style.display = cb.checked ? "" : "none";
-      });
-
-      const name = document.createElement("span");
-      name.className = "name";
-      name.textContent = prettify(g.id);
-
-      const count = document.createElement("span");
-      count.className = "count";
-      count.textContent = g.querySelectorAll("*").length.toLocaleString("ru");
-
-      row.append(cb, name, count);
-      layersBox.appendChild(row);
+  // --- Background layers ---
+  if (!bgInfo || !bgInfo.layers.length) {
+    appendGroupTitle("Слои подложки");
+    const note = document.createElement("div");
+    note.style.cssText = "padding: 6px 16px; color: var(--muted); font-size: 11px;";
+    note.textContent = bgInfo ? "В подложке нет именованных слоёв." : "Подложка не загружена.";
+    layersBox.appendChild(note);
+  } else if (bgInfo.use1914Cats) {
+    const grouped = new Map();
+    for (const l of bgInfo.layers) {
+      const cat = categoryOf(l.id);
+      if (!grouped.has(cat)) grouped.set(cat, []);
+      grouped.get(cat).push(l);
     }
+    const cats = [...grouped.keys()].sort(
+      (a, b) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)
+    );
+    for (const cat of cats) {
+      appendGroupTitle(cat);
+      for (const l of grouped.get(cat)) appendLayerRow(l);
+    }
+  } else {
+    appendGroupTitle("Слои подложки");
+    for (const l of bgInfo.layers) appendLayerRow(l);
   }
 
   rebuildCalibPanel();
+}
+
+function appendLayerRow(l) {
+  const row = document.createElement("label");
+  row.className = "layer";
+  row.dataset.name = prettify(l.id).toLowerCase();
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = !!l.visible;
+  cb.addEventListener("change", () => {
+    setLayerVisible(l, cb.checked);
+    saveState();
+  });
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = prettify(l.id);
+  const count = document.createElement("span");
+  count.className = "count";
+  count.textContent = l.el.querySelectorAll("*").length.toLocaleString("ru");
+  row.append(cb, name, count);
+  layersBox.appendChild(row);
 }
 
 function appendGroupTitle(text) {
@@ -669,14 +1416,10 @@ function buildCalibPanel(g) {
       <button data-act="reset">Сброс</button>
     </div>
   `;
-
   const syncInputs = () => {
-    for (const inp of panel.querySelectorAll("input[data-k]")) {
-      inp.value = g.calib[inp.dataset.k];
-    }
+    for (const inp of panel.querySelectorAll("input[data-k]")) inp.value = g.calib[inp.dataset.k];
   };
   syncInputs();
-
   for (const inp of panel.querySelectorAll("input[data-k]")) {
     const k = inp.dataset.k;
     inp.addEventListener("input", () => {
@@ -704,7 +1447,6 @@ function buildCalibPanel(g) {
     const s = `translate(${c.tx}, ${c.ty}) scale(${c.scale})`;
     try { await navigator.clipboard.writeText(s); flash(panel.querySelector('[data-act=copy]'), "✓"); } catch {}
   };
-
   panel._sync = syncInputs;
   g._calibPanel = panel;
   return panel;
@@ -713,14 +1455,13 @@ function buildCalibPanel(g) {
 function refreshCalibInputs(g) {
   if (g._calibPanel && g._calibPanel._sync) g._calibPanel._sync();
 }
-
 function flash(btn, text) {
   const orig = btn.textContent;
   btn.textContent = text;
   setTimeout(() => { btn.textContent = orig; }, 900);
 }
 
-// --------------- custom SVG loader ---------------
+// --- Custom SVG overlay loader ---
 async function addCustomSvgFile(file) {
   const text = await file.text();
   const label = file.name.replace(/\.svg$/i, "");
@@ -731,7 +1472,7 @@ async function addCustomSvgFile(file) {
   for (const o of g.overlays) await mountOverlay(g, o);
   buildTargetBar();
   buildLayerList();
-  setEditTarget(g.id);          // сразу включаем редактирование добавленной карты
+  setEditTarget(g.id);
   saveState();
 }
 const CUSTOM_COLORS = ["#7aa2ff", "#8ad57d", "#ff8aa0", "#c39bff", "#ffb86c", "#5ee0c6"];
@@ -740,7 +1481,7 @@ function pickColor() {
   return CUSTOM_COLORS.find((c) => !used.has(c)) || CUSTOM_COLORS[Math.floor(Math.random()*CUSTOM_COLORS.length)];
 }
 
-// --------------- toolbar buttons ---------------
+// --- Toolbar buttons ---
 document.getElementById("all").onclick = () => {
   layersBox.querySelectorAll('input[type=checkbox]').forEach((cb) => { cb.checked = true; cb.dispatchEvent(new Event("change")); });
 };
@@ -750,13 +1491,11 @@ document.getElementById("none").onclick = () => {
 document.getElementById("reset").onclick = () => {
   resetView();
   layersBox.querySelectorAll('.layer input[type=checkbox]').forEach((cb) => {
-    // overlays off, native layers on (опираемся на наличие .swatch у overlay-row)
     const isOverlay = cb.parentElement.querySelector(".swatch") !== null;
     cb.checked = !isOverlay;
     cb.dispatchEvent(new Event("change"));
   });
 };
-
 filterInput.addEventListener("input", () => {
   const q = filterInput.value.trim().toLowerCase();
   layersBox.querySelectorAll(".layer").forEach((row) => {
@@ -764,22 +1503,67 @@ filterInput.addEventListener("input", () => {
   });
 });
 
-// --------------- pan/zoom + edit ---------------
+// --- Background-slot buttons ---
+document.getElementById("bgFilePick").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (file) await loadBackgroundFromFile(file);
+  e.target.value = "";
+});
+document.getElementById("bgClose").onclick = () => {
+  if (confirm("Убрать текущую подложку? Список слоёв очистится.")) closeBackground();
+};
+document.getElementById("emptyFilePick").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (file) await loadBackgroundFromFile(file);
+  e.target.value = "";
+});
+document.getElementById("loadDefaultBtn").onclick = async () => {
+  const p = PRESET_BACKGROUNDS[0];
+  await loadBackgroundFromUrl(p.file, p.id, p.name);
+};
+
+// --- Drag-and-drop SVG onto stage ---
+stage.addEventListener("dragover", (e) => {
+  if (e.dataTransfer && [...e.dataTransfer.items].some((i) => i.kind === "file")) {
+    e.preventDefault();
+    stage.classList.add("drag-over");
+  }
+});
+stage.addEventListener("dragleave", (e) => {
+  if (e.target === stage) stage.classList.remove("drag-over");
+});
+stage.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  stage.classList.remove("drag-over");
+  const files = [...(e.dataTransfer?.files || [])].filter((f) => /\.svg$/i.test(f.name) || f.type === "image/svg+xml");
+  if (!files.length) return;
+  if (!bgInfo) {
+    // нет подложки → первая SVG становится подложкой, остальные — наложениями
+    await loadBackgroundFromFile(files[0]);
+    for (const f of files.slice(1)) await addCustomSvgFile(f);
+  } else {
+    // спросим: подложка или наложение?
+    const useAsBg = files.length === 1 && confirm("Загрузить как подложку (OK) или как наложение (Cancel)?");
+    if (useAsBg) await loadBackgroundFromFile(files[0]);
+    else for (const f of files) await addCustomSvgFile(f);
+  }
+});
+
+// --- Pan / zoom / edit ---
 let baseViewBox = null;
 let view = null;
 
-function setupPanZoom() {
-  const vb = svgEl.viewBox.baseVal;
-  if (!vb || (vb.width === 0 && vb.height === 0)) {
-    const w = parseFloat(svgEl.getAttribute("width")) || 1000;
-    const h = parseFloat(svgEl.getAttribute("height")) || 1000;
-    svgEl.setAttribute("viewBox", `0 0 ${w} ${h}`);
-  }
-  const v = svgEl.viewBox.baseVal;
+function initPanZoomForCurrentBg() {
+  const v = rootSvg.viewBox.baseVal;
   baseViewBox = { x: v.x, y: v.y, w: v.width, h: v.height };
   view = { ...baseViewBox };
   applyView();
+}
 
+function setupPanZoom() {
+  baseViewBox = { x: 0, y: 0, w: 1000, h: 1000 };
+  view = { ...baseViewBox };
+  applyView();
   wrap.addEventListener("wheel", onWheel, { passive: false });
   wrap.addEventListener("pointerdown", onPointerDown);
   wrap.addEventListener("pointermove", onPointerMove);
@@ -788,10 +1572,13 @@ function setupPanZoom() {
   wrap.addEventListener("dblclick", () => {
     if (editTarget === VIEW_TARGET) resetView();
   });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && editTarget !== VIEW_TARGET) setEditTarget(VIEW_TARGET);
+  });
 }
 
 function screenToWorld(clientX, clientY) {
-  const rect = svgEl.getBoundingClientRect();
+  const rect = rootSvg.getBoundingClientRect();
   const x = ((clientX - rect.left) / rect.width) * view.w + view.x;
   const y = ((clientY - rect.top) / rect.height) * view.h + view.y;
   return { x, y, rect };
@@ -801,8 +1588,7 @@ function onWheel(e) {
   e.preventDefault();
   const factor = Math.exp(e.deltaY * 0.0015);
   if (editTarget === VIEW_TARGET) {
-    // zoom main view around cursor
-    const rect = svgEl.getBoundingClientRect();
+    const rect = rootSvg.getBoundingClientRect();
     const mx = (e.clientX - rect.left) / rect.width;
     const my = (e.clientY - rect.top) / rect.height;
     const newW = view.w * factor;
@@ -812,12 +1598,11 @@ function onWheel(e) {
     view.w = newW; view.h = newH;
     applyView();
   } else {
-    // scale active overlay group around cursor, in world coords
     const g = groups.find((x) => x.id === editTarget);
     if (!g) return;
     const { x: wx, y: wy } = screenToWorld(e.clientX, e.clientY);
     const s = g.calib.scale;
-    const s2 = clamp(s / factor, 0.02, 20);  // wheel up = zoom in
+    const s2 = clamp(s / factor, 0.02, 20);
     const k = s2 / s;
     g.calib.scale = s2;
     g.calib.tx = wx + (g.calib.tx - wx) * k;
@@ -837,7 +1622,7 @@ function onPointerDown(e) {
 }
 function onPointerMove(e) {
   if (!dragging) return;
-  const rect = svgEl.getBoundingClientRect();
+  const rect = rootSvg.getBoundingClientRect();
   const dxWorld = (e.clientX - lastX) * (view.w / rect.width);
   const dyWorld = (e.clientY - lastY) * (view.h / rect.height);
   if (dragGroup) {
@@ -861,7 +1646,7 @@ function onPointerUp(e) {
 }
 
 function applyView() {
-  svgEl.setAttribute("viewBox", `${view.x} ${view.y} ${view.w} ${view.h}`);
+  rootSvg.setAttribute("viewBox", `${view.x} ${view.y} ${view.w} ${view.h}`);
 }
 function resetView() {
   if (!baseViewBox) return;
@@ -871,13 +1656,9 @@ function resetView() {
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-// keyboard: Esc → выйти из режима редактирования
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && editTarget !== VIEW_TARGET) setEditTarget(VIEW_TARGET);
-});
-
-load().catch((err) => {
-  wrap.innerHTML = `<div id="loading">Ошибка загрузки SVG: ${err.message}</div>`;
+boot().catch((err) => {
+  console.error(err);
+  wrap.innerHTML = `<div style="padding:20px;color:#ffcc66">Ошибка инициализации: ${err.message}</div>`;
 });
 </script>
 </body>
