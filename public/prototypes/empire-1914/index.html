@@ -112,12 +112,22 @@
     margin-bottom: 2px;
   }
   .target-btn {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
+    max-width: 100%;
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--panel); color: var(--muted);
     border: 1px solid var(--border); border-radius: 4px;
     padding: 4px 8px; font: inherit; font-size: 11px;
     cursor: pointer;
+    min-width: 0;
+  }
+  .target-btn .label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+    flex: 0 1 auto;
+    min-width: 0;
   }
   .target-btn:hover { color: var(--text); border-color: var(--accent); }
   .target-btn.active {
@@ -185,6 +195,164 @@
     font: inherit; font-size: 11px; cursor: pointer;
   }
   .calib .actions button:hover { border-color: var(--accent); }
+
+  /* Mode toggle (Simple / Points) */
+  .mode-row {
+    display: flex; gap: 0; margin: 8px 0;
+    border: 1px solid var(--border); border-radius: 5px; overflow: hidden;
+  }
+  .mode-row button {
+    flex: 1; padding: 6px 8px;
+    background: var(--panel); color: var(--muted);
+    border: none; border-right: 1px solid var(--border);
+    font: inherit; font-size: 11px; cursor: pointer;
+  }
+  .mode-row button:last-child { border-right: none; }
+  .mode-row button.on { color: var(--bg); background: var(--warn); }
+
+  /* Points list */
+  .pts-list {
+    margin: 8px 0;
+    border: 1px solid var(--border); border-radius: 5px;
+    overflow: hidden;
+  }
+  .pt-row {
+    display: grid;
+    grid-template-columns: 22px 1fr 56px 22px;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .pt-row:last-child { border-bottom: none; }
+  .pt-row .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #ff9b3d; color: #000; font-size: 10px; font-weight: 600;
+  }
+  .pt-row .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pt-row .res { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .pt-row .res.big { color: #ff7777; }
+  .pt-row .rm {
+    width: 18px; height: 18px; padding: 0;
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 4px;
+    cursor: pointer; font-size: 11px;
+  }
+  .pt-row .rm:hover { color: #fff; border-color: #ff7777; }
+  .pts-empty { padding: 8px; color: var(--muted); font-size: 11px; text-align: center; }
+  .pts-summary {
+    padding: 6px 8px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 11px;
+    display: flex; justify-content: space-between;
+  }
+
+  /* Capture mode banner over the stage */
+  #captureBanner {
+    position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
+    background: var(--warn); color: var(--bg);
+    padding: 8px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    display: none;
+    z-index: 30;
+  }
+  #captureBanner.on { display: block; }
+  #captureBanner .hint { font-weight: 400; opacity: 0.8; margin-left: 8px; }
+  #stage.capture-mode { cursor: crosshair !important; }
+  #stage.capture-mode #svgwrap { cursor: crosshair !important; }
+
+  /* City-tagger popup */
+  #cityTagPopup {
+    position: absolute;
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    padding: 8px;
+    z-index: 60;
+    min-width: 240px;
+    max-width: 320px;
+  }
+  #cityTagPopup .header {
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  #cityTagPopup input {
+    width: 100%;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 6px 8px; font: inherit; font-size: 12px;
+  }
+  #cityTagPopup input:focus { outline: none; border-color: var(--accent); }
+  #cityTagPopup .suggestions {
+    max-height: 160px; overflow-y: auto;
+    margin-top: 6px;
+  }
+  #cityTagPopup .sug {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 8px; font-size: 11px;
+    cursor: pointer; border-radius: 3px;
+  }
+  #cityTagPopup .sug:hover, #cityTagPopup .sug.active { background: var(--panel-2); }
+  #cityTagPopup .sug .cat {
+    font-size: 9px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 3px;
+    padding: 1px 4px; min-width: 70px; text-align: center;
+  }
+  #cityTagPopup .sug .name { flex: 1; }
+  #cityTagPopup .sug mark { background: rgba(255,204,102,0.35); color: inherit; }
+  #cityTagPopup .hint {
+    font-size: 10px; color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* SVG calibration markers */
+  .calib-marker-ov {
+    fill: #ff9b3d;
+    stroke: #1b1b1f;
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+  .calib-marker-bg {
+    fill: none;             /* hollow — чтобы видеть оранжевый внутри */
+    stroke: #3a78c8;
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+  .calib-marker-bg-shadow {  /* чёрная подложка под синей рамкой для контраста */
+    fill: none;
+    stroke: #000;
+    stroke-width: 5;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .calib-marker-label {
+    fill: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    font-family: -apple-system, sans-serif;
+    paint-order: stroke fill;
+    stroke: #000;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+  .calib-link {
+    stroke: #ffcc66;
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+    opacity: 0.6;
+  }
 
   #stage {
     position: relative; overflow: hidden;
@@ -399,6 +567,7 @@
   <main id="stage">
     <div id="svgwrap"></div>
     <div id="editbadge">редактирование</div>
+    <div id="captureBanner"><span class="msg">…</span><span class="hint">Esc — отмена</span></div>
     <div id="emptyState" class="hidden">
       <div class="hint">Подложка не загружена</div>
       <label class="file-pick-big">Открыть SVG-карту
@@ -436,9 +605,20 @@ const BASE_GROUPS = [
       { id: "arrows_pink",   name: "Стрелки · розовые", swatch: "#e895a8", file: "overlays/arrows_pink.svg" },
       { id: "rivers_cyan",   name: "Реки (cyan)",       swatch: "#63b9e9", file: "overlays/rivers_cyan.svg" },
     ],
-    calibDefault: { tx: 700, ty: 600, scale: 1.4, opacity: 0.9 },
+    calibDefault: { tx: 700, ty: 600, scale: 1.4, opacity: 0.9, strokeMul: 1 },
   },
 ];
+
+// Дефолтные поля points-режима (объединяются с calibDefault).
+function makePointsState() {
+  return {
+    mode: "simple",            // 'simple' | 'points'
+    points: [],                // [{ id, ox, oy, wx, wy, name?, src: 'manual'|'auto' }]
+    fit: "affine",             // 'affine' (similarity / tps — далее)
+    matrix: [1, 0, 0, 1, 0, 0],// applied affine when mode='points'
+    pointSeq: 1,
+  };
+}
 
 const VIEW_TARGET = "__view__";
 
@@ -490,10 +670,12 @@ const searchClear = document.getElementById("searchClear");
 let rootSvg = null;
 let bgContent = null;          // <g id="bg-content">
 let overlayRoot = null;        // <g id="overlay-root">
-let bgInfo = null;             // { id, name, source: 'preset'|'custom', file?, svgText?, layers: [{id, el, visible}], use1914Cats }
+let calibMarkers = null;       // <g id="calib-markers">
+let bgInfo = null;             // { id, name, source, layers, use1914Cats, ... }
 let groups = [];               // overlay groups
 let customSeq = 1;
 let editTarget = VIEW_TARGET;
+let captureMode = null;        // { groupId, step: 'overlay'|'background', ox?, oy? }
 const overlayBlobCache = new Map();
 
 // --- Persistence ---
@@ -516,10 +698,13 @@ function saveState() {
     } : null,
     groups: groups.map((g) => ({
       id: g.id, label: g.label, color: g.color,
-      calib: g.calib,
+      // Сохраняем только simple-mode параметры (tx/ty/scale/opacity/strokeMul).
+      // Точки/матрица/fit — транзитное состояние, сбрасывается при reload.
+      calib: { tx: g.calib.tx, ty: g.calib.ty, scale: g.calib.scale, opacity: g.calib.opacity, strokeMul: g.calib.strokeMul },
       enabled: g.overlays.filter((o) => o.enabled).map((o) => o.id),
       isCustom: !!g.isCustom,
       customSvg: g.isCustom ? g.customSvg : undefined,
+      hidden: !!g.hidden,
     })),
     editTarget,
   };
@@ -538,7 +723,9 @@ function initSvgShell() {
   bgContent.setAttribute("id", "bg-content");
   overlayRoot = document.createElementNS(SVG_NS, "g");
   overlayRoot.setAttribute("id", "overlay-root");
-  rootSvg.append(bgContent, overlayRoot);
+  calibMarkers = document.createElementNS(SVG_NS, "g");
+  calibMarkers.setAttribute("id", "calib-markers");
+  rootSvg.append(bgContent, overlayRoot, calibMarkers);
   wrap.innerHTML = "";
   wrap.appendChild(rootSvg);
 }
@@ -578,11 +765,13 @@ async function boot() {
     await loadBackgroundFromUrl(PRESET_BACKGROUNDS[0].file, PRESET_BACKGROUNDS[0].id, PRESET_BACKGROUNDS[0].name).catch(() => {});
   }
 
-  // Re-mount overlays after background is in place
+  // Re-mount overlays after background is in place (пропускаем скрытые)
   for (const g of groups) {
+    if (g.hidden) continue;
     for (const o of g.overlays.filter((o) => o.enabled)) {
       await mountOverlay(g, o);
     }
+    applyStrokeMultiplier(g);
   }
 
   setEditTarget(editTarget);
@@ -699,6 +888,86 @@ function categorizeLayerForText(layerId) {
   return prettify(base);
 }
 
+// Эвристика: слой это «маркеры» (пунсоны городов).
+// Распознаёт и underscore, и hyphen-разделение в id'шниках.
+function isMarkerLayerId(id) {
+  if (!id) return false;
+  return /[_-]Mark$|^city[_-]?dots$|[_-]dots$|[_-]markers?$|marker$/i.test(id);
+}
+
+// Нормализация id: lowercase + дефис ↔ подчёркивание (одно и то же логически)
+function normId(id) {
+  return (id || "").toLowerCase().replace(/-/g, "_");
+}
+
+// Собирает координаты центров пунсонов из «marker»-слоёв, сгруппированные по layer-id.
+// refCtmFn(screenCTM) → матрица в нужную систему (overlay-local или world).
+function buildMarkerIndex(rootNode, refCtmFn) {
+  const byLayer = new Map();  // layerId → [{x, y}]
+  const layers = rootNode.querySelectorAll("g[id]");
+  for (const layer of layers) {
+    if (!isMarkerLayerId(layer.id)) continue;
+    const arr = [];
+    const shapes = layer.querySelectorAll("circle, ellipse, rect, path, polygon, use");
+    for (const sh of shapes) {
+      let bbox = null, sCtm = null;
+      try { bbox = sh.getBBox(); sCtm = sh.getScreenCTM(); } catch {}
+      if (!bbox || !sCtm) continue;
+      if (bbox.width === 0 && bbox.height === 0) continue;
+      const m = refCtmFn(sCtm);
+      if (!m) continue;
+      const lx = bbox.x + bbox.width / 2;
+      const ly = bbox.y + bbox.height / 2;
+      arr.push({
+        x: m.a * lx + m.c * ly + m.e,
+        y: m.b * lx + m.d * ly + m.f,
+      });
+    }
+    if (arr.length) byLayer.set(layer.id, arr);
+  }
+  return byLayer;
+}
+
+// Возвращает координаты ближайшего маркера в радиусе maxDist, или null.
+function findNearestMarker(cx, cy, markers, maxDist) {
+  const max2 = maxDist * maxDist;
+  let best = null, bestD2 = max2;
+  for (const m of markers) {
+    const dx = m.x - cx, dy = m.y - cy;
+    const d2 = dx*dx + dy*dy;
+    if (d2 < bestD2) { bestD2 = d2; best = m; }
+  }
+  return best;
+}
+
+// Возвращает marker-layer-id для данного text-layer-id, или null если не маппится.
+// Поддерживаем оба соглашения: underscore (povolzhye) и hyphen (vectorized).
+//   *._Text       → *._Mark      (1914-style)
+//   labels_cities → city_dots    (povolzhye-style)
+//   labels-cities → city-dots    (vectorized-style)
+// Реки/моря/легенды/армии — не снаппятся (нет соответствующего marker-слоя).
+function deriveMarkerLayerId(textLayerId, availableMarkerLayers) {
+  if (!textLayerId) return null;
+
+  // 1914-style: Capital._Text → Capital._Mark
+  if (textLayerId.endsWith("._Text")) {
+    const candidate = textLayerId.slice(0, -("._Text".length)) + "._Mark";
+    if (availableMarkerLayers.has(candidate)) return candidate;
+  }
+
+  // labels_cities / labels-cities → city_dots / city-dots
+  const norm = normId(textLayerId);
+  if (norm === "labels_cities" || norm === "city_labels" || norm === "cities_labels") {
+    for (const candidate of availableMarkerLayers.keys()) {
+      const cn = normId(candidate);
+      if (cn === "city_dots" || cn === "cities_dots" || cn === "dots_cities" || cn === "city_markers") {
+        return candidate;
+      }
+    }
+  }
+  return null;
+}
+
 function buildSearchIndex() {
   searchIndex = [];
   activeResultIdx = -1;
@@ -721,6 +990,10 @@ function buildSearchIndex() {
   // promises — it returns something closer to screen pixels. Use the standard
   // workaround: matrix-to-viewBox = inverse(rootSvg.screenCTM) ⨯ el.screenCTM.
   const rootInv = rootSvg.getScreenCTM()?.inverse();
+
+  // Сначала собираем пунсоны (Capital._Mark, Guberniya_Center._Mark и т. п.)
+  // в тех же координатах (rootSvg viewBox).
+  const markersByLayer = rootInv ? buildMarkerIndex(bgContent, (sCtm) => rootInv.multiply(sCtm)) : new Map();
 
   const texts = bgContent.querySelectorAll("text");
   for (const t of texts) {
@@ -763,10 +1036,30 @@ function buildSearchIndex() {
     const w  = Math.max(...xs) - x0, h = Math.max(...ys) - y0;
     if (!isFinite(x0) || !isFinite(y0)) continue;
 
+    // Снап к ближайшему пунсону СВОЕЙ категории.
+    // Используем ANCHOR подписи (точка transform — (m.e, m.f) для text-anchor=start),
+    // а не центр bbox: для текста "САНКТ-ПЕТЕРБУРГ" anchor лежит рядом с пунсоном,
+    // а центр — далеко вправо. Радиус узкий, чтобы не зацепить соседний город.
+    const anchorX = ctm.e;
+    const anchorY = ctm.f;
+    const labelCx = x0 + w / 2;   // оставляем для search (камера летит к центру bbox)
+    const labelCy = y0 + h / 2;
+    const snapR = Math.max(6, h * 1.5);
+    let cityX = anchorX, cityY = anchorY, snapped = false;
+    const targetMarkerLayer = deriveMarkerLayerId(layerId, markersByLayer);
+    const candidateMarkers = targetMarkerLayer ? markersByLayer.get(targetMarkerLayer) : null;
+    if (candidateMarkers && candidateMarkers.length) {
+      const near = findNearestMarker(anchorX, anchorY, candidateMarkers, snapR);
+      if (near) { cityX = near.x; cityY = near.y; snapped = true; }
+    }
+    // если не снапнулось — фалбэк на центр bbox (как было)
+    if (!snapped) { cityX = labelCx; cityY = labelCy; }
+
     searchIndex.push({
       text: content,
       norm: normRu(content),
-      x: x0, y: y0, w, h,
+      x: x0, y: y0, w, h,            // bbox метки (для поиска / прыжка камеры)
+      cityX, cityY, snapped,         // координата ГОРОДА (для калибровки)
       cat: categorizeLayerForText(layerId),
       layerId,
       el: t,
@@ -997,7 +1290,7 @@ function initGroups() {
   const saved = loadState();
   groups = BASE_GROUPS.map((bg) => ({
     ...bg,
-    calib: { ...bg.calibDefault },
+    calib: { ...bg.calibDefault, ...makePointsState() },
     overlays: bg.overlays.map((o) => ({ ...o, enabled: false })),
     rootEl: null,
   }));
@@ -1012,14 +1305,13 @@ function initGroups() {
       if (g) {
         if (sg.calib) g.calib = { ...g.calib, ...sg.calib };
         if (Array.isArray(sg.enabled)) {
-          // Сначала всё в false, потом включаем строго то, что есть в сохранённом списке —
-          // иначе свежие кастом-группы (где defaults: enabled=true) затрут выключения.
           for (const o of g.overlays) o.enabled = false;
           for (const oid of sg.enabled) {
             const o = g.overlays.find((x) => x.id === oid);
             if (o) o.enabled = true;
           }
         }
+        if (sg.hidden) g.hidden = true;
       }
     }
   }
@@ -1028,6 +1320,7 @@ function initGroups() {
 function makeCustomGroup({ label, color, svgText, id }) {
   const gid = id || `custom-${customSeq++}`;
   const safeColor = color || "#7aa2ff";
+  const ptsState = makePointsState();
 
   // Парсим SVG, ищем внутренние слои (как у фоновой карты).
   let internalLayers = [];
@@ -1070,12 +1363,12 @@ function makeCustomGroup({ label, color, svgText, id }) {
     label,
     color: safeColor,
     overlays,
-    calib: { tx: 0, ty: 0, scale: 1, opacity: 0.9 },
+    calib: { tx: 0, ty: 0, scale: 1, opacity: 0.9, strokeMul: 1, ...ptsState },
     isCustom: true,
     customSvg: svgText,
     rootEl: null,
-    mountedContent: false,    // SVG-контент ещё не вставлен в DOM
-    _layerEls: null,           // Map<internalId|__idxN, <g>> после монтирования
+    mountedContent: false,
+    _layerEls: null,
   };
 }
 
@@ -1092,8 +1385,644 @@ function ensureGroupRoot(g) {
 function applyCalibToGroup(g, el = g.rootEl) {
   if (!el) return;
   const c = g.calib;
-  el.setAttribute("transform", `translate(${c.tx}, ${c.ty}) scale(${c.scale})`);
+  if (c.mode === "points") {
+    const [a, b, c2, d, e, f] = c.matrix;
+    el.setAttribute("transform", `matrix(${a} ${b} ${c2} ${d} ${e} ${f})`);
+  } else {
+    el.setAttribute("transform", `translate(${c.tx}, ${c.ty}) scale(${c.scale})`);
+  }
   el.setAttribute("opacity", String(c.opacity));
+}
+
+// Глобальный множитель stroke-width для всех линий в overlay-группе.
+// Сохраняет относительные толщины (рекá тонкая, граница толстая — пропорции).
+function applyStrokeMultiplier(g) {
+  if (!g.rootEl) return;
+  const mul = (g.calib && g.calib.strokeMul) || 1;
+  const elems = g.rootEl.querySelectorAll("path, line, polyline, polygon, circle, rect, ellipse");
+  for (const el of elems) {
+    const cs = getComputedStyle(el);
+    const stroke = cs.stroke;
+    if (!stroke || stroke === "none" || stroke === "rgba(0, 0, 0, 0)") continue;
+
+    if (el.dataset.origSw === undefined) {
+      const sw = parseFloat(cs.strokeWidth);
+      el.dataset.origSw = isFinite(sw) && sw > 0 ? sw : 1;
+    }
+    const orig = parseFloat(el.dataset.origSw);
+    if (Math.abs(mul - 1) < 1e-6) {
+      el.style.removeProperty("stroke-width");
+    } else {
+      el.style.strokeWidth = (orig * mul) + "px";
+    }
+  }
+}
+
+// --- Affine math ---
+function applyMatrix(m, x, y) {
+  // m = [a, b, c, d, e, f]; wx = a*x + c*y + e, wy = b*x + d*y + f
+  return { x: m[0]*x + m[2]*y + m[4], y: m[1]*x + m[3]*y + m[5] };
+}
+function inverseMatrix(m) {
+  const [a, b, c, d, e, f] = m;
+  const det = a*d - b*c;
+  if (Math.abs(det) < 1e-12) return null;
+  return [d/det, -b/det, -c/det, a/det, (c*f - d*e)/det, (b*e - a*f)/det];
+}
+function simpleToMatrix(tx, ty, scale) {
+  return [scale, 0, 0, scale, tx, ty];
+}
+function matrixIsIdentity(m) {
+  return Math.abs(m[0]-1)<1e-9 && Math.abs(m[3]-1)<1e-9 && Math.abs(m[1])<1e-9 && Math.abs(m[2])<1e-9 && Math.abs(m[4])<1e-9 && Math.abs(m[5])<1e-9;
+}
+
+// Возвращает функцию world→overlay-local для группы при её ТЕКУЩЕМ transform.
+function worldToLocalFn(g) {
+  if (g.calib.mode === "points") {
+    const inv = inverseMatrix(g.calib.matrix);
+    if (!inv) return null;
+    return (wx, wy) => {
+      const p = applyMatrix(inv, wx, wy);
+      return { ox: p.x, oy: p.y };
+    };
+  }
+  const { tx, ty, scale } = g.calib;
+  if (Math.abs(scale) < 1e-12) return null;
+  return (wx, wy) => ({ ox: (wx - tx) / scale, oy: (wy - ty) / scale });
+}
+
+function solve3x3(A, b) {
+  // Гаусс по копии
+  const M = [
+    [A[0][0], A[0][1], A[0][2], b[0]],
+    [A[1][0], A[1][1], A[1][2], b[1]],
+    [A[2][0], A[2][1], A[2][2], b[2]],
+  ];
+  for (let i = 0; i < 3; i++) {
+    let pivot = i;
+    for (let k = i+1; k < 3; k++) if (Math.abs(M[k][i]) > Math.abs(M[pivot][i])) pivot = k;
+    if (pivot !== i) [M[i], M[pivot]] = [M[pivot], M[i]];
+    if (Math.abs(M[i][i]) < 1e-12) return null;
+    for (let k = i+1; k < 3; k++) {
+      const f = M[k][i] / M[i][i];
+      for (let j = i; j < 4; j++) M[k][j] -= f * M[i][j];
+    }
+  }
+  const x = [0,0,0];
+  for (let i = 2; i >= 0; i--) {
+    let s = M[i][3];
+    for (let j = i+1; j < 3; j++) s -= M[i][j] * x[j];
+    x[i] = s / M[i][i];
+  }
+  return x;
+}
+
+// Affine LSQ из ≥3 пар. Возвращает матрицу [a,b,c,d,e,f] или null.
+function affineLSQ(points) {
+  if (points.length < 3) return null;
+  let ATA = [[0,0,0],[0,0,0],[0,0,0]];
+  let ATbx = [0,0,0], ATby = [0,0,0];
+  for (const p of points) {
+    const row = [p.ox, p.oy, 1];
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) ATA[i][j] += row[i] * row[j];
+      ATbx[i] += row[i] * p.wx;
+      ATby[i] += row[i] * p.wy;
+    }
+  }
+  const ace = solve3x3(ATA, ATbx);
+  const bdf = solve3x3(ATA, ATby);
+  if (!ace || !bdf) return null;
+  return [ace[0], bdf[0], ace[1], bdf[1], ace[2], bdf[2]];
+}
+
+// Residual'ы для точек при текущей matrix.
+function computeResiduals(points, matrix) {
+  return points.map((p) => {
+    const w = applyMatrix(matrix, p.ox, p.oy);
+    const dx = w.x - p.wx, dy = w.y - p.wy;
+    return Math.sqrt(dx*dx + dy*dy);
+  });
+}
+function rmse(residuals) {
+  if (!residuals.length) return 0;
+  const sumSq = residuals.reduce((s, r) => s + r*r, 0);
+  return Math.sqrt(sumSq / residuals.length);
+}
+
+// --- TPS (Thin-Plate Spline) warp ---
+function solveLinearSystem(A, b) {
+  const n = A.length;
+  // Augmented matrix copy
+  const M = A.map((row, i) => [...row, b[i]]);
+  for (let i = 0; i < n; i++) {
+    let pivot = i;
+    for (let k = i + 1; k < n; k++) {
+      if (Math.abs(M[k][i]) > Math.abs(M[pivot][i])) pivot = k;
+    }
+    if (pivot !== i) [M[i], M[pivot]] = [M[pivot], M[i]];
+    if (Math.abs(M[i][i]) < 1e-14) return null;
+    for (let k = i + 1; k < n; k++) {
+      const f = M[k][i] / M[i][i];
+      for (let j = i; j <= n; j++) M[k][j] -= f * M[i][j];
+    }
+  }
+  const x = new Array(n).fill(0);
+  for (let i = n - 1; i >= 0; i--) {
+    let s = M[i][n];
+    for (let j = i + 1; j < n; j++) s -= M[i][j] * x[j];
+    x[i] = s / M[i][i];
+  }
+  return x;
+}
+
+function tpsPhi(r2) {
+  // φ(r) = r² · log(r). Точка (0,0) → 0.
+  if (r2 < 1e-14) return 0;
+  return 0.5 * r2 * Math.log(r2);  // r² · log(r) = 0.5 · r² · log(r²)
+}
+
+function fitTPS(points) {
+  const N = points.length;
+  if (N < 3) return null;
+  const dim = N + 3;
+  // Сборка [K | P; P' | 0]
+  const A = Array.from({ length: dim }, () => new Array(dim).fill(0));
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      const dx = points[i].ox - points[j].ox;
+      const dy = points[i].oy - points[j].oy;
+      A[i][j] = tpsPhi(dx*dx + dy*dy);
+    }
+    A[i][N] = 1;
+    A[i][N+1] = points[i].ox;
+    A[i][N+2] = points[i].oy;
+    A[N][i] = 1;
+    A[N+1][i] = points[i].ox;
+    A[N+2][i] = points[i].oy;
+  }
+  const bx = new Array(dim).fill(0);
+  const by = new Array(dim).fill(0);
+  for (let i = 0; i < N; i++) {
+    bx[i] = points[i].wx;
+    by[i] = points[i].wy;
+  }
+  const sx = solveLinearSystem(A, bx);
+  const sy = solveLinearSystem(A, by);
+  if (!sx || !sy) return null;
+  return {
+    pts: points.map((p) => ({ ox: p.ox, oy: p.oy })),
+    wX: sx.slice(0, N), aX: sx.slice(N),
+    wY: sy.slice(0, N), aY: sy.slice(N),
+  };
+}
+
+function evalTPS(tps, u, v) {
+  const N = tps.pts.length;
+  let x = tps.aX[0] + tps.aX[1] * u + tps.aX[2] * v;
+  let y = tps.aY[0] + tps.aY[1] * u + tps.aY[2] * v;
+  for (let i = 0; i < N; i++) {
+    const dx = u - tps.pts[i].ox;
+    const dy = v - tps.pts[i].oy;
+    const phi = tpsPhi(dx*dx + dy*dy);
+    x += tps.wX[i] * phi;
+    y += tps.wY[i] * phi;
+  }
+  return { x, y };
+}
+
+// --- Warp individual shapes in place ---
+function warpPathDInPlace(pathEl, warp) {
+  const dOrig = pathEl.getAttribute("d") || "";
+  if (!dOrig.trim()) return;
+  // Subpath split — by M/m
+  const moveIdx = [];
+  for (let i = 0; i < dOrig.length; i++) {
+    if (dOrig[i] === "M" || dOrig[i] === "m") moveIdx.push(i);
+  }
+  moveIdx.push(dOrig.length);
+  if (moveIdx.length < 2) return;
+
+  let totalLen = 0;
+  try { totalLen = pathEl.getTotalLength(); } catch {}
+  const baseStep = Math.max(0.4, Math.min(2, totalLen / 600));
+
+  let outD = "";
+  for (let i = 0; i < moveIdx.length - 1; i++) {
+    const subD = dOrig.substring(moveIdx[i], moveIdx[i+1]).trim();
+    if (!subD) continue;
+    pathEl.setAttribute("d", subD);
+    let len = 0;
+    try { len = pathEl.getTotalLength(); } catch {}
+    const isClosed = /[zZ]\s*$/.test(subD);
+    if (len === 0) {
+      // только M — берём первую точку
+      try {
+        const p = pathEl.getPointAtLength(0);
+        const w = warp(p.x, p.y);
+        outD += `M${w.x.toFixed(2)},${w.y.toFixed(2)}`;
+      } catch {}
+      continue;
+    }
+    const samples = Math.max(2, Math.ceil(len / baseStep));
+    for (let j = 0; j <= samples; j++) {
+      const t = (j / samples) * len;
+      const p = pathEl.getPointAtLength(Math.min(t, len));
+      const w = warp(p.x, p.y);
+      if (j === 0) outD += `M${w.x.toFixed(2)},${w.y.toFixed(2)}`;
+      else outD += `L${w.x.toFixed(2)},${w.y.toFixed(2)}`;
+    }
+    if (isClosed) outD += "Z";
+  }
+  pathEl.setAttribute("d", outD);
+}
+
+function warpTextInPlace(textEl, warp) {
+  // У text есть якорь (либо x/y, либо transform="matrix(a b c d e f)" где (e,f) — позиция).
+  // Warp применяем к якорю; font-геометрию (a,b,c,d) сохраняем.
+  let anchorX = 0, anchorY = 0;
+  let kept = [1, 0, 0, 1];
+  const tr = textEl.getAttribute("transform");
+  if (tr) {
+    const m = tr.match(/matrix\(\s*([-+\d.eE\s,]+)\)/);
+    if (m) {
+      const p = m[1].trim().split(/[\s,]+/).map(parseFloat);
+      if (p.length >= 6) {
+        kept = [p[0], p[1], p[2], p[3]];
+        anchorX = p[4]; anchorY = p[5];
+      }
+    } else {
+      // Может быть translate(x,y)
+      const t = tr.match(/translate\(\s*([-+\d.eE]+)[\s,]+([-+\d.eE]+)\s*\)/);
+      if (t) { anchorX = parseFloat(t[1]); anchorY = parseFloat(t[2]); }
+    }
+  } else {
+    anchorX = parseFloat(textEl.getAttribute("x") || "0");
+    anchorY = parseFloat(textEl.getAttribute("y") || "0");
+  }
+  const w = warp(anchorX, anchorY);
+  textEl.setAttribute("transform", `matrix(${kept[0]} ${kept[1]} ${kept[2]} ${kept[3]} ${w.x} ${w.y})`);
+  textEl.removeAttribute("x");
+  textEl.removeAttribute("y");
+}
+
+function warpPointAttr(el, attrX, attrY, warp) {
+  const x = parseFloat(el.getAttribute(attrX) || "0");
+  const y = parseFloat(el.getAttribute(attrY) || "0");
+  const w = warp(x, y);
+  el.setAttribute(attrX, w.x);
+  el.setAttribute(attrY, w.y);
+}
+
+function warpShapeInPlace(shape, warp) {
+  const tag = shape.tagName.toLowerCase();
+  if (tag === "path") warpPathDInPlace(shape, warp);
+  else if (tag === "text") warpTextInPlace(shape, warp);
+  else if (tag === "circle") warpPointAttr(shape, "cx", "cy", warp);
+  else if (tag === "rect") warpPointAttr(shape, "x", "y", warp);  // упрощение: warp угол, размеры сохраняем
+  else if (tag === "line") {
+    warpPointAttr(shape, "x1", "y1", warp);
+    warpPointAttr(shape, "x2", "y2", warp);
+  } else if (tag === "polyline" || tag === "polygon") {
+    const pts = (shape.getAttribute("points") || "").trim().split(/[\s,]+/).filter(Boolean).map(parseFloat);
+    const out = [];
+    for (let i = 0; i + 1 < pts.length; i += 2) {
+      const w = warp(pts[i], pts[i+1]);
+      out.push(w.x.toFixed(2), w.y.toFixed(2));
+    }
+    shape.setAttribute("points", out.join(" "));
+  }
+}
+
+// --- Bake / undo TPS на group ---
+function dedupePointsForTPS(points, epsilon) {
+  // Убираем пары с почти-совпадающим overlay-местоположением (например,
+  // одна и та же <text>-метка, привязанная к нескольким одноимённым лейблам
+  // фона — даёт singular K-matrix). Среди дубликатов оставляем первую.
+  const eps2 = epsilon * epsilon;
+  const kept = [];
+  for (const p of points) {
+    const dup = kept.find((k) => {
+      const dx = k.ox - p.ox, dy = k.oy - p.oy;
+      return dx*dx + dy*dy < eps2;
+    });
+    if (!dup) kept.push(p);
+  }
+  return kept;
+}
+
+function bakeTPS(g) {
+  if (!g.isCustom) return { ok: false, why: "TPS пока только для подгруженных SVG (не для map_v6)." };
+  if (!g.calib.points || g.calib.points.length < 3) return { ok: false, why: "Нужно минимум 3 контрольные точки." };
+  if (g.calib.fit === "tps") return { ok: false, why: "TPS уже применён. Сначала откати к affine." };
+
+  // ε: 1% от bbox overlay (приблизительно)
+  let eps = 1;
+  try { const bb = g.rootEl.getBBox(); eps = Math.max(0.5, Math.min(bb.width, bb.height) * 0.01); } catch {}
+  const uniquePoints = dedupePointsForTPS(g.calib.points, eps);
+  if (uniquePoints.length < 3) {
+    return { ok: false, why: `После дедупликации осталось ${uniquePoints.length} точек (<3). Слишком много пар на одну и ту же метку overlay.` };
+  }
+
+  const tps = fitTPS(uniquePoints);
+  if (!tps) {
+    return { ok: false, why: "Не удалось решить TPS-систему (точки на одной прямой?). Добавьте точку, не лежащую на той же линии." };
+  }
+
+  // Сохраняем бэкап оригинального SVG (для отката)
+  if (!g._customSvgBackup) g._customSvgBackup = g.customSvg;
+
+  // Группа должна быть в DOM
+  if (!g.rootEl || !g.mountedContent) return { ok: false, why: "Группа не смонтирована." };
+
+  // Матрицы CTM в viewBox-координатах
+  const rootInv = rootSvg.getScreenCTM()?.inverse();
+  const rootElScreen = g.rootEl.getScreenCTM();
+  if (!rootInv || !rootElScreen) return { ok: false, why: "Не удалось получить CTM (страница не отрендерилась?)." };
+  // rootEl-local → world (это текущая affine matrix)
+  const rootElToWorld = rootInv.multiply(rootElScreen);
+  const rootElToWorldInv = rootElToWorld.inverse();
+  if (!rootElToWorldInv) return { ok: false, why: "Affine-матрица вырождена, не могу инвертировать." };
+
+  // Все leaf-формы внутри группы
+  const shapeTags = ["path", "text", "circle", "rect", "line", "polyline", "polygon"];
+  const shapes = g.rootEl.querySelectorAll(shapeTags.join(","));
+  let count = 0;
+
+  for (const shape of shapes) {
+    const sScreen = shape.getScreenCTM();
+    if (!sScreen) continue;
+    const shapeToWorld = rootInv.multiply(sScreen);
+    const shapeToOverlayLocal = rootElToWorldInv.multiply(shapeToWorld);
+    const a = shapeToOverlayLocal.a, b = shapeToOverlayLocal.b;
+    const c = shapeToOverlayLocal.c, d = shapeToOverlayLocal.d;
+    const e = shapeToOverlayLocal.e, f = shapeToOverlayLocal.f;
+    // compositeWarp: shape-local → overlay-local → world
+    const compositeWarp = (lx, ly) => {
+      const ox = a * lx + c * ly + e;
+      const oy = b * lx + d * ly + f;
+      return evalTPS(tps, ox, oy);
+    };
+    warpShapeInPlace(shape, compositeWarp);
+    shape.removeAttribute("transform");
+    count++;
+  }
+
+  // Снимаем transform со всех внутренних групп (warp уже в world-координатах)
+  for (const el of g.rootEl.querySelectorAll("g")) {
+    el.removeAttribute("transform");
+  }
+
+  // Группе ставим identity (TPS-warp запечён)
+  g.calib.fit = "tps";
+  g.calib.matrix = [1, 0, 0, 1, 0, 0];
+  applyCalibToGroup(g);
+  applyStrokeMultiplier(g);  // переприменить — формы перерисованы
+  renderCalibMarkers();
+  saveState();
+  return { ok: true, shapesWarped: count };
+}
+
+function undoTPS(g) {
+  if (!g._customSvgBackup) return { ok: false, why: "Нет бэкапа." };
+  g.customSvg = g._customSvgBackup;
+  // Полная пере-монтировка содержимого
+  if (g.rootEl) g.rootEl.replaceChildren();
+  g.mountedContent = false;
+  g._layerEls = null;
+  ensureCustomGroupMounted(g);
+  for (const o of g.overlays) {
+    const el = g._layerEls?.get(o.internalId);
+    if (el) el.style.display = o.enabled ? "" : "none";
+  }
+  g.calib.fit = "affine";
+  refitGroup(g);
+  applyStrokeMultiplier(g);  // переприменить — формы пере-смонтированы
+  saveState();
+  return { ok: true };
+}
+
+// --- Auto-match overlay text labels to background labels ---
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  let prev = new Array(b.length + 1);
+  for (let j = 0; j <= b.length; j++) prev[j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      cur[j] = Math.min(cur[j-1] + 1, prev[j] + 1, prev[j-1] + cost);
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
+// Извлекает текстовые метки из overlay-группы в её OVERLAY-LOCAL координатах.
+function buildOverlayTextIndex(g) {
+  if (!g.rootEl) return [];
+  const groupCTM = g.rootEl.getScreenCTM();
+  if (!groupCTM) return [];
+  const groupCTM_inv = groupCTM.inverse();
+
+  // Пунсоны в overlay-local
+  const markersByLayer = buildMarkerIndex(g.rootEl, (sCtm) => groupCTM_inv.multiply(sCtm));
+
+  // Найдём верхне-уровневые layer-группы, чтобы определить layerId каждого текста
+  const layerGroups = findLayerGroups(g.rootEl);
+  const layerByEl = new Map();
+  for (const lg of layerGroups) layerByEl.set(lg, lg.id);
+
+  const idx = [];
+  const texts = g.rootEl.querySelectorAll("text");
+  for (const t of texts) {
+    const content = (t.textContent || "").replace(/\s+/g, " ").trim();
+    if (!content || content.length > 80) continue;
+    let bbox = null, sCtm = null;
+    try { bbox = t.getBBox(); sCtm = t.getScreenCTM(); } catch {}
+    if (!bbox || !sCtm) continue;
+    if (bbox.width === 0 && bbox.height === 0) continue;
+
+    const m = groupCTM_inv.multiply(sCtm);
+    const corners = [
+      [bbox.x, bbox.y],
+      [bbox.x + bbox.width, bbox.y],
+      [bbox.x, bbox.y + bbox.height],
+      [bbox.x + bbox.width, bbox.y + bbox.height],
+    ].map(([lx, ly]) => ({
+      x: m.a * lx + m.c * ly + m.e,
+      y: m.b * lx + m.d * ly + m.f,
+    }));
+    const xs = corners.map(p => p.x), ys = corners.map(p => p.y);
+    const lblCx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const lblCy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    const lblH  = Math.max(...ys) - Math.min(...ys);
+    if (!isFinite(lblCx) || !isFinite(lblCy)) continue;
+
+    // Определяем layerId данного текста (ближайший layer-group в иерархии)
+    let textLayerId = null;
+    let p = t.parentNode;
+    while (p && p !== g.rootEl) {
+      if (layerByEl.has(p)) { textLayerId = layerByEl.get(p); break; }
+      p = p.parentNode;
+    }
+
+    // Anchor подписи (m.e, m.f) — позиция, откуда стартует label
+    const anchorX = m.e, anchorY = m.f;
+
+    // Snap к ближайшему пунсону соответствующей категории — узкий радиус
+    const snapR = Math.max(3, lblH * 1.5);
+    let ox = anchorX, oy = anchorY, snapped = false;
+    const targetLayer = deriveMarkerLayerId(textLayerId, markersByLayer);
+    const candidates = targetLayer ? markersByLayer.get(targetLayer) : null;
+    if (candidates && candidates.length) {
+      const near = findNearestMarker(anchorX, anchorY, candidates, snapR);
+      if (near) { ox = near.x; oy = near.y; snapped = true; }
+    }
+    // если не снапнулось — фалбэк на центр bbox
+    if (!snapped) { ox = lblCx; oy = lblCy; }
+
+    idx.push({ text: content, norm: normRu(content), ox, oy, snapped, layerId: textLayerId });
+  }
+  return idx;
+}
+
+// Эвристика: имя layer'а похоже на river/sea/army?
+function looksLikeNonCityLayer(layerId) {
+  if (!layerId) return false;
+  return /river|sea|ocean|lake|reservoir|вод|реки|моря|army|armies|армии/i.test(layerId);
+}
+
+// Кандидатные пары overlay↔background по схожести имён.
+// Стратегия:
+//   - bg: оставляем только city-категории (Capital/Guberniya/Settlement), где snap сработал
+//     → автоматически исключает рекки/моря/острова (они в *_Text без *_Mark)
+//   - overlay: исключаем явные river/army-слои по имени, но snap не обязателен
+//     (на overlay'ях с неизвестной структурой слоёв snap часто не срабатывает)
+function buildAutomatchCandidates(overlayIdx, bgIdx) {
+  const candidates = [];
+  for (const o of overlayIdx) {
+    if (looksLikeNonCityLayer(o.layerId)) continue;
+    for (const b of bgIdx) {
+      if (!b.snapped) continue;
+      let score = -1;
+      if (o.norm === b.norm) {
+        score = 0;
+      } else if (Math.abs(o.norm.length - b.norm.length) <= 3 && o.norm.length >= 4) {
+        const d = levenshtein(o.norm, b.norm);
+        const maxAllowed = Math.max(1, Math.floor(o.norm.length * 0.2));
+        if (d <= maxAllowed) score = d;
+      }
+      if (score < 0) continue;
+      // У b может быть cityX/cityY (snap-to-marker) — используем их если есть,
+      // иначе bbox-центр. У o аналогично — ox/oy уже либо marker'ные, либо bbox-центр.
+      const bx = (b.cityX != null) ? b.cityX : (b.x + b.w / 2);
+      const by = (b.cityY != null) ? b.cityY : (b.y + b.h / 2);
+      candidates.push({
+        ox: o.ox, oy: o.oy,
+        wx: bx, wy: by,
+        name: o.text,
+        bgName: b.text,
+        snappedO: !!o.snapped,
+        snappedB: !!b.snapped,
+        score,
+      });
+    }
+  }
+  return candidates;
+}
+
+function sampleK(arr, k) {
+  if (arr.length < k) return null;
+  const idxs = new Set();
+  while (idxs.size < k) idxs.add(Math.floor(Math.random() * arr.length));
+  return [...idxs].map(i => arr[i]);
+}
+
+// RANSAC: ищет максимальный консенсус среди кандидатов под affine.
+function ransacAffine(candidates, opts = {}) {
+  const minPts = 3;
+  if (candidates.length < minPts) return null;
+  const thresh = opts.thresh ?? (baseViewBox.w * 0.025);  // 2.5% of bg width
+  const maxIters = opts.iters ?? Math.min(800, Math.max(80, candidates.length * 10));
+
+  let best = { inliers: [], matrix: null };
+  for (let iter = 0; iter < maxIters; iter++) {
+    const s = sampleK(candidates, 3);
+    if (!s) continue;
+    const m = affineLSQ(s);
+    if (!m) continue;
+    const inliers = [];
+    for (const c of candidates) {
+      const p = applyMatrix(m, c.ox, c.oy);
+      const d = Math.hypot(p.x - c.wx, p.y - c.wy);
+      if (d < thresh) inliers.push(c);
+    }
+    if (inliers.length > best.inliers.length) best = { inliers, matrix: m };
+    // Early termination: если ≥ 80% всех кандидатов inlier'ы — хватит
+    if (best.inliers.length / candidates.length >= 0.8 && best.inliers.length >= 6) break;
+  }
+  if (best.inliers.length < minPts) return null;
+  // Refit на всех inlier'ах
+  const refined = affineLSQ(best.inliers);
+  return { matrix: refined || best.matrix, inliers: best.inliers, candidateCount: candidates.length };
+}
+
+// Запускает автомэтч и заполняет g.calib.points.
+function runAutoMatch(g) {
+  if (!bgInfo || !searchIndex || !searchIndex.length) {
+    alert("В подложке нет индекса текстовых меток.");
+    return null;
+  }
+  const overlayIdx = buildOverlayTextIndex(g);
+  if (!overlayIdx.length) {
+    alert("В этом наложении нет текстовых меток для автомэтча.\nЛибо это растровое наложение, либо подписи не сохранились в SVG.");
+    return null;
+  }
+  const candidates = buildAutomatchCandidates(overlayIdx, searchIndex);
+  if (candidates.length < 3) {
+    alert(`Совпадений по именам: ${candidates.length}. Меньше 3 — не хватит для affine.\nПопробуйте добавить точки вручную.`);
+    return null;
+  }
+  const fit = ransacAffine(candidates);
+  if (!fit) {
+    alert(`Не удалось найти согласованный набор. Кандидатов: ${candidates.length}.`);
+    return null;
+  }
+  ensurePointsMode(g);
+  g.calib.points = fit.inliers.map((c, i) => ({
+    id: g.calib.pointSeq++,
+    ox: c.ox, oy: c.oy,
+    wx: c.wx, wy: c.wy,
+    name: c.name === c.bgName ? c.name : `${c.name} → ${c.bgName}`,
+    src: "auto",
+  }));
+  g.calib.matrix = fit.matrix;
+  applyCalibToGroup(g);
+  renderCalibMarkers();
+  saveState();
+  return { matched: fit.inliers.length, total: overlayIdx.length, candidates: candidates.length };
+}
+
+// Перефитим: если ≥3 точек, пересчитываем matrix через affineLSQ.
+function refitGroup(g) {
+  if (g.calib.mode !== "points") return;
+  if (g.calib.points.length >= 3) {
+    const m = affineLSQ(g.calib.points);
+    if (m) g.calib.matrix = m;
+  }
+  applyCalibToGroup(g);
+  renderCalibMarkers();
+}
+
+// Переход simple → points: текущий simple-transform становится начальной матрицей.
+function ensurePointsMode(g) {
+  if (g.calib.mode === "points") return;
+  g.calib.mode = "points";
+  g.calib.matrix = simpleToMatrix(g.calib.tx, g.calib.ty, g.calib.scale);
+  applyCalibToGroup(g);
 }
 
 async function fetchSvgFrag(file) {
@@ -1201,8 +2130,12 @@ function unmountOverlay(g, o) {
 
 async function toggleOverlay(g, o, enabled) {
   o.enabled = enabled;
-  if (enabled) await mountOverlay(g, o);
-  else unmountOverlay(g, o);
+  if (enabled) {
+    await mountOverlay(g, o);
+    applyStrokeMultiplier(g);
+  } else {
+    unmountOverlay(g, o);
+  }
   saveState();
 }
 
@@ -1222,7 +2155,9 @@ function setEditTarget(id) {
   } else {
     editBadge.classList.remove("on");
   }
+  cancelCapture();
   rebuildCalibPanel();
+  if (typeof renderCalibMarkers === "function") renderCalibMarkers();
   saveState();
 }
 
@@ -1232,30 +2167,60 @@ function buildTargetBar() {
   }
   targetBar.appendChild(makeTargetBtn(VIEW_TARGET, "Подложка", "#9a9aa6", false));
   for (const g of groups) {
+    if (g.hidden) continue;
     targetBar.appendChild(makeTargetBtn(g.id, g.label, g.color, g.isCustom));
   }
 }
-function makeTargetBtn(id, label, color, removable) {
+function makeTargetBtn(id, label, color, isCustom) {
   const btn = document.createElement("button");
   btn.className = "target-btn";
   btn.dataset.target = id;
-  btn.innerHTML = `<span class="dot" style="color:${color}"></span><span>${label}</span>`;
+  btn.title = label;
+  btn.innerHTML = `<span class="dot" style="color:${color}"></span><span class="label">${label}</span>`;
   btn.addEventListener("click", (e) => {
     if (e.target.classList.contains("x")) return;
     setEditTarget(id);
   });
-  if (removable) {
+  if (id !== VIEW_TARGET) {
     const x = document.createElement("span");
     x.className = "x";
     x.textContent = "×";
-    x.title = "Удалить группу";
+    x.title = isCustom ? "Удалить группу (только в этой сессии)" : "Скрыть группу (можно вернуть)";
     x.addEventListener("click", (e) => {
       e.stopPropagation();
-      removeCustomGroup(id);
+      if (isCustom) removeCustomGroup(id);
+      else hideBaseGroup(id);
     });
     btn.appendChild(x);
   }
   return btn;
+}
+
+function hideBaseGroup(id) {
+  const g = groups.find((x) => x.id === id);
+  if (!g || g.isCustom) return;
+  g.hidden = true;
+  // Снимаем DOM группы и калибровочные маркеры (если они были её)
+  if (g.rootEl && g.rootEl.parentNode) g.rootEl.parentNode.removeChild(g.rootEl);
+  g.rootEl = null;
+  if (editTarget === id) editTarget = VIEW_TARGET;
+  buildTargetBar();
+  buildLayerList();
+  setEditTarget(editTarget);
+  saveState();
+}
+
+async function unhideBaseGroup(id) {
+  const g = groups.find((x) => x.id === id);
+  if (!g) return;
+  g.hidden = false;
+  // Перемонтируем включённые слои (rootEl был удалён при hide)
+  for (const o of g.overlays.filter((o) => o.enabled)) {
+    await mountOverlay(g, o);
+  }
+  buildTargetBar();
+  buildLayerList();
+  saveState();
 }
 
 function removeCustomGroup(id) {
@@ -1274,13 +2239,14 @@ function buildLayerList() {
   layersBox.innerHTML = "";
 
   appendGroupTitle("Наложения");
-  if (!groups.length) {
+  const visibleGroups = groups.filter((g) => !g.hidden);
+  if (!visibleGroups.length) {
     const note = document.createElement("div");
     note.style.cssText = "padding: 6px 16px; color: var(--muted); font-size: 11px;";
     note.textContent = "Подгрузите SVG ниже.";
     layersBox.appendChild(note);
   }
-  for (const g of groups) {
+  for (const g of visibleGroups) {
     // Подзаголовок группы (помельче, цветной dot)
     const sub = document.createElement("div");
     sub.style.cssText = "padding: 8px 16px 2px; display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text);";
@@ -1327,6 +2293,22 @@ function buildLayerList() {
     e.target.value = "";
   });
   layersBox.appendChild(pickRow);
+
+  // Кнопки «вернуть» для скрытых base-групп
+  const hiddenBase = groups.filter((g) => !g.isCustom && g.hidden);
+  if (hiddenBase.length) {
+    const restoreRow = document.createElement("div");
+    restoreRow.style.cssText = "display:flex; gap:6px; flex-wrap:wrap; padding: 4px 16px 0;";
+    for (const g of hiddenBase) {
+      const btn = document.createElement("button");
+      btn.style.cssText = "background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font: inherit; font-size: 10px; cursor: pointer;";
+      btn.textContent = `↻ ${g.label}`;
+      btn.title = "Вернуть скрытую группу";
+      btn.onclick = () => unhideBaseGroup(g.id);
+      restoreRow.appendChild(btn);
+    }
+    layersBox.appendChild(restoreRow);
+  }
 
   const slot = document.createElement("div");
   slot.id = "calibSlot";
@@ -1402,24 +2384,67 @@ function rebuildCalibPanel() {
 function buildCalibPanel(g) {
   const panel = document.createElement("div");
   panel.className = "calib";
+  const isPoints = g.calib.mode === "points";
+
   panel.innerHTML = `
     <h3>
       <span class="title-flex">Калибровка · ${g.label}</span>
       <button data-act="copy" title="Скопировать transform в буфер">copy</button>
     </h3>
-    <div class="row"><label>Δx</label><input type="range" data-k="tx" min="-2000" max="4000" step="1"><input type="number" data-k="tx" step="1"></div>
-    <div class="row"><label>Δy</label><input type="range" data-k="ty" min="-2000" max="3000" step="1"><input type="number" data-k="ty" step="1"></div>
-    <div class="row"><label>scale</label><input type="range" data-k="scale" min="0.05" max="6" step="0.001"><input type="number" data-k="scale" step="0.01"></div>
+    <div class="mode-row">
+      <button data-mode="simple" class="${isPoints ? '' : 'on'}">Простая</button>
+      <button data-mode="points" class="${isPoints ? 'on' : ''}">По точкам</button>
+    </div>
+    <div class="simple-body" style="display:${isPoints ? 'none' : 'block'}">
+      <div class="row"><label>Δx</label><input type="range" data-k="tx" min="-2000" max="4000" step="1"><input type="number" data-k="tx" step="1"></div>
+      <div class="row"><label>Δy</label><input type="range" data-k="ty" min="-2000" max="3000" step="1"><input type="number" data-k="ty" step="1"></div>
+      <div class="row"><label>scale</label><input type="range" data-k="scale" min="0.05" max="6" step="0.001"><input type="number" data-k="scale" step="0.01"></div>
+    </div>
+    <div class="points-body" style="display:${isPoints ? 'block' : 'none'}">
+      <div class="actions" style="margin-top:0">
+        <button data-act="cityTag" title="Клик на overlay в точке города → введи имя">🏙 Отметить город</button>
+        <button data-act="autoMatch" title="Найти совпадения по подписям городов">⚡ Авто по именам</button>
+      </div>
+      <div class="actions" style="margin-top:6px">
+        <button data-act="addPoint" title="Пара клик-overlay → клик-background">+ Точка вручную</button>
+        <button data-act="tps" title="Нелинейный warp через все точки (только для подгруженных SVG)">🌀 TPS warp</button>
+        <button data-act="resetPoints">⟲ Сброс</button>
+      </div>
+      <div class="pts-list" data-role="ptsList"></div>
+    </div>
     <div class="row"><label>opacity</label><input type="range" data-k="opacity" min="0" max="1" step="0.01"><input type="number" data-k="opacity" step="0.05"></div>
+    <div class="row"><label>линии ×</label><input type="range" data-k="strokeMul" min="0.3" max="6" step="0.1"><input type="number" data-k="strokeMul" step="0.1"></div>
     <div class="actions">
       <button data-act="save">Сохранить</button>
-      <button data-act="reset">Сброс</button>
+      <button data-act="reset">Сброс всего</button>
     </div>
   `;
+
+  // Mode toggle
+  panel.querySelectorAll('.mode-row button').forEach((btn) => {
+    btn.onclick = () => {
+      const want = btn.dataset.mode;
+      if (want === g.calib.mode) return;
+      if (want === "points") {
+        ensurePointsMode(g);
+      } else {
+        // Откат к simple: разбираем matrix обратно в tx/ty/scale (только uniform-scale)
+        // Если matrix не uniform-scale — оставляем tx/ty/scale как были, но переключаем mode.
+        g.calib.mode = "simple";
+        applyCalibToGroup(g);
+      }
+      cancelCapture();
+      rebuildCalibPanel();
+      renderCalibMarkers();
+      saveState();
+    };
+  });
+
   const syncInputs = () => {
     for (const inp of panel.querySelectorAll("input[data-k]")) inp.value = g.calib[inp.dataset.k];
   };
   syncInputs();
+
   for (const inp of panel.querySelectorAll("input[data-k]")) {
     const k = inp.dataset.k;
     inp.addEventListener("input", () => {
@@ -1429,24 +2454,172 @@ function buildCalibPanel(g) {
       for (const peer of panel.querySelectorAll(`input[data-k="${k}"]`)) {
         if (peer !== inp) peer.value = v;
       }
-      applyCalibToGroup(g);
+      if (k === "strokeMul") {
+        applyStrokeMultiplier(g);
+      } else {
+        // В simple-режиме изменения сразу применяются;
+        // в points — opacity и так применится, остальное игнорируется для transform.
+        applyCalibToGroup(g);
+      }
     });
   }
+
+  // Points list render (inside panel)
+  const ptsList = panel.querySelector('[data-role="ptsList"]');
+  const renderList = () => {
+    ptsList.innerHTML = "";
+    const pts = g.calib.points;
+    if (!pts.length) {
+      const empty = document.createElement("div");
+      empty.className = "pts-empty";
+      empty.textContent = "Точки не заданы. Нажмите «+ Точка вручную» и кликните сначала на overlay, потом на background.";
+      ptsList.appendChild(empty);
+      return;
+    }
+    const residuals = g.calib.fit === "tps"
+      ? pts.map(() => 0)  // TPS проходит точно через все опорные
+      : (g.calib.points.length >= 3 ? computeResiduals(pts, g.calib.matrix) : pts.map(() => null));
+    pts.forEach((p, i) => {
+      const row = document.createElement("div");
+      row.className = "pt-row";
+      const num = document.createElement("span");
+      num.className = "num"; num.textContent = String(p.id);
+      const label = document.createElement("span");
+      label.className = "label";
+      const srcMark = p.src === "auto" ? "⚡ "
+                     : p.src === "city-tag" ? "🏙 "
+                     : "";
+      label.textContent = srcMark + (p.name || `(${p.ox.toFixed(0)}, ${p.oy.toFixed(0)})`);
+      label.title = p.src === "auto" ? "Автоматическая пара"
+                  : p.src === "city-tag" ? "Размечена вручную (имя из bg-индекса)"
+                  : "Ручная пара (клик overlay + клик background)";
+      const res = document.createElement("span");
+      res.className = "res";
+      if (residuals[i] != null) {
+        res.textContent = residuals[i].toFixed(1);
+        if (residuals[i] > Math.max(baseViewBox.w * 0.02, 20)) res.classList.add("big");
+      } else {
+        res.textContent = "—";
+      }
+      const rm = document.createElement("button");
+      rm.className = "rm"; rm.textContent = "×"; rm.title = "Удалить точку";
+      rm.onclick = () => {
+        g.calib.points = g.calib.points.filter((x) => x !== p);
+        refitGroup(g);
+        renderList();
+        saveState();
+      };
+      row.append(num, label, res, rm);
+      ptsList.appendChild(row);
+    });
+    if (pts.length >= 3) {
+      const summary = document.createElement("div");
+      summary.className = "pts-summary";
+      if (g.calib.fit === "tps") {
+        summary.innerHTML = `<span>${pts.length} ${pluralize(pts.length, 'точка', 'точки', 'точек')} · 🌀 TPS warp</span><span>residual=0 в опорных</span>`;
+      } else {
+        const r = computeResiduals(pts, g.calib.matrix);
+        summary.innerHTML = `<span>${pts.length} ${pluralize(pts.length, 'точка', 'точки', 'точек')} · affine LSQ</span><span>RMSE ${rmse(r).toFixed(1)}</span>`;
+      }
+      ptsList.appendChild(summary);
+    } else {
+      const summary = document.createElement("div");
+      summary.className = "pts-summary";
+      summary.innerHTML = `<span>${pts.length}/3 минимум для affine</span><span>—</span>`;
+      ptsList.appendChild(summary);
+    }
+  };
+  renderList();
+  g._renderPtsList = renderList;
+
+  // Add-point button (overlay → background two-click pair)
+  const addBtn = panel.querySelector('[data-act=addPoint]');
+  if (addBtn) addBtn.onclick = () => startCapture(g);
+
+  // City-tag button: click on overlay → enter name → auto-create pair from bg index
+  const cityTagBtn = panel.querySelector('[data-act=cityTag]');
+  if (cityTagBtn) cityTagBtn.onclick = () => startCityTag(g);
+
+  // Auto-match by names
+  const autoBtn = panel.querySelector('[data-act=autoMatch]');
+  if (autoBtn) autoBtn.onclick = () => {
+    autoBtn.disabled = true;
+    autoBtn.textContent = "⚡ ищу…";
+    // даём UI прокраситься перед тяжёлой работой
+    setTimeout(() => {
+      try {
+        const r = runAutoMatch(g);
+        if (r) {
+          flash(autoBtn, `✓ ${r.matched}/${r.candidates}`);
+          if (g._renderPtsList) g._renderPtsList();
+        } else {
+          autoBtn.textContent = "⚡ Авто по именам";
+        }
+      } finally {
+        autoBtn.disabled = false;
+      }
+    }, 30);
+  };
+
+  // TPS bake / undo
+  const tpsBtn = panel.querySelector('[data-act=tps]');
+  if (tpsBtn) {
+    if (g.calib.fit === "tps") {
+      tpsBtn.textContent = "↩ Откатить TPS";
+      tpsBtn.title = "Вернуться к affine-фиту";
+    }
+    tpsBtn.onclick = () => {
+      tpsBtn.disabled = true;
+      const wasTps = g.calib.fit === "tps";
+      tpsBtn.textContent = wasTps ? "↩ откат…" : "🌀 печём…";
+      setTimeout(() => {
+        try {
+          const r = wasTps ? undoTPS(g) : bakeTPS(g);
+          if (r.ok) {
+            rebuildCalibPanel();
+            if (g._renderPtsList) g._renderPtsList();
+          } else {
+            alert(r.why);
+            tpsBtn.textContent = wasTps ? "↩ Откатить TPS" : "🌀 TPS warp";
+          }
+        } finally {
+          tpsBtn.disabled = false;
+        }
+      }, 30);
+    };
+  }
+
+  // Reset points
+  const resetPtsBtn = panel.querySelector('[data-act=resetPoints]');
+  if (resetPtsBtn) resetPtsBtn.onclick = () => {
+    g.calib.points = [];
+    g.calib.matrix = simpleToMatrix(g.calib.tx, g.calib.ty, g.calib.scale);
+    applyCalibToGroup(g);
+    renderList();
+    renderCalibMarkers();
+    saveState();
+  };
+
   panel.querySelector('[data-act=save]').onclick = () => {
     saveState();
     flash(panel.querySelector('[data-act=save]'), "Сохранено ✓");
   };
   panel.querySelector('[data-act=reset]').onclick = () => {
     const base = BASE_GROUPS.find((x) => x.id === g.id);
-    g.calib = base ? { ...base.calibDefault } : { tx: 0, ty: 0, scale: 1, opacity: 0.9 };
-    syncInputs();
+    g.calib = base ? { ...base.calibDefault, ...makePointsState() } : { tx: 0, ty: 0, scale: 1, opacity: 0.9, ...makePointsState() };
+    cancelCapture();
+    rebuildCalibPanel();
     applyCalibToGroup(g);
+    renderCalibMarkers();
   };
   panel.querySelector('[data-act=copy]').onclick = async () => {
     const c = g.calib;
-    const s = `translate(${c.tx}, ${c.ty}) scale(${c.scale})`;
+    const s = c.mode === "points"
+      ? `matrix(${c.matrix.join(' ')})`
+      : `translate(${c.tx}, ${c.ty}) scale(${c.scale})`;
     try { await navigator.clipboard.writeText(s); flash(panel.querySelector('[data-act=copy]'), "✓"); } catch {}
   };
+
   panel._sync = syncInputs;
   g._calibPanel = panel;
   return panel;
@@ -1459,6 +2632,262 @@ function flash(btn, text) {
   const orig = btn.textContent;
   btn.textContent = text;
   setTimeout(() => { btn.textContent = orig; }, 900);
+}
+
+// --- Capture mode (control-point picking) ---
+const captureBanner = document.getElementById("captureBanner");
+function startCapture(g) {
+  if (!g) return;
+  closeCityTagPopup();
+  ensurePointsMode(g);
+  rebuildCalibPanel();
+  captureMode = { type: "pair", groupId: g.id, step: "overlay", pointId: g.calib.pointSeq++ };
+  updateCaptureBanner();
+  stage.classList.add("capture-mode");
+  saveState();
+}
+
+function startCityTag(g) {
+  if (!g) return;
+  closeCityTagPopup();
+  ensurePointsMode(g);
+  rebuildCalibPanel();
+  captureMode = { type: "cityTag", groupId: g.id };
+  captureBanner.querySelector(".msg").textContent = `Кликни на OVERLAY в точке города (${g.label})`;
+  captureBanner.classList.add("on");
+  stage.classList.add("capture-mode");
+}
+function cancelCapture() {
+  captureMode = null;
+  stage.classList.remove("capture-mode");
+  captureBanner.classList.remove("on");
+  closeCityTagPopup();
+}
+function updateCaptureBanner() {
+  if (!captureMode) {
+    captureBanner.classList.remove("on");
+    return;
+  }
+  const g = groups.find((x) => x.id === captureMode.groupId);
+  const what = captureMode.step === "overlay"
+    ? `Клик на OVERLAY (${g?.label || ''}) — точка №${captureMode.pointId}`
+    : `Теперь клик на BACKGROUND — та же точка №${captureMode.pointId}`;
+  captureBanner.querySelector(".msg").textContent = what;
+  captureBanner.classList.add("on");
+}
+function handleCaptureClick(clientX, clientY) {
+  if (!captureMode) return false;
+  const g = groups.find((x) => x.id === captureMode.groupId);
+  if (!g) { cancelCapture(); return true; }
+
+  const { x: wx, y: wy } = screenToWorld(clientX, clientY);
+
+  if (captureMode.type === "cityTag") {
+    // 1 клик на overlay → запоминаем overlay-local координаты → показываем popup для имени
+    const inv = worldToLocalFn(g);
+    if (!inv) { cancelCapture(); return true; }
+    const { ox, oy } = inv(wx, wy);
+    // Прячем banner на время ввода имени
+    captureBanner.classList.remove("on");
+    stage.classList.remove("capture-mode");
+    openCityTagPopup(clientX, clientY, ox, oy, g);
+    return true;
+  }
+
+  // type === 'pair' (default — старый flow с двумя кликами)
+  if (captureMode.step === "overlay") {
+    const inv = worldToLocalFn(g);
+    if (!inv) { cancelCapture(); return true; }
+    const { ox, oy } = inv(wx, wy);
+    captureMode.ox = ox; captureMode.oy = oy;
+    captureMode.step = "background";
+    updateCaptureBanner();
+  } else {
+    g.calib.points.push({
+      id: captureMode.pointId,
+      ox: captureMode.ox, oy: captureMode.oy,
+      wx, wy,
+      src: "manual",
+    });
+    refitGroup(g);
+    cancelCapture();
+    if (g._renderPtsList) g._renderPtsList();
+    saveState();
+  }
+  return true;
+}
+
+// --- City-tag popup with autocomplete from bg searchIndex ---
+function openCityTagPopup(clientX, clientY, ox, oy, g) {
+  closeCityTagPopup();
+  const popup = document.createElement("div");
+  popup.id = "cityTagPopup";
+  const stageRect = stage.getBoundingClientRect();
+  // Размещаем чуть правее и ниже точки клика, чтобы не закрывал её
+  let leftPx = clientX - stageRect.left + 14;
+  let topPx  = clientY - stageRect.top + 14;
+  // Защита от ухода за правый/нижний край стейджа
+  leftPx = Math.min(leftPx, stage.clientWidth - 340);
+  topPx  = Math.min(topPx, stage.clientHeight - 220);
+  popup.style.left = leftPx + "px";
+  popup.style.top  = topPx + "px";
+  popup.innerHTML = `
+    <div class="header">Что это за город?</div>
+    <input type="text" placeholder="начни вводить имя…" autocomplete="off" spellcheck="false" />
+    <div class="suggestions"></div>
+    <div class="hint">Enter — выбрать, Esc — отмена</div>
+  `;
+  stage.appendChild(popup);
+  const input = popup.querySelector("input");
+  const sugBox = popup.querySelector(".suggestions");
+
+  // City-категории: «Столица», «Губерния», «Город», «Ген.-губерн.» — это то, что
+  // мы готовы признать городами для разметки. Реки/моря/легенды/гос-ва исключаем.
+  const CITY_CATS = new Set(["Столица", "Губерния", "Город", "Ген.-губерн."]);
+  // У snapped-entry координата dot'а, у не-snapped — центр bbox подписи.
+  // Для разметки оба варианта приемлемы (TPS-warp всё равно пройдёт через точки точно).
+  const candidatesAll = (searchIndex || []).filter((e) => CITY_CATS.has(e.cat));
+  let active = 0;
+
+  const render = () => {
+    const q = normRu(input.value);
+    sugBox.innerHTML = "";
+    if (!q) {
+      return;
+    }
+    // Сортировка: prefix > substring, короткие имена выше
+    const matches = candidatesAll
+      .map((e) => ({ e, idx: e.norm.indexOf(q) }))
+      .filter((m) => m.idx >= 0)
+      .sort((a, b) => (a.idx - b.idx) || (a.e.text.length - b.e.text.length))
+      .slice(0, 8);
+    if (active >= matches.length) active = matches.length - 1;
+    if (active < 0) active = 0;
+    matches.forEach((m, i) => {
+      const row = document.createElement("div");
+      row.className = "sug" + (i === active ? " active" : "");
+      const cat = document.createElement("span");
+      cat.className = "cat"; cat.textContent = m.e.cat;
+      const name = document.createElement("span");
+      name.className = "name";
+      const idx = m.idx;
+      name.innerHTML = m.e.text.slice(0, idx)
+        + "<mark>" + m.e.text.slice(idx, idx + q.length) + "</mark>"
+        + m.e.text.slice(idx + q.length);
+      row.append(cat, name);
+      row.addEventListener("mouseenter", () => { active = i; updateActive(); });
+      row.addEventListener("click", () => commit(m.e));
+      sugBox.appendChild(row);
+    });
+  };
+  const updateActive = () => {
+    [...sugBox.children].forEach((r, i) => r.classList.toggle("active", i === active));
+  };
+  const getCurrentMatches = () => {
+    const q = normRu(input.value);
+    if (!q) return [];
+    return candidatesAll
+      .map((e) => ({ e, idx: e.norm.indexOf(q) }))
+      .filter((m) => m.idx >= 0)
+      .sort((a, b) => (a.idx - b.idx) || (a.e.text.length - b.e.text.length))
+      .slice(0, 8);
+  };
+  const commit = (entry) => {
+    if (!entry) {
+      closeCityTagPopup();
+      return;
+    }
+    g.calib.points.push({
+      id: g.calib.pointSeq++,
+      ox, oy,
+      wx: entry.cityX, wy: entry.cityY,
+      name: entry.text,
+      src: "city-tag",
+    });
+    refitGroup(g);
+    if (g._renderPtsList) g._renderPtsList();
+    saveState();
+    closeCityTagPopup();
+    // Сразу включаем следующий тэг, чтобы можно было быстро размечать подряд
+    startCityTag(g);
+  };
+
+  input.addEventListener("input", render);
+  input.addEventListener("keydown", (e) => {
+    const matches = getCurrentMatches();
+    if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(matches.length - 1, active + 1); updateActive(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(0, active - 1); updateActive(); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      if (matches.length) commit(matches[active].e);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      closeCityTagPopup();
+      captureMode = null;
+    }
+  });
+
+  setTimeout(() => input.focus(), 10);
+}
+
+function closeCityTagPopup() {
+  const p = document.getElementById("cityTagPopup");
+  if (p) p.remove();
+}
+
+// --- Render control-point markers on stage ---
+function renderCalibMarkers() {
+  if (!calibMarkers) return;
+  calibMarkers.replaceChildren();
+  if (editTarget === VIEW_TARGET) return;
+  const g = groups.find((x) => x.id === editTarget);
+  if (!g || g.calib.mode !== "points") return;
+
+  const r = Math.max(3, baseViewBox.w * 0.0028);  // overlay-circle radius
+  const s = r * 2.4;                               // bg-square half-side (больше круга, обрамляет его)
+
+  for (const p of g.calib.points) {
+    // Position of OVERLAY point in world coords.
+    // В affine-режиме — через текущую матрицу. В TPS — точно в bg-позиции
+    // (по построению, поэтому маркеры лягут точно друг на друга).
+    const ov = g.calib.fit === "tps"
+      ? { x: p.wx, y: p.wy }
+      : applyMatrix(g.calib.matrix, p.ox, p.oy);
+
+    // 1. Connection line first (под всем)
+    const line = document.createElementNS(SVG_NS, "line");
+    line.setAttribute("x1", ov.x); line.setAttribute("y1", ov.y);
+    line.setAttribute("x2", p.wx); line.setAttribute("y2", p.wy);
+    line.setAttribute("class", "calib-link");
+    calibMarkers.appendChild(line);
+
+    // 2. BG square — пустая синяя рамка с чёрной подложкой
+    const shadow = document.createElementNS(SVG_NS, "rect");
+    shadow.setAttribute("x", p.wx - s); shadow.setAttribute("y", p.wy - s);
+    shadow.setAttribute("width", s * 2); shadow.setAttribute("height", s * 2);
+    shadow.setAttribute("class", "calib-marker-bg-shadow");
+    calibMarkers.appendChild(shadow);
+
+    const bgRect = document.createElementNS(SVG_NS, "rect");
+    bgRect.setAttribute("x", p.wx - s); bgRect.setAttribute("y", p.wy - s);
+    bgRect.setAttribute("width", s * 2); bgRect.setAttribute("height", s * 2);
+    bgRect.setAttribute("class", "calib-marker-bg");
+    calibMarkers.appendChild(bgRect);
+
+    // 3. Overlay circle — оранжевая заливка (поверх синей рамки)
+    const ovCircle = document.createElementNS(SVG_NS, "circle");
+    ovCircle.setAttribute("cx", ov.x); ovCircle.setAttribute("cy", ov.y);
+    ovCircle.setAttribute("r", r);
+    ovCircle.setAttribute("class", "calib-marker-ov");
+    calibMarkers.appendChild(ovCircle);
+
+    // 4. Один номер — на оранжевом круге (центр всей композиции при идеальном фите)
+    const lbl = document.createElementNS(SVG_NS, "text");
+    lbl.setAttribute("x", ov.x); lbl.setAttribute("y", ov.y);
+    lbl.setAttribute("class", "calib-marker-label");
+    lbl.textContent = String(p.id);
+    calibMarkers.appendChild(lbl);
+  }
 }
 
 // --- Custom SVG overlay loader ---
@@ -1573,7 +3002,10 @@ function setupPanZoom() {
     if (editTarget === VIEW_TARGET) resetView();
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && editTarget !== VIEW_TARGET) setEditTarget(VIEW_TARGET);
+    if (e.key === "Escape") {
+      if (captureMode) { cancelCapture(); return; }
+      if (editTarget !== VIEW_TARGET) setEditTarget(VIEW_TARGET);
+    }
   });
 }
 
@@ -1601,20 +3033,36 @@ function onWheel(e) {
     const g = groups.find((x) => x.id === editTarget);
     if (!g) return;
     const { x: wx, y: wy } = screenToWorld(e.clientX, e.clientY);
-    const s = g.calib.scale;
-    const s2 = clamp(s / factor, 0.02, 20);
-    const k = s2 / s;
-    g.calib.scale = s2;
-    g.calib.tx = wx + (g.calib.tx - wx) * k;
-    g.calib.ty = wy + (g.calib.ty - wy) * k;
+    if (g.calib.mode === "points") {
+      const k = 1 / factor;  // factor > 1 = zoom out, k < 1 (matrix shrinks output)
+      const m = g.calib.matrix;
+      g.calib.matrix = [
+        m[0]*k, m[1]*k, m[2]*k, m[3]*k,
+        m[4]*k + (1-k)*wx,
+        m[5]*k + (1-k)*wy,
+      ];
+    } else {
+      const s = g.calib.scale;
+      const s2 = clamp(s / factor, 0.02, 20);
+      const k = s2 / s;
+      g.calib.scale = s2;
+      g.calib.tx = wx + (g.calib.tx - wx) * k;
+      g.calib.ty = wy + (g.calib.ty - wy) * k;
+    }
     applyCalibToGroup(g);
     refreshCalibInputs(g);
+    renderCalibMarkers();
   }
 }
 
 let dragging = false, lastX = 0, lastY = 0, dragGroup = null;
 function onPointerDown(e) {
   if (e.button !== 0) return;
+  if (captureMode) {
+    e.preventDefault();
+    handleCaptureClick(e.clientX, e.clientY);
+    return;
+  }
   dragging = true; lastX = e.clientX; lastY = e.clientY;
   wrap.classList.add("grabbing");
   wrap.setPointerCapture(e.pointerId);
@@ -1626,10 +3074,16 @@ function onPointerMove(e) {
   const dxWorld = (e.clientX - lastX) * (view.w / rect.width);
   const dyWorld = (e.clientY - lastY) * (view.h / rect.height);
   if (dragGroup) {
-    dragGroup.calib.tx += dxWorld;
-    dragGroup.calib.ty += dyWorld;
+    if (dragGroup.calib.mode === "points") {
+      dragGroup.calib.matrix[4] += dxWorld;
+      dragGroup.calib.matrix[5] += dyWorld;
+    } else {
+      dragGroup.calib.tx += dxWorld;
+      dragGroup.calib.ty += dyWorld;
+    }
     applyCalibToGroup(dragGroup);
     refreshCalibInputs(dragGroup);
+    renderCalibMarkers();
   } else {
     view.x -= dxWorld;
     view.y -= dyWorld;
