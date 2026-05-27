@@ -20,6 +20,9 @@ npm run preview      # http://127.0.0.1:4173 — раздача dist/
 - [docs/claude-design-workflow.md](docs/claude-design-workflow.md) — как безопасно продолжать дизайн-проходы через Claude Design
 - [docs/deploy.md](docs/deploy.md) — деплой на сервер киоска
 
+Прототипы:
+- [prototypes/calendar-3d-paper-realistic/](prototypes/calendar-3d-paper-realistic/) — отдельный WebGL-стенд реалистичного отрывного календаря с проволочной спиралью, покадровым слайдером и панелью настройки физики перелистывания.
+
 ## Структура
 
 ```
@@ -67,6 +70,11 @@ mtk29/
 │   ├── trace_venn_blobs.py     # cv2 → SVG path трейсинг blob'ов (для Венна)
 │   ├── export_venn_svg.mjs     # экспорт Венна в SVG для Figma
 │   └── trace_venn_debug.py     # дамп HSV-масок для отладки
+│
+├── prototypes/
+│   └── calendar-3d-paper-realistic/
+│       ├── index.html          # автономный WebGL-прототип календаря
+│       └── README.md           # заметки по настройкам и сохранению состояния
 │
 └── vite.config.js
 ```
