@@ -389,7 +389,7 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
           <div style={{ fontSize: 18, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: fonts.mono, color: theme.inkFaint }}>
             {lang === 'ru' ? 'Государственный музей В.И. Ленина' : 'V.I. Lenin State Museum'}
           </div>
-          <div style={{ fontSize: 36, fontFamily: fonts.display, marginTop: 4, fontStyle: 'italic', letterSpacing: '-0.01em' }}>
+          <div style={{ fontSize: 36, fontFamily: fonts.display, marginTop: 4, letterSpacing: '-0.01em' }}>
             {lang === 'ru' ? 'Гражданская война · 1918—1922' : 'Civil War · 1918—1922'}
           </div>
         </div>

@@ -91,6 +91,77 @@ const BG_VARIANTS = {
       backgroundAttachment: 'fixed',
     },
   },
+  // Светлый бумажный фон — paper-white RAL 9001 (brand.html секция 1)
+  paper: {
+    ru: 'Бумага', en: 'Paper',
+    desc: 'RAL 9001 paper-white',
+    style: { background: '#F7F9EF' },
+  },
+  // Светлый с косыми полосами — paper-white + бренд-параллелограммы
+  paperStripes: {
+    ru: 'Бумага+полосы', en: 'Paper stripes',
+    desc: 'paper-white + параллелограммы',
+    style: {
+      background: [
+        'linear-gradient(105deg, transparent 0, transparent 72%, #A02128 72%, #A02128 86%, transparent 86.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 2%, rgba(85,93,97,0.18) 2%, rgba(85,93,97,0.18) 14%, transparent 14.2%)',
+        'linear-gradient(105deg, transparent 0, transparent 62%, #D2B773 62%, #D2B773 62.2%, transparent 62.4%)',
+        'linear-gradient(105deg, transparent 0, transparent 89%, rgba(67,80,89,0.55) 89%, rgba(67,80,89,0.55) 89.15%, transparent 89.35%)',
+        '#F7F9EF',
+      ].join(','),
+      backgroundAttachment: 'fixed',
+    },
+  },
+};
+
+// Все бренд-цвета RAL (см. brand.html). Используются в TEXT_BG/TEXT_INK
+// для тонкой настройки текстовой подложки и цвета шрифта в PersonDetail.
+const BRAND_COLORS = {
+  inkBlack:    { ru: 'Чёрный',      en: 'Black',        hex: '#000000' },
+  graphite:    { ru: 'Графит',      en: 'Graphite',     hex: '#435059' },
+  ironGrey:    { ru: 'Железо',      en: 'Iron grey',    hex: '#555D61' },
+  slateBlue:   { ru: 'Сине-серый',  en: 'Slate blue',   hex: '#5D6970' },
+  slateWindow: { ru: 'Светло-сер.', en: 'Slate window', hex: '#9DA3A6' },
+  telegrey4:   { ru: 'Теле-серый',  en: 'Telegrey 4',   hex: '#CFD0CF' },
+  paperWhite:  { ru: 'Бумага',      en: 'Paper',        hex: '#F7F9EF' },
+  brass:       { ru: 'Латунь',      en: 'Brass',        hex: '#D2B773' },
+  signalRed:   { ru: 'Красный',     en: 'Signal red',   hex: '#A02128' },
+};
+
+// Подложка под текстом справа. transparent — наследовать фон фрейма (как было).
+const TEXT_BG_VARIANTS = {
+  transparent: { ru: 'Без подложки', en: 'No backing', bg: 'transparent', swatch: 'transparent' },
+  ...Object.fromEntries(Object.entries(BRAND_COLORS).map(([k, v]) => [
+    k, { ru: v.ru, en: v.en, bg: v.hex, swatch: v.hex },
+  ])),
+};
+
+// Цвет основного текста справа (био + факты). По умолчанию — paper-white.
+const TEXT_INK_VARIANTS = Object.fromEntries(Object.entries(BRAND_COLORS).map(([k, v]) => [
+  k, { ru: v.ru, en: v.en, ink: v.hex, swatch: v.hex },
+]));
+
+// Фрейм большой карточки (внешний контейнер PersonDetail) + цвет overlay.
+// По умолчанию — слегка прозрачный graphite вместо мрачного чёрного.
+const FRAME_VARIANTS = {
+  graphiteSoft: { ru: 'Графит (soft)', en: 'Graphite (soft)',
+    bg: 'rgba(67,80,89,0.78)', overlay: 'rgba(0,0,0,0.66)', swatch: '#435059' },
+  ironSoft:     { ru: 'Железо (soft)', en: 'Iron (soft)',
+    bg: 'rgba(85,93,97,0.78)', overlay: 'rgba(0,0,0,0.66)', swatch: '#555D61' },
+  slateSoft:    { ru: 'Сине-сер. (soft)', en: 'Slate (soft)',
+    bg: 'rgba(93,105,112,0.78)', overlay: 'rgba(0,0,0,0.66)', swatch: '#5D6970' },
+  blackDeep:    { ru: 'Чёрный',     en: 'Black',
+    bg: 'rgba(0,0,0,0.65)', overlay: 'rgba(0,0,0,0.78)', swatch: '#000000' },
+  graphite:     { ru: 'Графит',     en: 'Graphite',
+    bg: '#435059', overlay: 'rgba(0,0,0,0.74)', swatch: '#435059' },
+  ironGrey:     { ru: 'Железо',     en: 'Iron grey',
+    bg: '#555D61', overlay: 'rgba(0,0,0,0.74)', swatch: '#555D61' },
+  slateBlue:    { ru: 'Сине-серый', en: 'Slate blue',
+    bg: '#5D6970', overlay: 'rgba(0,0,0,0.74)', swatch: '#5D6970' },
+  paperWhite:   { ru: 'Бумага',     en: 'Paper',
+    bg: '#F7F9EF', overlay: 'rgba(67,80,89,0.74)', swatch: '#F7F9EF' },
+  brass:        { ru: 'Латунь',     en: 'Brass',
+    bg: '#D2B773', overlay: 'rgba(0,0,0,0.66)', swatch: '#D2B773' },
 };
 
 function bgForVariant(variant) {
@@ -105,6 +176,9 @@ function SettingsPanel({ lang,
   headerVariant, setHeaderVariant,
   bgVariant, setBgVariant,
   cardVariant, setCardVariant,
+  textBgVariant, setTextBgVariant,
+  textInkVariant, setTextInkVariant,
+  frameVariant, setFrameVariant,
 }) {
   const [open, setOpen] = React.useState(() => {
     try { return localStorage.getItem('expo:settingsOpen') !== '0'; } catch { return true; }
@@ -112,9 +186,12 @@ function SettingsPanel({ lang,
   React.useEffect(() => { try { localStorage.setItem('expo:settingsOpen', open ? '1' : '0'); } catch {} }, [open]);
 
   const groups = [
-    { ru: 'Шапка',    en: 'Header', variants: HEADER_VARIANTS, value: headerVariant, set: setHeaderVariant },
-    { ru: 'Фон',      en: 'Bg',     variants: BG_VARIANTS,     value: bgVariant,     set: setBgVariant },
-    { ru: 'Карточка', en: 'Card',   variants: CARD_VARIANTS,   value: cardVariant,   set: setCardVariant },
+    { ru: 'Шапка',         en: 'Header',     variants: HEADER_VARIANTS,   value: headerVariant,   set: setHeaderVariant },
+    { ru: 'Фон',           en: 'Bg',         variants: BG_VARIANTS,       value: bgVariant,       set: setBgVariant },
+    { ru: 'Фрейм карточки', en: 'Card frame', variants: FRAME_VARIANTS,   value: frameVariant,    set: setFrameVariant },
+    { ru: 'Карточка',      en: 'Card',       variants: CARD_VARIANTS,     value: cardVariant,     set: setCardVariant },
+    { ru: 'Подложка текста', en: 'Text bg',  variants: TEXT_BG_VARIANTS,  value: textBgVariant,   set: setTextBgVariant },
+    { ru: 'Цвет текста',   en: 'Text ink',   variants: TEXT_INK_VARIANTS, value: textInkVariant,  set: setTextInkVariant },
   ];
 
   // pill-кнопка варианта
@@ -132,7 +209,10 @@ function SettingsPanel({ lang,
     }}>
       {swatch && <span style={{
         width: 10, height: 10, borderRadius: 2, flexShrink: 0,
-        background: swatch, border: '1px solid rgba(0,0,0,0.35)',
+        background: swatch === 'transparent'
+          ? 'linear-gradient(135deg, transparent 0 45%, #A02128 45% 55%, transparent 55% 100%), #F7F9EF'
+          : swatch,
+        border: '1px solid rgba(0,0,0,0.35)',
       }}/>}
       <span style={{ flex: 1, lineHeight: 1.15 }}>{label}</span>
     </button>
@@ -191,7 +271,7 @@ function SettingsPanel({ lang,
                 {Object.entries(g.variants).map(([id, v]) =>
                   pill(id, v[lang], g.value === id, () => g.set(id),
                     // swatch — bg цвет варианта (для card / header это hex)
-                    v.bg || (v.style && (typeof v.style.background === 'string' ? v.style.background : null)) || null)
+                    v.swatch || v.bg || (v.style && (typeof v.style.background === 'string' ? v.style.background : null)) || null)
                 )}
               </div>
             </div>
@@ -323,7 +403,7 @@ function PersonCard({ person, lang, onOpen, delay }) {
         <div style={{
           width: '100%', aspectRatio: '1/1.25',
           overflow: 'hidden', position: 'relative',
-          background: '#1a0d05',
+          background: '#F7F9EF',
           border: `1px solid ${theme.inkSoft}`,
           marginBottom: 10,
         }}>
@@ -335,20 +415,20 @@ function PersonCard({ person, lang, onOpen, delay }) {
           ) : (
             <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice"
               style={{ width: '100%', height: '100%', display: 'block' }}>
-              {/* Чёрно-белый плейсхолдер: bg = bell от slate-window до ink-black,
-                  силуэт чёрный, плечо — без цвета лагеря (серое). */}
+              {/* Светлый плейсхолдер: bg = paper-white → telegrey4 → slate-window,
+                  силуэт iron-grey, плечо slate-blue. */}
               <defs>
-                <radialGradient id={`pbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                  <stop offset="0%" stopColor="#9DA3A6"/>
-                  <stop offset="55%" stopColor="#555D61"/>
-                  <stop offset="100%" stopColor="#000000"/>
+                <radialGradient id={`pbg-${person.id}`} cx="50%" cy="35%" r="80%">
+                  <stop offset="0%" stopColor="#F7F9EF"/>
+                  <stop offset="60%" stopColor="#CFD0CF"/>
+                  <stop offset="100%" stopColor="#9DA3A6"/>
                 </radialGradient>
               </defs>
               <rect x="0" y="0" width="100" height="125" fill={`url(#pbg-${person.id})`}/>
               <path d="M 15 125 Q 15 82 32 74 Q 40 72 42 66 Q 34 62 34 47 Q 34 28 50 28 Q 66 28 66 47 Q 66 62 58 66 Q 60 72 68 74 Q 85 82 85 125 Z"
-                fill="#000000"/>
+                fill="#555D61"/>
               <path d="M 15 125 L 15 110 Q 50 95 85 110 L 85 125 Z"
-                fill="#435059"/>
+                fill="#5D6970"/>
             </svg>
           )}
           {/* грейн */}
@@ -370,7 +450,7 @@ function PersonCard({ person, lang, onOpen, delay }) {
           color: theme.inkFade, textTransform: 'uppercase',
         }}>{d.name}</div>
         <div style={{
-          fontFamily: fonts.display, fontStyle: 'italic',
+          fontFamily: fonts.display,
           fontSize: 24, lineHeight: 1, color: theme.ink, marginTop: 2,
         }}>{d.sur}</div>
         <div style={{
@@ -435,8 +515,12 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
 }
 
 // Модальная карточка с подробностями
-function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, cardCfg }) {
+function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, cardCfg, textBgCfg, textInkCfg, frameCfg }) {
   const card = cardCfg || CARD_VARIANTS.paper;
+  const textBg = (textBgCfg && textBgCfg.bg) || 'transparent';
+  const textInk = (textInkCfg && textInkCfg.ink) || '#F7F9EF';
+  const hasTextBg = textBg !== 'transparent';
+  const frame = frameCfg || FRAME_VARIANTS.graphiteSoft;
   const d = person[lang];
   const meta = SIDE_META[person.side];
   const photos = person.photos || [];
@@ -455,7 +539,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       // fixed — модалка приколочена к viewport iframe и не зависит
       // от scrollTop фонового списка персоналий ни при каких условиях.
       position: 'fixed', inset: 0,
-      background: 'rgba(0,0,0,0.78)',  // BRAND.inkBlack overlay
+      background: frame.overlay,
       backdropFilter: 'blur(10px) saturate(0.6)',
       WebkitBackdropFilter: 'blur(10px) saturate(0.6)',
       zIndex: 100,
@@ -470,7 +554,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         width: 1280, maxWidth: '100%', height: '90vh',
         display: 'grid', gridTemplateColumns: '380px 1fr',
         gap: 28, position: 'relative',
-        padding: 22, background: 'rgba(0,0,0,0.65)',  // BRAND.inkBlack frame
+        padding: 22, background: frame.bg,
         border: `1px solid #D2B773`,                  // BRAND.brass
         boxShadow: '0 0 0 1px rgba(0,0,0,.6), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(210,183,115,.18)',
         animation: 'popIn 400ms cubic-bezier(.2,.7,.3,1.1)',
@@ -489,7 +573,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           overflow: 'hidden',
           color: card.ink,
         }}>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#1a0d05', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#F7F9EF', flexShrink: 0 }}>
             {person.portrait ? (
               <img src={person.portrait} alt="" style={{
                 width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
@@ -498,24 +582,24 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
             ) : (
               <>
                 <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice" style={{ width: '100%', height: '100%' }}>
-                  {/* Чёрно-белый placeholder (бренд: slate-window → iron-grey → black). */}
+                  {/* Светлый placeholder (бренд: paper-white → telegrey4 → slate-window). */}
                   <defs>
-                    <radialGradient id={`mbg-${person.id}`} cx="50%" cy="35%" r="70%">
-                      <stop offset="0%" stopColor="#9DA3A6"/>
-                      <stop offset="55%" stopColor="#555D61"/>
-                      <stop offset="100%" stopColor="#000000"/>
+                    <radialGradient id={`mbg-${person.id}`} cx="50%" cy="35%" r="80%">
+                      <stop offset="0%" stopColor="#F7F9EF"/>
+                      <stop offset="60%" stopColor="#CFD0CF"/>
+                      <stop offset="100%" stopColor="#9DA3A6"/>
                     </radialGradient>
                   </defs>
                   <rect width="100" height="130" fill={`url(#mbg-${person.id})`}/>
                   <path d="M 15 130 Q 15 85 32 77 Q 40 74 42 68 Q 34 64 34 48 Q 34 28 50 28 Q 66 28 66 48 Q 66 64 58 68 Q 60 74 68 77 Q 85 85 85 130 Z"
-                    fill="#000000"/>
+                    fill="#555D61"/>
                   <path d="M 15 130 L 15 113 Q 50 96 85 113 L 85 130 Z"
-                    fill="#435059"/>
+                    fill="#5D6970"/>
                 </svg>
                 <div style={{
                   position: 'absolute', top: 10, left: 10,
-                  fontFamily: fonts.mono, fontSize: 10, color: '#f0dcae',
-                  letterSpacing: '0.2em', textShadow: '0 1px 2px #000',
+                  fontFamily: fonts.mono, fontSize: 10, color: '#435059',
+                  letterSpacing: '0.2em', textShadow: '0 1px 2px rgba(247,249,239,0.6)',
                 }}>
                   {lang === 'ru' ? '[фотография отсутствует]' : '[photograph missing]'}
                 </div>
@@ -537,7 +621,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
             color: card.muted, textTransform: 'uppercase',
           }}>{d.name}</div>
           <div style={{
-            fontFamily: fonts.display, fontStyle: 'italic',
+            fontFamily: fonts.display,
             fontSize: 38, lineHeight: 0.95, color: card.ink, marginTop: 2,
             letterSpacing: '-0.01em',
           }}>{d.sur}</div>
@@ -603,7 +687,13 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           gap: 16, minHeight: 0, overflow: 'hidden',
         }}>
           <div className="brand-scroll" style={{
-            color: theme.paperLit, paddingTop: 4, paddingRight: 18,
+            color: textInk,
+            background: textBg,
+            paddingTop: hasTextBg ? 16 : 4,
+            paddingRight: hasTextBg ? 18 : 18,
+            paddingLeft: hasTextBg ? 18 : 0,
+            paddingBottom: hasTextBg ? 18 : 0,
+            border: hasTextBg ? `1px solid rgba(0,0,0,0.18)` : 'none',
             overflowY: 'auto', overflowX: 'hidden', minHeight: 0,
             overscrollBehavior: 'contain',
           }}>
@@ -614,7 +704,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
 
             <div style={{
               marginTop: 22, fontFamily: fonts.body, fontSize: 18,
-              color: theme.paperLit, lineHeight: 1.6, maxWidth: 720,
+              color: textInk, lineHeight: 1.6, maxWidth: 720,
               textWrap: 'pretty',
             }}>
               {d.bio.split(/\n\s*\n/).map((p, i) => (
@@ -631,7 +721,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                 {d.facts.map((f, i) => (
                   <div key={i} style={{
                     fontFamily: fonts.mono, fontSize: 13,
-                    color: theme.paper, lineHeight: 1.4,
+                    color: textInk, lineHeight: 1.4,
                     paddingLeft: 14, position: 'relative',
                     borderLeft: `2px solid ${meta.accent}`,
                     paddingTop: 2, paddingBottom: 2,
@@ -774,6 +864,24 @@ function PersonalitiesApp() {
   React.useEffect(() => { try { localStorage.setItem('expo:peopleCard', cardVariant); } catch {} }, [cardVariant]);
   const cardCfg = CARD_VARIANTS[cardVariant] || CARD_VARIANTS.paper;
 
+  const [textBgVariant, setTextBgVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleTextBg') || 'transparent'; } catch { return 'transparent'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleTextBg', textBgVariant); } catch {} }, [textBgVariant]);
+  const textBgCfg = TEXT_BG_VARIANTS[textBgVariant] || TEXT_BG_VARIANTS.transparent;
+
+  const [textInkVariant, setTextInkVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleTextInk') || 'paperWhite'; } catch { return 'paperWhite'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleTextInk', textInkVariant); } catch {} }, [textInkVariant]);
+  const textInkCfg = TEXT_INK_VARIANTS[textInkVariant] || TEXT_INK_VARIANTS.paperWhite;
+
+  const [frameVariant, setFrameVariant] = React.useState(() => {
+    try { return localStorage.getItem('expo:peopleFrame') || 'graphiteSoft'; } catch { return 'graphiteSoft'; }
+  });
+  React.useEffect(() => { try { localStorage.setItem('expo:peopleFrame', frameVariant); } catch {} }, [frameVariant]);
+  const frameCfg = FRAME_VARIANTS[frameVariant] || FRAME_VARIANTS.graphiteSoft;
+
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
 
   // Sync языка с родителем-экспозицией и другими открытыми iframes.
@@ -881,7 +989,7 @@ function PersonalitiesApp() {
             {lang === 'ru' ? 'Музей В.И. Ленина · Гражданская война' : 'Lenin Museum · Russian Civil War'}
           </div>
           <div style={{
-            fontFamily: fonts.display, fontStyle: 'italic',
+            fontFamily: fonts.display,
             fontSize: 52, lineHeight: 1, color: headerInk, marginTop: 6,
             letterSpacing: '-0.01em',
           }}>{lang === 'ru' ? 'Персоналіи. 1918—1922' : 'People. 1918—1922'}</div>
@@ -974,7 +1082,9 @@ function PersonalitiesApp() {
       {opened && <PersonDetail person={opened} lang={lang}
         onClose={() => setOpenId(null)}
         lightboxIdx={lightboxIdx} setLightboxIdx={setLightboxIdx}
-        cardCfg={cardCfg}/>}
+        cardCfg={cardCfg}
+        textBgCfg={textBgCfg} textInkCfg={textInkCfg}
+        frameCfg={frameCfg}/>}
 
       {/* Плавающая панель стилей — справа, всегда видна */}
       <SettingsPanel
@@ -982,6 +1092,9 @@ function PersonalitiesApp() {
         headerVariant={headerVariant} setHeaderVariant={setHeaderVariant}
         bgVariant={bgVariant} setBgVariant={setBgVariant}
         cardVariant={cardVariant} setCardVariant={setCardVariant}
+        textBgVariant={textBgVariant} setTextBgVariant={setTextBgVariant}
+        textInkVariant={textInkVariant} setTextInkVariant={setTextInkVariant}
+        frameVariant={frameVariant} setFrameVariant={setFrameVariant}
       />
     </div>
   );

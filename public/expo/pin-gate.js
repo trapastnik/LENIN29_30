@@ -69,7 +69,7 @@
         }
       </style>
       <div style="font-size:10px;letter-spacing:0.32em;color:#D2B773;text-transform:uppercase;margin-bottom:14px;">◇ Служебный доступ</div>
-      <div style="font-family:'Nolde','Playfair Display',serif;font-style:italic;font-size:22px;line-height:1.15;margin-bottom:6px;color:#F7F9EF;">Введите пин-код</div>
+      <div style="font-family:'Nolde','Playfair Display',serif;font-size:22px;line-height:1.15;margin-bottom:6px;color:#F7F9EF;">Введите пин-код</div>
       <div style="font-size:11px;letter-spacing:0.2em;color:rgba(247,249,239,0.5);text-transform:uppercase;margin-bottom:18px;">Раздел временно закрыт</div>
       <div class="mtk-pin-display" style="height:54px;display:flex;align-items:center;justify-content:center;gap:14px;border:1px solid #D2B773;margin-bottom:18px;background:rgba(0,0,0,0.4);"></div>
       <div class="mtk-pin-pad" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
