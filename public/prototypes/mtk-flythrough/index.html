@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>МТК 30 · Облёт по сценарию</title>
+<style>
+  :root {
+    --paper-bg: #EDDCC6;
+    --paper-warm: #d9c398;
+    --paper-light: #efe4cd;
+    --ink: #2a1f16;
+    --brass: #8e6a2a;
+    --ochre: #c18f3c;
+    --red: #c1272d;
+    --wood: #1f1810;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: #1a1410; color: var(--paper-light); font-family: 'Georgia', 'Times New Roman', serif; overflow: hidden; }
+  #app { position: relative; height: 100vh; overflow: hidden; }
+
+  /* Map viewport */
+  #viewport {
+    position: absolute; inset: 0;
+    background: var(--paper-bg);
+  }
+  #stage { transform-origin: 0 0; will-change: transform; }
+  #stage svg, #stage image { display: block; }
+
+  /* Top-left: K{N} + narration card */
+  #narration {
+    position: absolute;
+    top: 24px; left: 24px;
+    max-width: 520px;
+    background: rgba(20, 14, 8, 0.86);
+    border: 1px solid var(--brass);
+    border-radius: 8px;
+    padding: 18px 22px;
+    color: var(--paper-light);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+    transition: opacity .4s;
+  }
+  #narration .frame-num {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  #narration .narration-text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--paper-light);
+  }
+
+  /* Right: image strip */
+  #images {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 240px;
+    max-height: calc(100vh - 200px);
+    display: flex; flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding: 6px;
+    z-index: 10;
+  }
+  #images img {
+    width: 100%;
+    border: 2px solid var(--brass);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    background: var(--paper-light);
+    display: block;
+    opacity: 0;
+    transition: opacity .6s;
+  }
+  #images img.loaded { opacity: 1; }
+
+  /* Bottom: slider + title */
+  #panel {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 32px 22px;
+    background: linear-gradient(to top, rgba(15,10,6,0.95), rgba(15,10,6,0.4) 80%, transparent);
+    z-index: 20;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  #panel-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'Georgia', serif;
+    color: var(--paper-warm);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  #panel-top .year-display {
+    color: var(--ochre);
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+  #slider-row {
+    display: flex; align-items: center; gap: 16px;
+  }
+  #slider-row button {
+    background: rgba(193, 39, 45, 0.12);
+    color: var(--paper-light);
+    border: 1px solid var(--brass);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    min-width: 38px;
+  }
+  #slider-row button:hover { background: rgba(193,39,45,0.25); }
+  #slider {
+    flex: 1;
+    -webkit-appearance: none; appearance: none;
+    height: 4px;
+    background: linear-gradient(to right, var(--brass) 0%, var(--brass) var(--progress, 0%), rgba(218,176,121,0.2) var(--progress, 0%));
+    border-radius: 2px;
+    outline: none;
+  }
+  #slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--ochre);
+    border: 2px solid var(--paper-light);
+    cursor: grab;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  #slider::-webkit-slider-thumb:active { cursor: grabbing; }
+  #frame-counter {
+    font-size: 13px;
+    color: var(--paper-warm);
+    font-variant-numeric: tabular-nums;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  #status {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    color: var(--paper-warm); font-size: 12px; padding: 4px 10px;
+    background: rgba(20,14,8,0.7); border-radius: 4px; z-index: 100;
+    transition: opacity .5s;
+  }
+  #status.hidden { opacity: 0; pointer-events: none; }
+
+  /* Большая дата по центру сверху — главный визуальный якорь */
+  #big-date {
+    position: absolute;
+    top: 28px; left: 50%; transform: translateX(-50%);
+    z-index: 11;
+    color: var(--paper-light);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.85), 0 0 36px rgba(20,14,8,0.7);
+    pointer-events: none;
+    user-select: none;
+    transition: opacity .35s ease;
+    text-align: center;
+    line-height: 1;
+  }
+  #big-date .sub {
+    display: block;
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  #big-date.swap { opacity: 0; }
+
+  /* Slider — wrapper для тиков */
+  #slider-wrap {
+    flex: 1;
+    position: relative;
+    height: 36px;
+    display: flex; align-items: center;
+  }
+  #slider { width: 100%; }
+  #ticks {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    pointer-events: none;
+    height: 100%;
+  }
+  #ticks .tick {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    color: var(--paper-warm);
+    text-align: center;
+    font-family: 'Georgia', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    user-select: none;
+  }
+  #ticks .tick::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 8px;
+    background: var(--brass);
+    margin: 4px auto 0;
+    opacity: 0.85;
+  }
+
+  /* Play-кнопка */
+  #play {
+    background: rgba(193, 39, 45, 0.20);
+    color: var(--paper-light);
+    border: 1px solid var(--ochre);
+    border-radius: 50%;
+    width: 38px; height: 38px;
+    padding: 0;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  #play:hover { background: rgba(193,39,45,0.35); }
+  #play.playing { background: rgba(218,176,121,0.25); }
+
+  /* Settings button + layer panel */
+  #settings-btn {
+    position: absolute;
+    top: 24px; left: 50%; transform: translateX(-50%);
+    margin-top: 84px; /* under big date */
+    z-index: 12;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(20,14,8,0.7);
+    border: 1px solid var(--brass);
+    color: var(--paper-light);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #settings-btn:hover { background: rgba(193,39,45,0.25); }
+
+  #layers-panel {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 340px;
+    background: rgba(20, 14, 8, 0.94);
+    border-right: 1px solid var(--brass);
+    z-index: 30;
+    display: flex; flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    color: var(--paper-light);
+    font-size: 13px;
+  }
+  #layers-panel.open { transform: translateX(0); }
+  #layers-panel header {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(218,176,121,0.25);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #layers-panel header h2 {
+    margin: 0; font-size: 14px; font-weight: 600;
+    color: var(--paper-light);
+    letter-spacing: 0.06em;
+  }
+  #layers-panel .close-btn {
+    background: none; border: none; color: var(--paper-warm);
+    font-size: 20px; cursor: pointer; line-height: 1;
+  }
+  #layers-panel .toolbar {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(218,176,121,0.18);
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  #layers-panel .toolbar button {
+    background: rgba(218,176,121,0.10);
+    color: var(--paper-light);
+    border: 1px solid rgba(218,176,121,0.4);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  #layers-panel .toolbar button:hover { border-color: var(--ochre); }
+  #layers-panel .list {
+    flex: 1; overflow-y: auto;
+    padding: 6px 8px 18px;
+  }
+  #layers-panel .group-title {
+    color: var(--paper-warm);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    padding: 12px 8px 4px;
+  }
+  #layers-panel .layer-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 8px; border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #layers-panel .layer-row:hover { background: rgba(218,176,121,0.08); }
+  #layers-panel .layer-row input[type="checkbox"] {
+    accent-color: var(--ochre);
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  #layers-panel .layer-row .name {
+    flex: 1; font-size: 12px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  #layers-panel .layer-row .count {
+    font-size: 10px; color: var(--paper-warm);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="status">Загрузка карты…</div>
+
+  <div id="viewport">
+    <div id="stage">
+      <!-- Basemap injected here -->
+    </div>
+  </div>
+
+  <div id="narration">
+    <div class="frame-num">Кадр 1 · 1918</div>
+    <div class="narration-text">Загрузка сценария…</div>
+  </div>
+
+  <div id="images"></div>
+
+  <div id="big-date">
+    <span class="big">1918</span>
+    <span class="sub">КАДР 1</span>
+  </div>
+
+  <button id="settings-btn" title="Слои карты">⚙</button>
+
+  <aside id="layers-panel">
+    <header>
+      <h2>Слои карты</h2>
+      <button class="close-btn" id="layers-close">×</button>
+    </header>
+    <div class="toolbar">
+      <button data-action="all-on">Все вкл</button>
+      <button data-action="all-off">Все выкл</button>
+      <button data-action="reset">Сброс</button>
+    </div>
+    <div class="list" id="layers-list"></div>
+  </aside>
+
+  <div id="panel">
+    <div id="panel-top">
+      <div class="title-display">МТК 30 · Россия в эпоху Гражданской войны</div>
+      <div class="year-display" id="year">1918</div>
+    </div>
+    <div id="slider-row">
+      <button id="play" title="Автоплей (Space)">▶</button>
+      <button id="prev">◂</button>
+      <div id="slider-wrap">
+        <input type="range" id="slider" min="1" max="30" value="1" step="1">
+        <div id="ticks"></div>
+      </div>
+      <button id="next">▸</button>
+      <div id="frame-counter">1 / 30</div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+const BASE = 'basemap.svg';
+const VIEW_W = 3600, VIEW_H = 2610;
+// Frame year mapping (rough, based on scenario timeline)
+const FRAME_YEARS = {
+  1:'1917–18', 2:'1918', 3:'1918', 4:'1918', 5:'1918', 6:'1918',
+  7:'март 1918', 8:'1918', 9:'июнь 1918', 10:'1918', 11:'30 авг 1918', 12:'5 сен 1918',
+  13:'осень 1918', 14:'ноя 1918', 15:'кон. 1918', 16:'весна 1919',
+  17:'лето 1919', 18:'1919', 19:'1919', 20:'1919', 21:'1919',
+  22:'1919', 23:'июнь 1919', 24:'осень 1919', 25:'1919', 26:'1920',
+  27:'ноя 1920', 28:'1922', 29:'1922', 30:'дек 1922',
+};
+
+const AUTOPLAY_MS = 6500; // время на кадр в автоплее
+
+const status = document.getElementById('status');
+const stage = document.getElementById('stage');
+const narration = document.getElementById('narration');
+const imagesEl = document.getElementById('images');
+const slider = document.getElementById('slider');
+const yearEl = document.getElementById('year');
+const counter = document.getElementById('frame-counter');
+const ticksEl = document.getElementById('ticks');
+const bigDate = document.getElementById('big-date');
+const playBtn = document.getElementById('play');
+
+// ---------- Data ----------
+const [frames, locations, frameLoc] = await Promise.all([
+  fetch('frames.json').then(r => r.json()),
+  fetch('locations.json').then(r => r.json()),
+  fetch('frame-locations.json').then(r => r.json()),
+]);
+const total = frames.length;
+slider.max = String(total);
+
+// ---------- Year ticks on slider ----------
+// Каждый тик ставим в позицию первого кадра соответствующего года.
+const YEAR_TICKS = [
+  { frame: 1,  label: '1917' },
+  { frame: 2,  label: '1918' },
+  { frame: 13, label: 'осень 1918' },
+  { frame: 16, label: '1919' },
+  { frame: 26, label: '1920' },
+  { frame: 28, label: '1922' },
+];
+function renderTicks() {
+  ticksEl.innerHTML = '';
+  for (const t of YEAR_TICKS) {
+    const pct = ((t.frame - 1) / (total - 1)) * 100;
+    const el = document.createElement('div');
+    el.className = 'tick';
+    el.style.left = pct + '%';
+    el.textContent = t.label;
+    ticksEl.appendChild(el);
+  }
+}
+renderTicks();
+
+// ---------- Inject basemap inline ----------
+// КРИТИЧНО: использовать DOMParser ('image/svg+xml'), а не innerHTML —
+// innerHTML парсит как HTML и теряет SVG-namespace, из-за чего getElementById
+// по top-level <g> работает, но querySelector(':scope > g[id]') возвращает 0.
+// DOMParser сохраняет namespace и DOCTYPE.
+async function injectBasemap() {
+  status.textContent = 'Загрузка карты…';
+  const txt = await fetch(BASE).then(r => r.text());
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(txt, 'image/svg+xml');
+  // Проверим что не parse-error
+  const err = doc.querySelector('parsererror');
+  if (err) {
+    console.error('SVG parse error:', err.textContent);
+    status.textContent = 'Ошибка парсинга SVG';
+    return null;
+  }
+  const svg = doc.documentElement; // <svg>
+  // Импортируем в основной document
+  const imported = document.importNode(svg, true);
+  imported.style.display = 'block';
+  imported.setAttribute('width', String(VIEW_W));
+  imported.setAttribute('height', String(VIEW_H));
+  stage.innerHTML = '';
+  stage.appendChild(imported);
+  return imported;
+}
+const baseSvg = await injectBasemap();
+status.classList.add('hidden');
+
+// ---------- Layers panel ----------
+const LAYER_CATEGORIES = [
+  'Административные единицы',
+  'Границы и сетка',
+  'Гидрография',
+  'Транспорт',
+  'Населённые пункты',
+  'Подписи и легенда',
+  'Прочее',
+];
+function categoryOf(id) {
+  const u = (id || '').toUpperCase();
+  // ВАЖНО: проверяем text/label раньше остальных — иначе "River._Text" уйдёт в Гидрографию.
+  if (/LEGEND|NAME|TEXT|MARK|LABEL/.test(u))               return 'Подписи и легенда';
+  if (/RAILWAY|ROAD|TRANSPORT/.test(u))                    return 'Транспорт';
+  if (/OCEAN|SEA|RIVER|LAKE|RESERVIOR|COAST|HYDRO/.test(u)) return 'Гидрография';
+  if (/BOUNDARY|FRAME|GEOGRID|GEOLINE|BORDER/.test(u))     return 'Границы и сетка';
+  if (/CAPITAL|SETTLEMENT|CENTER|ISLAND|PENN|TOWN|CITY/.test(u))  return 'Населённые пункты';
+  if (/PROVINCE|GUBERNIYA|STATE|DEPENDED|IMPERIOR|GOVERNORATE|REGION/.test(u)) return 'Административные единицы';
+  return 'Прочее';
+}
+function prettify(id) {
+  let s = id.replace(/_x([0-9a-fA-F]{2,4})_/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+  s = s.replace(/\._/g, ' · ').replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+  return s;
+}
+
+const layersListEl = document.getElementById('layers-list');
+const layersPanel  = document.getElementById('layers-panel');
+const settingsBtn  = document.getElementById('settings-btn');
+const layersClose  = document.getElementById('layers-close');
+
+// findLayerGroups — копия из empire-1914 калибратора (тот же приём:
+// идём вглубь через <switch>/<g i:extraneous>, пока не найдём узел
+// с 2+ прямыми детьми-g с id, и возвращаем именно их).
+function findLayerGroups(node) {
+  const childGroupsWithId = Array.from(node.children).filter(
+    (c) => c.tagName.toLowerCase() === 'g' && c.id
+  );
+  if (childGroupsWithId.length >= 2) return childGroupsWithId;
+  for (const c of node.children) {
+    if (['g', 'switch'].includes(c.tagName.toLowerCase())) {
+      const found = findLayerGroups(c);
+      if (found.length >= 2) return found;
+    }
+  }
+  return childGroupsWithId;
+}
+
+let layerGroups = []; // {id, el, defaultVisible}
+function buildLayersUI() {
+  if (!baseSvg) return;
+  const candidates = findLayerGroups(baseSvg);
+  console.log(`Layers found: ${candidates.length}`);
+  status.classList.add('hidden');
+  layerGroups = candidates.map(g => ({
+    id: g.id,
+    el: g,
+    defaultVisible: g.style.display !== 'none' && g.getAttribute('visibility') !== 'hidden',
+  }));
+
+  // Group by category
+  const byCat = {};
+  for (const cat of LAYER_CATEGORIES) byCat[cat] = [];
+  for (const l of layerGroups) byCat[categoryOf(l.id)].push(l);
+
+  layersListEl.innerHTML = '';
+  for (const cat of LAYER_CATEGORIES) {
+    const items = byCat[cat];
+    if (!items.length) continue;
+    const title = document.createElement('div');
+    title.className = 'group-title';
+    title.textContent = `${cat} · ${items.length}`;
+    layersListEl.appendChild(title);
+    for (const l of items) {
+      const row = document.createElement('label');
+      row.className = 'layer-row';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = l.defaultVisible;
+      cb.addEventListener('change', () => {
+        l.el.style.display = cb.checked ? '' : 'none';
+      });
+      const name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = prettify(l.id);
+      name.title = l.id;
+      row.append(cb, name);
+      layersListEl.appendChild(row);
+    }
+  }
+}
+buildLayersUI();
+
+settingsBtn.addEventListener('click', () => layersPanel.classList.toggle('open'));
+layersClose.addEventListener('click', () => layersPanel.classList.remove('open'));
+
+// Toolbar
+layersPanel.querySelector('.toolbar').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]'); if (!btn) return;
+  const act = btn.dataset.action;
+  const rows = layersListEl.querySelectorAll('input[type="checkbox"]');
+  rows.forEach((cb, i) => {
+    const l = layerGroups[i] || layerGroups.find(x => x.id === cb.parentElement.querySelector('.name').title);
+    if (!l) return;
+    let on;
+    if (act === 'all-on')  on = true;
+    if (act === 'all-off') on = false;
+    if (act === 'reset')   on = l.defaultVisible;
+    cb.checked = on;
+    l.el.style.display = on ? '' : 'none';
+  });
+});
+
+// ---------- Camera state ----------
+let cam = { cx: VIEW_W/2, cy: VIEW_H/2, zoom: 0.4 };
+let target = { ...cam };
+let tweenStart = 0, tweenDur = 1500;
+let tweenFrom = { ...cam };
+
+function applyTransform() {
+  // Compute screen window
+  const vp = document.getElementById('viewport').getBoundingClientRect();
+  const sx = vp.width / 2 - cam.cx * cam.zoom;
+  const sy = vp.height / 2 - cam.cy * cam.zoom;
+  stage.style.transform = `translate(${sx}px, ${sy}px) scale(${cam.zoom})`;
+}
+
+function easeInOutCubic(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
+
+function tick(now) {
+  if (target && (target.cx !== cam.cx || target.cy !== cam.cy || target.zoom !== cam.zoom)) {
+    const t = Math.min(1, (now - tweenStart) / tweenDur);
+    const e = easeInOutCubic(t);
+    cam = {
+      cx: tweenFrom.cx + (target.cx - tweenFrom.cx) * e,
+      cy: tweenFrom.cy + (target.cy - tweenFrom.cy) * e,
+      zoom: tweenFrom.zoom + (target.zoom - tweenFrom.zoom) * e,
+    };
+    if (t >= 1) cam = { ...target };
+    applyTransform();
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function setCameraTarget(loc, duration = 1500) {
+  tweenFrom = { ...cam };
+  target = { cx: loc.cx, cy: loc.cy, zoom: loc.zoom };
+  tweenStart = performance.now();
+  tweenDur = duration;
+}
+
+// ---------- Frame switching ----------
+let currentFrame = -1;
+function setFrame(n) {
+  n = Math.max(1, Math.min(total, n));
+  if (n === currentFrame) return;
+  currentFrame = n;
+  const f = frames[n-1];
+  const locKey = frameLoc[String(n)] || 'europe';
+  const loc = locations[locKey] || locations.europe;
+  setCameraTarget(loc);
+
+  // Update narration
+  narration.querySelector('.frame-num').textContent = `Кадр ${n} · ${FRAME_YEARS[n] || ''}`;
+  narration.querySelector('.narration-text').textContent = f.narration || '';
+
+  // Update images
+  imagesEl.innerHTML = '';
+  for (const img of (f.images || [])) {
+    const el = document.createElement('img');
+    el.src = `media/${img}`;
+    el.onload = () => el.classList.add('loaded');
+    el.onerror = () => el.remove();
+    imagesEl.appendChild(el);
+  }
+
+  // Slider + counter + year
+  slider.value = String(n);
+  slider.style.setProperty('--progress', `${((n-1)/(total-1))*100}%`);
+  counter.textContent = `${n} / ${total}`;
+  yearEl.textContent = FRAME_YEARS[n] || '';
+
+  // Большая дата сверху — с короткой fade-сменой
+  bigDate.classList.add('swap');
+  setTimeout(() => {
+    bigDate.querySelector('.big').textContent = (FRAME_YEARS[n] || '').toUpperCase();
+    bigDate.querySelector('.sub').textContent = `КАДР ${n}`;
+    bigDate.classList.remove('swap');
+  }, 180);
+}
+
+// ---------- Autoplay ----------
+let autoTimer = null;
+function isPlaying() { return autoTimer !== null; }
+function schedule() {
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(() => {
+    if (currentFrame >= total) { stopAutoplay(); return; }
+    setFrame(currentFrame + 1);
+    schedule();
+  }, AUTOPLAY_MS);
+}
+function startAutoplay() {
+  if (isPlaying()) return;
+  if (currentFrame >= total) setFrame(1);  // с конца перематываем в начало
+  playBtn.textContent = '‖';
+  playBtn.classList.add('playing');
+  playBtn.title = 'Пауза (Space)';
+  schedule();
+}
+function stopAutoplay() {
+  clearTimeout(autoTimer);
+  autoTimer = null;
+  playBtn.textContent = '▶';
+  playBtn.classList.remove('playing');
+  playBtn.title = 'Автоплей (Space)';
+}
+function toggleAutoplay() { isPlaying() ? stopAutoplay() : startAutoplay(); }
+playBtn.addEventListener('click', toggleAutoplay);
+
+// ---------- Input ----------
+// Любое ручное действие останавливает автоплей.
+slider.addEventListener('input', () => { stopAutoplay(); setFrame(parseInt(slider.value, 10)); });
+document.getElementById('prev').addEventListener('click', () => { stopAutoplay(); setFrame(currentFrame - 1); });
+document.getElementById('next').addEventListener('click', () => { stopAutoplay(); setFrame(currentFrame + 1); });
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  { stopAutoplay(); setFrame(currentFrame - 1); }
+  if (e.key === 'ArrowRight') { stopAutoplay(); setFrame(currentFrame + 1); }
+  if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); toggleAutoplay(); }
+});
+window.addEventListener('resize', applyTransform);
+
+// Start
+setFrame(1);
+</script>
+</body>
+</html>
