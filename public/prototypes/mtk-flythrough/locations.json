@@ -1,0 +1,19 @@
+{
+  "_comment": "Camera anchors in basemap viewBox 3600×2610. Picked from city text positions. Adjust by feel.",
+  "europe":      { "cx": 600,  "cy": 1000, "zoom": 1.4 },
+  "petrograd":   { "cx": 729,  "cy": 626,  "zoom": 3.5 },
+  "moscow":      { "cx": 608,  "cy": 864,  "zoom": 3.5 },
+  "brest":       { "cx": 226,  "cy": 644,  "zoom": 3.5 },
+  "don":         { "cx": 285,  "cy": 1166, "zoom": 2.4 },
+  "south":       { "cx": 450,  "cy": 1180, "zoom": 1.8 },
+  "southUral":   { "cx": 786,  "cy": 1342, "zoom": 2.4 },
+  "volga":       { "cx": 718,  "cy": 1121, "zoom": 2.4 },
+  "urals":       { "cx": 1064, "cy": 1121, "zoom": 2.4 },
+  "crimea":      { "cx": 82,   "cy": 1074, "zoom": 3.0 },
+  "siberia":     { "cx": 1611, "cy": 1485, "zoom": 2.0 },
+  "irkutsk":     { "cx": 2085, "cy": 1721, "zoom": 2.0 },
+  "vladivostok": { "cx": 3100, "cy": 1910, "zoom": 2.0 },
+  "north":       { "cx": 850,  "cy": 650,  "zoom": 2.2 },
+  "samara":      { "cx": 801,  "cy": 1205, "zoom": 3.0 },
+  "wholeUSSR":   { "cx": 1800, "cy": 1305, "zoom": 0.8 }
+}
