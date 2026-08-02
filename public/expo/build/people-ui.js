@@ -1159,7 +1159,7 @@ function PersonalitiesApp() {
     color: headerInk,
     marginTop: 6,
     letterSpacing: "-0.01em"
-  } }, lang === "ru" ? "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438. 1918\u20141922" : "People. 1918\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 14, alignItems: "center" } }, /* @__PURE__ */ React.createElement(
+  } }, lang === "ru" ? "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438. 1917\u20141922" : "People. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 14, alignItems: "center" } }, /* @__PURE__ */ React.createElement(
     "a",
     {
       href: "index.html",

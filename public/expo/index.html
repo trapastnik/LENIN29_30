@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Музей В.И. Ленина · Гражданская война · 1918—1922</title>
+<title>Музей В.И. Ленина · Гражданская война · 1917—1922</title>
 <!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
      ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
 <script src="../base.js"></script>
@@ -51,11 +51,9 @@
 <!-- Сцена: предкомпилированный JSX. Исходники — соседние *.jsx, компилятор —
      scripts/expo/build-jsx.mjs (esbuild). Babel-in-browser убран: он компилировал
      ~180 КБ JSX при каждом старте, на киоске это секунды белого экрана.
-     Порядок важен: shared → направления → точка входа. -->
+     Порядок важен: shared → экраны → точка входа. -->
 <script src="build/shared.js"></script>
-<script src="build/direction-a.js"></script>
-<script src="build/direction-b.js"></script>
-<script src="build/direction-c.js"></script>
+<script src="build/main-screen.js"></script>
 <script src="build/boot-expo.js"></script>
 </body>
 </html>

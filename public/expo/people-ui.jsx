@@ -1094,7 +1094,7 @@ function PersonalitiesApp() {
             fontFamily: fonts.display,
             fontSize: 52, lineHeight: 1, color: headerInk, marginTop: 6,
             letterSpacing: '-0.01em',
-          }}>{lang === 'ru' ? 'Персоналіи. 1918—1922' : 'People. 1918—1922'}</div>
+          }}>{lang === 'ru' ? 'Персоналіи. 1917—1922' : 'People. 1917—1922'}</div>
         </div>
 
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
