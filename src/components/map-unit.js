@@ -43,6 +43,31 @@ const TEMPLATE = `
     max-width: 90%;
   }
   #panel.hidden { display: none; }
+  /* Боковая панель справа — опт-ин через атрибут panel-side="right" на хосте. */
+  :host([panel-side="right"]) #panel {
+    top: 16px; right: 16px; bottom: 16px; left: auto;
+    transform: none;
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 12px 14px;
+    max-width: 280px;
+    max-height: calc(100% - 32px);
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  :host([panel-side="right"]) #panel .layer-row { min-height: 26px; }
+  :host([panel-side="right"]) #panel > div {
+    /* «btns»-контейнер из _buildPanel: возвращаем его в нормальный поток
+       (там стоит margin-left:auto для центральной раскладки). */
+    margin-left: 0 !important;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
   .layer-row {
     display: flex; align-items: center; gap: 6px;
     cursor: pointer; white-space: nowrap;
@@ -85,6 +110,9 @@ const TEMPLATE = `
     min-width: auto; min-height: auto;
   }
   button.ctrl:active { background: rgba(250, 240, 210, 0.28); }
+  /* Прозрачность всего векторного слоя поверх растра. Управляется
+     через CSS-переменную --vector-opacity на хосте (по умолчанию 1). */
+  #container svg > g.layer-vector { opacity: var(--vector-opacity, 1); }
 </style>
 <div id="viewport">
   <div id="container"></div>
@@ -146,6 +174,14 @@ export class MapUnit extends HTMLElement {
       const img = document.createElementNS(SVG_NS, 'image');
       img.setAttribute('width', String(w));
       img.setAttribute('height', String(h));
+      // preserveAspectRatio:
+      //   "none"            — растягивает растр точно по viewBox (для vectorize-карт
+      //                       где aspect векторного контента совпадает с растровым)
+      //   "xMidYMid meet"   — letterbox, сохраняет пропорции растра (для AI-карт,
+      //                       где векторный viewBox может быть квадратным)
+      // Берём из manifest.preserve_aspect, по умолчанию letterbox (безопасный).
+      const par = meta.preserve_aspect || 'xMidYMid meet';
+      img.setAttribute('preserveAspectRatio', par);
       img.setAttributeNS(XLINK_NS, 'xlink:href', base + meta.background_raster);
       img.setAttribute('href', base + meta.background_raster);
       g.appendChild(img);
@@ -162,6 +198,10 @@ export class MapUnit extends HTMLElement {
       const el = svgEl.querySelector(`#${CSS.escape(l.id)}`);
       if (!el) continue;
       el.setAttribute('visibility', initial.has(l.id) ? 'visible' : 'hidden');
+      // Класс для CSS-переменной --vector-opacity. Растровые слои
+      // (kind:"raster") остаются полностью непрозрачными — фейдится
+      // только vector-overlay поверх архивного растра.
+      el.classList.add(l.kind === 'raster' ? 'layer-raster' : 'layer-vector');
     }
 
     // Подготавливаем clip-пути для wipe-слоёв.
