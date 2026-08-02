@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
+  <!-- Токены как данные. Каталог обязан РИСОВАТЬ палитру из источника,
+       а не ОПИСЫВАТЬ её вторым списком: каталог, который сам не следует
+       правилам, источником правды быть не может. -->
+  <script src="/expo/brand-tokens.js?v=20260802"></script>
   <script src="/expo/pin-gate.js?v=20260427"></script>
   <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html' });</script>
   <style>
@@ -1299,19 +1303,11 @@
     <section class="cat-section">
       <p class="lede">01 · Палитра</p>
       <h2>Цвета бренда Ленин-центра</h2>
-      <p class="token-strip">Источник: <code>docs/brand.md</code> · переменные в <code>src/styles/tokens.css</code></p>
+      <p class="token-strip">Источник: <code>src/design/tokens.json</code> · генерируется в <code>src/styles/tokens.css</code></p>
 
-      <div class="grid-4" style="margin-top: 18px;">
-        <div class="swatch"><div class="fill" style="background: var(--ink-black);"></div><div class="meta"><b>--ink-black</b><span>#000000 · RAL 9005</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--paper-white);"></div><div class="meta"><b>--paper-white</b><span>#F7F9EF · RAL 9010</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--brass);"></div><div class="meta"><b>--brass</b><span>#D2B773 · RAL 1002</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--signal-red);"></div><div class="meta"><b>--signal-red</b><span>#A02128 · RAL 3001</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--slate-blue);"></div><div class="meta"><b>--slate-blue</b><span>#5D6970 · RAL 7031</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--slate-window);"></div><div class="meta"><b>--slate-window</b><span>#9DA3A6 · RAL 7040</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--iron-grey);"></div><div class="meta"><b>--iron-grey</b><span>#555D61 · RAL 7011 · 3 этаж</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--graphite);"></div><div class="meta"><b>--graphite</b><span>#435059 · мультимедиа</span></div></div>
-        <div class="swatch"><div class="fill" style="background: var(--telegrey-4);"></div><div class="meta"><b>--telegrey-4</b><span>#CFD0CF · RAL 7047</span></div></div>
-      </div>
+      <!-- Плитки рисует renderPalette() из window.MTK_GROUPS. Руками сюда
+           ничего не дописывать — новый цвет заводится в tokens.json. -->
+      <div class="grid-4" style="margin-top: 18px;" data-palette-group="brand"></div>
     </section>
 
     <!-- ── 02. Палитра лагерей ─────────────────────────────────── -->
@@ -1319,15 +1315,11 @@
       <p class="lede">02 · Лагеря</p>
       <h2>Цветовое кодирование сторон</h2>
 
-      <div class="stack" style="gap: 10px;">
-        <div class="camp-row" style="--camp-color: var(--camp-red);"><span class="camp-dot"></span><span>Красные · РСФСР, РККА</span></div>
-        <div class="camp-row" style="--camp-color: var(--camp-white);"><span class="camp-dot"></span><span>Белые · Колчак, Деникин, Врангель, Юденич</span></div>
-        <div class="camp-row" style="--camp-color: var(--camp-rev-dem);"><span class="camp-dot"></span><span>Революционная демократия · эсеры, меньшевики, Комуч</span></div>
-        <div class="camp-row" style="--camp-color: var(--camp-green);"><span class="camp-dot"></span><span>Зелёные · крестьянские восстания, Махно, Антонов</span></div>
-        <div class="camp-row" style="--camp-color: var(--camp-national);"><span class="camp-dot"></span><span>Национальные движения · УНР, Польша, Финляндия</span></div>
-        <div class="camp-row" style="--camp-color: var(--camp-intervention);"><span class="camp-dot"></span><span>Интервенция · Антанта, Япония, Германия</span></div>
-      </div>
-      <p class="token-strip"><code>--camp-red</code>, <code>--camp-white</code>, <code>--camp-rev-dem</code>, <code>--camp-green</code>, <code>--camp-national</code>, <code>--camp-intervention</code></p>
+      <!-- Строки рисует renderCamps(); подписи лагерей — здесь, цвета — из
+           токенов. Добавился лагерь в tokens.json, но нет подписи — строка
+           всё равно появится, с именем токена вместо названия. -->
+      <div class="stack" style="gap: 10px;" data-camp-rows></div>
+      <p class="token-strip" data-camp-tokens></p>
     </section>
 
     <!-- ── 03. Типографика ─────────────────────────────────────── -->
@@ -1799,17 +1791,8 @@
             </div>
             <div class="ctrl">
               <label>Фон</label>
-              <div class="bg-swatches" data-prop="bg">
-                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
-                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
-                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
-                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
-                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
-                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
-                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
-                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
-                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
-              </div>
+              <!-- кнопки фона рисует renderBgSwatches() из бренд-группы токенов -->
+              <div class="bg-swatches" data-prop="bg"></div>
             </div>
           </div>
         </div>
@@ -1843,17 +1826,8 @@
             </div>
             <div class="ctrl">
               <label>Фон</label>
-              <div class="bg-swatches" data-prop="bg">
-                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
-                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
-                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
-                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
-                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
-                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
-                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
-                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
-                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
-              </div>
+              <!-- кнопки фона рисует renderBgSwatches() из бренд-группы токенов -->
+              <div class="bg-swatches" data-prop="bg"></div>
             </div>
           </div>
         </div>
@@ -1887,17 +1861,8 @@
             </div>
             <div class="ctrl">
               <label>Фон</label>
-              <div class="bg-swatches" data-prop="bg">
-                <button title="iron-grey"    data-bg="#555D61" data-fg="#F7F9EF" class="active"></button>
-                <button title="ink-black"    data-bg="#000000" data-fg="#F7F9EF"></button>
-                <button title="paper-white"  data-bg="#F7F9EF" data-fg="#000000"></button>
-                <button title="brass"        data-bg="#D2B773" data-fg="#1a1a1a"></button>
-                <button title="signal-red"   data-bg="#A02128" data-fg="#F7F9EF"></button>
-                <button title="slate-blue"   data-bg="#5D6970" data-fg="#F7F9EF"></button>
-                <button title="slate-window" data-bg="#9DA3A6" data-fg="#1a1a1a"></button>
-                <button title="graphite"     data-bg="#435059" data-fg="#F7F9EF"></button>
-                <button title="telegrey-4"   data-bg="#CFD0CF" data-fg="#1a1a1a"></button>
-              </div>
+              <!-- кнопки фона рисует renderBgSwatches() из бренд-группы токенов -->
+              <div class="bg-swatches" data-prop="bg"></div>
             </div>
           </div>
         </div>
@@ -2313,6 +2278,80 @@
   </script>
 
   <script>
+    // ── Каталог рисует палитру из токенов ────────────────────────────────
+    // window.MTK_TOKENS / MTK_GROUPS / MTK_TOKEN_META приезжают из
+    // /expo/brand-tokens.js, который генерируется из src/design/tokens.json.
+    // Здесь нет ни одного значения цвета — только разметка.
+    if (!window.MTK_GROUPS) {
+      throw new Error('brand.html: не подключён /expo/brand-tokens.js');
+    }
+    const T = window.MTK_TOKENS;
+    const TMETA = window.MTK_TOKEN_META;
+    const group = (id) => window.MTK_GROUPS.find((g) => g.id === id);
+
+    /** Яркость по WCAG. */
+    function luminance(hex) {
+      const m = /^#([0-9a-f]{6})$/i.exec(hex);
+      if (!m) return 0;
+      const n = parseInt(m[1], 16);
+      const lin = (c) => (c /= 255, c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+      return 0.2126 * lin(n >> 16 & 255) + 0.7152 * lin(n >> 8 & 255) + 0.0722 * lin(n & 255);
+    }
+
+    /** Какой из двух бренд-цветов текста читаемее на этом фоне.
+        Сравниваем контраст по WCAG, а не яркость с порогом: порог промахивается
+        на средних серых (--slate-window даёт 0.36 — «тёмный» по порогу 0.45,
+        хотя чёрный текст на нём контрастнее белого втрое). */
+    function readableInk(bg) {
+      const L = luminance(bg);
+      const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      return ratio(L, luminance(T['ink-black'])) >= ratio(L, luminance(T['paper-white']))
+        ? T['ink-black'] : T['paper-white'];
+    }
+
+    // 01 · Палитра — плитки со значением и пояснением из tokens.json
+    document.querySelectorAll('[data-palette-group]').forEach((host) => {
+      const g = group(host.dataset.paletteGroup);
+      if (!g) return;
+      host.innerHTML = g.tokens.map((name) => `
+        <div class="swatch">
+          <div class="fill" style="background: var(--${name});"></div>
+          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span></div>
+        </div>`).join('');
+    });
+
+    // 02 · Лагеря — цвет из токена, подпись отсюда
+    const CAMP_LABELS = {
+      'camp-red':          'Красные · РСФСР, РККА',
+      'camp-white':        'Белые · Колчак, Деникин, Врангель, Юденич',
+      'camp-rev-dem':      'Революционная демократия · эсеры, меньшевики, Комуч',
+      'camp-green':        'Зелёные · крестьянские восстания, Махно, Антонов',
+      'camp-national':     'Национальные движения · УНР, Польша, Финляндия',
+      'camp-intervention': 'Интервенция · Антанта, Япония, Германия',
+    };
+    const campTokens = (group('camp')?.tokens ?? []).filter((n) => CAMP_LABELS[n]);
+    document.querySelectorAll('[data-camp-rows]').forEach((host) => {
+      host.innerHTML = campTokens.map((name) => `
+        <div class="camp-row" style="--camp-color: var(--${name});">
+          <span class="camp-dot"></span><span>${CAMP_LABELS[name]}</span>
+        </div>`).join('');
+    });
+    document.querySelectorAll('[data-camp-tokens]').forEach((host) => {
+      host.innerHTML = campTokens.map((n) => `<code>--${n}</code>`).join(', ');
+    });
+
+    // Кнопки фона в Typography Lab. Порядок — как в брендбуке, но первым
+    // ставим рабочий фон каталога, он же активный по умолчанию.
+    const BG_FIRST = 'iron-grey';
+    const bgTokens = (group('brand')?.tokens ?? [])
+      .filter((n) => n !== 'paper-pure')
+      .sort((a, b) => (a === BG_FIRST ? -1 : b === BG_FIRST ? 1 : 0));
+    document.querySelectorAll('.bg-swatches[data-prop="bg"]').forEach((host) => {
+      host.innerHTML = bgTokens.map((name, i) => `
+        <button title="${name}" data-bg="${T[name]}" data-fg="${readableInk(T[name])}"
+                style="background: var(--${name});"${i === 0 ? ' class="active"' : ''}></button>`).join('');
+    });
+
     // — Typography Lab: проводка слайдеров и кнопок —
     document.querySelectorAll('.font-lab').forEach((lab) => {
       const sample = lab.querySelector('.lab-sample');
