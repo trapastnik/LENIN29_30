@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
-  <script src="/expo/pin-gate.js?v=20260427"></script>
-  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html' });</script>
+  <!-- Первым скриптом: MTK_URL() для путей к ресурсам под file://. См. public/base.js. -->
+  <script src="base.js"></script>
+  <script src="expo/pin-gate.js?v=20260427"></script>
+  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: 'expo/people.html' });</script>
   <style>
     .view-toggle {
       display: inline-flex;
@@ -187,7 +189,7 @@
       <button id="btn-groups" class="active">По группам</button>
       <button id="btn-grid">Сетка</button>
     </div>
-    <a class="back-link" href="/" id="back-link">← К экспозиции</a>
+    <a class="back-link" href="index.html" id="back-link">← К экспозиции</a>
   </header>
 
   <main id="page-root">
@@ -228,7 +230,7 @@
     import { fetchJSON } from '/src/data/loader.js';
     import '/src/components/state-card.js';
 
-    const idx = await fetchJSON('/content/states/_index.json');
+    const idx = await fetchJSON(MTK_URL('content/states/_index.json'));
 
     // ───── Drill-down режим (ТЗ) ─────
     const pickerEl = document.getElementById('group-picker');
@@ -293,7 +295,7 @@
     const gridWrap = document.getElementById('grid-mode');
     const gridPage = new CollectionPage({
       kind: 'states',
-      indexUrl: '/content/states/_index.json',
+      indexUrl: MTK_URL('content/states/_index.json'),
       cardTag: 'state-card',
       idAttr: 'state-id',
     });

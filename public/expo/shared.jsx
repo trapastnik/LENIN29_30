@@ -400,9 +400,9 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
         {/* разделитель */}
         <div style={{ width: 1, background: `${theme.paperDark}55`, margin: '6px 4px' }}/>
         {[
-          { section: 'parties', src: '/parties.html', ru: 'Партіи',    en: 'Parties' },
-          { section: 'states',  src: '/states.html',  ru: 'Государственные образования', en: 'State formations' },
-          { section: 'people',  src: '/expo/people.html', ru: 'Персоналіи', en: 'People' },
+          { section: 'parties', src: '../parties.html', ru: 'Партіи',    en: 'Parties' },
+          { section: 'states',  src: '../states.html',  ru: 'Государственные образования', en: 'State formations' },
+          { section: 'people',  src: 'people.html', ru: 'Персоналіи', en: 'People' },
         ].map(link => (
           <button key={link.section} onClick={() => onOpenSection && onOpenSection(link.section, link.src)}
             style={{
@@ -426,7 +426,7 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
       </div>
 
       {/* служебная ссылка на бренд-каталог — центральный артефакт визуальной системы */}
-      <a href="/brand.html" target="_blank" rel="noopener" style={{
+      <a href="../brand.html" target="_blank" rel="noopener" style={{
         fontFamily: fonts.mono, fontSize: 14, letterSpacing: '0.28em',
         color: theme.paperLight, textDecoration: 'none',
         textTransform: 'uppercase', fontWeight: 700,

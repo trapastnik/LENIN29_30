@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
-  <script src="/expo/pin-gate.js?v=20260427"></script>
-  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html' });</script>
+  <!-- Первым скриптом: MTK_URL() для путей к ресурсам под file://. См. public/base.js. -->
+  <script src="base.js"></script>
+  <script src="expo/pin-gate.js?v=20260427"></script>
+  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: 'expo/people.html' });</script>
   <style>
     .view-toggle {
       display: inline-flex;
@@ -62,7 +64,7 @@
       <button id="btn-venn" class="active">Диаграмма</button>
       <button id="btn-grid">Список</button>
     </div>
-    <a class="back-link" href="/" id="back-link">← К экспозиции</a>
+    <a class="back-link" href="index.html" id="back-link">← К экспозиции</a>
   </header>
 
   <main id="page-root">
@@ -96,13 +98,13 @@
     import '/src/components/venn-selector.js';
     import '/src/components/camp-filter.js';
 
-    const idx = await fetchJSON('/content/parties/_index.json');
+    const idx = await fetchJSON(MTK_URL('content/parties/_index.json'));
 
     // --- Венн-вид ---
     const vennWrap = document.getElementById('venn-mode');
     const venn = document.createElement('venn-selector');
     venn.camps = idx.camps;
-    venn.background = '/content/parties/' + (idx.venn_background || 'venn-bg.png');
+    venn.background = MTK_URL('content/parties/') + (idx.venn_background || 'venn-bg.png');
     venn.headers = idx.venn_headers;
     venn.items = idx.items;
     vennWrap.appendChild(venn);

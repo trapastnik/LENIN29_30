@@ -108,7 +108,7 @@ export class PartyCard extends HTMLElement {
 
   async _load(id) {
     try {
-      this._data = await fetchJSON(`/content/parties/${id}.json`);
+      this._data = await fetchJSON(MTK_URL(`content/parties/${id}.json`));
     } catch (e) {
       this._data = {
         ...(this._stub || {}),
