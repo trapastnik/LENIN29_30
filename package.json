@@ -14,6 +14,7 @@
     "expo:build": "node scripts/expo/build-jsx.mjs",
     "expo:check": "node scripts/expo/build-jsx.mjs --check",
     "content:check": "node scripts/validate-content.mjs",
+    "media:build": "python3 scripts/media/build_media.py",
     "check": "npm run build && npm run tokens:check && npm run expo:check && npm run content:check && npm run paths:check",
     "preview": "vite preview --host 127.0.0.1 --port 4173"
   },
