@@ -1,0 +1,320 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 302 204">
+<!-- SVG created with Arrow, by QuiverAI (https://quiver.ai) -->
+  <style type="text/css">.cls-0 {fill:#EDDCC6;}
+.cls-1 {fill:#E7C6B5;}
+.cls-2 {fill:#F4DF9A;}
+.cls-3 {fill:none;stroke:#E0CCAE;stroke-width:0.5;stroke-dasharray:1,1;}
+.cls-4 {fill:none;stroke:#B3B3B3;stroke-width:0.5;}
+.cls-5 {fill:none;stroke:#BEAF97;stroke-width:0.5;}
+.cls-6 {fill:none;stroke:#B1C0C2;stroke-width:0.75;}
+.cls-7 {fill:none;stroke:#000000;stroke-width:0.75;}
+.cls-8 {fill:none;stroke:#0000FF;stroke-width:0.75;stroke-dasharray:3,2;}
+.cls-9 {fill:none;stroke:#FF0000;stroke-width:0.75;}
+.cls-10 {fill:none;stroke:#006837;stroke-width:0.75;}
+.cls-11 {fill:none;stroke:#FF0000;stroke-width:0.75;stroke-dasharray:3,1,1,1;}
+.cls-12 {fill:none;stroke:#0000FF;stroke-width:0.75;}
+.cls-13 {fill:none;stroke:#000000;stroke-width:0.75;stroke-dasharray:3,1,1,1;}
+.cls-14 {fill:none;stroke:#6699CC;stroke-width:0.75;}
+.cls-15 {fill:none;stroke:#336699;stroke-width:0.75;}
+.cls-16 {fill:#336699;}
+.cls-17 {fill:none;stroke:#CC9966;stroke-width:0.5;stroke-dasharray:2,1,1,1;}
+.cls-18 {fill:none;stroke:#CC6699;stroke-width:0.5;}
+.cls-19 {fill:none;stroke:#FF0099;stroke-width:0.5;}
+.cls-20 {fill:#FF0099;}
+.cls-21 {fill:none;stroke:#003366;stroke-width:0.5;}
+.cls-22 {fill:#003366;}
+.cls-23 {fill:none;stroke:#FF0000;stroke-width:0.75;stroke-linecap:round;}
+.cls-24 {fill:none;stroke:#0000FF;stroke-width:1.0001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:3,2,2,2,2,2;}
+.cls-25 {fill:none;stroke:#006600;stroke-width:1.0001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.cls-26 {fill:none;stroke:#FF0000;stroke-width:1.0001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:3,2,2,2,2,2;}
+.cls-27 {fill:#0000FF;}
+.cls-28 {fill:#FF0000;}
+.cls-29 {fill:none;stroke:#000000;stroke-width:0.5;}
+.cls-30 {fill:#006699;}
+.cls-31 {fill:#C1272D;}
+.cls-32 {fill:#CA001B;}
+.cls-33 {fill:#000000;}
+.cls-34 {fill:none;stroke:#006699;stroke-width:0.5;}</style>
+  <defs>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 L2,5 Z" fill="#FF0000"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 L2,5 Z" fill="#0000FF"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 L2,5 Z" fill="#006600"/>
+    </marker>
+    <marker id="arrow-magenta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 L2,5 Z" fill="#FF0099"/>
+    </marker>
+  </defs>
+
+  <g id="background_paper">
+  <rect class="cls-0" x=".2" y=".2" width="301.5" height="203.8"/>
+  </g>
+  <g id="frame_decor">
+  <path class="cls-17" d="m282 4.4 1.2 5.7-0.3 4.6 4.1-4.6 1.2-1.1 0.2 1.8-1.1 5.7 2.2-0.3 0.9 3.5-1.1 2.7 1.1 3.2-1.3 3.4-0.9 4.5-0.9 2.3-0.7 0.9 0.9 0.9 0.7 2.1-0.5 2.7-1.8 3.6-0.5 3-1.1 5.7 2.3-0.7 3.2-0.9 2.5-0.7 0.4 4.1 0.9 6.8 0.5 2.7 1.1 2.5 0.2 2.7-2 3-0.2 2.3v3.4l1.3 3.2 0.7 3.4 1.4 4.1 0.2 4.5-0.2 3.9 0.4 3.4-0.4 3.6-0.9 3.4-0.5 3.4-0.9 3.7v1.8l1.4 2.5-0.9 4.1 1.1 3.2 0.4 3.6 1 3.9 0.6 3.1 0.7 3.2 0.7 3.7 0.2 3.8-0.4 3.4-1.2 5 0.9 3.9 0.5 4.7v3.7l-0.2 3-0.5 4.5-0.7 6.8v3.2 3.2l-0.4 4.1 0.2 3.2 1.4 4.3"/>
+  <path class="cls-17" d="m233.9 51.7 1.1 1.1-0.5 1.4 1.8 1.6-0.6 2.7 1.6 0.9 0.9 2.3 0.2 3.4 1.1 0.9 1.9 1.6 0.9 2.3 2 2.2-0.4 2.1-0.7 2.7 0.2 2.5 2 2.1 0.3 2-1.6 3.2v2.3l0.4 2.7 0.7 2.7 0.2 3 0.9 3.6v3.6l-0.6 4.4v2.9l0.9 3.7 0.7 3.4 0.2 3.4 0.9 4.1 0.5 3.4 0.6 3.8 0.9 3.4 1.4 6.4 0.9 3.4 1.4-0.4 1.3 1.1 1.2-0.7h1.6l3.2 0.9 0.6 2.3 1.9 1.8 0.6 2.5 0.9 2.5 3 1.2 2.7 1.6 2.8 1.8 1.1 5.2 1.4-1.8 0.2-2.5 2.9-0.7 2.1 0.7 0.9-1.4 1.8-1.1 1.1 0.2 1.4 1.4 1.1-1.2 5.5 3v-0.7l-0.5-4.8 0.3-3.4 0.9-2.9 0.2-2.5-0.7-3-0.4-3.6 0.2-3.7-0.2-3.4-0.3-3.4 0.7-2.7-0.4-3.2 0.2-3.4v-3.6l-0.5-3.4v-3.2l1.2-3.4v-3.2-3.4l-0.5-3.4-0.4-3 0.2-2.9-0.7-3.2v-3.4l0.9-3 0.5-2.7 0.2-4.1-0.9-3.2v-2.7l0.7-3.2-1.2-3.2-0.6-2.9-0.3-3.7-0.6-3.1-0.5-3.9-0.5-3.2 0.7-3.2 0.3-3.4-0.7-3.2-0.7-3.1-0.7-3.2v-3.4l-0.2-3.4-0.5-3.5 0.3-2.9-1.2-3.2 0.2-3.4-1.1-2.3-2.5-1.1-3.6-1.4-0.7-1.8"/>
+  <path class="cls-17" d="m258.6 178.3-2.2 0.7-1 0.7 2.3-0.7 3.9-1.4 1.1-0.7 1.8-0.2 1.9 1.8 2.5 1.6 0.6 2.3 0.9 2 1.6 1.8 2.3 1.4 2.5 1.4 1.1 2.9 1.9 1.4 2-0.9 0.7-2.3 0.9-2 0.7-1.6 2-1.4 1.6 0.7 1.6 1.1 1.1 1.2 1.2 2 2 1.8 0.9 2.5 2.3 2.1 1.1 1.8 1.2 2 0.7 2.1"/>
+  </g>
+  <g id="territories">
+  <polygon class="cls-1" points="13.5 12.3 121.1 12.3 121.8 14.6 122.3 17.6 122 22.1 121.1 27.9 119.5 32.4 118.6 39.5 118.1 45.8 117 49.9 119.9 55.4 120 58.6 120 69.9 119.6 72.1 120.5 74.4 93.6 83.1 89.3 86.3 75.1 90.7 68.6 92 62.3 91.9 56 90.3 52.5 88 51.6 86.9 49.5 88.5 45.9 93.5 39.1 105.8 34.5 115.8 32.2 125.4 30.9 139.9 29.8 145.6 26.8 152.6 26.2 156.1 27.7 159.3 30.4 161.6 32.9 162.1 35.9 161.6 39.6 159.7 42.9 157.6 45.4 156.7 46.8 156.5 47.3 157.6 45.6 161.4 41.9 169.2 39.6 176.5 37.9 184.9 37.9 192.6 39.8 199.8 13.5 199.8"/>
+  <polygon class="cls-2" points="126.3 12.3 190.4 12.3 189.3 17.6 187.7 22.1 184.3 27.9 180.2 32.4 175.2 37.4 167.5 44.9 162.7 49.9 157.9 55.4 155.7 59.9 153.6 65.1 152 69.9 146.8 74.4 142.9 77.4 143.6 81.5 142.7 82.8 141.3 82.8 140.4 85.1 139.1 83.5 137.7 84.4 137.3 86.3 135.7 86.9 134.8 88.1 135.4 90.1 133.9 92 134.1 95.1 135.9 97.4 137.7 104.6 139.5 114.4 139.1 121 137.5 123.1 143.2 124.2 147.3 126.7 150.2 130.1 154.3 134.9 157.7 138.3 158.8 142.4 158.8 156 159.3 162.8 158.6 170.1 155.9 175.8 147.5 182.1 141.6 186 143.6 192.6 144.1 199.8 51.6 199.8 54.3 197.4 59.5 193.5 67.3 190.8 72.3 188.5 77.3 185.6 85.7 180.8 91.6 179.2 94.1 180.8 96.6 178.5 98.4 176.7 102.9 176.4 105.7 176.2 109.5 177.6 110.4 179.2 111.6 179.4 112.5 177.6 114.3 178.3 117.9 178.3 123.2 178.7 126.3 179.9 130.4 182.1 135.2 184.4 139.8 186 142.5 187.4 142.7 188.7 141.8 189.9 142.7 192.4 143.4 196.2 143.4 198.3 142.9 199.9 51.6 199.8 54.3 197.4 59.5 193.5 67.3 190.8 72.3 188.5 77.3 185.6 85.7 180.8 91.6 179.2 94.1 180.8 96.6 178.5 98.4 176.7 102.9 176.4 105.7 176.2 109.5 177.6 110.4 179.2 111.6 179.4 112.5 177.6 114.3 178.3 117.9 178.3 123.2 178.7 126.3 179.9 130.4 182.1 135.2 184.4 139.8 186 142.5 187.4 142.7 188.7 141.8 189.9 142.7 192.4 143.4 196.2 143.4 198.3 142.9 199.9 48.4 199.9 46.8 197.8 43.8 196.9 40.9 195.3 39.5 191 38.8 186.4 39.8 179.9 41.1 174.4 43.2 169.2 45.9 163.5 47.3 159.7 47.9 157.1 46.6 155.8 43.2 156.5 40.2 157.8 37.3 159.7 34.3 160.8 30.4 161.6 27.7 159.9 24.8 156.5 25.9 153.3 27.9 149.4 29.5 144.4 30.7 137.4 31.3 130.8 32.7 121.7 35.2 113.7 38.8 107.6 43.4 99.4 46.8 93.1 50.4 88.5 52 86.9 54.3 89 59.8 91.3 64.8 92.6 70.2 92.4 76.3 91 83.9 88.7 89.5 86.9 94.1 84.9 97.3 82.1 98.2 80.8 97 76 94.8 71.7 93.9 69.2 95.7 66.3 100.2 64.2 105.7 62.8 107.9 61.7 111.1 64.4 114.3 67.6 120 71 120 58.6 119.9 55.4 117 49.9 118.1 45.8 118.6 39.5 119.5 32.4 121.1 27.9 122 22.1 122.3 17.6 121.8 14.6 121.1 12.3"/>
+  <path class="cls-2" d="m155.2 59 5.7 5-3.4 1.6-3.9 0.9 1.6-7.5"/>
+  </g>
+  <g id="admin_borders">
+  <path class="cls-3" d="m48.6 199.9-2.1-2.3-2.3-0.7-2.6-1.9-2.5-3.3-2.3-3.5-2.5-0.2-1.2-2.3 0.7-2.1 1.8-0.9 0.2-1.4-0.5-1.6 1.2-1.4 2.3 0.2 1.4 0.5 0.9-2.5v-2.5l1.8-2.5 0.7-3.7 1.6-3.9 2.1-4.9 1.4-4.4-2.1 0.4h-2.5l-3 0.7-3.7 2.1-2.9 1.2-3 0.7-2-0.7-2.5-2.5 1.2-2.3 2.1-0.9 3.5 0.2 1.8-1.4 2.8-2.1 0.9-2.3v-1.7l2.1-1.4 0.6-2.2 2.5-0.9 3-0.9 1.6-1.6 4.4 0.9 2.6-0.9 2.8-0.2 2.2-1.2 0.9-2.3 2.5-1.3 3.2 0.2 2.3 0.2 2.7 0.9 2.1 1.6 2.5 1.4 2.2 0.7 1.2 1.8 0.9 3 1.3 2.2 3.2 5 2.1 2.1 2 1.9 3 3.1 2.9 2.5 3.4 1.1 2.3 1.8v1.6l-1.4 1.3 2.1 0.5 3.2-0.7 2.7-0.2 2.8-0.9 2.7-0.7 2.9 0.5 3.2-0.5 2.3-0.9 1.8-0.2 3.2 1.1 2.7 3.7 2.3 1.3 2.9 0.2 4.1 0.3 3.6 1.1 3.7 1.4 3.8 0.2 2.8-0.5 2.5-1.6 1.3-2.4-2.7-0.5-2.3 1.4-2.9 0.2-4.1-0.7-3-0.9-2.5-0.7-3.6-2.5-2-2.3-3-0.6-3.4-1.4-2.3-1.1-2.3-0.3-2.7 0.3-2.3 0.7-1.6 1.8-2.7 0.6-3.4-0.6h-2.7l-3.2-0.7-3-1.1-1.3-2.1v-1.8l-2.1-0.9-2-1.6-1.8-1.4-3.2-2-2.3-1.8-1.6-1.4-1.3-3-1.6-1.8-1.4-1.8-2.9-2.3-1.6-1.6-1.6-1.8-3-0.7-2.9-1.1-2.8-0.2-3.1-0.3-2.5 0.3-2.1 0.9-2.7 2-2.1 2.1-3.1-0.7-3.2-0.5-2.5-0.9 2.9-0.9 0.7-2-1.6-4.3-1.3-3.9-1.9-3.9-1.8-3.2 2.3-2.5 3.4-3.1 0.9-3 2.1-3.4 2.5-2.5 2.9-2 1.8-0.7 1.8-2.1 3.2-1.1 2.1 0.2 3.2-0.2 1.3-1.1 3.7-0.3 3.4-1.6 1.3-2 2.8-0.2 2.9 0.9 2.3-0.7 1.1-2.3 2.3-0.9 3.2-0.4 2.5-1.6 2.7-1.6 2.7-1.2 1.9 2.8 1.1 0.4-0.5 1.2 0.7 1.3 2.1 0.3 1.8-1.2 1.3 0.2 0.9 1.4 1 0.7 0.6 1.8 3.9 0.5 1.1 0.9 2.5 1.3 1.2 1.6 1.3 2.5 1.2 1.4 1.3 0.7-0.6 1.1 2 0.5-0.2 1.3 1.3 0.7 0.5 1.4-0.2 1.6 1.1 1.3 1.8 0.9 2.5 1.2 0.9 2.5-0.2 2.5-0.7 2.2-1.1 3.4-0.9 2.3-0.7 2.5 0.2 2.3 1.2 1.1 2.9 0.7 3.4 1.4 3.4 1.1 2.3 0.9-1.6 2.7-2.5 0.7-1.6 1.8-1.6 0.3-1.8-1.2-2 0.3-1.6 1.1-2.3 0.5-1.6-1.2 0.2-2.3 1.6-3.4 0.5-2-0.9-1.8-1.6-1.8-2.1-1.4-1.8-4.1-0.7-2.3-1.3-1.3 0.7-1.9 1.1-1.3v-2.1l-1.1-2.2-1.4-2.1-1.8-2.3-2.3-1.8-1.6-1.1-2-1.1-2.8 0.2-2.5 1.1-3.1 0.9-2.3 0.5-2.5 1.3-1.6 1.4-1.8 1.8-1.6 1.2-2.7-0.3-2.1 0.3-2.3-0.3-1.3 1.9 0.4 1.5 1.4 1.2 1.8 0.7-0.7 1.6-1.6 1.3h-1.3l-1.8 1.6-1.6 1.6-0.9 1.6v2.7l1.3 2.5 1.4 2.3 1.6 2.3 0.2 2.2 0.2 1.6-0.4 2.5-1.6 1.6-2.3 0.5-1.8-2.1-1.8-1.3"/>
+  <path class="cls-3" d="m126.3 13.1 3.2 7.2-3.2 4.1-0.6 5.3 0.9 6.8 2.2 2.5-1.1 1.3 0.5 2.1 1.1 0.7 0.7 2.3 2 1.5 2.8 1.2 3.4 1.1 3.1 1.4 6.4 2.2 2.7 1.4 2.1 1.6 2 1.1 2.8 1.4 2.7 1.1 1.6 2.3 0.4 1.8-1.8 1.6-2.5-0.2-1.8-0.7-1.6 0.7-0.7 2 1.2 1.8 2.2 1.2 0.7 2.2 1.4 1.9 2.7 0.2 1.4 1.4-1.2 2.2-1.6 1.4 0.5 1.6h1.6l2 0.7h1.6l1.2 1.3 1.5 0.9 0.5 2.3 1.4 3.2"/>
+  <path class="cls-3" d="m124.8 12.3 33.4 0.1 4.3 1.6 2 2.5 0.5 2.2 1.6 3.2v3.9l0.9 3.2v2.5l-2.5 2.5-0.5 2.5 0.3 2.9-1.6 2.3 1.3 3 2.1 2.9 2 3 0.9 2.7 1.4 2.1 1.8 2.4 2.1 2.3 2.7 1.4 2.9 1.3 2.8 1.6 2.7 1.2 2.9 1.3 2.1 1.8 2 1.2 2.8 1.1 2.2 0.7 2.8 1.1 2.7 1.2 2.3 0.2 2.5 0.7 2.7 0.4 1.8 0.7-0.4 18.6-0.5 16.2-2.7 0.7-2.5 1.6-3.2-0.5-3.6-0.2-3 0.2-2.9 0.5h-2.3l-2.1-1.6-2.7-1.2-1.4-0.9-0.9-2.9-0.6-1.9-0.3-2.5-0.4-2.7 0.2-2.5 0.5-2.9-0.7-2.3-2.1-2.7-2.7-2.1-2.7-1.8-2.1-2-2.5-3-1.3-2.7-1.2-1.8 0.2-2.3 0.7-2.3-1.1-2-1.8-2.1-2.5-1.6-2.5-0.4h-2.1l-2.2-0.7-1.4-0.7-1.1-1.8 1.1-2.3 1.1-1.6-1.8-1.3-2.5-0.5-2-1.3-1.9-1.4-2-0.9-2-1.4-2.3-1.3-2.7-0.7-2.5-1.4-2.1-1.1-1.8-1.1-1.1-2.3-1.6-1.6-0.9-2.1 0.4-0.7 1.8 0.7 3.2 0.3 3.4-0.3h2.7l2.8 0.5 2.5 0.7 2 1.8 2.1 0.7 1.3 2.3 0.5 2.2-0.9 3-1.2 2.2-1.8 2.1-1.3 2 1.3 1.4h2.3 2.7l1.6-0.5 2.1-0.9 1.3-1.5 1.4-1.2 0.9-2.5 1.4-2 0.2-2.1-0.2-2.2-1.2-2.3 1.4-1.6 3.6-0.9 2.5-1.6 0.9-0.7 3-0.2 2.7-1.2 2.1-1.8 2.5-2 1.8-2.8-1.8-2.7-3.2 0.3-3 0.4-2.5 0.7-1.6 1.3-2-1.3-0.9-2.5v-2.1l-0.5-2.9-0.9-2.5-0.7-2.5-2-2.5-3.6-1.7"/>
+  <path class="cls-4" d="m91.6 13.3c-2.4 0-3.1 3.9-1.2 5.7s2.5 4.1 2.5 6.1c1.4 1.6 2.1 3.6 1.9 7.5 2 2.1 2.9 3 2 7.3 3 1.1 3-0.9 3.4 4.5 0 1.4 0.9 2.5 1.6 2.6"/>
+  <path class="cls-5" d="m82.3 34.9c1.3 4.8 4 2 3.1-2.3-0.2-6.1 1.9-11.1-5.6-10.9-2.8 0-4.1 1.6-6.4 1.4-1.6-0.3-5-1.2-3.9 2.5 1.2 2.5-2.7 2-3.2 3.8-0.9 3.4-3.1 6.4-7.2 3.2-3-1.6-4.6-0.2-5.7 1.6-1.4 2.3-5 3.4-6.6 5.5-2 3.1 0.7 3.6 1.8 4.3-0.9 1.4-1.8 2.7 0.9 4.5 1.2 0.9 1.2 2.1 1.2 3.9s4.1 3.6 6.1 4.1c0.9 3.4-1.4 3.8 4.1 6.6 1.4 0 3.2 1.3 4.1 2.9 1.8 1.6 2.7 4.1 2.7 6.8 0.5 1.6 3-0.9 3.6 1.6-0.6 2.5 3 3.2 3 6.4 0 2.7 3 2.5 2.3 5.7 1.8 0.9 2.9 2.2-0.3 4.7-0.6 2.3-0.2 4.1 3.5 1.4 2.5-0.9 3.4-0.5 5.4-0.2 2.7-0.7 2.7-2.5 5.2-3.2 1.2-2.3 4.6-2.5 6.2-2.7 2.7-2.5 5.7-2.3 8.4-3.7 1.8-1.1 2.7-2.9 5-3.4 2.9 0.5 4.5 0.3 6.1-1.1 2.5-0.2 5.2-1.4 7.5-1.4 1.6-1.8 2.5-0.4 4.6 0.9l2.2 3 2.3 2-0.7 2.5 3.2 1.6 3-0.4 0.4-1.4 1.4-1.6 1.8 1.6 0.9-2.3h1.6l0.7-1.3-1.1-2.1 0.9-2.7 2.9-1.1 2.1-1.2 2.7 0.5 1.8-1.2 2.5-0.4 1.6 1.1h2.7l1.4 1.2-1.6 2.2 0.2 4.6 3.4-0.9h1.6l1.2 1.3 2 1.2 1.4 4.1 0.2 1.1"/>
+  <path class="cls-5" d="m14.3 79.4c2 0 2.5-1.8 4.3-0.9 2.3 0.5 2.5-1.1 5.3-1.6 2.2-0.4 2.9 1.4 3.8 3 1.2 2 5.2 2 6.8 2.2 3 0.3 4.8 2.8 6.6 4.4 2.5 2.2 5.7 2.7 7.5 2.9l3 0.5 0.4 5 2.3 3.6 0.7 3-1.8 2-1.2 1.4-1.8 1.6-1.1 3.4-1.6 1.6-2.1 1.6-0.9 1.8 0.9 3.2 2.1 2.9 1.1 3.4 1.4 3.9 0.7 2-1.2 2.1-2.9 2.9 2.5 0.9 3.2 0.5 3.1 0.7 2.1-0.7 2.7-1.8 2.3-1.8 1.8-0.7h3.6l2.8 0.2 2.9 0.9 3 0.9 1.6 1.8 1.8 1.6 1.6 1.4 1.6 1.8 0.9 2.1 1.6 2.9 1.3 2.1 1.6 1.8 2.3 1.3 3 2.1 2.2 1.6 1.8 1.6 2.1 1.1 1.6 2.5 2.7 1.4 3.2 0.6h2.7l3.4 0.5 2.7-0.5 2.3-2 1.6-1.1 2.7-0.3 2.3 0.3 3.2 1.1 2.5 1.4 2.7 1.1 2.3 2.3 3.6 2 2.5 0.7 3 0.9 4.1 0.7 2.9-0.2 2.3-1.4 2.7 0.5-1.3 2.4-2.5 1.6-2.8 0.5-3.8-0.2-3.9-1.4-3.4-1.1-4.1-0.3-2.9-0.2-2.3-1.3-3-3.7-2.9-1.1-1.8 0.2-2.3 0.9-3.2 0.5-2.9-0.5-3.5 0.5-2.9 1.1-2.3 0.2-3.9 0.9-0.9 1 1.6 2.2 1.9 2.8 2 1.8 2.3 3.2 1.3 1.6 1.4 0.2 1.6-2.3 2 0.7h3.4l5.3 0.4 3.1 1.2 4.1 2.2 4.8 2.3 4.6 1.6 2.7 1.4 0.9 1.6-0.7 2 0.7 2.3 0.5 3.4-1.2 4.1"/>
+  <path class="cls-5" d="m15.4 66.5c2.3 1.1 4.1 2.9 4.8 5.6l2.3 2.5-0.2 2.3"/>
+  <path class="cls-5" d="m19.1 78.7c-0.9 2.1 2.5 3.2 2.2 5.9-0.6 3-3.8 0-2.7 4.4"/>
+  <path class="cls-4" d="m27.5 53.3c-1.8 2.1 0.4 3.9 1.6 5.9l3.2 2.5 1.8 1.8 0.4 4.1 2.1 2.3 1.3 2.5 1.9 2.2 1.8 1.9 3.8 0.9 1.2 2.5 1.8 2.9 1.1 1.8 2.1-0.2 1.6 2.1 3.4-1.6"/>
+  </g>
+  <g id="rivers">
+  <path class="cls-6" d="m14.1 135.8c1.1-0.9 2.5-2.3 5-1.8 3.2 0.4 2.9 0 4.8-1.2 1.5-1.1 2.7-1.3 2.9-2.2"/>
+  <path class="cls-6" d="m16.1 164c2.3-1.2 4.8-1.6 6.8-2.3 3-1.1 2.5-2 3.9-2.7"/>
+  <path class="cls-6" d="m15.4 120.1c1.2-0.7 0.5-2.7 3.2-2.7s5.9-1.4 5.9-3c0.3-3.6-0.6-7.7-0.9-11.6-2.5-2.7-3.6-5.7-3.6-7.9 1.3-1.4 1.3-2.5-0.9-4.1"/>
+  <path class="cls-6" d="m15.4 79"/>
+  <path class="cls-6" d="m17.9 40.6c1.2 0.6 2.1-3 3.4-0.5 2.3 1.1 0.3 5.3-5.6 6.8"/>
+  <path class="cls-6" d="m184.5 32.6c1.6 0 3.2 0.7 4.1 2.3l2.3 2 0.4 0.9 4.4 0.3 4.1 0.9c1.8 0.4 1.8 2 2.5 4.1 1.1 1.3 2.2 1.1 2.5 0.2 0.9-0.2 0.9 2.5 2.7 1.4 1.3-0.3 0.9 2.2 3.6 2.9"/>
+  <path class="cls-6" d="m174.5 66.5 2.1 1.6 2.5 0.2c0.7 2.5 3.4 2.9 7.9 2.3l2.5 1.1 3.9 0.4 2.7-0.6 2.1 2 2.5 0.2 3.2 0.7 1.8-0.2 2.2 0.9 3 0.2 1.6 0.5"/>
+  <path class="cls-6" d="m184.5 91.2c1.2-1.5 3.9-2 6.2-1.3 1.1 0.2 2.2-0.2 3.2-0.9h3.4l2-0.9c1.6-1.4 3.2-2.3 5-0.7l2.3-0.5 2-1.3 2.5-0.7"/>
+  <path class="cls-6" d="m186.3 112.6c0.5 0.7 2.8 0.5 5 1.8 2.1-0.4 2.6-1.3 4.4-1.8l5.9-1.1 3.2-1.6 3.1-2.3 2.1-0.5 1.1-0.6"/>
+  <path class="cls-6" d="m160.9 143.1 2.3-0.7 2.2-2.5 2.5-0.9 3.7-2.8 3.4 1.2 1.6 1.6h2.5l2.7-1.2 2.3-0.9 2.2-0.2 2.1 2 2.3 0.7 3.6-0.4 1.6-0.7 6.1-0.5c1.9-0.9 3.2-1.3 5.5-2.9l1.3-1.4 2.3-0.4"/>
+  <path class="cls-6" d="m183.4 158.1c-0.9 3.4-0.5 5 2.5 5.2 3.6 0.9 7.3 0.7 5.7-3.2-2.8-1.1-0.3-2.5-0.3-3.4 0.3-2.3-0.4-4.8-1.5-6.6l-0.3-2.3-0.7-2-1.1-1.4"/>
+  <path class="cls-6" d="m175.7 181.9 6.3 1.2 2.5-0.7c-1.6 2.7-5.9 4.1-5 7.5l-0.4 3.6 0.4 4.1 0.5 1.8"/>
+  <path class="cls-6" d="m73.6 200.1c0.7-3.4-1.3-4.5-1.3-6.6l0.9-2-0.5-2.5-0.2-4.1 0.4-2.5-0.4-1.4 1.6-3.4 2.5-3 2.7-0.2 2.5-2.5 2.7-0.4 1.6-1.4 2.1-0.9 2.5-0.7 2.2-1.4 2.1 0.3 1.6 0.7 2.7-0.5 2-0.5"/>
+  <path class="cls-6" d="m153.4 110.3c2 1.4 4.8 1.2 7.5 0.5 1.6-0.7 3-2.3 3.9-2.3l3.8 0.2 0.9 1.6 0.7 2.1 1.6 1.3h0.9l0.9 1.4 1.8 0.5h2.8l3.6-2.1 2.7-0.7 1.8-0.2"/>
+  <path class="cls-6" d="m150.2 122.4 2.7-0.9 1.9-2.1 0.9-2.7 1.8-3.6 1.8-2.3 2.3-0.5v1.2l1.1 1.6-1.1 1.3-0.5 2.5 0.5 3.4 0.9 1.4-1.4 4.8-1.6 1.3 1.2 1.6-0.3 5 0.5 1.8-1.8 0.3-2.5-2.1-1.8-0.4-2.1-2.3-2.5-2.3-2.5-1.3 1.1-3z"/>
+  </g>
+  <g id="front_aug1918">
+  <path class="cls-7" d="m13.6 38.7c1.8-0.2 3.9-1.8 6.8-1.5 5.7 0.6 9.6 1.5 15.3 2l10.2 0.5c4.1 0 10.4-0.3 12-2.1l1.2-2 2.2 2 4.8 2.1c2.1 1.1 3.9 2.2 8 2.5 3.6 0 5.4 0.4 8.4 1.8 3.2 0.9 6.6 0.4 7 2.9 1.2 3.9 6.4 5.2 10 5 5-0.4 9.8-2.9 13.2-5.9 3.6-3.4 5.9-2.7 8.4-1.8l4.3 1.6 2.8-0.9 1.8 0.9 0.9 3.9c1.1 3.1 0.7 6.8 5.9 7.5l3.2 0.2 2-0.2c3-0.7 5.5 0.2 8 0.9l5.7 0.2 5.2 4.1 1.8 1.8 3.9 0.7 6.1-0.9 4.8 1.6c3.4 0.9 6.4 1.8 11.1-0.3 2.7-0.4 4.3-2.5 6.2-4.1 2.9-2 5.9-3.6 8.8-4.7 1.8-0.7 4.1-1.1 6.4-0.7l2 0.7"/>
+  <path class="cls-7" d="m14.5 92.6c1.4 0 1.8-1.6 3.7-2 2-0.3 4.7 2.7 7 2.9 2.1 0.9 3.7 1.6 4.8 0.7l7.3-1.6 6.6-3.6 4.5-0.9 3.2 0.4c3.8 0.5 6.1-2.9 8.6-3.6 3.2-1.2 4.6-0.3 7.5-1.6 2.7-0.5 4.8-2.1 8.4-1.8l5.2-2.5 6.2-2.1c2-0.9 4.3-0.2 6.4-2.3l4.5-2.7 5-2 5.7 1.6 1.3 0.4c2.3-2 6.2-0.9 9.6 0.7l6.1 3.2 8.7 1.1c2.7 0 5.9 0.5 6.1 3"/>
+  <path class="cls-7" d="m163.6 13.7c1.4 0.7 1.4 3 2.1 4.8 2 3.9 1.8 10.2 0.4 11.4-2.5 3.2-5.2 7.7-3.6 10.7 1.4 2.2 3.8 5 3.2 8.8-0.5 3-0.9 8.7 3.6 10.5 3.2 1.6 4.8 2.9 3.6 6.6-2.7 3.4-4.3 6.3-2.7 11.3 1.4 3.7 7.1 8.7 9.6 10.3l5.6 5.4-0.6 3c-0.5 4.1-0.3 10.2 1.5 15l1.4 2.5 6.2 3.6c2.9 1.1 6.1 1.6 9 1.4l8.7 0.6"/>
+  <path class="cls-7" d="m16.1 169h1.6"/>
+  <path class="cls-7" d="m18.4 199.4 1.6-4.1 1.3-5.2 1-6.4 1.6-7.5-0.3-1.3"/>
+  <path class="cls-7" d="m92.3 112.8h7l6.1 0.5 5.7 0.4 4.3-0.6 3.7-1.6 3.6-0.5 4.1-1.6 4.1-2.9 3.9-1.4 7-2.5 2.1-0.9 6.3-0.2 4.1-1.6 2.3-0.7 2.9-0.7c2.1-0.4 2.1-3.4 4.4-3.4 1.8 0 2.2 1.8 5.9 2.7 3.6 0.9 6.1 0.7 10-0.4l2.5-0.9 2.7-0.3 2.3-3.1 6.1-0.5 4.5-1.1 9.1-1.2 4.1-0.6 0.5-0.5"/>
+  <path class="cls-14" d="m127.7 17.4c8.6 5.9 22.1 9.1 35 9.5 8.2 1.2 16.1 4.3 16.4 8.7"/>
+  <path class="cls-15" d="m132.5 46.9c8.4 0 17 3.2 24.1 10.3"/>
+  <path class="cls-16" d="m122.7 41.7 4.1 0.9-2.3 0.7 1.2 2.1z"/>
+  <path class="cls-16" d="m135.4 46.2-3.8 0.7 3.6 1.4-0.4-1.4z"/>
+  <path class="cls-16" d="m126.3 49.4-0.2 3 1.2-1.4c0.2 3.7 5 8.4 11.3 8.4v-0.4c-6.8-0.5-8.8-4.3-11.8-7.8z"/>
+  <path class="cls-7" d="m53.4 16.9 0.9 2.1v1.6l1.4 1.8v3.2l2.2 4.7 0.7 3.9v1.4"/>
+  <path class="cls-7" d="m110 176.9 4.1-0.5 2.7-1.5 0.7-1.4-0.5-4.3 0.7-4.6 0.9-2.2"/>
+  </g>
+  <g id="front_nov1918">
+  <path class="cls-13" d="m15.7 137.1 5.6 0.7 3.5-1.1 2.5 0.2 4.3-0.7 5.9-0.4 6.4 0.7 3.1 0.4 3.7 1.8c3.6 1.6 7.9 1.4 10.2-1.6l1.1-1.1 4.6 2.1 3.2 0.9 3.1 1.6 4.8 1.1 2.7 1.4 3.2 2.9c2.3 3.9 5.5 5.9 9.8 7.5l6.4 1.8 0.9 2.8c1.6 2.5 5 3.4 9.3 3.4l4.3 0.6 4.1-0.9 1.4-2.2c2.9-1.4 7.7-0.3 11.5 2 2.3 0.9 3.2 2.5 4.6 4.6l3.9 0.4c1.8-0.7 3.6-0.2 5.2 0.9l2.9 0.2c2.3-0.4 3.9-0.2 6 0.3l2.7 0.2 1.6 0.7"/>
+  <path class="cls-18" d="m212.9 3.7 1.6-0.6 0.5 2-0.2 1.4"/>
+  <path class="cls-10" d="m183.9 12.1c0.2 2.3-2.3 2.3-4.4 2.8-2.7 1.8-3.8 2.9-7.9 5.2-3.2 1.4-5.3 5.9-8.7 8.2"/>
+  </g>
+  <g id="front_feb1919">
+  <path class="cls-11" d="m140 124.4c3.6 0 6.8 1.4 9.8 5.9 1.3 4.1 8.4 7.5 9.1 13.7l-0.5 8.4 0.7 7.5c0.2 7.2 0 12.5-4.8 16.3l-9.3 7.1-5.2 1.3-6.4-3.4c-2.5-2-5.7-4.3-10-5l-8.9 0.2-5.4-1.8-5.7-0.6-3.2-1.4-2-2.7"/>
+  <path class="cls-11" d="m126.8 93.5c0.9-4.3-2-8.9-4.1-13.8l-0.9-3.7"/>
+  </g>
+  <g id="arrows_red">
+  <path class="cls-9" d="m34.5 84.6c2.8 2.8 6.8 5.1 10 5.5"/>
+  <path class="cls-9" d="m96.3 66.9c4.8 2.1 10.5 6.8 9.8 11.2-1.1 4-11.1 6.8-11.8 17.9-0.4 6.6 0.2 16.4 3.2 18.4 2.9 2.1 11.8 1.4 12 8.2 0 3.9-7.5 9.3-10.4 13-5.7 7.5-15.5 20.2-23 26.5l-18.6 13-15.9 8.9-1.8 2.4"/>
+  <path class="cls-9" d="m24.3 156.5c2 3.6 4.8 6.1 10 4.1 4.3-1.9 8.6-5.3 11.4-4.1 3.4 0.9-3 9.3-4.1 12.9"/>
+  <path class="cls-9" d="m16.1 123.3 7.5-1.2 2.7-0.4 8-2.7 4.8-1.4 3.6-0.9 4.1-0.2 3.9 0.4 5.4 1.4 9.8 0.7 3.2-0.9 7.7 0.2 6.4 1.1 3.6-0.7 4.5-3.8" marker-end="url(#arrow-red)"/>
+  <path class="cls-9" d="m121.1 12.6c2.8 7.1-1.3 18-2.2 23.6l-0.7 8.2-1.4 5.3 3 5.7 0.2 3.2v13.3l2.7 4.6"/>
+  <path class="cls-23" d="m52.9 91.2c8.2 5.7 19.1 18.2 34.6 21.2" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m57.7 117.1c8-1.8 16.8-1.1 28.9-1.1l3.2-1.1"/>
+  <path class="cls-23" d="m65.2 135.3c4.1 0 14.3 0.7 17.3 6.6" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m65 134.9c4.5-2.1 11.6-6.2 17.9-6.4" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m88.9 129.9c4.3-0.5 13.4-1.6 16.3-5.9" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m48.2 154.4c4.7-3.6 10.9-9.3 12.7-14.1" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m63.4 139.9c3.2 3.6 2.9 10 8.6 20" marker-end="url(#arrow-red)"/>
+  <path class="cls-23" d="m49.3 195.1c2.5 0.9 5.2 0 7.5-1.1l12.7-4.6 7.1-4.1 17.5-15" marker-end="url(#arrow-red)"/>
+  <path class="cls-9" d="m32.9 104.4c2.8 1.8 5 0.5 6.6-2l10-15.9-0.4-4.8"/>
+  <path class="cls-9" d="m24.3 152.8c3.6-2.2 6.8-9.3 7-14.3 0.5-19.1 6.2-27.9 11.2-36.8l9.5-15c4.3 3.9 11.6 7 18.7 6.1 5.6-0.9 11.3-3.8 17-5.4l6.4-2.5 0.2-2.5-1.1-8.9c-0.9-9.8 7.9-10 10.4-11.8 1.4-1.1 1.4-2 1.2-3.9"/>
+  <path class="cls-9" d="m106.1 60.1c6.4 7.7 16.2 13 25 15 6.8 0.9 15.2-0.7 21.4-5 4.1-3.4 9.5-3.9 15.7-5"/>
+  <path class="cls-26" d="m132.7 96.5c2.1 0.9 3.9 6.8 4.1 10.2 1.6 8.2 3.9 15.2 0.5 16.6"/>
+  <path class="cls-28" d="m93.6 90.3-9.1-6.8-0.2 0.5 5.9 5 0.9-0.7z"/>
+  <path class="cls-28" d="m103.6 81-3.8 1.1 1.1 0.5v1.1z"/>
+  <path class="cls-28" d="m109.8 74.6-13.2-7.9-0.3 0.5 8.7 5.2 0.7-0.9z"/>
+  <path class="cls-28" d="m42.7 113.5-9.1-9.1-0.4 0.5 7.2 6.6 1-0.7z"/>
+  <path class="cls-28" d="m39.5 119.6-0.6 1.9-0.7 1.1-4.3 2.1v0.4l3.8-1.4 2.1-1.1 1.1-3.6z"/>
+  <path class="cls-28" d="m39.8 134-6.4-0.9v0.4l4.3 0.9 0.2-0.9z"/>
+  <path class="cls-28" d="m41.1 139.2-2.5 1.1-2.5 4.3c-1.6 2.1-3.4 3.5-6.3 4.6l0.2 0.4c2.5-0.6 4.8-2 6.6-4l2.9-4.8 1.9-0.7z"/>
+  <path class="cls-28" d="m54.3 112.6 0.2 3 1.4-3.2-0.9 0.2-0.5-1.4z"/>
+  <path class="cls-28" d="m47.5 97.1c3.6 3 6.6 9.1 7.7 15.5h-0.4c-1.2-6.1-3.9-11.6-7.5-15z"/>
+  </g>
+  <g id="arrows_blue">
+  <path class="cls-8" d="m53.4 87.6c5.2 2.7 10.7 5.9 19.8 3.9l10.9-3c5.7-1.1 12.2-2.7 13.4-6.4l-0.7-5.6-2-3 10.2-9.5 4.5 2.5 0.3 2.5-3.9 5.2 14.5-1.1 6.2 10.9 5 5 0.4 2.7 0.7 2.9 3.6 3.9 2.8 8-0.5 5 3 8.6 4.3 2.3 1.4 3 11.3 11.7 3 1.9v4.1 7.9l0.2 9.6c-0.2 5.4-0.2 11.3-4.3 17.2l-5 4.8-7.7 3.2-5 0.2-9.6-3.4-6.6-3.6-4.1-0.5h-5.2l-4.8-1.8-5.6-0.9-3.9 0.6-4.1 0.3-2.7-0.9-5-0.5-7.5 0.9-4.6-0.6-2.2-0.7-3.9-0.3-7.3 1.4h-5.4l-9.1 0.4-6.2-1.3-6.1-2-6.8-0.5-5.2 0.9-1-2.7-3.8-1.6"/>
+  <path class="cls-12" d="m42.5 200.3c-6.2-10.7-3.6-23.8 0.2-31.8 4.3-7.5 6.6-12.5 3-14.1l-2.1-0.4"/>
+  <path class="cls-12" d="m97.3 75.1c-1.9-5.2-0.7-8.4 7.2-10.7"/>
+  <path class="cls-12" d="m42.5 200.3c-5.7-9.7-3.6-20.6 0.2-31.8 2.3-4.8 8.4-12.3 4.1-14.1l-3.2-0.4"/>
+  <path class="cls-24" d="m52.5 89.4c7 4.1 14.3 4.8 20.9 3l14.5-3.9c4.4-0.9 9.4-3.2 9.8-6.4-0.4-5.2-3.4-7.7-3.8-10.2-0.7-5.4 3.6-6.6 10.6-7.9"/>
+  <path class="cls-12" d="m192.5 11.5c-0.9 15.4-11.8 25.9-26.4 38.8-5.2 5.1-9.8 11.4-13.6 21.8-6.4 4.6-14.8 5.5-23.7 5"/>
+  <path class="cls-8" d="m131.6 92.4 1.6-1.6"/>
+  <path class="cls-27" d="m143.4 62.6 4.3 9.5 0.5-0.2-3.2-6.8h-1.1z"/>
+  <path class="cls-27" d="m160.2 24 3.4 2-0.4-1.1 0.9-0.9z"/>
+  <path class="cls-12" d="m56.1 200.8c3-6.8 10.2-8.9 18.9-11.6l10.9-8.2c1.8-1.6 4.1-1.8 6.6-1.6l0.9 1.4 2.5-3 1.1-1.3 3.4-0.1 3.5-0.6 5.9 0.9-0.3-0.7 0.5-0.7 4.8 1.2 3.4-1.6-0.7-0.7 0.4 0.2 2.5 0.5 9.1 1.8c3.9 0.2 5 2.3 6.4 4.5 2.3 3.9 8.9 4.4 7 9.6l1 5.2 0.2 0.9v3"/>
+  <path class="cls-8" d="m145 122.4c-0.2-1.4 0.2-2.3 1.1-2.5"/>
+  </g>
+  <g id="arrows_green">
+  <path class="cls-25" d="m96.3 66.9c4.8 2.1 9.6 3.9 13.5 0.5 7.2-5.7 18.1-0.9 26.5-0.5 7.1 0.5 5-5.4 8-10 2.3-2.7 6.4-4.3 8.2-9.1 2.7-6.3 10-8.6 11.1-10 2.3-2-0.2-3.6 3-5.9"/>
+  </g>
+  <g id="arrows_pink">
+  <path class="cls-19" d="m100.7 92.4c10.6 0.9 25.4 3.6 31.8 11.1" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m100.7 81.5 18.2-0.5" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m90.4 148.7c5 2.5 15 8 24.4 10.5" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m121.1 162.4c9.6 4.1 21.6 7.9 31.4 7.5" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m111.1 119.9c6.8 0.4 14.8 0 22.5-1.6" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m111.1 120.8c4.8 0.4 10.5 1.6 14.6 3.4" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m131.1 128.7c4.1 2.1 9.1 4.1 14.6 4.1" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m98.4 111.9c5.2-2.9 13.6-5.9 24.5-4.3" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m44.1 169 11.6 3.8" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m62 174.2 9.8-1.1" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-19" d="m75.7 169.6v12.8" marker-end="url(#arrow-magenta)" marker-start="url(#arrow-magenta)"/>
+  </g>
+  <g id="city_dots">
+  <circle class="cls-33" cx="35.7" cy="186.9" r="1"/>
+  <circle class="cls-33" cx="185.4" cy="93.3" r="1"/>
+  <circle class="cls-33" cx="187.3" cy="112.6" r="1"/>
+  <circle class="cls-33" cx="158.2" cy="168.3" r="1"/>
+  <circle class="cls-33" cx="118.9" cy="161.2" r="1"/>
+  <circle class="cls-33" cx="75.7" cy="174.2" r="1"/>
+  <circle class="cls-33" cx="44.8" cy="158.1" r="1"/>
+  <circle class="cls-33" cx="83.4" cy="145.3" r="1"/>
+  <circle class="cls-33" cx="61.6" cy="136.2" r="1"/>
+  <circle class="cls-33" cx="42.5" cy="136.9" r="1"/>
+  <circle class="cls-33" cx="42.9" cy="116.5" r="1"/>
+  <circle class="cls-33" cx="51.6" cy="89.4" r="1"/>
+  <circle class="cls-33" cx="101.8" cy="77.1" r="1"/>
+  <circle class="cls-33" cx="136.8" cy="57.6" r="1"/>
+  <circle class="cls-33" cx="161.6" cy="43.5" r="1"/>
+  <circle class="cls-33" cx="128.2" cy="45.8" r="1"/>
+  <circle class="cls-33" cx="172.7" cy="64" r="1"/>
+  <circle class="cls-33" cx="143.2" cy="72.4" r="1"/>
+  <circle class="cls-33" cx="127.5" cy="109.4" r="1"/>
+  <circle class="cls-33" cx="107.5" cy="120.8" r="1"/>
+  <circle class="cls-33" cx="86.8" cy="130.1" r="1"/>
+  <circle class="cls-33" cx="92" cy="113.1" r="1"/>
+  <circle class="cls-33" cx="18.2" cy="169.2" r="1"/>
+  <circle class="cls-33" cx="130.7" cy="16.2" r="1"/>
+  <circle class="cls-33" cx="17.7" cy="169.2" r="1"/>
+  </g>
+  <g id="labels_rivers">
+  <text class="cls-30" transform="matrix(.5 -.866 .866 .5 159.5 74.45)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Уфа</text>
+  <text class="cls-30" transform="matrix(.9499 -.3124 .3124 .9499 32.4 79.43)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Волга</text>
+  <text class="cls-30" transform="matrix(.866 -.5 .5 .866 154.9 50.45)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Чусовая</text>
+  <text class="cls-30" transform="matrix(.5 -.866 .866 .5 159.7 36.16)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Тура</text>
+  <text class="cls-30" transform="matrix(.2079 -.9781 .9781 .2079 159.2 119.1)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Урал</text>
+  <text class="cls-30" transform="matrix(.342 -.9397 .9397 .342 95.1 167.4)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Урал</text>
+  <text class="cls-30" transform="matrix(.9659 -.2588 .2588 .9659 131.6 138.6)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Белая</text>
+  <text class="cls-30" transform="matrix(.1594 -.9872 .9872 .1594 85.11 34.25)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Вятка</text>
+  <text class="cls-30" transform="matrix(.9877 .1564 -.1564 .9877 129.5 27.71)" font-family="'TimesNewRomanPSMT'" font-size="2.667px">Кама</text>
+  </g>
+  <g id="labels_cities">
+  <text class="cls-33" transform="translate(133.4 17.16)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Соликамск</text>
+  <text class="cls-33" transform="translate(136.4 39.58)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Нижн. Тагил</text>
+  <text class="cls-33" transform="translate(130.5 44.08)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Пермь</text>
+  <text class="cls-33" transform="translate(60.88 36.41)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Вятка</text>
+  <text class="cls-33" transform="translate(41.48 143.4)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Сызрань</text>
+  <text class="cls-33" transform="translate(53.15 133.6)" font-family="'TimesNewRomanPSMT'" font-size="3.667px">Самара</text>
+  <text class="cls-33" transform="translate(81.48 135.2)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Белебей</text>
+  <text class="cls-33" transform="translate(67.65 149.1)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Бузулук</text>
+  <text class="cls-33" transform="translate(49.15 160.6)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Николаевск</text>
+  <text class="cls-33" transform="translate(77.15 169.6)" font-family="'TimesNewRomanPSMT'" font-size="3.667px">Уральск</text>
+  <text class="cls-33" transform="translate(41.48 189.7)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Новоузенск</text>
+  <text class="cls-33" transform="translate(21.04 168.6)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Саратов</text>
+  <text class="cls-33" transform="translate(40.98 122.2)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Симбирск</text>
+  <text class="cls-33" transform="translate(50.65 81.74)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Казань</text>
+  <text class="cls-33" transform="translate(78.15 67.41)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Ижевск</text>
+  <text class="cls-33" transform="translate(104.8 76.99)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Сарапул</text>
+  <text class="cls-33" transform="translate(127.6 63.74)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Кунгур</text>
+  <text class="cls-33" transform="translate(146.6 79.41)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Красноуфимск</text>
+  <text class="cls-33" transform="translate(186.8 98.41)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Челябинск</text>
+  <text class="cls-33" transform="translate(188.6 111.1)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Троицк</text>
+  <text class="cls-33" transform="translate(78.65 109.7)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Бугульма</text>
+  <text class="cls-33" transform="translate(170 59.24)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Екатеринбург</text>
+  <text class="cls-33" transform="translate(148.5 164.4)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Орск</text>
+  <text class="cls-33" transform="translate(115 156.1)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Оренбург</text>
+  <text class="cls-33" transform="translate(129.8 112.9)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Уфа</text>
+  </g>
+  <g id="labels_armies">
+  <text class="cls-32" transform="translate(18.18 29)" font-family="'TimesNewRomanPS-BoldItalicMT'" font-size="14px">Р С Ф С Р</text>
+  <text class="cls-32" transform="translate(18.42 54.67)" font-family="'TimesNewRomanPS-BoldItalicMT'" font-size="7px">Восточный</text>
+  <text class="cls-32" transform="translate(18.18 63.91)" font-family="'TimesNewRomanPS-BoldItalicMT'" font-size="7px">фронт Р К К А</text>
+  <text class="cls-30" transform="translate(163.2 127.7)" font-family="'TimesNewRomanPSMT'" font-size="6.667px">Российское</text>
+  <text class="cls-30" transform="translate(163.2 136.5)" font-family="'TimesNewRomanPSMT'" font-size="6.667px">Государство</text>
+  <text class="cls-30" transform="translate(163.2 144.8)" font-family="'TimesNewRomanPSMT'" font-size="6.667px">(с 23 сентября</text>
+  <text class="cls-30" transform="translate(163.2 154.2)" font-family="'TimesNewRomanPSMT'" font-size="6.667px">1918 г.)</text>
+  <text class="cls-30" transform="matrix(.9499 -.3124 .3124 .9499 48.11 133.8)" font-family="'TimesNewRomanPSMT'" font-size="4px">Поволжский</text>
+  <text class="cls-30" transform="matrix(.583 -.8125 .8125 .583 69.07 106.6)" font-family="'TimesNewRomanPSMT'" font-size="4px">фронт</text>
+  <text class="cls-30" transform="matrix(.8205 -.5717 .5717 .8205 87.6 164)" font-family="'TimesNewRomanPSMT'" font-size="4px">Западный фронт</text>
+  <text class="cls-30" transform="matrix(.3907 -.9205 .9205 .3907 46.98 193.8)" font-family="'TimesNewRomanPSMT'" font-size="4px">Уральская армия</text>
+  <text class="cls-30" transform="matrix(.9848 .1736 -.1736 .9848 93.93 188.2)" font-family="'TimesNewRomanPSMT'" font-size="4px">Оренбургские казаки</text>
+  <text class="cls-30" transform="matrix(.9136 -.4067 .4067 .9136 133.8 125.1)" font-family="'TimesNewRomanPSMT'" font-size="4px">12</text>
+  <text class="cls-30" transform="matrix(.4848 -.8746 .8746 .4848 141.6 115.6)" font-family="'TimesNewRomanPSMT'" font-size="4px">октября)</text>
+  <text class="cls-30" transform="matrix(.9136 -.4067 .4067 .9136 127.6 130.9)" font-family="'TimesNewRomanPSMT'" font-size="4px">(с</text>
+  <text class="cls-30" transform="translate(80.88 120.6)" font-family="'TimesNewRomanPSMT'" font-size="4px">Народная</text>
+  <text class="cls-30" transform="translate(84.38 124.6)" font-family="'TimesNewRomanPSMT'" font-size="4px">армия</text>
+  <text class="cls-30" transform="translate(82.63 127.9)" font-family="'TimesNewRomanPSMT'" font-size="4px">Комуча</text>
+  <text class="cls-32" transform="translate(103.5 28.74)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">3 армия</text>
+  <text class="cls-32" transform="translate(140.5 33.08)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">3 армия</text>
+  <text class="cls-32" transform="translate(25.48 99.08)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">5 армия</text>
+  <text class="cls-32" transform="translate(114.6 98.74)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">2 армия</text>
+  <text class="cls-32" transform="translate(120.4 116.6)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">5 армия</text>
+  <text class="cls-32" transform="translate(140.5 142.4)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">1 армия</text>
+  <text class="cls-32" transform="translate(24.15 178.7)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">4 армия</text>
+  <text class="cls-32" transform="translate(16.48 128.1)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.667px">1 армия</text>
+  <text class="cls-32" transform="translate(73.65 72.74)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">2 армия</text>
+  <text class="cls-30" transform="translate(155.3 104.6)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Западная армия</text>
+  <text class="cls-30" transform="translate(154.3 108.6)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">(с конца декабря)</text>
+  <text class="cls-30" transform="translate(174.3 48.08)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">Сибирская армия</text>
+  <text class="cls-30" transform="translate(178.3 52.08)" font-family="'TimesNewRomanPSMT'" font-size="3.333px">(с 24 декабря)</text>
+  <text class="cls-32" transform="translate(141.8 160.7)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">1 армия</text>
+  </g>
+  <g id="title">
+  <text class="cls-33" transform="translate(18.18 8)" font-family="'TimesNewRomanPS-BoldMT'" font-size="4.667px">Военные действия в Поволжье и на Урале. Сентябрь 1918 – февраль 1919 г.</text>
+  </g>
+  <g id="map_frame">
+  <rect class="cls-29" x="13.4" y="12.3" width="198.2" height="186.9"/>
+  </g>
+  <g id="legend">
+  <path class="cls-21" d="m216.6 18.5c2.7-2.3 7.3-5.2 10.2-4.1"/>
+  <path class="cls-22" d="m226.8 14.4-0.2 0.7h0.2v-0.7z"/>
+  <path class="cls-21" d="m216.6 19c2.7-2.3 7.3-5.3 10.2-4.1"/>
+  <text class="cls-33" transform="translate(229.3 16.91)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Линия фронта к концу августа 1918 г.</text>
+  <text class="cls-33" transform="translate(229.3 29.08)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Направления ударов РККА в сента-</text>
+  <text class="cls-33" transform="translate(229.3 33.08)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">бре-октябре 1918 г.</text>
+  <text class="cls-33" transform="translate(229.3 44.91)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Направления ударов Сибирской армии в</text>
+  <text class="cls-33" transform="translate(229.3 48.91)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">сентябре-октябре 1918 г.</text>
+  <text class="cls-33" transform="translate(229.3 61.91)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Подавление Ижевско-Воткинского вос-</text>
+  <text class="cls-33" transform="translate(229.3 66.58)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">стания</text>
+  <text class="cls-33" transform="translate(229.3 79.24)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Линия фронта к концу ноября 1918 г.</text>
+  <text class="cls-33" transform="translate(229.3 91.58)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Направления ударов Русской армии и</text>
+  <text class="cls-33" transform="translate(229.3 95.58)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">союзных войск в декабре 1918 г.</text>
+  <text class="cls-33" transform="translate(229.3 107.9)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Направления ударов РККА в декабре</text>
+  <text class="cls-33" transform="translate(229.3 112.6)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">1918 – феврале 1919 г.</text>
+  <text class="cls-33" transform="translate(229.3 124.2)" font-family="'TimesNewRomanPS-BoldMT'" font-size="3.333px">Линия фронта к концу февраля 1919 г.</text>
+  <path class="cls-31" d="m216.6 29.4"/>
+  <path class="cls-21" d="m216.1 30.6"/>
+  <path class="cls-31" d="m216.1 29.6"/>
+  <path class="cls-15" d="m216.1 30.6"/>
+  <path class="cls-21" d="m216.1 29.6"/>
+  <path class="cls-34" d="m216.1 45.6 1.8 0.2 0.5 0.7"/>
+  <path class="cls-21" d="m216.6 45.6c2.7 0.9 7 0 9.8-2.5"/>
+  <path class="cls-31" d="m216.1 30.6"/>
+  <path class="cls-21" d="m216.1 30.6c2.5-2.3 6.2-3.7 9.3-3"/>
+  <path class="cls-31" d="m216.1 30.6"/>
+  <path class="cls-19" d="m217.3 95.8c2.7-2.3 6.3-4.1 9.1-3.7" marker-end="url(#arrow-magenta)"/>
+  <path class="cls-10" d="m216.6 82.6c3.2-2 7-4.3 10.2-3.4"/>
+  <path class="cls-12" d="m215.9 58.1 10 8.8"/>
+  <path class="cls-12" d="m217 63.7c4.1-5.6 12.3-6.3 8-0.4-4.6 5-9.6 3.6-8 0.4z"/>
+  <path class="cls-28" d="m217.5 70.1 8.4-14.5-0.5-0.2-8.1 14.5z"/>
+  <path class="cls-21" d="m216.1 111.7c2.3-1.8 5.7-3.9 8.9-3.4"/>
+  <path class="cls-16" d="m226.1 107.8-2.2-0.4 0.9 0.9v0.9z"/>
+  <path class="cls-23" d="m216.1 30.6c2.5-2.3 6.2-3.7 9.3-3" marker-end="url(#arrow-red)"/>
+  <path class="cls-18" d="m216.6 124.4c2-1.6 5.9-3.8 10-2.9"/>
+  <path class="cls-22" d="m227 121.7-0.2 0.7h0.2v-0.7z"/>
+  <path class="cls-21" d="m216.8 125.6c1.4-1.9 5-4.1 10.5-3.2"/>
+  <path class="cls-22" d="m227.3 122.4v0.7h0.2l-0.2-0.7z"/>
+  </g>
+</svg>

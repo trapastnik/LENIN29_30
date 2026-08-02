@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29 · demo · &lt;map-unit&gt; · Поволжье 1918–1919</title>
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
+    header {
+      padding: 18px 24px;
+      background: var(--wood);
+      color: var(--paper-light);
+      border-bottom: 2px solid var(--brass);
+      display: flex; align-items: baseline; gap: 18px;
+    }
+    header h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+    }
+    header small {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--paper-warm);
+      text-transform: uppercase;
+    }
+    .opacity-control {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--paper-warm);
+      letter-spacing: 0.1em;
+    }
+    .opacity-control input[type="range"] {
+      width: 160px;
+      accent-color: var(--ochre, #c18f3c);
+    }
+    .opacity-control output { min-width: 36px; text-align: right; }
+    main {
+      flex: 1;
+      background: var(--page-bg);
+      min-height: 0;
+    }
+    map-unit { width: 100%; height: 100%; min-height: 600px; display: block; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>&lt;map-unit&gt; · Поволжье и Урал, сент. 1918 – фев. 1919</h1>
+    <small>гибрид · 19 слоёв · pan/zoom/wipe/fade</small>
+    <label class="opacity-control">
+      Прозрачность векторного слоя
+      <input id="opacity-slider" type="range" min="0" max="100" value="100" step="1">
+      <output id="opacity-value">100%</output>
+    </label>
+  </header>
+  <main>
+    <map-unit id="map" map-id="povolzhye-1918-1919" show-panel="true" panel-side="right"></map-unit>
+  </main>
+
+  <script type="module" src="/src/components/map-unit.js"></script>
+  <script>
+    const mapEl    = document.getElementById('map');
+    const slider   = document.getElementById('opacity-slider');
+    const valueOut = document.getElementById('opacity-value');
+    slider.addEventListener('input', () => {
+      const v = slider.value / 100;
+      mapEl.style.setProperty('--vector-opacity', String(v));
+      valueOut.textContent = `${slider.value}%`;
+    });
+  </script>
+</body>
+</html>

@@ -88,8 +88,15 @@
 - Корневые `*.html` кроме `index.html`, `brand.html`, `demo*.html`
 - `src/components/{party-card,state-card,venn-selector,camp-filter}.js`
 - `src/pages/**`, `src/data/**`
-- `public/expo/**` кроме `brand-tokens.js`
+- `public/expo/**` кроме `brand-tokens.js` — включая `vendor/**` (локальный React)
+  и `build/**` (скомпилированный JSX, генерируется, в `.gitignore`)
 - `scripts/venn/**`, `scripts/trace_venn_*.py`, `scripts/export_venn_svg.mjs`
+- `scripts/expo/**` — предкомпиляция JSX (`build-jsx.mjs`)
+
+⚠️ `public/expo/{index,people}.html` — **зона `ui`**, хотя дизайну там нужна
+строка подключения `brand-tokens.js`. Дизайн подаёт заявку, а не правит сам:
+`ui` одновременно перестраивает эти файлы целиком (CDN → `vendor/`, вынос
+инлайнового `text/babel` в `boot-*.jsx`), и параллельная правка встаёт поперёк.
 
 ### `simbirsk`
 - `simbirsk.html`, `src/components/longread-*.js`
@@ -130,6 +137,48 @@ UI показывает заглушку. Никто не заводит `territ
 **`public/expo/shared.jsx`** — общий на сцену. Меняется отдельными коммитами,
 до правок в потребителях; в коммите указывается, что изменилось в экспорте.
 
+**Сцена грузит не `.jsx`, а скомпилированный `public/expo/build/*.js`.**
+Babel-in-browser убран (он тянулся с CDN и ломал офлайн-киоск), компиляция —
+`scripts/expo/build-jsx.mjs`, вшивается в `npm run build` одним коммитом
+с мержем `ui` (до него схемы на `main` нет). Практическое следствие,
+которое кусается тихо: **правка `.jsx` без пересборки в сцену не попадает** —
+ничего не падает, просто работает старая версия. `build/` в `.gitignore`,
+собирается на сервере при деплое. Правил `.jsx` — прогони `npm run build`
+и проверяй результат, а не исходник.
+
+**Пути к ресурсам — ни одного ведущего слэша.** Киоск запускается как
+`file:///opt/mtk29/dist/index.html`, и `/content/x.json` там резолвится
+в корень файловой системы. Раздел выходит пустым **без ошибки в консоли**,
+а на stage по http тот же путь работает — то есть глазами дефект не ловится
+нигде, кроме приёмки.
+
+`public/base.js` (владеет `main`) вычисляет корень сборки из адреса самого
+себя и кладёт на `window`:
+
+| Что | Значение |
+|---|---|
+| `MTK_BASE` | абсолютный URL корня `dist/`, со слэшем на конце |
+| `MTK_URL(rel)` | `rel` **без** ведущего слэша → готовый URL |
+
+Подключается **первым** скриптом в `<head>`, обычным (не module): с корневой
+страницы `base.js`, из `/expo/` — `../base.js`. Адрес самого скрипта, а не
+`location`, потому что страницы лежат на двух глубинах.
+
+```js
+const idx = await fetchJSON(MTK_URL('content/parties/_index.json'));
+```
+
+**В данных — тоже без слэша.** Пути внутри json и `people-data.js` пишутся
+от корня сборки (`content/people/lenin/lenin-00.jpg`), потребитель гонит их
+через `MTK_URL()` при отрисовке.
+
+**CSS не трогаем руками** — `url()` переписывает vite (`base: './'`),
+все пути в `src/styles/**` уже корректны в сборке.
+
+Ловится механически: `npm run check` (сборка + `scripts/check-paths.mjs`).
+Проверка идёт по `dist/`, а не по исходникам, — иначе ложно срабатывает
+на том, что vite чинит сам.
+
 ## 6. Git-дисциплина
 
 - ❌ **Никогда `git add -A`, `git add .`, `git commit -am`.** Только поимённо.
@@ -149,7 +198,9 @@ LFS усложнит деплой.
 
 **Ворота перед мержем в `main`** (прогоняет оркестратор):
 ```bash
-npm run check    # brand:lint + tokens:check + content:check
+npm run check      # build + tokens:check + paths:check
+npm run brand:lint # НЕ в check: красный на унаследованном долге, подробности ниже
+                   # content:check подключится с мержем `content`
 npm run build
 ```
 
@@ -191,6 +242,23 @@ ssh ostrov 'cd /root/mtk29-src && git pull --ff-only && npm run build \
 «свёрстай по `brand.html#c-spravka-card`», а не описание словами.
 
 `npm run brand:lint` — обязателен перед коммитом.
+
+**Он сейчас красный, и это не повод его игнорировать.** Долг зафиксирован
+в `scripts/design/brand-lint.baseline.json` пофайловыми счётчиками: линтер
+падает не на самом наличии нарушений, а на **приросте** к базе. Правило —
+не трогать чужой счётчик и не гонять `--update-baseline`, чтобы «стало
+зелено»: это стирает единственную метрику, по которой видно, кто добавил.
+
+Две оговорки к текущим цифрам:
+- База считалась до мержа `maps`, поэтому `demo-povolzhye.html`
+  и `map-unit.js` показывают прирост, которого зона не делала.
+- `R4` у карт — `var(--x)` на несуществующие `--wood`, `--paper-light`,
+  `--paper-warm`, `--ochre`. Их не было и до мержа `design`: карта никогда
+  не стояла на брендовой палитре, а рисовалась хексовыми fallback'ами.
+  Разбор — в `docs/launch/m1d-maps.md`, задача 4.
+
+Поэтому `brand:lint` **не входит в `npm run check`** — постоянно красный
+гейт учит его пропускать. Войдёт, когда прирост будет обнулён.
 
 ## 9. Контент
 
@@ -260,9 +328,9 @@ webm из МТК 30 — только для того, что уже отренд
 ## 12. Чеклист перед коммитом
 
 ```bash
-npm run brand:lint       # сырой hex, italic на Nolde, hover, CDN
-npm run content:check    # битые связи, отсутствующие файлы, нормы ТЗ
-npm run build            # сборка проходит
+npm run check            # сборка + абсолютные пути (ломают киоск под file://)
+npm run brand:lint       # сырой hex, italic на Nolde, hover, CDN — с мержем `design`
+npm run content:check    # битые связи, отсутствующие файлы — с мержем `content`
 git status --short       # видно только своё
 git add <файлы поимённо> # НЕ -A
 ```

@@ -5,54 +5,26 @@
 // - Лента годов 1918–1922
 
 // ── Цвета, шрифты ──────────────────────────────────────────────────────────
-// Архитектура цветов: бренд (PDF-гайд RAL, неизменно) → наша адаптация
-// (theme.js / tokens.css, точное наследование) → наши решения поверх
-// (тёплая бумага, дерево, старина). Здесь — последний слой.
+// Значений здесь больше нет. Единственный источник — src/design/tokens.json,
+// генератор кладёт готовые объекты в public/expo/brand-tokens.js, страница
+// подключает его обычным <script> до этого файла.
 //
-// Используем `BRAND.signalRed` / `BRAND.brass` / `BRAND.inkBlack` напрямую,
-// когда нужен официальный бренд-акцент (флаг лагеря, page-header, бренд-pill).
-// `theme.X` — наши тёплые расширения для интерьера экспозиции.
-const BRAND = (typeof window !== 'undefined' && window.BRAND_THEME) || {
-  inkBlack: '#000000', paperWhite: '#F7F9EF', brass: '#D2B773',
-  signalRed: '#A02128', slateBlue: '#5D6970', slateWindow: '#9DA3A6',
-  ironGrey: '#555D61', graphite: '#435059', telegrey4: '#CFD0CF',
-};
-
-const theme = {
-  // Главные бренд-акценты — точно по PDF-гайду (RAL).
-  ink:         BRAND.inkBlack,    // RAL 9005 «Чёрный янтарь»
-  brass:       BRAND.brass,       // RAL 1002 «Латунь песочно-жёлтый»
-  red:         BRAND.signalRed,   // RAL 3001 «Сигнальный красный»
-  white:       BRAND.telegrey4,   // RAL 7047 «Телегрей 4» — лагерь «Белые»
-  // Тёплая бумажная иерархия — наши «материалы и старина» поверх бренда
-  // (PDF даёт один paper-white #F7F9EF; для карточек/штампов нужны 4 ступени).
-  inkSoft:     '#2a1f16',    // тёплая умбра — для длинного текста на бумаге
-  inkFaint:    '#7a6650',    // мета на бумаге
-  paperLight:  '#efe4cd',    // светлая бумага «стола»
-  paper:       '#e6d6b5',    // основная бумага
-  paperWarm:   '#d9c398',    // загорелые края
-  paperDark:   '#a8875a',    // тени
-  wood:        '#3a2517',    // тёмное дерево стола
-  woodLight:   '#5a3a22',    // дерево подсветка
-  redDeep:     '#6b0d0d',    // глубокий красный для контраста с BRAND.signalRed
-  ochre:       '#c18f3c',    // тёплый золотой акцент
-  gold:        '#d4af3a',    // тёплое золото
-  greenMap:    '#6b7f4a',    // зелёный для карты (вне бренда)
-  blueMap:     '#4a6178',    // синий для карты (вне бренда)
-};
-
-// Фирменные шрифты Ленин-центра. Совпадают с tokens.css (--font-*).
-// Назначение по docs/brand.md:
-//   Nolde     — заголовки, крупные цифры, буквицы
-//   21 Cent   — длинные тексты, параграфы
-//   20 Kopeek — короткие надписи, акценты, кнопки, метки, mono-стиль
-const fonts = {
-  display: '"Nolde", "Playfair Display", Georgia, serif',
-  body:    '"21 Cent", "PT Serif", Georgia, serif',
-  mono:    '"20 Kopeek", "JetBrains Mono", "Courier New", monospace',
-  stamp:   '"20 Kopeek", "Special Elite", monospace',
-  rus:     '"21 Cent", "PT Serif", Georgia, serif',
-};
+// `BRAND.*` — официальная палитра RAL (флаг лагеря, page-header, бренд-pill).
+// `theme.*` — тёплый слой design-pass-1 поверх бренда. Ключи те же, что были,
+// поэтому direction-*.jsx этой перестановки не заметили.
+//
+// ⚠️ Тёплый слой помечен в tokens.json как deprecated: paper там #e6d6b5
+// против бренд-RAL #F7F9EF, inkSoft #2a1f16 против #2a2f33. Снимается на
+// шаге 3 вместе с направлениями A/B/C.
+//
+// Запасных значений на месте нет намеренно: молчаливый фолбэк — это вторая
+// палитра, которая включается при опечатке в имени. Нет токенов — падаем.
+if (!window.MTK_THEME) {
+  throw new Error('shared.jsx: не подключён brand-tokens.js (см. public/expo/index.html)');
+}
+const BRAND = window.BRAND_THEME;
+const theme = window.MTK_THEME;
+const fonts = window.MTK_FONTS;
 
 // ── Paper texture (layered) ────────────────────────────────────────────────
 function paperBg({ base = theme.paper, vignette = true } = {}) {

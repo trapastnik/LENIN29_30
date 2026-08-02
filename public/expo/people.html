@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Персоналии · Гражданская война 1918—1922</title>
+<!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
+     ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
+<script src="../base.js"></script>
 <link rel="stylesheet" href="/src/styles/fonts.css">
 <link rel="stylesheet" href="/src/styles/tokens.css">
 <style>
@@ -31,7 +34,9 @@
 <script src="vendor/react-18.3.1.production.min.js"></script>
 <script src="vendor/react-dom-18.3.1.production.min.js"></script>
 
-<script src="theme.js?v=20260426c"></script>
+<!-- Единственный источник палитры: генерируется из src/design/tokens.json.
+     Заменил theme.js. Правки — в tokens.json, не здесь. -->
+<script src="brand-tokens.js?v=20260802"></script>
 <!-- people-data.js — чистые данные без JSX, через Babel он проходил зря. -->
 <script src="people-data.js"></script>
 <!-- Предкомпилированный JSX, исходники — соседние *.jsx.
