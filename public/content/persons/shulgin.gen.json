@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "shulgin",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "В. В. ШУЛЬГИН",
   "title_en": null,
   "sort_key_ru": "шульгин",
@@ -110,5 +110,6 @@
     "sha256": "a4b3e1b92b345e31fd9c74f3059d3a66f351eddcf15b180b64d5570a1a1faed5",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

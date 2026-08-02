@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "pilsudski",
   "kind": "person",
-  "camp": "green",
-  "side": "green",
+  "camp": "national",
+  "side": "national",
   "title_ru": "Ю. ПИЛСУДСКИЙ",
   "title_en": null,
   "sort_key_ru": "пилсудский",
@@ -125,5 +125,6 @@
     "sha256": "8f6313066b018bebcc249b2aeba6ae4d288fd543107210b5ce0cd14f5fc93157",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

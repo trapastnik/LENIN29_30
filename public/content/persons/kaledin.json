@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "kaledin",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "А. М. КАЛЕДИН",
   "title_en": null,
   "sort_key_ru": "каледин",
@@ -117,5 +117,6 @@
     "sha256": "b52b7b4933bb73e66744c43f791062a2ae63829f69a1c3503cab1e4d7ddbd624",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

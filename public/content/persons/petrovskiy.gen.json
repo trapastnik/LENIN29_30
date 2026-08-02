@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "petrovskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Г. И. ПЕТРОВСКИЙ",
   "title_en": null,
   "sort_key_ru": "петровский",
@@ -157,5 +157,6 @@
     "sha256": "80c42cbd0f905ebaf57bff456b53d715d9351cca7aa72bb79d70dafecd4301de",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

@@ -353,30 +353,6 @@
       "sort_key_ru": "центральные державы"
     },
     {
-      "id": "pravitelstvo-yuga-rossii-do-6-avgusta-19",
-      "title_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
-      "has_card": false,
-      "camp": "white",
-      "dates_display_ru": "11 апреля – 11 ноября 1920 г.",
-      "lead_media": "media/states/pravitelstvo-yuga-rossii-do-6-avgusta-19/01",
-      "lead_w": 1332,
-      "lead_h": 1990,
-      "sort_key_ru": "правительство юга россии до 6 августа 1920 г. – совет при главнокомандующем вооруженными силами юга россии",
-      "stub": true
-    },
-    {
-      "id": "priamurskoe-gosudarstvennoe-obrazovanie",
-      "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
-      "has_card": false,
-      "camp": "white",
-      "dates_display_ru": "26 мая 1921 – 25 октября 1922 г.",
-      "lead_media": "media/states/priamurskoe-gosudarstvennoe-obrazovanie/01",
-      "lead_w": 2616,
-      "lead_h": 3984,
-      "sort_key_ru": "приамурское государственное образование с 8 августа 1922 г. – приамурский земский край",
-      "stub": true
-    },
-    {
       "id": "rossiyskaya-vostochnaya-okraina",
       "title_ru": "Российская Восточная окраина",
       "has_card": true,
@@ -386,18 +362,6 @@
       "lead_w": 2832,
       "lead_h": 3948,
       "sort_key_ru": "российская восточная окраина"
-    },
-    {
-      "id": "rossiyskoe-gosudarstvo-a-v-kolchak",
-      "title_ru": "Российское Государство (А. В. Колчак)",
-      "has_card": false,
-      "camp": "white",
-      "dates_display_ru": "18 ноября 1918 – 4 января 1920 г.",
-      "lead_media": "media/states/rossiyskoe-gosudarstvo-a-v-kolchak/01",
-      "lead_w": 2908,
-      "lead_h": 3900,
-      "sort_key_ru": "российское государство а. в. колчак",
-      "stub": true
     },
     {
       "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
@@ -466,56 +430,6 @@
       "sort_key_ru": "западно-сибирское восстание"
     },
     {
-      "id": "63-kronshtadtskoe-vosstanie",
-      "title_ru": "63 Кронштадтское восстание",
-      "has_card": false,
-      "camp": "uprising",
-      "dates_display_ru": "1–18 марта 1921 г",
-      "sort_key_ru": "63 кронштадтское восстание",
-      "title_full_ru": "Кронштадтское восстание («Кронштадтский мятеж»)",
-      "lead_media": "media/states/63-kronshtadtskoe-vosstanie/01",
-      "lead_w": 1899,
-      "lead_h": 1320,
-      "stub": true
-    },
-    {
-      "id": "soyuznaya-interventsiya-antanta",
-      "title_ru": "Союзная интервенция (Антанта)",
-      "has_card": false,
-      "camp": "intervention",
-      "dates_display_ru": "1918–1922 гг.",
-      "lead_media": "media/states/soyuznaya-interventsiya-antanta/01",
-      "lead_w": 1206,
-      "lead_h": 911,
-      "sort_key_ru": "союзная интервенция антанта",
-      "stub": true
-    },
-    {
-      "id": "otmetit-bolshogo-borodatogo-muzhika-tsif",
-      "title_ru": "Отметить большого бородатого мужика цифрой 1 (снизу, на темном), а человек слева через одного от него – цифрой 2 (тоже снизу, однообразно). Использовалось в справке 27 из хроники!!",
-      "has_card": false,
-      "camp": "intervention",
-      "dates_display_ru": "Вторая половина мая 1918 – начало 1920 г.",
-      "sort_key_ru": "отметить большого бородатого мужика цифрой 1 снизу, на темном, а человек слева через одного от него – цифрой 2 тоже снизу, однообразно. использовалось в справке 27 из хроники!!",
-      "title_full_ru": "Чехословацкий корпус",
-      "lead_media": "media/states/otmetit-bolshogo-borodatogo-muzhika-tsif/01",
-      "lead_w": 2340,
-      "lead_h": 1896,
-      "stub": true
-    },
-    {
-      "id": "interventsiya-tsentralnykh-derzhav",
-      "title_ru": "Интервенция Центральных держав",
-      "has_card": false,
-      "camp": "intervention",
-      "dates_display_ru": "Конец 1917 – ноябрь 1918 г.",
-      "lead_media": "media/states/interventsiya-tsentralnykh-derzhav/01",
-      "lead_w": 1698,
-      "lead_h": 1145,
-      "sort_key_ru": "интервенция центральных держав",
-      "stub": true
-    },
-    {
       "id": "sksr",
       "title_ru": "Северо-Кавказская Советская Республика",
       "has_card": true,
@@ -528,40 +442,6 @@
       "lead_w": 682,
       "lead_h": 1080,
       "sort_key_ru": "северо-кавказская советская республика"
-    },
-    {
-      "id": "tsfr",
-      "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
-      "has_card": false,
-      "abbr_ru": [
-        "ТСФР",
-        "Туркестанская СФР",
-        "ТСР",
-        "ТАССР",
-        "Туркестанская АССР"
-      ],
-      "camp": "red",
-      "dates_display_ru": "30 апреля 1918 – 27 октября 1924 г.",
-      "lead_media": "media/states/tsfr/01",
-      "lead_w": 828,
-      "lead_h": 1073,
-      "sort_key_ru": "туркестанская советская федеративная республика с сентября 1920 г. – туркестанская автономная социалистическая советская республика",
-      "stub": true
-    },
-    {
-      "id": "ssr-gruziya",
-      "title_ru": "Социалистическая Советская Республика Грузия",
-      "has_card": false,
-      "abbr_ru": [
-        "ССР Грузия"
-      ],
-      "camp": "red",
-      "dates_display_ru": "25 февраля 1921 – 1991 г.",
-      "lead_media": "media/states/ssr-gruziya/01",
-      "lead_w": 2010,
-      "lead_h": 2808,
-      "sort_key_ru": "социалистическая советская республика грузия",
-      "stub": true
     },
     {
       "id": "bnsr",
@@ -884,18 +764,6 @@
       "lead_w": 884,
       "lead_h": 1137,
       "sort_key_ru": "временное сибирское правительство"
-    },
-    {
-      "id": "rossiyskoe-gosudarstvo-vremennoe-vseross",
-      "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
-      "has_card": false,
-      "camp": "rev-dem",
-      "dates_display_ru": "23 сентября – 18 ноября 1918 г.",
-      "lead_media": "media/states/rossiyskoe-gosudarstvo-vremennoe-vseross/01",
-      "lead_w": 2506,
-      "lead_h": 3430,
-      "sort_key_ru": "российское государство временное всероссийское правительство – уфимская директория",
-      "stub": true
     },
     {
       "id": "kronshtadtskoe-vosstanie-kronshtadtskiy",

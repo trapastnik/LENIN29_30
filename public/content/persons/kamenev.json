@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "kamenev",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "С. С. КАМЕНЕВ",
   "title_en": null,
   "sort_key_ru": "каменев",
@@ -120,5 +120,6 @@
     "sha256": "9abdbc9c1cdb14f8ec4caff3303fa59908203146a4eb874d237cef8c91ba180b",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

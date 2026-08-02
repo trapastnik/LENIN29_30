@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "sverdlov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Я. М. СВЕРДЛОВ",
   "title_en": null,
   "sort_key_ru": "свердлов",
@@ -153,5 +153,6 @@
     "sha256": "de3a9da4ea9a5ad90b0bf9404cf1b1b7dbeafafaa5f37de6317034514fccb8e0",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

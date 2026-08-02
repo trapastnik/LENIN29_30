@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "nabokov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "В. Д. НАБОКОВ",
   "title_en": null,
   "sort_key_ru": "набоков",
@@ -130,5 +130,6 @@
     "sha256": "24af2d806cb83d5cb0d5dc32ee93b919016bb3df4c8c8ba9ab350be71544da3f",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

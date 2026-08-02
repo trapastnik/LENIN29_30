@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "schetinkin",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "П. Е. ЩЕТИНКИН",
   "title_en": null,
   "sort_key_ru": "щетинкин",
@@ -93,5 +93,6 @@
     "sha256": "62a067b83f503c4faf569eb133a828b1077b81b3520027cc94675d00d01b5789",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

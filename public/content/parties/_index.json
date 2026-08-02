@@ -345,17 +345,6 @@
       "sort_key_ru": "алаш"
     },
     {
-      "id": "alekseevskaya-organizatsiya-dobrovolches",
-      "title_ru": "Алексеевская организация (Добровольческая армия)",
-      "has_card": false,
-      "dates_display_ru": "Октябрь–декабрь 1917 г.",
-      "lead_media": "media/parties/alekseevskaya-organizatsiya-dobrovolches/01",
-      "lead_w": 2802,
-      "lead_h": 1989,
-      "sort_key_ru": "алексеевская организация добровольческая армия",
-      "stub": true
-    },
-    {
       "id": "basmachestvo",
       "title_ru": "Басмачество",
       "has_card": true,

@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "milyukov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "П. Н. МИЛЮКОВ",
   "title_en": null,
   "sort_key_ru": "милюков",
@@ -148,5 +148,6 @@
   },
   "flags": [
     "media-missing"
-  ]
+  ],
+  "camp_source": "regalia"
 }

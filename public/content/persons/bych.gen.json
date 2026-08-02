@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "bych",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "Л. Л. БЫЧ",
   "title_en": null,
   "sort_key_ru": "быч",
@@ -83,5 +83,6 @@
     "sha256": "d386fb41e1fece18b88122c7745395155a7946bf200b568ee3036a057bb1970c",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

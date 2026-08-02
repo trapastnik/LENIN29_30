@@ -39,6 +39,7 @@ IN = ROOT.parent / "IN" / "new" / "МТК №29"
 CONTENT = ROOT / "public" / "content"
 SRC = ROOT / "content-src"
 
+import camps  # noqa: E402
 import docxlib  # noqa: E402
 import entity_chronicle  # noqa: E402
 import entity_event  # noqa: E402
@@ -340,13 +341,13 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
     # camp для партий и персон берём из уже выверенных индексов, а не выдумываем
     data = builder(doc, ctx)
     eid = data["id"]
-    if kind in ("party", "person") and ctx.camp is None:
+    if kind == "person" and ctx.camp is None:
+        assign_person_camp(data, ctx)
+    elif kind == "party" and ctx.camp is None:
         camp = lookup_camp(kind, eid)
         if camp:
             data["camp"] = camp
-            if kind == "person":
-                data["side"] = camp
-            if kind == "party" and not data.get("venn_groups"):
+            if not data.get("venn_groups"):
                 data["venn_groups"] = [camp]
 
     apply_media_manifest(data)
@@ -444,6 +445,65 @@ def archive_stale(kind: str, imported: set, stats: Stats):
         path.unlink()
         stats.legacy.append("%s/%s → content-src/legacy/%s/%s (справка ещё не импортирована, "
                             "запись индекса помечена stub)" % (kind, eid, kind, name))
+
+
+CAMP_ROWS: List[dict] = []
+
+
+def assign_person_camp(data: dict, ctx: "Ctx") -> None:
+    """Проставить лагерь личности по регалиям.
+
+    Поля «лагерь» в справках личностей нет — заказчик его не заводил, а
+    `people-data.js` для этого не источник: там 17 человек и три значения,
+    куда всё небелое и некрасное свалено в `green` (Авксентьев — лидер
+    эсеров — «зелёный», Пилсудский — глава Польши — тоже).
+
+    Разбор регалий даёт 68 из 70; двое спорных остаются `null` — пустой
+    фильтр честнее неправильного. Итог помечается `camp_source` и
+    перебивается вручную через `<id>.patch.json`.
+    """
+    verdict = camps.classify(data.get("regalia_ru") or [], data.get("summary_ru"))
+    camp = verdict["camp"]
+    source = "regalia"
+    legacy = lookup_camp("person", data["id"])
+
+    if camp is None and legacy:
+        camp, source = legacy, "people-data"
+
+    if camp:
+        data["camp"] = camp
+        data["side"] = camp
+        data["camp_source"] = source
+
+    CAMP_ROWS.append({
+        "id": data["id"],
+        "camp": camp or "",
+        "source": source if camp else "",
+        "legacy": legacy or "",
+        "scores": verdict["scores"],
+        "first_regalia": (data.get("regalia_ru") or [""])[0],
+    })
+    if legacy and camp and legacy != camp:
+        ctx.reports.append(
+            "лагерь person/%s: по регалиям «%s», в people-data.js «%s» — "
+            "взяты регалии" % (data["id"], camp, legacy))
+    elif not camp:
+        ctx.reports.append(
+            "лагерь person/%s не определён: %s — размечать руками через patch"
+            % (data["id"], {k: v for k, v in verdict["scores"].items() if v}))
+
+
+def write_camp_report() -> None:
+    if not CAMP_ROWS:
+        return
+    head = "id;camp;source;people_data_js;first_regalia;" + ";".join(camps.CAMPS)
+    lines = [head]
+    for r in sorted(CAMP_ROWS, key=lambda x: (x["camp"], x["id"])):
+        sc = ";".join(str(r["scores"].get(c, 0)) for c in camps.CAMPS)
+        lines.append("%s;%s;%s;%s;%s;%s" % (
+            r["id"], r["camp"], r["source"], r["legacy"],
+            r["first_regalia"].replace(";", ",")[:80], sc))
+    (SRC / "_camps-persons.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 _MEDIA_MANIFEST: Optional[dict] = None
@@ -558,19 +618,30 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
     idx = read_json(path) or {}
     idx["schema"] = 1
     idx["kind"] = kind
+    if kind == "person" and not idx.get("camps"):
+        # Словарь лагерей для фильтра. У партий и территорий он кураторский
+        # и пришёл из M0, у личностей раздела не было вовсе — заводим тот же,
+        # чтобы фильтр по лагерям читал одну и ту же таблицу везде.
+        idx["camps"] = [{"id": c, "title_ru": t} for c, t in (
+            ("red", "Красные"),
+            ("white", "Белые"),
+            ("rev-dem", "Революционная демократия"),
+            ("national", "Национальные движения"),
+            ("green", "Зелёные"),
+        )]
     items = idx.get("items") or []
     by_id = {it["id"]: it for it in items if "id" in it}
     order = [it["id"] for it in items if "id" in it]
 
-    # Все закреплённые id обязаны быть в индексе, даже если справка ещё не
-    # импортирована: словарь алиасов ссылается на них уже сейчас, а индекс —
-    # единственная таблица разрешения ссылок. Нет записи → битая ссылка.
-    for eid, rec in registry.bucket(kind).items():
-        if eid in by_id:
-            continue
-        by_id[eid] = {"id": eid, "title_ru": rec.get("title_ru") or eid,
-                      "has_card": False, "stub": True}
-        order.append(eid)
+    # Раньше сюда досевались все закреплённые id — на случай, если словарь
+    # алиасов сошлётся на ещё не импортированную справку. Досев убран:
+    # ссылок на такие записи нет ни одной, а UI считает разделы по длине
+    # `items` и рисует плитку на каждый элемент. Заглушки давали завышенные
+    # счётчики и карточки-призраки, открывающиеся в пустоту.
+    #
+    # Индекс описывает то, что UI может показать. Нет файла справки — нет
+    # и записи; id при этом остаётся закреплённым в `_ids.json` (реестр
+    # append-only), так что при поставке справки запись вернётся с тем же id.
 
     for ent in entities:
         eid = ent["id"]
@@ -611,17 +682,23 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
     # Пересчитываем всегда: значение с прошлого прогона может быть протухшим
     # (справку убрали в архив, а `has_card: true` в индексе остался).
     imported = {e["id"] for e in entities}
-    for eid, rec in by_id.items():
-        if eid in imported:
-            continue
-        if (outdir / ("%s.json" % eid)).exists():
+    dropped = []
+    for eid, rec in list(by_id.items()):
+        if eid in imported or (outdir / ("%s.json" % eid)).exists():
             rec["has_card"] = True
             rec.pop("stub", None)
-        else:
-            rec["has_card"] = False
-            rec["stub"] = True
+            continue
+        # Карточки нет и не будет: справку не прислали либо запись осталась
+        # от снятого дубля транслитерации. Держать её в индексе — значит
+        # завышать счётчик раздела и открывать плитку в пустоту.
+        del by_id[eid]
+        dropped.append("%s «%s»" % (eid, (rec.get("title_ru") or "")[:40]))
 
-    idx["items"] = [by_id[i] for i in order]
+    if dropped:
+        reports.append("из индекса %s убраны записи без карточки (%d): %s"
+                       % (kind, len(dropped), "; ".join(sorted(dropped))))
+
+    idx["items"] = [by_id[i] for i in order if i in by_id]
     if write_json(path, idx):
         reports.append("индекс обновлён: %s" % path.relative_to(ROOT))
 
@@ -720,6 +797,8 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
                   "Значит, заказчик поправил ровно то место, что правили руками — "
                   "патч надо пересмотреть.", ""]
         lines += ["- `%s`" % c for c in stats.conflicts] + [""]
+    write_camp_report()
+
     if stats.legacy:
         lines += ["## Черновики M0, убранные в архив", "",
                   "Файлы существовали до первого прогона импорта. Копии сохранены, "

@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "derber",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "П. Я. ДЕРБЕР",
   "title_en": null,
   "sort_key_ru": "дербер",
@@ -70,5 +70,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

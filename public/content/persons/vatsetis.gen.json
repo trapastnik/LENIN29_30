@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "vatsetis",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "И. И. ВАЦЕТИС",
   "title_en": null,
   "sort_key_ru": "вацетис",
@@ -109,5 +109,6 @@
     "sha256": "1a993643b4eb81c73d688a1771d45f9ef1e5054776556e224a9012f3b90bb112",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

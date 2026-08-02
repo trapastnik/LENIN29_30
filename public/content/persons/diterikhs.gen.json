@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "diterikhs",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "М. К. ДИТЕРИХС",
   "title_en": null,
   "sort_key_ru": "дитерихс",
@@ -91,5 +91,6 @@
     "sha256": "c115340c598709b9526a840020137cfb8f2ceb0b7a726bccdc3635e52e168dfd",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }
