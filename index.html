@@ -2,11 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/expo/index.html">
+  <!-- Пути ОТНОСИТЕЛЬНЫЕ, без ведущего слэша. Киоск запускается как
+       file:///opt/mtk29/dist/index.html — абсолютный /expo/index.html там
+       разрешается в file:///expo/index.html, то есть в корень файловой
+       системы, и экспозиция не открывается. Относительный путь работает
+       и под file://, и под http:// на stage. -->
+  <meta http-equiv="refresh" content="0; url=expo/index.html">
   <title>МТК 29 · Гражданская война</title>
 </head>
 <body>
-  <script>location.replace('/expo/index.html');</script>
-  <p><a href="/expo/index.html">Открыть экспозицию →</a></p>
+  <script>location.replace('expo/index.html');</script>
+  <p><a href="expo/index.html">Открыть экспозицию →</a></p>
 </body>
 </html>

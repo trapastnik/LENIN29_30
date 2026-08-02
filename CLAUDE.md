@@ -88,8 +88,15 @@
 - Корневые `*.html` кроме `index.html`, `brand.html`, `demo*.html`
 - `src/components/{party-card,state-card,venn-selector,camp-filter}.js`
 - `src/pages/**`, `src/data/**`
-- `public/expo/**` кроме `brand-tokens.js`
+- `public/expo/**` кроме `brand-tokens.js` — включая `vendor/**` (локальный React)
+  и `build/**` (скомпилированный JSX, генерируется, в `.gitignore`)
 - `scripts/venn/**`, `scripts/trace_venn_*.py`, `scripts/export_venn_svg.mjs`
+- `scripts/expo/**` — предкомпиляция JSX (`build-jsx.mjs`)
+
+⚠️ `public/expo/{index,people}.html` — **зона `ui`**, хотя дизайну там нужна
+строка подключения `brand-tokens.js`. Дизайн подаёт заявку, а не правит сам:
+`ui` одновременно перестраивает эти файлы целиком (CDN → `vendor/`, вынос
+инлайнового `text/babel` в `boot-*.jsx`), и параллельная правка встаёт поперёк.
 
 ### `simbirsk`
 - `simbirsk.html`, `src/components/longread-*.js`
@@ -129,6 +136,15 @@ UI показывает заглушку. Никто не заводит `territ
 
 **`public/expo/shared.jsx`** — общий на сцену. Меняется отдельными коммитами,
 до правок в потребителях; в коммите указывается, что изменилось в экспорте.
+
+**Сцена грузит не `.jsx`, а скомпилированный `public/expo/build/*.js`.**
+Babel-in-browser убран (он тянулся с CDN и ломал офлайн-киоск), компиляция —
+`scripts/expo/build-jsx.mjs`, вшивается в `npm run build` одним коммитом
+с мержем `ui` (до него схемы на `main` нет). Практическое следствие,
+которое кусается тихо: **правка `.jsx` без пересборки в сцену не попадает** —
+ничего не падает, просто работает старая версия. `build/` в `.gitignore`,
+собирается на сервере при деплое. Правил `.jsx` — прогони `npm run build`
+и проверяй результат, а не исходник.
 
 ## 6. Git-дисциплина
 
