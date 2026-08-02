@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Музей В.И. Ленина · Гражданская война · 1918—1922</title>
+<!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
+     ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
+<script src="../base.js"></script>
 <link rel="stylesheet" href="/src/styles/fonts.css">
 <link rel="stylesheet" href="/src/styles/tokens.css">
 <style>
@@ -41,7 +44,7 @@
   // Главная экспозиция /expo/ закрыта пин-кодом. Без кода доступ только
   // к разделу «Персоналии» — кнопка-эскейп на gate-оверлее.
   if (window.MTK_PIN) {
-    window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html', escapeLabel: '→ К персоналиям' });
+    window.MTK_PIN.guardPage({ escapeHref: 'people.html', escapeLabel: '→ К персоналиям' });
   }
 </script>
 <script src="data.js?v=20260426c"></script>

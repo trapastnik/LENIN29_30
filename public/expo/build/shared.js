@@ -1,63 +1,12 @@
 // ВНИМАНИЕ: файл сгенерирован. Не редактировать.
 // Источник: public/expo/shared.jsx
 // Пересобрать: node scripts/expo/build-jsx.mjs
-const BRAND = typeof window !== "undefined" && window.BRAND_THEME || {
-  inkBlack: "#000000",
-  paperWhite: "#F7F9EF",
-  brass: "#D2B773",
-  signalRed: "#A02128",
-  slateBlue: "#5D6970",
-  slateWindow: "#9DA3A6",
-  ironGrey: "#555D61",
-  graphite: "#435059",
-  telegrey4: "#CFD0CF"
-};
-const theme = {
-  // Главные бренд-акценты — точно по PDF-гайду (RAL).
-  ink: BRAND.inkBlack,
-  // RAL 9005 «Чёрный янтарь»
-  brass: BRAND.brass,
-  // RAL 1002 «Латунь песочно-жёлтый»
-  red: BRAND.signalRed,
-  // RAL 3001 «Сигнальный красный»
-  white: BRAND.telegrey4,
-  // RAL 7047 «Телегрей 4» — лагерь «Белые»
-  // Тёплая бумажная иерархия — наши «материалы и старина» поверх бренда
-  // (PDF даёт один paper-white #F7F9EF; для карточек/штампов нужны 4 ступени).
-  inkSoft: "#2a1f16",
-  // тёплая умбра — для длинного текста на бумаге
-  inkFaint: "#7a6650",
-  // мета на бумаге
-  paperLight: "#efe4cd",
-  // светлая бумага «стола»
-  paper: "#e6d6b5",
-  // основная бумага
-  paperWarm: "#d9c398",
-  // загорелые края
-  paperDark: "#a8875a",
-  // тени
-  wood: "#3a2517",
-  // тёмное дерево стола
-  woodLight: "#5a3a22",
-  // дерево подсветка
-  redDeep: "#6b0d0d",
-  // глубокий красный для контраста с BRAND.signalRed
-  ochre: "#c18f3c",
-  // тёплый золотой акцент
-  gold: "#d4af3a",
-  // тёплое золото
-  greenMap: "#6b7f4a",
-  // зелёный для карты (вне бренда)
-  blueMap: "#4a6178"
-  // синий для карты (вне бренда)
-};
-const fonts = {
-  display: '"Nolde", "Playfair Display", Georgia, serif',
-  body: '"21 Cent", "PT Serif", Georgia, serif',
-  mono: '"20 Kopeek", "JetBrains Mono", "Courier New", monospace',
-  stamp: '"20 Kopeek", "Special Elite", monospace',
-  rus: '"21 Cent", "PT Serif", Georgia, serif'
-};
+if (!window.MTK_THEME) {
+  throw new Error("shared.jsx: \u043D\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D brand-tokens.js (\u0441\u043C. public/expo/index.html)");
+}
+const BRAND = window.BRAND_THEME;
+const theme = window.MTK_THEME;
+const fonts = window.MTK_FONTS;
 function paperBg({ base = theme.paper, vignette = true } = {}) {
   const layers = [
     // мелкие крапинки
@@ -385,9 +334,9 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
     " \xB7 ",
     lang === "ru" ? d.ru : d.en
   )), /* @__PURE__ */ React.createElement("div", { style: { width: 1, background: `${theme.paperDark}55`, margin: "6px 4px" } }), [
-    { section: "parties", src: "/parties.html", ru: "\u041F\u0430\u0440\u0442\u0456\u0438", en: "Parties" },
-    { section: "states", src: "/states.html", ru: "\u0413\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F", en: "State formations" },
-    { section: "people", src: "/expo/people.html", ru: "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438", en: "People" }
+    { section: "parties", src: "../parties.html", ru: "\u041F\u0430\u0440\u0442\u0456\u0438", en: "Parties" },
+    { section: "states", src: "../states.html", ru: "\u0413\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F", en: "State formations" },
+    { section: "people", src: "people.html", ru: "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438", en: "People" }
   ].map((link) => /* @__PURE__ */ React.createElement(
     "button",
     {
@@ -414,7 +363,7 @@ function TopBar({ lang, setLang, direction, setDirection, directions, onOpenSect
   ))), /* @__PURE__ */ React.createElement(
     "a",
     {
-      href: "/brand.html",
+      href: "../brand.html",
       target: "_blank",
       rel: "noopener",
       style: {

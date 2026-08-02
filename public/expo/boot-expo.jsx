@@ -19,9 +19,9 @@ const DURATION = 60;
 // Разделы-оверлеи, открываются поверх сцены без перезагрузки.
 // Iframe'ы монтируются лениво и остаются в DOM → повторный клик мгновенен.
 const SECTION_SRCS = {
-  parties: '/parties.html',
-  states:  '/states.html',
-  people:  '/expo/people.html',
+  parties: '../parties.html',
+  states:  '../states.html',
+  people:  'people.html',
 };
 
 function Expo() {

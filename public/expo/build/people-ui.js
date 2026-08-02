@@ -1,53 +1,14 @@
 // ВНИМАНИЕ: файл сгенерирован. Не редактировать.
 // Источник: public/expo/people-ui.jsx
 // Пересобрать: node scripts/expo/build-jsx.mjs
-const SIDE_META = {
-  red: { ru: "\u041A\u0440\u0430\u0441\u043D\u044B\u0435", en: "Reds", color: "#b23028", accent: "#d94a36", flag: "#a01818" },
-  white: { ru: "\u0411\u0435\u043B\u044B\u0435", en: "Whites", color: "#2a3d5e", accent: "#4a6290", flag: "#1a2238" },
-  green: { ru: "\u0422\u0440\u0435\u0442\u044C\u044F \u0441\u0438\u043B\u0430", en: "Third force", color: "#4d5a28", accent: "#6a7a3a", flag: "#3a4418" }
-};
-const BRAND = typeof window !== "undefined" && window.BRAND_THEME || {
-  inkBlack: "#000000",
-  paperWhite: "#F7F9EF",
-  brass: "#D2B773",
-  signalRed: "#A02128",
-  slateBlue: "#5D6970",
-  slateWindow: "#9DA3A6",
-  ironGrey: "#555D61",
-  graphite: "#435059",
-  telegrey4: "#CFD0CF"
-};
-const theme = {
-  // Главные бренд-акценты — RAL по PDF-гайду
-  ink: BRAND.inkBlack,
-  // RAL 9005
-  brass: BRAND.brass,
-  // RAL 1002
-  redDeep: BRAND.signalRed,
-  // RAL 3001 — лагерь «Красные»
-  // Тёплая «материальная» палитра карточки персоналии (старая бумага, виньетка)
-  bg: "#120803",
-  // тёмное сукно стола
-  bgDeep: "#0a0502",
-  paper: "#e8d4a8",
-  // тёплая бумага карточки
-  paperLit: "#f2e1b4",
-  // светлая
-  paperDim: "#c8b488",
-  // тень
-  inkSoft: "#3a2010",
-  // длинный текст
-  inkFade: "#6a4a20",
-  // мета
-  ochre: "#c88a40"
-  // акцент-охра
-};
-const fonts = {
-  display: "'Nolde', 'Playfair Display', Georgia, serif",
-  body: "'21 Cent', 'PT Serif', Georgia, serif",
-  stamp: "'20 Kopeek', 'Special Elite', monospace",
-  mono: "'20 Kopeek', 'JetBrains Mono', 'Courier New', monospace"
-};
+if (!window.MTK_TOKENS) {
+  throw new Error("people-ui.jsx: \u043D\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D brand-tokens.js (\u0441\u043C. public/expo/people.html)");
+}
+const SIDE_META = window.MTK_SIDE_META;
+const BRAND = window.BRAND_THEME;
+const theme = window.MTK_PEOPLE_THEME;
+const fonts = window.MTK_PEOPLE_FONTS;
+const T = window.MTK_TOKENS;
 const BG_VARIANTS = {
   iron: {
     ru: "\u0416\u0435\u043B\u0435\u0437\u043E-\u0441\u0435\u0440\u044B\u0439",
@@ -128,17 +89,17 @@ const BG_VARIANTS = {
     }
   }
 };
-const BRAND_COLORS = {
-  inkBlack: { ru: "\u0427\u0451\u0440\u043D\u044B\u0439", en: "Black", hex: "#000000" },
-  graphite: { ru: "\u0413\u0440\u0430\u0444\u0438\u0442", en: "Graphite", hex: "#435059" },
-  ironGrey: { ru: "\u0416\u0435\u043B\u0435\u0437\u043E", en: "Iron grey", hex: "#555D61" },
-  slateBlue: { ru: "\u0421\u0438\u043D\u0435-\u0441\u0435\u0440\u044B\u0439", en: "Slate blue", hex: "#5D6970" },
-  slateWindow: { ru: "\u0421\u0432\u0435\u0442\u043B\u043E-\u0441\u0435\u0440.", en: "Slate window", hex: "#9DA3A6" },
-  telegrey4: { ru: "\u0422\u0435\u043B\u0435-\u0441\u0435\u0440\u044B\u0439", en: "Telegrey 4", hex: "#CFD0CF" },
-  paperWhite: { ru: "\u0411\u0443\u043C\u0430\u0433\u0430", en: "Paper", hex: "#F7F9EF" },
-  brass: { ru: "\u041B\u0430\u0442\u0443\u043D\u044C", en: "Brass", hex: "#D2B773" },
-  signalRed: { ru: "\u041A\u0440\u0430\u0441\u043D\u044B\u0439", en: "Signal red", hex: "#A02128" }
-};
+const BRAND_COLORS = Object.fromEntries([
+  ["inkBlack", "ink-black", "\u0427\u0451\u0440\u043D\u044B\u0439", "Black"],
+  ["graphite", "graphite", "\u0413\u0440\u0430\u0444\u0438\u0442", "Graphite"],
+  ["ironGrey", "iron-grey", "\u0416\u0435\u043B\u0435\u0437\u043E", "Iron grey"],
+  ["slateBlue", "slate-blue", "\u0421\u0438\u043D\u0435-\u0441\u0435\u0440\u044B\u0439", "Slate blue"],
+  ["slateWindow", "slate-window", "\u0421\u0432\u0435\u0442\u043B\u043E-\u0441\u0435\u0440.", "Slate window"],
+  ["telegrey4", "telegrey-4", "\u0422\u0435\u043B\u0435-\u0441\u0435\u0440\u044B\u0439", "Telegrey 4"],
+  ["paperWhite", "paper-white", "\u0411\u0443\u043C\u0430\u0433\u0430", "Paper"],
+  ["brass", "brass", "\u041B\u0430\u0442\u0443\u043D\u044C", "Brass"],
+  ["signalRed", "signal-red", "\u041A\u0440\u0430\u0441\u043D\u044B\u0439", "Signal red"]
+].map(([key, token, ru, en]) => [key, { ru, en, hex: T[token] }]));
 const TEXT_BG_VARIANTS = {
   transparent: { ru: "\u0411\u0435\u0437 \u043F\u043E\u0434\u043B\u043E\u0436\u043A\u0438", en: "No backing", bg: "transparent", swatch: "transparent" },
   ...Object.fromEntries(Object.entries(BRAND_COLORS).map(([k, v]) => [

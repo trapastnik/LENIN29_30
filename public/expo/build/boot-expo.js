@@ -8,9 +8,9 @@ const DIRECTIONS = [
 ];
 const DURATION = 60;
 const SECTION_SRCS = {
-  parties: "/parties.html",
-  states: "/states.html",
-  people: "/expo/people.html"
+  parties: "../parties.html",
+  states: "../states.html",
+  people: "people.html"
 };
 function Expo() {
   const [lang, setLang] = React.useState(() => {

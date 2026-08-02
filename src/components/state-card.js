@@ -118,7 +118,7 @@ export class StateCard extends HTMLElement {
 
   async _load(id) {
     try {
-      this._data = await fetchJSON(`/content/states/${id}.json`);
+      this._data = await fetchJSON(MTK_URL(`content/states/${id}.json`));
     } catch {
       this._data = {
         ...(this._stub || {}),
