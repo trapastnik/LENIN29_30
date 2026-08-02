@@ -106,7 +106,7 @@ worktree, написан этот документ. Откат — тег `pre-r
 - `src/components/{party-card,state-card,venn-selector,camp-filter}.js`
 - `src/pages/**`, `src/data/**`
 - `public/expo/**` кроме `brand-tokens.js` — включая `vendor/**` (локальный React)
-  и `build/**` (скомпилированный JSX, генерируется, в `.gitignore`)
+  и `build/**` (скомпилированный JSX; **коммитится**, сверяется `npm run expo:check`)
 - `scripts/venn/**`, `scripts/trace_venn_*.py`, `scripts/export_venn_svg.mjs`
 - `scripts/expo/**` — предкомпиляция JSX (`build-jsx.mjs`)
 
