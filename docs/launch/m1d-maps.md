@@ -83,10 +83,14 @@ M0-документ ровно про это предупреждает: «ош�
 Всплыло при мерже `design` 2026-08-02. `npm run brand:lint` даёт по твоей зоне:
 
 ```
-R4  demo-povolzhye.html: было 0, стало 5   ← --wood --paper-light --paper-warm --ochre
+R4  demo-povolzhye.html:        было 0, стало 5   ← --wood --paper-light --paper-warm --ochre
 R4  src/components/map-unit.js: было 6, стало 7
+R2  demo-povolzhye.html:        было 0, стало 1   ← var(--x, #hex)
 R2  src/components/map-unit.js: было 9, стало 10
+R1  demo-povolzhye.html:        было 0, стало 1   ← сырой hex
 ```
+
+Пять позиций, не три. Починишь часть — гейт останется красным на остатке.
 
 R4 — это `var(--x)` на **несуществующий токен**. Проверено: `--wood`,
 `--paper-light`, `--paper-warm`, `--ochre` в `src/styles/tokens.css` нет
