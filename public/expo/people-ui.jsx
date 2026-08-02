@@ -1,43 +1,32 @@
 // Персоналии Гражданской войны — UI
 
-const SIDE_META = {
-  red:   { ru: 'Красные',    en: 'Reds',         color: '#b23028', accent: '#d94a36', flag: '#a01818' },
-  white: { ru: 'Белые',      en: 'Whites',       color: '#2a3d5e', accent: '#4a6290', flag: '#1a2238' },
-  green: { ru: 'Третья сила',en: 'Third force',  color: '#4d5a28', accent: '#6a7a3a', flag: '#3a4418' },
-};
+// Значений здесь больше нет. Единственный источник — src/design/tokens.json,
+// генератор кладёт готовые объекты в public/expo/brand-tokens.js, страница
+// подключает его обычным <script> до этого файла.
+//
+// Запасных значений на месте нет намеренно: молчаливый фолбэк — это вторая
+// палитра, которая включается при опечатке в имени. Нет токенов — падаем.
+if (!window.MTK_TOKENS) {
+  throw new Error('people-ui.jsx: не подключён brand-tokens.js (см. public/expo/people.html)');
+}
 
-// Бренд-токены (PDF-гайд RAL, через theme.js). Используются для бренд-акцентов
-// (флаг лагеря, page-header, бренд-pill); локальные `theme.X` — наши тёплые
-// решения поверх (старина, дерево, виньетка карточки).
-const BRAND = (typeof window !== 'undefined' && window.BRAND_THEME) || {
-  inkBlack: '#000000', paperWhite: '#F7F9EF', brass: '#D2B773',
-  signalRed: '#A02128', slateBlue: '#5D6970', slateWindow: '#9DA3A6',
-  ironGrey: '#555D61', graphite: '#435059', telegrey4: '#CFD0CF',
-};
+// ⚠️ Четвёртый набор цветов лагерей: ни один не совпадает с --camp-*.
+// «Красные» здесь #b23028 против бренд-RAL 3001 #A02128. Помечен в
+// tokens.json как deprecated, сводится к --camp-* на шаге 3.
+const SIDE_META = window.MTK_SIDE_META;
 
-const theme = {
-  // Главные бренд-акценты — RAL по PDF-гайду
-  ink:      BRAND.inkBlack,    // RAL 9005
-  brass:    BRAND.brass,       // RAL 1002
-  redDeep:  BRAND.signalRed,   // RAL 3001 — лагерь «Красные»
-  // Тёплая «материальная» палитра карточки персоналии (старая бумага, виньетка)
-  bg:       '#120803',         // тёмное сукно стола
-  bgDeep:   '#0a0502',
-  paper:    '#e8d4a8',         // тёплая бумага карточки
-  paperLit: '#f2e1b4',         // светлая
-  paperDim: '#c8b488',         // тень
-  inkSoft:  '#3a2010',         // длинный текст
-  inkFade:  '#6a4a20',         // мета
-  ochre:    '#c88a40',         // акцент-охра
-};
+// Официальная палитра RAL — для бренд-акцентов (флаг лагеря, page-header, pill).
+const BRAND = window.BRAND_THEME;
 
-// Фирменные шрифты Ленин-центра (см. docs/brand.md, tokens.css).
-const fonts = {
-  display: "'Nolde', 'Playfair Display', Georgia, serif",
-  body:    "'21 Cent', 'PT Serif', Georgia, serif",
-  stamp:   "'20 Kopeek', 'Special Elite', monospace",
-  mono:    "'20 Kopeek', 'JetBrains Mono', 'Courier New', monospace",
-};
+// ⚠️ Тёплая «материальная» палитра карточки (старая бумага, виньетка) — тоже
+// deprecated: paper здесь #e8d4a8, третье значение для одного имени.
+const theme = window.MTK_PEOPLE_THEME;
+
+const fonts = window.MTK_PEOPLE_FONTS;
+
+// Плоская карта токенов: BRAND_COLORS ниже собирается из неё, чтобы каталог
+// цветов в панели «Стиль» не был очередной копией палитры.
+const T = window.MTK_TOKENS;
 
 // Бренд-фоны (только из RAL-палитры по PDF-гайду; см. project_style_layers).
 // Названия и значения соответствуют brand.html секциям 1, 6, 17.
@@ -116,17 +105,19 @@ const BG_VARIANTS = {
 
 // Все бренд-цвета RAL (см. brand.html). Используются в TEXT_BG/TEXT_INK
 // для тонкой настройки текстовой подложки и цвета шрифта в PersonDetail.
-const BRAND_COLORS = {
-  inkBlack:    { ru: 'Чёрный',      en: 'Black',        hex: '#000000' },
-  graphite:    { ru: 'Графит',      en: 'Graphite',     hex: '#435059' },
-  ironGrey:    { ru: 'Железо',      en: 'Iron grey',    hex: '#555D61' },
-  slateBlue:   { ru: 'Сине-серый',  en: 'Slate blue',   hex: '#5D6970' },
-  slateWindow: { ru: 'Светло-сер.', en: 'Slate window', hex: '#9DA3A6' },
-  telegrey4:   { ru: 'Теле-серый',  en: 'Telegrey 4',   hex: '#CFD0CF' },
-  paperWhite:  { ru: 'Бумага',      en: 'Paper',        hex: '#F7F9EF' },
-  brass:       { ru: 'Латунь',      en: 'Brass',        hex: '#D2B773' },
-  signalRed:   { ru: 'Красный',     en: 'Signal red',   hex: '#A02128' },
-};
+// Подписи — местные (в панели нужны короткие, «Светло-сер.» вместо RAL 7040),
+// а hex приезжает из токенов. Порядок сохранён — он определяет порядок свотчей.
+const BRAND_COLORS = Object.fromEntries([
+  ['inkBlack',    'ink-black',    'Чёрный',      'Black'],
+  ['graphite',    'graphite',     'Графит',      'Graphite'],
+  ['ironGrey',    'iron-grey',    'Железо',      'Iron grey'],
+  ['slateBlue',   'slate-blue',   'Сине-серый',  'Slate blue'],
+  ['slateWindow', 'slate-window', 'Светло-сер.', 'Slate window'],
+  ['telegrey4',   'telegrey-4',   'Теле-серый',  'Telegrey 4'],
+  ['paperWhite',  'paper-white',  'Бумага',      'Paper'],
+  ['brass',       'brass',        'Латунь',      'Brass'],
+  ['signalRed',   'signal-red',   'Красный',     'Signal red'],
+].map(([key, token, ru, en]) => [key, { ru, en, hex: T[token] }]));
 
 // Подложка под текстом справа. transparent — наследовать фон фрейма (как было).
 const TEXT_BG_VARIANTS = {

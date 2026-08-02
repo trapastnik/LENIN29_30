@@ -1,0 +1,85 @@
+{
+  "_": [
+    "Принятый долг дизайн-кода. Читает scripts/design/brand-lint.mjs.",
+    "",
+    "debt — счётчик нарушений на пару (правило, файл). Не номера строк:",
+    "строки плывут от любой правки, и файл исключений быстро протухает.",
+    "  стало больше → прогон падает (это новое нарушение);",
+    "  стало меньше → линтер просит опустить планку --update-baseline.",
+    "Долг может только уменьшаться.",
+    "",
+    "allow — постоянные исключения: {rule, file, match, why}. Заводить только",
+    "с причиной, которая переживёт смену исполнителя.",
+    "",
+    "Кто разбирает долг (CLAUDE.md §4, контракт владения):",
+    "  R6 unpkg.com в public/expo/*.html ......... веха M1c, офлайн-киоск",
+    "  R1/R3 в direction-*.jsx, people-ui.jsx .... зона ui, шаг 4",
+    "  R1/R3/R7 в brand.html ..................... зона design, шаг 4",
+    "  R2/R4 в src/components/*.js ............... зона design + maps (map-unit)",
+    "  R1 в scripts/export_venn_svg.mjs .......... зона ui",
+    "",
+    "R4 (27 шт.) — не косметика: --paper-light, --paper-warm, --ochre, --wood",
+    "не определены нигде, эти страницы рендерятся с унаследованным цветом."
+  ],
+  "allow": [],
+  "debt": {
+    "R6": {
+      "brand.html": 2,
+      "project.html": 1,
+      "public/expo/index.html": 3,
+      "public/expo/people.html": 3
+    },
+    "R2": {
+      "brand.html": 1,
+      "src/components/camp-filter.js": 4,
+      "src/components/map-unit.js": 9,
+      "src/components/party-card.js": 1,
+      "src/components/state-card.js": 2,
+      "src/components/venn-selector.js": 4,
+      "states.html": 1
+    },
+    "R1": {
+      "brand.html": 68,
+      "project.html": 2,
+      "public/expo/direction-a.jsx": 92,
+      "public/expo/direction-b.jsx": 28,
+      "public/expo/direction-c.jsx": 28,
+      "public/expo/index.html": 4,
+      "public/expo/people-ui.jsx": 106,
+      "public/expo/people.html": 2,
+      "public/expo/shared.jsx": 11,
+      "scripts/export_venn_svg.mjs": 11,
+      "sections.html": 2,
+      "src/components/camp-filter.js": 5,
+      "src/components/map-unit.js": 14,
+      "src/components/party-card.js": 2,
+      "src/components/state-card.js": 4,
+      "src/components/venn-selector.js": 10
+    },
+    "R3": {
+      "brand.html": 7,
+      "demo.html": 1,
+      "project.html": 2,
+      "public/expo/direction-a.jsx": 8,
+      "public/expo/direction-b.jsx": 3,
+      "public/expo/direction-c.jsx": 5,
+      "public/expo/shared.jsx": 3,
+      "sections.html": 2,
+      "src/components/party-card.js": 1,
+      "src/components/state-card.js": 1,
+      "src/components/venn-selector.js": 1,
+      "states.html": 3
+    },
+    "R7": {
+      "brand.html": 2
+    },
+    "R4": {
+      "demo.html": 3,
+      "parties.html": 2,
+      "project.html": 5,
+      "sections.html": 5,
+      "src/components/map-unit.js": 6,
+      "states.html": 6
+    }
+  }
+}
