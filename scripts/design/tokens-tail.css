@@ -1,0 +1,32 @@
+/* Ручной хвост tokens.css. Генератор дописывает этот файл без изменений
+   после сгенерированного блока :root.
+
+   Здесь живёт только то, что не является токеном, но обязано ехать вместе
+   с ними: правила, которые нужны страницам /expo/, а те подключают
+   tokens.css и НЕ подключают base.css. Переносить в base.css нельзя —
+   на экспо-страницах пропадут скроллбары.
+
+   Значения брать только из var(--…). Сырой hex здесь ловит brand-lint (R1). */
+
+/* Универсальный класс для скроллящихся областей — везде один brass-thumb.
+   На тач-столе пользователь должен видеть, что блок скроллится. */
+.brand-scroll {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar {
+  width: var(--scroll-width);
+  height: var(--scroll-width);
+}
+.brand-scroll::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 3px solid var(--scroll-track);
+  border-radius: 8px;
+  min-height: 60px;
+}
+.brand-scroll::-webkit-scrollbar-thumb:active {
+  background: var(--scroll-thumb-active);
+}
