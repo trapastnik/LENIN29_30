@@ -15,6 +15,53 @@ if (!window.MTK_TOKENS) {
 // tokens.json как deprecated, сводится к --camp-* на шаге 3.
 const SIDE_META = window.MTK_SIDE_META;
 
+// Лагерь известен не у всех: в индексе camp стоит у 14 записей из 78.
+// Без запасного значения meta.flag роняет всю сетку.
+const SIDE_NEUTRAL = {
+  ru: 'Внѣ лагерей', en: 'Unaligned',
+  color: '#5D6970',   // BRAND.slateBlue
+  accent: '#9DA3A6',  // BRAND.slateWindow
+  flag: '#555D61',    // BRAND.ironGrey
+};
+function sideMeta(side) {
+  return (side && SIDE_META[side]) || SIDE_NEUTRAL;
+}
+
+// ── Разметка в summary_ru ──────────────────────────────────────────────────
+// Импорт кладёт в текст справки ссылки на другие справки —
+// `[большевиков](#/party/bolsheviks)`, а неразрезолвленные упоминания
+// помечает `***жирным курсивом***` (docs/content.md). Без разбора всё это
+// видно на экране как есть: «[большевиков](#/party/bolsheviks)».
+//
+// Курсива здесь нет намеренно: он лёг бы на Nolde, а курсивного начертания
+// у неё нет — браузер синтезирует наклон, и на крупных кеглях это читается
+// как дефект засечек (CLAUDE.md §8). Выделяем цветом и насыщенностью.
+const RICH_RE = /\[([^\]]+)\]\(([^)]+)\)|(\*\*\*)([^*]+)\3|(\*\*)([^*]+)\5|(\*)([^*]+)\7/g;
+
+function richText(src, accent) {
+  const out = [];
+  let last = 0, m, key = 0;
+  while ((m = RICH_RE.exec(src)) !== null) {
+    if (m.index > last) out.push(src.slice(last, m.index));
+    if (m[1] !== undefined) {
+      // Ссылка на другую справку. Переход между разделами — отдельная
+      // задача (нужен роутер поверх iframe-оверлеев), поэтому пока
+      // подсвечиваем как термин, а не делаем ложную кнопку.
+      out.push(<span key={key++} style={{ color: accent, borderBottom: `1px dotted ${accent}` }}>{m[1]}</span>);
+    } else if (m[3]) {
+      out.push(<b key={key++} style={{ color: accent, fontWeight: 700 }}>{m[4]}</b>);
+    } else if (m[5]) {
+      out.push(<b key={key++} style={{ fontWeight: 700 }}>{m[6]}</b>);
+    } else {
+      out.push(<b key={key++} style={{ fontWeight: 600 }}>{m[8]}</b>);
+    }
+    last = m.index + m[0].length;
+  }
+  if (last < src.length) out.push(src.slice(last));
+  return out;
+}
+
+
 // Официальная палитра RAL — для бренд-акцентов (флаг лагеря, page-header, pill).
 const BRAND = window.BRAND_THEME;
 
@@ -171,8 +218,12 @@ function SettingsPanel({ lang,
   textInkVariant, setTextInkVariant,
   frameVariant, setFrameVariant,
 }) {
+  // По умолчанию свёрнута. Это панель подбора стиля из design-pass, а не
+  // элемент экспозиции: раскрытой она перекрывает правую колонку справки —
+  // ровно то место, где текст биографии. Посетителю киоска она не нужна,
+  // разработчику — открывается тем же чевроном и состояние помнится.
   const [open, setOpen] = React.useState(() => {
-    try { return localStorage.getItem('expo:settingsOpen') !== '0'; } catch { return true; }
+    try { return localStorage.getItem('expo:settingsOpen') === '1'; } catch { return false; }
   });
   React.useEffect(() => { try { localStorage.setItem('expo:settingsOpen', open ? '1' : '0'); } catch {} }, [open]);
 
@@ -304,7 +355,7 @@ function paperFill() {
 
 // Силуэтный портрет — SVG заглушка, различается по стороне
 function Silhouette({ side, size = 240, accent }) {
-  const meta = SIDE_META[side];
+  const meta = sideMeta(side);
   return (
     <svg viewBox="0 0 100 140" style={{ width: size, height: size * 1.4 }}>
       <defs>
@@ -341,7 +392,7 @@ function Silhouette({ side, size = 240, accent }) {
 
 // Сторона-плашка (флажок)
 function SideFlag({ side, lang }) {
-  const meta = SIDE_META[side];
+  const meta = sideMeta(side);
   return (
     <div style={{
       display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -360,10 +411,13 @@ function SideFlag({ side, lang }) {
 
 // Карточка-миниатюра персоналии
 function PersonCard({ person, lang, onOpen, delay }) {
-  const d = person[lang];
-  const meta = SIDE_META[person.side];
+  const meta = sideMeta(person.side);
   return (
-    <button onClick={onOpen} style={{
+    <button onClick={onOpen || undefined} disabled={!onOpen} style={{
+      // Заглушка без справки не кликается: файла <id>.json у неё нет,
+      // тап давал бы 404 и пустую модалку.
+      opacity: onOpen ? 1 : 0.55,
+      cursor: onOpen ? 'pointer' : 'default',
       position: 'relative',
       // isolate: каждая карточка в своём stacking-context — соседи не
       // съедают её клик, даже когда transform-rotate их слегка пересекает
@@ -435,25 +489,53 @@ function PersonCard({ person, lang, onOpen, delay }) {
           }}>{person.years}</div>
         </div>
 
-        {/* имя */}
-        <div style={{
-          fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.25em',
-          color: theme.inkFade, textTransform: 'uppercase',
-        }}>{d.name}</div>
+        {/* Имя. В индексе нет отдельных given/surname — только title_ru
+            («В. И. ЛЕНИН (УЛЬЯНОВ)»), и это правильно: плитка рисуется
+            без единой дозагрузки. Регалии показывает уже справка. */}
         <div style={{
           fontFamily: fonts.display,
-          fontSize: 24, lineHeight: 1, color: theme.ink, marginTop: 2,
-        }}>{d.sur}</div>
+          fontSize: 22, lineHeight: 1.05, color: theme.ink, marginTop: 2,
+        }}>{person.title}</div>
         <div style={{
-          marginTop: 8, fontFamily: fonts.body, fontSize: 12,
-          color: theme.inkSoft, lineHeight: 1.3,
-        }}>{d.role}</div>
-        <div style={{
-          marginTop: 4, fontFamily: fonts.stamp, fontSize: 11,
-          color: meta.color, letterSpacing: '0.05em',
-        }}>{d.tag}</div>
+          marginTop: 8, fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.2em',
+          color: meta.color, textTransform: 'uppercase',
+        }}>{meta[lang]}</div>
+        {person.stub && (
+          <div style={{
+            marginTop: 6, fontFamily: fonts.mono, fontSize: 10,
+            letterSpacing: '0.15em', color: theme.inkFade, textTransform: 'uppercase',
+          }}>{lang === 'ru' ? 'справки пока нѣтъ' : 'no dossier yet'}</div>
+        )}
       </div>
     </button>
+  );
+}
+
+
+// Кадр галереи. Производные (content/<file>-<tier>.webp) ещё не собраны:
+// npm run media:build отсутствует, tiers пуст у всех 258 изображений.
+// Поэтому src может быть null — и тогда нужен внятный прямоугольник,
+// а не сломанная иконка картинки. Появятся производные — включится само.
+function PhotoFrame({ photo, lang }) {
+  if (photo && photo.src) {
+    return (
+      <img src={photo.src} alt="" loading="lazy" style={{
+        width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
+        display: 'block', filter: 'sepia(0.12) contrast(1.04)',
+      }}/>
+    );
+  }
+  return (
+    <div style={{
+      width: '100%', height: '100%',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      textAlign: 'center', padding: 10,
+      background: 'linear-gradient(160deg, #435059 0%, #2a2f33 100%)',
+      fontFamily: fonts.mono, fontSize: 9, lineHeight: 1.5,
+      letterSpacing: '0.16em', color: '#9DA3A6', textTransform: 'uppercase',
+    }}>
+      {lang === 'ru' ? 'изображеніе не собрано' : 'image not built'}
+    </div>
   );
 }
 
@@ -513,7 +595,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
   const hasTextBg = textBg !== 'transparent';
   const frame = frameCfg || FRAME_VARIANTS.graphiteSoft;
   const d = person[lang];
-  const meta = SIDE_META[person.side];
+  const meta = sideMeta(person.side);
   const photos = person.photos || [];
 
   // Режим раскладки правой колонки:
@@ -698,8 +780,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
               color: textInk, lineHeight: 1.6, maxWidth: 720,
               textWrap: 'pretty',
             }}>
-              {d.bio.split(/\n\s*\n/).map((p, i) => (
-                <p key={i} style={{ margin: i === 0 ? '0 0 0.85em' : '0.85em 0' }}>{p}</p>
+              {(d.bio || '').split(/\n\s*\n/).map((p, i) => (
+                <p key={i} style={{ margin: i === 0 ? '0 0 0.85em' : '0.85em 0' }}>{richText(p, meta.accent)}</p>
               ))}
             </div>
 
@@ -736,7 +818,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                 }}>
                   {photos.map((ph, i) => (
                     <figure key={i} style={{ margin: 0 }}>
-                      <button onClick={() => setLightboxIdx(i)} style={{
+                      <button onClick={ph.src ? () => setLightboxIdx(i) : undefined} disabled={!ph.src} style={{
+                      // Без производной открывать нечего — лайтбокс дал бы пустой экран.
+                      cursor: ph.src ? 'pointer' : 'default',
                         display: 'block', width: '100%', padding: 0, border: 'none',
                         background: 'transparent', cursor: 'pointer',
                       }}>
@@ -745,10 +829,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                           background: '#1a0d05',
                           border: `1px solid ${theme.inkSoft}`,
                         }}>
-                          <img src={ph.src} alt="" loading="lazy" style={{
-                            width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
-                            display: 'block', filter: 'sepia(0.12) contrast(1.04)',
-                          }}/>
+                          <PhotoFrame photo={ph} lang={lang}/>
                         </div>
                       </button>
                       <figcaption style={{
@@ -784,7 +865,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
               }}>
                 {photos.map((ph, i) => (
                   <figure key={i} style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
-                    <button onClick={() => setLightboxIdx(i)} style={{
+                    <button onClick={ph.src ? () => setLightboxIdx(i) : undefined} disabled={!ph.src} style={{
+                      // Без производной открывать нечего — лайтбокс дал бы пустой экран.
+                      cursor: ph.src ? 'pointer' : 'default',
                       display: 'block', width: '100%', padding: 0, border: 'none',
                       background: 'transparent', cursor: 'pointer',
                     }} title={ph[lang]}>
@@ -793,10 +876,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                         background: '#1a0d05',
                         border: `1px solid ${theme.inkSoft}`,
                       }}>
-                        <img src={ph.src} alt="" loading="lazy" style={{
-                          width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
-                          display: 'block', filter: 'sepia(0.12) contrast(1.04)',
-                        }}/>
+                        <PhotoFrame photo={ph} lang={lang}/>
                       </div>
                     </button>
                     <figcaption style={{
@@ -894,6 +974,50 @@ function PersonalitiesApp() {
     return () => window.removeEventListener('message', onMsg);
   }, []);
 
+  // Esc и стрелки — ниже, после загрузки справки: обработчику нужно знать,
+  // сколько у открытой персоны фотографий.
+
+  // При смене персоны — лайтбокс закрываем
+  React.useEffect(() => { if (!openId) setLightboxIdx(null); }, [openId]);
+
+  // ── Данные ───────────────────────────────────────────────────────────────
+  // Плитки — из одного _index.json, справка — по тапу. Раньше здесь лежал
+  // window.People: 17 человек, вбитых руками в people-data.js. Теперь 78
+  // записей импорта, и грузить их все разом незачем — индекс самодостаточен.
+  const [people, setPeople] = React.useState([]);
+  const [indexError, setIndexError] = React.useState(null);
+  React.useEffect(() => {
+    let alive = true;
+    window.MTK_PERSONS.loadIndex().then(list => {
+      if (!alive) return;
+      // псевдослучайный наклон, стабильный по позиции
+      setPeople(list.map((p, i) => ({
+        ...p,
+        _rot: [-2.5, 1.8, -1, 2.2, -1.5, .9, -2.1, 1.4, -.8, 2.5, -1.9, 1.1, -2.2, .7, -1.3, 2][i % 16],
+      })));
+    }).catch(err => { if (alive) setIndexError(err); });
+    return () => { alive = false; };
+  }, []);
+
+  // Справка подгружается по тапу и остаётся в памяти модуля.
+  const [opened, setOpened] = React.useState(null);
+  const [openError, setOpenError] = React.useState(null);
+  React.useEffect(() => {
+    if (!openId) { setOpened(null); setOpenError(null); return; }
+    let alive = true;
+    setOpenError(null);
+    window.MTK_PERSONS.loadPerson(openId)
+      .then(p => { if (alive) setOpened({ ...p, _rot: 0 }); })
+      .catch(err => { if (alive) { setOpened(null); setOpenError(err); } });
+    return () => { alive = false; };
+  }, [openId]);
+
+  const shown = filter === 'all'
+    ? people
+    : filter === 'none'
+      ? people.filter(p => !p.side)
+      : people.filter(p => p.side === filter);
+
   // Esc: сначала закрывает лайтбокс, затем модалку. Стрелки — навигация по фото.
   React.useEffect(() => {
     const onKey = (e) => {
@@ -901,27 +1025,14 @@ function PersonalitiesApp() {
         if (lightboxIdx !== null) setLightboxIdx(null);
         else if (openId) setOpenId(null);
       } else if (lightboxIdx !== null) {
-        const opened = window.People.find(p => p.id === openId);
-        const photos = opened?.photos || [];
+        const photos = (opened && opened.photos) || [];
         if (e.key === 'ArrowLeft' && lightboxIdx > 0) setLightboxIdx(i => i - 1);
         else if (e.key === 'ArrowRight' && lightboxIdx < photos.length - 1) setLightboxIdx(i => i + 1);
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [lightboxIdx, openId]);
-
-  // При смене персоны — лайтбокс закрываем
-  React.useEffect(() => { if (!openId) setLightboxIdx(null); }, [openId]);
-
-  // псевдослучайный наклон, стабильный по id
-  const people = React.useMemo(() => window.People.map((p, i) => ({
-    ...p,
-    _rot: [-2.5, 1.8, -1, 2.2, -1.5, .9, -2.1, 1.4, -.8, 2.5, -1.9, 1.1, -2.2, .7, -1.3, 2][i % 16],
-  })), []);
-
-  const shown = filter === 'all' ? people : people.filter(p => p.side === filter);
-  const opened = openId ? people.find(p => p.id === openId) : null;
+  }, [lightboxIdx, openId, opened]);
 
   return (
     <div className="brand-scroll" style={{
@@ -983,7 +1094,7 @@ function PersonalitiesApp() {
             fontFamily: fonts.display,
             fontSize: 52, lineHeight: 1, color: headerInk, marginTop: 6,
             letterSpacing: '-0.01em',
-          }}>{lang === 'ru' ? 'Персоналіи. 1918—1922' : 'People. 1918—1922'}</div>
+          }}>{lang === 'ru' ? 'Персоналіи. 1917—1922' : 'People. 1917—1922'}</div>
         </div>
 
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
@@ -1019,15 +1130,20 @@ function PersonalitiesApp() {
         padding: '0 40px 18px', display: 'flex', gap: 10, flexWrap: 'wrap',
         alignItems: 'center',
       }}>
+        {/* Лагерь проставлен только у 14 персон из 78 — импорт берёт его из
+            справки, а в большинстве справок его нет. Без пятой кнопки
+            остальные 64 не отбираются ничем, кроме «Всѣ», и выглядит это
+            как потерянные записи. Кнопки с нулём не показываем. */}
         {[
           { id: 'all',   ru: 'Всѣ',         en: 'All',         count: people.length, brand: '#D2B773' /* BRAND.brass */ },
           { id: 'red',   ru: 'Красные',     en: 'Reds',        count: people.filter(p => p.side==='red').length,   brand: '#A02128' /* BRAND.signalRed */ },
           { id: 'white', ru: 'Бѣлые',       en: 'Whites',      count: people.filter(p => p.side==='white').length, brand: '#CFD0CF' /* BRAND.telegrey4 */ },
           { id: 'green', ru: 'Третья сила', en: 'Third force', count: people.filter(p => p.side==='green').length, brand: '#5D6970' /* BRAND.slateBlue */ },
-        ].map(f => {
+          { id: 'none',  ru: 'Внѣ лагерей', en: 'Unaligned',   count: people.filter(p => !p.side).length,          brand: '#9DA3A6' /* BRAND.slateWindow */ },
+        ].filter(f => f.count > 0).map(f => {
           const active = filter === f.id;
-          // На активном фоне signalRed/slateBlue текст белый, на brass/telegrey4 — чёрный
-          const lightBg = (f.brand === '#D2B773' || f.brand === '#CFD0CF');
+          // На активном фоне signalRed/slateBlue текст белый, на brass/telegrey4/slateWindow — чёрный
+          const lightBg = (f.brand === '#D2B773' || f.brand === '#CFD0CF' || f.brand === '#9DA3A6');
           const activeText = lightBg ? '#000' : '#F7F9EF';
           return (
             <button key={f.id} onClick={() => setFilter(f.id)} style={{
@@ -1065,10 +1181,49 @@ function PersonalitiesApp() {
       }}>
         {shown.map((p, i) => (
           <PersonCard key={p.id} person={p} lang={lang}
-            delay={i * 45}
-            onOpen={() => setOpenId(p.id)}/>
+            // Анимацию въезда лесенкой держим короткой: при 78 плитках
+            // прежние 45 мс на карточку растягивали появление на 3,5 с.
+            delay={Math.min(i, 12) * 45}
+            onOpen={p.stub ? null : () => setOpenId(p.id)}/>
         ))}
       </div>
+
+      {indexError && (
+        <div style={{
+          padding: '40px', fontFamily: fonts.mono, fontSize: 14,
+          color: theme.brass, letterSpacing: '0.1em',
+        }}>
+          {lang === 'ru' ? 'Не удалось загрузить списокъ персоналій: ' : 'Could not load the list of people: '}
+          {String(indexError.message || indexError)}
+        </div>
+      )}
+
+      {/* Справка едет по сети — без этого тап по карточке выглядит мёртвым. */}
+      {openId && !opened && !openError && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 100,
+          background: 'rgba(10,6,3,0.72)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: fonts.mono, fontSize: 13, letterSpacing: '0.3em',
+          color: theme.brass, textTransform: 'uppercase',
+        }} onClick={() => setOpenId(null)}>
+          {lang === 'ru' ? 'загружаемъ справку…' : 'loading dossier…'}
+        </div>
+      )}
+      {openId && openError && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 100,
+          background: 'rgba(10,6,3,0.82)',
+          display: 'flex', flexDirection: 'column', gap: 18,
+          alignItems: 'center', justifyContent: 'center',
+          fontFamily: fonts.mono, fontSize: 13, letterSpacing: '0.2em',
+          color: theme.brass, textAlign: 'center', padding: 40,
+        }} onClick={() => setOpenId(null)}>
+          <div>{lang === 'ru' ? 'Справка не открылась' : 'Dossier failed to open'}</div>
+          <div style={{ fontSize: 11, opacity: .7 }}>{String(openError.message || openError)}</div>
+          <div style={{ fontSize: 11, opacity: .7 }}>{lang === 'ru' ? 'нажмите, чтобы закрыть' : 'tap to close'}</div>
+        </div>
+      )}
 
       {opened && <PersonDetail person={opened} lang={lang}
         onClose={() => setOpenId(null)}

@@ -1,45 +1,106 @@
-// Точка входа сцены /expo/. Раньше жила инлайном в index.html под
-// <script type="text/babel">; вынесена в файл, чтобы проходить предкомпиляцию
+// Точка входа сцены /expo/ — главный экран экспозиции.
+//
+// Живёт файлом, а не инлайном в index.html, чтобы проходить предкомпиляцию
 // вместе с остальным JSX (scripts/expo/build-jsx.mjs).
 //
-// theme, fonts, Vernier, TopBar приходят из shared.jsx, DirectionA/B/C — из
-// direction-*.jsx. Все они объявлены на верхнем уровне своих <script> и потому
-// уже видны здесь; переобъявлять их через `const {…} = window` нельзя —
-// у скриптов страницы общая лексическая область, второе объявление = SyntaxError.
+// theme, fonts, paperBg приходят из shared.jsx; Backdrop, MainHeader,
+// Timeline, SectionTiles — из main-screen.jsx. Все они объявлены на верхнем
+// уровне своих <script> и потому уже видны здесь; переобъявлять их через
+// `const {…} = window` нельзя — у скриптов страницы общая лексическая
+// область, второе объявление = SyntaxError.
 
-const DIRECTIONS = [
-  { id: 'A', ru: 'Стол коменданта',  en: 'Commander\'s Desk' },
-  { id: 'B', ru: 'Карта фронтов',    en: 'Fronts Map' },
-  { id: 'C', ru: 'Поток документов', en: 'Document Stream' },
+// Разделы. Первые четыре — по ТЗ (../IN/00-tz/МТК 29.docx: «вверху тайм-лайн
+// и 4 кнопки»), Симбирск добавлен решением проекта (CLAUDE.md §1).
+//
+// src: null — страницы ещё нет, плитка показывается неактивной. Ведёт на
+// 404 только тот, кто пишет ссылку заранее; здесь мы этого не делаем.
+// Симбирск — зона simbirsk, его страницу заводит она, не мы.
+const SECTIONS = [
+  {
+    id: 'chronicle', src: null,
+    ru: 'Хроника событій', en: 'Chronicle of events',
+    noteRu: 'Лента времени 1917–1922, событія по годамъ',
+    noteEn: 'Timeline 1917–1922, events by year',
+    accent: '#A02128',            // BRAND.signalRed
+    countKey: 'chronicle',
+  },
+  {
+    id: 'parties', src: '../parties.html',
+    ru: 'Политическія партіи', en: 'Political parties',
+    noteRu: 'Красные, бѣлые, революціонная демократія, зелёные, національныя движенія',
+    noteEn: 'Reds, Whites, revolutionary democracy, Greens, national movements',
+    accent: '#8C4A99',            // --camp-rev-dem
+    countKey: 'parties',
+  },
+  {
+    id: 'states', src: '../states.html',
+    ru: 'Государственныя образованія', en: 'State formations',
+    noteRu: 'Шесть группъ, справки съ инфоблокомъ и картой территоріи',
+    noteEn: 'Six groups, dossiers with an info block and a territory map',
+    accent: '#2F4A6B',            // --camp-intervention
+    countKey: 'states',
+  },
+  {
+    id: 'people', src: 'people.html',
+    ru: 'Персоналіи', en: 'People',
+    noteRu: 'Справки о участникахъ съ обѣихъ сторонъ',
+    noteEn: 'Dossiers on participants from every side',
+    accent: '#D2B773',            // BRAND.brass
+    countKey: 'persons',
+  },
+  {
+    id: 'simbirsk', src: null,
+    ru: 'Симбирскъ 1918–1919', en: 'Simbirsk 1918–1919',
+    noteRu: 'Лонгридъ о городѣ между красными и Комучемъ',
+    noteEn: 'A longread on the town between the Reds and Komuch',
+    accent: '#5A8E55',            // --camp-green
+    countKey: null,
+  },
 ];
 
-// общая длительность таймлайна (сек)
-const DURATION = 60;
-
-// Разделы-оверлеи, открываются поверх сцены без перезагрузки.
-// Iframe'ы монтируются лениво и остаются в DOM → повторный клик мгновенен.
-const SECTION_SRCS = {
-  parties: '../parties.html',
-  states:  '../states.html',
-  people:  'people.html',
+// Счётчики на плитках — из индексов разделов, а не константами: цифра,
+// разошедшаяся с содержимым, хуже отсутствующей.
+const COUNT_SOURCES = {
+  chronicle: { url: 'content/chronicle/_index.json', pick: d => (d.years || []).reduce((s, y) => s + (y.count || 0), 0) },
+  parties:   { url: 'content/parties/_index.json',   pick: d => (d.items || []).length },
+  states:    { url: 'content/states/_index.json',    pick: d => (d.items || []).length },
+  persons:   { url: 'content/persons/_index.json',   pick: d => (d.items || []).length },
 };
 
 function Expo() {
   const [lang, setLang] = React.useState(() => {
     try { return localStorage.getItem('expo:lang') || 'ru'; } catch { return 'ru'; }
   });
-  const [direction, setDirection] = React.useState(() => {
-    try { return localStorage.getItem('expo:direction') || 'A'; } catch { return 'A'; }
-  });
-  const [time, setTime] = React.useState(() => {
-    try { return parseFloat(localStorage.getItem('expo:t') || '0') || 0; } catch { return 0; }
-  });
-  const [playing, setPlaying] = React.useState(true);
   const [scale, setScale] = React.useState(1);
   const [activeSection, setActiveSection] = React.useState(null);
   // Какие разделы уже подгружены (один раз) — iframe'ы остаются в DOM.
   const [loadedSections, setLoadedSections] = React.useState(new Set());
+  const [years, setYears] = React.useState([]);
+  const [activeYear, setActiveYear] = React.useState(null);
+  const [counts, setCounts] = React.useState({});
 
+  // ── Данные главной ───────────────────────────────────────────────────────
+  React.useEffect(() => {
+    let alive = true;
+    fetch(MTK_URL('content/chronicle/_index.json'))
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+      .then(d => { if (alive) setYears(d.years || []); })
+      .catch(err => console.warn('[expo] хроника не загрузилась:', err));
+    return () => { alive = false; };
+  }, []);
+
+  React.useEffect(() => {
+    let alive = true;
+    Object.entries(COUNT_SOURCES).forEach(([key, s]) => {
+      fetch(MTK_URL(s.url))
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+        .then(d => { if (alive) setCounts(prev => ({ ...prev, [key]: s.pick(d) })); })
+        .catch(err => console.warn('[expo] счётчик', key, 'не загрузился:', err));
+    });
+    return () => { alive = false; };
+  }, []);
+
+  // ── Разделы-оверлеи ──────────────────────────────────────────────────────
   const openSection = React.useCallback((id) => {
     setActiveSection(id);
     setLoadedSections(prev => {
@@ -52,8 +113,7 @@ function Expo() {
     // (например, открытую карточку персоналии), чтобы пользователь видел
     // главный список, а не последний дрилл-даун.
     requestAnimationFrame(() => {
-      const iframes = document.querySelectorAll('iframe');
-      iframes.forEach((f) => {
+      document.querySelectorAll('iframe').forEach((f) => {
         if (f.title === id && f.contentWindow) {
           try { f.contentWindow.postMessage('mtk29:section-opened', '*'); } catch {}
         }
@@ -77,8 +137,6 @@ function Expo() {
   // persist + sync lang между этим окном и iframes (storage event срабатывает
   // только в чужих окнах одного origin, поэтому iframes сами увидят перемену)
   React.useEffect(() => { try { localStorage.setItem('expo:lang', lang); } catch {} }, [lang]);
-  React.useEffect(() => { try { localStorage.setItem('expo:direction', direction); } catch {} }, [direction]);
-  React.useEffect(() => { try { localStorage.setItem('expo:t', String(time)); } catch {} }, [time]);
 
   // Слушаем смены языка из iframes (parties/states/people) — они тоже пишут expo:lang.
   React.useEffect(() => {
@@ -105,41 +163,11 @@ function Expo() {
     return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
   }, []);
 
-  // tick
-  const rafRef = React.useRef(null);
-  const lastTsRef = React.useRef(null);
-  React.useEffect(() => {
-    if (!playing) { lastTsRef.current = null; return; }
-    const step = (ts) => {
-      if (lastTsRef.current == null) lastTsRef.current = ts;
-      const dt = (ts - lastTsRef.current) / 1000;
-      lastTsRef.current = ts;
-      setTime(t => {
-        let next = t + dt;
-        if (next >= DURATION) next = next % DURATION;
-        return next;
-      });
-      rafRef.current = requestAnimationFrame(step);
-    };
-    rafRef.current = requestAnimationFrame(step);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); lastTsRef.current = null; };
-  }, [playing]);
-
-  // keyboard
-  React.useEffect(() => {
-    const onKey = (e) => {
-      if (e.code === 'Space') { e.preventDefault(); setPlaying(p => !p); }
-      else if (e.code === 'ArrowLeft') setTime(t => Math.max(0, t - 1));
-      else if (e.code === 'ArrowRight') setTime(t => Math.min(DURATION, t + 1));
-      else if (e.key === '1') setDirection('A');
-      else if (e.key === '2') setDirection('B');
-      else if (e.key === '3') setDirection('C');
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const years = window.EXPO_DATA.years;
+  const sections = SECTIONS.map(s => ({
+    ...s,
+    count: s.countKey ? (counts[s.countKey] != null ? counts[s.countKey] : null) : null,
+  }));
+  const overlays = SECTIONS.filter(s => s.src);
 
   return (
     <div ref={stageRef} style={{
@@ -148,6 +176,10 @@ function Expo() {
       background: '#050301',
       overflow: 'hidden',
     }}>
+      <style>{`
+        @keyframes fadeUpTile { from { opacity: 0; transform: translateY(26px); } }
+      `}</style>
+
       <div style={{
         width: 1920, height: 1080,
         position: 'relative',
@@ -155,65 +187,38 @@ function Expo() {
         transformOrigin: 'center',
         flexShrink: 0,
         boxShadow: '0 0 120px rgba(0,0,0,.9)',
+        overflow: 'hidden',
       }}>
-        {/* сцена направления — слои поверх друг друга, невидимые скрываем */}
-        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'A' ? 'visible' : 'hidden' }}>
-          <DirectionA lang={lang} time={time} duration={DURATION} years={years}/>
-        </div>
-        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'B' ? 'visible' : 'hidden' }}>
-          <DirectionB lang={lang} time={time} duration={DURATION} years={years}/>
-        </div>
-        <div style={{ position: 'absolute', inset: 0, visibility: direction === 'C' ? 'visible' : 'hidden' }}>
-          <DirectionC lang={lang} time={time} duration={DURATION} years={years}/>
-        </div>
+        <Backdrop/>
+        <MainHeader lang={lang} setLang={setLang}/>
+        <Timeline years={years} active={activeYear} onPick={setActiveYear} lang={lang}/>
+        <SectionTiles sections={sections} lang={lang} onOpen={openSection}/>
 
-        {/* верхний бар */}
-        <TopBar
-          lang={lang} setLang={setLang}
-          direction={direction} setDirection={setDirection}
-          directions={DIRECTIONS}
-          onOpenSection={openSection}
-        />
-
-        {/* верньер */}
-        <Vernier
-          time={time} duration={DURATION}
-          playing={playing}
-          onPlayPause={() => setPlaying(p => !p)}
-          onSeek={t => setTime(t)}
-          onHover={() => {}}
-          years={[1918, 1919, 1920, 1921, 1922]}
-        />
-
-        {/* подсказка для тач-взаимодействия */}
         <div style={{
-          position: 'absolute', bottom: 28, left: '50%',
-          transform: 'translateX(-50%)',
-          fontFamily: fonts.mono,
-          fontSize: 13,
-          letterSpacing: '0.3em',
-          color: theme.inkFaint,
-          textTransform: 'uppercase',
+          position: 'absolute', bottom: 26, left: 0, right: 0, zIndex: 3,
+          textAlign: 'center',
+          fontFamily: fonts.mono, fontSize: 13, letterSpacing: '0.3em',
+          color: theme.paperWarm, textTransform: 'uppercase',
           pointerEvents: 'none',
         }}>
           {lang === 'ru'
-            ? '◂ ПЕРЕТАЩИТЕ ВЕРНЬЕР ДЛЯ ДВИЖЕНИЯ ПО ГОДАМ ▸    ·    НАЖМИТЕ РАЗДЕЛ СВЕРХУ, ЧТОБЫ СМЕНИТЬ ВИД'
-            : '◂ DRAG THE VERNIER TO SCRUB THROUGH THE YEARS ▸    ·    TAP A SECTION ABOVE TO CHANGE THE VIEW'}
+            ? 'Нажмите годъ на лентѣ времени · нажмите разделъ, чтобы открыть'
+            : 'Tap a year on the timeline · tap a section to open'}
         </div>
       </div>
 
       {/* Оверлей с разделами: iframe'ы остаются в DOM после первого открытия. */}
-      {Object.entries(SECTION_SRCS).map(([id, src]) => (
-        loadedSections.has(id) ? (
-          <div key={id} style={{
+      {overlays.map(s => (
+        loadedSections.has(s.id) ? (
+          <div key={s.id} style={{
             position: 'fixed', inset: 0,
             zIndex: 200,
             background: '#050301',
-            display: activeSection === id ? 'block' : 'none',
+            display: activeSection === s.id ? 'block' : 'none',
           }}>
             <iframe
-              src={src}
-              title={id}
+              src={s.src}
+              title={s.id}
               style={{
                 position: 'absolute', inset: 0,
                 width: '100%', height: '100%',
