@@ -1,5 +1,9 @@
 # Node
-node_modules/
+# Без слэша: в зонах-worktree node_modules — это СИМЛИНК в ../mtk29/node_modules,
+# а паттерн `node_modules/` симлинк не ловит (git видит его как файл, не каталог).
+# Из-за этого во всех пяти зонах он висел в `git status` как untracked и мешал
+# проверке §12 «видно только своё».
+node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
