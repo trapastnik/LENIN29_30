@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 1350,
       "h": 1245,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kolchak/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 2518,
       "h": 1807,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kolchak/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,14 @@
       "extra_ru": null,
       "w": 4032,
       "h": 2892,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kolchak/03"
+      ]
     },
     {
       "n": 4,
@@ -80,10 +101,17 @@
       "extra_ru": null,
       "w": 3732,
       "h": 5500,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Дизайнерам: подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kolchak/04"
       ]
     },
     {
@@ -98,10 +126,17 @@
       "extra_ru": null,
       "w": 4070,
       "h": 5045,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Дизайнерам: подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kolchak/05"
       ]
     }
   ],

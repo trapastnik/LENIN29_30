@@ -46,8 +46,14 @@
       "extra_ru": null,
       "w": 640,
       "h": 851,
-      "tiers": [],
-      "note_ru": "Убрать надпись справа внизу или немного подрезать фото снизу."
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "note_ru": "Убрать надпись справа внизу или немного подрезать фото снизу.",
+      "files": [
+        "media/parties/national-center/01"
+      ]
     },
     {
       "n": 2,
@@ -61,7 +67,14 @@
       "extra_ru": null,
       "w": 655,
       "h": 1005,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/national-center/02"
+      ]
     },
     {
       "n": 3,
@@ -75,7 +88,14 @@
       "extra_ru": null,
       "w": 736,
       "h": 1098,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/national-center/03"
+      ]
     }
   ],
   "related": {

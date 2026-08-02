@@ -39,13 +39,20 @@
       "extra_ru": null,
       "w": 2362,
       "h": 3321,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Ранее использовалось в Большевики 02\nПодрезать поля",
       "directives": [
         "trim",
         "duplicate_of"
       ],
-      "duplicate_of": "Большевики 02"
+      "duplicate_of": "Большевики 02",
+      "files": [
+        "media/events/vybory-v-us/01"
+      ]
     },
     {
       "n": 2,
@@ -59,10 +66,17 @@
       "extra_ru": null,
       "w": 2937,
       "h": 4187,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/vybory-v-us/02"
       ]
     },
     {
@@ -77,7 +91,14 @@
       "extra_ru": null,
       "w": 2915,
       "h": 3717,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vybory-v-us/03"
+      ]
     },
     {
       "n": 4,
@@ -91,7 +112,14 @@
       "extra_ru": null,
       "w": 8302,
       "h": 5074,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vybory-v-us/04"
+      ]
     },
     {
       "n": 5,
@@ -105,12 +133,19 @@
       "extra_ru": null,
       "w": 8302,
       "h": 5074,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Ранее использовалось в Урицком",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "Урицком"
+      "duplicate_of": "Урицком",
+      "files": [
+        "media/events/vybory-v-us/05"
+      ]
     }
   ],
   "related": {

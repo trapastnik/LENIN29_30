@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 2400,
       "h": 3691,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vtoroy-sezd-sovetov/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,14 @@
       "extra_ru": null,
       "w": 3169,
       "h": 2598,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vtoroy-sezd-sovetov/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +81,14 @@
       "extra_ru": null,
       "w": 2535,
       "h": 1554,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vtoroy-sezd-sovetov/03"
+      ]
     },
     {
       "n": 4,
@@ -81,7 +102,14 @@
       "extra_ru": null,
       "w": 1368,
       "h": 1112,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vtoroy-sezd-sovetov/04"
+      ]
     }
   ],
   "related": {

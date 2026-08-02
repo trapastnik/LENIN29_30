@@ -52,7 +52,14 @@
       "extra_ru": "*Изготовлено весной 1917 г. по указанию Н. И. Подвойского золотошвейкой М. С. Александровой. Знамя погибло в начале июля 1917 г. после занятия особняка М. Ф. Кшесинской солдатами Временного правительства. Воссоздано по заказу музея.*",
       "w": 3401,
       "h": 2338,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/bolsheviks/01"
+      ]
     },
     {
       "n": 2,
@@ -66,10 +73,17 @@
       "extra_ru": null,
       "w": 2362,
       "h": 3321,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/bolsheviks/02"
       ]
     },
     {
@@ -84,7 +98,14 @@
       "extra_ru": null,
       "w": 2577,
       "h": 1848,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/bolsheviks/03"
+      ]
     },
     {
       "n": 4,
@@ -98,10 +119,17 @@
       "extra_ru": null,
       "w": 1158,
       "h": 1738,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/bolsheviks/04"
       ]
     },
     {
@@ -116,10 +144,17 @@
       "extra_ru": null,
       "w": 2251,
       "h": 1715,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать белые поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/bolsheviks/05"
       ]
     }
   ],

@@ -37,7 +37,14 @@
       "extra_ru": null,
       "w": 3513,
       "h": 4799,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pilsudski/01"
+      ]
     },
     {
       "n": 2,
@@ -51,7 +58,14 @@
       "extra_ru": null,
       "w": 1046,
       "h": 1661,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pilsudski/02"
+      ]
     },
     {
       "n": 3,
@@ -65,7 +79,14 @@
       "extra_ru": null,
       "w": 2953,
       "h": 1955,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pilsudski/03"
+      ]
     },
     {
       "n": 4,
@@ -79,7 +100,13 @@
       "extra_ru": null,
       "w": 900,
       "h": 599,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pilsudski/04"
+      ]
     }
   ],
   "related": {

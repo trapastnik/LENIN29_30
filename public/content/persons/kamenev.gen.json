@@ -38,10 +38,17 @@
       "extra_ru": null,
       "w": 1584,
       "h": 2292,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kamenev/01"
       ]
     },
     {
@@ -56,10 +63,17 @@
       "extra_ru": null,
       "w": 2184,
       "h": 2853,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kamenev/02"
       ]
     },
     {
@@ -74,10 +88,17 @@
       "extra_ru": null,
       "w": 2170,
       "h": 1536,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kamenev/03"
       ]
     }
   ],

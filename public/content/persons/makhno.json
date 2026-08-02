@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 1872,
       "h": 2400,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/makhno/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,13 @@
       "extra_ru": null,
       "w": 695,
       "h": 709,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/makhno/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +80,14 @@
       "extra_ru": null,
       "w": 919,
       "h": 1200,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/makhno/03"
+      ]
     }
   ],
   "related": {

@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 1200,
       "h": 1600,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/khodzhaev/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,12 @@
       "extra_ru": null,
       "w": 357,
       "h": 491,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/persons/khodzhaev/02"
+      ]
     },
     {
       "n": 3,

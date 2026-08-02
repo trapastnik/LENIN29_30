@@ -38,8 +38,15 @@
       "extra_ru": null,
       "w": 1287,
       "h": 1814,
-      "tiers": [],
-      "note_ru": "Убрать номер справа"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Убрать номер справа",
+      "files": [
+        "media/persons/shulgin/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,14 @@
       "extra_ru": null,
       "w": 6299,
       "h": 4306,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/shulgin/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +81,14 @@
       "extra_ru": null,
       "w": 1080,
       "h": 1080,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/shulgin/03"
+      ]
     }
   ],
   "related": {

@@ -37,8 +37,15 @@
       "extra_ru": null,
       "w": 2772,
       "h": 3875,
-      "tiers": [],
-      "note_ru": "ПРИМЕЧАНИЕ ХУДОЖНИКАМ: СТЕРЕТЬ НОМЕРА ВНИЗУ ФОТО"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "ПРИМЕЧАНИЕ ХУДОЖНИКАМ: СТЕРЕТЬ НОМЕРА ВНИЗУ ФОТО",
+      "files": [
+        "media/persons/pyats/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,13 @@
       "extra_ru": null,
       "w": 620,
       "h": 420,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pyats/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +79,14 @@
       "extra_ru": null,
       "w": 2381,
       "h": 3520,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/pyats/03"
+      ]
     }
   ],
   "related": {

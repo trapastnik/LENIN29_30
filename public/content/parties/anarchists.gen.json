@@ -55,10 +55,17 @@
       "extra_ru": null,
       "w": 1144,
       "h": 1736,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать белые поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/anarchists/01"
       ]
     },
     {
@@ -73,7 +80,14 @@
       "extra_ru": null,
       "w": 1058,
       "h": 1662,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/anarchists/02"
+      ]
     },
     {
       "n": 3,
@@ -87,10 +101,17 @@
       "extra_ru": null,
       "w": 1463,
       "h": 1979,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/anarchists/03"
       ]
     },
     {
@@ -105,7 +126,14 @@
       "extra_ru": "*Справа – А. М. Краснощёков, председатель правительства и министр иностранных дел Дальневосточной республики.*",
       "w": 1398,
       "h": 1961,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/anarchists/04"
+      ]
     },
     {
       "n": 5,
@@ -119,10 +147,17 @@
       "extra_ru": null,
       "w": 4269,
       "h": 3255,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать черные поля по периметру изображения",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/anarchists/05"
       ]
     }
   ],

@@ -53,10 +53,18 @@
       "extra_ru": "*Напечатано на шелке.*",
       "w": 1722,
       "h": 1408,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "09 ХНСР 01 1.jpg",
         "09 ХНСР 01 2.jpg"
+      ],
+      "files": [
+        "media/states/khnsr/01",
+        "media/states/khnsr/01p2"
       ]
     }
   ],

@@ -44,10 +44,16 @@
       "extra_ru": null,
       "w": 1200,
       "h": 748,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "note_ru": "Удалить черное поле с современным текстом внизу, а также не растягивать это фото на максимум, качества точно не хватит, сделать поменьше.",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/dashnaktsutyun/01"
       ]
     },
     {
@@ -62,7 +68,13 @@
       "extra_ru": null,
       "w": 760,
       "h": 852,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/dashnaktsutyun/02"
+      ]
     },
     {
       "n": 3,
@@ -76,10 +88,17 @@
       "extra_ru": null,
       "w": 883,
       "h": 1024,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Удалить белые поля.",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/dashnaktsutyun/03"
       ]
     }
   ],

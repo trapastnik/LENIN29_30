@@ -81,7 +81,14 @@
       "extra_ru": null,
       "w": 2343,
       "h": 1560,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/bukharskaya-operatsiya/04"
+      ]
     }
   ],
   "related": {

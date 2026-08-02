@@ -39,10 +39,17 @@
       "extra_ru": null,
       "w": 800,
       "h": 1249,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/gegechkori/01"
       ]
     },
     {
@@ -57,8 +64,15 @@
       "extra_ru": null,
       "w": 1920,
       "h": 1080,
-      "tiers": [],
-      "note_ru": "Попробовать убрать пятна"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Попробовать убрать пятна",
+      "files": [
+        "media/persons/gegechkori/02"
+      ]
     }
   ],
   "related": {

@@ -36,7 +36,14 @@
       "extra_ru": null,
       "w": 4442,
       "h": 3147,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/01"
+      ]
     },
     {
       "n": 2,
@@ -50,7 +57,13 @@
       "extra_ru": null,
       "w": 572,
       "h": 813,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/02"
+      ]
     },
     {
       "n": 3,
@@ -64,7 +77,14 @@
       "extra_ru": "*Дутов Александр Ильич (1879–1921), один из лидеров Белого движения, генерал-лейтенант (1919). В 1917–1921 гг. атаман Оренбургского казачьего войска.*",
       "w": 1434,
       "h": 2085,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/03"
+      ]
     },
     {
       "n": 4,
@@ -78,7 +98,14 @@
       "extra_ru": null,
       "w": 2819,
       "h": 2061,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/04"
+      ]
     },
     {
       "n": 5,
@@ -92,7 +119,11 @@
       "extra_ru": null,
       "w": 2039,
       "h": 1261,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "26 Оренб 05 1.jpg",
         "26 Оренб 05 2.jpg"
@@ -101,6 +132,10 @@
       "directives": [
         "trim",
         "spread"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/05",
+        "media/states/orenburg-cossack-host/05p2"
       ]
     },
     {
@@ -115,10 +150,17 @@
       "extra_ru": null,
       "w": 2025,
       "h": 1347,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/states/orenburg-cossack-host/06"
       ]
     }
   ],

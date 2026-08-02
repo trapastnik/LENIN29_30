@@ -39,8 +39,15 @@
       "extra_ru": null,
       "w": 4164,
       "h": 2804,
-      "tiers": [],
-      "note_ru": "Убрать белые поля и подрезать левый край"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Убрать белые поля и подрезать левый край",
+      "files": [
+        "media/events/pokhod-kerenskogo-krasnova/01"
+      ]
     },
     {
       "n": 2,
@@ -54,7 +61,14 @@
       "extra_ru": null,
       "w": 2671,
       "h": 2034,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/pokhod-kerenskogo-krasnova/02"
+      ]
     },
     {
       "n": 3,
@@ -68,8 +82,15 @@
       "extra_ru": null,
       "w": 3008,
       "h": 4280,
-      "tiers": [],
-      "note_ru": "Убрать черные края"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Убрать черные края",
+      "files": [
+        "media/events/pokhod-kerenskogo-krasnova/03"
+      ]
     },
     {
       "n": 4,
@@ -83,8 +104,15 @@
       "extra_ru": null,
       "w": 1995,
       "h": 1290,
-      "tiers": [],
-      "note_ru": "Обрезать надпись внизу, сделать размер чуть меньше, так как качество не очень."
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Обрезать надпись внизу, сделать размер чуть меньше, так как качество не очень.",
+      "files": [
+        "media/events/pokhod-kerenskogo-krasnova/04"
+      ]
     },
     {
       "n": 5,

@@ -39,7 +39,14 @@
       "extra_ru": "*Перхуров Александр Петрович (1876–1922), полковник Русской армии, участник Русско-японской и Первой мировой войн. Начальник штаба СЗРиС. За руководство восстанием в Ярославле произведен Верховным правителем А. В. Колчаком в генерал-майоры. В 1922 г. расстрелян по приговору Военной коллегии Верховного ревтрибунала.*",
       "w": 763,
       "h": 1254,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/01"
+      ]
     },
     {
       "n": 2,
@@ -53,10 +60,17 @@
       "extra_ru": null,
       "w": 1725,
       "h": 1251,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/02"
       ]
     },
     {
@@ -71,10 +85,17 @@
       "extra_ru": null,
       "w": 1995,
       "h": 1443,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "обрезать поля, выровнять фото",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/03"
       ]
     },
     {
@@ -89,10 +110,17 @@
       "extra_ru": null,
       "w": 1491,
       "h": 1035,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/04"
       ]
     },
     {
@@ -107,7 +135,14 @@
       "extra_ru": null,
       "w": 1950,
       "h": 1294,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/05"
+      ]
     },
     {
       "n": 6,
@@ -121,7 +156,14 @@
       "extra_ru": "*Гроб с телом Нахимсона был отправлен в Петроград и захоронен на Марсовом поле.*",
       "w": 2040,
       "h": 1443,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/yaroslavskoe-vosstanie/06"
+      ]
     }
   ],
   "related": {

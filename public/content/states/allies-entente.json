@@ -87,7 +87,14 @@
       "extra_ru": null,
       "w": 1206,
       "h": 911,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/allies-entente/01"
+      ]
     },
     {
       "n": 2,
@@ -101,7 +108,14 @@
       "extra_ru": null,
       "w": 2028,
       "h": 1355,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/allies-entente/02"
+      ]
     },
     {
       "n": 3,
@@ -115,7 +129,14 @@
       "extra_ru": null,
       "w": 1420,
       "h": 1932,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/allies-entente/03"
+      ]
     },
     {
       "n": 4,
@@ -129,7 +150,14 @@
       "extra_ru": null,
       "w": 3936,
       "h": 2772,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/allies-entente/04"
+      ]
     },
     {
       "n": 5,
@@ -143,7 +171,14 @@
       "extra_ru": null,
       "w": 2451,
       "h": 1368,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/allies-entente/05"
+      ]
     }
   ],
   "related": {

@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 923,
       "h": 1204,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bukeykhanov/01"
+      ]
     },
     {
       "n": 2,
@@ -66,7 +73,14 @@
       "extra_ru": null,
       "w": 1429,
       "h": 826,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bukeykhanov/03"
+      ]
     },
     {
       "n": 4,
@@ -80,7 +94,14 @@
       "extra_ru": null,
       "w": 1077,
       "h": 1440,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bukeykhanov/04"
+      ]
     }
   ],
   "related": {
