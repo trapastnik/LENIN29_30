@@ -42,9 +42,13 @@
     /* ───── Экран 1: выбор группы (крупные блоки) ───── */
     #groups-mode { display: flex; flex-direction: column; gap: 28px; }
 
+    /* Групп шесть, а не четыре: к «красным», «белым», «революционной
+       демократии» и «интервенции» добавились повстанческие движения (8)
+       и национальные государства (13). Раскладка 3×2 держит все шесть;
+       прежние repeat(2,1fr) отправляли лишние в неявные строки за край. */
     .group-picker {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 24px;
       flex: 1;
@@ -240,16 +244,54 @@
     const backBtn = document.getElementById('back-to-groups');
     let activeCamp = null;
 
+    // Временный запас на группы, которых ещё нет в idx.camps.
+    // 21 образование (8 повстанческих + 13 национальных) было недоступно:
+    // renderPicker шёл по idx.camps, а там перечислены четыре из шести.
+    // Заявка в content — дописать записи в _index.json; как только они
+    // появятся, эта карта перестанет срабатывать сама собой.
+    // Цвет: у --camp-uprising токена нет, берём --camp-green — Махно,
+    // Антонов и «чапанная война» это ровно «зелёные», а не новый цвет.
+    const CAMP_FALLBACK = {
+      uprising: { title_ru: 'Повстанческие движения', color: 'var(--camp-green)' },
+      national: { title_ru: 'Национальные государства', color: 'var(--camp-national)' },
+    };
+
     function countFor(campId) {
       return idx.items.filter(i => i.camp === campId).length;
     }
 
+    // Список групп берём из самих образований, а не из idx.camps: иначе
+    // забытая запись в индексе молча прячет целую группу — без ошибки,
+    // просто на экране её нет. Порядок idx.camps сохраняем, остальные —
+    // следом, по убыванию наполнения.
+    function groupsFromItems() {
+      const declared = idx.camps || [];
+      const order = new Map(declared.map((c, i) => [c.id, i]));
+      const ids = [...new Set(idx.items.map(i => i.camp).filter(Boolean))];
+      ids.sort((a, b) => {
+        const oa = order.has(a) ? order.get(a) : Infinity;
+        const ob = order.has(b) ? order.get(b) : Infinity;
+        if (oa !== ob) return oa - ob;
+        return countFor(b) - countFor(a);
+      });
+      return ids.map(id => {
+        const known = declared.find(c => c.id === id);
+        const spare = CAMP_FALLBACK[id];
+        if (!known && !spare) console.warn(`[states] группа «${id}» без названия — добавь её в _index.json`);
+        return {
+          id,
+          title_ru: (known && known.title_ru) || (spare && spare.title_ru) || id,
+          color: (spare && spare.color) || `var(--camp-${id})`,
+        };
+      });
+    }
+
     function renderPicker() {
       pickerEl.innerHTML = '';
-      for (const c of idx.camps) {
+      for (const c of groupsFromItems()) {
         const b = document.createElement('button');
         b.className = 'group-btn';
-        b.style.setProperty('--camp-color', `var(--camp-${c.id})`);
+        b.style.setProperty('--camp-color', c.color);
         b.innerHTML = `
           <div class="kicker">Группа</div>
           <h3>${c.title_ru}</h3>
@@ -263,15 +305,17 @@
 
     function openGroup(campId) {
       activeCamp = campId;
-      const camp = idx.camps.find(c => c.id === campId);
+      // Через тот же список, что и плитки: idx.camps не знает про две группы,
+      // и прямой find() здесь давал бы undefined.title_ru.
+      const camp = groupsFromItems().find(c => c.id === campId);
       const list = idx.items.filter(i => i.camp === campId);
-      detailEl.style.setProperty('--camp-color', `var(--camp-${campId})`);
+      detailEl.style.setProperty('--camp-color', camp.color);
       titleEl.innerHTML = `${camp.title_ru}<span class="cnt">· ${list.length} ${list.length === 1 ? 'образование' : 'образований'}</span>`;
       itemsEl.innerHTML = '';
       for (const it of list) {
         const row = document.createElement('div');
         row.className = 'state-plate' + (it.map_id ? ' has-map' : '');
-        row.style.setProperty('--camp-color', `var(--camp-${it.camp})`);
+        row.style.setProperty('--camp-color', camp.color);
         row.innerHTML = `
           <div class="name">${it.title_ru}</div>
           <div class="abbr">${it.abbr_ru || '\u00A0'}</div>

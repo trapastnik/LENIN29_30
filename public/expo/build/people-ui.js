@@ -5,6 +5,39 @@ if (!window.MTK_TOKENS) {
   throw new Error("people-ui.jsx: \u043D\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D brand-tokens.js (\u0441\u043C. public/expo/people.html)");
 }
 const SIDE_META = window.MTK_SIDE_META;
+const SIDE_NEUTRAL = {
+  ru: "\u0412\u043D\u0463 \u043B\u0430\u0433\u0435\u0440\u0435\u0439",
+  en: "Unaligned",
+  color: "#5D6970",
+  // BRAND.slateBlue
+  accent: "#9DA3A6",
+  // BRAND.slateWindow
+  flag: "#555D61"
+  // BRAND.ironGrey
+};
+function sideMeta(side) {
+  return side && SIDE_META[side] || SIDE_NEUTRAL;
+}
+const RICH_RE = /\[([^\]]+)\]\(([^)]+)\)|(\*\*\*)([^*]+)\3|(\*\*)([^*]+)\5|(\*)([^*]+)\7/g;
+function richText(src, accent) {
+  const out = [];
+  let last = 0, m, key = 0;
+  while ((m = RICH_RE.exec(src)) !== null) {
+    if (m.index > last) out.push(src.slice(last, m.index));
+    if (m[1] !== void 0) {
+      out.push(/* @__PURE__ */ React.createElement("span", { key: key++, style: { color: accent, borderBottom: `1px dotted ${accent}` } }, m[1]));
+    } else if (m[3]) {
+      out.push(/* @__PURE__ */ React.createElement("b", { key: key++, style: { color: accent, fontWeight: 700 } }, m[4]));
+    } else if (m[5]) {
+      out.push(/* @__PURE__ */ React.createElement("b", { key: key++, style: { fontWeight: 700 } }, m[6]));
+    } else {
+      out.push(/* @__PURE__ */ React.createElement("b", { key: key++, style: { fontWeight: 600 } }, m[8]));
+    }
+    last = m.index + m[0].length;
+  }
+  if (last < src.length) out.push(src.slice(last));
+  return out;
+}
 const BRAND = window.BRAND_THEME;
 const theme = window.MTK_PEOPLE_THEME;
 const fonts = window.MTK_PEOPLE_FONTS;
@@ -197,9 +230,9 @@ function SettingsPanel({
 }) {
   const [open, setOpen] = React.useState(() => {
     try {
-      return localStorage.getItem("expo:settingsOpen") !== "0";
+      return localStorage.getItem("expo:settingsOpen") === "1";
     } catch {
-      return true;
+      return false;
     }
   });
   React.useEffect(() => {
@@ -329,7 +362,7 @@ function paperFill() {
   };
 }
 function Silhouette({ side, size = 240, accent }) {
-  const meta = SIDE_META[side];
+  const meta = sideMeta(side);
   return /* @__PURE__ */ React.createElement("svg", { viewBox: "0 0 100 140", style: { width: size, height: size * 1.4 } }, /* @__PURE__ */ React.createElement("defs", null, /* @__PURE__ */ React.createElement("radialGradient", { id: `bg-${side}`, cx: "50%", cy: "40%", r: "70%" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#8a6a3c" }), /* @__PURE__ */ React.createElement("stop", { offset: "60%", stopColor: "#4a2e14" }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#1a0d05" })), /* @__PURE__ */ React.createElement("linearGradient", { id: `sil-${side}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#1a0d05" }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#2a1a0a" }))), /* @__PURE__ */ React.createElement("rect", { x: "0", y: "0", width: "100", height: "140", fill: `url(#bg-${side})` }), /* @__PURE__ */ React.createElement("rect", { x: "0", y: "0", width: "100", height: "140", fill: "url(#noise)", opacity: ".15" }), /* @__PURE__ */ React.createElement(
     "path",
     {
@@ -339,7 +372,7 @@ function Silhouette({ side, size = 240, accent }) {
   ), /* @__PURE__ */ React.createElement("circle", { cx: "72", cy: "108", r: "6", fill: meta.flag, opacity: ".85" }), /* @__PURE__ */ React.createElement("circle", { cx: "72", cy: "108", r: "6", fill: "none", stroke: "#f0dcae", strokeOpacity: ".3", strokeWidth: ".6" }), /* @__PURE__ */ React.createElement("rect", { x: "0", y: "0", width: "100", height: "140", fill: "url(#vign)", opacity: ".7" }), /* @__PURE__ */ React.createElement("defs", null, /* @__PURE__ */ React.createElement("radialGradient", { id: "vign", cx: "50%", cy: "50%", r: "70%" }, /* @__PURE__ */ React.createElement("stop", { offset: "60%", stopColor: "#000", stopOpacity: "0" }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#000", stopOpacity: ".7" }))));
 }
 function SideFlag({ side, lang }) {
-  const meta = SIDE_META[side];
+  const meta = sideMeta(side);
   return /* @__PURE__ */ React.createElement("div", { style: {
     display: "inline-flex",
     alignItems: "center",
@@ -356,13 +389,17 @@ function SideFlag({ side, lang }) {
   } }, /* @__PURE__ */ React.createElement("span", { style: { width: 10, height: 10, background: "#f0dcae", opacity: 0.85 } }), meta[lang]);
 }
 function PersonCard({ person, lang, onOpen, delay }) {
-  const d = person[lang];
-  const meta = SIDE_META[person.side];
+  const meta = sideMeta(person.side);
   return /* @__PURE__ */ React.createElement(
     "button",
     {
-      onClick: onOpen,
+      onClick: onOpen || void 0,
+      disabled: !onOpen,
       style: {
+        // Заглушка без справки не кликается: файла <id>.json у неё нет,
+        // тап давал бы 404 и пустую модалку.
+        opacity: onOpen ? 1 : 0.55,
+        cursor: onOpen ? "pointer" : "default",
         position: "relative",
         // isolate: каждая карточка в своём stacking-context — соседи не
         // съедают её клик, даже когда transform-rotate их слегка пересекает
@@ -446,31 +483,55 @@ function PersonCard({ person, lang, onOpen, delay }) {
       letterSpacing: "0.15em",
       textShadow: "0 1px 2px #000"
     } }, person.years)), /* @__PURE__ */ React.createElement("div", { style: {
-      fontFamily: fonts.mono,
-      fontSize: 10,
-      letterSpacing: "0.25em",
-      color: theme.inkFade,
-      textTransform: "uppercase"
-    } }, d.name), /* @__PURE__ */ React.createElement("div", { style: {
       fontFamily: fonts.display,
-      fontSize: 24,
-      lineHeight: 1,
+      fontSize: 22,
+      lineHeight: 1.05,
       color: theme.ink,
       marginTop: 2
-    } }, d.sur), /* @__PURE__ */ React.createElement("div", { style: {
+    } }, person.title), /* @__PURE__ */ React.createElement("div", { style: {
       marginTop: 8,
-      fontFamily: fonts.body,
-      fontSize: 12,
-      color: theme.inkSoft,
-      lineHeight: 1.3
-    } }, d.role), /* @__PURE__ */ React.createElement("div", { style: {
-      marginTop: 4,
-      fontFamily: fonts.stamp,
-      fontSize: 11,
+      fontFamily: fonts.mono,
+      fontSize: 10,
+      letterSpacing: "0.2em",
       color: meta.color,
-      letterSpacing: "0.05em"
-    } }, d.tag))
+      textTransform: "uppercase"
+    } }, meta[lang]), person.stub && /* @__PURE__ */ React.createElement("div", { style: {
+      marginTop: 6,
+      fontFamily: fonts.mono,
+      fontSize: 10,
+      letterSpacing: "0.15em",
+      color: theme.inkFade,
+      textTransform: "uppercase"
+    } }, lang === "ru" ? "\u0441\u043F\u0440\u0430\u0432\u043A\u0438 \u043F\u043E\u043A\u0430 \u043D\u0463\u0442\u044A" : "no dossier yet"))
   );
+}
+function PhotoFrame({ photo, lang }) {
+  if (photo && photo.src) {
+    return /* @__PURE__ */ React.createElement("img", { src: photo.src, alt: "", loading: "lazy", style: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "top",
+      display: "block",
+      filter: "sepia(0.12) contrast(1.04)"
+    } });
+  }
+  return /* @__PURE__ */ React.createElement("div", { style: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: 10,
+    background: "linear-gradient(160deg, #435059 0%, #2a2f33 100%)",
+    fontFamily: fonts.mono,
+    fontSize: 9,
+    lineHeight: 1.5,
+    letterSpacing: "0.16em",
+    color: "#9DA3A6",
+    textTransform: "uppercase"
+  } }, lang === "ru" ? "\u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0456\u0435 \u043D\u0435 \u0441\u043E\u0431\u0440\u0430\u043D\u043E" : "image not built");
 }
 function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext }) {
   return /* @__PURE__ */ React.createElement("div", { style: {
@@ -556,7 +617,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
   const hasTextBg = textBg !== "transparent";
   const frame = frameCfg || FRAME_VARIANTS.graphiteSoft;
   const d = person[lang];
-  const meta = SIDE_META[person.side];
+  const meta = sideMeta(person.side);
   const photos = person.photos || [];
   const [viewMode, setViewMode] = React.useState(() => {
     try {
@@ -754,7 +815,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         lineHeight: 1.6,
         maxWidth: 720,
         textWrap: "pretty"
-      } }, d.bio.split(/\n\s*\n/).map((p, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: { margin: i === 0 ? "0 0 0.85em" : "0.85em 0" } }, p))), d.facts && d.facts.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
+      } }, (d.bio || "").split(/\n\s*\n/).map((p, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: { margin: i === 0 ? "0 0 0.85em" : "0.85em 0" } }, richText(p, meta.accent)))), d.facts && d.facts.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
         marginTop: 28,
         display: "grid",
         gridTemplateColumns: "repeat(2, 1fr)",
@@ -782,7 +843,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
         gap: 18,
         maxWidth: 820
-      } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setLightboxIdx(i), style: {
+      } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: ph.src ? () => setLightboxIdx(i) : void 0, disabled: !ph.src, style: {
+        // Без производной открывать нечего — лайтбокс дал бы пустой экран.
+        cursor: ph.src ? "pointer" : "default",
         display: "block",
         width: "100%",
         padding: 0,
@@ -795,14 +858,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         overflow: "hidden",
         background: "#1a0d05",
         border: `1px solid ${theme.inkSoft}`
-      } }, /* @__PURE__ */ React.createElement("img", { src: ph.src, alt: "", loading: "lazy", style: {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        objectPosition: "top",
-        display: "block",
-        filter: "sepia(0.12) contrast(1.04)"
-      } }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
+      } }, /* @__PURE__ */ React.createElement(PhotoFrame, { photo: ph, lang }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
         marginTop: 8,
         fontFamily: fonts.body,
         fontSize: 12,
@@ -825,7 +881,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         // они занимают левую часть, не растягиваются на всю ширину
         gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
         gap: 12
-      } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setLightboxIdx(i), style: {
+      } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ React.createElement("button", { onClick: ph.src ? () => setLightboxIdx(i) : void 0, disabled: !ph.src, style: {
+        // Без производной открывать нечего — лайтбокс дал бы пустой экран.
+        cursor: ph.src ? "pointer" : "default",
         display: "block",
         width: "100%",
         padding: 0,
@@ -838,14 +896,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         overflow: "hidden",
         background: "#1a0d05",
         border: `1px solid ${theme.inkSoft}`
-      } }, /* @__PURE__ */ React.createElement("img", { src: ph.src, alt: "", loading: "lazy", style: {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        objectPosition: "top",
-        display: "block",
-        filter: "sepia(0.12) contrast(1.04)"
-      } }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
+      } }, /* @__PURE__ */ React.createElement(PhotoFrame, { photo: ph, lang }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
         marginTop: 6,
         fontFamily: fonts.body,
         fontSize: 11,
@@ -992,29 +1043,62 @@ function PersonalitiesApp() {
     return () => window.removeEventListener("message", onMsg);
   }, []);
   React.useEffect(() => {
+    if (!openId) setLightboxIdx(null);
+  }, [openId]);
+  const [people, setPeople] = React.useState([]);
+  const [indexError, setIndexError] = React.useState(null);
+  React.useEffect(() => {
+    let alive = true;
+    window.MTK_PERSONS.loadIndex().then((list) => {
+      if (!alive) return;
+      setPeople(list.map((p, i) => ({
+        ...p,
+        _rot: [-2.5, 1.8, -1, 2.2, -1.5, 0.9, -2.1, 1.4, -0.8, 2.5, -1.9, 1.1, -2.2, 0.7, -1.3, 2][i % 16]
+      })));
+    }).catch((err) => {
+      if (alive) setIndexError(err);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const [opened, setOpened] = React.useState(null);
+  const [openError, setOpenError] = React.useState(null);
+  React.useEffect(() => {
+    if (!openId) {
+      setOpened(null);
+      setOpenError(null);
+      return;
+    }
+    let alive = true;
+    setOpenError(null);
+    window.MTK_PERSONS.loadPerson(openId).then((p) => {
+      if (alive) setOpened({ ...p, _rot: 0 });
+    }).catch((err) => {
+      if (alive) {
+        setOpened(null);
+        setOpenError(err);
+      }
+    });
+    return () => {
+      alive = false;
+    };
+  }, [openId]);
+  const shown = filter === "all" ? people : filter === "none" ? people.filter((p) => !p.side) : people.filter((p) => p.side === filter);
+  React.useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
         if (lightboxIdx !== null) setLightboxIdx(null);
         else if (openId) setOpenId(null);
       } else if (lightboxIdx !== null) {
-        const opened2 = window.People.find((p) => p.id === openId);
-        const photos = opened2?.photos || [];
+        const photos = opened && opened.photos || [];
         if (e.key === "ArrowLeft" && lightboxIdx > 0) setLightboxIdx((i) => i - 1);
         else if (e.key === "ArrowRight" && lightboxIdx < photos.length - 1) setLightboxIdx((i) => i + 1);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIdx, openId]);
-  React.useEffect(() => {
-    if (!openId) setLightboxIdx(null);
-  }, [openId]);
-  const people = React.useMemo(() => window.People.map((p, i) => ({
-    ...p,
-    _rot: [-2.5, 1.8, -1, 2.2, -1.5, 0.9, -2.1, 1.4, -0.8, 2.5, -1.9, 1.1, -2.2, 0.7, -1.3, 2][i % 16]
-  })), []);
-  const shown = filter === "all" ? people : people.filter((p) => p.side === filter);
-  const opened = openId ? people.find((p) => p.id === openId) : null;
+  }, [lightboxIdx, openId, opened]);
   return /* @__PURE__ */ React.createElement("div", { className: "brand-scroll", style: {
     position: "absolute",
     inset: 0,
@@ -1146,10 +1230,18 @@ function PersonalitiesApp() {
       count: people.filter((p) => p.side === "green").length,
       brand: "#5D6970"
       /* BRAND.slateBlue */
+    },
+    {
+      id: "none",
+      ru: "\u0412\u043D\u0463 \u043B\u0430\u0433\u0435\u0440\u0435\u0439",
+      en: "Unaligned",
+      count: people.filter((p) => !p.side).length,
+      brand: "#9DA3A6"
+      /* BRAND.slateWindow */
     }
-  ].map((f) => {
+  ].filter((f) => f.count > 0).map((f) => {
     const active = filter === f.id;
-    const lightBg = f.brand === "#D2B773" || f.brand === "#CFD0CF";
+    const lightBg = f.brand === "#D2B773" || f.brand === "#CFD0CF" || f.brand === "#9DA3A6";
     const activeText = lightBg ? "#000" : "#F7F9EF";
     return /* @__PURE__ */ React.createElement("button", { key: f.id, onClick: () => setFilter(f.id), style: {
       fontFamily: fonts.mono,
@@ -1183,10 +1275,45 @@ function PersonalitiesApp() {
       key: p.id,
       person: p,
       lang,
-      delay: i * 45,
-      onOpen: () => setOpenId(p.id)
+      delay: Math.min(i, 12) * 45,
+      onOpen: p.stub ? null : () => setOpenId(p.id)
     }
-  ))), opened && /* @__PURE__ */ React.createElement(
+  ))), indexError && /* @__PURE__ */ React.createElement("div", { style: {
+    padding: "40px",
+    fontFamily: fonts.mono,
+    fontSize: 14,
+    color: theme.brass,
+    letterSpacing: "0.1em"
+  } }, lang === "ru" ? "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A\u044A \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0439: " : "Could not load the list of people: ", String(indexError.message || indexError)), openId && !opened && !openError && /* @__PURE__ */ React.createElement("div", { style: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 100,
+    background: "rgba(10,6,3,0.72)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: fonts.mono,
+    fontSize: 13,
+    letterSpacing: "0.3em",
+    color: theme.brass,
+    textTransform: "uppercase"
+  }, onClick: () => setOpenId(null) }, lang === "ru" ? "\u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C\u044A \u0441\u043F\u0440\u0430\u0432\u043A\u0443\u2026" : "loading dossier\u2026"), openId && openError && /* @__PURE__ */ React.createElement("div", { style: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 100,
+    background: "rgba(10,6,3,0.82)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: fonts.mono,
+    fontSize: 13,
+    letterSpacing: "0.2em",
+    color: theme.brass,
+    textAlign: "center",
+    padding: 40
+  }, onClick: () => setOpenId(null) }, /* @__PURE__ */ React.createElement("div", null, lang === "ru" ? "\u0421\u043F\u0440\u0430\u0432\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C" : "Dossier failed to open"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, opacity: 0.7 } }, String(openError.message || openError)), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, opacity: 0.7 } }, lang === "ru" ? "\u043D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0437\u0430\u043A\u0440\u044B\u0442\u044C" : "tap to close")), opened && /* @__PURE__ */ React.createElement(
     PersonDetail,
     {
       person: opened,
