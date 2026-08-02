@@ -8,7 +8,11 @@ export default defineConfig({
   root: '.',
   server: {
     host: '127.0.0.1',
-    port: 5173,
+    // Порт берётся из PORT, иначе 5173. Зон шесть, у каждой свой worktree,
+    // и жёстко прибитый порт означал, что второй запущенный dev-сервер молча
+    // уезжает на 5174 — а всё, что ждёт его на заданном порту, упирается
+    // в ERR_CONNECTION_REFUSED.
+    port: Number(process.env.PORT) || 5173,
     fs: { allow: ['.'] },
   },
   build: {
@@ -21,6 +25,7 @@ export default defineConfig({
       input: {
         main:     'index.html',       // redirect → /expo/
         demo:     'demo.html',        // demo <map-unit>
+        povolzhye: 'demo-povolzhye.html', // Поволжье 1918–1919 (зона maps)
         parties:  'parties.html',     // Раздел 2 · Партии (Венн + Список)
         states:   'states.html',      // Раздел 3 · Гос-образования (Группы + Сетка)
         sections: 'sections.html',    // Старый каталог 4 разделов
