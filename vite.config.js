@@ -6,6 +6,11 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: '.',
+  // Относительные пути к ассетам. По умолчанию vite подставляет абсолютные
+  // `/assets/…`, а киоск запускается как file:///opt/mtk29/dist/… — там
+  // `/assets/…` резолвится в file:///assets/… и не находится (CLAUDE.md §1).
+  // Ломались все собранные страницы разом, кроме тех, что лежат в public/.
+  base: './',
   server: {
     host: '127.0.0.1',
     // Порт берётся из PORT, иначе 5173. Зон шесть, у каждой свой worktree,
