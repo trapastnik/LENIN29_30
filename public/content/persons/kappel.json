@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 872,
       "h": 1259,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kappel/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1747,
       "h": 2470,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kappel/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,13 @@
       "extra_ru": null,
       "w": 1280,
       "h": 720,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kappel/03"
+      ]
     }
   ],
   "related": {

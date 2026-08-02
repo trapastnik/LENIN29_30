@@ -37,7 +37,14 @@
       "extra_ru": null,
       "w": 882,
       "h": 1197,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/skoropadskiy/01"
+      ]
     },
     {
       "n": 2,
@@ -51,7 +58,14 @@
       "extra_ru": null,
       "w": 736,
       "h": 1026,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/skoropadskiy/02"
+      ]
     },
     {
       "n": 3,
@@ -65,7 +79,14 @@
       "extra_ru": null,
       "w": 3576,
       "h": 2580,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/skoropadskiy/03"
+      ]
     },
     {
       "n": 4,
@@ -79,7 +100,14 @@
       "extra_ru": null,
       "w": 5649,
       "h": 4306,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/skoropadskiy/04"
+      ]
     },
     {
       "n": 5,
@@ -93,7 +121,14 @@
       "extra_ru": null,
       "w": 749,
       "h": 1024,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/skoropadskiy/05"
+      ]
     }
   ],
   "related": {

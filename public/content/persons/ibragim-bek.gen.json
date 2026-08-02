@@ -37,7 +37,14 @@
       "extra_ru": null,
       "w": 1472,
       "h": 1054,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ibragim-bek/01"
+      ]
     },
     {
       "n": 2,
@@ -51,7 +58,13 @@
       "extra_ru": null,
       "w": 1000,
       "h": 624,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ibragim-bek/02"
+      ]
     },
     {
       "n": 3,
@@ -65,7 +78,13 @@
       "extra_ru": null,
       "w": 620,
       "h": 732,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ibragim-bek/03"
+      ]
     }
   ],
   "related": {

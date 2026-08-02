@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 2506,
       "h": 3430,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/avksentiev/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1041,
       "h": 1646,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/avksentiev/02"
+      ]
     }
   ],
   "related": {

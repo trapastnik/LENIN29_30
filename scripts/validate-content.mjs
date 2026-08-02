@@ -29,6 +29,12 @@ const KINDS = [
 
 const TZ_SUMMARY_MAX = 3000;
 
+// Производные лежат в .gitignore и собираются только там, где есть ../IN/.
+// На сервере и в свежем клоне каталога media/ нет вовсе — требовать там
+// файлы тиров значит красить ворота в красный на пустом месте. Поэтому
+// наличие файлов проверяем, только если сборка вообще прогонялась.
+const mediaBuilt = existsSync(join(CONTENT, 'media'));
+
 const errors = [];
 const warnings = [];
 const quiet = process.argv.includes('--quiet');
@@ -223,12 +229,23 @@ function checkMedia(where, data) {
       warn(where, `media n=${m.n}: аннотация «${m.src_name || '?'}» без файла на диске`);
       continue;
     }
-    // ── каждый заявленный тир обязан существовать
-    for (const tier of m.tiers || []) {
-      const f = join(CONTENT, `${m.file}-${tier}.webp`);
-      if (!existsSync(f)) {
-        err(where, `media n=${m.n}: заявлен тир ${tier}, файла ${rel(f)} нет`);
+    // ── каждый заявленный тир обязан существовать у КАЖДОЙ части записи:
+    //    у двусторонней купюры вторая сторона живёт под своим путём (…05p2),
+    //    и проверка одного `file` пропустила бы её пропажу
+    const bases = m.files && m.files.length ? m.files : (m.file ? [m.file] : []);
+    if (mediaBuilt) {
+      for (const base of bases) {
+        for (const tier of m.tiers || []) {
+          const f = join(CONTENT, `${base}-${tier}.webp`);
+          if (!existsSync(f)) {
+            err(where, `media n=${m.n}: заявлен тир ${tier}, файла ${rel(f)} нет`);
+          }
+        }
       }
+    }
+    if ((m.parts || []).length > 1 && bases.length !== m.parts.length) {
+      err(where, `media n=${m.n}: частей ${m.parts.length}, а путей производных `
+        + `${bases.length} — вторая сторона потеряется`);
     }
     if ((m.tiers || []).length === 0) unbuilt += 1;
     // ── лайтбокс не должен апскейлить: без натива он этого не узнает

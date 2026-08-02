@@ -44,12 +44,19 @@
       "extra_ru": null,
       "w": 800,
       "h": 1155,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Фото ранее использовалось в справке про Жордания, фото 2.",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "Жордания"
+      "duplicate_of": "Жордания",
+      "files": [
+        "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/01"
+      ]
     },
     {
       "n": 2,
@@ -63,13 +70,20 @@
       "extra_ru": null,
       "w": 800,
       "h": 1249,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля. Фото ранее использовалось в справке про Гегечкори, фото 1.",
       "directives": [
         "trim",
         "duplicate_of"
       ],
-      "duplicate_of": "Гегечкори"
+      "duplicate_of": "Гегечкори",
+      "files": [
+        "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/02"
+      ]
     },
     {
       "n": 3,
@@ -83,7 +97,14 @@
       "extra_ru": "*Рамишвили Исидор Иванович (1859–1937), один из лидеров грузинских меньшевиков, член правительства Грузинской Демократической Республики (1919– 1920).*",
       "w": 1265,
       "h": 1918,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/03"
+      ]
     }
   ],
   "related": {

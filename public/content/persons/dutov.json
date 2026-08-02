@@ -38,10 +38,17 @@
       "extra_ru": null,
       "w": 915,
       "h": 1324,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Дизайнерам: сравнить качество с ДУТОВ_01а и если она лучше, то обрезать на ней поля.",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/dutov/01"
       ]
     },
     {
@@ -56,7 +63,14 @@
       "extra_ru": null,
       "w": 2819,
       "h": 2061,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/dutov/02"
+      ]
     },
     {
       "n": 3,
@@ -70,7 +84,14 @@
       "extra_ru": null,
       "w": 1082,
       "h": 1600,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/dutov/03"
+      ]
     }
   ],
   "related": {

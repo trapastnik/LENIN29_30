@@ -37,7 +37,13 @@
       "extra_ru": null,
       "w": 424,
       "h": 658,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/karl-gustav-emil/01"
+      ]
     },
     {
       "n": 2,
@@ -51,7 +57,14 @@
       "extra_ru": null,
       "w": 1218,
       "h": 1722,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/karl-gustav-emil/02"
+      ]
     },
     {
       "n": 3,
@@ -65,7 +78,14 @@
       "extra_ru": null,
       "w": 1219,
       "h": 1740,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/karl-gustav-emil/03"
+      ]
     }
   ],
   "related": {

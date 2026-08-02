@@ -96,7 +96,13 @@
       "extra_ru": "*Тухачевский Михаил Николаевич (1893–1937), советский военачальник. В апреле–ноябре 1919 г. командующий 5-й армией Восточного фронта РККА.*",
       "w": 429,
       "h": 642,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/events/nastuplenie-vostochnogo-fronta-1919-1920/05"
+      ]
     },
     {
       "n": 6,
@@ -110,7 +116,14 @@
       "extra_ru": null,
       "w": 1313,
       "h": 2074,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/nastuplenie-vostochnogo-fronta-1919-1920/06"
+      ]
     }
   ],
   "related": {

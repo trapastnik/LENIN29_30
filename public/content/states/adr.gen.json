@@ -46,7 +46,14 @@
       "extra_ru": null,
       "w": 1865,
       "h": 1343,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/adr/01"
+      ]
     },
     {
       "n": 2,
@@ -60,7 +67,14 @@
       "extra_ru": null,
       "w": 2070,
       "h": 1368,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/adr/02"
+      ]
     },
     {
       "n": 3,
@@ -74,7 +88,11 @@
       "extra_ru": "*Подписаны председателем Совета министров Н. Усуббековым.*",
       "w": 1715,
       "h": 1111,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "47 АДР 03 1.tif",
         "47 АДР 03 2.tif"
@@ -83,6 +101,10 @@
       "directives": [
         "trim",
         "spread"
+      ],
+      "files": [
+        "media/states/adr/03",
+        "media/states/adr/03p2"
       ]
     }
   ],

@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 2688,
       "h": 2044,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/spiridonova/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1625,
       "h": 1037,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/spiridonova/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,14 @@
       "extra_ru": null,
       "w": 939,
       "h": 1332,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/spiridonova/03"
+      ]
     },
     {
       "n": 4,
@@ -80,7 +101,14 @@
       "extra_ru": null,
       "w": 876,
       "h": 1018,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/spiridonova/04"
+      ]
     }
   ],
   "related": {

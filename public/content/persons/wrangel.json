@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 1734,
       "h": 2685,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/wrangel/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,14 @@
       "extra_ru": null,
       "w": 2466,
       "h": 3575,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/wrangel/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +81,14 @@
       "extra_ru": null,
       "w": 2850,
       "h": 3895,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/wrangel/03"
+      ]
     },
     {
       "n": 4,
@@ -81,7 +102,13 @@
       "extra_ru": null,
       "w": 1000,
       "h": 667,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/wrangel/04"
+      ]
     }
   ],
   "related": {

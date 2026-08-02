@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 848,
       "h": 1184,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/boldyrev/01"
+      ]
     },
     {
       "n": 2,
@@ -52,8 +59,15 @@
       "extra_ru": null,
       "w": 3829,
       "h": 2393,
-      "tiers": [],
-      "note_ru": "Художникам: стереть номер КП в левом нижнем углу и надписи в верху фото."
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Художникам: стереть номер КП в левом нижнем углу и надписи в верху фото.",
+      "files": [
+        "media/persons/boldyrev/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +81,13 @@
       "extra_ru": null,
       "w": 542,
       "h": 827,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/boldyrev/03"
+      ]
     }
   ],
   "related": {

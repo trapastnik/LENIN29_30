@@ -53,7 +53,14 @@
       "extra_ru": null,
       "w": 2800,
       "h": 1889,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vzyatie-kazani-chastyami-narodnoy-armii/02"
+      ]
     },
     {
       "n": 3,

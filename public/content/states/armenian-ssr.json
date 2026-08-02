@@ -50,7 +50,14 @@
       "extra_ru": null,
       "w": 1804,
       "h": 1272,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/armenian-ssr/01"
+      ]
     },
     {
       "n": 2,
@@ -64,7 +71,14 @@
       "extra_ru": "*Мясников (Мясникян) Александр Фёдорович (1886–1925), революционер, большевик. В 1921–1922 гг. председатель* [Совета народных комиссаров](https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%B2%D0%B5%D1%82_%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D1%8B%D1%85_%D0%BA%D0%BE%D0%BC%D0%B8%D1%81%D1%81%D0%B0%D1%80%D0%BE%D0%B2) *и нарком по военным делам* [Армянской ССР](https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%BC%D1%8F%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%A1%D0%A1%D0%A0)*, заместитель председателя СНК* [ЗСФСР](https://ru.wikipedia.org/wiki/%D0%97%D0%A1%D0%A4%D0%A1%D0%A0)*, член Кавказского бюро ЦК РКП(б).*",
       "w": 1189,
       "h": 1806,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/armenian-ssr/02"
+      ]
     },
     {
       "n": 3,
@@ -78,7 +92,14 @@
       "extra_ru": null,
       "w": 4429,
       "h": 3240,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/armenian-ssr/03"
+      ]
     },
     {
       "n": 4,
@@ -92,10 +113,18 @@
       "extra_ru": null,
       "w": 1785,
       "h": 955,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "05 ССР Армения 04 1.jpg",
         "05 ССР Армения 04 2.jpg"
+      ],
+      "files": [
+        "media/states/armenian-ssr/04",
+        "media/states/armenian-ssr/04p2"
       ]
     }
   ],

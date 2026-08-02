@@ -39,7 +39,13 @@
       "extra_ru": null,
       "w": 600,
       "h": 671,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/derber/01"
+      ]
     }
   ],
   "related": {

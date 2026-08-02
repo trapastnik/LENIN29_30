@@ -58,10 +58,16 @@
       "extra_ru": null,
       "w": 1216,
       "h": 795,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/rostovo-novocherkasskaya-operatsiya/02"
       ]
     },
     {

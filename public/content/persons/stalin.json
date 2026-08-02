@@ -39,12 +39,19 @@
       "extra_ru": null,
       "w": 1200,
       "h": 897,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "parts": [
         "СТАЛИН И.В._01.jpg",
         "СТАЛИН И.В._01а.TIF"
       ],
-      "note_ru": "НА ВЫБОР ФОТО 01 И 01А, НАВЕРНО, 01А ПОЛУЧШЕ, ВЗЯТЬ ИЗ НЕГО ТОЛЬКО ФОТО"
+      "note_ru": "НА ВЫБОР ФОТО 01 И 01А, НАВЕРНО, 01А ПОЛУЧШЕ, ВЗЯТЬ ИЗ НЕГО ТОЛЬКО ФОТО",
+      "files": [
+        "media/persons/stalin/01",
+        "media/persons/stalin/01p2"
+      ]
     },
     {
       "n": 2,
@@ -58,10 +65,17 @@
       "extra_ru": null,
       "w": 1526,
       "h": 2284,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/stalin/02"
       ]
     },
     {
@@ -76,7 +90,14 @@
       "extra_ru": null,
       "w": 2707,
       "h": 2362,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/stalin/03"
+      ]
     },
     {
       "n": 4,
@@ -90,7 +111,14 @@
       "extra_ru": null,
       "w": 4772,
       "h": 3089,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/stalin/04"
+      ]
     }
   ],
   "related": {

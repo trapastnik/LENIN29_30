@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 1300,
       "h": 1882,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/krasnov/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1594,
       "h": 2145,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/krasnov/02"
+      ]
     },
     {
       "n": 3,
@@ -66,10 +80,16 @@
       "extra_ru": null,
       "w": 1000,
       "h": 751,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "note_ru": "Дизайнерам: подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/krasnov/03"
       ]
     }
   ],
