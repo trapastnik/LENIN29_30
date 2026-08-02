@@ -8,12 +8,16 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
+  <!-- Первым скриптом: MTK_URL() для путей к ресурсам под file://. См. public/base.js. -->
+  <script src="base.js"></script>
   <!-- Токены как данные. Каталог обязан РИСОВАТЬ палитру из источника,
        а не ОПИСЫВАТЬ её вторым списком: каталог, который сам не следует
        правилам, источником правды быть не может. -->
   <script src="/expo/brand-tokens.js?v=20260802"></script>
   <script src="/expo/pin-gate.js?v=20260427"></script>
-  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: '/expo/people.html' });</script>
+  <!-- escapeHref идёт через MTK_URL: это строка внутри JS, её vite не переписывает,
+       и ведущий слэш уехал бы в сборку. Под file:// он резолвится в корень ФС. -->
+  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: MTK_URL('expo/people.html') });</script>
   <style>
     /* — Layout каталога — */
     /* Высокий specificity (`html.brand-scroll`) нужен потому что Vite
@@ -1295,7 +1299,8 @@
       <div class="kicker">Бренд-каталог · МТК 29</div>
       <h1>Визуальные примитивы</h1>
     </div>
-    <a class="back-link" href="/" id="back-link">← На стартовую</a>
+    <!-- index.html, а не "/": голый слэш под file:// ведёт в корень ФС. -->
+    <a class="back-link" href="index.html" id="back-link">← На стартовую</a>
   </header>
 
   <main>
@@ -1920,7 +1925,9 @@
       <!-- ── Демо: две независимые реализации перекидного календаря ── -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px;">
 
-        <a href="/calendar.html"
+        <!-- Без ведущего слэша: <a href> vite не переписывает, и под file://
+             слэш увёл бы в корень ФС. brand.html лежит в корне сборки. -->
+        <a href="calendar.html"
            style="display: flex; flex-direction: column; gap: 8px;
                   padding: 22px 26px;
                   background: linear-gradient(120deg, rgba(160,33,40,0.18), rgba(210,183,115,0.08));
@@ -1947,7 +1954,7 @@
           </div>
         </a>
 
-        <a href="/prototypes/calendar-3d-paper-realistic/"
+        <a href="prototypes/calendar-3d-paper-realistic/"
            style="display: flex; flex-direction: column; gap: 8px;
                   padding: 22px 26px;
                   background: linear-gradient(120deg, rgba(67,80,89,0.35), rgba(210,183,115,0.05));
