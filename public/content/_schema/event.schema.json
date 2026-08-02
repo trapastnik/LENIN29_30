@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mtk29/event",
+  "title": "Карточка события",
+  "description": "36 карточек из «Хроника конфликта/Карточки по событиям/». Мост к ленте хроники — явная команда заказчика «Переход к справке 24 …» в тексте ленты, ~77 вхождений.",
+  "allOf": [{ "$ref": "mtk29/common" }],
+  "type": "object",
+  "required": ["schema", "id", "kind", "title_ru", "en_status"],
+  "properties": {
+    "kind": { "const": "event" },
+    "date": { "$ref": "mtk29/common#/definitions/dates" },
+    "chronicle_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "id записей ленты, которые ведут в эту карточку. Обратная сторона поля chronicle.card."
+    }
+  }
+}

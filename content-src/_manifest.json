@@ -1,0 +1,1106 @@
+{
+  "schema": 1,
+  "parser": "1.0.0",
+  "units": {
+    "party/bolsheviks": {
+      "src": "Партии/Большевики/Большевики.docx",
+      "sha256": "44c2829e5cd17bdc2402e8be066824cde2d39edca22af3e50a4e3137758fdbe8",
+      "parser": "1.0.0"
+    },
+    "party/srs": {
+      "src": "Партии/Социалисты-революционеры (эсеры)/Эсеры.docx",
+      "sha256": "65405010cdb998aea4a612f0fd5d80fc96600e454a13397f669ca49591b6f051",
+      "parser": "1.0.0"
+    },
+    "party/reds-general": {
+      "src": "Партии/Красные/Красные.docx",
+      "sha256": "e636d6421041e3932429d7dd81f8976a79d357517dd95b7ad2a60c039464a6b7",
+      "parser": "1.0.0"
+    },
+    "state/rsfsr": {
+      "src": "Территория/Красные/01 РСФСР.docx",
+      "sha256": "0d4472590979280ff4e014a55d4138bf507d3a9e366285224fc7570b9e8187a6",
+      "parser": "1.0.0"
+    },
+    "state/vsyur": {
+      "src": "Территория/Белые/Вооруженные силы Юга России (ВСЮР)/22 ВСЮР.docx",
+      "sha256": "56a3cb12a0463f1dc3aa4ab13cde2ebdbf0f3f75cce936f73448415372b8235d",
+      "parser": "1.0.0"
+    },
+    "state/komuch": {
+      "src": "Территория/Революционная демократия/34 Комуч.docx",
+      "sha256": "42317feab0dd08bcc1d06163be922759d0af1c6dd017d79031ce18e556725576",
+      "parser": "1.0.0"
+    },
+    "person/lenin": {
+      "src": "Личности/Ленин/ЛЕНИН В.И..docx",
+      "sha256": "82c48ed843a57b6de47716620a4c428acb56f96bb7df63ac563330ac2b744981",
+      "parser": "1.0.0"
+    },
+    "person/kolchak": {
+      "src": "Личности/Колчак/КОЛЧАК А.В..docx",
+      "sha256": "9cd7f6524048dd81635c157c871da527a23b91994016cba75d8842b943b64779",
+      "parser": "1.0.0"
+    },
+    "person/grigorev": {
+      "src": "Личности/Григорьев/ГРИГОРЬЕВ Н.А..docx",
+      "sha256": "cb23356d5d8c25a8f2b8b6aaa18fc006087a2995ebc55c986ff71a9e8fc6d01a",
+      "parser": "1.0.0"
+    },
+    "chronicle/1917": {
+      "src": "Хроника конфликта/1917.docx",
+      "sha256": "0b0cba41ffe8889b91aa14a17ece42c0f4035a3ec7282a52e745114490ade554",
+      "parser": "1.0.0"
+    },
+    "party/alash": {
+      "src": "Партии/Алаш/Алаш.docx",
+      "sha256": "8200ee18a31d2793dba5c0d1a6e0004ae7ba61ca8e5c177583cf2659b8739022",
+      "parser": "1.0.0"
+    },
+    "party/alekseevskaya-organizatsiya-dobrovolches": {
+      "src": "Партии/Алексеевская организация/Алексеевская организация.docx",
+      "sha256": "8e1849e1fb692a52ae99b3447ab26b1f4029271990a60318d7f92483fb660610",
+      "parser": "1.0.0"
+    },
+    "party/anarchists": {
+      "src": "Партии/Анархисты/Анархисты.docx",
+      "sha256": "56ee11eb4548f9f86e0269690cd6875e1c12566cf9fa931e6f4dcb4d3c9f892d",
+      "parser": "1.0.0"
+    },
+    "party/basmachestvo": {
+      "src": "Партии/Басмачество/Басмачество.docx",
+      "sha256": "4336afafeca360844f821e4d9e14804d3ce09e389bd5720ec23b9ad897d1c8d3",
+      "parser": "1.0.0"
+    },
+    "party/belorusskaya-sotsialisticheskaya-gromada": {
+      "src": "Партии/Белорусская социалистическая громада/БСГ.docx",
+      "sha256": "e7eae45a28f14423b3b43d747a856cfa19bb99a8c76d97785144ec5247a4620e",
+      "parser": "1.0.0"
+    },
+    "party/whites-general": {
+      "src": "Партии/Белые/Белые.docx",
+      "sha256": "754bbbf6d276e18900d0406b7b0a71edf1fbcedd4cab238f5cbaadccb5c75856",
+      "parser": "1.0.0"
+    },
+    "party/borotbisty": {
+      "src": "Партии/Боротьбисты/Боротьбисты.docx",
+      "sha256": "24e1208efbca0ff5ddcf91682677b84b8a7941c50221e1df71fd991d5804249f",
+      "parser": "1.0.0"
+    },
+    "party/bund": {
+      "src": "Партии/Бунд/Бунд.docx",
+      "sha256": "66ace690631c38217a79e78aca21899e731001c19994de1e1c8cc580379b122e",
+      "parser": "1.0.0"
+    },
+    "party/gruzinskaya-sotsial-demokraticheskaya-pa": {
+      "src": "Партии/Грузинская социал-демократическая партия/Грузинская СДП.docx",
+      "sha256": "aa05d6a846c7f8593d58d863d2fd1c3e378ca96402ccef269a118c151c6c82bc",
+      "parser": "1.0.0"
+    },
+    "party/dashnaktsutyun": {
+      "src": "Партии/Дашнакцутюн/Дашнакцутюн.docx",
+      "sha256": "f78c5da65ead8b7bf051815a844444059c6951a9a3ee7421393058c4d654e652",
+      "parser": "1.0.0"
+    },
+    "party/greens-general": {
+      "src": "Партии/Зеленые/Зеленые.docx",
+      "sha256": "fa30311b5caa0806ad6aa9195ad55245f44b1faf7e9cf58984ec651a34b2e436",
+      "parser": "1.0.0"
+    },
+    "party/committee-salvation": {
+      "src": "Партии/Комитет спасения родины и революции/Комитет спасения Родины и революции.docx",
+      "sha256": "d393f028330105532e30b0fa40ef468589493c0b26284e8d9de5524d61dd72ca",
+      "parser": "1.0.0"
+    },
+    "party/cadets": {
+      "src": "Партии/Конституционно-демократическая партия/Конституционно-демократическая партия.docx",
+      "sha256": "9bf57190b2058ff2c9a2588c5f4726d8f463141c2eee4d209d09ca87a6cee425",
+      "parser": "1.0.0"
+    },
+    "party/latyshskiy-krestyanskiy-soyuz": {
+      "src": "Партии/Латышский крестьянский союз/Латышский крестьянский союз.docx",
+      "sha256": "98b052f3371598d28cc1cd7eeaf652118bf9247d2eb612a661a6b027a06d9c4d",
+      "parser": "1.0.0"
+    },
+    "party/left-srs": {
+      "src": "Партии/Левые эсеры/Левые эсеры.docx",
+      "sha256": "155927f6d0b56645756fccfde424736999200bd45dfbf737481abf999a4cf5f3",
+      "parser": "1.0.0"
+    },
+    "party/mensheviks": {
+      "src": "Партии/Меньшевики/Меньшевики.docx",
+      "sha256": "58fcbabf990ee55cd1e9c4990eafbd1e41f97efab24926258b2734d1cc3564d8",
+      "parser": "1.0.0"
+    },
+    "party/musavat": {
+      "src": "Партии/Мусават/Мусават.docx",
+      "sha256": "e71b8a42f7ebeb0ea2c1c78ebe575ab629a270eef9085bfaa79a844fe204e455",
+      "parser": "1.0.0"
+    },
+    "party/muslim-socialists": {
+      "src": "Партии/Мусульманские социалистические комитеты/Мусульманские социалистические комитеты.docx",
+      "sha256": "7776a6b050bcb6fadc35df57438ee108091192c97622716fddb4af7d8929e4f5",
+      "parser": "1.0.0"
+    },
+    "party/national-movements": {
+      "src": "Партии/Национальные движения/Национальные движения.docx",
+      "sha256": "4c7ac3fafb99488f44885ff438e7cd4385db5eb15b697432db581266e5641e37",
+      "parser": "1.0.0"
+    },
+    "party/national-center": {
+      "src": "Партии/Национальный центр/Национальный центр.docx",
+      "sha256": "bdc34a95b16875dcb556229cbf3794e2e31365656f5fe29ca43b3052df4674c2",
+      "parser": "1.0.0"
+    },
+    "party/poaley-tsion": {
+      "src": "Партии/Поалей Цион/Поалей Цион.docx",
+      "sha256": "ffbafa7ab6ae369d2a69dbc7ed7a91faa0c0e62c9ff4875eefff50e4066eff8b",
+      "parser": "1.0.0"
+    },
+    "party/right-center": {
+      "src": "Партии/Правый центр/Правый центр.docx",
+      "sha256": "678ae9617fccfd117751d04c474803d22ca7bc7321724f93e3248f0ad80af4cc",
+      "parser": "1.0.0"
+    },
+    "party/revdem-general": {
+      "src": "Партии/Революционная демократия/Революционная демократия.docx",
+      "sha256": "f36734c0038dbb306c5bbd08e57af682052bb37f407943d5c6d55524968ade3f",
+      "parser": "1.0.0"
+    },
+    "party/sibirskoe-oblastnichestvo": {
+      "src": "Партии/Сибирское областничество/Сибирское областничество.docx",
+      "sha256": "9959dea08eaff6621dba923480730e519f03fb359368e72c48595aef21937ef8",
+      "parser": "1.0.0"
+    },
+    "party/sotsial-demokraticheskaya-partiya-finlya": {
+      "src": "Партии/Социал-демократическая партия Финляндии/СДПФ.docx",
+      "sha256": "44be49aa6f87c6f649f4dc5f5b0365992b4187cc2cb81ff76b56f04d5ffa1f2b",
+      "parser": "1.0.0"
+    },
+    "party/union-renewal": {
+      "src": "Партии/Союз возроджения России/Союз возрождения России.docx",
+      "sha256": "cc9265fbca3d98ab534103a1c6d50d1ab2291274136805e71e1d5e56432499f4",
+      "parser": "1.0.0"
+    },
+    "party/union-constituent": {
+      "src": "Партии/Союз защиты Учредительного собрания/Союз защиты Учредительного собрания.docx",
+      "sha256": "60d4807431bb803c576708f1dcc66875b531fcbde22ce5a6f6ef0f164e166764",
+      "parser": "1.0.0"
+    },
+    "party/union-defence": {
+      "src": "Партии/Союз защиты родины и свободы/Союз защиты Родины и свободы.docx",
+      "sha256": "61e537a095ab42fcbbaead9fcc4dfc1f054ebd9db41390b9439f347386836490",
+      "parser": "1.0.0"
+    },
+    "party/narodnie-socialists": {
+      "src": "Партии/Трудовая народно-социалистическая партия/ТНСП.docx",
+      "sha256": "313e950ef5d787619f06b232f5931613a1294889c5351ddd53ff356241b38555",
+      "parser": "1.0.0"
+    },
+    "party/ukrainskaya-sotsial-demokraticheskaya-ra": {
+      "src": "Партии/Украинская социал-демократическая партия/УСДРП.docx",
+      "sha256": "784a492e0109da4ec7a880fdf406ae3d227acc8d1e4153e3da4dc5d62039fa24",
+      "parser": "1.0.0"
+    },
+    "state/great-don-host": {
+      "src": "Территория/Белые/Всевеликое Войско Донское/23 Всевеликое Войско Донское.docx",
+      "sha256": "98639db3dab2a2880d9d2afaf290c665d2f6703c0f9005fa36ea1b3724cbb2b7",
+      "parser": "1.0.0"
+    },
+    "state/orenburg-cossack-host": {
+      "src": "Территория/Белые/Оренбургское казачье войско/26 Оренбургское казачье войско..docx",
+      "sha256": "4b7274a1d5cb11d4c9d8d0b6690dd1a89235d8660451031afdea43042a5db73a",
+      "parser": "1.0.0"
+    },
+    "state/pravitelstvo-yuga-rossii-do-6-avgusta-19": {
+      "src": "Территория/Белые/Правительство Юга России/31 Правительство Юга России.docx",
+      "sha256": "21fd56ed74d9a62443d9940c3b49f5436846b9b01d2020aecc64eb04d145ddb2",
+      "parser": "1.0.0"
+    },
+    "state/priamurskoe-gosudarstvennoe-obrazovanie": {
+      "src": "Территория/Белые/Приамурский Земский Край/30 Приамурский земский край.docx",
+      "sha256": "e3156816b4d67b3779b844cfe02ff624bd6c61c32c3bcaa004df3e10a5dfc779",
+      "parser": "1.0.0"
+    },
+    "state/rossiyskaya-vostochnaya-okraina": {
+      "src": "Территория/Белые/Российская Восточная окраина/28 Восточная Окраина.docx",
+      "sha256": "0759fa5fa6b92008234c0587d5862eb814686b9c1312931a2590101670eeb870",
+      "parser": "1.0.0"
+    },
+    "state/rossiyskoe-gosudarstvo-a-v-kolchak": {
+      "src": "Территория/Белые/Российское Государство/27 Российское государство.docx",
+      "sha256": "3d934e7bce5c6ff273a2e33db39d6d7700bce1d0451bb79c1862bf264bcf6545",
+      "parser": "1.0.0"
+    },
+    "state/northern-region": {
+      "src": "Территория/Белые/Северная область/20 Северная область.docx",
+      "sha256": "648b3e436fda4bab3ab06b601868d328b40bbde28b3a2d8a4ed84d4114ed8a4c",
+      "parser": "1.0.0"
+    },
+    "state/tambovskoe-vosstanie-pod-rukovodstvom-a": {
+      "src": "Территория/Восстания/54 Тамбовское восстание.docx",
+      "sha256": "afb59790bdd9ce8659cef5883d6b1eea0835b9d3f1ac247179774ec3f7ba2ac8",
+      "parser": "1.0.0"
+    },
+    "state/dvizhenie-pod-rukovodstvom-n-i-makhno": {
+      "src": "Территория/Восстания/55 Махновщина.docx",
+      "sha256": "5513ebcc6b1b53ce31b4f97ce5d30b3c234dffb75786102ab7a0c9623da446df",
+      "parser": "1.0.0"
+    },
+    "state/kochg": {
+      "src": "Территория/Восстания/57 КОЧГ.docx",
+      "sha256": "81e18ae47196530edd06c6f3827650e086b06a360f9b09b3bb1a2832b706615e",
+      "parser": "1.0.0"
+    },
+    "state/krasnoe-partizanskoe-dvizhenie-v-sibiri": {
+      "src": "Территория/Восстания/58 Красные партизаны Сибири и ДВ.docx",
+      "sha256": "f38999d86517b570bd53a2db262e70c5ab1b22cdee61064d56372ddaa8893029",
+      "parser": "1.0.0"
+    },
+    "state/chapannaya-voyna": {
+      "src": "Территория/Восстания/59 Чапанная война.docx",
+      "sha256": "e35e916e6d6450d1e302e9089c74ad71a9c22092ba1a54614e340c246dc49901",
+      "parser": "1.0.0"
+    },
+    "state/zapadno-sibirskoe-vosstanie": {
+      "src": "Территория/Восстания/61 Западно-сибирское восстание.docx",
+      "sha256": "df6b9fa0bb0c6a58bdf083711575bc1d103c93f5af1494049be1d32aadc729a8",
+      "parser": "1.0.0"
+    },
+    "state/63-kronshtadtskoe-vosstanie": {
+      "src": "Территория/Восстания/63 Кронштадтское восстание.docx",
+      "sha256": "6251ebb4b5db12cbc8c8035c6c8f5479dc6205038ad2cd540412c1321b521535",
+      "parser": "1.0.0"
+    },
+    "state/soyuznaya-interventsiya-antanta": {
+      "src": "Территория/Интервенция/64 Союзная интервенция.docx",
+      "sha256": "33745baa68a1785ca979a6a0b8b831a11eae10a1a1f641dd1e36b016da3eda8d",
+      "parser": "1.0.0"
+    },
+    "state/otmetit-bolshogo-borodatogo-muzhika-tsif": {
+      "src": "Территория/Интервенция/65 Выступление Чехословацкого корпуса.docx",
+      "sha256": "9ebca3f02ad9cc39251a7bd20d1c9e3f77ca0df7b3877b231a2795b7854108d9",
+      "parser": "1.0.0"
+    },
+    "state/interventsiya-tsentralnykh-derzhav": {
+      "src": "Территория/Интервенция/66 Центральные державы.docx",
+      "sha256": "09830f900faa472940a0ebb86fe65a2c6c5a83f6f166a53c56772a03aa2312fe",
+      "parser": "1.0.0"
+    },
+    "state/sksr": {
+      "src": "Территория/Красные/02 Северо-Кавказская советская социалистическая республика.docx",
+      "sha256": "2925ee639ae8479360a7c84b9ef7b2f473db931e948a5ed20b2a29c22db43e84",
+      "parser": "1.0.0"
+    },
+    "state/tsfr": {
+      "src": "Территория/Красные/03 ТСФР.docx",
+      "sha256": "337bb21e6aed29c3b90040c57fdcc6af72356957c32c34e732a6c618a9555049",
+      "parser": "1.0.0"
+    },
+    "state/azerbaijani-ssr": {
+      "src": "Территория/Красные/04 Азербайджанская ССР.docx",
+      "sha256": "23762e3aa11b4db8e63a935528b312ed71b5a6ad2a8378d562b6dbc61664fd4d",
+      "parser": "1.0.0"
+    },
+    "state/armenian-ssr": {
+      "src": "Территория/Красные/05 Армянская ССР.docx",
+      "sha256": "ce51ed05e81f2c5f00d6959827a1dfcbb059389956afcf89b7017920d0d4ef08",
+      "parser": "1.0.0"
+    },
+    "state/ssr-gruziya": {
+      "src": "Территория/Красные/06 Грузинская ССР.docx",
+      "sha256": "bea2b2344ca9f24a9972520f02fce83dfd87af7466a209240df73bc56af7726e",
+      "parser": "1.0.0"
+    },
+    "state/zsfsr": {
+      "src": "Территория/Красные/07 ЗСФСР.docx",
+      "sha256": "7dec30e21c6c4bfe7243aedcc779c7f112133041bc867c799983dc5dbe87f249",
+      "parser": "1.0.0"
+    },
+    "state/bnsr": {
+      "src": "Территория/Красные/08 БНСР.docx",
+      "sha256": "bdcc9748f043bb8359fbe0660f503705f6d52c8b5f4d2c5101645bb1b343403a",
+      "parser": "1.0.0"
+    },
+    "state/khnsr": {
+      "src": "Территория/Красные/09 ХНСР.docx",
+      "sha256": "f8d7c8c5c4cfb10f0bfd2e5abd84167765e019c3e1c82a8400dfcb7d0863b9fb",
+      "parser": "1.0.0"
+    },
+    "state/unrs": {
+      "src": "Территория/Красные/10 Украинская народная республика советов.docx",
+      "sha256": "3ad09a07344f12ec87e9c93ca9c35a7733fddb349c6ae6c61fb17dd155934103",
+      "parser": "1.0.0"
+    },
+    "state/ukrainian-ssr": {
+      "src": "Территория/Красные/11 УССР.docx",
+      "sha256": "aa5a7b1fd5836ab9180fd381263e604b9aad4eb1677a9d668904f494561013b1",
+      "parser": "1.0.0"
+    },
+    "state/osr": {
+      "src": "Территория/Красные/12 Одесская республика.docx",
+      "sha256": "c1e6c0b8f87c6ab6fc896896d077d2532664d9845f7aa43eab193855eca72dad",
+      "parser": "1.0.0"
+    },
+    "state/belorussian-ssr": {
+      "src": "Территория/Красные/13 ССРБ.docx",
+      "sha256": "7acc98467ab617c724b9a3d2d842ab9b648c1cbd0fc8266cef2033cd2841fd59",
+      "parser": "1.0.0"
+    },
+    "state/finlyandskaya-sotsialisticheskaya-raboch": {
+      "src": "Территория/Красные/14 Финляндская социалистическая рабочая республика.docx",
+      "sha256": "0d019f7226252f33745c0783caa523c7204e1f4c58137c9ab6c2acf341c6fdaf",
+      "parser": "1.0.0"
+    },
+    "state/fer": {
+      "src": "Территория/Красные/15 ДВР.docx",
+      "sha256": "94a226047221a806231c78af4d75a1e1f5825914b3c699379101b59d68ff360b",
+      "parser": "1.0.0"
+    },
+    "state/litovsko-belorusskaya-sotsialisticheskay": {
+      "src": "Территория/Красные/16 ЛитБел.docx",
+      "sha256": "62d8d733112c9734d69e0beb492485ef4cb2a574dfba0fc8bcc63c2380452ba5",
+      "parser": "1.0.0"
+    },
+    "state/etk": {
+      "src": "Территория/Красные/17 Эстляндская Трудовая Коммуна.docx",
+      "sha256": "a47ffe1a9196cfdc33528f31776731c82f301b3421499580aa56011fd7f50d62",
+      "parser": "1.0.0"
+    },
+    "state/dksr": {
+      "src": "Территория/Красные/18 Донецко-Криворожская республика.docx",
+      "sha256": "836207d4fbf734695df6769114aa53ba791769738c0cfb834ff0a4cc071bdf46",
+      "parser": "1.0.0"
+    },
+    "state/latvssr": {
+      "src": "Территория/Красные/19 ЛатвССР.docx",
+      "sha256": "a2b04636f2c2cec5e6e1122c445a5178b4fcff9b7fa7fd9db5d441163496a945",
+      "parser": "1.0.0"
+    },
+    "state/bashkir-assr": {
+      "src": "Территория/Красные/53 БАССР.docx",
+      "sha256": "790f9f21b76e344627ef8401bd9c1c8ebe28f279839ec02ab2130757c6cac5a1",
+      "parser": "1.0.0"
+    },
+    "state/ussr": {
+      "src": "Территория/Красные/71 СССР.docx",
+      "sha256": "f9b24c4365551839bf5b2a0927aaf50099b82306320ff962ef992442f9709b71",
+      "parser": "1.0.0"
+    },
+    "state/gruzinskaya-demokraticheskaya-respublika": {
+      "src": "Территория/Национальные государства/38 ГДР.docx",
+      "sha256": "87d94b100d9c3f30517b7f6dee2cc4a3e43395e42c209b9318d860287848347a",
+      "parser": "1.0.0"
+    },
+    "state/unr": {
+      "src": "Территория/Национальные государства/40 УНР.docx",
+      "sha256": "f6b4878eabd3a1740b51b19aae3923e73063e3affa98c7cfe6bcb6a9554035bd",
+      "parser": "1.0.0"
+    },
+    "state/ukrainskaya-derzhava": {
+      "src": "Территория/Национальные государства/41 Украинская держава.docx",
+      "sha256": "6a63494ce583fd451b6c9ccf485aae7b3dd8af3f2d9d8ace91c808e5cf70b158",
+      "parser": "1.0.0"
+    },
+    "state/estonskaya-respublika": {
+      "src": "Территория/Национальные государства/42 Эстонская Республика.docx",
+      "sha256": "c6222e0656b7ba962fc58803c59e17e6c9846d5470197926579b3a9590153b7c",
+      "parser": "1.0.0"
+    },
+    "state/latviyskaya-respublika": {
+      "src": "Территория/Национальные государства/43 Латвийская Республика.docx",
+      "sha256": "d12f99d7b11127181788cb81ee9a3b556e758fb72e193eccdd1bc3f401548d54",
+      "parser": "1.0.0"
+    },
+    "state/litovskaya-respublika": {
+      "src": "Территория/Национальные государства/44 Литовская Республика.docx",
+      "sha256": "b11fecdb3e3a3bd0f37fdc7f7941403ac5f106df5b6a2b4a1e61d845037a0136",
+      "parser": "1.0.0"
+    },
+    "state/zdfr": {
+      "src": "Территория/Национальные государства/45 ЗДФР.docx",
+      "sha256": "d6d62318f3ffcd5df523f04ce51a2c154af9dd2e09160b010137d3b9ea7c063f",
+      "parser": "1.0.0"
+    },
+    "state/respublika-armeniya": {
+      "src": "Территория/Национальные государства/46 Армянская республика.docx",
+      "sha256": "3c7609fcb3f6ea39242ab67a4346b94cd0309c654976b8cb0d03205b1e06d722",
+      "parser": "1.0.0"
+    },
+    "state/adr": {
+      "src": "Территория/Национальные государства/47 Азербайджанская республика.docx",
+      "sha256": "f5be6b34c5c4c56f7721f68a85a8cd85723fbed0cd52d0a1e30dc244df8b0f92",
+      "parser": "1.0.0"
+    },
+    "state/bukharskiy-emirat": {
+      "src": "Территория/Национальные государства/49 Бухарский эмират.docx",
+      "sha256": "6e0850681cc774d1ec9738c33b8771ba81b7751793d89543a0903ce5106ba8d7",
+      "parser": "1.0.0"
+    },
+    "state/khivinskoe-khanstvo": {
+      "src": "Территория/Национальные государства/50 Хивинское ханство.docx",
+      "sha256": "3d77e9bdc071bc22808cb1e3f0a4374e4bbcbe507c27900760f11df3a34ebbf1",
+      "parser": "1.0.0"
+    },
+    "state/finlyandskaya-respublika-s-10-avgusta-19": {
+      "src": "Территория/Национальные государства/51 Финляндия.docx",
+      "sha256": "d05457ad8d1fb857876c90c3ef39fd1d9126a8be2c3f4ea161e5b90d60f4b614",
+      "parser": "1.0.0"
+    },
+    "state/polskaya-respublika": {
+      "src": "Территория/Национальные государства/52 Польская Республика.docx",
+      "sha256": "5be639c5c5a5bfe60c1f0d50289023fcda5e069e56698b52f7fddc968c7cccd8",
+      "parser": "1.0.0"
+    },
+    "state/vremennoe-pravitelstvo-rossiyskaya-respu": {
+      "src": "Территория/Революционная демократия/32 Временное правительство.docx",
+      "sha256": "e5a324c7fd9d2a9049ccea61f1411ca4ebf536cfd784a8630dae41acddd7babc",
+      "parser": "1.0.0"
+    },
+    "state/zakaspiyskoe-vremennoe-pravitelstvo": {
+      "src": "Территория/Революционная демократия/33 Закаспийское правительство.docx",
+      "sha256": "f34f8c656a1eb7a138e5ecf2c9b7103208bf50e4d29709f10b790917e16c4361",
+      "parser": "1.0.0"
+    },
+    "state/vopu": {
+      "src": "Территория/Революционная демократия/35 Временное областное правительство Урала.docx",
+      "sha256": "1e43034555c4e6220544b1849e35e8bf5fd594a1f8c3a74f94cf74de0c255331",
+      "parser": "1.0.0"
+    },
+    "state/vsp": {
+      "src": "Территория/Революционная демократия/36 Временное Сибирское правительство.docx",
+      "sha256": "063946478d22ea7b7ab12b96c6696bcbcc3fa5878108c41ec3fcc606a3204d94",
+      "parser": "1.0.0"
+    },
+    "state/politcenter": {
+      "src": "Территория/Революционная демократия/37 Политцентр.docx",
+      "sha256": "83870d965088fb5a2e1c19037f4a6a8d76c3af09ee43ad4d401de6f768ad7685",
+      "parser": "1.0.0"
+    },
+    "state/rossiyskoe-gosudarstvo-vremennoe-vseross": {
+      "src": "Территория/Революционная демократия/67 Уфимская директория.docx",
+      "sha256": "45186f9efe4c23d970031b77574a87b906b447d6c81988641b31937fafdc90a1",
+      "parser": "1.0.0"
+    },
+    "person/avksentiev": {
+      "src": "Личности/Авксентьев/АВКСЕНТЬЕВ Н.Д..docx",
+      "sha256": "74c90e48f78a7738bc84adaf63496aaf057e13e01efeeeca86db95268686fa6e",
+      "parser": "1.0.0"
+    },
+    "person/alekseev": {
+      "src": "Личности/Алексеев/АЛЕКСЕЕВ М.В..docx",
+      "sha256": "748543c052f21b21320354222b80873863b20ab4732ad94e8eb6f1611902cd5c",
+      "parser": "1.0.0"
+    },
+    "person/anvelt": {
+      "src": "Личности/Анвельт/АНВЕЛЬТ Я.Я..docx",
+      "sha256": "0d06cfc63eccdf1f345863bfe3a37bf2b461e17c9603796bd9560fe3c608d3c0",
+      "parser": "1.0.0"
+    },
+    "person/blyukher": {
+      "src": "Личности/Блюхер/БЛЮХЕР В.К..docx",
+      "sha256": "ea2e206290df3db71ec2ebb02368be13a4aaed9f23fb14b015c988449846dbde",
+      "parser": "1.0.0"
+    },
+    "person/bogaevskiy": {
+      "src": "Личности/Богаевский/БОГАЕВСКИЙ А.П..docx",
+      "sha256": "696a3656bbd90e746d56cecc20717b693a04a0ab4239dc786c6e8d2f1b093e93",
+      "parser": "1.0.0"
+    },
+    "person/boldyrev": {
+      "src": "Личности/Болдырев/БОЛДЫРЕВ В.Г..docx",
+      "sha256": "2eda872d6ece7c7c7c26871ec8af6db5bf8dfd70c2857b91c6bdc7771b02d886",
+      "parser": "1.0.0"
+    },
+    "person/budyonny": {
+      "src": "Личности/Буденный/БУДЕННЫЙ С.М..docx",
+      "sha256": "afe94d075ed7917b49920aae142085f12225761bfe57c1dabaec447e1f8a5f4d",
+      "parser": "1.0.0"
+    },
+    "person/bukeykhanov": {
+      "src": "Личности/Букейханов/БУКЕЙХАНОВ А.Н..docx",
+      "sha256": "11e28c132f48b9584d175a7c049efab346d07b753665b84c549c4e949c96c2b0",
+      "parser": "1.0.0"
+    },
+    "person/bych": {
+      "src": "Личности/Быч/БЫЧ Л.Л..docx",
+      "sha256": "20178661f7854022d10260db277638fa175c808c1c549c156b087057548fe90d",
+      "parser": "1.0.0"
+    },
+    "person/vatsetis": {
+      "src": "Личности/Вацетис/ВАЦЕТИС И.И..docx",
+      "sha256": "9187c822973a3e1108d598d6bf5d269a41968b704d5ce7e3b216754eed391f10",
+      "parser": "1.0.0"
+    },
+    "person/vologodskiy": {
+      "src": "Личности/Вологодский/ВОЛОГОДСКИЙ П.В..docx",
+      "sha256": "2e40c897ec0b7c7d89d324ba50c940e9d28f6f9b2dc21194b4f9c89d6d2da5e3",
+      "parser": "1.0.0"
+    },
+    "person/volskiy": {
+      "src": "Личности/Вольский/ВОЛЬСКИЙ В.К..docx",
+      "sha256": "dcce8535e496c98590f175943dee781655247b336951a7318641b2537ba2aed4",
+      "parser": "1.0.0"
+    },
+    "person/voroshilov": {
+      "src": "Личности/Ворошилов/ВОРОШИЛОВ К.Е..docx",
+      "sha256": "aa4feb6855d7aa9aea52712fce9efe760e670be022fc878885ac0fe916800dab",
+      "parser": "1.0.0"
+    },
+    "person/wrangel": {
+      "src": "Личности/Врангель/ВРАНГЕЛЬ П.Н..docx",
+      "sha256": "f06a7dbe5f491ce4343974f7d27e4a078de43ef77f9bb4bb0e98940b2622ade3",
+      "parser": "1.0.0"
+    },
+    "person/gayda": {
+      "src": "Личности/Гайда/ГАЙДА Р..docx",
+      "sha256": "2002b848dd9fa8224902b9f1452cced851d3a219f00e8928fab3f14c0a9f4a8d",
+      "parser": "1.0.0"
+    },
+    "person/gegechkori": {
+      "src": "Личности/Гегечкори/ГЕГЕЧКОРИ Е.П..docx",
+      "sha256": "70397251acb8ea237a79ff2ac4b39f178e188ad38042a9170053d699dc5a2428",
+      "parser": "1.0.0"
+    },
+    "person/grishin": {
+      "src": "Личности/Гришин (Алмазов)/ГРИШИН (АЛМАЗОВ) А.Н..docx",
+      "sha256": "78de13725d761847bfbee38b799e236cb52104cf7626bf14acd8131321bf23c9",
+      "parser": "1.0.0"
+    },
+    "person/denikin-a-i": {
+      "src": "Личности/Деникин/ДЕНИКИН А.И..docx",
+      "sha256": "6ae89ae4210c0e842524abc4264c43ad5e9092828fd7d71c2fb5739d9ca299e2",
+      "parser": "1.0.0"
+    },
+    "person/derber": {
+      "src": "Личности/Дербер/ДЕРБЕР П.Я..docx",
+      "sha256": "13b10c49c67ee6f7647726d5cbce4227cb750a7d0e5e2940a8425db63c2f3b0a",
+      "parser": "1.0.0"
+    },
+    "person/dzerzhinskiy": {
+      "src": "Личности/Дзержинский/ДЗЕРЖИНСКИЙ Ф.Э..docx",
+      "sha256": "e6d3827e734f7be372cf2b3e62aed20ce5238e0a571fbd515366d2b366c08e2f",
+      "parser": "1.0.0"
+    },
+    "person/diterikhs": {
+      "src": "Личности/Дитерихс/ДИТЕРИХС М.К..docx",
+      "sha256": "ef72286eed7d246f9f249f1178ae02799bd13984b5f3aa57f1467a75942f5651",
+      "parser": "1.0.0"
+    },
+    "person/dutov": {
+      "src": "Личности/Дутов/ДУТОВ А.И..docx",
+      "sha256": "3b9020fbd95dd78e6f56f3f5bdeb83e289eaed4ca8a0a2fada3b658e3dd743ee",
+      "parser": "1.0.0"
+    },
+    "person/egorov": {
+      "src": "Личности/Егоров/ЕГОРОВ А.И..docx",
+      "sha256": "b9d4dc514c00e63d6d4b74b14eec2f7772e8624a63d5b17a17a31f05524bc5d7",
+      "parser": "1.0.0"
+    },
+    "person/zhordaniya": {
+      "src": "Личности/Жордания/ЖОРДАНИЯ Н.Н..docx",
+      "sha256": "80edd42e3211adb4af1d116a5b5b8b1c76118f5a8afc77dcd30cb95c8868e44b",
+      "parser": "1.0.0"
+    },
+    "person/zenzinov": {
+      "src": "Личности/Зензинов/ЗЕНЗИНОВ В.М..docx",
+      "sha256": "c7b0dd4b55393f28cdc93d8c3336e6c370bde61b61a8e3a706c9fbcd2ac11231",
+      "parser": "1.0.0"
+    },
+    "person/zinovev": {
+      "src": "Личности/Зиновьев/ЗИНОВЬЕВ Г.Е..docx",
+      "sha256": "f76095d097477ffc60886390534ff33c0b02a460b3366838fef52b3f47bd8f46",
+      "parser": "1.0.0"
+    },
+    "person/ibragim-bek": {
+      "src": "Личности/Ибрагим-бек/ИБРАГИМ-БЕК.docx",
+      "sha256": "8806056ed057e355ba38365e0064380da81917081598fef5bce3da2ab6660077",
+      "parser": "1.0.0"
+    },
+    "person/kaledin": {
+      "src": "Личности/Каледин/КАЛЕДИН А.М..docx",
+      "sha256": "b19b09ff8fd1cec2165f316600556e0db66f07c270696739dca4fa69e7350623",
+      "parser": "1.0.0"
+    },
+    "person/kamenev": {
+      "src": "Личности/Каменев С. С/КАМЕНЕВ С.С..docx",
+      "sha256": "8b358c1051134bce00ac851f784a184fb01f8bc7eeaa72f81e0fa04fc556bde7",
+      "parser": "1.0.0"
+    },
+    "person/kappel": {
+      "src": "Личности/Каппель/КАППЕЛЬ В.О..docx",
+      "sha256": "77f0145e3af10211fa89bb155f4fcd87add25514e81044dd428248d4ca2299b8",
+      "parser": "1.0.0"
+    },
+    "person/kerenskiy": {
+      "src": "Личности/Керенский/КЕРЕНСКИЙ А.Ф..docx",
+      "sha256": "1ebccbdbf0bdf0c6e5aad5a55bcd2f6689efe7e4634315a4c65dc55b26a9dda8",
+      "parser": "1.0.0"
+    },
+    "person/kornilov": {
+      "src": "Личности/Корнилов/КОРНИЛОВ Л.Г..docx",
+      "sha256": "11b597421b295e034b17610fafe7435199a06e16f8dc56ac29f86b8a23948ed8",
+      "parser": "1.0.0"
+    },
+    "person/krasnov": {
+      "src": "Личности/Краснов/КРАСНОВ П.Н..docx",
+      "sha256": "13e4d5fb2bfd81e6f01d3803fb92372cdaac9a624ee7a87760d1f65e7bea62a2",
+      "parser": "1.0.0"
+    },
+    "person/krivoshein": {
+      "src": "Личности/Кривошеин/КРИВОШЕИН А.В..docx",
+      "sha256": "7b0b0d7fde1cb70b9bd7c1df3bf3e95f4265ee7d79288e819f07a52dc2d08864",
+      "parser": "1.0.0"
+    },
+    "person/karl-gustav-emil": {
+      "src": "Личности/Маннергейм/МАННЕРГЕЙМ Г.К..docx",
+      "sha256": "5eba440eb838f55294836ef4241a46e556bc8af69dfc5af8c4c663da2af41924",
+      "parser": "1.0.0"
+    },
+    "person/makhno": {
+      "src": "Личности/Махно/МАХНО Н.И..docx",
+      "sha256": "e0961caf4e0300d96cc4d5e351ec13b3b15df882a6f4560c25769ef5e816286c",
+      "parser": "1.0.0"
+    },
+    "person/miller": {
+      "src": "Личности/Миллер/МИЛЛЕР Е.К..docx",
+      "sha256": "49ecc2f900510c926323729538f8f5321836e8403b668d1518f92479a3a81683",
+      "parser": "1.0.0"
+    },
+    "person/milyukov": {
+      "src": "Личности/Милюков/МИЛЮКОВ П.Н..docx",
+      "sha256": "fe7058ed479b2308431742ca4a317b98634fe9aa7f0237e4a32683812db66d9b",
+      "parser": "1.0.0"
+    },
+    "person/myasnikov": {
+      "src": "Личности/Мясников/МЯСНИКОВ А.Ф..docx",
+      "sha256": "92ec767ef7fc6fcc7fb042083aad932f6ac950cf1cad5b9201f917b0305b8414",
+      "parser": "1.0.0"
+    },
+    "person/nabokov": {
+      "src": "Личности/Набоков/НАБОКОВ В.Д..docx",
+      "sha256": "534fc2190dcef62284e33184ec660a754dfe170f27e84ad8a1d112a0249be896",
+      "parser": "1.0.0"
+    },
+    "person/ordzhonikidze": {
+      "src": "Личности/Орджоникидзе/ОРДЖОНИКИДЗЕ Г.К..docx",
+      "sha256": "232e86d7c71c6c58f16a3f0fc8d110147189839fdc92d97f14b3f8eafbd5993c",
+      "parser": "1.0.0"
+    },
+    "person/petlyura": {
+      "src": "Личности/Петлюра/ПЕТЛЮРА С.В..docx",
+      "sha256": "07da5ce2719e995a806efc323162296e0655df4afba8ef54391e0f019987a197",
+      "parser": "1.0.0"
+    },
+    "person/petrovskiy": {
+      "src": "Личности/Петровский/ПЕТРОВСКИЙ Г.И..docx",
+      "sha256": "9b7a9ff4c2e2706eb929f0fe37c02a17fde89c52f54a0447495c70eee994a79d",
+      "parser": "1.0.0"
+    },
+    "person/pilsudskiy": {
+      "src": "Личности/Пилсудский/ПИЛСУДСКИЙ Ю..docx",
+      "sha256": "8c840a9cfd4e3e62fdead30cf16d5980527b1f4ee3db0d7e06acf435147d976a",
+      "parser": "1.0.0"
+    },
+    "person/poluyan": {
+      "src": "Личности/Полуян/ПОЛУЯН Я.В..docx",
+      "sha256": "cbc7a716077e7cc48f33641abdc22efca83be4c424a4bc0597b81ccd61078192",
+      "parser": "1.0.0"
+    },
+    "person/pyats": {
+      "src": "Личности/Пятс/ПЯТС К.Я..docx",
+      "sha256": "18d483096ea2eae3a8fa4390201ca309ec8138bbf34b7876d15d8bd270791600",
+      "parser": "1.0.0"
+    },
+    "person/savinkov": {
+      "src": "Личности/Савинков/САВИНКОВ Б.В..docx",
+      "sha256": "c112940c3d2b38017ff94438bb08ec2654228bed5036524605bcefddb268eda4",
+      "parser": "1.0.0"
+    },
+    "person/sverdlov": {
+      "src": "Личности/Свердлов/СВЕРДЛОВ Я.М..docx",
+      "sha256": "42eed9e006b431dbb170273118df01e912564b06c0f0c51045b0d3c930734f00",
+      "parser": "1.0.0"
+    },
+    "person/semenov": {
+      "src": "Личности/Семенов/СЕМЕНОВ Г.М..docx",
+      "sha256": "254bd46c608c961dd9ef4175b6db54459df0f46344fec2e8ae1a514348ce9927",
+      "parser": "1.0.0"
+    },
+    "person/skoropadskiy": {
+      "src": "Личности/Скоропадский/СКОРОПАДСКИЙ П.П..docx",
+      "sha256": "4fa13786ead72c68e8a2696fe2ea7a695b634d694ed5262d0c632b8339dc3b73",
+      "parser": "1.0.0"
+    },
+    "person/spiridonova": {
+      "src": "Личности/Спиридонова/СПИРИДОНОВА М.А..docx",
+      "sha256": "13b3b72b80e2aef236c88b5c583cd7f0eb7ac71edeb52a287574d3fe1a7948ba",
+      "parser": "1.0.0"
+    },
+    "person/stalin": {
+      "src": "Личности/Сталин/СТАЛИН И.В..docx",
+      "sha256": "c86eed7108d8cb195d2ae3c62cfcdf462bde14ed80b6d8db073dc9d1f9108f0b",
+      "parser": "1.0.0"
+    },
+    "person/struve": {
+      "src": "Личности/Струве/СТРУВЕ П.Б..docx",
+      "sha256": "80538adade410f27e3d7b975fea8a5f4b2e40a8cb292d44ac68f6e99be619fc6",
+      "parser": "1.0.0"
+    },
+    "person/stuchka": {
+      "src": "Личности/Стучка/СТУЧКА П.И..docx",
+      "sha256": "3ff9bcb27a504ffcea41dc2399f9efaa8d9cd3d78b8dac7bec2fc3510a0818ba",
+      "parser": "1.0.0"
+    },
+    "person/trotskiy": {
+      "src": "Личности/Троцкий/ТРОЦКИЙ Л.Д..docx",
+      "sha256": "9d7c644f77a4d7a4db985adc4f6cb0649f371ee019e34597108618e62bb685e6",
+      "parser": "1.0.0"
+    },
+    "person/tukhachevskiy": {
+      "src": "Личности/Тухачевский/ТУХАЧЕВСКИЙ М.Н..docx",
+      "sha256": "821d58c6b851739b5e11fa37e2b5197dfb72449d65e5aa0f0cddf7256c20b2c1",
+      "parser": "1.0.0"
+    },
+    "person/uborevich": {
+      "src": "Личности/Уборевич/УБОРЕВИЧ И.П..docx",
+      "sha256": "ab1717044759efb82acf4b54c0bd8d7c936ea3c1bd453633075eedec906665f7",
+      "parser": "1.0.0"
+    },
+    "person/ulmanis": {
+      "src": "Личности/Улманис/УЛМАНИС К.И..docx",
+      "sha256": "c1850ead8ab0368d764e65121cbf19911ea92a4d9a90064550148e311490864f",
+      "parser": "1.0.0"
+    },
+    "person/uritskiy": {
+      "src": "Личности/Урицкий/УРИЦКИЙ М.С..docx",
+      "sha256": "705e6985a0cb86051a5df261dbd61117958a26e5f6680933e5fafaaa97c1dadf",
+      "parser": "1.0.0"
+    },
+    "person/frunze": {
+      "src": "Личности/Фрунзе/ФРУНЗЕ М.В..docx",
+      "sha256": "37b241628fa09fa0349e6c369baf139004ec293b560c2fa4bad6cd49434935de",
+      "parser": "1.0.0"
+    },
+    "person/khodzhaev": {
+      "src": "Личности/Ходжаев/ХОДЖАЕВ Ф.Г..docx",
+      "sha256": "8017514e440c40e4875b2fde09ff89e653f6b32ffda12f5cca8c89f35fc3b125",
+      "parser": "1.0.0"
+    },
+    "person/chaykovskiy": {
+      "src": "Личности/Чайковский/ЧАЙКОВСКИЙ Н.В..docx",
+      "sha256": "8c2f5274bc9d831dffc19dbd5a6d2af114cd6268344407101523a47fe9fad79d",
+      "parser": "1.0.0"
+    },
+    "person/chernov": {
+      "src": "Личности/Чернов/ЧЕРНОВ В.М..docx",
+      "sha256": "ccbd81cd29faa168e86f2572397fef494f48660a5b462479d71464f308d1ac34",
+      "parser": "1.0.0"
+    },
+    "person/chkheidze": {
+      "src": "Личности/Чхеидзе/ЧХЕИДЗЕ Н.С..docx",
+      "sha256": "a5877ccd376b08df82aab84f20b74087b776959249445f94c387cfbfecfbeda7",
+      "parser": "1.0.0"
+    },
+    "person/shulgin": {
+      "src": "Личности/Шульгин/ШУЛЬГИН В.В..docx",
+      "sha256": "2f97d46cbaeea437e5c02fa1023b27668fbb6cf635763f5aac627089c301d10f",
+      "parser": "1.0.0"
+    },
+    "person/schetinkin": {
+      "src": "Личности/Щетинкин/ЩЕТИНКИН П.Е..docx",
+      "sha256": "40af2fcb0cb31bd0b3a93565df5dd9c2491a5bd39a138111a283e4014f983381",
+      "parser": "1.0.0"
+    },
+    "person/yudenich": {
+      "src": "Личности/Юденич/ЮДЕНИЧ Н.Н..docx",
+      "sha256": "f067ec081a5fb0b543eaa944132dc027501dd77bc16e0bc2ff8c9c73ca53adb7",
+      "parser": "1.0.0"
+    },
+    "event/oktyabrskoe-vosstanie-v-moskve": {
+      "src": "Хроника конфликта/Карточки по событиям/07 Октябрьское восстание в Москве/07 Октябрьское вооружённое восстание в Москве.docx",
+      "sha256": "9de150081387c1184b28e3e5a0d4fe4ba8c9fa5b7c4781f77098340cbf6f7840",
+      "parser": "1.0.0"
+    },
+    "event/pokhod-kerenskogo-krasnova": {
+      "src": "Хроника конфликта/Карточки по событиям/08 Поход Керенского-Краснова/08 Поход Керенского-Краснова.docx",
+      "sha256": "8b067e65228a9fe50b7f5430ea91b095b04ac2a8f4c6f07c24b1f299c26651ef",
+      "parser": "1.0.0"
+    },
+    "event/oktyabrskiy-perevorot-v-petrograde": {
+      "src": "Хроника конфликта/Карточки по событиям/20 Октябрьский переворот в Петрограде/20 Октябрьский переворот.docx",
+      "sha256": "323ce3d3318c60ae535f5746c56bde54ef6759eb491c26461f931f854cc03624",
+      "parser": "1.0.0"
+    },
+    "event/vtoroy-sezd-sovetov": {
+      "src": "Хроника конфликта/Карточки по событиям/21 Второй съезд Советов/21 Второй съезд Советов.docx",
+      "sha256": "9f7ad4987b84ed798a24e971504446519a15b3851c769792efdc19c364efb038",
+      "parser": "1.0.0"
+    },
+    "event/vybory-v-us": {
+      "src": "Хроника конфликта/Карточки по событиям/22 Выборы в УС/22 Выборы в УС.docx",
+      "sha256": "6efd044359e2608e8c24eb63400dba01440e59f88c77e364df9eaaf269e485ae",
+      "parser": "1.0.0"
+    },
+    "event/brest-litovskie-peregovory": {
+      "src": "Хроника конфликта/Карточки по событиям/23 Брест-Литовские переговоры/23 Брест-Литовские мирные переговоры.docx",
+      "sha256": "ac3cdaf7f41bf877dd3e7e36cc6a2b81ab25506d6f0300fb0e68b6f170e1c8f0",
+      "parser": "1.0.0"
+    },
+    "event/otkrytie-i-razgon-us": {
+      "src": "Хроника конфликта/Карточки по событиям/24 Открытие и разгон УС/24 Открытие и разгон Учредительного собрания.docx",
+      "sha256": "ab26ed84df8ec5219490259c9b08de46d7ffb4206d9785dda92d63b88a10d596",
+      "parser": "1.0.0"
+    },
+    "event/brest-litovskiy-mir": {
+      "src": "Хроника конфликта/Карточки по событиям/26 Брест-Литовский мир/26 Брест-Литовский мир.docx",
+      "sha256": "434d494f579c35d8dc0af7f4f03c1cf410a57e8253e1bf97bf562251852af755",
+      "parser": "1.0.0"
+    },
+    "event/vystuplenie-chekhoslovatskogo-korpusa": {
+      "src": "Хроника конфликта/Карточки по событиям/27 Выступление Чехословацкого корпуса/27 Выступление Чехословацкого корпуса.docx",
+      "sha256": "2d245ef8eb94d53894ac823dc33606423700501ff91e1f08512614e7c467e0c8",
+      "parser": "1.0.0"
+    },
+    "event/vystuplenie-levykh-eserov": {
+      "src": "Хроника конфликта/Карточки по событиям/28 Выступление левых эсеров/28 Выступление левых эсеров.docx",
+      "sha256": "98dbaf79978bd568896bf2c734cad766ad3030d0db2496f48927f2e1dcbf4220",
+      "parser": "1.0.0"
+    },
+    "event/yaroslavskoe-vosstanie": {
+      "src": "Хроника конфликта/Карточки по событиям/29 Ярославское восстание/29 Ярославское восстание.docx",
+      "sha256": "f0f8f8c6505e235cf0d7241a4f3f478a3ac99b19b05e634e03e64d0b5405043b",
+      "parser": "1.0.0"
+    },
+    "event/pokhod-uralskoy-armii-blyukhera": {
+      "src": "Хроника конфликта/Карточки по событиям/30 Поход Уральской армии Блюхера/30 Поход Уральской армии Блюхера.docx",
+      "sha256": "06cbc22ae01e336da225011fb71a1c430bbb7f3f3ce89d0ed6824240d6dc2497",
+      "parser": "1.0.0"
+    },
+    "event/oborona-tsaritsyna": {
+      "src": "Хроника конфликта/Карточки по событиям/31 Оборона Царицына/31 Оборона Царицына.docx",
+      "sha256": "ef19df540de25d62550e7789adc8d90e9dab5055d8c02a39dde2e7e5fd69f36e",
+      "parser": "1.0.0"
+    },
+    "event/vzyatie-kazani-chastyami-narodnoy-armii": {
+      "src": "Хроника конфликта/Карточки по событиям/32 Взятие Казани частями Народной армии Комуча/32 Взятие Казани частями Народной армии Комуча.docx",
+      "sha256": "31e29175341b694bdf752e54fda4689dd85b28c41ca9889783b96a19fb43ce9b",
+      "parser": "1.0.0"
+    },
+    "event/krasnyy-terror": {
+      "src": "Хроника конфликта/Карточки по событиям/33 Красный террор/33 Красный террор.docx",
+      "sha256": "0ce83c5f81d5315790320eb22358527f0edbc647b2cd0654be3e9763942b3c53",
+      "parser": "1.0.0"
+    },
+    "event/nastuplenie-vostochnogo-fronta-rkka": {
+      "src": "Хроника конфликта/Карточки по событиям/34 Наступление Восточного фронта РККА/34 Наступление Восточного фронта РККА  1918-1919.docx",
+      "sha256": "6db74a96d732f3426735cf7c56fb0f19eaf822f92042048ebe44bc2dd5975f62",
+      "parser": "1.0.0"
+    },
+    "event/perevorot-v-omske": {
+      "src": "Хроника конфликта/Карточки по событиям/35 Переворот в Омске/35 Переворот в Омске.docx",
+      "sha256": "016b61be7d0a539053db2d03237ab6c5d99b8d69c6a6331f10992561502b5791",
+      "parser": "1.0.0"
+    },
+    "event/permskaya-operatsiya-russkoy-armii": {
+      "src": "Хроника конфликта/Карточки по событиям/36 Пермская операция Русской армии/36 Пермская операция Русской армии.docx",
+      "sha256": "debae36632acf18adfa3e588b7660dbc3acf39376e81d19a5086f565caddef22",
+      "parser": "1.0.0"
+    },
+    "event/vesennee-nastuplenie-russkoy-armii": {
+      "src": "Хроника конфликта/Карточки по событиям/37 Весеннее наступление Русской армии/37 Весеннее наступление Русской армии 1919.docx",
+      "sha256": "7582c8ae9bbb9dbd16b5c5bde9ebe2868ce358c429615dc68fd0530262b8997d",
+      "parser": "1.0.0"
+    },
+    "event/kontrnastuplenie-vostochnogo-fronta-rkka": {
+      "src": "Хроника конфликта/Карточки по событиям/39 Контрнаступление Восточного фронта РККА/39 Контрнаступление Восточного фронта РККА.docx",
+      "sha256": "39222ab63c734f7fe586505fad610de8e61149f7d3465161d336ff9bb589cf51",
+      "parser": "1.0.0"
+    },
+    "event/voennye-deystviya-na-severo-zapade": {
+      "src": "Хроника конфликта/Карточки по событиям/40 Военные действия на Северо-Западе/40 Военные действия на Северо-Западе России.docx",
+      "sha256": "6e83880ad0149fab54e5280ce2ce00e03c92178c0985d4078f136ba0f9f7c4dc",
+      "parser": "1.0.0"
+    },
+    "event/krasnaya-gorka-i-seraya-loshad": {
+      "src": "Хроника конфликта/Карточки по событиям/41 Красная горка и Серая Лошадь/41 Красная горка и Серая Лошадь.docx",
+      "sha256": "b3c2e0438924531a1d9353203c71d5a716c8568cdb4fb74e13c50939d9f8f052",
+      "parser": "1.0.0"
+    },
+    "event/nastuplenie-vostochnogo-fronta-1919-1920": {
+      "src": "Хроника конфликта/Карточки по событиям/42 Наступление Восточного фронта 1919-1920/42 Наступление Восточного фронта 1919-1920 гг..docx",
+      "sha256": "b51559457d0062e75bba8a593745c27b380893ed53c26f587f903a021e6cbdbc",
+      "parser": "1.0.0"
+    },
+    "event/moskovskiy-pokhod-vsyur": {
+      "src": "Хроника конфликта/Карточки по событиям/43 Московский поход ВСЮР/43 Московский поход.docx",
+      "sha256": "cdeab455c47cd364bbf973ee65848e49d5f213dfeb283eabe22e8c636d1da1a8",
+      "parser": "1.0.0"
+    },
+    "event/turkestanskiy-front": {
+      "src": "Хроника конфликта/Карточки по событиям/44 Туркестанский фронт/44 Туркестанский фронт.docx",
+      "sha256": "8abe39774d944962ceada25535ffceb0a3bb624d2302e32e196b3edd58244513",
+      "parser": "1.0.0"
+    },
+    "event/kontrnastuplenie-yuzhnogo-fronta-rkka": {
+      "src": "Хроника конфликта/Карточки по событиям/45 Контрнаступление Южного фронта РККА/45 Контрнаступление Южного фронта.docx",
+      "sha256": "c6c5fee3eebdaf1fd80f8ac7c69afcfaf15d78cec6e4a5867a6f713d340880ce",
+      "parser": "1.0.0"
+    },
+    "event/pervaya-konnaya-armiya": {
+      "src": "Хроника конфликта/Карточки по событиям/46 Первая Конная армия/46 Первая Конная армия.docx",
+      "sha256": "5ceb329a703c9b4c1b50e84f1daf7860e3329e134aedb40674df075c028d397d",
+      "parser": "1.0.0"
+    },
+    "event/kharkovskaya-operatsiya-rkka": {
+      "src": "Хроника конфликта/Карточки по событиям/47 Харьковская операция РККА/47 Харьковская операция РККА.docx",
+      "sha256": "a6a0014e115a347ade311a28126bee257feefb63e5718ced1a60c76692c2a0df",
+      "parser": "1.0.0"
+    },
+    "event/rostovo-novocherkasskaya-operatsiya": {
+      "src": "Хроника конфликта/Карточки по событиям/49 Ростово-Новочеркасская операция/49 Ростово-Новочеркасская операция.docx",
+      "sha256": "7062a0960aa5418d2ba47648ca96c5743260ab0dfc68dcf2acaf8b9e18cdee83",
+      "parser": "1.0.0"
+    },
+    "event/sovetsko-polskaya-voyna": {
+      "src": "Хроника конфликта/Карточки по событиям/50 Советско-польская война/50 Советско-польская война.docx",
+      "sha256": "762de9035165950150b8dc95d4a3c4278a07b40024d44fac6a53bad5e7f9403e",
+      "parser": "1.0.0"
+    },
+    "event/bakinskaya-operatsiya-rkka": {
+      "src": "Хроника конфликта/Карточки по событиям/51 Бакинская операция РККА/51 Бакинская операция РККА.docx",
+      "sha256": "3bb1748fb7279607b6bf0e6a73d064345e555a9967b3e9394530c9d326622e15",
+      "parser": "1.0.0"
+    },
+    "event/kakhovka": {
+      "src": "Хроника конфликта/Карточки по событиям/52 Каховка/52 Каховка.docx",
+      "sha256": "e805271bcd5f103c7a477a9bdd1c1ea28eb6c69eead78b9da1d40db5ee1fcb57",
+      "parser": "1.0.0"
+    },
+    "event/bukharskaya-operatsiya": {
+      "src": "Хроника конфликта/Карточки по событиям/53 Бухарская операция/53 Бухарская операция.docx",
+      "sha256": "8843e14f4ddbde192476584b5ec603dd24e035b4441dac4d218f96a34daa16ce",
+      "parser": "1.0.0"
+    },
+    "event/perekopsko-chongarskaya-operatsiya": {
+      "src": "Хроника конфликта/Карточки по событиям/53 Перекопско-Чонгарская операция/54 Перекопско-Чонгарская операция.docx",
+      "sha256": "5f08f1a38f9fc201866a44894f8513a657c823d6a7fd1ef4a1bcc1e0529864e1",
+      "parser": "1.0.0"
+    },
+    "event/volochaevskaya-operatsiya": {
+      "src": "Хроника конфликта/Карточки по событиям/55 Волочаевская операция/55 Волочаевская операция.docx",
+      "sha256": "e525735d298fa736e53f0f4a19278639f44dd164289d1b7b1ca1abbe3b7fe901",
+      "parser": "1.0.0"
+    },
+    "event/primorskaya-operatsiya": {
+      "src": "Хроника конфликта/Карточки по событиям/56 Приморская операция/56 Приморская операция.docx",
+      "sha256": "9e2fffe7fdc569839794277d7e84fdb5df3d4377a89dd28acef54589070ccb04",
+      "parser": "1.0.0"
+    },
+    "chronicle/1918": {
+      "src": "Хроника конфликта/1918.docx",
+      "sha256": "5d89ed3f65d281bea477bdeb3903a91eeacf0a97b98433e514f571fdd23d1b32",
+      "parser": "1.0.0"
+    },
+    "chronicle/1919": {
+      "src": "Хроника конфликта/1919.docx",
+      "sha256": "3c089359694862a3dfdc3c710808180cb294fba42a28123d796811a46a20e181",
+      "parser": "1.0.0"
+    },
+    "chronicle/1920": {
+      "src": "Хроника конфликта/1920.docx",
+      "sha256": "d3c2cb48af5f74bc09adc1725c35f649f3c2fd346a3a70d1fa43eb7c1fa4616a",
+      "parser": "1.0.0"
+    },
+    "chronicle/1921": {
+      "src": "Хроника конфликта/1921.docx",
+      "sha256": "335c189c978ddfc3e01b27dc757050142694c4ef46a56d0be5d159027028032e",
+      "parser": "1.0.0"
+    },
+    "chronicle/1922": {
+      "src": "Хроника конфликта/1922.docx",
+      "sha256": "866c815121ed477799e4514fa1d6adbfe966027cd8e8378028a57b7a9a5da633",
+      "parser": "1.0.0"
+    },
+    "party/alekseev-org": {
+      "src": "Партии/Алексеевская организация/Алексеевская организация.docx",
+      "sha256": "8e1849e1fb692a52ae99b3447ab26b1f4029271990a60318d7f92483fb660610",
+      "parser": "1.0.0"
+    },
+    "state/russian-state-kolchak": {
+      "src": "Территория/Белые/Российское Государство/27 Российское государство.docx",
+      "sha256": "3d934e7bce5c6ff273a2e33db39d6d7700bce1d0451bb79c1862bf264bcf6545",
+      "parser": "1.0.0"
+    },
+    "state/kronshtadtskoe-vosstanie-kronshtadtskiy": {
+      "src": "Территория/Восстания/63 Кронштадтское восстание.docx",
+      "sha256": "6251ebb4b5db12cbc8c8035c6c8f5479dc6205038ad2cd540412c1321b521535",
+      "parser": "1.0.0"
+    },
+    "state/allies-entente": {
+      "src": "Территория/Интервенция/64 Союзная интервенция.docx",
+      "sha256": "33745baa68a1785ca979a6a0b8b831a11eae10a1a1f641dd1e36b016da3eda8d",
+      "parser": "1.0.0"
+    },
+    "state/czechoslovak-corps": {
+      "src": "Территория/Интервенция/65 Выступление Чехословацкого корпуса.docx",
+      "sha256": "9ebca3f02ad9cc39251a7bd20d1c9e3f77ca0df7b3877b231a2795b7854108d9",
+      "parser": "1.0.0"
+    },
+    "state/central-powers": {
+      "src": "Территория/Интервенция/66 Центральные державы.docx",
+      "sha256": "09830f900faa472940a0ebb86fe65a2c6c5a83f6f166a53c56772a03aa2312fe",
+      "parser": "1.0.0"
+    },
+    "state/georgian-ssr": {
+      "src": "Территория/Красные/06 Грузинская ССР.docx",
+      "sha256": "bea2b2344ca9f24a9972520f02fce83dfd87af7466a209240df73bc56af7726e",
+      "parser": "1.0.0"
+    },
+    "person/denikin": {
+      "src": "Личности/Деникин/ДЕНИКИН А.И..docx",
+      "sha256": "6ae89ae4210c0e842524abc4264c43ad5e9092828fd7d71c2fb5739d9ca299e2",
+      "parser": "1.0.0"
+    },
+    "person/pilsudski": {
+      "src": "Личности/Пилсудский/ПИЛСУДСКИЙ Ю..docx",
+      "sha256": "8c840a9cfd4e3e62fdead30cf16d5980527b1f4ee3db0d7e06acf435147d976a",
+      "parser": "1.0.0"
+    },
+    "person/semyonov": {
+      "src": "Личности/Семенов/СЕМЕНОВ Г.М..docx",
+      "sha256": "254bd46c608c961dd9ef4175b6db54459df0f46344fec2e8ae1a514348ce9927",
+      "parser": "1.0.0"
+    },
+    "person/trotsky": {
+      "src": "Личности/Троцкий/ТРОЦКИЙ Л.Д..docx",
+      "sha256": "9d7c644f77a4d7a4db985adc4f6cb0649f371ee019e34597108618e62bb685e6",
+      "parser": "1.0.0"
+    },
+    "person/tukhachevsky": {
+      "src": "Личности/Тухачевский/ТУХАЧЕВСКИЙ М.Н..docx",
+      "sha256": "821d58c6b851739b5e11fa37e2b5197dfb72449d65e5aa0f0cddf7256c20b2c1",
+      "parser": "1.0.0"
+    },
+    "state/south-russia-gov": {
+      "src": "Территория/Белые/Правительство Юга России/31 Правительство Юга России.docx",
+      "sha256": "21fd56ed74d9a62443d9940c3b49f5436846b9b01d2020aecc64eb04d145ddb2",
+      "parser": "1.0.0"
+    },
+    "state/priamur-state": {
+      "src": "Территория/Белые/Приамурский Земский Край/30 Приамурский земский край.docx",
+      "sha256": "e3156816b4d67b3779b844cfe02ff624bd6c61c32c3bcaa004df3e10a5dfc779",
+      "parser": "1.0.0"
+    },
+    "state/turkestan-sfr": {
+      "src": "Территория/Красные/03 ТСФР.docx",
+      "sha256": "337bb21e6aed29c3b90040c57fdcc6af72356957c32c34e732a6c618a9555049",
+      "parser": "1.0.0"
+    },
+    "state/ufa-directory": {
+      "src": "Территория/Революционная демократия/67 Уфимская директория.docx",
+      "sha256": "45186f9efe4c23d970031b77574a87b906b447d6c81988641b31937fafdc90a1",
+      "parser": "1.0.0"
+    }
+  }
+}

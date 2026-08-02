@@ -1,0 +1,378 @@
+{
+  "schema": 1,
+  "_note": "Колонка ПРИМЕЧАНИЕ из docx — инструкции верстальщику и медиа-конвейеру, не контент раздела.",
+  "items": {
+    "alekseev-org": [
+      {
+        "n": 1,
+        "src_name": "Алексеевская_01",
+        "note_ru": "Обрезать поля.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "anarchists": [
+      {
+        "n": 1,
+        "src_name": "АНАРХИСТЫ_01",
+        "note_ru": "Подрезать белые поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "АНАРХИСТЫ_03",
+        "note_ru": "Подрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "АНАРХИСТЫ_05",
+        "note_ru": "Подрезать черные поля по периметру изображения",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "basmachestvo": [
+      {
+        "n": 1,
+        "src_name": "Басмачество_01",
+        "note_ru": "Обрезать белые поля фото",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "belorusskaya-sotsialisticheskaya-gromada": [
+      {
+        "n": 3,
+        "src_name": "БСГ_03",
+        "note_ru": "Подрезать белые поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "bolsheviks": [
+      {
+        "n": 2,
+        "src_name": "БОЛЬШЕВИКИ_02",
+        "note_ru": "Подрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "БОЛЬШЕВИКИ_04",
+        "note_ru": "Подрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "БОЛЬШЕВИКИ_05",
+        "note_ru": "Подрезать белые поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "borotbisty": [
+      {
+        "n": 1,
+        "src_name": "БОРОТЬБИСТЫ_01",
+        "note_ru": "Затереть надпись на фото в левом нижнем углу",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "gruzinskaya-sotsial-demokraticheskaya-pa": [
+      {
+        "n": 1,
+        "src_name": "Грузинская СДП_01",
+        "note_ru": "Фото ранее использовалось в справке про Жордания, фото 2.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Жордания"
+      },
+      {
+        "n": 2,
+        "src_name": "Грузинская СДП_02",
+        "note_ru": "Подрезать поля. Фото ранее использовалось в справке про Гегечкори, фото 1.",
+        "directives": [
+          "trim",
+          "duplicate_of"
+        ],
+        "duplicate_of": "Гегечкори"
+      }
+    ],
+    "dashnaktsutyun": [
+      {
+        "n": 1,
+        "src_name": "Дашнакцутюн_01",
+        "note_ru": "Удалить черное поле с современным текстом внизу, а также не растягивать это фото на максимум, качества точно не хватит, сделать поменьше.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "Дашнакцутюн_03",
+        "note_ru": "Удалить белые поля.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "committee-salvation": [
+      {
+        "n": 4,
+        "src_name": "КОМИТЕТ СПАСЕНИЯ_04",
+        "note_ru": "Удалить подпись на черном фоне внизу фотографии, оставить только изображение",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "cadets": [
+      {
+        "n": 1,
+        "src_name": "КАДЕТЫ_01",
+        "note_ru": "Убрать в левом нижнем углу просвечивающие синие чернила от печатей.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "КАДЕТЫ_04",
+        "note_ru": "Ранее использовалось в справке про Милюкова, фото 1.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Милюкова"
+      },
+      {
+        "n": 5,
+        "src_name": "КАДЕТЫ_05",
+        "note_ru": "Ранее использовалось в справке про Набокова, фото 4.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Набокова"
+      }
+    ],
+    "latyshskiy-krestyanskiy-soyuz": [
+      {
+        "n": 1,
+        "src_name": "ЛатышскийКС_01",
+        "note_ru": "Ранее использовалось в справке про Улманиса, фото 2.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Улманиса"
+      },
+      {
+        "n": 2,
+        "src_name": "ЛатышскийКС_02",
+        "note_ru": "Затереть надпись в правом нижнем углу.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "mensheviks": [
+      {
+        "n": 4,
+        "src_name": "Меньшевики_04",
+        "note_ru": "Фото ранее использовалось в Чхеидзе.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Чхеидзе"
+      }
+    ],
+    "muslim-socialists": [
+      {
+        "n": 4,
+        "src_name": "Мусульманские СК_04",
+        "note_ru": "Подрезать черные поля.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "national-center": [
+      {
+        "n": 1,
+        "src_name": "Национальный центр_01",
+        "note_ru": "Убрать надпись справа внизу или немного подрезать фото снизу.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "poaley-tsion": [
+      {
+        "n": 2,
+        "src_name": "Паолей Цион_02",
+        "note_ru": "Обрезать черные поля.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "right-center": [
+      {
+        "n": 1,
+        "src_name": "Правый центр_01",
+        "note_ru": "Фото ранее использовалось в справке про Кривошеина.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Кривошеина"
+      },
+      {
+        "n": 3,
+        "src_name": "Правый центр_03",
+        "note_ru": "Качество на грани, можно сразу сделать фото поменьше, чтобы выглядело покачественнее.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "sotsial-demokraticheskaya-partiya-finlya": [
+      {
+        "n": 3,
+        "src_name": "СДПФ_03",
+        "note_ru": "Обрезать низ фото (черное поле с плохо разборчивым текстом).",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "СДПФ_04 1 и СДПФ_04 2",
+        "note_ru": "Обрезать черные поля на обоих фото (довольно тонкие, но видны) и совместить обе фотографии, чтобы слева была первая, а справа – вторая.\nЕсли получится, что слишком мелко и текст нечитабелен, то оставим только первую страницу.",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "СДПФ_05",
+        "note_ru": "Минимально подрезать сверху или затереть черный уголок в правом верхнем углу.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "srs": [
+      {
+        "n": 1,
+        "src_name": "Эсеры_01.jpg",
+        "note_ru": "Фото ранее использовалось в Чернов, фото 3.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Чернов"
+      },
+      {
+        "n": 2,
+        "src_name": "Эсеры_02.jpg",
+        "note_ru": "Фото ранее использовалось в Авксентьев.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Авксентьев"
+      },
+      {
+        "n": 3,
+        "src_name": "Эсеры_03.jpg",
+        "note_ru": "Фото ранее использовалось в Вольский.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Вольский"
+      }
+    ],
+    "union-renewal": [
+      {
+        "n": 1,
+        "src_name": "Союза возрождения_01",
+        "note_ru": "Фото плохого качества, можно сразу сделать поменьше размером, чтобы не расползлось.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "Союза возрождения_04",
+        "note_ru": "Фото ранее использовалось в справке про Чайковского.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Чайковского"
+      },
+      {
+        "n": 5,
+        "src_name": "Союза возрождения_05",
+        "note_ru": "Фото ранее использовалось в справке про Авксентьева.",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Авксентьева"
+      }
+    ],
+    "union-constituent": [
+      {
+        "n": 1,
+        "src_name": "СЗУС_01",
+        "note_ru": "Обрезать неровности по краям снизу и справа",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "СЗУС_02",
+        "note_ru": "Немного обрезать неровности по краям сверху и снизу",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "narodnie-socialists": [
+      {
+        "n": 2,
+        "src_name": "ТНСП_02",
+        "note_ru": "Обрезать все поля, оставить только изображение",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "ukrainskaya-sotsial-demokraticheskaya-ra": [
+      {
+        "n": 1,
+        "src_name": "УСДРП_01",
+        "note_ru": "Немного, где-то в половину, подрезать светлое паспарту. Но полностью его не удалять, потому что качества фото, скорее всего, не хватит.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ]
+  }
+}

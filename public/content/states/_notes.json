@@ -1,0 +1,589 @@
+{
+  "schema": 1,
+  "_note": "Колонка ПРИМЕЧАНИЕ из docx — инструкции верстальщику и медиа-конвейеру, не контент раздела.",
+  "items": {
+    "vsyur": [
+      {
+        "n": 1,
+        "src_name": "22 ВСЮР_01",
+        "note_ru": "Обрезать поля\nИспользовалось ранее в персоналиях",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "22 ВСЮР_02",
+        "note_ru": "Обрезать поля и надпись внизу",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "22 ВСЮР_03",
+        "note_ru": "Добавлено в последний момент, сменилась очередность изображений далее\nОбрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "22 ВСЮР_04",
+        "note_ru": "Обрезать поля\nРазместить обе стороны купюры на одну страницу",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 6,
+        "src_name": "22 ВСЮР_06",
+        "note_ru": "Добавлено в последний момент, что-то удалялось еще\nРазместить обе стороны купюры на одну страницу",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "great-don-host": [
+      {
+        "n": 4,
+        "src_name": "23 ВВД_04",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "orenburg-cossack-host": [
+      {
+        "n": 5,
+        "src_name": "26 Оренб_05",
+        "note_ru": "Обрезать поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 6,
+        "src_name": "26 Оренб_06",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "rossiyskaya-vostochnaya-okraina": [
+      {
+        "n": 1,
+        "src_name": "28 РВО_01",
+        "note_ru": "ФОТО ЕСТЬ В СПРАВКЕ О СЕМЁНОВЕ",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "russian-state-kolchak": [
+      {
+        "n": 1,
+        "src_name": "27 Российское Гос_01",
+        "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
+        "directives": [
+          "trim",
+          "duplicate_of"
+        ],
+        "duplicate_of": "хронике (переворот в Омске)"
+      },
+      {
+        "n": 2,
+        "src_name": "27 Российское Гос_02",
+        "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
+        "directives": [
+          "trim",
+          "duplicate_of"
+        ],
+        "duplicate_of": "хронике (переворот в Омске)"
+      },
+      {
+        "n": 3,
+        "src_name": "27 Российское Гос_03",
+        "note_ru": "Использовалось в хронике (переворот в Омске)",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "хронике (переворот в Омске)"
+      },
+      {
+        "n": 4,
+        "src_name": "27 Российское Гос_04",
+        "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
+        "directives": [
+          "trim",
+          "duplicate_of"
+        ],
+        "duplicate_of": "хронике (переворот в Омске)"
+      },
+      {
+        "n": 5,
+        "src_name": "27 Российское Гос_05",
+        "note_ru": "Использовалось в хронике (переворот в Омске)",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "хронике (переворот в Омске)"
+      },
+      {
+        "n": 6,
+        "src_name": "27 Российское Гос_06",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "northern-region": [
+      {
+        "n": 1,
+        "src_name": "20 Сев_Область_01",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "20 Сев_Область_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "20 Сев_Область_03",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "20 Сев_Область_04",
+        "note_ru": "Повернуть крестик ровно и обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "tambovskoe-vosstanie-pod-rukovodstvom-a": [
+      {
+        "n": 4,
+        "src_name": "54 Тамбовщина_04",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "czechoslovak-corps": [
+      {
+        "n": 5,
+        "src_name": "ЧСК_04",
+        "note_ru": "Отметить большого бородатого мужика цифрой 1 (снизу, на темном), а человек слева через одного от него – цифрой 2 (тоже снизу, однообразно).\n\nИспользовалось в справке 27 из хроники!!",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "27 из хроники!!"
+      }
+    ],
+    "central-powers": [
+      {
+        "n": 4,
+        "src_name": "ЦЕНТРАЛЬНЫЕ ДЕРЖАВЫ_04",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "rsfsr": [
+      {
+        "n": 2,
+        "src_name": "01 РСФСР_02",
+        "note_ru": "Использовалась в СВЕРДЛОВ",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "СВЕРДЛОВ"
+      },
+      {
+        "n": 4,
+        "src_name": "01 РСФСР_04",
+        "note_ru": "Удалить белые поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "01 РСФСР_05",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "sksr": [
+      {
+        "n": 3,
+        "src_name": "02 СКСР_03",
+        "note_ru": "Удалить поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "02 СКСР_04",
+        "note_ru": "Удалить поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "turkestan-sfr": [
+      {
+        "n": 4,
+        "src_name": "03 ТСФР_04",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "azerbaijani-ssr": [
+      {
+        "n": 2,
+        "src_name": "04 АзССР_02",
+        "note_ru": "Немного подрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "04 АзССР_04",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "georgian-ssr": [
+      {
+        "n": 3,
+        "src_name": "06 ССР Грузии_03",
+        "note_ru": "Обрезать тонкие белые поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "zsfsr": [
+      {
+        "n": 3,
+        "src_name": "07 ЗСФСР_03",
+        "note_ru": "Разместить обе стороны купюры на одной стороне страницы\n\nЭто изображение добавилось!!!",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "fer": [
+      {
+        "n": 3,
+        "src_name": "15 ДВР_03",
+        "note_ru": "ФОТО ЕСТЬ В СПРАВКЕ ПРО БЛЮХЕРА",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "15 ДВР_04",
+        "note_ru": "ФОТО ЕСТЬ В СПРАВКЕ ПРО Уборевича",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "15 ДВР_05",
+        "note_ru": "Разместить обе купюры на одной странице",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "etk": [
+      {
+        "n": 2,
+        "src_name": "17 ЭТК_02",
+        "note_ru": "обрезать надпись снизу",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "latvssr": [
+      {
+        "n": 1,
+        "src_name": "19 ЛатвССР_01",
+        "note_ru": "использовать фото СТУЧКА П.И._01.jpg из биографий",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "фото СТУЧКА П"
+      },
+      {
+        "n": 4,
+        "src_name": "19 ЛатвССР_04",
+        "note_ru": "Разместить обе стороны купюры на одну страницу",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "gruzinskaya-demokraticheskaya-respublika": [
+      {
+        "n": 3,
+        "src_name": "38 ГДР_03",
+        "note_ru": "Использовалось в Чхеидзе, фото 02\nЗатереть подпись русский Шейдеман",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Чхеидзе"
+      },
+      {
+        "n": 5,
+        "src_name": "38 ГДР_05.jpg",
+        "note_ru": "Обрезать поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "unr": [
+      {
+        "n": 2,
+        "src_name": "40 УНР_02",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "latviyskaya-respublika": [
+      {
+        "n": 4,
+        "src_name": "43 Латвийская Республика_04",
+        "note_ru": "Разместить обе стороны купюры на одну страницу",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "43 Латвийская Республика_05",
+        "note_ru": "Разместить обе стороны купюры на одну страницу",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "zdfr": [
+      {
+        "n": 2,
+        "src_name": "45 ЗДФР_02",
+        "note_ru": "Затереть надпись. УЖЕ ИСПОЛЬЗОВАЛАСЬ В СПРАВКЕ ПРО ЧХЕИДЗЕ, фото 02\nУдалить надпись про шейдемана",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "ЧХЕИДЗЕ"
+      },
+      {
+        "n": 3,
+        "src_name": "45 ЗДФР_03.jpg",
+        "note_ru": "Обрезать белые поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "respublika-armeniya": [
+      {
+        "n": 1,
+        "src_name": "46 Армянская Республика_01",
+        "note_ru": "Обрезать поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "adr": [
+      {
+        "n": 3,
+        "src_name": "47 АДР_03",
+        "note_ru": "Обрезать белые поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "finlyandskaya-respublika-s-10-avgusta-19": [
+      {
+        "n": 4,
+        "src_name": "51 ФИНЛЯНДИЯ_04",
+        "note_ru": "Обрезать белые поля\nРазместить обе стороны купюры на одной странице",
+        "directives": [
+          "trim",
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "polskaya-respublika": [
+      {
+        "n": 1,
+        "src_name": "52 ПОЛЬША_01",
+        "note_ru": "использовать фото ПИЛСУДСКИЙ Ю._01.jpg",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "фото ПИЛСУДСКИЙ Ю"
+      },
+      {
+        "n": 6,
+        "src_name": "52 ПОЛЬША_06",
+        "note_ru": "Обе стороны купюры на одной странице разместить",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "vremennoe-pravitelstvo-rossiyskaya-respu": [
+      {
+        "n": 1,
+        "src_name": "32 ВП_01",
+        "note_ru": "Есть в 12 справке к хронике про формирование Временного правительства",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "32 ВП_05",
+        "note_ru": "ФОТО ЕСТЬ В СПРАВКЕ ОБ АВКСЕНТЬЕВЕ",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "zakaspiyskoe-vremennoe-pravitelstvo": [
+      {
+        "n": 1,
+        "src_name": "33 ЗВП_01",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "komuch": [
+      {
+        "n": 1,
+        "src_name": "34 Комуч_01",
+        "note_ru": "Добавилось в последний момент\nОбрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "34 Комуч_02",
+        "note_ru": "Добавилось в последний момент\nОбрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "vsp": [
+      {
+        "n": 3,
+        "src_name": "36 ВСП_03",
+        "note_ru": "Разместить обе стороны купюры на одной странице",
+        "directives": [
+          "spread"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "ufa-directory": [
+      {
+        "n": 1,
+        "src_name": "67 Уфимская 01",
+        "note_ru": "Фото использовалось в персоналиях",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "67 Уфимская 02",
+        "note_ru": "Фото использовалось в персоналиях",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "67 Уфимская 03",
+        "note_ru": "Фото использовалось в персоналиях",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ]
+  }
+}
