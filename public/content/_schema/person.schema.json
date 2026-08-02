@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mtk29/person",
+  "title": "Личность",
+  "allOf": [{ "$ref": "mtk29/common" }],
+  "type": "object",
+  "required": ["schema", "id", "kind", "title_ru", "en_status", "surname_ru"],
+  "properties": {
+    "kind": { "const": "person" },
+    "given_ru": { "type": ["string", "null"], "description": "Имя и отчество, как в источнике прописными: «ВЛАДИМИР ИЛЬИЧ». Хранится в исходном регистре, регистр — дело вёрстки." },
+    "surname_ru": { "type": "string", "description": "Фамилия, возможна вторая в скобках: «ЛЕНИН (УЛЬЯНОВ)»." },
+    "short_ru": { "type": ["string", "null"], "description": "Сокращённая форма ФИО из источника: «В. И. ЛЕНИН (УЛЬЯНОВ)»." },
+    "regalia_ru": { "type": "array", "items": { "type": "string" }, "description": "Список регалий, каждая — отдельная строка справки." },
+    "regalia_en": { "type": "array", "items": { "type": "string" } },
+    "side": { "type": ["string", "null"], "description": "Алиас camp. Держим оба имени: сцена /expo/ читает side, карточки — camp." }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mtk29/state",
+  "title": "Государственное образование",
+  "allOf": [{ "$ref": "mtk29/common" }],
+  "type": "object",
+  "required": ["schema", "id", "kind", "title_ru", "en_status"],
+  "properties": {
+    "kind": { "const": "state" },
+    "abbr_ru": { "type": "array", "items": { "type": "string" } },
+    "aka_ru": { "type": "array", "items": { "type": "string" }, "description": "«Другие названия». Только сами названия: строки-заголовки периодов («До июля 1918 г.:») в список не попадают." },
+    "aka_raw_ru": { "type": ["string", "null"], "description": "Блок «Другие названия» целиком, как в источнике. У РСФСР там семь имён, разложенных по периодам, — плоский aka_ru эту разбивку теряет." },
+    "participants_ru": { "type": "array", "items": { "type": "string" } },
+    "capital_ru": { "type": ["string", "null"] },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": ["string", "null"] },
+          "src_file": { "type": ["string", "null"] },
+          "caption_ru": { "type": ["string", "null"] },
+          "w": { "type": ["integer", "null"] },
+          "h": { "type": ["integer", "null"] }
+        }
+      },
+      "description": "Флаги и гербы из строки «Символика». Отдельно от media[]: выводятся не в галерее."
+    },
+    "territory_id": {
+      "type": ["string", "null"],
+      "description": "Ссылка в public/content/geo/_index.json — реестр зоны maps. Нет полигона — null, UI показывает заглушку. Заводить «на будущее» нельзя."
+    }
+  }
+}

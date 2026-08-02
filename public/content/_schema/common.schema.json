@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mtk29/common",
+  "title": "Общий конверт справки МТК 29",
+  "description": "Плоская схема с суффиксами _ru/_en. Плоскость — не стиль, а требование: только при плоских полях работает stub-fallback карточек (party-card.js, state-card.js собирают карточку из записи индекса при 404).",
+  "type": "object",
+  "required": ["schema", "id", "kind", "title_ru", "en_status"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": 1, "description": "Версия схемы. Ломающее изменение = бамп + правка docs/content-schema.md." },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Из content-src/_ids.json, append-only. Никогда не переназначается." },
+    "kind": { "enum": ["person", "party", "state", "event", "chronicle", "longread"] },
+    "camp": { "type": ["string", "null"], "enum": ["red", "white", "rev-dem", "green", "national", "intervention", "uprising", null] },
+    "title_ru": { "type": "string", "minLength": 1 },
+    "title_en": { "type": ["string", "null"] },
+    "sort_key_ru": { "type": "string", "description": "Ключ алфавитной сортировки: фамилия/название без кавычек и артиклей, ё→е, lowercase." },
+    "dates": { "$ref": "#/definitions/dates" },
+    "summary_ru": { "type": ["string", "null"], "description": "Markdown. Ссылки на другие справки — инлайн: [эсеров](#/party/srs)." },
+    "summary_en": { "type": ["string", "null"] },
+    "en_status": {
+      "enum": ["ok", "missing", "copy_of_ru"],
+      "description": "copy_of_ru = в колонке EN лежит копия русского. Тогда summary_en обязан быть null, иначе переключатель RU/EN покажет русский и это примут за баг движка."
+    },
+    "media": { "type": "array", "items": { "$ref": "#/definitions/media" } },
+    "related": { "$ref": "#/definitions/related" },
+    "notes": { "type": "array", "items": { "type": "string" }, "description": "Машиночитаемые директивы из колонки ПРИМЕЧАНИЕ. Полный текст — в _notes.json." },
+    "src": { "$ref": "#/definitions/src" },
+    "flags": { "type": "array", "items": { "type": "string" }, "description": "Аномалии, замеченные импортом: over-tz-limit, media-missing, dates-unknown, en-copy." }
+  },
+  "definitions": {
+    "dates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": ["string", "null"], "description": "ISO YYYY-MM-DD либо YYYY. Подпись календаря, не абсолютный момент: до февраля 1918 г. заказчик пишет по юлианскому стилю." },
+        "to": { "type": ["string", "null"] },
+        "precision": { "enum": ["day", "decade", "month", "year", "unknown"] },
+        "display_ru": { "type": ["string", "null"], "description": "Строка заказчика как написана. Приоритет при выводе." },
+        "style": { "enum": ["single", "dual"], "description": "dual — в источнике оба стиля: «15 (28) января»." },
+        "alt": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": { "type": ["string", "null"] },
+            "to": { "type": ["string", "null"] },
+            "raw": { "type": ["string", "null"] }
+          }
+        },
+        "raw": { "type": ["string", "null"] }
+      }
+    },
+    "media": {
+      "type": "object",
+      "required": ["n", "slot"],
+      "additionalProperties": false,
+      "description": "Аннотация, инвентарный номер и пояснительный хвост хранятся РАЗДЕЛЬНО. Инв. номер выводится отдельной строкой мелким кеглем — музейное требование. Слепив их, получишь абзац текста под фото.",
+      "properties": {
+        "n": { "type": "integer", "minimum": 1, "description": "Порядковый номер в справке. Ключ слияния с .patch.json." },
+        "slot": { "enum": ["lead", "gallery"] },
+        "file": { "type": ["string", "null"], "description": "База пути производной без тира и расширения: media/parties/bolsheviks/01." },
+        "src_file": { "type": ["string", "null"], "description": "Имя оригинала в IN/ — для media:build и для поиска пропаж." },
+        "src_name": { "type": ["string", "null"], "description": "Имя как написано в docx, до сопоставления с диском." },
+        "parts": { "type": "array", "items": { "type": "string" }, "description": "Если одна аннотация покрывает несколько файлов (две стороны купюры)." },
+        "caption_ru": { "type": ["string", "null"], "description": "Аннотация. Без инв. номера и без пояснительного хвоста." },
+        "caption_en": { "type": ["string", "null"] },
+        "inv_ru": { "type": ["string", "null"], "description": "Инвентарный номер: «ГМПИР. Ф.III-38505/1»." },
+        "extra_ru": { "type": ["string", "null"], "description": "Пояснительный хвост после инв. номера." },
+        "w": { "type": ["integer", "null"], "minimum": 1, "description": "Натив оригинала. У 44 % фонда длинная сторона < 1600 px — лайтбокс не должен апскейлить." },
+        "h": { "type": ["integer", "null"], "minimum": 1 },
+        "tiers": { "type": "array", "items": { "enum": ["lg", "sm", "xs"] }, "description": "Пусто = производные ещё не собраны (npm run media:build)." },
+        "note_ru": { "type": ["string", "null"], "description": "Колонка ПРИМЕЧАНИЕ по этой строке — инструкция верстальщику, не контент." },
+        "directives": { "type": "array", "items": { "enum": ["trim", "spread", "duplicate_of"] } },
+        "duplicate_of": { "type": ["string", "null"], "description": "Изображение уже использовано в другой справке — из примечания «Использовалась в СВЕРДЛОВ»." }
+      }
+    },
+    "related": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Заполняется из разметки заказчика: жирный курсив = упоминание другой сущности. Каждый id обязан существовать в соответствующем индексе.",
+      "properties": {
+        "persons": { "type": "array", "items": { "type": "string" } },
+        "parties": { "type": "array", "items": { "type": "string" } },
+        "states": { "type": "array", "items": { "type": "string" } },
+        "events": { "type": "array", "items": { "type": "string" } },
+        "longreads": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "src": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Происхождение. Номера 01–71 — метаданные, НЕ идентификатор: у «Территории» и «Хроники» независимые пространства имён и номера пересекаются.",
+      "properties": {
+        "file": { "type": "string", "description": "Путь относительно IN/new/МТК №29/." },
+        "no": { "type": ["string", "null"], "description": "Номер в источнике, как написан: «01», «22»." },
+        "ns": { "type": ["string", "null"], "enum": ["territory", "chronicle", "person", "party", null] },
+        "group": { "type": ["string", "null"], "description": "Группа источника: «Красные», «Белые»…" },
+        "sha256": { "type": "string", "description": "sha256 исходного docx." },
+        "parser": { "type": "string" }
+      }
+    }
+  }
+}

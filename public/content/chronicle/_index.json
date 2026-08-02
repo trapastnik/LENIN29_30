@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "kind": "chronicle",
+  "years": [
+    {
+      "year": 1917,
+      "file": "1917.json",
+      "count": 35,
+      "pol": 32,
+      "mil": 6,
+      "cards": 6
+    },
+    {
+      "year": 1918,
+      "file": "1918.json",
+      "count": 139,
+      "pol": 96,
+      "mil": 54,
+      "cards": 21
+    },
+    {
+      "year": 1919,
+      "file": "1919.json",
+      "count": 107,
+      "pol": 49,
+      "mil": 66,
+      "cards": 28
+    },
+    {
+      "year": 1920,
+      "file": "1920.json",
+      "count": 77,
+      "pol": 41,
+      "mil": 45,
+      "cards": 18
+    },
+    {
+      "year": 1921,
+      "file": "1921.json",
+      "count": 19,
+      "pol": 10,
+      "mil": 9,
+      "cards": 1
+    },
+    {
+      "year": 1922,
+      "file": "1922.json",
+      "count": 19,
+      "pol": 15,
+      "mil": 4,
+      "cards": 2
+    }
+  ]
+}

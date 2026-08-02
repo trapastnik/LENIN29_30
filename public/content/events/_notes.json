@@ -1,0 +1,465 @@
+{
+  "schema": 1,
+  "_note": "Колонка ПРИМЕЧАНИЕ из docx — инструкции верстальщику и медиа-конвейеру, не контент раздела.",
+  "items": {
+    "oktyabrskoe-vosstanie-v-moskve": [
+      {
+        "n": 1,
+        "src_name": "ОКТЯБРЬ В МОСКВЕ_01",
+        "note_ru": "Подрезать рамку",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "pokhod-kerenskogo-krasnova": [
+      {
+        "n": 1,
+        "src_name": "ПОХОД КЕРЕНСКОГО_01",
+        "note_ru": "Убрать белые поля и подрезать левый край",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "ПОХОД КЕРЕНСКОГО_03",
+        "note_ru": "Убрать черные края",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "ПОХОД КЕРЕНСКОГО_04",
+        "note_ru": "Обрезать надпись внизу, сделать размер чуть меньше, так как качество не очень.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "ПОХОД КЕРЕНСКОГО_05",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "vybory-v-us": [
+      {
+        "n": 1,
+        "src_name": "Выборы в УС_01",
+        "note_ru": "Ранее использовалось в Большевики 02\nПодрезать поля",
+        "directives": [
+          "trim",
+          "duplicate_of"
+        ],
+        "duplicate_of": "Большевики 02"
+      },
+      {
+        "n": 2,
+        "src_name": "Выборы в УС_02",
+        "note_ru": "Подрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "Выборы в УС_04",
+        "note_ru": "Ранее использовалось в Урицком",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Урицком"
+      }
+    ],
+    "brest-litovskie-peregovory": [
+      {
+        "n": 2,
+        "src_name": "БРЕСТ ПЕРЕГОВОРЫ_02",
+        "note_ru": "Фотография уже использовалась в персоналиях (Стучка_02)",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "персоналиях (Стучка_02)"
+      }
+    ],
+    "brest-litovskiy-mir": [
+      {
+        "n": 4,
+        "src_name": "БРЕСТСКИЙ МИР_04",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "vystuplenie-chekhoslovatskogo-korpusa": [
+      {
+        "n": 5,
+        "src_name": "ЧСК_04",
+        "note_ru": "Отметить большого бородатого мужика цифрой 1 (снизу, на темном), а человек слева через одного от него – цифрой 2 (тоже снизу, однообразно).",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "vystuplenie-levykh-eserov": [
+      {
+        "n": 1,
+        "src_name": "Восстание левых эсеров_01.jpg",
+        "note_ru": "Использовалось в Спиридонова_01",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Спиридонова_01"
+      },
+      {
+        "n": 2,
+        "src_name": "Восстание левые эсеров_02.jpg",
+        "note_ru": "Использовалось в Левые эсеры_02",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "Левые эсеры_02"
+      }
+    ],
+    "yaroslavskoe-vosstanie": [
+      {
+        "n": 2,
+        "src_name": "ЯРОСЛАВЛЬ_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "ЯРОСЛАВЛЬ_03",
+        "note_ru": "обрезать поля, выровнять фото",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "ЯРОСЛАВЛЬ_04",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "pokhod-uralskoy-armii-blyukhera": [
+      {
+        "n": 1,
+        "src_name": "УРАЛ АРМ_01",
+        "note_ru": "Обрезать подпись внизу",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "УРАЛ АРМ_02",
+        "note_ru": "Фото уже использовалось в персоналиях БЛЮХЕР_01",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "персоналиях БЛЮХЕР_01"
+      }
+    ],
+    "vzyatie-kazani-chastyami-narodnoy-armii": [
+      {
+        "n": 3,
+        "src_name": "Взятие Казани_03",
+        "note_ru": "Добавилось в последний момент",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "krasnyy-terror": [
+      {
+        "n": 1,
+        "src_name": "Красный террор_01",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "Красный террор_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "Красный террор_04",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "nastuplenie-vostochnogo-fronta-rkka": [
+      {
+        "n": 1,
+        "src_name": "Карта 12",
+        "note_ru": "Название карты в подписи давать не надо",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "Вост фронт 1918_02",
+        "note_ru": "Затереть подпись внизу",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "perevorot-v-omske": [
+      {
+        "n": 1,
+        "src_name": "ОМСК_01",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "ОМСК_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "ОМСК_04",
+        "note_ru": "Есть КОЛЧАК_03",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "permskaya-operatsiya-russkoy-armii": [
+      {
+        "n": 1,
+        "src_name": "Карта 12",
+        "note_ru": "Название должно быть на самой карте, в виде подписи давать не нужно",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "kontrnastuplenie-vostochnogo-fronta-rkka": [
+      {
+        "n": 1,
+        "src_name": "Карта_07",
+        "note_ru": "Название не даем в виде подписи, уже есть в самой карте.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "КОНТРНАСТ ВОСТ ФРОНТ_01",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "КОНТРНАСТ ВОСТ ФРОНТ_02",
+        "note_ru": "Обрезать поля, развернуть горизонтально",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "КОНТРНАСТ ВОСТ ФРОНТ_04",
+        "note_ru": "Убрать подпись внизу",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "voennye-deystviya-na-severo-zapade": [
+      {
+        "n": 1,
+        "src_name": "Карта 11",
+        "note_ru": "Название карты не надо давать в подписи, оно уже есть на карте.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 2,
+        "src_name": "Северо-запад 01",
+        "note_ru": "Удалить поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "Северо-запад 04",
+        "note_ru": "Сделать размер поменьше, качество хромает.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "krasnaya-gorka-i-seraya-loshad": [
+      {
+        "n": 1,
+        "src_name": "Карта_01",
+        "note_ru": "Название карты давать в подписи не надо. Оно уже есть в самой карте.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "nastuplenie-vostochnogo-fronta-1919-1920": [
+      {
+        "n": 1,
+        "src_name": "Карта_18",
+        "note_ru": "Название карты давать в подписи не нужно, оно уже есть в карте.",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "moskovskiy-pokhod-vsyur": [
+      {
+        "n": 1,
+        "src_name": "Карта 09",
+        "note_ru": "Дублировать название карты в подписи не надо, оно уже есть на картинке с картой",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "kontrnastuplenie-yuzhnogo-fronta-rkka": [
+      {
+        "n": 2,
+        "src_name": "КОНТРНАСТ ЮЖ ФРОНТА_01",
+        "note_ru": "Фото уже использовалось в персоналиях ЕГОРОВ_01",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "персоналиях ЕГОРОВ_01"
+      },
+      {
+        "n": 3,
+        "src_name": "КОНТРНАСТ ЮЖ ФРОНТА_02",
+        "note_ru": "Фото уже использовалось в персоналиях БУДЕННЫЙ_01",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "персоналиях БУДЕННЫЙ_01"
+      }
+    ],
+    "kharkovskaya-operatsiya-rkka": [
+      {
+        "n": 1,
+        "src_name": "Карта 15",
+        "note_ru": "Название не надо давать в подписи, оно уже есть на самой карте.",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 3,
+        "src_name": "ХАРЬКОВ_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "rostovo-novocherkasskaya-operatsiya": [
+      {
+        "n": 1,
+        "src_name": "РОСТОВ_01",
+        "note_ru": "Фото уже использовалось в персоналиях ОРДЖОНИКИДЗЕ_04",
+        "directives": [
+          "duplicate_of"
+        ],
+        "duplicate_of": "персоналиях ОРДЖОНИКИДЗЕ_04"
+      },
+      {
+        "n": 2,
+        "src_name": "РОСТОВ_02",
+        "note_ru": "Обрезать поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      },
+      {
+        "n": 4,
+        "src_name": "РОСТОВ_04",
+        "note_ru": "Обрезать края",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "sovetsko-polskaya-voyna": [
+      {
+        "n": 3,
+        "src_name": "Советско-польская_03",
+        "note_ru": "Обрезать поля фото",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "bakinskaya-operatsiya-rkka": [
+      {
+        "n": 2,
+        "src_name": "Бакинская операция_02",
+        "note_ru": "Вырезать паспорту с белой рамкой, надпись оставить",
+        "directives": [],
+        "duplicate_of": null
+      }
+    ],
+    "perekopsko-chongarskaya-operatsiya": [
+      {
+        "n": 1,
+        "src_name": "Перекоп_01",
+        "note_ru": "Удалить подпись снизу. Оставить только изображение",
+        "directives": [],
+        "duplicate_of": null
+      },
+      {
+        "n": 5,
+        "src_name": "Перекоп_05",
+        "note_ru": "Удалить поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ],
+    "volochaevskaya-operatsiya": [
+      {
+        "n": 2,
+        "src_name": "Волочаевка_02",
+        "note_ru": "Обрезать лишние поля",
+        "directives": [
+          "trim"
+        ],
+        "duplicate_of": null
+      }
+    ]
+  }
+}

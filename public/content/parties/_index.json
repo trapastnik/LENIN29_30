@@ -1,45 +1,503 @@
 {
   "camps": [
-    { "id": "red",      "title_ru": "Красные",                  "icon": "star",   "general_id": "reds-general" },
-    { "id": "rev-dem",  "title_ru": "Революционная демократия", "icon": "people", "general_id": "revdem-general" },
-    { "id": "white",    "title_ru": "Белые",                    "icon": "shield", "general_id": "whites-general" },
-    { "id": "green",    "title_ru": "Зелёные",                  "icon": "anarchy","general_id": "greens-general" },
-    { "id": "national", "title_ru": "Национальные движения",    "icon": "flag",   "general_id": "national-movements" }
+    {
+      "id": "red",
+      "title_ru": "Красные",
+      "icon": "star",
+      "general_id": "reds-general"
+    },
+    {
+      "id": "rev-dem",
+      "title_ru": "Революционная демократия",
+      "icon": "people",
+      "general_id": "revdem-general"
+    },
+    {
+      "id": "white",
+      "title_ru": "Белые",
+      "icon": "shield",
+      "general_id": "whites-general"
+    },
+    {
+      "id": "green",
+      "title_ru": "Зелёные",
+      "icon": "anarchy",
+      "general_id": "greens-general"
+    },
+    {
+      "id": "national",
+      "title_ru": "Национальные движения",
+      "icon": "flag",
+      "general_id": "national-movements"
+    }
   ],
   "venn_background": "venn-bg.png",
   "venn_aspect": "16 / 9",
   "venn_headers": [
-    { "camp": "red",      "x": 15.0, "y": 23.3 },
-    { "camp": "rev-dem",  "x": 43.5, "y": 36.8 },
-    { "camp": "white",    "x": 81.3, "y": 22.3 },
-    { "camp": "green",    "x": 14.5, "y": 70.3 },
-    { "camp": "national", "x": 85.4, "y": 66.1 }
+    {
+      "camp": "red",
+      "x": 15.0,
+      "y": 23.3
+    },
+    {
+      "camp": "rev-dem",
+      "x": 43.5,
+      "y": 36.8
+    },
+    {
+      "camp": "white",
+      "x": 81.3,
+      "y": 22.3
+    },
+    {
+      "camp": "green",
+      "x": 14.5,
+      "y": 70.3
+    },
+    {
+      "camp": "national",
+      "x": 85.4,
+      "y": 66.1
+    }
   ],
   "items": [
-    { "id": "reds-general",         "title_ru": "Красные",                                         "camp": "red",      "_is_general": true },
-    { "id": "bolsheviks",           "title_ru": "Большевики",                                      "camp": "red",      "x": 14.1, "y": 37.1 },
-    { "id": "left-srs",             "title_ru": "Левые эсеры",                                     "camp": "red",      "x": 14.1, "y": 42.5 },
-
-    { "id": "revdem-general",       "title_ru": "Революционная демократия",                        "camp": "rev-dem",  "_is_general": true },
-    { "id": "srs",                  "title_ru": "Социалисты-революционеры",                        "camp": "rev-dem",  "x": 24.1, "y": 53.0 },
-    { "id": "mensheviks",           "title_ru": "Меньшевики",                                      "camp": "rev-dem",  "x": 24.1, "y": 58.8 },
-    { "id": "narodnie-socialists",  "title_ru": "Трудовая народно-социалистическая партия",        "camp": "rev-dem",  "x": 43.1, "y": 59.5 },
-    { "id": "committee-salvation",  "title_ru": "Комитет спасения Родины и революции",             "camp": "rev-dem",  "x": 43.1, "y": 63.9 },
-    { "id": "union-constituent",    "title_ru": "Союз защиты Учредительного собрания",             "camp": "rev-dem",  "x": 43.1, "y": 71.5 },
-
-    { "id": "whites-general",       "title_ru": "Белые",                                           "camp": "white",    "_is_general": true },
-    { "id": "cadets",               "title_ru": "Конституционно-демократическая партия",           "camp": "white",    "x": 54.0, "y": 29.5 },
-    { "id": "alekseev-org",         "title_ru": "Алексеевская организация · Добровольческая армия", "camp": "white",   "x": 54.0, "y": 34.5 },
-    { "id": "right-center",         "title_ru": "Правый центр",                                    "camp": "white",    "x": 82.9, "y": 37.0 },
-    { "id": "national-center",      "title_ru": "Национальный центр",                              "camp": "white",    "x": 82.9, "y": 41.0 },
-
-    { "id": "union-defence",        "title_ru": "Союз защиты Родины и свободы",                    "camp": "rev-dem",  "x": 63.8, "y": 48.0 },
-    { "id": "union-renewal",        "title_ru": "Союз возрождения России",                         "camp": "rev-dem",  "x": 70.3, "y": 51.3 },
-
-    { "id": "greens-general",       "title_ru": "Зелёные",                                         "camp": "green",    "_is_general": true },
-    { "id": "anarchists",           "title_ru": "Анархисты",                                       "camp": "green",    "x": 14.1, "y": 82.9 },
-
-    { "id": "national-movements",   "title_ru": "Национальные движения",                           "camp": "national", "_is_general": true },
-    { "id": "muslim-socialists",    "title_ru": "Мусульманские социалистические комитеты",         "camp": "national", "x": 49.6, "y": 83.5 }
-  ]
+    {
+      "id": "reds-general",
+      "title_ru": "Красные",
+      "camp": "red",
+      "_is_general": true,
+      "sort_key_ru": "красные",
+      "has_card": true
+    },
+    {
+      "id": "bolsheviks",
+      "title_ru": "Большевики",
+      "camp": "red",
+      "x": 14.1,
+      "y": 37.1,
+      "abbr_ru": [
+        "РСДРП(б)",
+        "РКП(б)"
+      ],
+      "dates_display_ru": "1917–1991",
+      "lead_media": "media/parties/bolsheviks/01",
+      "lead_w": 3401,
+      "lead_h": 2338,
+      "sort_key_ru": "большевики",
+      "has_card": true
+    },
+    {
+      "id": "left-srs",
+      "title_ru": "Левые эсеры",
+      "camp": "red",
+      "x": 14.1,
+      "y": 42.5,
+      "has_card": true,
+      "abbr_ru": [
+        "ПЛСР, левые с.-р."
+      ],
+      "dates_display_ru": "1917 – середина 1920-х гг.",
+      "lead_media": "media/parties/left-srs/01",
+      "lead_w": 2688,
+      "lead_h": 2044,
+      "sort_key_ru": "левые эсеры"
+    },
+    {
+      "id": "revdem-general",
+      "title_ru": "Революционная демократия",
+      "camp": "rev-dem",
+      "_is_general": true,
+      "has_card": true,
+      "sort_key_ru": "революционная демократия"
+    },
+    {
+      "id": "srs",
+      "title_ru": "Социалисты-революционеры",
+      "camp": "rev-dem",
+      "x": 24.1,
+      "y": 53.0,
+      "abbr_ru": [
+        "ПСР"
+      ],
+      "dates_display_ru": "1901/1902 – середина 1920-х гг.",
+      "lead_media": "media/parties/srs/01",
+      "lead_w": 1000,
+      "lead_h": 667,
+      "sort_key_ru": "социалисты-революционеры",
+      "has_card": true
+    },
+    {
+      "id": "mensheviks",
+      "title_ru": "Меньшевики",
+      "camp": "rev-dem",
+      "x": 24.1,
+      "y": 58.8,
+      "has_card": true,
+      "abbr_ru": [
+        "РСДРП",
+        "РСДРП(о)"
+      ],
+      "dates_display_ru": "1917 – вторая половина 1920-х гг.",
+      "lead_media": "media/parties/mensheviks/01",
+      "lead_w": 1353,
+      "lead_h": 1684,
+      "sort_key_ru": "меньшевики"
+    },
+    {
+      "id": "narodnie-socialists",
+      "title_ru": "Трудовая народно-социалистическая партия",
+      "camp": "rev-dem",
+      "x": 43.1,
+      "y": 59.5,
+      "has_card": true,
+      "abbr_ru": [
+        "ТНСП"
+      ],
+      "dates_display_ru": "1906–1918",
+      "lead_media": "media/parties/narodnie-socialists/01",
+      "lead_w": 1287,
+      "lead_h": 1854,
+      "sort_key_ru": "трудовая народно-социалистическая партия"
+    },
+    {
+      "id": "committee-salvation",
+      "title_ru": "Комитет спасения Родины и революции",
+      "camp": "rev-dem",
+      "x": 43.1,
+      "y": 63.9,
+      "has_card": true,
+      "dates_display_ru": "Октябрь–ноябрь 1917",
+      "lead_media": "media/parties/committee-salvation/01",
+      "lead_w": 889,
+      "lead_h": 1197,
+      "sort_key_ru": "комитет спасения родины и революции"
+    },
+    {
+      "id": "union-constituent",
+      "title_ru": "Союз защиты Учредительного собрания",
+      "camp": "rev-dem",
+      "x": 43.1,
+      "y": 71.5,
+      "has_card": true,
+      "abbr_ru": [
+        "ПСЗУС, СЗУС"
+      ],
+      "dates_display_ru": "Ноябрь 1917 – январь 1918",
+      "lead_media": "media/parties/union-constituent/01",
+      "lead_w": 2544,
+      "lead_h": 3900,
+      "sort_key_ru": "союз защиты учредительного собрания"
+    },
+    {
+      "id": "whites-general",
+      "title_ru": "Белые",
+      "camp": "white",
+      "_is_general": true,
+      "has_card": true,
+      "sort_key_ru": "белые"
+    },
+    {
+      "id": "cadets",
+      "title_ru": "Конституционно-демократическая партия",
+      "camp": "white",
+      "x": 54.0,
+      "y": 29.5,
+      "has_card": true,
+      "abbr_ru": [
+        "КДП",
+        "ПНС"
+      ],
+      "dates_display_ru": "1905 – начало 1930-х гг.",
+      "lead_media": "media/parties/cadets/01",
+      "lead_w": 2805,
+      "lead_h": 3973,
+      "sort_key_ru": "конституционно-демократическая партия"
+    },
+    {
+      "id": "alekseev-org",
+      "title_ru": "Алексеевская организация · Добровольческая армия",
+      "camp": "white",
+      "x": 54.0,
+      "y": 34.5,
+      "has_card": true,
+      "title_full_ru": "Алексеевская организация (Добровольческая армия)",
+      "dates_display_ru": "Октябрь–декабрь 1917 г.",
+      "lead_media": "media/parties/alekseev-org/01",
+      "lead_w": 2802,
+      "lead_h": 1989,
+      "sort_key_ru": "алексеевская организация · добровольческая армия"
+    },
+    {
+      "id": "right-center",
+      "title_ru": "Правый центр",
+      "camp": "white",
+      "x": 82.9,
+      "y": 37.0,
+      "has_card": true,
+      "dates_display_ru": "1918",
+      "lead_media": "media/parties/right-center/01",
+      "lead_w": 589,
+      "lead_h": 800,
+      "sort_key_ru": "правый центр"
+    },
+    {
+      "id": "national-center",
+      "title_ru": "Национальный центр",
+      "camp": "white",
+      "x": 82.9,
+      "y": 41.0,
+      "has_card": true,
+      "abbr_ru": [
+        "ВНЦ",
+        "НЦ"
+      ],
+      "dates_display_ru": "1918–1920",
+      "lead_media": "media/parties/national-center/01",
+      "lead_w": 640,
+      "lead_h": 851,
+      "sort_key_ru": "национальный центр"
+    },
+    {
+      "id": "union-defence",
+      "title_ru": "Союз защиты Родины и свободы",
+      "camp": "rev-dem",
+      "x": 63.8,
+      "y": 48.0,
+      "has_card": true,
+      "abbr_ru": [
+        "СЗРиС"
+      ],
+      "dates_display_ru": "1918",
+      "lead_media": "media/parties/union-defence/01",
+      "lead_w": 688,
+      "lead_h": 1011,
+      "sort_key_ru": "союз защиты родины и свободы"
+    },
+    {
+      "id": "union-renewal",
+      "title_ru": "Союз возрождения России",
+      "camp": "rev-dem",
+      "x": 70.3,
+      "y": 51.3,
+      "has_card": true,
+      "abbr_ru": [
+        "СВР"
+      ],
+      "dates_display_ru": "1918–1921",
+      "lead_media": "media/parties/union-renewal/01",
+      "lead_w": 320,
+      "lead_h": 435,
+      "sort_key_ru": "союз возрождения россии"
+    },
+    {
+      "id": "greens-general",
+      "title_ru": "Зелёные",
+      "camp": "green",
+      "_is_general": true,
+      "has_card": true,
+      "sort_key_ru": "зеленые"
+    },
+    {
+      "id": "anarchists",
+      "title_ru": "Анархисты",
+      "camp": "green",
+      "x": 14.1,
+      "y": 82.9,
+      "has_card": true,
+      "dates_display_ru": "Первая треть ХХ в.",
+      "lead_media": "media/parties/anarchists/01",
+      "lead_w": 1144,
+      "lead_h": 1736,
+      "sort_key_ru": "анархисты"
+    },
+    {
+      "id": "national-movements",
+      "title_ru": "Национальные движения",
+      "camp": "national",
+      "_is_general": true,
+      "has_card": true,
+      "sort_key_ru": "национальные движения"
+    },
+    {
+      "id": "muslim-socialists",
+      "title_ru": "Мусульманские социалистические комитеты",
+      "camp": "national",
+      "x": 49.6,
+      "y": 83.5,
+      "has_card": true,
+      "abbr_ru": [
+        "МСК"
+      ],
+      "dates_display_ru": "1917–1918",
+      "lead_media": "media/parties/muslim-socialists/01",
+      "lead_w": 827,
+      "lead_h": 908,
+      "sort_key_ru": "мусульманские социалистические комитеты"
+    },
+    {
+      "id": "alash",
+      "title_ru": "Алаш",
+      "has_card": true,
+      "dates_display_ru": "1917–1920",
+      "lead_media": "media/parties/alash/01",
+      "lead_w": 1280,
+      "lead_h": 720,
+      "sort_key_ru": "алаш"
+    },
+    {
+      "id": "alekseevskaya-organizatsiya-dobrovolches",
+      "title_ru": "Алексеевская организация (Добровольческая армия)",
+      "has_card": false,
+      "dates_display_ru": "Октябрь–декабрь 1917 г.",
+      "lead_media": "media/parties/alekseevskaya-organizatsiya-dobrovolches/01",
+      "lead_w": 2802,
+      "lead_h": 1989,
+      "sort_key_ru": "алексеевская организация добровольческая армия",
+      "stub": true
+    },
+    {
+      "id": "basmachestvo",
+      "title_ru": "Басмачество",
+      "has_card": true,
+      "dates_display_ru": "1910-е – 1930-е гг.",
+      "lead_media": "media/parties/basmachestvo/01",
+      "lead_w": 768,
+      "lead_h": 1063,
+      "sort_key_ru": "басмачество"
+    },
+    {
+      "id": "belorusskaya-sotsialisticheskaya-gromada",
+      "title_ru": "Белорусская социалистическая громада",
+      "has_card": true,
+      "abbr_ru": [
+        "БСГ"
+      ],
+      "dates_display_ru": "1902–1918",
+      "lead_media": "media/parties/belorusskaya-sotsialisticheskaya-gromada/01",
+      "lead_w": 533,
+      "lead_h": 768,
+      "sort_key_ru": "белорусская социалистическая громада"
+    },
+    {
+      "id": "borotbisty",
+      "title_ru": "Боротьбисты",
+      "has_card": true,
+      "abbr_ru": [
+        "УПСР(боротьбистов), УПСР(б)",
+        "УПСР(коммунистов-боротьбистов), УПСР(к.-б.) / УПСР(к)",
+        "УКП(боротьбистов), УКП(б)"
+      ],
+      "dates_display_ru": "1918–1920",
+      "lead_media": "media/parties/borotbisty/01",
+      "lead_w": 2541,
+      "lead_h": 3228,
+      "sort_key_ru": "боротьбисты"
+    },
+    {
+      "id": "bund",
+      "title_ru": "Бунд",
+      "has_card": true,
+      "dates_display_ru": "1897–1921",
+      "lead_media": "media/parties/bund/01",
+      "lead_w": 2044,
+      "lead_h": 2900,
+      "sort_key_ru": "бунд"
+    },
+    {
+      "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+      "title_ru": "Грузинская социал-демократическая партия",
+      "has_card": true,
+      "dates_display_ru": "1918–1926",
+      "lead_media": "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/01",
+      "lead_w": 800,
+      "lead_h": 1155,
+      "sort_key_ru": "грузинская социал-демократическая партия"
+    },
+    {
+      "id": "dashnaktsutyun",
+      "title_ru": "Дашнакцутюн",
+      "has_card": true,
+      "dates_display_ru": "1890 – настоящее время",
+      "lead_media": "media/parties/dashnaktsutyun/01",
+      "lead_w": 1200,
+      "lead_h": 748,
+      "sort_key_ru": "дашнакцутюн"
+    },
+    {
+      "id": "latyshskiy-krestyanskiy-soyuz",
+      "title_ru": "Латышский крестьянский союз",
+      "has_card": true,
+      "abbr_ru": [
+        "ЛКС"
+      ],
+      "dates_display_ru": "1918–1934",
+      "lead_media": "media/parties/latyshskiy-krestyanskiy-soyuz/01",
+      "lead_w": 900,
+      "lead_h": 1307,
+      "sort_key_ru": "латышский крестьянский союз"
+    },
+    {
+      "id": "musavat",
+      "title_ru": "Мусават",
+      "has_card": true,
+      "dates_display_ru": "1911–1926",
+      "lead_media": "media/parties/musavat/01",
+      "lead_w": 872,
+      "lead_h": 587,
+      "sort_key_ru": "мусават"
+    },
+    {
+      "id": "poaley-tsion",
+      "title_ru": "Поалей Цион",
+      "has_card": true,
+      "abbr_ru": [
+        "ЕСДРП «Поалей Цион»",
+        "ЕСДРП «П. Ц.»",
+        "ЕКП «Поалей Цион»"
+      ],
+      "dates_display_ru": "1905–1928",
+      "lead_media": "media/parties/poaley-tsion/01",
+      "lead_w": 461,
+      "lead_h": 615,
+      "sort_key_ru": "поалей цион"
+    },
+    {
+      "id": "sibirskoe-oblastnichestvo",
+      "title_ru": "Сибирское областничество",
+      "has_card": true,
+      "dates_display_ru": "Конец XIX – первая четверть ХХ в.",
+      "lead_media": "media/parties/sibirskoe-oblastnichestvo/01",
+      "lead_w": 1343,
+      "lead_h": 2007,
+      "sort_key_ru": "сибирское областничество"
+    },
+    {
+      "id": "sotsial-demokraticheskaya-partiya-finlya",
+      "title_ru": "Социал-демократическая партия Финляндии",
+      "has_card": true,
+      "abbr_ru": [
+        "СДПФ"
+      ],
+      "dates_display_ru": "1899 – настоящее время",
+      "lead_media": "media/parties/sotsial-demokraticheskaya-partiya-finlya/01",
+      "lead_w": 960,
+      "lead_h": 1030,
+      "sort_key_ru": "социал-демократическая партия финляндии"
+    },
+    {
+      "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+      "title_ru": "Украинская социал-демократическая рабочая партия",
+      "has_card": true,
+      "abbr_ru": [
+        "УСДРП"
+      ],
+      "dates_display_ru": "1905–1920",
+      "lead_media": "media/parties/ukrainskaya-sotsial-demokraticheskaya-ra/01",
+      "lead_w": 1172,
+      "lead_h": 1527,
+      "sort_key_ru": "украинская социал-демократическая рабочая партия"
+    }
+  ],
+  "schema": 1,
+  "kind": "party"
 }

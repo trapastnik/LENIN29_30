@@ -1,37 +1,914 @@
 {
   "camps": [
-    { "id": "red",          "title_ru": "Красные"   },
-    { "id": "white",        "title_ru": "Белые"     },
-    { "id": "rev-dem",      "title_ru": "Революционная демократия" },
-    { "id": "intervention", "title_ru": "Интервенция" }
+    {
+      "id": "red",
+      "title_ru": "Красные"
+    },
+    {
+      "id": "white",
+      "title_ru": "Белые"
+    },
+    {
+      "id": "rev-dem",
+      "title_ru": "Революционная демократия"
+    },
+    {
+      "id": "intervention",
+      "title_ru": "Интервенция"
+    }
   ],
   "items": [
-    { "id": "rsfsr",            "title_ru": "РСФСР",                              "abbr_ru": "РСФСР",  "camp": "red" },
-    { "id": "ussr",             "title_ru": "СССР",                               "abbr_ru": "СССР",   "camp": "red" },
-    { "id": "ukrainian-ssr",    "title_ru": "Украинская ССР",                     "abbr_ru": "УССР",   "camp": "red" },
-    { "id": "belorussian-ssr",  "title_ru": "Белорусская ССР",                    "abbr_ru": "БССР",   "camp": "red" },
-    { "id": "zsfsr",            "title_ru": "Закавказская СФСР",                  "abbr_ru": "ЗСФСР",  "camp": "red" },
-    { "id": "azerbaijani-ssr",  "title_ru": "Азербайджанская ССР",                 "camp": "red" },
-    { "id": "armenian-ssr",     "title_ru": "Армянская ССР",                      "camp": "red" },
-    { "id": "georgian-ssr",     "title_ru": "Грузинская ССР",                     "camp": "red" },
-    { "id": "bashkir-assr",     "title_ru": "Башкирская АССР",                    "camp": "red" },
-    { "id": "fer",              "title_ru": "Дальневосточная Республика",         "abbr_ru": "ДВР",    "camp": "red" },
-    { "id": "turkestan-sfr",    "title_ru": "Туркестанская СФР / АСР",            "camp": "red" },
-
-    { "id": "vsyur",                "title_ru": "Вооружённые силы Юга России",       "abbr_ru": "ВСЮР",  "camp": "white" },
-    { "id": "great-don-host",       "title_ru": "Всевеликое Войско Донское",         "camp": "white" },
-    { "id": "orenburg-cossack-host","title_ru": "Оренбургское казачье войско",       "camp": "white" },
-    { "id": "south-russia-gov",     "title_ru": "Правительство Юга России",          "camp": "white" },
-    { "id": "priamur-state",        "title_ru": "Приамурское государственное образование",  "camp": "white" },
-    { "id": "russian-state-kolchak","title_ru": "Российское Государство · А.В. Колчак", "camp": "white" },
-    { "id": "northern-region",      "title_ru": "Северная область",                  "camp": "white" },
-
-    { "id": "komuch",          "title_ru": "Комитет членов Учредительного собрания", "abbr_ru": "Комуч", "camp": "rev-dem", "map_id": "komuch" },
-    { "id": "politcenter",     "title_ru": "Политцентр",                              "camp": "rev-dem" },
-    { "id": "ufa-directory",   "title_ru": "Временное Всероссийское правительство · Уфимская директория", "camp": "rev-dem" },
-
-    { "id": "allies-entente",     "title_ru": "Союзники · Антанта",                  "camp": "intervention" },
-    { "id": "czechoslovak-corps", "title_ru": "Чехословацкий корпус",                "camp": "intervention" },
-    { "id": "central-powers",     "title_ru": "Центральные державы",                 "camp": "intervention" }
-  ]
+    {
+      "id": "rsfsr",
+      "title_ru": "РСФСР",
+      "abbr_ru": [
+        "РСФСР"
+      ],
+      "camp": "red",
+      "title_full_ru": "Российская Социалистическая Федеративная Советская Республика",
+      "dates_display_ru": "Октябрь 1917 – декабрь 1991 г.",
+      "lead_media": "media/states/rsfsr/01",
+      "lead_w": 1921,
+      "lead_h": 2578,
+      "sort_key_ru": "рсфср",
+      "has_card": true
+    },
+    {
+      "id": "ussr",
+      "title_ru": "СССР",
+      "abbr_ru": [
+        "СССР"
+      ],
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Союз Советских Социалистических Республик",
+      "dates_display_ru": "30 декабря 1922 – 26 декабря 1991 г.",
+      "lead_media": "media/states/ussr/01",
+      "lead_w": 2628,
+      "lead_h": 1892,
+      "sort_key_ru": "ссср"
+    },
+    {
+      "id": "ukrainian-ssr",
+      "title_ru": "Украинская ССР",
+      "abbr_ru": [
+        "УССР",
+        "Украинская ССР"
+      ],
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Украинская Социалистическая Советская Республика",
+      "dates_display_ru": "10 марта 1919 – 24 августа 1991 г.",
+      "lead_media": "media/states/ukrainian-ssr/01",
+      "lead_w": 1086,
+      "lead_h": 1638,
+      "sort_key_ru": "украинская сср"
+    },
+    {
+      "id": "belorussian-ssr",
+      "title_ru": "Белорусская ССР",
+      "abbr_ru": [
+        "ССРБ",
+        "БССР"
+      ],
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Социалистическая Советская Республика Белоруссия",
+      "dates_display_ru": "1 января 1919 – 27 февраля 1919 г.; 31 июля 1920 – 1991 г.",
+      "lead_media": "media/states/belorussian-ssr/01",
+      "lead_w": 1189,
+      "lead_h": 1806,
+      "sort_key_ru": "белорусская сср"
+    },
+    {
+      "id": "zsfsr",
+      "title_ru": "Закавказская СФСР",
+      "abbr_ru": [
+        "ФСССРЗ",
+        "ЗСФСР"
+      ],
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Федеративный Союз Социалистических Советских Республик Закавказья (с декабря 1922 г. – Закавказская Социалистическая Федеративная Советская Республика)",
+      "dates_display_ru": "12 марта 1922 – 5 декабря 1936 г.",
+      "lead_media": "media/states/zsfsr/01",
+      "lead_w": 2010,
+      "lead_h": 2808,
+      "sort_key_ru": "закавказская сфср"
+    },
+    {
+      "id": "azerbaijani-ssr",
+      "title_ru": "Азербайджанская ССР",
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Социалистическая Советская Республика Азербайджан",
+      "abbr_ru": [
+        "ССР Азербайджан",
+        "Азербайджанская ССР",
+        "АССР",
+        "АзССР"
+      ],
+      "dates_display_ru": "28 апреля 1920 – 1991 г.",
+      "lead_media": "media/states/azerbaijani-ssr/01",
+      "lead_w": 890,
+      "lead_h": 1072,
+      "sort_key_ru": "азербайджанская сср"
+    },
+    {
+      "id": "armenian-ssr",
+      "title_ru": "Армянская ССР",
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Социалистическая Советская Республика Армения",
+      "abbr_ru": [
+        "Армянская ССР",
+        "ССР Армения"
+      ],
+      "dates_display_ru": "29 ноября 1920 – 1991 г.",
+      "lead_media": "media/states/armenian-ssr/01",
+      "lead_w": 1804,
+      "lead_h": 1272,
+      "sort_key_ru": "армянская сср"
+    },
+    {
+      "id": "georgian-ssr",
+      "title_ru": "Грузинская ССР",
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Социалистическая Советская Республика Грузия",
+      "abbr_ru": [
+        "ССР Грузия"
+      ],
+      "dates_display_ru": "25 февраля 1921 – 1991 г.",
+      "lead_media": "media/states/georgian-ssr/01",
+      "lead_w": 2010,
+      "lead_h": 2808,
+      "sort_key_ru": "грузинская сср"
+    },
+    {
+      "id": "bashkir-assr",
+      "title_ru": "Башкирская АССР",
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Башкирская Автономная Социалистическая Советская Республика",
+      "abbr_ru": [
+        "БАССР",
+        "Башкирская АССР",
+        "АБССР",
+        "Автономная Башкирская ССР"
+      ],
+      "dates_display_ru": "Март 1919 – октябрь 1990 г.",
+      "lead_media": "media/states/bashkir-assr/01",
+      "lead_w": 2074,
+      "lead_h": 1374,
+      "sort_key_ru": "башкирская асср"
+    },
+    {
+      "id": "fer",
+      "title_ru": "Дальневосточная Республика",
+      "abbr_ru": [
+        "ДВР"
+      ],
+      "camp": "red",
+      "has_card": true,
+      "dates_display_ru": "6 апреля 1920 – 15 ноября 1922 гг.",
+      "lead_media": "media/states/fer/01",
+      "lead_w": 2052,
+      "lead_h": 1644,
+      "sort_key_ru": "дальневосточная республика"
+    },
+    {
+      "id": "turkestan-sfr",
+      "title_ru": "Туркестанская СФР / АСР",
+      "camp": "red",
+      "has_card": true,
+      "title_full_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+      "abbr_ru": [
+        "ТСФР",
+        "Туркестанская СФР",
+        "ТСР",
+        "ТАССР",
+        "Туркестанская АССР"
+      ],
+      "dates_display_ru": "30 апреля 1918 – 27 октября 1924 г.",
+      "lead_media": "media/states/turkestan-sfr/01",
+      "lead_w": 828,
+      "lead_h": 1073,
+      "sort_key_ru": "туркестанская сфр / аср"
+    },
+    {
+      "id": "vsyur",
+      "title_ru": "Вооружённые силы Юга России",
+      "abbr_ru": [
+        "ВСЮР"
+      ],
+      "camp": "white",
+      "title_full_ru": "Вооруженные силы Юга России",
+      "dates_display_ru": "8 января 1919 – 11 мая 1920 г.",
+      "lead_media": "media/states/vsyur/01",
+      "lead_w": 1562,
+      "lead_h": 2045,
+      "sort_key_ru": "вооруженные силы юга россии",
+      "has_card": true
+    },
+    {
+      "id": "great-don-host",
+      "title_ru": "Всевеликое Войско Донское",
+      "camp": "white",
+      "has_card": true,
+      "dates_display_ru": "18 мая 1918 – 20 марта 1920 г.",
+      "lead_media": "media/states/great-don-host/01",
+      "lead_w": 2887,
+      "lead_h": 3700,
+      "sort_key_ru": "всевеликое войско донское"
+    },
+    {
+      "id": "orenburg-cossack-host",
+      "title_ru": "Оренбургское казачье войско",
+      "camp": "white",
+      "has_card": true,
+      "dates_display_ru": "Октябрь 1917 – сентябрь 1919 г.",
+      "lead_media": "media/states/orenburg-cossack-host/01",
+      "lead_w": 4442,
+      "lead_h": 3147,
+      "sort_key_ru": "оренбургское казачье войско"
+    },
+    {
+      "id": "south-russia-gov",
+      "title_ru": "Правительство Юга России",
+      "camp": "white",
+      "has_card": true,
+      "title_full_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
+      "dates_display_ru": "11 апреля – 11 ноября 1920 г.",
+      "lead_media": "media/states/south-russia-gov/01",
+      "lead_w": 1332,
+      "lead_h": 1990,
+      "sort_key_ru": "правительство юга россии"
+    },
+    {
+      "id": "priamur-state",
+      "title_ru": "Приамурское государственное образование",
+      "camp": "white",
+      "has_card": true,
+      "title_full_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+      "dates_display_ru": "26 мая 1921 – 25 октября 1922 г.",
+      "lead_media": "media/states/priamur-state/01",
+      "lead_w": 2616,
+      "lead_h": 3984,
+      "sort_key_ru": "приамурское государственное образование"
+    },
+    {
+      "id": "russian-state-kolchak",
+      "title_ru": "Российское Государство · А.В. Колчак",
+      "camp": "white",
+      "has_card": true,
+      "title_full_ru": "Российское Государство (А. В. Колчак)",
+      "dates_display_ru": "18 ноября 1918 – 4 января 1920 г.",
+      "lead_media": "media/states/russian-state-kolchak/01",
+      "lead_w": 2908,
+      "lead_h": 3900,
+      "sort_key_ru": "российское государство · а.в. колчак"
+    },
+    {
+      "id": "northern-region",
+      "title_ru": "Северная область",
+      "camp": "white",
+      "has_card": true,
+      "dates_display_ru": "Август 1918 – февраль 1920 г.",
+      "lead_media": "media/states/northern-region/01",
+      "lead_w": 2770,
+      "lead_h": 3900,
+      "sort_key_ru": "северная область"
+    },
+    {
+      "id": "komuch",
+      "title_ru": "Комитет членов Учредительного собрания",
+      "abbr_ru": [
+        "Комуч"
+      ],
+      "camp": "rev-dem",
+      "map_id": "komuch",
+      "title_full_ru": "Комитет членов Всероссийского учредительного собрания",
+      "dates_display_ru": "8 июня – 23 сентября 1918 г.",
+      "lead_media": "media/states/komuch/01",
+      "lead_w": 2135,
+      "lead_h": 2876,
+      "sort_key_ru": "комитет членов учредительного собрания",
+      "has_card": true
+    },
+    {
+      "id": "politcenter",
+      "title_ru": "Политцентр",
+      "camp": "rev-dem",
+      "has_card": true,
+      "title_full_ru": "Политический центр",
+      "dates_display_ru": "12 ноября 1919 – 23 января 1920 г.",
+      "sort_key_ru": "политцентр"
+    },
+    {
+      "id": "ufa-directory",
+      "title_ru": "Временное Всероссийское правительство · Уфимская директория",
+      "camp": "rev-dem",
+      "has_card": true,
+      "title_full_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+      "dates_display_ru": "23 сентября – 18 ноября 1918 г.",
+      "lead_media": "media/states/ufa-directory/01",
+      "lead_w": 2506,
+      "lead_h": 3430,
+      "sort_key_ru": "временное всероссийское правительство · уфимская директория"
+    },
+    {
+      "id": "allies-entente",
+      "title_ru": "Союзники · Антанта",
+      "camp": "intervention",
+      "has_card": true,
+      "title_full_ru": "Союзная интервенция (Антанта)",
+      "dates_display_ru": "1918–1922 гг.",
+      "lead_media": "media/states/allies-entente/01",
+      "lead_w": 1206,
+      "lead_h": 911,
+      "sort_key_ru": "союзники · антанта"
+    },
+    {
+      "id": "czechoslovak-corps",
+      "title_ru": "Чехословацкий корпус",
+      "camp": "intervention",
+      "has_card": true,
+      "dates_display_ru": "Вторая половина мая 1918 – начало 1920 г.",
+      "lead_media": "media/states/czechoslovak-corps/01",
+      "lead_w": 2340,
+      "lead_h": 1896,
+      "sort_key_ru": "чехословацкий корпус"
+    },
+    {
+      "id": "central-powers",
+      "title_ru": "Центральные державы",
+      "camp": "intervention",
+      "has_card": true,
+      "title_full_ru": "Интервенция Центральных держав",
+      "dates_display_ru": "Конец 1917 – ноябрь 1918 г.",
+      "lead_media": "media/states/central-powers/01",
+      "lead_w": 1698,
+      "lead_h": 1145,
+      "sort_key_ru": "центральные державы"
+    },
+    {
+      "id": "pravitelstvo-yuga-rossii-do-6-avgusta-19",
+      "title_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
+      "has_card": false,
+      "camp": "white",
+      "dates_display_ru": "11 апреля – 11 ноября 1920 г.",
+      "lead_media": "media/states/pravitelstvo-yuga-rossii-do-6-avgusta-19/01",
+      "lead_w": 1332,
+      "lead_h": 1990,
+      "sort_key_ru": "правительство юга россии до 6 августа 1920 г. – совет при главнокомандующем вооруженными силами юга россии",
+      "stub": true
+    },
+    {
+      "id": "priamurskoe-gosudarstvennoe-obrazovanie",
+      "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+      "has_card": false,
+      "camp": "white",
+      "dates_display_ru": "26 мая 1921 – 25 октября 1922 г.",
+      "lead_media": "media/states/priamurskoe-gosudarstvennoe-obrazovanie/01",
+      "lead_w": 2616,
+      "lead_h": 3984,
+      "sort_key_ru": "приамурское государственное образование с 8 августа 1922 г. – приамурский земский край",
+      "stub": true
+    },
+    {
+      "id": "rossiyskaya-vostochnaya-okraina",
+      "title_ru": "Российская Восточная окраина",
+      "has_card": true,
+      "camp": "white",
+      "dates_display_ru": "16 января – 28 октября 1920 г.",
+      "lead_media": "media/states/rossiyskaya-vostochnaya-okraina/01",
+      "lead_w": 2832,
+      "lead_h": 3948,
+      "sort_key_ru": "российская восточная окраина"
+    },
+    {
+      "id": "rossiyskoe-gosudarstvo-a-v-kolchak",
+      "title_ru": "Российское Государство (А. В. Колчак)",
+      "has_card": false,
+      "camp": "white",
+      "dates_display_ru": "18 ноября 1918 – 4 января 1920 г.",
+      "lead_media": "media/states/rossiyskoe-gosudarstvo-a-v-kolchak/01",
+      "lead_w": 2908,
+      "lead_h": 3900,
+      "sort_key_ru": "российское государство а. в. колчак",
+      "stub": true
+    },
+    {
+      "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
+      "title_ru": "Тамбовское восстание под руководством А. С. Антонова",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "Август 1920 – лето 1921 г.",
+      "lead_media": "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/01",
+      "lead_w": 825,
+      "lead_h": 1045,
+      "sort_key_ru": "тамбовское восстание под руководством а. с. антонова"
+    },
+    {
+      "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+      "title_ru": "Движение под руководством Н. И. Махно",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "1918–1921 гг.",
+      "sort_key_ru": "движение под руководством н. и. махно"
+    },
+    {
+      "id": "kochg",
+      "title_ru": "Комитет освобождения Черноморской губернии",
+      "has_card": true,
+      "abbr_ru": [
+        "КОЧГ"
+      ],
+      "camp": "uprising",
+      "dates_display_ru": "1 декабря 1919 – октябрь 1920 г.",
+      "lead_media": "media/states/kochg/01",
+      "lead_w": 1004,
+      "lead_h": 1335,
+      "sort_key_ru": "комитет освобождения черноморской губернии"
+    },
+    {
+      "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+      "title_ru": "Красное партизанское движение в Сибири и на Дальнем Востоке",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "1918–1922 г.",
+      "lead_media": "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/01",
+      "lead_w": 1289,
+      "lead_h": 884,
+      "sort_key_ru": "красное партизанское движение в сибири и на дальнем востоке"
+    },
+    {
+      "id": "chapannaya-voyna",
+      "title_ru": "«Чапанная война»",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "Март 1919 г.",
+      "lead_media": "media/states/chapannaya-voyna/01",
+      "lead_w": 2937,
+      "lead_h": 3700,
+      "sort_key_ru": "чапанная война"
+    },
+    {
+      "id": "zapadno-sibirskoe-vosstanie",
+      "title_ru": "Западно-Сибирское восстание",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "Январь 1921 – середина 1922 г.",
+      "lead_media": "media/states/zapadno-sibirskoe-vosstanie/01",
+      "lead_w": 3480,
+      "lead_h": 2550,
+      "sort_key_ru": "западно-сибирское восстание"
+    },
+    {
+      "id": "63-kronshtadtskoe-vosstanie",
+      "title_ru": "63 Кронштадтское восстание",
+      "has_card": false,
+      "camp": "uprising",
+      "dates_display_ru": "1–18 марта 1921 г",
+      "sort_key_ru": "63 кронштадтское восстание",
+      "title_full_ru": "Кронштадтское восстание («Кронштадтский мятеж»)",
+      "lead_media": "media/states/63-kronshtadtskoe-vosstanie/01",
+      "lead_w": 1899,
+      "lead_h": 1320,
+      "stub": true
+    },
+    {
+      "id": "soyuznaya-interventsiya-antanta",
+      "title_ru": "Союзная интервенция (Антанта)",
+      "has_card": false,
+      "camp": "intervention",
+      "dates_display_ru": "1918–1922 гг.",
+      "lead_media": "media/states/soyuznaya-interventsiya-antanta/01",
+      "lead_w": 1206,
+      "lead_h": 911,
+      "sort_key_ru": "союзная интервенция антанта",
+      "stub": true
+    },
+    {
+      "id": "otmetit-bolshogo-borodatogo-muzhika-tsif",
+      "title_ru": "Отметить большого бородатого мужика цифрой 1 (снизу, на темном), а человек слева через одного от него – цифрой 2 (тоже снизу, однообразно). Использовалось в справке 27 из хроники!!",
+      "has_card": false,
+      "camp": "intervention",
+      "dates_display_ru": "Вторая половина мая 1918 – начало 1920 г.",
+      "sort_key_ru": "отметить большого бородатого мужика цифрой 1 снизу, на темном, а человек слева через одного от него – цифрой 2 тоже снизу, однообразно. использовалось в справке 27 из хроники!!",
+      "title_full_ru": "Чехословацкий корпус",
+      "lead_media": "media/states/otmetit-bolshogo-borodatogo-muzhika-tsif/01",
+      "lead_w": 2340,
+      "lead_h": 1896,
+      "stub": true
+    },
+    {
+      "id": "interventsiya-tsentralnykh-derzhav",
+      "title_ru": "Интервенция Центральных держав",
+      "has_card": false,
+      "camp": "intervention",
+      "dates_display_ru": "Конец 1917 – ноябрь 1918 г.",
+      "lead_media": "media/states/interventsiya-tsentralnykh-derzhav/01",
+      "lead_w": 1698,
+      "lead_h": 1145,
+      "sort_key_ru": "интервенция центральных держав",
+      "stub": true
+    },
+    {
+      "id": "sksr",
+      "title_ru": "Северо-Кавказская Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "СКСР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "7 июля 1918 – 11 января 1919 г.",
+      "lead_media": "media/states/sksr/01",
+      "lead_w": 682,
+      "lead_h": 1080,
+      "sort_key_ru": "северо-кавказская советская республика"
+    },
+    {
+      "id": "tsfr",
+      "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+      "has_card": false,
+      "abbr_ru": [
+        "ТСФР",
+        "Туркестанская СФР",
+        "ТСР",
+        "ТАССР",
+        "Туркестанская АССР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "30 апреля 1918 – 27 октября 1924 г.",
+      "lead_media": "media/states/tsfr/01",
+      "lead_w": 828,
+      "lead_h": 1073,
+      "sort_key_ru": "туркестанская советская федеративная республика с сентября 1920 г. – туркестанская автономная социалистическая советская республика",
+      "stub": true
+    },
+    {
+      "id": "ssr-gruziya",
+      "title_ru": "Социалистическая Советская Республика Грузия",
+      "has_card": false,
+      "abbr_ru": [
+        "ССР Грузия"
+      ],
+      "camp": "red",
+      "dates_display_ru": "25 февраля 1921 – 1991 г.",
+      "lead_media": "media/states/ssr-gruziya/01",
+      "lead_w": 2010,
+      "lead_h": 2808,
+      "sort_key_ru": "социалистическая советская республика грузия",
+      "stub": true
+    },
+    {
+      "id": "bnsr",
+      "title_ru": "Бухарская Народная Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "БНСР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "1920–1924 гг.",
+      "lead_media": "media/states/bnsr/01",
+      "lead_w": 2343,
+      "lead_h": 1560,
+      "sort_key_ru": "бухарская народная советская республика"
+    },
+    {
+      "id": "khnsr",
+      "title_ru": "Хорезмская Народная Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "ХНСР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "26 апреля 1920 – 30 октября 1923 г.",
+      "lead_media": "media/states/khnsr/01",
+      "lead_w": 1722,
+      "lead_h": 1408,
+      "sort_key_ru": "хорезмская народная советская республика"
+    },
+    {
+      "id": "unrs",
+      "title_ru": "Украинская Народная Республика Советов",
+      "has_card": true,
+      "abbr_ru": [
+        "УНРС",
+        "УНР Советов"
+      ],
+      "camp": "red",
+      "dates_display_ru": "12 декабря 1917 – апрель 1918 г.",
+      "lead_media": "media/states/unrs/01",
+      "lead_w": 1015,
+      "lead_h": 1344,
+      "sort_key_ru": "украинская народная республика советов"
+    },
+    {
+      "id": "osr",
+      "title_ru": "Одесская Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "ОСР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "18 января – 13 марта 1918 г.",
+      "lead_media": "media/states/osr/01",
+      "lead_w": 780,
+      "lead_h": 1122,
+      "sort_key_ru": "одесская советская республика"
+    },
+    {
+      "id": "finlyandskaya-sotsialisticheskaya-raboch",
+      "title_ru": "Финляндская Социалистическая Рабочая Республика",
+      "has_card": true,
+      "camp": "red",
+      "dates_display_ru": "15(28) января 1918 – 16 мая 1918 г.",
+      "lead_media": "media/states/finlyandskaya-sotsialisticheskaya-raboch/01",
+      "lead_w": 1274,
+      "lead_h": 858,
+      "sort_key_ru": "финляндская социалистическая рабочая республика"
+    },
+    {
+      "id": "litovsko-belorusskaya-sotsialisticheskay",
+      "title_ru": "Литовско-Белорусская Социалистическая Советская Республика",
+      "has_card": true,
+      "camp": "red",
+      "dates_display_ru": "27 февраля – август 1919 г.",
+      "lead_media": "media/states/litovsko-belorusskaya-sotsialisticheskay/01",
+      "lead_w": 1301,
+      "lead_h": 1848,
+      "sort_key_ru": "литовско-белорусская социалистическая советская республика"
+    },
+    {
+      "id": "etk",
+      "title_ru": "Эстляндская Трудовая Коммуна",
+      "has_card": true,
+      "abbr_ru": [
+        "ЭТК"
+      ],
+      "camp": "red",
+      "dates_display_ru": "Ноябрь 1918 – январь 1919 г.",
+      "lead_media": "media/states/etk/01",
+      "lead_w": 884,
+      "lead_h": 1136,
+      "sort_key_ru": "эстляндская трудовая коммуна"
+    },
+    {
+      "id": "dksr",
+      "title_ru": "Донецко-Криворожская Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "ДКСР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "30 января 1918 – 17 февраля 1919 г.",
+      "lead_media": "media/states/dksr/01",
+      "lead_w": 1218,
+      "lead_h": 1578,
+      "sort_key_ru": "донецко-криворожская советская республика"
+    },
+    {
+      "id": "latvssr",
+      "title_ru": "Латвийская Социалистическая Советская Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "ЛатвССР",
+        "Латвийская ССР",
+        "ЛССР"
+      ],
+      "camp": "red",
+      "dates_display_ru": "Декабрь 1918 – январь 1920 г.",
+      "lead_media": "media/states/latvssr/01",
+      "lead_w": 1452,
+      "lead_h": 1932,
+      "sort_key_ru": "латвийская социалистическая советская республика"
+    },
+    {
+      "id": "gruzinskaya-demokraticheskaya-respublika",
+      "title_ru": "Грузинская Демократическая Республика",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "26 мая 1918 – 18 марта 1921 г.",
+      "lead_media": "media/states/gruzinskaya-demokraticheskaya-respublika/01",
+      "lead_w": 783,
+      "lead_h": 1137,
+      "sort_key_ru": "грузинская демократическая республика"
+    },
+    {
+      "id": "unr",
+      "title_ru": "Украинская Народная Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "УНР"
+      ],
+      "camp": "national",
+      "dates_display_ru": "7 ноября 1917 – 29 апреля 1918 г.;",
+      "lead_media": "media/states/unr/01",
+      "lead_w": 1172,
+      "lead_h": 1527,
+      "sort_key_ru": "украинская народная республика"
+    },
+    {
+      "id": "ukrainskaya-derzhava",
+      "title_ru": "Украинская держава",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "29 апреля – 14 декабря 1918 г.",
+      "lead_media": "media/states/ukrainskaya-derzhava/01",
+      "lead_w": 4216,
+      "lead_h": 3112,
+      "sort_key_ru": "украинская держава"
+    },
+    {
+      "id": "estonskaya-respublika",
+      "title_ru": "Эстонская Республика",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1918–1940 гг.",
+      "lead_media": "media/states/estonskaya-respublika/01",
+      "lead_w": 1588,
+      "lead_h": 1002,
+      "sort_key_ru": "эстонская республика"
+    },
+    {
+      "id": "latviyskaya-respublika",
+      "title_ru": "Латвийская Республика",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1918–1940 гг.",
+      "lead_media": "media/states/latviyskaya-respublika/01",
+      "lead_w": 1658,
+      "lead_h": 1056,
+      "sort_key_ru": "латвийская республика"
+    },
+    {
+      "id": "litovskaya-respublika",
+      "title_ru": "Литовская Республика",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1918–1940 гг.",
+      "lead_media": "media/states/litovskaya-respublika/01",
+      "lead_w": 1001,
+      "lead_h": 1526,
+      "sort_key_ru": "литовская республика"
+    },
+    {
+      "id": "zdfr",
+      "title_ru": "Закавказская Демократическая Федеративная Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "ЗДФР"
+      ],
+      "camp": "national",
+      "dates_display_ru": "9 апреля – 26 мая 1918 г.",
+      "lead_media": "media/states/zdfr/01",
+      "lead_w": 1265,
+      "lead_h": 1918,
+      "sort_key_ru": "закавказская демократическая федеративная республика"
+    },
+    {
+      "id": "respublika-armeniya",
+      "title_ru": "Республика Армения",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "28 мая 1918 – 2 декабря 1920 г.",
+      "lead_media": "media/states/respublika-armeniya/01",
+      "lead_w": 1712,
+      "lead_h": 1192,
+      "sort_key_ru": "республика армения"
+    },
+    {
+      "id": "adr",
+      "title_ru": "Азербайджанская Демократическая Республика",
+      "has_card": true,
+      "abbr_ru": [
+        "АДР"
+      ],
+      "camp": "national",
+      "dates_display_ru": "28 мая 1918 – апрель 1920 г.",
+      "lead_media": "media/states/adr/01",
+      "lead_w": 1865,
+      "lead_h": 1343,
+      "sort_key_ru": "азербайджанская демократическая республика"
+    },
+    {
+      "id": "bukharskiy-emirat",
+      "title_ru": "Бухарский эмират",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1785–1920",
+      "lead_media": "media/states/bukharskiy-emirat/01",
+      "lead_w": 2343,
+      "lead_h": 1560,
+      "sort_key_ru": "бухарский эмират"
+    },
+    {
+      "id": "khivinskoe-khanstvo",
+      "title_ru": "Хивинское ханство",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1512–1920 гг.",
+      "sort_key_ru": "хивинское ханство"
+    },
+    {
+      "id": "finlyandskaya-respublika-s-10-avgusta-19",
+      "title_ru": "Финляндская Республика (с 10 августа 1918 по 17 июля 1919 г. – Королевство Финляндия)",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "23 ноября (6 декабря) 1917 г. – настоящее время",
+      "lead_media": "media/states/finlyandskaya-respublika-s-10-avgusta-19/01",
+      "lead_w": 1218,
+      "lead_h": 1722,
+      "sort_key_ru": "финляндская республика с 10 августа 1918 по 17 июля 1919 г. – королевство финляндия"
+    },
+    {
+      "id": "polskaya-respublika",
+      "title_ru": "Польская Республика",
+      "has_card": true,
+      "camp": "national",
+      "dates_display_ru": "1918–1939 гг.",
+      "lead_media": "media/states/polskaya-respublika/01",
+      "lead_w": 3513,
+      "lead_h": 4799,
+      "sort_key_ru": "польская республика"
+    },
+    {
+      "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+      "title_ru": "Временное правительство (Российская республика)",
+      "has_card": true,
+      "camp": "rev-dem",
+      "dates_display_ru": "2 марта – 26 октября 1917 г.",
+      "lead_media": "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/01",
+      "lead_w": 980,
+      "lead_h": 1559,
+      "sort_key_ru": "временное правительство российская республика"
+    },
+    {
+      "id": "zakaspiyskoe-vremennoe-pravitelstvo",
+      "title_ru": "Закаспийское временное правительство",
+      "has_card": true,
+      "camp": "rev-dem",
+      "dates_display_ru": "Июль 1918 – январь 1919 г.",
+      "lead_media": "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01",
+      "lead_w": 1775,
+      "lead_h": 1240,
+      "sort_key_ru": "закаспийское временное правительство"
+    },
+    {
+      "id": "vopu",
+      "title_ru": "Временное областное правительство Урала",
+      "has_card": true,
+      "abbr_ru": [
+        "ВОПУ"
+      ],
+      "camp": "rev-dem",
+      "dates_display_ru": "19 августа – 10 ноября 1918 г.",
+      "lead_media": "media/states/vopu/01",
+      "lead_w": 2647,
+      "lead_h": 1810,
+      "sort_key_ru": "временное областное правительство урала"
+    },
+    {
+      "id": "vsp",
+      "title_ru": "Временное Сибирское правительство",
+      "has_card": true,
+      "abbr_ru": [
+        "ВСП"
+      ],
+      "camp": "rev-dem",
+      "dates_display_ru": "30 июня – 3 ноября 1918 г.",
+      "lead_media": "media/states/vsp/01",
+      "lead_w": 884,
+      "lead_h": 1137,
+      "sort_key_ru": "временное сибирское правительство"
+    },
+    {
+      "id": "rossiyskoe-gosudarstvo-vremennoe-vseross",
+      "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+      "has_card": false,
+      "camp": "rev-dem",
+      "dates_display_ru": "23 сентября – 18 ноября 1918 г.",
+      "lead_media": "media/states/rossiyskoe-gosudarstvo-vremennoe-vseross/01",
+      "lead_w": 2506,
+      "lead_h": 3430,
+      "sort_key_ru": "российское государство временное всероссийское правительство – уфимская директория",
+      "stub": true
+    },
+    {
+      "id": "kronshtadtskoe-vosstanie-kronshtadtskiy",
+      "title_ru": "Кронштадтское восстание («Кронштадтский мятеж»)",
+      "has_card": true,
+      "camp": "uprising",
+      "dates_display_ru": "1–18 марта 1921 г",
+      "lead_media": "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/01",
+      "lead_w": 1899,
+      "lead_h": 1320,
+      "sort_key_ru": "кронштадтское восстание кронштадтский мятеж"
+    }
+  ],
+  "schema": 1,
+  "kind": "state"
 }
