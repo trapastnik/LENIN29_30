@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "paths:check": "node scripts/check-paths.mjs",
+    "check": "npm run build && npm run paths:check",
     "preview": "vite preview --host 127.0.0.1 --port 4173"
   },
   "devDependencies": {
