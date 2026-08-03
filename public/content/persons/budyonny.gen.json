@@ -159,5 +159,6 @@
     "sha256": "41b817d97e4e0c3044807994846603d79ed97aab39e370fd2b1c6772acb28457",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

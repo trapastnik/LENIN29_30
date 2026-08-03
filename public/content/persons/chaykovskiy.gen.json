@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "chaykovskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "Н. В. ЧАЙКОВСКИЙ",
   "title_en": null,
   "sort_key_ru": "чайковский",
@@ -136,5 +136,6 @@
     "sha256": "52f8a98ce8fa9fdd90f7cdf89e8d2b7808705b0e0268654aa88fbeaace386818",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

@@ -1,12 +1,31 @@
-/* Фирменные шрифты Ленин-центра.
-   Источник правил: docs/brand/Fonts-requirements.docx
-   Лицензиары:
-     · Nolde (Regular)               — ИП Багдасарян Гаянэ Александровна
-     · 20_kopeek (Regular/Bold/Italic) — ИП Гордон Юрий Моисеевич
-     · 21_Cent  (Regular/Italic)     — ИП Гордон Юрий Моисеевич
-   Все файлы лежат в public/fonts/{nolde,kopeek,cent}. */
+/* ┌──────────────────────────────────────────────────────────────────────┐
+   │  ФАЙЛ СГЕНЕРИРОВАН. РУЧНЫЕ ПРАВКИ БУДУТ ЗАТЁРТЫ.                     │
+   │  Источник:  src/design/tokens.json
+   │  Генератор: node scripts/design/build-tokens.mjs                     │
+   │  Хвост (.brand-scroll) — scripts/design/tokens-tail.css              │
+   └──────────────────────────────────────────────────────────────────────┘ */
 
-/* ── Nolde Regular — заголовки, крупные цифры, буквицы ─────────────────── */
+/* Реестр начертаний. Источник правил — docs/brand/Fonts-requirements.docx. */
+/* Лицензиары: Nolde — ИП Багдасарян Г. А.; 20 Kopeek и 21 Cent — ИП Гордон Ю. М. */
+
+/* Отсюда генерируются ДВА файла с одинаковыми @font-face и разными */
+/* префиксами путей, потому что лежат они на разной глубине: */
+/*   src/styles/fonts.css        — '/fonts/…', пути переписывает vite */
+/*   public/expo/brand-tokens.css — '../fonts/…', vite public/ НЕ обрабатывает */
+
+/* Второй появился 2026-08-03. До него сцена /expo/ ссылалась на */
+/* '/src/styles/fonts.css', которого в dist/ нет вообще: /expo/ лежит */
+/* в public/, vite его копирует как есть и ссылки не переписывает. */
+/* Итог — document.fonts.size = 0, три страницы просили Nolde и получали */
+/* Georgia, а :root-переменных не было совсем, из-за чего молча не */
+/* действовало требование --touch-hit ≥ 120px. На stage по http это */
+/* выглядело так же, как на киоске, — то есть не ловилось нигде, кроме */
+/* приёмки. Дублировать @font-face инлайном в страницах нельзя: это */
+/* вторая точка правды на пути к шрифтам (§13). */
+
+/* Курсив Nolde тут отсутствует намеренно — файла начертания нет, */
+/* браузер синтезировал бы наклон. Ловит brand-lint R3. */
+
 @font-face {
   font-family: 'Nolde';
   font-weight: 400;
@@ -14,8 +33,6 @@
   font-display: swap;
   src: url('/fonts/nolde/nolde.otf') format('opentype');
 }
-
-/* ── 20 Kopeek — короткие надписи, акценты, плашки ────────────────────── */
 @font-face {
   font-family: '20 Kopeek';
   font-weight: 400;
@@ -58,15 +75,13 @@
   font-display: swap;
   src: url('/fonts/kopeek/20-kopeek-bold-italic.otf') format('opentype');
 }
-
-/* ── 21 Cent — длинные тексты, параграфы ──────────────────────────────── */
 @font-face {
   font-family: '21 Cent';
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url('/fonts/cent/21Cent.woff') format('woff'),
-       url('/fonts/cent/21Cent.ttf')  format('truetype');
+       url('/fonts/cent/21Cent.ttf') format('truetype');
 }
 @font-face {
   font-family: '21 Cent';
@@ -74,7 +89,7 @@
   font-style: italic;
   font-display: swap;
   src: url('/fonts/cent/21Cent-Italic.woff') format('woff'),
-       url('/fonts/cent/21Cent-Italic.ttf')  format('truetype');
+       url('/fonts/cent/21Cent-Italic.ttf') format('truetype');
 }
 @font-face {
   font-family: '21 Cent';
@@ -82,7 +97,7 @@
   font-style: normal;
   font-display: swap;
   src: url('/fonts/cent/21Cent-Bold.woff') format('woff'),
-       url('/fonts/cent/21Cent-Bold.ttf')  format('truetype');
+       url('/fonts/cent/21Cent-Bold.ttf') format('truetype');
 }
 @font-face {
   font-family: '21 Cent';
@@ -90,7 +105,7 @@
   font-style: italic;
   font-display: swap;
   src: url('/fonts/cent/21Cent-BoldItalic.woff') format('woff'),
-       url('/fonts/cent/21Cent-BoldItalic.ttf')  format('truetype');
+       url('/fonts/cent/21Cent-BoldItalic.ttf') format('truetype');
 }
 @font-face {
   font-family: '21 Cent';
@@ -98,5 +113,5 @@
   font-style: normal;
   font-display: swap;
   src: url('/fonts/cent/21Cent-Black.woff') format('woff'),
-       url('/fonts/cent/21Cent-Black.ttf')  format('truetype');
+       url('/fonts/cent/21Cent-Black.ttf') format('truetype');
 }

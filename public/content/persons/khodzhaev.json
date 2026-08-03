@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "khodzhaev",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "Ф. Г. ХОДЖАЕВ",
   "title_en": null,
   "sort_key_ru": "ходжаев",
@@ -99,5 +99,6 @@
   },
   "flags": [
     "media-missing"
-  ]
+  ],
+  "camp_source": "regalia"
 }

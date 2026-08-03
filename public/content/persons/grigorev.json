@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "grigorev",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "Н. А. ГРИГОРЬЕВ (СЕРВЕТНИКОВ)",
   "title_en": null,
   "sort_key_ru": "григорьев серветников",
@@ -113,5 +113,6 @@
   "flags": [
     "date-approx",
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

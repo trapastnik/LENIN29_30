@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "gayda",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "Р. ГАЙДА (Р. ГАЙДЛЬ)",
   "title_en": null,
   "sort_key_ru": "гайда",
@@ -88,5 +88,6 @@
     "sha256": "b5fd3432247233eeb80c3b8062203c01b375d020b5e3efa51ce8272cd51fe899",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

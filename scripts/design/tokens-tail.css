@@ -15,8 +15,8 @@
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 .brand-scroll::-webkit-scrollbar {
-  width: var(--scroll-width);
-  height: var(--scroll-width);
+  width: var(--scroll-width, 14px);
+  height: var(--scroll-width, 14px);
 }
 .brand-scroll::-webkit-scrollbar-track {
   background: var(--scroll-track);

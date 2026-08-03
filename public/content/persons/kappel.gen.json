@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "kappel",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "В. О. КАППЕЛЬ",
   "title_en": null,
   "sort_key_ru": "каппель",
@@ -106,5 +106,6 @@
     "sha256": "1b16757ab23d7da29b97ad4ab9a2cd45f2dcaa90d6e7509753eed14d1bef1073",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

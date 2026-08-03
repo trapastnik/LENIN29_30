@@ -118,5 +118,6 @@
   },
   "flags": [
     "media-missing"
-  ]
+  ],
+  "camp_source": "regalia"
 }

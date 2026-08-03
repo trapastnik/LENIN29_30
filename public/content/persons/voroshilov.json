@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "voroshilov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "К. Е. ВОРОШИЛОВ",
   "title_en": null,
   "sort_key_ru": "ворошилов",
@@ -157,5 +157,6 @@
     "sha256": "70f0becd4fcfba020dab267b207536a78220e44b82c188cb984bd0d968b31bf7",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "alekseev",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "М. В. АЛЕКСЕЕВ",
   "title_en": null,
   "sort_key_ru": "алексеев",
@@ -152,5 +152,6 @@
     "sha256": "6c7c5cf031c624ebef8a2d8a26b92a95371e363b054db5bf1ca18f6de90b2edc",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

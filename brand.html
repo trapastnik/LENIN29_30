@@ -629,8 +629,8 @@
       color: var(--paper-white);
     }
     .touch-target {
-      width: var(--touch-hit);
-      height: var(--touch-hit);
+      width: var(--touch-hit, 120px);
+      height: var(--touch-hit, 120px);
       border: 1.5px dashed var(--brass);
       border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center;
@@ -1925,15 +1925,16 @@
       <!-- ── Демо: две независимые реализации перекидного календаря ── -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px;">
 
-        <!-- Без ведущего слэша: <a href> vite не переписывает, и под file://
-             слэш увёл бы в корень ФС. brand.html лежит в корне сборки. -->
-        <a href="calendar.html"
-           style="display: flex; flex-direction: column; gap: 8px;
+        <!-- Не ссылка, а <div>: calendar.html снят со сборки 2026-08-03
+             (vite.config.js, §4 «Заморожено»). Файл в репозитории на месте,
+             открывается только из исходников — npm run dev. Живая ссылка
+             отсюда вела бы в 404 в собранном киоске. -->
+        <div style="display: flex; flex-direction: column; gap: 8px;
                   padding: 22px 26px;
                   background: linear-gradient(120deg, rgba(160,33,40,0.18), rgba(210,183,115,0.08));
                   border: 1px solid rgba(210,183,115,0.45);
                   border-radius: 6px;
-                  text-decoration: none; color: inherit;">
+                  color: inherit; opacity: 0.55;">
           <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.32em;
                       text-transform: uppercase; color: var(--brass);">
             Версия А · Three.js + html2canvas
@@ -1950,9 +1951,9 @@
           </div>
           <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em;
                       text-transform: uppercase; color: var(--brass); margin-top: auto; padding-top: 10px;">
-            Открыть →
+            Снят со сборки · npm run dev
           </div>
-        </a>
+        </div>
 
         <a href="prototypes/calendar-3d-paper-realistic/"
            style="display: flex; flex-direction: column; gap: 8px;

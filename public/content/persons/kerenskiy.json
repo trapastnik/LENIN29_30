@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "kerenskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "А. Ф. КЕРЕНСКИЙ",
   "title_en": null,
   "sort_key_ru": "керенский",
@@ -147,5 +147,6 @@
     "sha256": "6d1e5015edf6c077c87dc6ccdbe6bcdae7faa4101e37d416ca9ff1f37d6d0d11",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

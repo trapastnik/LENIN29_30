@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "pyats",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "К. Я. ПЯТС",
   "title_en": null,
   "sort_key_ru": "пятс",
@@ -108,5 +108,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }
