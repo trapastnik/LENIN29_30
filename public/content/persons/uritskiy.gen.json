@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 1324,
       "h": 1912,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/uritskiy/01"
+      ]
     },
     {
       "n": 2,
@@ -52,8 +59,15 @@
       "extra_ru": null,
       "w": 1250,
       "h": 1603,
-      "tiers": [],
-      "note_ru": "https://russkiymir.ru/publications/271682/"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "https://russkiymir.ru/publications/271682/",
+      "files": [
+        "media/persons/uritskiy/02"
+      ]
     },
     {
       "n": 3,
@@ -67,8 +81,15 @@
       "extra_ru": null,
       "w": 2047,
       "h": 1548,
-      "tiers": [],
-      "note_ru": "ДИЗАЙНЕРАМ: УДАЛИТЬ ПОРТФОЛИО"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "ДИЗАЙНЕРАМ: УДАЛИТЬ ПОРТФОЛИО",
+      "files": [
+        "media/persons/uritskiy/03"
+      ]
     },
     {
       "n": 4,
@@ -82,7 +103,14 @@
       "extra_ru": null,
       "w": 2733,
       "h": 2025,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/uritskiy/04"
+      ]
     },
     {
       "n": 5,
@@ -96,7 +124,14 @@
       "extra_ru": null,
       "w": 1903,
       "h": 1346,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/uritskiy/05"
+      ]
     }
   ],
   "related": {

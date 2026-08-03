@@ -48,8 +48,32 @@ for (const file of walk(DIST)) {
   }
 }
 
+// ── crossorigin — тот же класс дефекта: убивает стили только под file:// ──
+// Vite вешает атрибут сам; под file:// он включает проверку CORS для
+// непрозрачного origin, и стиль МОЛЧА не применяется. Снимает плагин
+// в vite.config.js — проверка на случай, если плагин уберут или обойдут.
+const cors = [];
+for (const file of walk(DIST)) {
+  if (!file.endsWith('.html')) continue;
+  const text = readFileSync(file, 'utf8');
+  const lines = text.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    if (/<(link|script)[^>]*\scrossorigin[\s>]/.test(lines[i])) {
+      cors.push({ rel: relative(DIST, file), line: i + 1 });
+    }
+  }
+}
+
+if (cors.length) {
+  console.error(`check-paths: crossorigin в ${cors.length} местах.`);
+  console.error('Под file:// (киоск) стиль молча не применяется — страница без оформления.\n');
+  for (const c of cors) console.error(`  ${c.rel}:${c.line}`);
+  console.error('\nПочинка: плагин mtk-strip-crossorigin в vite.config.js.');
+  process.exit(1);
+}
+
 if (hits.length === 0) {
-  console.log('check-paths: чисто — абсолютных путей к ресурсам в dist/ нет');
+  console.log('check-paths: чисто — абсолютных путей и crossorigin в dist/ нет');
   process.exit(0);
 }
 

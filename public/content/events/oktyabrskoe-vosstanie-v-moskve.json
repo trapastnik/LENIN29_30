@@ -39,8 +39,15 @@
       "extra_ru": null,
       "w": 2103,
       "h": 1521,
-      "tiers": [],
-      "note_ru": "Подрезать рамку"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Подрезать рамку",
+      "files": [
+        "media/events/oktyabrskoe-vosstanie-v-moskve/01"
+      ]
     },
     {
       "n": 2,
@@ -54,7 +61,14 @@
       "extra_ru": null,
       "w": 1456,
       "h": 929,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/oktyabrskoe-vosstanie-v-moskve/02"
+      ]
     },
     {
       "n": 3,
@@ -68,7 +82,14 @@
       "extra_ru": null,
       "w": 2078,
       "h": 2726,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/oktyabrskoe-vosstanie-v-moskve/03"
+      ]
     },
     {
       "n": 4,
@@ -82,7 +103,14 @@
       "extra_ru": null,
       "w": 2700,
       "h": 2010,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/oktyabrskoe-vosstanie-v-moskve/04"
+      ]
     }
   ],
   "related": {

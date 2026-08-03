@@ -37,20 +37,25 @@ const OUT = path.join(EXPO, 'build');
 // но держим его тем же, что в HTML, — чтобы список читался как манифест.
 const SOURCES = [
   'shared.jsx',
-  'direction-a.jsx',
-  'direction-b.jsx',
-  'direction-c.jsx',
+  'main-screen.jsx',
   'boot-expo.jsx',
   'people-ui.jsx',
   'boot-people.jsx',
 ];
+
+// direction-a/b/c.jsx здесь намеренно нет. Это заготовки design-pass —
+// «стол коменданта», «карта фронтов», «поток документов», между которыми
+// переключался посетитель. По ТЗ выбора направления на главной нет, экран
+// собирается из таймлайна и плиток разделов, поэтому направления сняты
+// с загрузки: 133 КБ мёртвого JS на киоск возить незачем.
+// Исходники оставлены на месте — удалять чужую отрисовку не наше решение.
 
 // Что за чем подключается на каждой странице. Нужно для проверки коллизий:
 // у классических <script> общая на страницу лексическая область, поэтому
 // одинаковое top-level имя в двух файлах — SyntaxError, и увидишь ты его
 // только в браузере. Раньше это пряталось: Babel опускал const до var.
 const PAGES = {
-  'index.html':  ['shared.jsx', 'direction-a.jsx', 'direction-b.jsx', 'direction-c.jsx', 'boot-expo.jsx'],
+  'index.html':  ['shared.jsx', 'main-screen.jsx', 'boot-expo.jsx'],
   'people.html': ['people-ui.jsx', 'boot-people.jsx'],
 };
 

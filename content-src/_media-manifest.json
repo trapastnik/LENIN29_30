@@ -1,0 +1,5821 @@
+{
+  "schema": 1,
+  "builder": "1.0.0",
+  "_note": "Что собрал `npm run media:build`. Коммитится, а сами производные — нет: поле `tiers` в справках обязано быть одинаковым на любой машине, включая ту, где ../IN/ нет. Читает run_import.py.",
+  "tier_boxes": {
+    "lg": [
+      2400,
+      1500
+    ],
+    "sm": [
+      1280,
+      900
+    ],
+    "xs": [
+      560,
+      560
+    ]
+  },
+  "entries": {
+    "media/events/brest-litovskie-peregovory/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2026,
+      "h": 1368
+    },
+    "media/events/brest-litovskie-peregovory/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4040,
+      "h": 3328
+    },
+    "media/events/brest-litovskie-peregovory/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1368,
+      "h": 1105
+    },
+    "media/events/brest-litovskie-peregovory/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1698,
+      "h": 1145
+    },
+    "media/events/bukharskaya-operatsiya/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2343,
+      "h": 1560
+    },
+    "media/events/kakhovka/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 277,
+      "h": 469
+    },
+    "media/events/kharkovskaya-operatsiya-rkka/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1756,
+      "h": 2505
+    },
+    "media/events/kontrnastuplenie-vostochnogo-fronta-rkka/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2040,
+      "h": 1443
+    },
+    "media/events/kontrnastuplenie-yuzhnogo-fronta-rkka/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 959,
+      "h": 1996
+    },
+    "media/events/krasnyy-terror/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4248,
+      "h": 2939
+    },
+    "media/events/krasnyy-terror/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2047,
+      "h": 1548
+    },
+    "media/events/krasnyy-terror/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2733,
+      "h": 2025
+    },
+    "media/events/krasnyy-terror/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1915,
+      "h": 1544
+    },
+    "media/events/nastuplenie-vostochnogo-fronta-1919-1920/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 429,
+      "h": 642
+    },
+    "media/events/nastuplenie-vostochnogo-fronta-1919-1920/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1313,
+      "h": 2074
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1544,
+      "h": 995
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1961,
+      "h": 1317
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2085,
+      "h": 1508
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1400,
+      "h": 2043
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3084,
+      "h": 3700
+    },
+    "media/events/oktyabrskiy-perevorot-v-petrograde/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2608,
+      "h": 3543
+    },
+    "media/events/oktyabrskoe-vosstanie-v-moskve/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2103,
+      "h": 1521
+    },
+    "media/events/oktyabrskoe-vosstanie-v-moskve/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1456,
+      "h": 929
+    },
+    "media/events/oktyabrskoe-vosstanie-v-moskve/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2078,
+      "h": 2726
+    },
+    "media/events/oktyabrskoe-vosstanie-v-moskve/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2700,
+      "h": 2010
+    },
+    "media/events/otkrytie-i-razgon-us/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2064,
+      "h": 1487
+    },
+    "media/events/otkrytie-i-razgon-us/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2125,
+      "h": 1560
+    },
+    "media/events/otkrytie-i-razgon-us/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2044
+    },
+    "media/events/otkrytie-i-razgon-us/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2550,
+      "h": 1569
+    },
+    "media/events/otkrytie-i-razgon-us/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1509,
+      "h": 2061
+    },
+    "media/events/pokhod-kerenskogo-krasnova/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4164,
+      "h": 2804
+    },
+    "media/events/pokhod-kerenskogo-krasnova/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2671,
+      "h": 2034
+    },
+    "media/events/pokhod-kerenskogo-krasnova/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3008,
+      "h": 4280
+    },
+    "media/events/pokhod-kerenskogo-krasnova/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1995,
+      "h": 1290
+    },
+    "media/events/pokhod-uralskoy-armii-blyukhera/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2153,
+      "h": 2875
+    },
+    "media/events/pokhod-uralskoy-armii-blyukhera/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1017,
+      "h": 1544
+    },
+    "media/events/pokhod-uralskoy-armii-blyukhera/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1357,
+      "h": 2034
+    },
+    "media/events/primorskaya-operatsiya/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2056,
+      "h": 1264
+    },
+    "media/events/primorskaya-operatsiya/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1530,
+      "h": 909
+    },
+    "media/events/primorskaya-operatsiya/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1911,
+      "h": 1281
+    },
+    "media/events/rostovo-novocherkasskaya-operatsiya/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1216,
+      "h": 795
+    },
+    "media/events/voennye-deystviya-na-severo-zapade/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1220,
+      "h": 834
+    },
+    "media/events/voennye-deystviya-na-severo-zapade/03p2": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1204,
+      "h": 807
+    },
+    "media/events/voennye-deystviya-na-severo-zapade/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 217,
+      "h": 281
+    },
+    "media/events/voennye-deystviya-na-severo-zapade/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2094,
+      "h": 1513
+    },
+    "media/events/volochaevskaya-operatsiya/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2057,
+      "h": 1304
+    },
+    "media/events/volochaevskaya-operatsiya/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2770,
+      "h": 2106
+    },
+    "media/events/volochaevskaya-operatsiya/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 323,
+      "h": 239
+    },
+    "media/events/vtoroy-sezd-sovetov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2400,
+      "h": 3691
+    },
+    "media/events/vtoroy-sezd-sovetov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3169,
+      "h": 2598
+    },
+    "media/events/vtoroy-sezd-sovetov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2535,
+      "h": 1554
+    },
+    "media/events/vtoroy-sezd-sovetov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1368,
+      "h": 1112
+    },
+    "media/events/vybory-v-us/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2362,
+      "h": 3321
+    },
+    "media/events/vybory-v-us/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2937,
+      "h": 4187
+    },
+    "media/events/vybory-v-us/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2915,
+      "h": 3717
+    },
+    "media/events/vybory-v-us/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 8302,
+      "h": 5074
+    },
+    "media/events/vybory-v-us/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 8302,
+      "h": 5074
+    },
+    "media/events/vystuplenie-chekhoslovatskogo-korpusa/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1287,
+      "h": 709
+    },
+    "media/events/vystuplenie-levykh-eserov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2044
+    },
+    "media/events/vystuplenie-levykh-eserov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 873,
+      "h": 1202
+    },
+    "media/events/vystuplenie-levykh-eserov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 819,
+      "h": 1200
+    },
+    "media/events/vzyatie-kazani-chastyami-narodnoy-armii/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2800,
+      "h": 1889
+    },
+    "media/events/yaroslavskoe-vosstanie/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 763,
+      "h": 1254
+    },
+    "media/events/yaroslavskoe-vosstanie/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1725,
+      "h": 1251
+    },
+    "media/events/yaroslavskoe-vosstanie/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1995,
+      "h": 1443
+    },
+    "media/events/yaroslavskoe-vosstanie/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1491,
+      "h": 1035
+    },
+    "media/events/yaroslavskoe-vosstanie/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1950,
+      "h": 1294
+    },
+    "media/events/yaroslavskoe-vosstanie/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2040,
+      "h": 1443
+    },
+    "media/parties/alash/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1280,
+      "h": 720
+    },
+    "media/parties/alekseev-org/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2802,
+      "h": 1989
+    },
+    "media/parties/alekseev-org/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 700,
+      "h": 996
+    },
+    "media/parties/alekseev-org/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1375,
+      "h": 2106
+    },
+    "media/parties/anarchists/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1144,
+      "h": 1736
+    },
+    "media/parties/anarchists/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1058,
+      "h": 1662
+    },
+    "media/parties/anarchists/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1463,
+      "h": 1979
+    },
+    "media/parties/anarchists/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1398,
+      "h": 1961
+    },
+    "media/parties/anarchists/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4269,
+      "h": 3255
+    },
+    "media/parties/basmachestvo/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 768,
+      "h": 1063
+    },
+    "media/parties/basmachestvo/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 692,
+      "h": 1024
+    },
+    "media/parties/basmachestvo/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1926,
+      "h": 1328
+    },
+    "media/parties/basmachestvo/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1956,
+      "h": 1170
+    },
+    "media/parties/basmachestvo/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 624
+    },
+    "media/parties/belorusskaya-sotsialisticheskaya-gromada/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 533,
+      "h": 768
+    },
+    "media/parties/belorusskaya-sotsialisticheskaya-gromada/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 900,
+      "h": 857
+    },
+    "media/parties/belorusskaya-sotsialisticheskaya-gromada/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2488,
+      "h": 3900
+    },
+    "media/parties/belorusskaya-sotsialisticheskaya-gromada/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 760,
+      "h": 1050
+    },
+    "media/parties/bolsheviks/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3401,
+      "h": 2338
+    },
+    "media/parties/bolsheviks/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2362,
+      "h": 3321
+    },
+    "media/parties/bolsheviks/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2577,
+      "h": 1848
+    },
+    "media/parties/bolsheviks/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1158,
+      "h": 1738
+    },
+    "media/parties/bolsheviks/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2251,
+      "h": 1715
+    },
+    "media/parties/borotbisty/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2541,
+      "h": 3228
+    },
+    "media/parties/borotbisty/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 701,
+      "h": 993
+    },
+    "media/parties/bund/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2044,
+      "h": 2900
+    },
+    "media/parties/bund/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 730,
+      "h": 1000
+    },
+    "media/parties/bund/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1333,
+      "h": 1198
+    },
+    "media/parties/cadets/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2805,
+      "h": 3973
+    },
+    "media/parties/cadets/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1300,
+      "h": 877
+    },
+    "media/parties/cadets/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2550,
+      "h": 3689
+    },
+    "media/parties/cadets/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2016,
+      "h": 2718
+    },
+    "media/parties/cadets/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1119,
+      "h": 1854
+    },
+    "media/parties/committee-salvation/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 889,
+      "h": 1197
+    },
+    "media/parties/committee-salvation/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 916,
+      "h": 1200
+    },
+    "media/parties/committee-salvation/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2524,
+      "h": 3798
+    },
+    "media/parties/committee-salvation/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1632,
+      "h": 1016
+    },
+    "media/parties/dashnaktsutyun/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 748
+    },
+    "media/parties/dashnaktsutyun/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 760,
+      "h": 852
+    },
+    "media/parties/dashnaktsutyun/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 883,
+      "h": 1024
+    },
+    "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1155
+    },
+    "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1249
+    },
+    "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1265,
+      "h": 1918
+    },
+    "media/parties/latyshskiy-krestyanskiy-soyuz/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 900,
+      "h": 1307
+    },
+    "media/parties/latyshskiy-krestyanskiy-soyuz/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 576,
+      "h": 742
+    },
+    "media/parties/left-srs/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2044
+    },
+    "media/parties/left-srs/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 873,
+      "h": 1202
+    },
+    "media/parties/left-srs/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 450,
+      "h": 647
+    },
+    "media/parties/left-srs/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 522,
+      "h": 656
+    },
+    "media/parties/mensheviks/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1353,
+      "h": 1684
+    },
+    "media/parties/mensheviks/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 624,
+      "h": 974
+    },
+    "media/parties/mensheviks/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 990,
+      "h": 1359
+    },
+    "media/parties/mensheviks/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 869,
+      "h": 1261
+    },
+    "media/parties/mensheviks/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1221,
+      "h": 1851
+    },
+    "media/parties/musavat/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 872,
+      "h": 587
+    },
+    "media/parties/musavat/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 709,
+      "h": 886
+    },
+    "media/parties/musavat/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 500,
+      "h": 693
+    },
+    "media/parties/muslim-socialists/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 827,
+      "h": 908
+    },
+    "media/parties/muslim-socialists/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2800,
+      "h": 1889
+    },
+    "media/parties/muslim-socialists/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 1403
+    },
+    "media/parties/muslim-socialists/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 620,
+      "h": 1021
+    },
+    "media/parties/narodnie-socialists/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1287,
+      "h": 1854
+    },
+    "media/parties/narodnie-socialists/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5100,
+      "h": 3680
+    },
+    "media/parties/narodnie-socialists/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1049,
+      "h": 1596
+    },
+    "media/parties/narodnie-socialists/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1164,
+      "h": 1717
+    },
+    "media/parties/narodnie-socialists/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2620,
+      "h": 3030
+    },
+    "media/parties/national-center/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 640,
+      "h": 851
+    },
+    "media/parties/national-center/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 655,
+      "h": 1005
+    },
+    "media/parties/national-center/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 736,
+      "h": 1098
+    },
+    "media/parties/poaley-tsion/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 461,
+      "h": 615
+    },
+    "media/parties/poaley-tsion/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2656,
+      "h": 3900
+    },
+    "media/parties/right-center/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 589,
+      "h": 800
+    },
+    "media/parties/right-center/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 996,
+      "h": 1425
+    },
+    "media/parties/right-center/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 746,
+      "h": 906
+    },
+    "media/parties/sibirskoe-oblastnichestvo/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1343,
+      "h": 2007
+    },
+    "media/parties/sibirskoe-oblastnichestvo/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 600,
+      "h": 671
+    },
+    "media/parties/sibirskoe-oblastnichestvo/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 884,
+      "h": 1137
+    },
+    "media/parties/sibirskoe-oblastnichestvo/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 560,
+      "h": 810
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 960,
+      "h": 1030
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2513,
+      "h": 3448
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 959,
+      "h": 1526
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2540,
+      "h": 3900
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2400,
+      "h": 3676
+    },
+    "media/parties/sotsial-demokraticheskaya-partiya-finlya/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1668,
+      "h": 934
+    },
+    "media/parties/srs/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 667
+    },
+    "media/parties/srs/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2506,
+      "h": 3430
+    },
+    "media/parties/srs/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2560,
+      "h": 1465
+    },
+    "media/parties/srs/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 461,
+      "h": 489
+    },
+    "media/parties/srs/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1134,
+      "h": 1719
+    },
+    "media/parties/ukrainskaya-sotsial-demokraticheskaya-ra/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1172,
+      "h": 1527
+    },
+    "media/parties/ukrainskaya-sotsial-demokraticheskaya-ra/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1600,
+      "h": 1079
+    },
+    "media/parties/ukrainskaya-sotsial-demokraticheskaya-ra/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2562,
+      "h": 1800
+    },
+    "media/parties/union-constituent/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2544,
+      "h": 3900
+    },
+    "media/parties/union-constituent/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2476,
+      "h": 3700
+    },
+    "media/parties/union-constituent/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2527,
+      "h": 2032
+    },
+    "media/parties/union-constituent/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2526,
+      "h": 1352
+    },
+    "media/parties/union-constituent/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2064,
+      "h": 1487
+    },
+    "media/parties/union-defence/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 688,
+      "h": 1011
+    },
+    "media/parties/union-defence/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 750,
+      "h": 500
+    },
+    "media/parties/union-defence/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 1369
+    },
+    "media/parties/union-defence/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1056
+    },
+    "media/parties/union-defence/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 599,
+      "h": 900
+    },
+    "media/parties/union-renewal/01": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 320,
+      "h": 435
+    },
+    "media/parties/union-renewal/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 465,
+      "h": 700
+    },
+    "media/parties/union-renewal/03": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 345,
+      "h": 500
+    },
+    "media/parties/union-renewal/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1049,
+      "h": 1596
+    },
+    "media/parties/union-renewal/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2506,
+      "h": 3430
+    },
+    "media/persons/alekseev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 756,
+      "h": 1199
+    },
+    "media/persons/alekseev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 728,
+      "h": 917
+    },
+    "media/persons/alekseev/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2750,
+      "h": 3664
+    },
+    "media/persons/alekseev/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2530,
+      "h": 3570
+    },
+    "media/persons/alekseev/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2802,
+      "h": 1989
+    },
+    "media/persons/anvelt/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 884,
+      "h": 1136
+    },
+    "media/persons/anvelt/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1486,
+      "h": 2315
+    },
+    "media/persons/anvelt/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 993,
+      "h": 684
+    },
+    "media/persons/anvelt/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 867,
+      "h": 1223
+    },
+    "media/persons/anvelt/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 599,
+      "h": 965
+    },
+    "media/persons/avksentiev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2506,
+      "h": 3430
+    },
+    "media/persons/avksentiev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1041,
+      "h": 1646
+    },
+    "media/persons/blyukher/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1017,
+      "h": 1544
+    },
+    "media/persons/blyukher/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1620,
+      "h": 1122
+    },
+    "media/persons/blyukher/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1392,
+      "h": 1884
+    },
+    "media/persons/blyukher/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1045,
+      "h": 811
+    },
+    "media/persons/blyukher/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2535,
+      "h": 4704
+    },
+    "media/persons/bogaevskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1025
+    },
+    "media/persons/bogaevskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1373,
+      "h": 902
+    },
+    "media/persons/bogaevskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1013,
+      "h": 1536
+    },
+    "media/persons/bogaevskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1391,
+      "h": 872
+    },
+    "media/persons/bogaevskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5412,
+      "h": 3466
+    },
+    "media/persons/boldyrev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 848,
+      "h": 1184
+    },
+    "media/persons/boldyrev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3829,
+      "h": 2393
+    },
+    "media/persons/boldyrev/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 542,
+      "h": 827
+    },
+    "media/persons/budyonny/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2540,
+      "h": 3306
+    },
+    "media/persons/budyonny/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5193,
+      "h": 3543
+    },
+    "media/persons/budyonny/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3429,
+      "h": 2102
+    },
+    "media/persons/budyonny/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1920,
+      "h": 1334
+    },
+    "media/persons/budyonny/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5634,
+      "h": 3753
+    },
+    "media/persons/bukeykhanov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 923,
+      "h": 1204
+    },
+    "media/persons/bukeykhanov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1429,
+      "h": 826
+    },
+    "media/persons/bukeykhanov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1077,
+      "h": 1440
+    },
+    "media/persons/bych/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 620,
+      "h": 870
+    },
+    "media/persons/bych/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 475,
+      "h": 650
+    },
+    "media/persons/chaykovskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1049,
+      "h": 1596
+    },
+    "media/persons/chaykovskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1378,
+      "h": 1740
+    },
+    "media/persons/chaykovskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 749,
+      "h": 1236
+    },
+    "media/persons/chaykovskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 674,
+      "h": 1024
+    },
+    "media/persons/chernov/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 592,
+      "h": 794
+    },
+    "media/persons/chernov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 752,
+      "h": 1236
+    },
+    "media/persons/chernov/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 667
+    },
+    "media/persons/chernov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2133,
+      "h": 2953
+    },
+    "media/persons/chernov/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 638,
+      "h": 827
+    },
+    "media/persons/chkheidze/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 869,
+      "h": 1261
+    },
+    "media/persons/chkheidze/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1054,
+      "h": 1610
+    },
+    "media/persons/chkheidze/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 599,
+      "h": 821
+    },
+    "media/persons/chkheidze/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 928,
+      "h": 1175
+    },
+    "media/persons/chkheidze/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 901,
+      "h": 1323
+    },
+    "media/persons/denikin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1375,
+      "h": 2106
+    },
+    "media/persons/denikin/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3510,
+      "h": 2656
+    },
+    "media/persons/denikin/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 700,
+      "h": 443
+    },
+    "media/persons/denikin/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2380,
+      "h": 3600
+    },
+    "media/persons/denikin/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1146,
+      "h": 1771
+    },
+    "media/persons/derber/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 600,
+      "h": 671
+    },
+    "media/persons/diterikhs/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 652,
+      "h": 1000
+    },
+    "media/persons/diterikhs/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2616,
+      "h": 3984
+    },
+    "media/persons/dutov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 915,
+      "h": 1324
+    },
+    "media/persons/dutov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2819,
+      "h": 2061
+    },
+    "media/persons/dutov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1082,
+      "h": 1600
+    },
+    "media/persons/dzerzhinskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3086,
+      "h": 4396
+    },
+    "media/persons/dzerzhinskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1915,
+      "h": 1544
+    },
+    "media/persons/dzerzhinskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1732,
+      "h": 1182
+    },
+    "media/persons/dzerzhinskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4724,
+      "h": 3153
+    },
+    "media/persons/dzerzhinskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3947,
+      "h": 2879
+    },
+    "media/persons/egorov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 959,
+      "h": 1996
+    },
+    "media/persons/egorov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 760,
+      "h": 1012
+    },
+    "media/persons/egorov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1531,
+      "h": 2151
+    },
+    "media/persons/egorov/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1045,
+      "h": 811
+    },
+    "media/persons/frunze/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1271,
+      "h": 1764
+    },
+    "media/persons/frunze/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2811,
+      "h": 2070
+    },
+    "media/persons/frunze/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2035
+    },
+    "media/persons/frunze/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3787,
+      "h": 1885
+    },
+    "media/persons/frunze/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 881,
+      "h": 620
+    },
+    "media/persons/gayda/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 611,
+      "h": 900
+    },
+    "media/persons/gayda/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 836,
+      "h": 672
+    },
+    "media/persons/gegechkori/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1249
+    },
+    "media/persons/gegechkori/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1920,
+      "h": 1080
+    },
+    "media/persons/grigorev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 788,
+      "h": 1562
+    },
+    "media/persons/grigorev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1968,
+      "h": 1342
+    },
+    "media/persons/grigorev/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 644,
+      "h": 877
+    },
+    "media/persons/grishin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 768,
+      "h": 1007
+    },
+    "media/persons/grishin/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1108,
+      "h": 768
+    },
+    "media/persons/grishin/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3690,
+      "h": 2000
+    },
+    "media/persons/ibragim-bek/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1472,
+      "h": 1054
+    },
+    "media/persons/ibragim-bek/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 624
+    },
+    "media/persons/ibragim-bek/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 620,
+      "h": 732
+    },
+    "media/persons/kaledin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 976,
+      "h": 1500
+    },
+    "media/persons/kaledin/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1210,
+      "h": 1703
+    },
+    "media/persons/kaledin/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1776,
+      "h": 1270
+    },
+    "media/persons/kamenev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1584,
+      "h": 2292
+    },
+    "media/persons/kamenev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2184,
+      "h": 2853
+    },
+    "media/persons/kamenev/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2170,
+      "h": 1536
+    },
+    "media/persons/kappel/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 872,
+      "h": 1259
+    },
+    "media/persons/kappel/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1747,
+      "h": 2470
+    },
+    "media/persons/kappel/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1280,
+      "h": 720
+    },
+    "media/persons/karl-gustav-emil/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 424,
+      "h": 658
+    },
+    "media/persons/karl-gustav-emil/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1218,
+      "h": 1722
+    },
+    "media/persons/karl-gustav-emil/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1219,
+      "h": 1740
+    },
+    "media/persons/kerenskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 963,
+      "h": 1280
+    },
+    "media/persons/kerenskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1083,
+      "h": 1646
+    },
+    "media/persons/kerenskiy/03": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 388,
+      "h": 427
+    },
+    "media/persons/kerenskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1600,
+      "h": 960
+    },
+    "media/persons/kerenskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4174,
+      "h": 3116
+    },
+    "media/persons/khodzhaev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 1600
+    },
+    "media/persons/khodzhaev/02": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 357,
+      "h": 491
+    },
+    "media/persons/kolchak/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1350,
+      "h": 1245
+    },
+    "media/persons/kolchak/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2518,
+      "h": 1807
+    },
+    "media/persons/kolchak/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4032,
+      "h": 2892
+    },
+    "media/persons/kolchak/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3732,
+      "h": 5500
+    },
+    "media/persons/kolchak/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4070,
+      "h": 5045
+    },
+    "media/persons/kornilov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1297,
+      "h": 1856
+    },
+    "media/persons/kornilov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 796,
+      "h": 1024
+    },
+    "media/persons/krasnov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1300,
+      "h": 1882
+    },
+    "media/persons/krasnov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1594,
+      "h": 2145
+    },
+    "media/persons/krasnov/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 751
+    },
+    "media/persons/krivoshein/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 500,
+      "h": 561
+    },
+    "media/persons/krivoshein/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 589,
+      "h": 800
+    },
+    "media/persons/krivoshein/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1507,
+      "h": 1280
+    },
+    "media/persons/lenin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2628,
+      "h": 1892
+    },
+    "media/persons/lenin/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 803
+    },
+    "media/persons/lenin/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3340,
+      "h": 2365
+    },
+    "media/persons/lenin/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4844,
+      "h": 4350
+    },
+    "media/persons/lenin/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3543,
+      "h": 2365
+    },
+    "media/persons/makhno/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1872,
+      "h": 2400
+    },
+    "media/persons/makhno/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 695,
+      "h": 709
+    },
+    "media/persons/makhno/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 919,
+      "h": 1200
+    },
+    "media/persons/miller/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 802,
+      "h": 1223
+    },
+    "media/persons/miller/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1280,
+      "h": 1785
+    },
+    "media/persons/miller/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1080,
+      "h": 936
+    },
+    "media/persons/milyukov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1186,
+      "h": 1028
+    },
+    "media/persons/milyukov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 980,
+      "h": 1559
+    },
+    "media/persons/milyukov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2000,
+      "h": 1521
+    },
+    "media/persons/milyukov/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 395,
+      "h": 600
+    },
+    "media/persons/myasnikov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1189,
+      "h": 1806
+    },
+    "media/persons/myasnikov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2715,
+      "h": 1976
+    },
+    "media/persons/nabokov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 860,
+      "h": 908
+    },
+    "media/persons/nabokov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 6274,
+      "h": 4265
+    },
+    "media/persons/nabokov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1119,
+      "h": 1854
+    },
+    "media/persons/nabokov/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 328,
+      "h": 471
+    },
+    "media/persons/ordzhonikidze/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1962,
+      "h": 2652
+    },
+    "media/persons/ordzhonikidze/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 624,
+      "h": 762
+    },
+    "media/persons/ordzhonikidze/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2152,
+      "h": 2859
+    },
+    "media/persons/ordzhonikidze/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1881,
+      "h": 1353
+    },
+    "media/persons/petlyura/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 920,
+      "h": 693
+    },
+    "media/persons/petlyura/02": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 331,
+      "h": 374
+    },
+    "media/persons/petlyura/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 900,
+      "h": 682
+    },
+    "media/persons/petlyura/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1536,
+      "h": 768
+    },
+    "media/persons/petrovskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 773,
+      "h": 938
+    },
+    "media/persons/petrovskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1792,
+      "h": 1336
+    },
+    "media/persons/petrovskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1624,
+      "h": 1032
+    },
+    "media/persons/petrovskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3437,
+      "h": 2540
+    },
+    "media/persons/petrovskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2284,
+      "h": 3204
+    },
+    "media/persons/pilsudski/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3513,
+      "h": 4799
+    },
+    "media/persons/pilsudski/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1046,
+      "h": 1661
+    },
+    "media/persons/pilsudski/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2953,
+      "h": 1955
+    },
+    "media/persons/pilsudski/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 900,
+      "h": 599
+    },
+    "media/persons/poluyan/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1906,
+      "h": 2498
+    },
+    "media/persons/poluyan/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 682,
+      "h": 1080
+    },
+    "media/persons/pyats/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2772,
+      "h": 3875
+    },
+    "media/persons/pyats/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 620,
+      "h": 420
+    },
+    "media/persons/pyats/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2381,
+      "h": 3520
+    },
+    "media/persons/savinkov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 688,
+      "h": 1011
+    },
+    "media/persons/savinkov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 593,
+      "h": 949
+    },
+    "media/persons/savinkov/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 629,
+      "h": 352
+    },
+    "media/persons/savinkov/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1024,
+      "h": 749
+    },
+    "media/persons/savinkov/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1024,
+      "h": 662
+    },
+    "media/persons/schetinkin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1303,
+      "h": 1890
+    },
+    "media/persons/schetinkin/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1313,
+      "h": 2074
+    },
+    "media/persons/semyonov/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 600,
+      "h": 789
+    },
+    "media/persons/semyonov/02": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 400,
+      "h": 522
+    },
+    "media/persons/semyonov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2832,
+      "h": 3948
+    },
+    "media/persons/semyonov/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 500,
+      "h": 572
+    },
+    "media/persons/shulgin/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1287,
+      "h": 1814
+    },
+    "media/persons/shulgin/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 6299,
+      "h": 4306
+    },
+    "media/persons/shulgin/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1080,
+      "h": 1080
+    },
+    "media/persons/skoropadskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 882,
+      "h": 1197
+    },
+    "media/persons/skoropadskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 736,
+      "h": 1026
+    },
+    "media/persons/skoropadskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3576,
+      "h": 2580
+    },
+    "media/persons/skoropadskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5649,
+      "h": 4306
+    },
+    "media/persons/skoropadskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 749,
+      "h": 1024
+    },
+    "media/persons/spiridonova/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2044
+    },
+    "media/persons/spiridonova/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1625,
+      "h": 1037
+    },
+    "media/persons/spiridonova/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 939,
+      "h": 1332
+    },
+    "media/persons/spiridonova/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 876,
+      "h": 1018
+    },
+    "media/persons/stalin/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 897
+    },
+    "media/persons/stalin/01p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 772,
+      "h": 1460
+    },
+    "media/persons/stalin/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1526,
+      "h": 2284
+    },
+    "media/persons/stalin/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2707,
+      "h": 2362
+    },
+    "media/persons/stalin/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4772,
+      "h": 3089
+    },
+    "media/persons/struve/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1332,
+      "h": 1990
+    },
+    "media/persons/struve/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1607,
+      "h": 2160
+    },
+    "media/persons/struve/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4480,
+      "h": 5728
+    },
+    "media/persons/struve/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1015,
+      "h": 768
+    },
+    "media/persons/struve/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 703,
+      "h": 1000
+    },
+    "media/persons/stuchka/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1452,
+      "h": 1932
+    },
+    "media/persons/stuchka/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4040,
+      "h": 3328
+    },
+    "media/persons/stuchka/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2774,
+      "h": 3783
+    },
+    "media/persons/sverdlov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1450,
+      "h": 2034
+    },
+    "media/persons/sverdlov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4626,
+      "h": 3425
+    },
+    "media/persons/sverdlov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2125,
+      "h": 1560
+    },
+    "media/persons/sverdlov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1569,
+      "h": 1167
+    },
+    "media/persons/sverdlov/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2067,
+      "h": 1353
+    },
+    "media/persons/trotsky/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2349,
+      "h": 3535
+    },
+    "media/persons/trotsky/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3550,
+      "h": 2349
+    },
+    "media/persons/trotsky/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3146,
+      "h": 2379
+    },
+    "media/persons/trotsky/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3528,
+      "h": 2364
+    },
+    "media/persons/trotsky/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2460,
+      "h": 3543
+    },
+    "media/persons/tukhachevsky/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1119,
+      "h": 1719
+    },
+    "media/persons/tukhachevsky/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3185,
+      "h": 1879
+    },
+    "media/persons/tukhachevsky/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2688,
+      "h": 2035
+    },
+    "media/persons/tukhachevsky/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1152,
+      "h": 825
+    },
+    "media/persons/tukhachevsky/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 931,
+      "h": 1376
+    },
+    "media/persons/uborevich/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1603,
+      "h": 2327
+    },
+    "media/persons/uborevich/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1690,
+      "h": 1163
+    },
+    "media/persons/uborevich/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1911,
+      "h": 1281
+    },
+    "media/persons/uborevich/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1866,
+      "h": 1222
+    },
+    "media/persons/ulmanis/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 850,
+      "h": 553
+    },
+    "media/persons/ulmanis/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 900,
+      "h": 1307
+    },
+    "media/persons/ulmanis/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1468,
+      "h": 1080
+    },
+    "media/persons/uritskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1324,
+      "h": 1912
+    },
+    "media/persons/uritskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1250,
+      "h": 1603
+    },
+    "media/persons/uritskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2047,
+      "h": 1548
+    },
+    "media/persons/uritskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2733,
+      "h": 2025
+    },
+    "media/persons/uritskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1903,
+      "h": 1346
+    },
+    "media/persons/vatsetis/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1535,
+      "h": 2046
+    },
+    "media/persons/vatsetis/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2191,
+      "h": 3063
+    },
+    "media/persons/vatsetis/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 992,
+      "h": 657
+    },
+    "media/persons/vologodskiy/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 560,
+      "h": 810
+    },
+    "media/persons/vologodskiy/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1120,
+      "h": 720
+    },
+    "media/persons/vologodskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1939,
+      "h": 1185
+    },
+    "media/persons/volskiy/01": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 249,
+      "h": 400
+    },
+    "media/persons/volskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2560,
+      "h": 1465
+    },
+    "media/persons/voroshilov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1014,
+      "h": 1610
+    },
+    "media/persons/voroshilov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2152,
+      "h": 2859
+    },
+    "media/persons/voroshilov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2016,
+      "h": 1575
+    },
+    "media/persons/voroshilov/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 963,
+      "h": 1318
+    },
+    "media/persons/voroshilov/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1045,
+      "h": 811
+    },
+    "media/persons/wrangel/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1734,
+      "h": 2685
+    },
+    "media/persons/wrangel/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2466,
+      "h": 3575
+    },
+    "media/persons/wrangel/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2850,
+      "h": 3895
+    },
+    "media/persons/wrangel/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1000,
+      "h": 667
+    },
+    "media/persons/yudenich/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1282
+    },
+    "media/persons/yudenich/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1452,
+      "h": 2164
+    },
+    "media/persons/yudenich/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1200,
+      "h": 1939
+    },
+    "media/persons/zenzinov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1250,
+      "h": 1874
+    },
+    "media/persons/zenzinov/02": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 461,
+      "h": 489
+    },
+    "media/persons/zenzinov/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 729,
+      "h": 1000
+    },
+    "media/persons/zhordaniya/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 800,
+      "h": 1155
+    },
+    "media/persons/zhordaniya/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 783,
+      "h": 1137
+    },
+    "media/persons/zinovev/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 984,
+      "h": 1559
+    },
+    "media/persons/zinovev/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3550,
+      "h": 2349
+    },
+    "media/persons/zinovev/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 7560,
+      "h": 5247
+    },
+    "media/persons/zinovev/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2273,
+      "h": 3231
+    },
+    "media/persons/zinovev/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2606,
+      "h": 3543
+    },
+    "media/states/adr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1865,
+      "h": 1343
+    },
+    "media/states/adr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2070,
+      "h": 1368
+    },
+    "media/states/adr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1715,
+      "h": 1111
+    },
+    "media/states/adr/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1680,
+      "h": 1093
+    },
+    "media/states/allies-entente/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1206,
+      "h": 911
+    },
+    "media/states/allies-entente/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2028,
+      "h": 1355
+    },
+    "media/states/allies-entente/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1420,
+      "h": 1932
+    },
+    "media/states/allies-entente/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3936,
+      "h": 2772
+    },
+    "media/states/allies-entente/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2451,
+      "h": 1368
+    },
+    "media/states/armenian-ssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1804,
+      "h": 1272
+    },
+    "media/states/armenian-ssr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1189,
+      "h": 1806
+    },
+    "media/states/armenian-ssr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4429,
+      "h": 3240
+    },
+    "media/states/armenian-ssr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1785,
+      "h": 955
+    },
+    "media/states/armenian-ssr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1777,
+      "h": 949
+    },
+    "media/states/azerbaijani-ssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 890,
+      "h": 1072
+    },
+    "media/states/azerbaijani-ssr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2799,
+      "h": 2103
+    },
+    "media/states/azerbaijani-ssr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2680,
+      "h": 2068
+    },
+    "media/states/azerbaijani-ssr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1740,
+      "h": 1110
+    },
+    "media/states/azerbaijani-ssr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1741,
+      "h": 1084
+    },
+    "media/states/bashkir-assr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2074,
+      "h": 1374
+    },
+    "media/states/bashkir-assr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2433,
+      "h": 1767
+    },
+    "media/states/bashkir-assr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1692,
+      "h": 1249
+    },
+    "media/states/belorussian-ssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1189,
+      "h": 1806
+    },
+    "media/states/bnsr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2343,
+      "h": 1560
+    },
+    "media/states/bnsr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1752,
+      "h": 1279
+    },
+    "media/states/bnsr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 782,
+      "h": 1140
+    },
+    "media/states/bnsr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2318,
+      "h": 1482
+    },
+    "media/states/bnsr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2277,
+      "h": 1496
+    },
+    "media/states/bukharskiy-emirat/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2343,
+      "h": 1560
+    },
+    "media/states/bukharskiy-emirat/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1752,
+      "h": 1279
+    },
+    "media/states/bukharskiy-emirat/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 782,
+      "h": 1140
+    },
+    "media/states/central-powers/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1698,
+      "h": 1145
+    },
+    "media/states/central-powers/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1193,
+      "h": 827
+    },
+    "media/states/central-powers/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3780,
+      "h": 2784
+    },
+    "media/states/central-powers/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1851,
+      "h": 1164
+    },
+    "media/states/central-powers/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1863,
+      "h": 1181
+    },
+    "media/states/chapannaya-voyna/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2937,
+      "h": 3700
+    },
+    "media/states/chapannaya-voyna/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1926,
+      "h": 2892
+    },
+    "media/states/czechoslovak-corps/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2340,
+      "h": 1896
+    },
+    "media/states/czechoslovak-corps/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1968,
+      "h": 1261
+    },
+    "media/states/czechoslovak-corps/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1287,
+      "h": 709
+    },
+    "media/states/czechoslovak-corps/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2340,
+      "h": 1896
+    },
+    "media/states/czechoslovak-corps/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3960,
+      "h": 2700
+    },
+    "media/states/dksr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1218,
+      "h": 1578
+    },
+    "media/states/dksr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1668,
+      "h": 1253
+    },
+    "media/states/estonskaya-respublika/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1588,
+      "h": 1002
+    },
+    "media/states/estonskaya-respublika/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1295,
+      "h": 760
+    },
+    "media/states/estonskaya-respublika/02p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1298,
+      "h": 770
+    },
+    "media/states/estonskaya-respublika/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1797,
+      "h": 1221
+    },
+    "media/states/etk/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 884,
+      "h": 1136
+    },
+    "media/states/etk/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1734,
+      "h": 2461
+    },
+    "media/states/fer/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2052,
+      "h": 1644
+    },
+    "media/states/fer/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1398,
+      "h": 1961
+    },
+    "media/states/fer/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1017,
+      "h": 1544
+    },
+    "media/states/fer/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1911,
+      "h": 1281
+    },
+    "media/states/fer/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1747,
+      "h": 1157
+    },
+    "media/states/fer/05p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1753,
+      "h": 1167
+    },
+    "media/states/finlyandskaya-respublika-s-10-avgusta-19/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1218,
+      "h": 1722
+    },
+    "media/states/finlyandskaya-respublika-s-10-avgusta-19/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1033,
+      "h": 1588
+    },
+    "media/states/finlyandskaya-respublika-s-10-avgusta-19/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1942,
+      "h": 1228
+    },
+    "media/states/finlyandskaya-respublika-s-10-avgusta-19/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1464,
+      "h": 901
+    },
+    "media/states/finlyandskaya-respublika-s-10-avgusta-19/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1473,
+      "h": 916
+    },
+    "media/states/finlyandskaya-sotsialisticheskaya-raboch/01": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1274,
+      "h": 858
+    },
+    "media/states/finlyandskaya-sotsialisticheskaya-raboch/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2690,
+      "h": 3700
+    },
+    "media/states/finlyandskaya-sotsialisticheskaya-raboch/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2360,
+      "h": 3580
+    },
+    "media/states/finlyandskaya-sotsialisticheskaya-raboch/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1668,
+      "h": 934
+    },
+    "media/states/georgian-ssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2010,
+      "h": 2808
+    },
+    "media/states/georgian-ssr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 804,
+      "h": 1314
+    },
+    "media/states/georgian-ssr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2539,
+      "h": 2783
+    },
+    "media/states/georgian-ssr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 922,
+      "h": 1302
+    },
+    "media/states/great-don-host/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2887,
+      "h": 3700
+    },
+    "media/states/great-don-host/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 580,
+      "h": 808
+    },
+    "media/states/great-don-host/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 885,
+      "h": 1333
+    },
+    "media/states/great-don-host/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2137,
+      "h": 1163
+    },
+    "media/states/great-don-host/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2144,
+      "h": 1156
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 783,
+      "h": 1137
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1265,
+      "h": 1918
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1054,
+      "h": 1610
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1746,
+      "h": 2640
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2047,
+      "h": 1312
+    },
+    "media/states/gruzinskaya-demokraticheskaya-respublika/05p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2031,
+      "h": 1280
+    },
+    "media/states/khnsr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1722,
+      "h": 1408
+    },
+    "media/states/khnsr/01p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1703,
+      "h": 1346
+    },
+    "media/states/kochg/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1004,
+      "h": 1335
+    },
+    "media/states/komuch/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2135,
+      "h": 2876
+    },
+    "media/states/komuch/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2082,
+      "h": 2926
+    },
+    "media/states/komuch/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 5070,
+      "h": 2064
+    },
+    "media/states/komuch/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 872,
+      "h": 1259
+    },
+    "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1289,
+      "h": 884
+    },
+    "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1313,
+      "h": 2074
+    },
+    "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 809,
+      "h": 1190
+    },
+    "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1830,
+      "h": 2696
+    },
+    "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3678,
+      "h": 2644
+    },
+    "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1899,
+      "h": 1320
+    },
+    "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1940,
+      "h": 1343
+    },
+    "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1960,
+      "h": 1363
+    },
+    "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1955,
+      "h": 1385
+    },
+    "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1876,
+      "h": 1341
+    },
+    "media/states/latviyskaya-respublika/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1658,
+      "h": 1056
+    },
+    "media/states/latviyskaya-respublika/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 801,
+      "h": 1100
+    },
+    "media/states/latviyskaya-respublika/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1827,
+      "h": 1230
+    },
+    "media/states/latviyskaya-respublika/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1528,
+      "h": 958
+    },
+    "media/states/latviyskaya-respublika/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1520,
+      "h": 952
+    },
+    "media/states/latviyskaya-respublika/05": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1163,
+      "h": 826
+    },
+    "media/states/latviyskaya-respublika/05p2": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 1157,
+      "h": 819
+    },
+    "media/states/latvssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1452,
+      "h": 1932
+    },
+    "media/states/latvssr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1518,
+      "h": 2096
+    },
+    "media/states/latvssr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1650,
+      "h": 1042
+    },
+    "media/states/latvssr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1333,
+      "h": 797
+    },
+    "media/states/latvssr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1333,
+      "h": 810
+    },
+    "media/states/litovskaya-respublika/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1001,
+      "h": 1526
+    },
+    "media/states/litovsko-belorusskaya-sotsialisticheskay/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1301,
+      "h": 1848
+    },
+    "media/states/northern-region/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2770,
+      "h": 3900
+    },
+    "media/states/northern-region/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3983,
+      "h": 2683
+    },
+    "media/states/northern-region/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2592,
+      "h": 1764
+    },
+    "media/states/northern-region/04": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 695,
+      "h": 673
+    },
+    "media/states/northern-region/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3872,
+      "h": 1496
+    },
+    "media/states/orenburg-cossack-host/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4442,
+      "h": 3147
+    },
+    "media/states/orenburg-cossack-host/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 572,
+      "h": 813
+    },
+    "media/states/orenburg-cossack-host/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1434,
+      "h": 2085
+    },
+    "media/states/orenburg-cossack-host/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2819,
+      "h": 2061
+    },
+    "media/states/orenburg-cossack-host/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2039,
+      "h": 1261
+    },
+    "media/states/orenburg-cossack-host/05p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1815,
+      "h": 1112
+    },
+    "media/states/orenburg-cossack-host/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2025,
+      "h": 1347
+    },
+    "media/states/osr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 780,
+      "h": 1122
+    },
+    "media/states/polskaya-respublika/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3513,
+      "h": 4799
+    },
+    "media/states/polskaya-respublika/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1296,
+      "h": 2526
+    },
+    "media/states/polskaya-respublika/03": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 646,
+      "h": 725
+    },
+    "media/states/polskaya-respublika/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1843,
+      "h": 1237
+    },
+    "media/states/polskaya-respublika/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1675,
+      "h": 2187
+    },
+    "media/states/polskaya-respublika/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2458,
+      "h": 1534
+    },
+    "media/states/polskaya-respublika/06p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2440,
+      "h": 1533
+    },
+    "media/states/priamur-state/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2616,
+      "h": 3984
+    },
+    "media/states/respublika-armeniya/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1712,
+      "h": 1192
+    },
+    "media/states/respublika-armeniya/01p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1734,
+      "h": 1127
+    },
+    "media/states/rossiyskaya-vostochnaya-okraina/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2832,
+      "h": 3948
+    },
+    "media/states/rossiyskaya-vostochnaya-okraina/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1720,
+      "h": 1023
+    },
+    "media/states/rossiyskaya-vostochnaya-okraina/02p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1720,
+      "h": 996
+    },
+    "media/states/rsfsr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1921,
+      "h": 2578
+    },
+    "media/states/rsfsr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2125,
+      "h": 1560
+    },
+    "media/states/rsfsr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1181,
+      "h": 1780
+    },
+    "media/states/rsfsr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4497,
+      "h": 3149
+    },
+    "media/states/rsfsr/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2025,
+      "h": 1458
+    },
+    "media/states/rsfsr/05p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2024,
+      "h": 1447
+    },
+    "media/states/rsfsr/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2766,
+      "h": 2781
+    },
+    "media/states/russian-state-kolchak/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2908,
+      "h": 3900
+    },
+    "media/states/russian-state-kolchak/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2889,
+      "h": 2158
+    },
+    "media/states/russian-state-kolchak/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1314,
+      "h": 885
+    },
+    "media/states/russian-state-kolchak/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3986,
+      "h": 2953
+    },
+    "media/states/russian-state-kolchak/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1686,
+      "h": 1134
+    },
+    "media/states/russian-state-kolchak/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1409,
+      "h": 903
+    },
+    "media/states/russian-state-kolchak/06p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1403,
+      "h": 897
+    },
+    "media/states/sksr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 682,
+      "h": 1080
+    },
+    "media/states/sksr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1420,
+      "h": 862
+    },
+    "media/states/sksr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1380,
+      "h": 973
+    },
+    "media/states/sksr/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1398,
+      "h": 985
+    },
+    "media/states/sksr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1559,
+      "h": 961
+    },
+    "media/states/sksr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1548,
+      "h": 1000
+    },
+    "media/states/south-russia-gov/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1332,
+      "h": 1990
+    },
+    "media/states/south-russia-gov/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1860,
+      "h": 955
+    },
+    "media/states/south-russia-gov/02p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1884,
+      "h": 973
+    },
+    "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 825,
+      "h": 1045
+    },
+    "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1603,
+      "h": 2327
+    },
+    "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1428,
+      "h": 1974
+    },
+    "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2064,
+      "h": 2704
+    },
+    "media/states/turkestan-sfr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 828,
+      "h": 1073
+    },
+    "media/states/turkestan-sfr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1824,
+      "h": 2610
+    },
+    "media/states/turkestan-sfr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2183,
+      "h": 2750
+    },
+    "media/states/turkestan-sfr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1272,
+      "h": 2235
+    },
+    "media/states/turkestan-sfr/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1276,
+      "h": 2233
+    },
+    "media/states/ufa-directory/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2506,
+      "h": 3430
+    },
+    "media/states/ufa-directory/02": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 461,
+      "h": 489
+    },
+    "media/states/ufa-directory/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1049,
+      "h": 1596
+    },
+    "media/states/ukrainian-ssr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1086,
+      "h": 1638
+    },
+    "media/states/ukrainian-ssr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1040,
+      "h": 1463
+    },
+    "media/states/ukrainian-ssr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2682,
+      "h": 1950
+    },
+    "media/states/ukrainskaya-derzhava/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4216,
+      "h": 3112
+    },
+    "media/states/ukrainskaya-derzhava/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4850,
+      "h": 3696
+    },
+    "media/states/ukrainskaya-derzhava/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2217,
+      "h": 1397
+    },
+    "media/states/ukrainskaya-derzhava/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2225,
+      "h": 1398
+    },
+    "media/states/unr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1172,
+      "h": 1527
+    },
+    "media/states/unr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1969,
+      "h": 1227
+    },
+    "media/states/unr/02p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1950,
+      "h": 1209
+    },
+    "media/states/unr/03": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 331,
+      "h": 374
+    },
+    "media/states/unr/04": {
+      "tiers": [
+        "lg"
+      ],
+      "w": 270,
+      "h": 322
+    },
+    "media/states/unrs/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1015,
+      "h": 1344
+    },
+    "media/states/unrs/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1206,
+      "h": 2472
+    },
+    "media/states/unrs/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1440,
+      "h": 2107
+    },
+    "media/states/unrs/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 4334,
+      "h": 3224
+    },
+    "media/states/ussr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2628,
+      "h": 1892
+    },
+    "media/states/ussr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2784,
+      "h": 2046
+    },
+    "media/states/ussr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2284,
+      "h": 3204
+    },
+    "media/states/ussr/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1713,
+      "h": 1245
+    },
+    "media/states/ussr/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1723,
+      "h": 2647
+    },
+    "media/states/ussr/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2814,
+      "h": 1950
+    },
+    "media/states/vopu/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2647,
+      "h": 1810
+    },
+    "media/states/vopu/02": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 746,
+      "h": 505
+    },
+    "media/states/vopu/02p2": {
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "w": 747,
+      "h": 523
+    },
+    "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 980,
+      "h": 1559
+    },
+    "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1782,
+      "h": 2385
+    },
+    "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 973,
+      "h": 1573
+    },
+    "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 980,
+      "h": 1573
+    },
+    "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2506,
+      "h": 3430
+    },
+    "media/states/vsp/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 884,
+      "h": 1137
+    },
+    "media/states/vsp/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3690,
+      "h": 2000
+    },
+    "media/states/vsp/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1418,
+      "h": 864
+    },
+    "media/states/vsp/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1421,
+      "h": 880
+    },
+    "media/states/vsyur/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1562,
+      "h": 2045
+    },
+    "media/states/vsyur/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2136,
+      "h": 1758
+    },
+    "media/states/vsyur/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2685,
+      "h": 3700
+    },
+    "media/states/vsyur/04": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2434,
+      "h": 1254
+    },
+    "media/states/vsyur/04p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2429,
+      "h": 1296
+    },
+    "media/states/vsyur/05": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1950,
+      "h": 1341
+    },
+    "media/states/vsyur/06": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1537,
+      "h": 958
+    },
+    "media/states/vsyur/06p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1537,
+      "h": 966
+    },
+    "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1775,
+      "h": 1240
+    },
+    "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1824,
+      "h": 1257
+    },
+    "media/states/zapadno-sibirskoe-vosstanie/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3480,
+      "h": 2550
+    },
+    "media/states/zapadno-sibirskoe-vosstanie/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 841,
+      "h": 1214
+    },
+    "media/states/zdfr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1265,
+      "h": 1918
+    },
+    "media/states/zdfr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 1054,
+      "h": 1610
+    },
+    "media/states/zdfr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2078,
+      "h": 1288
+    },
+    "media/states/zdfr/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2048,
+      "h": 1328
+    },
+    "media/states/zsfsr/01": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2010,
+      "h": 2808
+    },
+    "media/states/zsfsr/02": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 2814,
+      "h": 1950
+    },
+    "media/states/zsfsr/03": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3943,
+      "h": 2322
+    },
+    "media/states/zsfsr/03p2": {
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "w": 3943,
+      "h": 2333
+    }
+  }
+}

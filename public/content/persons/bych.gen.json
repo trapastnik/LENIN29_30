@@ -37,8 +37,14 @@
       "extra_ru": null,
       "w": 620,
       "h": 870,
-      "tiers": [],
-      "note_ru": "На выбор, оба фото плохие, лучше не нашли"
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "note_ru": "На выбор, оба фото плохие, лучше не нашли",
+      "files": [
+        "media/persons/bych/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +58,13 @@
       "extra_ru": null,
       "w": 475,
       "h": 650,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bych/02"
+      ]
     }
   ],
   "related": {

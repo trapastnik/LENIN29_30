@@ -67,7 +67,14 @@
       "extra_ru": null,
       "w": 1287,
       "h": 709,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/vystuplenie-chekhoslovatskogo-korpusa/03"
+      ]
     },
     {
       "n": 4,

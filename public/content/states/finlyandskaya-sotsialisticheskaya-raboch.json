@@ -44,7 +44,13 @@
       "extra_ru": null,
       "w": 1274,
       "h": 858,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/states/finlyandskaya-sotsialisticheskaya-raboch/01"
+      ]
     },
     {
       "n": 2,
@@ -58,7 +64,14 @@
       "extra_ru": null,
       "w": 2690,
       "h": 3700,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/finlyandskaya-sotsialisticheskaya-raboch/02"
+      ]
     },
     {
       "n": 3,
@@ -72,7 +85,14 @@
       "extra_ru": null,
       "w": 2360,
       "h": 3580,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/finlyandskaya-sotsialisticheskaya-raboch/03"
+      ]
     },
     {
       "n": 4,
@@ -86,7 +106,14 @@
       "extra_ru": null,
       "w": 1668,
       "h": 934,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/finlyandskaya-sotsialisticheskaya-raboch/04"
+      ]
     }
   ],
   "related": {

@@ -44,7 +44,14 @@
       "extra_ru": null,
       "w": 2343,
       "h": 1560,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/bukharskiy-emirat/01"
+      ]
     },
     {
       "n": 2,
@@ -58,7 +65,14 @@
       "extra_ru": null,
       "w": 1752,
       "h": 1279,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/bukharskiy-emirat/02"
+      ]
     },
     {
       "n": 3,
@@ -72,7 +86,14 @@
       "extra_ru": "*Ходжаев Файзулла Губайдуллаевич (Убайдуллаевич) (1896–1938), лидер движения младобухарцев. В 1920–1924 гг. председатель Совета народных назиров (комиссаров) Бухарской Народной Советской Республики.*",
       "w": 782,
       "h": 1140,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/bukharskiy-emirat/03"
+      ]
     }
   ],
   "related": {

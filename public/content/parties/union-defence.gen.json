@@ -44,7 +44,14 @@
       "extra_ru": "*Савинков Борис Викторович (1879–1925), революционер, руководитель боевой организации Партии социалистов-революционеров в 1909–1911 гг. Участник Белого движения. Руководитель Союза защиты Родины и Свободы.*",
       "w": 688,
       "h": 1011,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-defence/01"
+      ]
     },
     {
       "n": 2,
@@ -58,7 +65,13 @@
       "extra_ru": null,
       "w": 750,
       "h": 500,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-defence/02"
+      ]
     },
     {
       "n": 3,
@@ -72,7 +85,14 @@
       "extra_ru": null,
       "w": 1000,
       "h": 1369,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-defence/03"
+      ]
     },
     {
       "n": 4,
@@ -86,7 +106,14 @@
       "extra_ru": null,
       "w": 800,
       "h": 1056,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-defence/04"
+      ]
     },
     {
       "n": 5,
@@ -100,7 +127,13 @@
       "extra_ru": null,
       "w": 599,
       "h": 900,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-defence/05"
+      ]
     }
   ],
   "related": {

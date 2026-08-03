@@ -44,7 +44,13 @@
       "extra_ru": null,
       "w": 1280,
       "h": 720,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/alash/01"
+      ]
     }
   ],
   "related": {

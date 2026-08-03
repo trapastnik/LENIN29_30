@@ -56,7 +56,7 @@ npm run build
 ```bash
 git push origin main
 ssh ostrov 'cd /root/mtk29-src && git pull --ff-only && npm run build \
-  && rsync -a --delete --exclude=nginx.conf dist/ /var/www/mtk29/ \
+  && rsync -a --delete --exclude=nginx.conf --exclude=content/media/ dist/ /var/www/mtk29/ \
   && cp deploy/nginx.conf /var/www/mtk29/nginx.conf \
   && docker exec mtk29-web nginx -s reload'
 ```

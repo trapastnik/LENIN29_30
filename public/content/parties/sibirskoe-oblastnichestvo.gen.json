@@ -54,7 +54,14 @@
       "extra_ru": "*Потанин Григорий Николаевич (1835–1920), один из идеологов и основателей сибирского областничества, действительный член Императорского русского географического общества.*",
       "w": 1343,
       "h": 2007,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/sibirskoe-oblastnichestvo/01"
+      ]
     },
     {
       "n": 2,
@@ -68,7 +75,13 @@
       "extra_ru": null,
       "w": 600,
       "h": 671,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/sibirskoe-oblastnichestvo/02"
+      ]
     },
     {
       "n": 3,
@@ -82,7 +95,14 @@
       "extra_ru": "*Патушинский Григорий Борисович (1873–1931), сибирский областник, член Временного Сибирского правительства, член Политцентра.*",
       "w": 884,
       "h": 1137,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/sibirskoe-oblastnichestvo/03"
+      ]
     },
     {
       "n": 4,
@@ -96,7 +116,13 @@
       "extra_ru": null,
       "w": 560,
       "h": 810,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/sibirskoe-oblastnichestvo/04"
+      ]
     }
   ],
   "related": {

@@ -72,10 +72,17 @@
       "extra_ru": "*Подписан командующим корпусом генерал-майором А. П. Родзянко.*",
       "w": 1220,
       "h": 834,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "parts": [
         "Северо-запад _02 1.jpg",
         "Северо-запад_02 2.jpg"
+      ],
+      "files": [
+        "media/events/voennye-deystviya-na-severo-zapade/03",
+        "media/events/voennye-deystviya-na-severo-zapade/03p2"
       ]
     },
     {
@@ -90,7 +97,12 @@
       "extra_ru": "*В обращении не была. В центре изображена эмблема Корпуса, затем – Северо-Западной армии: бело-сине-красная лента углом и белый крест.*",
       "w": 217,
       "h": 281,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/events/voennye-deystviya-na-severo-zapade/04"
+      ]
     },
     {
       "n": 5,
@@ -104,8 +116,15 @@
       "extra_ru": null,
       "w": 2094,
       "h": 1513,
-      "tiers": [],
-      "note_ru": "Сделать размер поменьше, качество хромает."
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Сделать размер поменьше, качество хромает.",
+      "files": [
+        "media/events/voennye-deystviya-na-severo-zapade/05"
+      ]
     },
     {
       "n": 6,

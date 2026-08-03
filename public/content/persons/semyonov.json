@@ -39,7 +39,13 @@
       "extra_ru": null,
       "w": 600,
       "h": 789,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/semyonov/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +59,12 @@
       "extra_ru": null,
       "w": 400,
       "h": 522,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/persons/semyonov/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +78,14 @@
       "extra_ru": null,
       "w": 2832,
       "h": 3948,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/semyonov/03"
+      ]
     },
     {
       "n": 4,
@@ -81,7 +99,13 @@
       "extra_ru": null,
       "w": 500,
       "h": 572,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/semyonov/04"
+      ]
     }
   ],
   "related": {

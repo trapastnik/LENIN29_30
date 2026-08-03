@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 869,
       "h": 1261,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/chkheidze/01"
+      ]
     },
     {
       "n": 2,
@@ -53,10 +60,17 @@
       "extra_ru": null,
       "w": 1054,
       "h": 1610,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Художникам: обрезать поля, оставить только фото",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/chkheidze/02"
       ]
     },
     {
@@ -71,7 +85,13 @@
       "extra_ru": null,
       "w": 599,
       "h": 821,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/chkheidze/03"
+      ]
     },
     {
       "n": 4,
@@ -85,7 +105,14 @@
       "extra_ru": null,
       "w": 928,
       "h": 1175,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/chkheidze/04"
+      ]
     },
     {
       "n": 5,
@@ -99,7 +126,14 @@
       "extra_ru": null,
       "w": 901,
       "h": 1323,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/chkheidze/05"
+      ]
     }
   ],
   "related": {

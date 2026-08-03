@@ -46,8 +46,15 @@
       "extra_ru": null,
       "w": 2544,
       "h": 3900,
-      "tiers": [],
-      "note_ru": "Обрезать неровности по краям снизу и справа"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Обрезать неровности по краям снизу и справа",
+      "files": [
+        "media/parties/union-constituent/01"
+      ]
     },
     {
       "n": 2,
@@ -61,8 +68,15 @@
       "extra_ru": null,
       "w": 2476,
       "h": 3700,
-      "tiers": [],
-      "note_ru": "Немного обрезать неровности по краям сверху и снизу"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Немного обрезать неровности по краям сверху и снизу",
+      "files": [
+        "media/parties/union-constituent/02"
+      ]
     },
     {
       "n": 3,
@@ -76,7 +90,14 @@
       "extra_ru": null,
       "w": 2527,
       "h": 2032,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-constituent/03"
+      ]
     },
     {
       "n": 4,
@@ -90,7 +111,14 @@
       "extra_ru": null,
       "w": 2526,
       "h": 1352,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-constituent/04"
+      ]
     },
     {
       "n": 5,
@@ -104,7 +132,14 @@
       "extra_ru": null,
       "w": 2064,
       "h": 1487,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/union-constituent/05"
+      ]
     }
   ],
   "related": {

@@ -40,12 +40,19 @@
       "extra_ru": null,
       "w": 900,
       "h": 1307,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Ранее использовалось в справке про Улманиса, фото 2.",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "Улманиса"
+      "duplicate_of": "Улманиса",
+      "files": [
+        "media/parties/latyshskiy-krestyanskiy-soyuz/01"
+      ]
     },
     {
       "n": 2,
@@ -59,8 +66,14 @@
       "extra_ru": null,
       "w": 576,
       "h": 742,
-      "tiers": [],
-      "note_ru": "Затереть надпись в правом нижнем углу."
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "note_ru": "Затереть надпись в правом нижнем углу.",
+      "files": [
+        "media/parties/latyshskiy-krestyanskiy-soyuz/02"
+      ]
     }
   ],
   "related": {

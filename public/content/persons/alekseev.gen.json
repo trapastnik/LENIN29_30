@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 756,
       "h": 1199,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/alekseev/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,14 @@
       "extra_ru": null,
       "w": 728,
       "h": 917,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/alekseev/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +81,14 @@
       "extra_ru": null,
       "w": 2750,
       "h": 3664,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/alekseev/03"
+      ]
     },
     {
       "n": 4,
@@ -81,8 +102,15 @@
       "extra_ru": null,
       "w": 2530,
       "h": 3570,
-      "tiers": [],
-      "note_ru": "Кп_ 472_ 03."
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Кп_ 472_ 03.",
+      "files": [
+        "media/persons/alekseev/04"
+      ]
     },
     {
       "n": 5,
@@ -96,7 +124,14 @@
       "extra_ru": null,
       "w": 2802,
       "h": 1989,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/alekseev/05"
+      ]
     }
   ],
   "related": {

@@ -48,7 +48,13 @@
       "extra_ru": null,
       "w": 533,
       "h": 768,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/belorusskaya-sotsialisticheskaya-gromada/01"
+      ]
     },
     {
       "n": 2,
@@ -62,7 +68,13 @@
       "extra_ru": null,
       "w": 900,
       "h": 857,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/belorusskaya-sotsialisticheskaya-gromada/02"
+      ]
     },
     {
       "n": 3,
@@ -76,10 +88,17 @@
       "extra_ru": null,
       "w": 2488,
       "h": 3900,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать белые поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/belorusskaya-sotsialisticheskaya-gromada/03"
       ]
     },
     {
@@ -94,7 +113,14 @@
       "extra_ru": null,
       "w": 760,
       "h": 1050,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/belorusskaya-sotsialisticheskaya-gromada/04"
+      ]
     }
   ],
   "related": {

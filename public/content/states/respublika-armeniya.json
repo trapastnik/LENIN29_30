@@ -53,7 +53,11 @@
       "extra_ru": null,
       "w": 1712,
       "h": 1192,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "46 Армянская 01 1.tif",
         "46 Армянская 01 2.tif"
@@ -62,6 +66,10 @@
       "directives": [
         "trim",
         "spread"
+      ],
+      "files": [
+        "media/states/respublika-armeniya/01",
+        "media/states/respublika-armeniya/01p2"
       ]
     }
   ],

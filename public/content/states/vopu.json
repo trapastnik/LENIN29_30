@@ -46,7 +46,14 @@
       "extra_ru": null,
       "w": 2647,
       "h": 1810,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/vopu/01"
+      ]
     },
     {
       "n": 2,
@@ -60,10 +67,17 @@
       "extra_ru": "*Выпуск Временного областного правительства Урала*.",
       "w": 746,
       "h": 505,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "parts": [
         "35 ВОПУ 2 1.jpg",
         "35 ВОПУ 2 2.jpg"
+      ],
+      "files": [
+        "media/states/vopu/02",
+        "media/states/vopu/02p2"
       ]
     }
   ],

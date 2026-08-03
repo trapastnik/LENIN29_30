@@ -349,6 +349,7 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
             if kind == "party" and not data.get("venn_groups"):
                 data["venn_groups"] = [camp]
 
+    apply_media_manifest(data)
     _collect_notes(kind, eid, data, notes_acc)
 
     outdir = DIRS[kind]
@@ -443,6 +444,48 @@ def archive_stale(kind: str, imported: set, stats: Stats):
         path.unlink()
         stats.legacy.append("%s/%s → content-src/legacy/%s/%s (справка ещё не импортирована, "
                             "запись индекса помечена stub)" % (kind, eid, kind, name))
+
+
+_MEDIA_MANIFEST: Optional[dict] = None
+
+
+def media_manifest() -> dict:
+    """`content-src/_media-manifest.json` — что собрал `media:build`.
+
+    Читаем манифест, а не смотрим на диск: производные лежат в `.gitignore`,
+    и на машине без `../IN/` их нет вовсе. Смотрели бы на диск — поле `tiers`
+    в справках то появлялось бы, то исчезало от машины к машине, и каждый
+    прогон импорта давал бы разный git diff.
+    """
+    global _MEDIA_MANIFEST
+    if _MEDIA_MANIFEST is None:
+        data = read_json(SRC / "_media-manifest.json") or {}
+        _MEDIA_MANIFEST = data.get("entries") or {}
+    return _MEDIA_MANIFEST
+
+
+def apply_media_manifest(data: dict) -> None:
+    """Проставить `files` и `tiers` по манифесту сборки производных.
+
+    `files` — все производные записи: у двусторонней купюры их две
+    (`…/05` и `…/05p2`). `file` остаётся первой из них, чтобы не ломать
+    потребителей, которым хватает одной картинки.
+    """
+    man = media_manifest()
+    for m in data.get("media") or []:
+        base = m.get("file")
+        if not base or not m.get("src_file"):
+            continue
+        n_parts = len(m.get("parts") or []) or 1
+        bases = [base] + ["%sp%d" % (base, k) for k in range(2, n_parts + 1)]
+        m["files"] = bases
+        # Тиры общие на запись: берём пересечение по всем частям, иначе
+        # потребитель запросит тир, которого у второй стороны купюры нет.
+        tiers: Optional[list] = None
+        for b in bases:
+            got = (man.get(b) or {}).get("tiers") or []
+            tiers = got[:] if tiers is None else [t for t in tiers if t in got]
+        m["tiers"] = tiers or []
 
 
 def merge_tables(doc):

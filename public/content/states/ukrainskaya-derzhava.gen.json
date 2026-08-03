@@ -44,7 +44,14 @@
       "extra_ru": null,
       "w": 4216,
       "h": 3112,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/ukrainskaya-derzhava/01"
+      ]
     },
     {
       "n": 2,
@@ -58,7 +65,14 @@
       "extra_ru": null,
       "w": 4850,
       "h": 3696,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/ukrainskaya-derzhava/02"
+      ]
     },
     {
       "n": 3,
@@ -72,10 +86,18 @@
       "extra_ru": null,
       "w": 2217,
       "h": 1397,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "41 Укр держава 03 1.TIF",
         "41 Укр держава 03 2.TIF"
+      ],
+      "files": [
+        "media/states/ukrainskaya-derzhava/03",
+        "media/states/ukrainskaya-derzhava/03p2"
       ]
     }
   ],

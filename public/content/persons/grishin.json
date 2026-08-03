@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 768,
       "h": 1007,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/grishin/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,13 @@
       "extra_ru": null,
       "w": 1108,
       "h": 768,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/grishin/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +79,14 @@
       "extra_ru": null,
       "w": 3690,
       "h": 2000,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/grishin/03"
+      ]
     }
   ],
   "related": {

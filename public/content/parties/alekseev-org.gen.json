@@ -39,10 +39,17 @@
       "extra_ru": "*Алексеев Михаил Васильевич (1857–1918), генерал от инфантерии, Верховный руководитель Добровольческой армии.*",
       "w": 2802,
       "h": 1989,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля.",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/alekseev-org/01"
       ]
     },
     {
@@ -57,7 +64,14 @@
       "extra_ru": null,
       "w": 700,
       "h": 996,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/alekseev-org/02"
+      ]
     },
     {
       "n": 3,
@@ -71,7 +85,14 @@
       "extra_ru": null,
       "w": 1375,
       "h": 2106,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/alekseev-org/03"
+      ]
     }
   ],
   "related": {

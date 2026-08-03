@@ -51,7 +51,14 @@
       "extra_ru": null,
       "w": 1658,
       "h": 1056,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/latviyskaya-respublika/01"
+      ]
     },
     {
       "n": 2,
@@ -65,7 +72,14 @@
       "extra_ru": "*Балодис Янис (Иван Петрович) (1881–1965), генерал, один из создателей вооруженных сил Латвийской Республики. В 1919–1921 гг. командир Курземской бригады, командующий Южной группой войск, главнокомандующий армией Латвии.*",
       "w": 801,
       "h": 1100,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/latviyskaya-respublika/02"
+      ]
     },
     {
       "n": 3,
@@ -79,7 +93,14 @@
       "extra_ru": null,
       "w": 1827,
       "h": 1230,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/latviyskaya-respublika/03"
+      ]
     },
     {
       "n": 4,
@@ -93,7 +114,11 @@
       "extra_ru": null,
       "w": 1528,
       "h": 958,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "43 Латвийская 04 1.jpg",
         "43 Латвийская 04 2.jpg"
@@ -101,6 +126,10 @@
       "note_ru": "Разместить обе стороны купюры на одну страницу",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/latviyskaya-respublika/04",
+        "media/states/latviyskaya-respublika/04p2"
       ]
     },
     {
@@ -115,7 +144,10 @@
       "extra_ru": "*Подписан командующим армией полковником П. Р. Бермондт-Аваловым.*",
       "w": 1163,
       "h": 826,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "parts": [
         "43 Латвийская 05 1.TIF",
         "43 Латвийская 05 2.TIF"
@@ -123,6 +155,10 @@
       "note_ru": "Разместить обе стороны купюры на одну страницу",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/latviyskaya-respublika/05",
+        "media/states/latviyskaya-respublika/05p2"
       ]
     }
   ],
