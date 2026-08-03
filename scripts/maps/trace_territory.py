@@ -39,6 +39,7 @@ OUT_DIR = os.path.join(ROOT, "public", "content", "geo", "polygons")
 
 sys.path.insert(0, os.path.dirname(__file__))
 from register_sheets import find_map_frame  # noqa: E402
+from _zone import owned_write, fail_if_empty  # noqa: E402
 
 
 def hex_bgr(s):
@@ -215,7 +216,16 @@ def main():
                 rows.append((key, "нет привязки", "transform: null", 0, 0))
                 continue
 
-            img = cv2.imread(os.path.join(ROOT, roots[ph["src_root"]], ph["src_file"]))
+            src_path = os.path.join(ROOT, roots[ph["src_root"]], ph["src_file"])
+            # Исходники заказчика лежат вне репозитория и переезжают: за два
+            # дня каталог «Все карты (сборка)» уже сменил место. cv2.imread
+            # на отсутствующем файле возвращает None, и дальше падал трейсбек,
+            # а строки о сломанном листе в отчёте не появлялось вовсе.
+            img = cv2.imread(src_path)
+            if img is None:
+                rows.append((key, "ОШИБКА", f"исходник не читается: {ph['src_file'][:40]}", 0, 0))
+                print(f"trace_territory: не читается {src_path}", file=sys.stderr)
+                continue
             fr = find_map_frame(img) or (0, int(img.shape[0] * 0.10),
                                          img.shape[1], img.shape[0])
             x1, y1, x2, y2 = fr
@@ -223,7 +233,8 @@ def main():
 
             polys, mask = trace(sheet, sp)
             if not polys:
-                rows.append((key, "пусто", "маска ничего не дала", 0, 0))
+                rows.append((key, "ОШИБКА", "маска ничего не дала", 0, 0))
+                print(f"trace_territory: {key} — маска пуста", file=sys.stderr)
                 continue
 
             base_polys = [to_base(p, ph["transform"]["M"]) for p in polys]
@@ -241,7 +252,8 @@ def main():
             if args.write:
                 os.makedirs(OUT_DIR, exist_ok=True)
                 name = f"{it['id']}-{ph['n']}.svg"
-                with open(os.path.join(OUT_DIR, name), "w", encoding="utf-8") as f:
+                with open(owned_write(os.path.join(OUT_DIR, name)), "w",
+                      encoding="utf-8") as f:
                     f.write(svg(base_polys, view_box,
                                 f"{it['title_ru']} — {ph['label_ru']}"))
                 ph["polygon"] = f"content/geo/polygons/{name}"
@@ -256,7 +268,7 @@ def main():
                 it["polygon"] = done[-1]
 
     if args.write:
-        with open(INDEX, "w", encoding="utf-8") as f:
+        with open(owned_write(INDEX), "w", encoding="utf-8") as f:
             json.dump(doc, f, ensure_ascii=False, indent=2)
             f.write("\n")
 
@@ -265,10 +277,19 @@ def main():
         tail = f"  {pts:>5}  {pct:5.1f}%" if pts else ""
         print(f"{key[:46]:46} {st:12} {what}{tail}")
     print()
+    fail_if_empty(len(rows), "срезов со спецификацией трассировки",
+                  "проверь scripts/maps/trace_spec.json и phases в реестре")
+
     ok = sum(1 for r in rows if r[1] == "ок")
-    print(f"трассировано {ok} из {len(rows)}"
+    errors = sum(1 for r in rows if r[1] == "ОШИБКА")
+    skipped = sum(1 for r in rows if r[1] == "пропуск")
+    print(f"трассировано {ok}/{len(rows)}, ошибок {errors}, "
+          f"пропущено по причине {skipped}"
           + ("" if args.write else "  (dry-run, ничего не записано)"))
-    return 0
+    # Сбой на ОДНОЙ единице обязан менять код возврата: строку в отчёте
+    # никто не читает, пока не заподозрит неладное, а подозревать нечего —
+    # прогон отчитался успехом.
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":
