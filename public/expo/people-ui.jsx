@@ -1069,9 +1069,12 @@ function PersonalitiesApp() {
 
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <a href="index.html" style={{
+            // «к экспозиции» — основная навигация, ≥120 px (§1).
+            minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
+            display: 'inline-flex', alignItems: 'center',
             fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
             color: headerInkDim, textDecoration: 'none',
-            border: `1px solid ${headerInkDim}`, padding: '8px 16px',
+            border: `1px solid ${headerInkDim}`,
             textTransform: 'uppercase',
           }}
             onClick={e => {
@@ -1084,9 +1087,11 @@ function PersonalitiesApp() {
             ← {lang === 'ru' ? 'къ экспозиціи' : 'to the exhibit'}
           </a>
           <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
+            // Переключатель языка — основная навигация, ≥120 px (§1).
+            minWidth: 120, minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
             fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
             color: headerInk, background: 'transparent',
-            border: `1px solid #D2B773`, padding: '8px 16px',  // BRAND.brass border
+            border: `1px solid #D2B773`,  // BRAND.brass border
             textTransform: 'uppercase',
           }}>
             {lang === 'ru' ? 'EN' : 'RU'}
@@ -1117,8 +1122,9 @@ function PersonalitiesApp() {
           const activeText = lightBg ? '#000' : '#F7F9EF';
           return (
             <button key={f.id} onClick={() => setFilter(f.id)} style={{
+              // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).
+              minHeight: 64, padding: '0 20px',
               fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.2em',
-              padding: '10px 18px',
               background: active ? f.brand : 'transparent',
               color: active ? activeText : headerInkDim,
               border: `1px solid ${active ? f.brand : headerInkDim}`,

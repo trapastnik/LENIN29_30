@@ -1144,13 +1144,17 @@ function PersonalitiesApp() {
     {
       href: "index.html",
       style: {
+        // «к экспозиции» — основная навигация, ≥120 px (§1).
+        minHeight: "var(--touch-hit, 120px)",
+        padding: "0 24px",
+        display: "inline-flex",
+        alignItems: "center",
         fontFamily: fonts.mono,
         fontSize: 11,
         letterSpacing: "0.25em",
         color: headerInkDim,
         textDecoration: "none",
         border: `1px solid ${headerInkDim}`,
-        padding: "8px 16px",
         textTransform: "uppercase"
       },
       onClick: (e) => {
@@ -1163,13 +1167,16 @@ function PersonalitiesApp() {
     "\u2190 ",
     lang === "ru" ? "\u043A\u044A \u044D\u043A\u0441\u043F\u043E\u0437\u0438\u0446\u0456\u0438" : "to the exhibit"
   ), /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
+    // Переключатель языка — основная навигация, ≥120 px (§1).
+    minWidth: 120,
+    minHeight: "var(--touch-hit, 120px)",
+    padding: "0 24px",
     fontFamily: fonts.mono,
     fontSize: 11,
     letterSpacing: "0.25em",
     color: headerInk,
     background: "transparent",
     border: `1px solid #D2B773`,
-    padding: "8px 16px",
     // BRAND.brass border
     textTransform: "uppercase"
   } }, lang === "ru" ? "EN" : "RU"))), /* @__PURE__ */ React.createElement("div", { style: {
@@ -1224,10 +1231,12 @@ function PersonalitiesApp() {
     const lightBg = f.brand === "#D2B773" || f.brand === "#CFD0CF" || f.brand === "#9DA3A6";
     const activeText = lightBg ? "#000" : "#F7F9EF";
     return /* @__PURE__ */ React.createElement("button", { key: f.id, onClick: () => setFilter(f.id), style: {
+      // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).
+      minHeight: 64,
+      padding: "0 20px",
       fontFamily: fonts.mono,
       fontSize: 12,
       letterSpacing: "0.2em",
-      padding: "10px 18px",
       background: active ? f.brand : "transparent",
       color: active ? activeText : headerInkDim,
       border: `1px solid ${active ? f.brand : headerInkDim}`,

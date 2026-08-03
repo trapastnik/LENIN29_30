@@ -21,8 +21,9 @@ const TEMPLATE = `
   }
   button {
     padding: 14px 24px;
+    /* Управляющий элемент раздела — ≥64 px (CLAUDE.md §1). */
     min-width: 140px;
-    min-height: 56px;
+    min-height: 64px;
     font-family: var(--font-mono);
     font-size: 14px;
     letter-spacing: 0.18em;

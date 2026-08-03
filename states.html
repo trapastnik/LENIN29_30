@@ -22,14 +22,15 @@
       font-family: var(--font-mono);
     }
     .view-toggle button {
-      padding: 14px 22px;
+      /* Переключатель вида — управляющий элемент раздела, ≥64 px (§1). */
+      padding: 0 22px;
       font-size: 13px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--paper-light);
       background: transparent;
       border: none;
-      min-height: 48px;
+      min-height: 64px;
       min-width: auto;
     }
     .view-toggle button.active {
@@ -193,6 +194,21 @@
     /* applyStaticLabels() проставляет html[lang]; подпись из ::after
        иначе осталась бы русской при английском интерфейсе. */
     html[lang='en'] .state-plate.has-map .abbr::after { content: '  ·  map'; }
+
+    /* Пороги тач-целей §1. .back-link приходит из pages.css (зона design)
+       с padding 14/24 — это ≈45 px, ниже порога. Переопределяем у себя,
+       чужой файл не трогаем.
+         основная навигация      ≥120 px — «к экспозиции», переключатель языка
+         управляющий элемент     ≥64 px  — переключатель вида, «к группам» */
+    .back-link,
+    #btn-lang {
+      min-height: var(--touch-hit, 120px);
+      padding: 0 24px;
+      justify-content: center;
+    }
+    #btn-lang { min-width: 120px; }
+
+    #group-detail .back-btn { min-height: 64px; }
   </style>
 </head>
 <body>

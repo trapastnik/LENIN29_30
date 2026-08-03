@@ -114,7 +114,8 @@ const TEMPLATE = `
     font-family: var(--font-body);
     font-size: 13px;
     letter-spacing: 0.04em;
-    min-height: 28px; min-width: 72px;
+    /* Кнопка группы в подвале — управляющий элемент, ≥64 px (§1). */
+    min-height: 64px; min-width: 96px;
     user-select: none;
   }
   .group-button:active {
@@ -181,7 +182,9 @@ const TEMPLATE = `
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    min-height: 30px;
+    /* Управляющий элемент раздела — ≥64 px (§1). */
+    min-height: 64px;
+    padding: 0 24px;
   }
   .all-btn:active { background: rgba(196, 154, 46, 0.2); }
 </style>
