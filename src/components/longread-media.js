@@ -19,7 +19,7 @@
 
   var TEMPLATE = `
 <style>
-  :host { display: block; margin: 34px 0; }
+  :host { display: block; margin: calc(34px * var(--ui-scale, 1)) 0; }
   :host([hidden]) { display: none; }
 
   figure { margin: 0; }
@@ -32,9 +32,9 @@
   .frame {
     position: relative;
     max-width: 100%;
-    border: 1px solid var(--rule);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     background: var(--paper-pure);
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 calc(6px * var(--ui-scale, 1)) calc(22px * var(--ui-scale, 1)) rgba(0, 0, 0, 0.22);
   }
   img { display: block; width: 100%; height: auto; }
 
@@ -47,11 +47,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    padding: 10px 18px;
+    padding: calc(10px * var(--ui-scale, 1)) calc(18px * var(--ui-scale, 1));
     background: var(--accent-alt);
     color: var(--paper-white);
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.22em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -60,26 +60,26 @@
      у кого и что просить. Строкой ниже подписи, тем же мелким кеглем,
      что и инвентарный номер. */
   .holder {
-    margin-top: 6px;
+    margin-top: calc(6px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.08em;
     color: var(--accent-alt);
   }
 
   figcaption {
-    margin-top: 14px;
+    margin-top: calc(14px * var(--ui-scale, 1));
     font-family: var(--font-body);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     line-height: 1.45;
     color: var(--ink-soft);
   }
   /* Инвентарный номер — отдельной строкой мелким кеглем. Музейное требование:
      слепив его с аннотацией, получишь абзац текста под фото. */
   .inv {
-    margin-top: 6px;
+    margin-top: calc(6px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.12em;
     color: var(--ink-faint);
   }
@@ -134,7 +134,19 @@
       // «content/../longread/…» браузер нормализует сам.
       img.src = window.MTK_URL('content/' + m.file + '-' + tier + '.webp');
       img.alt = m.caption_ru || '';
-      if (m.w) this.shadowRoot.querySelector('.frame').style.maxWidth = m.w + 'px';
+      // Предел по нативу оригинала — но в логических пикселях, поэтому тоже
+      // множится на --ui-scale. Без множителя картинка на киоске осталась бы
+      // вдвое мельче окружающего текста: он удвоился, она нет.
+      //
+      // Да, на 4K превью в 800 px при этом раскладывается в 1600 и мылит.
+      // Это цена ВРЕМЕННОГО изображения, а не ошибка вёрстки: выкупленный
+      // оригинал приезжает тиром lg 2400×1500 и покрывает удвоение с запасом.
+      // Держать картинку резкой ценой «марки» рядом с полусотенным кеглем —
+      // хуже: так ломается вся полоса, а не одна иллюстрация.
+      if (m.w) {
+        this.shadowRoot.querySelector('.frame').style.maxWidth =
+          'calc(' + m.w + 'px * var(--ui-scale, 1))';
+      }
 
       var cap = this.shadowRoot.querySelector('figcaption');
       cap.textContent = m.caption_ru || '';

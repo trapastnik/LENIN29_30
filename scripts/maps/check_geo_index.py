@@ -184,6 +184,38 @@ for it in items:
     check_polygon(it["id"], it.get("polygon"))
     for p in it.get("phases", []):
         check_polygon(f"{it['id']} фаза {p['n']}", p.get("polygon"))
+    for z in it.get("zones", []):
+        check_polygon(f"{it['id']} зона {z['id']}", z.get("polygon"))
+
+    # --- 7. записи с нетерриториальной геометрией ---------------------------
+    # geometry_kind != "area" означает, что polygon указывает не на контур.
+    # Проверяем, что за дискриминатором действительно что-то стоит: иначе
+    # запись объявляет особую модель и не даёт по ней ничего, а UI молча
+    # нарисует пустоту.
+    kind = it.get("geometry_kind", "area")
+    if kind != "area":
+        if not it.get("polygon"):
+            fail(f"{it['id']}: geometry_kind «{kind}», а polygon пуст — "
+                 "UI покажет заглушку при объявленной геометрии")
+        known = {a["id"] for a in it.get("actors", [])}
+        if kind == "presence" and not it.get("sites"):
+            fail(f"{it['id']}: geometry_kind «presence» без sites — "
+                 "объявленная модель ничем не наполнена")
+        for grp in ("sites", "zones"):
+            for s in it.get(grp, []):
+                unknown = [a for a in s.get("actors", []) if a not in known]
+                if unknown:
+                    fail(f"{it['id']} {grp}/{s['id']}: участники не объявлены "
+                         f"в actors: {', '.join(unknown)}")
+                if grp == "sites" and not (-90 <= s["lat"] <= 90
+                                          and -180 <= s["lon"] <= 180):
+                    fail(f"{it['id']} sites/{s['id']}: координаты вне земного "
+                         f"шара — {s['lat']}, {s['lon']}")
+        # Даты не обязательны, но их отсутствие — заметный факт, а не норма:
+        # карта без дат показывает одновременным то, что растянуто на годы.
+        nodate = [s["id"] for s in it.get("sites", []) if not s.get("from")]
+        if nodate:
+            warn(f"{it['id']}: точки без даты начала — {', '.join(nodate)}")
 
     # Инвариант контракта: если геометрия есть хоть у одной фазы, она обязана
     # быть видна и на уровне записи. Иначе UI, проверяющий одно поле polygon,
