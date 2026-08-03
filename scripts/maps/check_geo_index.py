@@ -216,6 +216,29 @@ for it in items:
         if kind == "presence" and not it.get("sites"):
             fail(f"{it['id']}: geometry_kind «presence» без sites — "
                  "объявленная модель ничем не наполнена")
+        if kind == "corridor":
+            wps = (it.get("corridor") or {}).get("waypoints") or []
+            if not wps:
+                fail(f"{it['id']}: geometry_kind «corridor» без waypoints — "
+                     "объявленная модель ничем не наполнена")
+            ns = sorted(w["n"] for w in wps)
+            if ns != list(range(1, len(ns) + 1)):
+                fail(f"{it['id']}: n у waypoints должны быть 1..{len(ns)} "
+                     f"без пропусков и дублей, получено {ns}")
+            # n — порядок вдоль линии с запада на восток. Расхождение
+            # с географией значит перепутанные номера или координату,
+            # и глазами это не ловится.
+            byn = sorted(wps, key=lambda w: w["n"])
+            drops = [(a["title_ru"], b["title_ru"])
+                     for a, b in zip(byn, byn[1:]) if b["lon"] < a["lon"]]
+            if drops:
+                fail(f"{it['id']}: порядок n расходится с географией — "
+                     + "; ".join(f"{a} → {b}" for a, b in drops))
+            for w in wps:
+                unknown = [a for a in w.get("actors", []) if a not in known]
+                if unknown:
+                    fail(f"{it['id']} waypoints/{w['id']}: участники "
+                         f"не объявлены: {', '.join(unknown)}")
         for grp in ("sites", "zones"):
             for s in it.get(grp, []):
                 unknown = [a for a in s.get("actors", []) if a not in known]
