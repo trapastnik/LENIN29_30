@@ -172,9 +172,19 @@ function stripImagePlaceholders(s) {
 function crossCheckParser(where, data) {
   if (crosscheckOff) return;
   const src = data.src && data.src.file;
+  // Корня исходников нет — это сервер или свежий клон, там их и не должно
+  // быть. А вот корень есть, а файла в нём нет — оборванная ссылка: справку
+  // нечем переимпортировать, и кросс-чек по ней молча перестаёт работать.
+  // Различение подсказала зона `maps`: у неё переезд каталога «Все карты
+  // (сборка)» в IN/02-maps-src осиротил 10 ссылок из 25 при зелёном прогоне.
   if (!src || !existsSync(IN)) return;
   const docx = join(IN, src);
-  if (!existsSync(docx) || !havePandoc()) return;
+  if (!existsSync(docx)) {
+    err(where, `src.file указывает на «${src}», а файла в ../IN/ нет — `
+      + 'справку нечем переимпортировать, исходник переехал или переименован');
+    return;
+  }
+  if (!havePandoc()) return;
 
   const viaPandoc = spawnSync('pandoc', ['--to=plain', '--wrap=none', docx],
     { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
