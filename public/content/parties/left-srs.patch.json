@@ -1,8 +1,7 @@
 {
   "schema": 1,
-  "camp": "national",
   "venn_groups": [
-    "national",
+    "red",
     "rev-dem"
   ]
 }

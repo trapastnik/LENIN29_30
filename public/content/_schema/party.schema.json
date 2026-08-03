@@ -2,23 +2,83 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mtk29/party",
   "title": "Политическая партия",
-  "allOf": [{ "$ref": "mtk29/common" }],
+  "allOf": [
+    {
+      "$ref": "mtk29/common"
+    }
+  ],
   "type": "object",
-  "required": ["schema", "id", "kind", "title_ru", "en_status"],
+  "required": [
+    "schema",
+    "id",
+    "kind",
+    "title_ru",
+    "en_status"
+  ],
   "properties": {
-    "kind": { "const": "party" },
-    "title_full_ru": { "type": ["string", "null"], "description": "Полное название. У «Большевиков» их два с периодами — обе строки сохраняются через \\n." },
-    "abbr_ru": { "type": "array", "items": { "type": "string" }, "description": "Аббревиатур бывает несколько: РСДРП(б) и РКП(б). Массив, а не строка." },
-    "aka_ru": { "type": "array", "items": { "type": "string" }, "description": "Краткие и неофициальные названия." },
-    "leaders_ru": { "type": "array", "items": { "type": "string" } },
+    "kind": {
+      "const": "party"
+    },
+    "title_full_ru": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Полное название. У «Большевиков» их два с периодами — обе строки сохраняются через \\n."
+    },
+    "abbr_ru": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Аббревиатур бывает несколько: РСДРП(б) и РКП(б). Массив, а не строка."
+    },
+    "aka_ru": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Краткие и неофициальные названия."
+    },
+    "leaders_ru": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "venn_groups": {
       "type": "array",
-      "items": { "enum": ["red", "white", "rev-dem", "green", "national"] },
-      "description": "МАССИВ, а не один camp. Без него смысл диаграммы Венна теряется: «Союз защиты Родины и свободы» визуально стоит между белыми и рев-демократией, а в одном camp сидит в одном круге. Заполняется вручную по 33 записям."
+      "items": {
+        "enum": [
+          "red",
+          "white",
+          "rev-dem",
+          "green",
+          "national"
+        ]
+      },
+      "description": "Лагеря, между которыми партия стоит на диаграмме Венна. Первый обязан совпадать с `camp` — это основной лагерь, по нему запись попадает в фильтр и красится; остальные — притяжение. Каждое пересечение подтверждено цитатой из справки заказчика (scripts/import/seed_venn_groups.py). Где текст молчит — один лагерь: пустое пересечение честнее выдуманного, по нему зона design строит раскладку."
     },
-    "x": { "type": ["number", "null"], "description": "Координата на диаграмме, % от ширины. Геометрия — зона ui/design, импорт её не перетирает." },
-    "y": { "type": ["number", "null"] },
-    "xy_locked": { "type": "boolean", "description": "true — координата поставлена руками, генератор индекса её не трогает." },
-    "_is_general": { "type": "boolean", "description": "Обзорная справка по лагерю (5 штук), без фото и без полей." }
+    "x": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Координата на диаграмме, % от ширины. Геометрия — зона ui/design, импорт её не перетирает."
+    },
+    "y": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "xy_locked": {
+      "type": "boolean",
+      "description": "true — координата поставлена руками, генератор индекса её не трогает."
+    },
+    "_is_general": {
+      "type": "boolean",
+      "description": "Обзорная справка по лагерю (5 штук), без фото и без полей."
+    }
   }
 }

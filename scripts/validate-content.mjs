@@ -81,6 +81,17 @@ const PLURAL = {
   events: 'event', longreads: 'longread',
 };
 
+// Справочник лагерей — объединение блоков `camps` из всех индексов.
+// Проверять `venn_groups` по нему, а не по списку в коде: лагеря заводит
+// индекс, и жёсткий список тут разошёлся бы с данными молча.
+const campVocabulary = new Set();
+for (const { dir } of KINDS) {
+  const idx = readJSON(join(CONTENT, dir, '_index.json'));
+  for (const c of (idx && idx.camps) || []) {
+    if (c && c.id) campVocabulary.add(c.id);
+  }
+}
+
 // Лонгриды живут без `_index.json` — их по одному на раздел. Но ссылаться
 // на них можно (`related.longreads`), поэтому id заводятся в общую таблицу
 // разрешения так же, как записи индексов.
@@ -227,8 +238,27 @@ for (const { kind, dir } of KINDS) {
     if (kind === 'person' && !data.surname_ru) {
       err(where, 'у личности не разобрана фамилия');
     }
-    if (kind === 'party' && data.venn_groups && !Array.isArray(data.venn_groups)) {
-      err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+    if (kind === 'party' && data.venn_groups) {
+      const g = data.venn_groups;
+      if (!Array.isArray(g)) {
+        err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+      } else {
+        // Порядок значим: первый лагерь — основной, по нему запись попадает
+        // в фильтр и красится. Разъедется с `camp` — партия будет одного
+        // цвета в списке и другого на диаграмме.
+        if (data.camp && g[0] !== data.camp) {
+          err(where, `venn_groups[0] = «${g[0]}», а camp = «${data.camp}» — `
+            + 'на диаграмме и в фильтре партия окажется в разных лагерях');
+        }
+        if (new Set(g).size !== g.length) {
+          err(where, 'venn_groups содержит повтор');
+        }
+        for (const c of g) {
+          if (!campVocabulary.has(c)) {
+            err(where, `venn_groups: «${c}» нет в справочнике лагерей индекса`);
+          }
+        }
+      }
     }
   }
 }

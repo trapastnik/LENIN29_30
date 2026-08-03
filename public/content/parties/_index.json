@@ -67,7 +67,10 @@
       "camp": "red",
       "_is_general": true,
       "sort_key_ru": "красные",
-      "has_card": true
+      "has_card": true,
+      "venn_groups": [
+        "red"
+      ]
     },
     {
       "id": "bolsheviks",
@@ -89,6 +92,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "red"
       ]
     },
     {
@@ -110,6 +116,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "red",
+        "rev-dem"
       ]
     },
     {
@@ -118,7 +128,10 @@
       "camp": "rev-dem",
       "_is_general": true,
       "has_card": true,
-      "sort_key_ru": "революционная демократия"
+      "sort_key_ru": "революционная демократия",
+      "venn_groups": [
+        "rev-dem"
+      ]
     },
     {
       "id": "srs",
@@ -138,6 +151,9 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -160,6 +176,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -181,6 +200,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -199,6 +221,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -220,6 +245,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -228,7 +256,10 @@
       "camp": "white",
       "_is_general": true,
       "has_card": true,
-      "sort_key_ru": "белые"
+      "sort_key_ru": "белые",
+      "venn_groups": [
+        "white"
+      ]
     },
     {
       "id": "cadets",
@@ -250,6 +281,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "white"
       ]
     },
     {
@@ -269,6 +303,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "white"
       ]
     },
     {
@@ -286,6 +323,9 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "white"
       ]
     },
     {
@@ -307,6 +347,9 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "white"
       ]
     },
     {
@@ -328,6 +371,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem",
+        "white"
       ]
     },
     {
@@ -347,6 +394,10 @@
       "sort_key_ru": "союз возрождения россии",
       "lead_tiers": [
         "lg"
+      ],
+      "venn_groups": [
+        "rev-dem",
+        "white"
       ]
     },
     {
@@ -355,7 +406,10 @@
       "camp": "green",
       "_is_general": true,
       "has_card": true,
-      "sort_key_ru": "зеленые"
+      "sort_key_ru": "зеленые",
+      "venn_groups": [
+        "green"
+      ]
     },
     {
       "id": "anarchists",
@@ -373,6 +427,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "green"
       ]
     },
     {
@@ -381,7 +438,10 @@
       "camp": "national",
       "_is_general": true,
       "has_card": true,
-      "sort_key_ru": "национальные движения"
+      "sort_key_ru": "национальные движения",
+      "venn_groups": [
+        "national"
+      ]
     },
     {
       "id": "muslim-socialists",
@@ -402,6 +462,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "red"
       ]
     },
     {
@@ -417,6 +481,10 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "white"
       ]
     },
     {
@@ -433,6 +501,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "green",
+        "national"
       ]
     },
     {
@@ -451,6 +523,10 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "rev-dem"
       ]
     },
     {
@@ -472,6 +548,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "red"
       ]
     },
     {
@@ -488,6 +568,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "rev-dem"
       ]
     },
     {
@@ -504,6 +588,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "rev-dem"
       ]
     },
     {
@@ -519,6 +607,9 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "national"
       ]
     },
     {
@@ -538,6 +629,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national"
       ]
     },
     {
@@ -553,6 +647,9 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "national"
       ]
     },
     {
@@ -573,6 +670,10 @@
       "lead_tiers": [
         "lg",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "rev-dem"
       ]
     },
     {
@@ -589,6 +690,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "rev-dem"
       ]
     },
     {
@@ -608,6 +712,10 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national",
+        "red"
       ]
     },
     {
@@ -627,6 +735,9 @@
         "lg",
         "sm",
         "xs"
+      ],
+      "venn_groups": [
+        "national"
       ]
     }
   ],

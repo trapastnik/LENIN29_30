@@ -672,6 +672,10 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["abbr_ru"] = ent["abbr_ru"]
         if ent.get("camp") and not rec.get("camp"):
             rec["camp"] = ent["camp"]
+        if ent.get("venn_groups"):
+            # Раскладку диаграммы строит зона design по индексу, а не по
+            # карточкам: тянуть 33 файла ради координат чипа она не будет.
+            rec["venn_groups"] = ent["venn_groups"]
         dates = ent.get("dates") or {}
         if dates.get("display_ru"):
             # В плитку идёт одна строка. У «Большевиков» в «Годах деятельности»
