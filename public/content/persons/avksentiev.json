@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "avksentiev",
   "kind": "person",
-  "camp": "green",
-  "side": "green",
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "Н. Д. АВКСЕНТЬЕВ",
   "title_en": null,
   "sort_key_ru": "авксентьев",
@@ -94,5 +94,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

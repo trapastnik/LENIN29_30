@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "petlyura",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "С. В. ПЕТЛЮРА",
   "title_en": null,
   "sort_key_ru": "петлюра",
@@ -108,5 +108,6 @@
     "sha256": "a8f090e3f1a3d4c021a5115c4f69cdde40541e63490d33209fcadf1ee03619be",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

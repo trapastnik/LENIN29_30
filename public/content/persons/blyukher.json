@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "blyukher",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "В. К. БЛЮХЕР",
   "title_en": null,
   "sort_key_ru": "блюхер",
@@ -155,5 +155,6 @@
     "sha256": "772cd0bddece2eaeb0bda0d7c65ac13fe9eac4aab0de0bd5fc4910d81f6a24da",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

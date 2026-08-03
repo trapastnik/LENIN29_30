@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "myasnikov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "МЯСНИКОВ",
   "title_en": null,
   "sort_key_ru": "мясников мясникян",
@@ -88,5 +88,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

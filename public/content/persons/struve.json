@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "struve",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "П. Б. СТРУВЕ",
   "title_en": null,
   "sort_key_ru": "струве",
@@ -164,5 +164,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

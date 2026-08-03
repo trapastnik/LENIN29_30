@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "vologodskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "П. В. ВОЛОГОДСКИЙ",
   "title_en": null,
   "sort_key_ru": "вологодский",
@@ -109,5 +109,6 @@
     "sha256": "2e60baff129c354ad6e780a84e62ec665f2a38f10509f5a5889c48fb0696a968",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

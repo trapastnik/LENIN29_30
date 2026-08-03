@@ -1048,6 +1048,12 @@
       }
     },
     "chronicle": {},
-    "longread": {}
+    "longread": {
+      "simbirsk": {
+        "title_ru": "Симбирск 1918–1919",
+        "src": "Симбирск 1918-1919 гг..docx",
+        "origin": "зона simbirsk, M1e"
+      }
+    }
   }
 }

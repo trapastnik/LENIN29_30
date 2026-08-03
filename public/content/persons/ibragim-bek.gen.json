@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "ibragim-bek",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "green",
+  "side": "green",
   "title_ru": "ИБРАГИМ-БЕК ИБРАГИМ-БЕК (ЧАКАБАЙ, ЧАКАБАЕВ)",
   "title_en": null,
   "sort_key_ru": "ибрагим-бек чакабай, чакабаев",
@@ -100,5 +100,6 @@
     "sha256": "63c34c1e3f324babd41b96dcf9d0c2a925f76f11208eed5e30a2a80f9ce7bdb1",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

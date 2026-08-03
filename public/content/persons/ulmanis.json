@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "ulmanis",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "К. И. УЛМАНИС",
   "title_en": null,
   "sort_key_ru": "улманис",
@@ -105,5 +105,6 @@
     "sha256": "c25e7a92c97ee79ca5af18f8dee3ec0c6ab6f5f200a5f353a16bd89732bebde5",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

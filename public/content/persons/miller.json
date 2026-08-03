@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "miller",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "Е. К. МИЛЛЕР",
   "title_en": null,
   "sort_key_ru": "миллер",
@@ -115,5 +115,6 @@
     "sha256": "6506d934ff082fb7746c5ba0f39b07e898b857a5973c2dbea7827dcbd2473ace",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

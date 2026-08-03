@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "dutov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "А. И. ДУТОВ",
   "title_en": null,
   "sort_key_ru": "дутов",
@@ -117,5 +117,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

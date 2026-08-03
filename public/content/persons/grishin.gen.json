@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "grishin",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "А. Н. ГРИШИН (АЛМАЗОВ)",
   "title_en": null,
   "sort_key_ru": "гришин алмазов",
@@ -111,5 +111,6 @@
     "sha256": "bc075a30268a12ae81e72e1bf6ce7c4169afc2f0011d24fbe451844ffce58a26",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

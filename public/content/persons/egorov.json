@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "egorov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "А. И. ЕГОРОВ",
   "title_en": null,
   "sort_key_ru": "егоров",
@@ -134,5 +134,6 @@
     "sha256": "ee455d7af8b16ecc2fd59b2c493c0a3f766222d56cf5fc4f7f22138eeb657379",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

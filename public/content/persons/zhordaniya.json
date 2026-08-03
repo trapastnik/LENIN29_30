@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "zhordaniya",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "Н. Н. ЖОРДАНИЯ",
   "title_en": null,
   "sort_key_ru": "жордания",
@@ -91,5 +91,6 @@
     "sha256": "5ccc5f2810cd21e97bc5654f463eae4a693ccc9c8d6bd533995f7f09358bfdd8",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

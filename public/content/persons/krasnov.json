@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "krasnov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "П. Н. КРАСНОВ",
   "title_en": null,
   "sort_key_ru": "краснов",
@@ -116,5 +116,6 @@
     "sha256": "32ac0fd751c0bb5dc1b27f17062d1cd4897bbbfbc638048033503fc6caea35ba",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

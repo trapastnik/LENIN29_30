@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "zenzinov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "В. М. ЗЕНЗИНОВ",
   "title_en": null,
   "sort_key_ru": "зензинов",
@@ -106,5 +106,6 @@
     "sha256": "702079dbc561c3935b65dfb84077fe44dcce0100891e716a9743e9f8c36efed2",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

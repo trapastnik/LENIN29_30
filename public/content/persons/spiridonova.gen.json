@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "spiridonova",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "М. А. СПИРИДОНОВА",
   "title_en": null,
   "sort_key_ru": "спиридонова",
@@ -128,5 +128,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "ordzhonikidze",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Г. К. ОРДЖОНИКИДЗЕ",
   "title_en": null,
   "sort_key_ru": "орджоникидзе",
@@ -131,5 +131,6 @@
     "sha256": "d2e47193e43ecb31e9a756a2464a61bce8018472474f0da9f98d1e54ed663fad",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

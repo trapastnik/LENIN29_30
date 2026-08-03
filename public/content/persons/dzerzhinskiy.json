@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "dzerzhinskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Ф. Э. ДЗЕРЖИНСКИЙ",
   "title_en": null,
   "sort_key_ru": "дзержинский",
@@ -158,5 +158,6 @@
     "sha256": "a4a4a3111a2f0fdc6b17186b758bcf889c81dbfe44b4d4b79adca060db4301f3",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

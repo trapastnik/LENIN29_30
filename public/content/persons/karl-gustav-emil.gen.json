@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "karl-gustav-emil",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "Г. К. МАННЕРГЕЙМ",
   "title_en": null,
   "sort_key_ru": "карл густав эмиль густав карлович",
@@ -105,5 +105,6 @@
     "sha256": "67c11a66be5a7eecd69de93447608569ce33b5012cb3b2170547ec8004ab334a",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

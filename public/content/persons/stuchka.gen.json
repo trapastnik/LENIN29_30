@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "stuchka",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "П. И. СТУЧКА",
   "title_en": null,
   "sort_key_ru": "стучка",
@@ -108,5 +108,6 @@
     "sha256": "cb86a8cf579fc5261be261bc4e2dbafa5fb223740308d49da71e24ea8f04c6dd",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }
