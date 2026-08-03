@@ -36,21 +36,57 @@ def erode(m, r):
     k = int(r/GRID)
     return ndimage.binary_erosion(m, np.ones((2*k+1, 2*k+1))) if k else m
 
+# Расстановка КОЛОНКАМИ, а не максимальным разбросом.
+#
+# Так раскладывал куратор: в старом индексе rev-dem стоит двумя колонками
+# (x 24.1 и 43.1), white — двумя (54 и 82.9), внутри колонки шаг по y 4–8 %.
+# Это композиция, которой нет в данных: диаграмма читается списком сверху
+# вниз, а не обшаривается глазами. Разброс «подальше друг от друга» даёт
+# большее расстояние, но теряет порядок чтения — и на 33 чипах это дороже.
+COL_GAP, ROW_GAP = HIT * 1.9, HIT * 1.25
+
 def place(m, n, taken):
     cand = np.stack([xs[m], ys[m]], 1)
-    if not len(cand): return []
-    # берём самую «глубокую» точку области первой, дальше — жадно по удалённости
+    if not len(cand) or n == 0: return []
+    x0, x1 = cand[:,0].min(), cand[:,0].max()
+    y0, y1 = cand[:,1].min(), cand[:,1].max()
+    inside = set(map(tuple, cand.astype(int)))
+    def ok(px, py):
+        if not any(abs(px-cx) <= GRID and abs(py-cy) <= GRID
+                   for cx, cy in inside if abs(px-cx) <= GRID):
+            return False
+        return all(math.dist((px,py), q) >= HIT for q in taken)
+
+    best = None
+    for ncol in range(1, n + 1):                      # сколько колонок пробуем
+        nrow = math.ceil(n / ncol)
+        if (ncol-1)*COL_GAP > (x1-x0) or (nrow-1)*ROW_GAP > (y1-y0): continue
+        for ox in np.linspace(x0, x1 - (ncol-1)*COL_GAP, 9):
+            for oy in np.linspace(y0, y1 - (nrow-1)*ROW_GAP, 9):
+                pts = []
+                for c in range(ncol):
+                    for r in range(nrow):
+                        if len(pts) >= n: break
+                        px, py = ox + c*COL_GAP, oy + r*ROW_GAP
+                        if ok(px, py): pts.append((px, py))
+                if len(pts) == n:
+                    # предпочитаем меньше колонок и вертикальную компактность
+                    cost = ncol * 1000 + (max(p[1] for p in pts) - min(p[1] for p in pts))
+                    if best is None or cost < best[0]: best = (cost, pts)
+        if best: break
+    if best: return best[1]
+
+    # решётка не села — падаем на прежний жадный разброс
     picked = []
-    while len(picked) < n and len(cand):
+    c2 = cand.copy()
+    while len(picked) < n and len(c2):
         ref = picked + taken
-        if ref:
-            d = np.min([np.hypot(cand[:,0]-q[0], cand[:,1]-q[1]) for q in ref], 0)
-        else:
-            d = np.hypot(cand[:,0]-cand[:,0].mean(), cand[:,1]-cand[:,1].mean()) * -1
+        d = (np.min([np.hypot(c2[:,0]-q[0], c2[:,1]-q[1]) for q in ref], 0) if ref
+             else -np.hypot(c2[:,0]-c2[:,0].mean(), c2[:,1]-c2[:,1].mean()))
         i = int(d.argmax())
         if ref and d[i] < HIT: break
-        picked.append((float(cand[i,0]), float(cand[i,1])))
-        cand = np.delete(cand, i, 0)
+        picked.append((float(c2[i,0]), float(c2[i,1])))
+        c2 = np.delete(c2, i, 0)
     return picked
 
 plan = ([(k, pairs[k]) for k in sorted(pairs, key=lambda k: -len(pairs[k]))]
@@ -64,9 +100,23 @@ for key, items in plan:
     if len(pts) < len(items):
         fail += len(items) - len(pts)
         print(f"  ✗ {' ∩ '.join(key)}: {len(pts)}/{len(items)}")
-    for p, it in zip(pts, items):
+    # Кого в какую точку — решает куратор там, где он высказался.
+    # Позиции уже посчитаны геометрией; кураторские x/y (15 из 33, остаток
+    # раскладки под ~15 чипов) задают лишь НАЗНАЧЕНИЕ внутри области.
+    # Так композиция, которую куратор держал в голове, переживает пересчёт.
+    items = sorted(items, key=lambda i: (i.get("cy") if i.get("cy") is not None else 999))
+    pts = sorted(pts, key=lambda p: (round(p[0]/COL_GAP), p[1]))
+    anchored = [i for i in items if i.get("cx") is not None]
+    rest = [i for i in items if i.get("cx") is None]
+    free = list(pts); ordered = []
+    for it in anchored:
+        tx, ty = it["cx"]/100*W, it["cy"]/100*H
+        k = min(range(len(free)), key=lambda i: math.dist(free[i], (tx, ty)))
+        ordered.append((free.pop(k), it))
+    ordered += list(zip(free, rest))
+    for p, it in ordered:
         placed.append(dict(id=it["id"], title_ru=it["t"], camp=it["camp"],
-                           venn_groups=it["g"],
+                           venn_groups=it["g"], curated=it.get("cx") is not None,
                            x=round(p[0]/W*100, 2), y=round(p[1]/H*100, 2)))
     taken += pts
 

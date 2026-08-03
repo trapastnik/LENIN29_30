@@ -7,8 +7,9 @@
    "national",
    "rev-dem"
   ],
-  "x": 47.6,
-  "y": 49.44
+  "curated": false,
+  "x": 40.86,
+  "y": 46.11
  },
  {
   "id": "bund",
@@ -18,8 +19,9 @@
    "national",
    "rev-dem"
   ],
-  "x": 58.85,
-  "y": 47.96
+  "curated": false,
+  "x": 40.86,
+  "y": 53.52
  },
  {
   "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
@@ -29,8 +31,9 @@
    "national",
    "rev-dem"
   ],
-  "x": 36.98,
-  "y": 50.93
+  "curated": false,
+  "x": 47.2,
+  "y": 46.11
  },
  {
   "id": "poaley-tsion",
@@ -40,8 +43,9 @@
    "national",
    "rev-dem"
   ],
-  "x": 53.44,
-  "y": 54.26
+  "curated": false,
+  "x": 47.2,
+  "y": 53.52
  },
  {
   "id": "muslim-socialists",
@@ -51,8 +55,9 @@
    "national",
    "red"
   ],
-  "x": 13.44,
-  "y": 66.85
+  "curated": true,
+  "x": 19.77,
+  "y": 67.04
  },
  {
   "id": "borotbisty",
@@ -62,8 +67,9 @@
    "national",
    "red"
   ],
-  "x": 26.98,
-  "y": 66.85
+  "curated": false,
+  "x": 13.44,
+  "y": 67.04
  },
  {
   "id": "sotsial-demokraticheskaya-partiya-finlya",
@@ -73,8 +79,9 @@
    "national",
    "red"
   ],
-  "x": 20.1,
-  "y": 58.7
+  "curated": false,
+  "x": 19.77,
+  "y": 59.63
  },
  {
   "id": "union-defence",
@@ -84,8 +91,9 @@
    "rev-dem",
    "white"
   ],
-  "x": 82.81,
-  "y": 24.63
+  "curated": true,
+  "x": 74.48,
+  "y": 36.25
  },
  {
   "id": "union-renewal",
@@ -95,8 +103,9 @@
    "rev-dem",
    "white"
   ],
+  "curated": true,
   "x": 74.48,
-  "y": 37.59
+  "y": 28.84
  },
  {
   "id": "left-srs",
@@ -106,8 +115,9 @@
    "red",
    "rev-dem"
   ],
-  "x": 26.56,
-  "y": 25.37
+  "curated": true,
+  "x": 24.48,
+  "y": 31.76
  },
  {
   "id": "alash",
@@ -117,8 +127,9 @@
    "national",
    "white"
   ],
-  "x": 79.69,
-  "y": 67.59
+  "curated": false,
+  "x": 70.1,
+  "y": 54.35
  },
  {
   "id": "basmachestvo",
@@ -128,18 +139,9 @@
    "green",
    "national"
   ],
-  "x": 40.1,
-  "y": 79.07
- },
- {
-  "id": "reds-general",
-  "title_ru": "Красные",
-  "camp": "red",
-  "venn_groups": [
-   "red"
-  ],
-  "x": 13.85,
-  "y": 36.48
+  "curated": false,
+  "x": 26.35,
+  "y": 79.26
  },
  {
   "id": "bolsheviks",
@@ -148,18 +150,20 @@
   "venn_groups": [
    "red"
   ],
-  "x": 6.56,
-  "y": 51.67
+  "curated": true,
+  "x": 8.49,
+  "y": 46.99
  },
  {
-  "id": "greens-general",
-  "title_ru": "Зелёные",
-  "camp": "green",
+  "id": "reds-general",
+  "title_ru": "Красные",
+  "camp": "red",
   "venn_groups": [
-   "green"
+   "red"
   ],
-  "x": 7.81,
-  "y": 91.67
+  "curated": false,
+  "x": 8.49,
+  "y": 54.4
  },
  {
   "id": "anarchists",
@@ -168,18 +172,20 @@
   "venn_groups": [
    "green"
   ],
-  "x": 21.98,
-  "y": 90.19
+  "curated": true,
+  "x": 14.56,
+  "y": 84.63
  },
  {
-  "id": "whites-general",
-  "title_ru": "Белые",
-  "camp": "white",
+  "id": "greens-general",
+  "title_ru": "Зелёные",
+  "camp": "green",
   "venn_groups": [
-   "white"
+   "green"
   ],
-  "x": 92.81,
-  "y": 48.7
+  "curated": false,
+  "x": 14.56,
+  "y": 92.04
  },
  {
   "id": "cadets",
@@ -188,8 +194,9 @@
   "venn_groups": [
    "white"
   ],
-  "x": 82.81,
-  "y": 47.59
+  "curated": true,
+  "x": 88.91,
+  "y": 26.48
  },
  {
   "id": "alekseev-org",
@@ -198,8 +205,9 @@
   "venn_groups": [
    "white"
   ],
-  "x": 91.35,
-  "y": 32.04
+  "curated": true,
+  "x": 88.91,
+  "y": 33.89
  },
  {
   "id": "right-center",
@@ -208,8 +216,9 @@
   "venn_groups": [
    "white"
   ],
-  "x": 89.27,
-  "y": 20.56
+  "curated": true,
+  "x": 88.91,
+  "y": 41.3
  },
  {
   "id": "national-center",
@@ -218,8 +227,20 @@
   "venn_groups": [
    "white"
   ],
-  "x": 86.15,
-  "y": 37.96
+  "curated": true,
+  "x": 88.91,
+  "y": 48.7
+ },
+ {
+  "id": "whites-general",
+  "title_ru": "Белые",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": false,
+  "x": 88.91,
+  "y": 19.07
  },
  {
   "id": "national-movements",
@@ -228,8 +249,9 @@
   "venn_groups": [
    "national"
   ],
-  "x": 63.23,
-  "y": 82.04
+  "curated": false,
+  "x": 50.41,
+  "y": 64.81
  },
  {
   "id": "dashnaktsutyun",
@@ -238,8 +260,9 @@
   "venn_groups": [
    "national"
   ],
-  "x": 51.98,
-  "y": 75.37
+  "curated": false,
+  "x": 50.41,
+  "y": 72.22
  },
  {
   "id": "latyshskiy-krestyanskiy-soyuz",
@@ -248,8 +271,9 @@
   "venn_groups": [
    "national"
   ],
-  "x": 65.1,
-  "y": 63.15
+  "curated": false,
+  "x": 50.41,
+  "y": 79.63
  },
  {
   "id": "musavat",
@@ -258,8 +282,9 @@
   "venn_groups": [
    "national"
   ],
-  "x": 73.44,
-  "y": 82.04
+  "curated": false,
+  "x": 56.74,
+  "y": 64.81
  },
  {
   "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
@@ -268,18 +293,9 @@
   "venn_groups": [
    "national"
   ],
-  "x": 42.81,
-  "y": 63.52
- },
- {
-  "id": "revdem-general",
-  "title_ru": "Революционная демократия",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem"
-  ],
-  "x": 60.52,
-  "y": 13.89
+  "curated": false,
+  "x": 56.74,
+  "y": 72.22
  },
  {
   "id": "srs",
@@ -288,8 +304,9 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 43.23,
-  "y": 16.85
+  "curated": true,
+  "x": 36.16,
+  "y": 38.66
  },
  {
   "id": "mensheviks",
@@ -298,8 +315,9 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 52.6,
-  "y": 29.81
+  "curated": true,
+  "x": 36.16,
+  "y": 31.25
  },
  {
   "id": "narodnie-socialists",
@@ -308,8 +326,9 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 71.77,
-  "y": 15.0
+  "curated": true,
+  "x": 42.49,
+  "y": 31.25
  },
  {
   "id": "committee-salvation",
@@ -318,8 +337,9 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 64.27,
-  "y": 31.67
+  "curated": true,
+  "x": 42.49,
+  "y": 23.84
  },
  {
   "id": "union-constituent",
@@ -328,8 +348,20 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 36.56,
-  "y": 32.04
+  "curated": true,
+  "x": 36.16,
+  "y": 23.84
+ },
+ {
+  "id": "revdem-general",
+  "title_ru": "Революционная демократия",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 36.16,
+  "y": 16.44
  },
  {
   "id": "sibirskoe-oblastnichestvo",
@@ -338,7 +370,8 @@
   "venn_groups": [
    "rev-dem"
   ],
-  "x": 34.27,
-  "y": 16.48
+  "curated": false,
+  "x": 42.49,
+  "y": 16.44
  }
 ]
