@@ -168,12 +168,58 @@ Stage-URL: http://212.113.117.186:8091/
 
 ### Linux kiosk (рекомендовано)
 
+### Почему киоск ходит через localhost, а не по `file://`
+
+До 2026-08-03 стенд открывался как `file:///opt/mtk29/dist/index.html`. Так
+делать нельзя, и это выяснилось дорого — тремя дефектами за один день, каждый
+из которых **не виден на stage по http и убивает раздел молча**:
+
+| Что | Симптом под `file://` |
+|---|---|
+| Абсолютные `/assets/…` | резолвятся в корень ФС, страница без стилей и кода |
+| `crossorigin` на `<link>` | CORS для непрозрачного origin, стиль не применяется |
+| `<script type=module>` и `fetch` | не исполняются и блокируются |
+
+Замер по последнему: `parties.html` 3 338 → 23 331 байт DOM,
+`expo/people.html` 6 629 → 231 468.
+
+Флаг `--allow-file-access-from-files` лечил симптом, но оставлял класс: любой
+будущий код на модулях или `fetch` работал бы только там, где флаг не забыли
+прописать. Соседний проект 38-42 (пять киоск-МТК того же музея) запретил
+`file://` каноном по той же причине — независимое подтверждение.
+
+Локальный статик-сервер убирает причину: у страницы появляется нормальный
+origin, и **киоск исполняет ровно то же, что проверено на stage**. Ноль
+внешних запросов при этом сохраняется — сервер слушает только `127.0.0.1`.
+
+`/etc/systemd/system/mtk29-server.service`:
+
+```ini
+[Unit]
+Description=МТК 29 — локальный статик-сервер стенда
+After=network.target
+
+[Service]
+Type=simple
+User=kiosk
+# http.server с Python 3.7 многопоточный (ThreadingHTTPServer), одного
+# локального клиента держит с запасом. Отдельной зависимости не добавляет:
+# python3 есть в любой десктопной сборке Linux.
+ExecStart=/usr/bin/python3 -m http.server 8080 --bind 127.0.0.1 --directory /opt/mtk29/dist
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical.target
+```
+
 `/etc/systemd/system/mtk29-kiosk.service`:
 
 ```ini
 [Unit]
 Description=МТК 29 — Гражданская война
-After=graphical.target
+After=graphical.target mtk29-server.service
+Requires=mtk29-server.service
 
 [Service]
 Type=simple
@@ -181,7 +227,7 @@ User=kiosk
 Environment="DISPLAY=:0"
 ExecStart=/usr/bin/chromium \
   --kiosk \
-  --app=file:///opt/mtk29/dist/index.html \
+  --app=http://127.0.0.1:8080/ \
   --window-size=3840,2160 \
   --start-fullscreen \
   --disable-session-crashed-bubble \
@@ -213,7 +259,14 @@ sudo systemctl enable --now mtk29-kiosk
 
 Chromium в kiosk-режиме: shortcut с флагами
 ```
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk --app="file:///C:/mtk29/dist/index.html"
+1. Запустить статик-сервер (Python 3 должен быть установлен):
+```
+python -m http.server 8080 --bind 127.0.0.1 --directory C:\mtk29\dist
+```
+2. Ярлык браузера:
+```
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk --app="http://127.0.0.1:8080/"
+```
 ```
 Добавить в автозапуск через Task Scheduler → On Logon.
 
