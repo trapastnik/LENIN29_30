@@ -141,5 +141,7 @@
     "sha256": "d53da6ed7f67ee2fe2c75380c95020dc891ffe89aa81b200b416a62b2a1d0c25",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "x": 24.48,
+  "y": 31.76
 }
