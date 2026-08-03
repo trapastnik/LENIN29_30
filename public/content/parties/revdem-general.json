@@ -57,5 +57,7 @@
   "flags": [
     "over-tz-limit"
   ],
-  "_is_general": true
+  "_is_general": true,
+  "x": 36.16,
+  "y": 16.44
 }
