@@ -40,6 +40,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from copy import deepcopy
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -51,10 +52,18 @@ from docxlib import Document, PARSER_VERSION, norm_space  # noqa: E402
 SRC_REL = "Симбирск 1918-1919 гг..docx"
 SRC = ROOT.parent / "IN" / "new" / "МТК №29" / SRC_REL
 
-OUT_JSON = ROOT / "public" / "content" / "longreads" / "simbirsk.json"
-OUT_DATA = ROOT / "public" / "content" / "longreads" / "simbirsk.data.js"
+LONGREADS = ROOT / "public" / "content" / "longreads"
+
+# Трёхфайловая модель зоны content (CLAUDE.md §9): машина пишет .gen.json,
+# человек — .patch.json, слияние ложится в .json. Машина никогда не пишет
+# в файл, который правил человек, поэтому .patch.json генератор не создаёт
+# и не трогает: его заводят руками, когда приедут иллюстрации.
+OUT_GEN = LONGREADS / "simbirsk.gen.json"
+PATCH = LONGREADS / "simbirsk.patch.json"
+OUT_JSON = LONGREADS / "simbirsk.json"
+
+OUT_DATA = LONGREADS / "simbirsk.data.js"
 OUT_WANTED = ROOT / "content-src" / "simbirsk-media-wanted.md"
-PATCH = ROOT / "public" / "content" / "longreads" / "simbirsk.patch.json"
 
 LONGREAD_ID = "simbirsk"
 
@@ -451,17 +460,19 @@ def build(doc: Document) -> dict:
         },
     }
 
-    # Человеческая правка поверх машинной — трёхфайловая модель (§9).
-    if PATCH.exists():
-        patch = json.loads(PATCH.read_text(encoding="utf-8"))
-        data = merge_patch(data, patch)
-
     return data
 
 
 def merge_patch(base: dict, patch: dict) -> dict:
-    """Неглубокое слияние с поимённым слиянием секций и медиа по ключу n."""
-    out = dict(base)
+    """Слияние человеческой правки поверх машинной. Секции и медиа — по ключу n.
+
+    Копия ГЛУБОКАЯ, и это не перестраховка. При поверхностной `dict(base)`
+    вложенные секции и медиа остаются теми же объектами, что и в машинном
+    результате: правка из патча оседала заодно и в .gen.json, то есть машинный
+    артефакт переставал быть машинным. Ломается ровно та гарантия, ради которой
+    трёхфайловая модель и заведена, и молча — оба файла выглядят правдоподобно.
+    """
+    out = deepcopy(base)
     for k, v in patch.items():
         if k == "sections" and isinstance(v, list):
             by_n = {s["n"]: s for s in out["sections"]}
@@ -606,8 +617,16 @@ def main() -> int:
         print(f"нет исходника: {SRC}", file=sys.stderr)
         return 2
 
-    data = build(Document(str(SRC)))
+    gen = build(Document(str(SRC)))
+
+    # Слияние с человеческой правкой. Патча пока нет и быть не должно:
+    # иллюстраций заказчик не поставил, править нечего.
+    data = gen
+    if PATCH.exists():
+        data = merge_patch(gen, json.loads(PATCH.read_text(encoding="utf-8")))
+
     artifacts = [
+        (OUT_GEN, render_json(gen)),
         (OUT_JSON, render_json(data)),
         (OUT_DATA, render_data_js(data)),
         (OUT_WANTED, render_wanted(data)),
