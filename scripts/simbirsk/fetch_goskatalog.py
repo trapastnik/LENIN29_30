@@ -87,6 +87,17 @@ def gk_id(url: str | None) -> str | None:
     return m.group(1) if m else None
 
 
+def file_base(gk: str) -> str:
+    """Путь к производной — ВЫВОДИТСЯ из id, а не хранится копией.
+
+    Отсчёт от public/content/, как у всей медиа проекта: иначе медиа-конвейер
+    зоны content однажды подставит сюда свой путь в своей системе координат,
+    и слот уедет в никуда. Ведущий «../» честный — заглушки лежат
+    в public/longread/, вне каталога зоны content.
+    """
+    return "../longread/placeholders/%s" % gk
+
+
 def targets() -> list[dict]:
     """Уникальные позиции каталога из канона лонгрида.
 
@@ -163,6 +174,11 @@ def main() -> int:
     record = {}
     if OUT_RECORD.exists():
         record = json.loads(OUT_RECORD.read_text(encoding="utf-8")).get("items", {})
+        # Выводимые поля пересчитываем на каждом прогоне. Иначе смена
+        # конвенции путей потребовала бы перекачивать 12 картинок ради
+        # правки строки — это витрина госкаталога, туда не ходят зря.
+        for key, entry in record.items():
+            entry["file"] = file_base(key)
 
     todo = [t for t in items if force or t["gk"] not in record]
 
@@ -213,7 +229,7 @@ def main() -> int:
                 "name_ru": (meta.get("name") or "").strip() or None,
                 "dims_ru": (meta.get("dimStr") or "").strip() or None,
                 "period_ru": (meta.get("periodStr") or "").strip() or None,
-                "file": "longread/placeholders/%s" % i,
+                "file": file_base(i),
                 "w": w, "h": h, "tiers": tiers,
                 "image_id": image_id,
                 "image_file": images[0].get("fileName"),

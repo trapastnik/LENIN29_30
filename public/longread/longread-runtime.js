@@ -141,7 +141,11 @@
 
       var tier = (m.tiers && m.tiers.indexOf('lg') >= 0) ? 'lg' : 'sm';
       var img = this.shadowRoot.querySelector('img');
-      img.src = window.MTK_URL(m.file + '-' + tier + '.webp');
+      // file отсчитывается от public/content/ — общая конвенция проекта,
+      // а не от корня сборки. Отсюда префикс. У временных изображений путь
+      // начинается с «../», потому что они лежат в public/longread/;
+      // «content/../longread/…» браузер нормализует сам.
+      img.src = window.MTK_URL('content/' + m.file + '-' + tier + '.webp');
       img.alt = m.caption_ru || '';
       if (m.w) this.shadowRoot.querySelector('.frame').style.maxWidth = m.w + 'px';
 
@@ -288,7 +292,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-    min-height: var(--touch-hit);
+    min-height: var(--touch-hit, 120px);
     padding: 18px 26px;
     text-decoration: none;
     color: var(--ink);
@@ -489,7 +493,7 @@
     height: 2px;
     background: var(--brass);
     opacity: 0.55;
-    transform: skewX(var(--brand-skew));
+    transform: skewX(var(--brand-skew, -15deg));
   }
 
   .sections { display: flex; flex-direction: column; gap: 40px; }
@@ -552,10 +556,10 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
   }
   .pager button {
-    width: var(--touch-hit);
-    height: var(--touch-hit);
-    min-width: var(--touch-hit);
-    min-height: var(--touch-hit);
+    width: var(--touch-hit, 120px);
+    height: var(--touch-hit, 120px);
+    min-width: var(--touch-hit, 120px);
+    min-height: var(--touch-hit, 120px);
     border-radius: 50%;
     border: 1.5px solid var(--brass);
     background: transparent;
@@ -636,7 +640,7 @@
     align-items: center;
     gap: 28px;
     width: 100%;
-    min-height: var(--touch-hit);
+    min-height: var(--touch-hit, 120px);
     padding: 20px 32px;
     text-align: left;
     background: transparent;

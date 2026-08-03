@@ -115,7 +115,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-    min-height: var(--touch-hit);
+    min-height: var(--touch-hit, 120px);
     padding: 18px 26px;
     text-decoration: none;
     color: var(--ink);

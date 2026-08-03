@@ -68,7 +68,7 @@
     height: 2px;
     background: var(--brass);
     opacity: 0.55;
-    transform: skewX(var(--brand-skew));
+    transform: skewX(var(--brand-skew, -15deg));
   }
 
   .sections { display: flex; flex-direction: column; gap: 40px; }
@@ -131,10 +131,10 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
   }
   .pager button {
-    width: var(--touch-hit);
-    height: var(--touch-hit);
-    min-width: var(--touch-hit);
-    min-height: var(--touch-hit);
+    width: var(--touch-hit, 120px);
+    height: var(--touch-hit, 120px);
+    min-width: var(--touch-hit, 120px);
+    min-height: var(--touch-hit, 120px);
     border-radius: 50%;
     border: 1.5px solid var(--brass);
     background: transparent;
@@ -215,7 +215,7 @@
     align-items: center;
     gap: 28px;
     width: 100%;
-    min-height: var(--touch-hit);
+    min-height: var(--touch-hit, 120px);
     padding: 20px 32px;
     text-align: left;
     background: transparent;

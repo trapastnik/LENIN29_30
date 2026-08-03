@@ -50,7 +50,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 1,
           "slot": "gallery",
-          "file": "longread/placeholders/67744736",
+          "file": "../longread/placeholders/67744736",
           "src_file": null,
           "caption_ru": "Вступительная статья И. Варейкиса «Коммунистическая революция и крестьянство».",
           "caption_en": null,
@@ -137,7 +137,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 1,
           "slot": "gallery",
-          "file": "longread/placeholders/26385843",
+          "file": "../longread/placeholders/26385843",
           "src_file": null,
           "caption_ru": "Яковлев С. (художник). Открытка из комплекта открыток «Советские военачальники – герои гражданской войны». Михаил Николаевич Тухачевский.",
           "caption_en": null,
@@ -258,7 +258,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 1,
           "slot": "gallery",
-          "file": "longread/placeholders/12862453",
+          "file": "../longread/placeholders/12862453",
           "src_file": null,
           "caption_ru": "Фотография. Потехин Иван Сергеевич – красноармеец, участник октябрьских событий 1917 года, участник Гражданской войны.",
           "caption_en": null,
@@ -347,7 +347,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 2,
           "slot": "gallery",
-          "file": "longread/placeholders/11948667",
+          "file": "../longread/placeholders/11948667",
           "src_file": null,
           "caption_ru": "Бендель Пётр Эмильевич (художник). Марка. 80-летие со дня рождения героя гражданской войны Г. Д. Гая. 1887–1938.",
           "caption_en": null,
@@ -368,7 +368,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 3,
           "slot": "gallery",
-          "file": "longread/placeholders/16226169",
+          "file": "../longread/placeholders/16226169",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
@@ -389,7 +389,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 4,
           "slot": "gallery",
-          "file": "longread/placeholders/16226154",
+          "file": "../longread/placeholders/16226154",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
@@ -410,7 +410,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 5,
           "slot": "gallery",
-          "file": "longread/placeholders/16226151",
+          "file": "../longread/placeholders/16226151",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
@@ -431,7 +431,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 6,
           "slot": "gallery",
-          "file": "longread/placeholders/16226187",
+          "file": "../longread/placeholders/16226187",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
@@ -452,7 +452,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 7,
           "slot": "gallery",
-          "file": "longread/placeholders/26385843",
+          "file": "../longread/placeholders/26385843",
           "src_file": null,
           "caption_ru": "Яковлев С. (художник). Открытка из комплекта открыток «Советские военачальники – герои гражданской войны». Михаил Николаевич Тухачевский.",
           "caption_en": null,
@@ -473,7 +473,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 8,
           "slot": "gallery",
-          "file": "longread/placeholders/28647659",
+          "file": "../longread/placeholders/28647659",
           "src_file": null,
           "caption_ru": "Грамота, преподнесённая Ветлину А. И. Мелекесским райкомом и горсоветом в день 10-й годовщины освобождения Мелекесса от чехословацких белогвардейских банд, как одному из активных участников и героев Гражданской войны. Период создания: 30 сентября 1928 г.",
           "caption_en": null,
@@ -520,7 +520,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 1,
           "slot": "gallery",
-          "file": "longread/placeholders/37088431",
+          "file": "../longread/placeholders/37088431",
           "src_file": null,
           "caption_ru": "Автобиография А. И. Аксянова – участника Гражданской войны, активного советского и партийного работника. Период создания: 12 марта 1956 г.",
           "caption_en": null,
@@ -601,7 +601,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 1,
           "slot": "gallery",
-          "file": "longread/placeholders/13493599",
+          "file": "../longread/placeholders/13493599",
           "src_file": null,
           "caption_ru": "Петрейков (редактор). Открытка – почтовая карточка. «Советский плакат периода гражданской войны (1919 г.). Первый поход Антанты».",
           "caption_en": null,
@@ -622,7 +622,7 @@ window.MTK_LONGREADS["simbirsk"] = {
         {
           "n": 2,
           "slot": "gallery",
-          "file": "longread/placeholders/35918045",
+          "file": "../longread/placeholders/35918045",
           "src_file": null,
           "caption_ru": "Фотокопия. Телеграмма В. И. Ленину от 8-го губернского съезда Советов, от И. Варейкиса.",
           "caption_en": null,
@@ -731,7 +731,7 @@ window.MTK_LONGREADS["simbirsk"] = {
     "dutov": {
       "kind": "person",
       "title_ru": "ДУТОВ",
-      "camp": null,
+      "camp": "white",
       "href": "expo/people.html#/person/dutov"
     },
     "frunze": {
@@ -743,7 +743,7 @@ window.MTK_LONGREADS["simbirsk"] = {
     "kappel": {
       "kind": "person",
       "title_ru": "КАППЕЛЬ",
-      "camp": null,
+      "camp": "rev-dem",
       "href": "expo/people.html#/person/kappel"
     },
     "kolchak": {
@@ -791,7 +791,7 @@ window.MTK_LONGREADS["simbirsk"] = {
     "sverdlov": {
       "kind": "person",
       "title_ru": "СВЕРДЛОВ",
-      "camp": null,
+      "camp": "red",
       "href": "expo/people.html#/person/sverdlov"
     },
     "trotsky": {
