@@ -17,8 +17,8 @@ const TEMPLATE = `
     width: 100%;
     height: 100%;
     background: repeating-conic-gradient(#333 0% 25%, #2a2a2a 0% 50%) 0 0 / 20px 20px;
-    color: var(--ink, #2a1f16);
-    font-family: var(--font-body, Georgia, serif);
+    color: var(--ink);
+    font-family: var(--font-body);
   }
   #viewport {
     position: absolute; inset: 0;
@@ -36,7 +36,7 @@ const TEMPLATE = `
     padding: 12px 18px;
     background: rgba(30, 20, 10, 0.88);
     color: var(--paper-light, #efe4cd);
-    border: 1px solid var(--brass, #8e6a2a);
+    border: 1px solid var(--brass);
     border-radius: 10px;
     font-size: 14px;
     user-select: none;
@@ -152,7 +152,16 @@ export class MapUnit extends HTMLElement {
   }
 
   async load(mapId) {
-    const base = `/content/maps/${mapId}/`;
+    // Без ведущего слэша и через MTK_URL: киоск запускается как
+    // file:///opt/mtk29/dist/index.html, где `/content/…` резолвится в корень
+    // файловой системы. Карта не находится, ошибки в консоли нет — на stage
+    // по http тот же путь работает, поэтому глазами дефект не ловится
+    // нигде, кроме приёмки. См. CLAUDE.md §5 и public/base.js.
+    //
+    // Отсюда же берут префикс map.json, layers.svg и растр — место одно.
+    // Страница, встраивающая <map-unit>, обязана подключить base.js первым
+    // скриптом в <head>.
+    const base = MTK_URL(`content/maps/${mapId}/`);
     const meta = await (await fetch(base + 'map.json')).json();
     const svgText = await (await fetch(base + meta.svg)).text();
 
