@@ -1,6 +1,8 @@
 // <camp-filter> — горизонтальный ряд флагов лагерей.
 // Событие 'camp-change' с detail: { camp: 'red' | 'white' | … | null (все) }
 
+import { t, onLangChange } from '../data/i18n.js';
+
 const TEMPLATE = `
 <style>
   :host {
@@ -62,7 +64,13 @@ export class CampFilter extends HTMLElement {
     this._active = null;
   }
 
-  connectedCallback() { this._render(); }
+  connectedCallback() {
+    this._render();
+    if (!this._unLang) this._unLang = onLangChange(() => this._render());
+  }
+  disconnectedCallback() {
+    if (this._unLang) { this._unLang(); this._unLang = null; }
+  }
 
   attributeChangedCallback(name) {
     if (name === 'camps') {
@@ -80,7 +88,7 @@ export class CampFilter extends HTMLElement {
     this._bar.innerHTML = '';
 
     const all = document.createElement('button');
-    all.textContent = 'Все';
+    all.textContent = t('Все', 'All');
     all.classList.toggle('active', this._active === null);
     all.addEventListener('click', () => this._select(null));
     this._bar.appendChild(all);
