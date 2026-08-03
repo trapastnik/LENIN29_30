@@ -27,39 +27,9 @@ function sideMeta(side) {
   return (side && SIDE_META[side]) || SIDE_NEUTRAL;
 }
 
-// ── Разметка в summary_ru ──────────────────────────────────────────────────
-// Импорт кладёт в текст справки ссылки на другие справки —
-// `[большевиков](#/party/bolsheviks)`, а неразрезолвленные упоминания
-// помечает `***жирным курсивом***` (docs/content.md). Без разбора всё это
-// видно на экране как есть: «[большевиков](#/party/bolsheviks)».
-//
-// Курсива здесь нет намеренно: он лёг бы на Nolde, а курсивного начертания
-// у неё нет — браузер синтезирует наклон, и на крупных кеглях это читается
-// как дефект засечек (CLAUDE.md §8). Выделяем цветом и насыщенностью.
-const RICH_RE = /\[([^\]]+)\]\(([^)]+)\)|(\*\*\*)([^*]+)\3|(\*\*)([^*]+)\5|(\*)([^*]+)\7/g;
+// richText() приходит из rich-text.jsx — та же разметка в хронике,
+// держать две копии рендерера нельзя.
 
-function richText(src, accent) {
-  const out = [];
-  let last = 0, m, key = 0;
-  while ((m = RICH_RE.exec(src)) !== null) {
-    if (m.index > last) out.push(src.slice(last, m.index));
-    if (m[1] !== undefined) {
-      // Ссылка на другую справку. Переход между разделами — отдельная
-      // задача (нужен роутер поверх iframe-оверлеев), поэтому пока
-      // подсвечиваем как термин, а не делаем ложную кнопку.
-      out.push(<span key={key++} style={{ color: accent, borderBottom: `1px dotted ${accent}` }}>{m[1]}</span>);
-    } else if (m[3]) {
-      out.push(<b key={key++} style={{ color: accent, fontWeight: 700 }}>{m[4]}</b>);
-    } else if (m[5]) {
-      out.push(<b key={key++} style={{ fontWeight: 700 }}>{m[6]}</b>);
-    } else {
-      out.push(<b key={key++} style={{ fontWeight: 600 }}>{m[8]}</b>);
-    }
-    last = m.index + m[0].length;
-  }
-  if (last < src.length) out.push(src.slice(last));
-  return out;
-}
 
 
 // Официальная палитра RAL — для бренд-акцентов (флаг лагеря, page-header, pill).
