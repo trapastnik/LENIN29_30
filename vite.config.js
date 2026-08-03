@@ -4,8 +4,26 @@
 
 import { defineConfig } from 'vite';
 
+// Vite вешает crossorigin на каждый свой <link rel=stylesheet> и <script type=module>.
+// Под file:// этот атрибут включает проверку CORS для непрозрачного origin, и стиль
+// МОЛЧА не применяется — киоск открывается вообще без оформления, без ошибки
+// в консоли. По http всё в порядке, поэтому на stage дефект не виден.
+// Проверено в настоящем Chrome, file://, две одинаковые страницы:
+//   <link rel=stylesheet href>              → rgb(1, 2, 3)     применился
+//   <link rel=stylesheet crossorigin href>  → rgba(0, 0, 0, 0) НЕТ
+// Отключаемой опции у vite нет — снимаем атрибут после сборки html.
+// Безопасно: внешних ресурсов в киоске нет вовсе (CLAUDE.md §1).
+const stripCrossorigin = {
+  name: 'mtk-strip-crossorigin',
+  enforce: 'post',
+  transformIndexHtml(html) {
+    return html.replace(/\s+crossorigin(?=[\s>])/g, '');
+  },
+};
+
 export default defineConfig({
   root: '.',
+  plugins: [stripCrossorigin],
   // Относительные пути к ассетам. По умолчанию vite подставляет абсолютные
   // `/assets/…`, а киоск запускается как file:///opt/mtk29/dist/… — там
   // `/assets/…` резолвится в file:///assets/… и не находится (CLAUDE.md §1).
