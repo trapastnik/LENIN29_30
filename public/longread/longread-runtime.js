@@ -39,14 +39,46 @@
 
   /* Лайтбокс и вёрстка НЕ АПСКЕЙЛЯТ: у 44 % фонда длинная сторона < 1600 px
      (CLAUDE.md §9). Ширину ограничиваем нативом оригинала, который приезжает
-     в data.w; без него — просто не растягиваем сверх колонки. */
+     в data.w; без него — просто не растягиваем сверх колонки. Для временных
+     изображений это критично вдвойне: превью госкаталога — 800 px по длинной
+     стороне, растянутое до колонки оно выглядит как брак печати. */
   .frame {
+    position: relative;
     max-width: 100%;
     border: 1px solid var(--rule);
     background: var(--paper-pure);
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
   }
   img { display: block; width: 100%; height: auto; }
+
+  /* ── плашка временного изображения ─────────────────────────────────────
+     Не украшение и не отладка. Превью из госкаталога визуально неотличимо
+     от поставленного музеем файла, и без пометки на приёмке его засчитают
+     за готовую иллюстрацию — а права на него не выкуплены. Поэтому плашка
+     непрозрачная, поверх картинки и в самом заметном углу. */
+  .stub {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 18px;
+    background: var(--accent-alt);
+    color: var(--paper-white);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* Держатель и номер по книге поступлений — по ним заказчик понимает,
+     у кого и что просить. Строкой ниже подписи, тем же мелким кеглем,
+     что и инвентарный номер. */
+  .holder {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: var(--accent-alt);
+  }
 
   figcaption {
     margin-top: 14px;
@@ -66,9 +98,13 @@
   }
 </style>
 <figure>
-  <div class="frame"><img alt=""></div>
+  <div class="frame">
+    <img alt="">
+    <div class="stub" hidden>Временное изображение</div>
+  </div>
   <figcaption></figcaption>
   <div class="inv"></div>
+  <div class="holder" hidden></div>
 </figure>`;
 
   /** Есть ли что показывать. Без файла слот не рисуется вообще. */
@@ -116,6 +152,16 @@
       var inv = this.shadowRoot.querySelector('.inv');
       inv.textContent = m.inv_ru || '';
       inv.hidden = !m.inv_ru;
+
+      // Временное изображение: плашка поверх картинки и строка «у кого просить».
+      this.shadowRoot.querySelector('.stub').hidden = !m.placeholder;
+
+      var holder = this.shadowRoot.querySelector('.holder');
+      var line = [m.holder_ru, m.kp_no].filter(Boolean).join(' · ');
+      holder.textContent = line;
+      // Держателя показываем только у временных: у выкупленного оригинала
+      // эту роль играет инвентарный номер, и две строки подряд дублируют себя.
+      holder.hidden = !(m.placeholder && line);
     }
   }
 
