@@ -233,10 +233,22 @@ for (const { kind, dir } of KINDS) {
   }
 }
 
+// Временные иллюстрации — превью с Госкаталога, скачанные, пока заказчик
+// не поставил файлы. Считаем и печатаем громко, но НЕ роняем: заглушки обязаны
+// спокойно жить, пока идёт запрос, а вечно красный гейт учит себя игнорировать.
+const placeholders = [];
+
 function checkMedia(where, data) {
   const seen = new Set();
   let unbuilt = 0;
   for (const m of data.media || []) {
+    if (m.placeholder) {
+      placeholders.push({ where, n: m.n, holder: m.holder_ru, gk: m.gk_no });
+      if (!m.source_url) {
+        warn(where, `media n=${m.n}: placeholder без source_url — `
+          + 'заменить временную картинку будет нечем');
+      }
+    }
     if (typeof m.n !== 'number') { err(where, 'media без ключа n'); continue; }
     if (seen.has(m.n)) err(where, `media: номер n=${m.n} встречается дважды`);
     seen.add(m.n);
@@ -478,6 +490,23 @@ if (!quiet || errors.length) {
   console.log(`content:check — проверено файлов: ${checked}, `
     + `записей в индексах: ${indexRecords.size}`
     + (crosschecked ? `, сверено с pandoc: ${crosschecked}` : ''));
+}
+
+if (placeholders.length) {
+  const byHolder = new Map();
+  for (const p of placeholders) {
+    const k = p.holder || 'держатель не указан';
+    byHolder.set(k, (byHolder.get(k) || 0) + 1);
+  }
+  const n = placeholders.length;
+  console.log(`\n⚠  ВРЕМЕННЫХ ИЛЛЮСТРАЦИЙ: ${n} `
+    + `${label(n, 'штука', 'штуки', 'штук')} — превью с Госкаталога вместо `
+    + 'поставки заказчика.');
+  for (const [holder, cnt] of [...byHolder].sort((a, b) => b[1] - a[1])) {
+    console.log(`     ${cnt}× ${holder}`);
+  }
+  console.log('     Официальные файлы запрошены. Гейт на этом не падает '
+    + 'намеренно — заменить их надо до приёмки, а не до мержа.');
 }
 if (warnings.length && !quiet) {
   console.log(`\nПредупреждения (${warnings.length}):`);
