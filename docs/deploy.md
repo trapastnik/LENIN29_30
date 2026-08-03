@@ -181,6 +181,7 @@ User=kiosk
 Environment="DISPLAY=:0"
 ExecStart=/usr/bin/chromium \
   --kiosk \
+  --allow-file-access-from-files \
   --app=file:///opt/mtk29/dist/index.html \
   --window-size=3840,2160 \
   --start-fullscreen \
@@ -213,7 +214,7 @@ sudo systemctl enable --now mtk29-kiosk
 
 Chromium в kiosk-режиме: shortcut с флагами
 ```
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk --app="file:///C:/mtk29/dist/index.html"
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk --allow-file-access-from-files --app="file:///C:/mtk29/dist/index.html"
 ```
 Добавить в автозапуск через Task Scheduler → On Logon.
 
