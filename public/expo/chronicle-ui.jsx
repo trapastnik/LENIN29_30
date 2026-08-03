@@ -82,7 +82,8 @@ function EventRow({ item, lang, onOpenCard }) {
 
         {withCard && item.card && (
           <button onClick={() => onOpenCard(item.card)} style={{
-            marginTop: 16, minHeight: 56, padding: '0 26px',
+            // «Справка →» — управляющий элемент раздела, ≥64 px (§1).
+            marginTop: 16, minHeight: 64, padding: '0 28px',
             fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.24em',
             color: chTheme.ink, background: 'transparent',
             border: `1px solid ${c}`, borderRadius: 28,
@@ -218,7 +219,8 @@ function EventCard({ card, lang, onClose }) {
         )}
 
         <button onClick={onClose} style={{
-          marginTop: 36, minHeight: 60, padding: '0 32px',
+          // Возврат к ленте — управляющий элемент раздела, ≥64 px (§1).
+          marginTop: 36, minHeight: 64, padding: '0 32px',
           fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.26em',
           color: chTheme.paper, background: chTheme.ink,
           border: 'none', borderRadius: 30, textTransform: 'uppercase',

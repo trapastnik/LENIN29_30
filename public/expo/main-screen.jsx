@@ -71,7 +71,8 @@ function MainHeader({ lang, setLang }) {
 
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
         <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
-          minWidth: 96, minHeight: 64,
+          // Переключатель языка — основная навигация, ≥120 px (§1).
+          minWidth: 120, minHeight: 'var(--touch-hit, 120px)',
           fontFamily: fonts.mono, fontSize: 15, letterSpacing: '0.25em',
           color: theme.paperLight, background: 'transparent',
           border: `1.5px solid ${theme.brass}`, borderRadius: 32,

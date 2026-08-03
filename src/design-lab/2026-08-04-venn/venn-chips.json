@@ -1,0 +1,377 @@
+[
+ {
+  "id": "belorusskaya-sotsialisticheskaya-gromada",
+  "title_ru": "Белорусская социалистическая громада",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 40.86,
+  "y": 46.11
+ },
+ {
+  "id": "bund",
+  "title_ru": "Бунд",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 40.86,
+  "y": 53.52
+ },
+ {
+  "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+  "title_ru": "Грузинская социал-демократическая партия",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 47.2,
+  "y": 46.11
+ },
+ {
+  "id": "poaley-tsion",
+  "title_ru": "Поалей Цион",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 47.2,
+  "y": 53.52
+ },
+ {
+  "id": "muslim-socialists",
+  "title_ru": "Мусульманские социалистические комитеты",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "curated": true,
+  "x": 19.77,
+  "y": 67.04
+ },
+ {
+  "id": "borotbisty",
+  "title_ru": "Боротьбисты",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "curated": false,
+  "x": 13.44,
+  "y": 67.04
+ },
+ {
+  "id": "sotsial-demokraticheskaya-partiya-finlya",
+  "title_ru": "Социал-демократическая партия Финляндии",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "curated": false,
+  "x": 19.77,
+  "y": 59.63
+ },
+ {
+  "id": "union-defence",
+  "title_ru": "Союз защиты Родины и свободы",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem",
+   "white"
+  ],
+  "curated": true,
+  "x": 74.48,
+  "y": 36.25
+ },
+ {
+  "id": "union-renewal",
+  "title_ru": "Союз возрождения России",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem",
+   "white"
+  ],
+  "curated": true,
+  "x": 74.48,
+  "y": 28.84
+ },
+ {
+  "id": "left-srs",
+  "title_ru": "Левые эсеры",
+  "camp": "red",
+  "venn_groups": [
+   "red",
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 24.48,
+  "y": 31.76
+ },
+ {
+  "id": "alash",
+  "title_ru": "Алаш",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "white"
+  ],
+  "curated": false,
+  "x": 70.1,
+  "y": 54.35
+ },
+ {
+  "id": "basmachestvo",
+  "title_ru": "Басмачество",
+  "camp": "green",
+  "venn_groups": [
+   "green",
+   "national"
+  ],
+  "curated": false,
+  "x": 26.35,
+  "y": 79.26
+ },
+ {
+  "id": "bolsheviks",
+  "title_ru": "Большевики",
+  "camp": "red",
+  "venn_groups": [
+   "red"
+  ],
+  "curated": true,
+  "x": 8.49,
+  "y": 46.99
+ },
+ {
+  "id": "reds-general",
+  "title_ru": "Красные",
+  "camp": "red",
+  "venn_groups": [
+   "red"
+  ],
+  "curated": false,
+  "x": 8.49,
+  "y": 54.4
+ },
+ {
+  "id": "anarchists",
+  "title_ru": "Анархисты",
+  "camp": "green",
+  "venn_groups": [
+   "green"
+  ],
+  "curated": true,
+  "x": 14.56,
+  "y": 84.63
+ },
+ {
+  "id": "greens-general",
+  "title_ru": "Зелёные",
+  "camp": "green",
+  "venn_groups": [
+   "green"
+  ],
+  "curated": false,
+  "x": 14.56,
+  "y": 92.04
+ },
+ {
+  "id": "cadets",
+  "title_ru": "Конституционно-демократическая партия",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": true,
+  "x": 88.91,
+  "y": 26.48
+ },
+ {
+  "id": "alekseev-org",
+  "title_ru": "Алексеевская организация · Добровольческая армия",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": true,
+  "x": 88.91,
+  "y": 33.89
+ },
+ {
+  "id": "right-center",
+  "title_ru": "Правый центр",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": true,
+  "x": 88.91,
+  "y": 41.3
+ },
+ {
+  "id": "national-center",
+  "title_ru": "Национальный центр",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": true,
+  "x": 88.91,
+  "y": 48.7
+ },
+ {
+  "id": "whites-general",
+  "title_ru": "Белые",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "curated": false,
+  "x": 88.91,
+  "y": 19.07
+ },
+ {
+  "id": "national-movements",
+  "title_ru": "Национальные движения",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "curated": false,
+  "x": 50.41,
+  "y": 64.81
+ },
+ {
+  "id": "dashnaktsutyun",
+  "title_ru": "Дашнакцутюн",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "curated": false,
+  "x": 50.41,
+  "y": 72.22
+ },
+ {
+  "id": "latyshskiy-krestyanskiy-soyuz",
+  "title_ru": "Латышский крестьянский союз",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "curated": false,
+  "x": 50.41,
+  "y": 79.63
+ },
+ {
+  "id": "musavat",
+  "title_ru": "Мусават",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "curated": false,
+  "x": 56.74,
+  "y": 64.81
+ },
+ {
+  "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+  "title_ru": "Украинская социал-демократическая рабочая партия",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "curated": false,
+  "x": 56.74,
+  "y": 72.22
+ },
+ {
+  "id": "srs",
+  "title_ru": "Социалисты-революционеры",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 36.16,
+  "y": 38.66
+ },
+ {
+  "id": "mensheviks",
+  "title_ru": "Меньшевики",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 36.16,
+  "y": 31.25
+ },
+ {
+  "id": "narodnie-socialists",
+  "title_ru": "Трудовая народно-социалистическая партия",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 42.49,
+  "y": 31.25
+ },
+ {
+  "id": "committee-salvation",
+  "title_ru": "Комитет спасения Родины и революции",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 42.49,
+  "y": 23.84
+ },
+ {
+  "id": "union-constituent",
+  "title_ru": "Союз защиты Учредительного собрания",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": true,
+  "x": 36.16,
+  "y": 23.84
+ },
+ {
+  "id": "revdem-general",
+  "title_ru": "Революционная демократия",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 36.16,
+  "y": 16.44
+ },
+ {
+  "id": "sibirskoe-oblastnichestvo",
+  "title_ru": "Сибирское областничество",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "curated": false,
+  "x": 42.49,
+  "y": 16.44
+ }
+]

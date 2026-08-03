@@ -29,6 +29,24 @@ const KINDS = [
 
 const TZ_SUMMARY_MAX = 3000;
 
+/**
+ * Длина ТЕКСТА, а не строки: разметка не считается.
+ *
+ * Норма ТЗ про то, сколько читает посетитель. В `summary_ru` лежит markdown:
+ * ссылка `[меньшевикам](#/party/mensheviks)` весит 38 знаков при 12 видимых,
+ * и после того как связность выросла с 55 % до 82 %, сырая длина распухла
+ * настолько, что 42 справки числились нарушителями нормы, укладываясь в неё
+ * на самом деле. У «Туркестанского фронта» — 3681 знак строки против 2123
+ * видимых. Считать по строке значит просить заказчика сократить текст,
+ * которого он не писал.
+ */
+function visibleLength(s) {
+  return (s || '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')   // ссылка → её текст
+    .replace(/\*{1,3}([^*]*)\*{1,3}/g, '$1')   // выделения
+    .length;
+}
+
 // Производные лежат в .gitignore и собираются только там, где есть ../IN/.
 // На сервере и в свежем клоне каталога media/ нет вовсе — требовать там
 // файлы тиров значит красить ворота в красный на пустом месте. Поэтому
@@ -62,7 +80,12 @@ const indexRecords = new Map();
 
 for (const { kind, dir } of KINDS) {
   const path = join(CONTENT, dir, '_index.json');
-  if (!existsSync(path)) continue;
+  // Пропавший индекс — ошибка, а не «нечего проверять». Иначе гейт на
+  // исчезнувшем разделе отвечает «Ошибок нет», и это выглядит правдоподобно.
+  if (!existsSync(path)) {
+    err(rel(path), `индекса раздела «${kind}» нет — раздел не отрисуется`);
+    continue;
+  }
   const idx = readJSON(path);
   if (!idx) continue;
   if (idx.schema !== 1) warn(rel(path), 'нет поля schema: 1');
@@ -80,6 +103,17 @@ const PLURAL = {
   persons: 'person', parties: 'party', states: 'state',
   events: 'event', longreads: 'longread',
 };
+
+// Справочник лагерей — объединение блоков `camps` из всех индексов.
+// Проверять `venn_groups` по нему, а не по списку в коде: лагеря заводит
+// индекс, и жёсткий список тут разошёлся бы с данными молча.
+const campVocabulary = new Set();
+for (const { dir } of KINDS) {
+  const idx = readJSON(join(CONTENT, dir, '_index.json'));
+  for (const c of (idx && idx.camps) || []) {
+    if (c && c.id) campVocabulary.add(c.id);
+  }
+}
 
 // Лонгриды живут без `_index.json` — их по одному на раздел. Но ссылаться
 // на них можно (`related.longreads`), поэтому id заводятся в общую таблицу
@@ -168,7 +202,11 @@ let checked = 0;
 
 for (const { kind, dir } of KINDS) {
   const folder = join(CONTENT, dir);
-  if (!existsSync(folder)) continue;
+  if (!existsSync(folder)) {
+    err(rel(folder), `каталога раздела «${kind}» нет — проверять нечего, `
+      + 'и это не повод считать проверку пройденной');
+    continue;
+  }
 
   const files = readdirSync(folder)
     .filter((f) => f.endsWith('.json'))
@@ -203,7 +241,7 @@ for (const { kind, dir } of KINDS) {
     }
 
     // ── норма ТЗ по объёму
-    const len = (data.summary_ru || '').length;
+    const len = visibleLength(data.summary_ru);
     if (len > TZ_SUMMARY_MAX) {
       warn(where, `summary_ru ${len} знаков, норма ТЗ — ${TZ_SUMMARY_MAX}`);
     }
@@ -227,8 +265,27 @@ for (const { kind, dir } of KINDS) {
     if (kind === 'person' && !data.surname_ru) {
       err(where, 'у личности не разобрана фамилия');
     }
-    if (kind === 'party' && data.venn_groups && !Array.isArray(data.venn_groups)) {
-      err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+    if (kind === 'party' && data.venn_groups) {
+      const g = data.venn_groups;
+      if (!Array.isArray(g)) {
+        err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+      } else {
+        // Порядок значим: первый лагерь — основной, по нему запись попадает
+        // в фильтр и красится. Разъедется с `camp` — партия будет одного
+        // цвета в списке и другого на диаграмме.
+        if (data.camp && g[0] !== data.camp) {
+          err(where, `venn_groups[0] = «${g[0]}», а camp = «${data.camp}» — `
+            + 'на диаграмме и в фильтре партия окажется в разных лагерях');
+        }
+        if (new Set(g).size !== g.length) {
+          err(where, 'venn_groups содержит повтор');
+        }
+        for (const c of g) {
+          if (!campVocabulary.has(c)) {
+            err(where, `venn_groups: «${c}» нет в справочнике лагерей индекса`);
+          }
+        }
+      }
     }
   }
 }

@@ -22,14 +22,15 @@
       font-family: var(--font-mono);
     }
     .view-toggle button {
-      padding: 14px 22px;
+      /* Переключатель вида — управляющий элемент раздела, ≥64 px (§1). */
+      padding: 0 22px;
       font-size: 13px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--paper-light);
       background: transparent;
       border: none;
-      min-height: 48px;
+      min-height: 64px;
       min-width: auto;
     }
     .view-toggle button.active {
@@ -98,7 +99,11 @@
       font-size: 48px;
       font-weight: 700;
       line-height: 1.05;
-      color: var(--camp-color);
+      /* Текст по светлой бумаге — начертательный токен, не заливочный.
+         --camp-white это Телегрей 4: как заливка он верен, как текст давал
+         контраст 1.45, то есть заголовок «Белые» был практически невидим.
+         --camp-*-ink те же лагеря, но затемнённые до читаемых значений. */
+      color: var(--camp-ink, var(--camp-color));
     }
     .group-btn .count {
       margin-top: auto;
@@ -112,7 +117,7 @@
       position: absolute;
       bottom: 28px; right: 36px;
       font-size: 34px;
-      color: var(--camp-color);
+      color: var(--camp-ink, var(--camp-color));
       line-height: 1;
     }
 
@@ -193,6 +198,21 @@
     /* applyStaticLabels() проставляет html[lang]; подпись из ::after
        иначе осталась бы русской при английском интерфейсе. */
     html[lang='en'] .state-plate.has-map .abbr::after { content: '  ·  map'; }
+
+    /* Пороги тач-целей §1. .back-link приходит из pages.css (зона design)
+       с padding 14/24 — это ≈45 px, ниже порога. Переопределяем у себя,
+       чужой файл не трогаем.
+         основная навигация      ≥120 px — «к экспозиции», переключатель языка
+         управляющий элемент     ≥64 px  — переключатель вида, «к группам» */
+    .back-link,
+    #btn-lang {
+      min-height: var(--touch-hit, 120px);
+      padding: 0 24px;
+      justify-content: center;
+    }
+    #btn-lang { min-width: 120px; }
+
+    #group-detail .back-btn { min-height: 64px; }
   </style>
 </head>
 <body>
@@ -268,11 +288,11 @@
     // renderPicker шёл по idx.camps, а там перечислены четыре из шести.
     // Заявка в content — дописать записи в _index.json; как только они
     // появятся, эта карта перестанет срабатывать сама собой.
-    // Цвет: у --camp-uprising токена нет, берём --camp-green — Махно,
-    // Антонов и «чапанная война» это ровно «зелёные», а не новый цвет.
+    // Цвета больше не подменяем: design завела --camp-uprising и
+    // --camp-national вместе с начертательными --camp-*-ink.
     const CAMP_FALLBACK = {
-      uprising: { title_ru: 'Повстанческие движения', color: 'var(--camp-green)' },
-      national: { title_ru: 'Национальные государства', color: 'var(--camp-national)' },
+      uprising: { title_ru: 'Повстанческие движения' },
+      national: { title_ru: 'Национальные государства' },
     };
 
     function countFor(campId) {
@@ -300,7 +320,9 @@
         return {
           id,
           title_ru: (known && known.title_ru) || (spare && spare.title_ru) || id,
-          color: (spare && spare.color) || `var(--camp-${id})`,
+          // Заливка и начертание — разные токены: см. комментарий у .group-btn h3.
+          color: `var(--camp-${id})`,
+          ink: `var(--camp-${id}-ink, var(--camp-${id}))`,
         };
       });
     }
@@ -311,6 +333,7 @@
         const b = document.createElement('button');
         b.className = 'group-btn';
         b.style.setProperty('--camp-color', c.color);
+        b.style.setProperty('--camp-ink', c.ink);
         b.innerHTML = `
           <div class="kicker">${t('Группа', 'Group')}</div>
           <h3>${c.title_ru}</h3>
@@ -329,6 +352,7 @@
       const camp = groupsFromItems().find(c => c.id === campId);
       const list = idx.items.filter(i => i.camp === campId);
       detailEl.style.setProperty('--camp-color', camp.color);
+      detailEl.style.setProperty('--camp-ink', camp.ink);
       titleEl.innerHTML = `${camp.title_ru}<span class="cnt">· ${list.length} `
         + `${t(list.length === 1 ? 'образование' : 'образований', list.length === 1 ? 'formation' : 'formations')}</span>`;
       itemsEl.innerHTML = '';
@@ -336,6 +360,7 @@
         const row = document.createElement('div');
         row.className = 'state-plate' + (it.map_id ? ' has-map' : '');
         row.style.setProperty('--camp-color', camp.color);
+        row.style.setProperty('--camp-ink', camp.ink);
         row.innerHTML = `
           <div class="name">${it.title_ru}</div>
           <div class="abbr">${it.abbr_ru || '\u00A0'}</div>

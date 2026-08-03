@@ -35,11 +35,28 @@ function walk(dir, out = []) {
   return out;
 }
 
+// Комментарии гасим и здесь. Зона `ui` поймала ложное срабатывание: строка
+// `(/expo/ лежит в public/…)` внутри её же пояснения попала под регексп —
+// проза о путях выглядит как путь. Заставлять людей переписывать
+// комментарии, чтобы угодить линтеру, — это линтер, воспитывающий обход,
+// а не код. Гасим HTML- и JS-комментарии и тела <style>/<script>, сохраняя
+// переносы строк: номера строк остаются верными.
+const blankRun = (s) => s.replace(/[^\n]/g, ' ');
+const stripNoise = (text, isHtml) => {
+  let t = text.replace(/<!--[\s\S]*?-->/g, blankRun);
+  if (isHtml) {
+    t = t.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, (_, a, b, c) => a + blankRun(b) + c)
+         .replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (_, a, b, c) => a + blankRun(b) + c);
+  }
+  return t.replace(/\/\*[\s\S]*?\*\//g, blankRun)
+          .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + blankRun(m.slice(p.length)));
+};
+
 const hits = [];
 for (const file of walk(DIST)) {
   const rel = relative(DIST, file);
   if (SKIP.has(rel)) continue;
-  const text = readFileSync(file, 'utf8');
+  const text = stripNoise(readFileSync(file, 'utf8'), file.endsWith('.html'));
   const lines = text.split('\n');
   for (let i = 0; i < lines.length; i++) {
     for (const m of lines[i].matchAll(RE)) {

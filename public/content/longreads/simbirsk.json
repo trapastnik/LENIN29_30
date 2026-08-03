@@ -37,16 +37,23 @@
         {
           "n": 1,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/67744736",
           "src_file": null,
           "caption_ru": "Вступительная статья И. Варейкиса «Коммунистическая революция и крестьянство».",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=67744736",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 582,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "67468081",
+          "kp_no": "УМЛ-6809"
         }
       ],
       "media_wanted_ru": [
@@ -117,16 +124,23 @@
         {
           "n": 1,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/26385843",
           "src_file": null,
           "caption_ru": "Яковлев С. (художник). Открытка из комплекта открыток «Советские военачальники – герои гражданской войны». Михаил Николаевич Тухачевский.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=26385843",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 600,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "26230555",
+          "kp_no": "УМЛ-27237/17"
         }
       ],
       "media_wanted_ru": [
@@ -231,16 +245,23 @@
         {
           "n": 1,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/12862453",
           "src_file": null,
           "caption_ru": "Фотография. Потехин Иван Сергеевич – красноармеец, участник октябрьских событий 1917 года, участник Гражданской войны.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=12862453",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 579,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "12746804",
+          "kp_no": "УМЛ-7558"
         }
       ],
       "media_wanted_ru": [],
@@ -313,100 +334,149 @@
         {
           "n": 2,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/11948667",
           "src_file": null,
           "caption_ru": "Бендель Пётр Эмильевич (художник). Марка. 80-летие со дня рождения героя гражданской войны Г. Д. Гая. 1887–1938.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=11948667",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 538,
+          "h": 761,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "11831267",
+          "kp_no": "УМЛ-8897/1"
         },
         {
           "n": 3,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/16226169",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=16226169",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 800,
+          "h": 547,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "16100960",
+          "kp_no": "УМЛ-17978/1"
         },
         {
           "n": 4,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/16226154",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=16226154",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 800,
+          "h": 548,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "16100973",
+          "kp_no": "УМЛ-17978/7"
         },
         {
           "n": 5,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/16226151",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=16226151",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 800,
+          "h": 558,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "16100976",
+          "kp_no": "УМЛ-17978/5"
         },
         {
           "n": 6,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/16226187",
           "src_file": null,
           "caption_ru": "Почтовая карточка из комплекта «Г. Д. Гай», подаренного ветерану Гражданской войны Г. Я. Новикову вдовой Г. Д. Гая – Наталией, с дарственной надписью.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=16226187",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 800,
+          "h": 558,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "16100944",
+          "kp_no": "УМЛ-17978/4"
         },
         {
           "n": 7,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/26385843",
           "src_file": null,
           "caption_ru": "Яковлев С. (художник). Открытка из комплекта открыток «Советские военачальники – герои гражданской войны». Михаил Николаевич Тухачевский.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=26385843",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 600,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "26230555",
+          "kp_no": "УМЛ-27237/17"
         },
         {
           "n": 8,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/28647659",
           "src_file": null,
           "caption_ru": "Грамота, преподнесённая Ветлину А. И. Мелекесским райкомом и горсоветом в день 10-й годовщины освобождения Мелекесса от чехословацких белогвардейских банд, как одному из активных участников и героев Гражданской войны. Период создания: 30 сентября 1928 г.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=28647659",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 506,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "28476897",
+          "kp_no": "УМЛ-11198"
         }
       ],
       "media_wanted_ru": [],
@@ -437,16 +507,23 @@
         {
           "n": 1,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/37088431",
           "src_file": null,
           "caption_ru": "Автобиография А. И. Аксянова – участника Гражданской войны, активного советского и партийного работника. Период создания: 12 марта 1956 г.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=37088431",
           "source_note_ru": null,
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 587,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "36871382",
+          "kp_no": "УМЛ-11241"
         }
       ],
       "media_wanted_ru": [
@@ -511,30 +588,44 @@
         {
           "n": 1,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/13493599",
           "src_file": null,
           "caption_ru": "Петрейков (редактор). Открытка – почтовая карточка. «Советский плакат периода гражданской войны (1919 г.). Первый поход Антанты».",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=13493599",
           "source_note_ru": "Уместно использовать в части про 1919 г., вторая половина.",
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 800,
+          "h": 564,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "13366147",
+          "kp_no": "УМЛ-10682"
         },
         {
           "n": 2,
           "slot": "gallery",
-          "file": null,
+          "file": "../longread/placeholders/35918045",
           "src_file": null,
           "caption_ru": "Фотокопия. Телеграмма В. И. Ленину от 8-го губернского съезда Советов, от И. Варейкиса.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": "https://goskatalog.ru/portal/#/collections?id=35918045",
           "source_note_ru": "Написано 1922, но по факту конец 1919 г.",
-          "w": null,
-          "h": null,
-          "tiers": []
+          "w": 785,
+          "h": 800,
+          "tiers": [
+            "lg",
+            "xs"
+          ],
+          "placeholder": true,
+          "holder_ru": "Областное государственное автономное учреждение культуры \"Ленинский мемориал\"",
+          "gk_no": "35716463",
+          "kp_no": "УМЛ-2306/2"
         }
       ],
       "media_wanted_ru": [
@@ -627,7 +718,7 @@
     "dutov": {
       "kind": "person",
       "title_ru": "ДУТОВ",
-      "camp": null,
+      "camp": "white",
       "href": "expo/people.html#/person/dutov"
     },
     "frunze": {
@@ -639,7 +730,7 @@
     "kappel": {
       "kind": "person",
       "title_ru": "КАППЕЛЬ",
-      "camp": null,
+      "camp": "rev-dem",
       "href": "expo/people.html#/person/kappel"
     },
     "kolchak": {
@@ -687,7 +778,7 @@
     "sverdlov": {
       "kind": "person",
       "title_ru": "СВЕРДЛОВ",
-      "camp": null,
+      "camp": "red",
       "href": "expo/people.html#/person/sverdlov"
     },
     "trotsky": {
@@ -729,7 +820,7 @@
   },
   "media": [],
   "flags": [
-    "media-missing",
+    "media-placeholder",
     "media-wanted"
   ],
   "src": {

@@ -52,8 +52,9 @@ function MainHeader({ lang, setLang }) {
     color: theme.paperWarm,
     marginTop: 8
   } }, "1917 \u2014 1922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 14, alignItems: "center" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
-    minWidth: 96,
-    minHeight: 64,
+    // Переключатель языка — основная навигация, ≥120 px (§1).
+    minWidth: 120,
+    minHeight: "var(--touch-hit, 120px)",
     fontFamily: fonts.mono,
     fontSize: 15,
     letterSpacing: "0.25em",

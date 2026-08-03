@@ -183,8 +183,9 @@ function ChronicleApp() {
   } }, lang === "ru" ? "\u0425\u0440\u043E\u043D\u0438\u043A\u0430 \u0441\u043E\u0431\u044B\u0442\u0456\u0439. 1917\u20141922" : "Chronicle of events. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 12, alignItems: "center", flexShrink: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => {
     if (window.parent !== window) window.parent.postMessage("mtk29:close-section", "*");
   }, style: {
-    minHeight: 56,
-    padding: "0 22px",
+    // «к экспозиции» — основная навигация, ≥120 px (§1).
+    minHeight: "var(--touch-hit, 120px)",
+    padding: "0 28px",
     fontFamily: chFonts.mono,
     fontSize: 12,
     letterSpacing: "0.22em",
@@ -194,8 +195,10 @@ function ChronicleApp() {
     borderRadius: 28,
     textTransform: "uppercase"
   } }, "\u2190 ", lang === "ru" ? "\u043A\u044A \u044D\u043A\u0441\u043F\u043E\u0437\u0438\u0446\u0456\u0438" : "to the exhibit"), /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
-    minHeight: 56,
-    padding: "0 20px",
+    // Переключатель языка — основная навигация, ≥120 px (§1).
+    minWidth: 120,
+    minHeight: "var(--touch-hit, 120px)",
+    padding: "0 24px",
     fontFamily: chFonts.mono,
     fontSize: 12,
     letterSpacing: "0.24em",
@@ -207,8 +210,9 @@ function ChronicleApp() {
   } }, lang === "ru" ? "EN" : "RU"))), /* @__PURE__ */ React.createElement("div", { style: { padding: "18px 40px 0", display: "flex", gap: 10, flexWrap: "wrap" } }, yearList.map((y) => {
     const on = y.year === year;
     return /* @__PURE__ */ React.createElement("button", { key: y.year, onClick: () => setYear(y.year), style: {
+      // Кнопка года — основная навигация по ленте, ≥120 px (§1).
       minWidth: 150,
-      minHeight: 76,
+      minHeight: "var(--touch-hit, 120px)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -225,8 +229,9 @@ function ChronicleApp() {
   ].map((t) => {
     const on = track === t.id;
     return /* @__PURE__ */ React.createElement("button", { key: t.id, onClick: () => setTrack(t.id), style: {
-      minHeight: 52,
-      padding: "0 20px",
+      // Фильтр трека — управляющий элемент раздела, ≥64 px (§1).
+      minHeight: 64,
+      padding: "0 22px",
       fontFamily: chFonts.mono,
       fontSize: 12,
       letterSpacing: "0.2em",

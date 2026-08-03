@@ -32,43 +32,79 @@
 
   var TEMPLATE = `
 <style>
-  :host { display: block; margin: 34px 0; }
+  :host { display: block; margin: calc(34px * var(--ui-scale, 1)) 0; }
   :host([hidden]) { display: none; }
 
   figure { margin: 0; }
 
   /* Лайтбокс и вёрстка НЕ АПСКЕЙЛЯТ: у 44 % фонда длинная сторона < 1600 px
      (CLAUDE.md §9). Ширину ограничиваем нативом оригинала, который приезжает
-     в data.w; без него — просто не растягиваем сверх колонки. */
+     в data.w; без него — просто не растягиваем сверх колонки. Для временных
+     изображений это критично вдвойне: превью госкаталога — 800 px по длинной
+     стороне, растянутое до колонки оно выглядит как брак печати. */
   .frame {
+    position: relative;
     max-width: 100%;
-    border: 1px solid var(--rule);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     background: var(--paper-pure);
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 calc(6px * var(--ui-scale, 1)) calc(22px * var(--ui-scale, 1)) rgba(0, 0, 0, 0.22);
   }
   img { display: block; width: 100%; height: auto; }
 
+  /* ── плашка временного изображения ─────────────────────────────────────
+     Не украшение и не отладка. Превью из госкаталога визуально неотличимо
+     от поставленного музеем файла, и без пометки на приёмке его засчитают
+     за готовую иллюстрацию — а права на него не выкуплены. Поэтому плашка
+     непрозрачная, поверх картинки и в самом заметном углу. */
+  .stub {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: calc(10px * var(--ui-scale, 1)) calc(18px * var(--ui-scale, 1));
+    background: var(--accent-alt);
+    color: var(--paper-white);
+    font-family: var(--font-mono);
+    font-size: calc(15px * var(--ui-scale, 1));
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* Держатель и номер по книге поступлений — по ним заказчик понимает,
+     у кого и что просить. Строкой ниже подписи, тем же мелким кеглем,
+     что и инвентарный номер. */
+  .holder {
+    margin-top: calc(6px * var(--ui-scale, 1));
+    font-family: var(--font-mono);
+    font-size: calc(15px * var(--ui-scale, 1));
+    letter-spacing: 0.08em;
+    color: var(--accent-alt);
+  }
+
   figcaption {
-    margin-top: 14px;
+    margin-top: calc(14px * var(--ui-scale, 1));
     font-family: var(--font-body);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     line-height: 1.45;
     color: var(--ink-soft);
   }
   /* Инвентарный номер — отдельной строкой мелким кеглем. Музейное требование:
      слепив его с аннотацией, получишь абзац текста под фото. */
   .inv {
-    margin-top: 6px;
+    margin-top: calc(6px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.12em;
     color: var(--ink-faint);
   }
 </style>
 <figure>
-  <div class="frame"><img alt=""></div>
+  <div class="frame">
+    <img alt="">
+    <div class="stub" hidden>Временное изображение</div>
+  </div>
   <figcaption></figcaption>
   <div class="inv"></div>
+  <div class="holder" hidden></div>
 </figure>`;
 
   /** Есть ли что показывать. Без файла слот не рисуется вообще. */
@@ -105,9 +141,25 @@
 
       var tier = (m.tiers && m.tiers.indexOf('lg') >= 0) ? 'lg' : 'sm';
       var img = this.shadowRoot.querySelector('img');
-      img.src = window.MTK_URL(m.file + '-' + tier + '.webp');
+      // file отсчитывается от public/content/ — общая конвенция проекта,
+      // а не от корня сборки. Отсюда префикс. У временных изображений путь
+      // начинается с «../», потому что они лежат в public/longread/;
+      // «content/../longread/…» браузер нормализует сам.
+      img.src = window.MTK_URL('content/' + m.file + '-' + tier + '.webp');
       img.alt = m.caption_ru || '';
-      if (m.w) this.shadowRoot.querySelector('.frame').style.maxWidth = m.w + 'px';
+      // Предел по нативу оригинала — но в логических пикселях, поэтому тоже
+      // множится на --ui-scale. Без множителя картинка на киоске осталась бы
+      // вдвое мельче окружающего текста: он удвоился, она нет.
+      //
+      // Да, на 4K превью в 800 px при этом раскладывается в 1600 и мылит.
+      // Это цена ВРЕМЕННОГО изображения, а не ошибка вёрстки: выкупленный
+      // оригинал приезжает тиром lg 2400×1500 и покрывает удвоение с запасом.
+      // Держать картинку резкой ценой «марки» рядом с полусотенным кеглем —
+      // хуже: так ломается вся полоса, а не одна иллюстрация.
+      if (m.w) {
+        this.shadowRoot.querySelector('.frame').style.maxWidth =
+          'calc(' + m.w + 'px * var(--ui-scale, 1))';
+      }
 
       var cap = this.shadowRoot.querySelector('figcaption');
       cap.textContent = m.caption_ru || '';
@@ -116,6 +168,16 @@
       var inv = this.shadowRoot.querySelector('.inv');
       inv.textContent = m.inv_ru || '';
       inv.hidden = !m.inv_ru;
+
+      // Временное изображение: плашка поверх картинки и строка «у кого просить».
+      this.shadowRoot.querySelector('.stub').hidden = !m.placeholder;
+
+      var holder = this.shadowRoot.querySelector('.holder');
+      var line = [m.holder_ru, m.kp_no].filter(Boolean).join(' · ');
+      holder.textContent = line;
+      // Держателя показываем только у временных: у выкупленного оригинала
+      // эту роль играет инвентарный номер, и две строки подряд дублируют себя.
+      holder.hidden = !(m.placeholder && line);
     }
   }
 
@@ -164,53 +226,53 @@
 <style>
   :host {
     display: block;
-    scroll-margin-top: 140px;   /* шапка sticky — иначе якорь уезжает под неё */
+    scroll-margin-top: calc(140px * var(--ui-scale, 1));   /* шапка sticky — иначе якорь уезжает под неё */
   }
 
   .sheet {
     background: var(--paper);
     color: var(--ink);
-    padding: 56px 72px 48px;
-    border: 1px solid var(--rule);
-    border-top: 6px solid var(--accent-alt);
+    padding: calc(56px * var(--ui-scale, 1)) calc(72px * var(--ui-scale, 1)) calc(48px * var(--ui-scale, 1));
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
+    border-top: calc(6px * var(--ui-scale, 1)) solid var(--accent-alt);
   }
 
-  header { margin-bottom: 34px; }
+  header { margin-bottom: calc(34px * var(--ui-scale, 1)); }
 
   .num {
     font-family: var(--font-display);
-    font-size: 92px;
+    font-size: calc(92px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 0.8;
     color: var(--accent-alt);
     letter-spacing: -0.04em;
   }
   h2 {
-    margin: 14px 0 0;
+    margin: calc(14px * var(--ui-scale, 1)) 0 0;
     /* Nolde. Курсив на нём запрещён — файла начертания нет, браузер
        синтезирует наклон, и на 46 px это видно как дефект засечек. §8 */
     font-family: var(--font-display);
     font-style: normal;
-    font-size: 46px;
+    font-size: calc(46px * var(--ui-scale, 1));
     font-weight: 700;
     line-height: 1.1;
     color: var(--ink);
   }
   .lede {
-    margin: 18px 0 0;
+    margin: calc(18px * var(--ui-scale, 1)) 0 0;
     /* 21 Cent — курсивное начертание у него есть, подключено в fonts.css */
     font-family: var(--font-body);
     font-style: italic;
-    font-size: 27px;
+    font-size: calc(27px * var(--ui-scale, 1));
     line-height: 1.4;
     color: var(--ink-soft);
     max-width: 46em;
   }
 
   .body p {
-    margin: 0 0 26px;
+    margin: 0 0 calc(26px * var(--ui-scale, 1));
     font-family: var(--font-body);
-    font-size: 25px;
+    font-size: calc(25px * var(--ui-scale, 1));
     line-height: 1.62;
     color: var(--ink);
     max-width: 42em;      /* мера строки: длиннее с полутора метров не читается */
@@ -218,22 +280,22 @@
   .body p:last-child { margin-bottom: 0; }
 
   /* ── связи ─────────────────────────────────────────────────────────── */
-  .refs { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .refs { margin-top: calc(44px * var(--ui-scale, 1)); padding-top: calc(28px * var(--ui-scale, 1)); border-top: calc(1px * var(--ui-scale, 1)) solid var(--rule); }
   .refs-title {
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    margin-bottom: 20px;
+    margin-bottom: calc(20px * var(--ui-scale, 1));
   }
   /* Сетка, а не flex-wrap: у плашек разная длина подписи, и во flex каждая
      сжимается по своему содержимому — колонки не выстраиваются, ряды идут
      лесенкой. Равные колонки читаются как список, а не как россыпь. */
   .chips {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(calc(320px * var(--ui-scale, 1)), 1fr));
+    gap: calc(16px * var(--ui-scale, 1));
   }
 
   a.chip {
@@ -241,29 +303,29 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
-    min-height: var(--touch-hit);
-    padding: 18px 26px;
+    gap: calc(6px * var(--ui-scale, 1));
+    min-height: var(--touch-hit, 120px);
+    padding: calc(18px * var(--ui-scale, 1)) calc(26px * var(--ui-scale, 1));
     text-decoration: none;
     color: var(--ink);
     background: var(--paper-pure);
-    border: 1px solid var(--rule);
-    border-left: 8px solid var(--camp-color);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
+    border-left: calc(8px * var(--ui-scale, 1)) solid var(--camp-color);
     transition: transform .12s, background .12s;
   }
   /* Только :active. Тач-палец не наводится, :hover в киоске запрещён (§8). */
-  a.chip:active { transform: translateX(3px); background: var(--paper); }
+  a.chip:active { transform: translateX(calc(3px * var(--ui-scale, 1))); background: var(--paper); }
 
   .chip .kind {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: calc(13px * var(--ui-scale, 1));
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--ink-faint);
   }
   .chip .name {
     font-family: var(--font-body);
-    font-size: 22px;
+    font-size: calc(22px * var(--ui-scale, 1));
     line-height: 1.2;
   }
 </style>
@@ -400,30 +462,30 @@
 
   .wrap {
     width: 100%;
-    max-width: 1180px;
+    max-width: calc(1180px * var(--ui-scale, 1));
     margin: 0 auto;
-    padding: 0 32px 220px;   /* хвост под пагинатор, чтобы он не закрывал текст */
+    padding: 0 calc(32px * var(--ui-scale, 1)) calc(220px * var(--ui-scale, 1));   /* хвост под пагинатор, чтобы он не закрывал текст */
   }
 
   /* ── титул ─────────────────────────────────────────────────────────── */
   .hero {
-    padding: 64px 0 52px;
+    padding: calc(64px * var(--ui-scale, 1)) 0 calc(52px * var(--ui-scale, 1));
     color: var(--ink-on-dark);
   }
   .hero .kicker {
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.34em;
     text-transform: uppercase;
     color: var(--brass);
-    margin-bottom: 22px;
+    margin-bottom: calc(22px * var(--ui-scale, 1));
   }
   .hero h1 {
     margin: 0;
     /* Nolde, прямое начертание: курсива у него нет (§8) */
     font-family: var(--font-display);
     font-style: normal;
-    font-size: 78px;
+    font-size: calc(78px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 1.04;
     letter-spacing: -0.015em;
@@ -431,46 +493,46 @@
     max-width: 18em;
   }
   .hero .dates {
-    margin-top: 26px;
+    margin-top: calc(26px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--telegrey-4);
   }
   .hero .rule {
-    margin-top: 34px;
-    height: 2px;
+    margin-top: calc(34px * var(--ui-scale, 1));
+    height: calc(2px * var(--ui-scale, 1));
     background: var(--brass);
     opacity: 0.55;
-    transform: skewX(var(--brand-skew));
+    transform: skewX(var(--brand-skew, -15deg));
   }
 
-  .sections { display: flex; flex-direction: column; gap: 40px; }
+  .sections { display: flex; flex-direction: column; gap: calc(40px * var(--ui-scale, 1)); }
 
   /* ── подвал: источники и примечания ────────────────────────────────── */
   .tail {
-    margin-top: 56px;
-    padding: 40px 48px;
+    margin-top: calc(56px * var(--ui-scale, 1));
+    padding: calc(40px * var(--ui-scale, 1)) calc(48px * var(--ui-scale, 1));
     background: var(--page-bg-deep);
-    border: 1px solid var(--rule);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     color: var(--telegrey-4);
   }
   .tail h3 {
-    margin: 0 0 18px;
+    margin: 0 0 calc(18px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--brass);
     font-weight: 400;
   }
-  .tail ul { margin: 0 0 28px; padding-left: 24px; }
+  .tail ul { margin: 0 0 calc(28px * var(--ui-scale, 1)); padding-left: calc(24px * var(--ui-scale, 1)); }
   .tail li {
     font-family: var(--font-body);
-    font-size: 19px;
+    font-size: calc(19px * var(--ui-scale, 1));
     line-height: 1.5;
-    margin-bottom: 12px;
+    margin-bottom: calc(12px * var(--ui-scale, 1));
   }
   .tail li:last-child { margin-bottom: 0; }
   .tail .grp:last-child ul { margin-bottom: 0; }
@@ -479,10 +541,10 @@
   .tail .url {
     display: block;
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     color: var(--slate-window);
     word-break: break-all;
-    margin-top: 4px;
+    margin-top: calc(4px * var(--ui-scale, 1));
   }
 
   /* ── пагинатор ─────────────────────────────────────────────────────── */
@@ -492,30 +554,30 @@
      а стрелки ↑/↓ на ней читаются вернее, чем на горизонтальной. */
   .pager {
     position: fixed;
-    right: 40px;
-    bottom: 40px;
+    right: calc(40px * var(--ui-scale, 1));
+    bottom: calc(40px * var(--ui-scale, 1));
     z-index: 40;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 16px 12px;
+    gap: calc(10px * var(--ui-scale, 1));
+    padding: calc(16px * var(--ui-scale, 1)) calc(12px * var(--ui-scale, 1));
     background: var(--page-bg-deep);
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     border-radius: 999px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 calc(12px * var(--ui-scale, 1)) calc(40px * var(--ui-scale, 1)) rgba(0, 0, 0, 0.55);
   }
   .pager button {
-    width: var(--touch-hit);
-    height: var(--touch-hit);
-    min-width: var(--touch-hit);
-    min-height: var(--touch-hit);
+    width: var(--touch-hit, 120px);
+    height: var(--touch-hit, 120px);
+    min-width: var(--touch-hit, 120px);
+    min-height: var(--touch-hit, 120px);
     border-radius: 50%;
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     background: transparent;
     color: var(--brass);
     font-family: var(--font-display);
-    font-size: 40px;
+    font-size: calc(40px * var(--ui-scale, 1));
     line-height: 1;
     transition: background .14s, color .14s, transform .14s;
   }
@@ -524,10 +586,10 @@
   .pager .counter {
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     letter-spacing: 0.16em;
     color: var(--telegrey-4);
-    padding: 2px 0;
+    padding: calc(2px * var(--ui-scale, 1)) 0;
   }
   .pager .counter b { color: var(--brass); font-weight: 400; }
 
@@ -549,37 +611,37 @@
      пересечение, а шапка остаётся доступной — «Разделы» закрывают повторным
      нажатием. Значение — высота .page-header (≈142) плюс воздух. */
   .toc-panel {
-    width: min(1080px, calc(100vw - 96px));
-    max-height: calc(100vh - 200px);
-    margin-top: 160px;
+    width: min(calc(1080px * var(--ui-scale, 1)), calc(100vw - calc(96px * var(--ui-scale, 1))));
+    max-height: calc(100vh - calc(200px * var(--ui-scale, 1)));
+    margin-top: calc(160px * var(--ui-scale, 1));
     display: flex;
     flex-direction: column;
     background: var(--page-bg-deep);
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
   }
   .toc-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 26px 32px;
-    border-bottom: 1.5px solid var(--brass);
+    gap: calc(24px * var(--ui-scale, 1));
+    padding: calc(26px * var(--ui-scale, 1)) calc(32px * var(--ui-scale, 1));
+    border-bottom: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
   }
   .toc-head .t {
     font-family: var(--font-mono);
-    font-size: 17px;
+    font-size: calc(17px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--brass);
   }
   .toc-close {
-    width: 72px; height: 72px;
-    min-width: 72px; min-height: 72px;
+    width: calc(72px * var(--ui-scale, 1)); height: calc(72px * var(--ui-scale, 1));
+    min-width: calc(72px * var(--ui-scale, 1)); min-height: calc(72px * var(--ui-scale, 1));
     border-radius: 50%;
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     background: var(--signal-red);
     color: var(--paper-white);
-    font-size: 34px;
+    font-size: calc(34px * var(--ui-scale, 1));
     line-height: 1;
   }
   .toc-close:active { transform: scale(0.96); }
@@ -588,37 +650,37 @@
   .toc-item {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: calc(28px * var(--ui-scale, 1));
     width: 100%;
-    min-height: var(--touch-hit);
-    padding: 20px 32px;
+    min-height: var(--touch-hit, 120px);
+    padding: calc(20px * var(--ui-scale, 1)) calc(32px * var(--ui-scale, 1));
     text-align: left;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     color: var(--ink-on-dark);
   }
   .toc-item:active { background: rgba(210, 183, 115, 0.22); }
   .toc-item[aria-current='true'] { background: rgba(210, 183, 115, 0.13); }
   .toc-item .n {
     flex: 0 0 auto;
-    width: 78px;
+    width: calc(78px * var(--ui-scale, 1));
     font-family: var(--font-display);
-    font-size: 44px;
+    font-size: calc(44px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 1;
     color: var(--brass);
   }
-  .toc-item .txt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .toc-item .txt { display: flex; flex-direction: column; gap: calc(6px * var(--ui-scale, 1)); min-width: 0; }
   .toc-item .ttl {
     font-family: var(--font-body);
-    font-size: 27px;
+    font-size: calc(27px * var(--ui-scale, 1));
     line-height: 1.2;
   }
   .toc-item .sub {
     font-family: var(--font-body);
     font-style: italic;
-    font-size: 19px;
+    font-size: calc(19px * var(--ui-scale, 1));
     line-height: 1.3;
     color: var(--slate-window);
   }
@@ -815,7 +877,7 @@
           var i = self._sections.indexOf(e.target);
           if (i >= 0) { self._current = i; self._syncPager(); }
         });
-      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      }, { rootMargin: '-45% calc(0px * var(--ui-scale, 1)) -50% calc(0px * var(--ui-scale, 1))', threshold: 0 });
 
       this._sections.forEach(function (el) { self._observer.observe(el); });
     }

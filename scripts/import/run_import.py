@@ -39,6 +39,7 @@ IN = ROOT.parent / "IN" / "new" / "МТК №29"
 CONTENT = ROOT / "public" / "content"
 SRC = ROOT / "content-src"
 
+import aliases_manual  # noqa: E402
 import camps  # noqa: E402
 import docxlib  # noqa: E402
 import entity_chronicle  # noqa: E402
@@ -47,6 +48,7 @@ import entity_party  # noqa: E402
 import entity_person  # noqa: E402
 import entity_state  # noqa: E402
 import richtext  # noqa: E402
+import ruforms  # noqa: E402
 import spravka  # noqa: E402
 from docxlib import Document, Table, fold  # noqa: E402
 from ids import IdRegistry  # noqa: E402
@@ -192,8 +194,39 @@ def patch_keys(patch: Optional[dict]) -> set:
 # ------------------------------------------------------------------ запись
 
 
+# Каталоги, в которые зоне `content` можно писать (CLAUDE.md §4). Всё
+# остальное — чужое: `public/expo/**` у `ui`, `public/content/longreads/**`
+# у `simbirsk`, `maps/` и `geo/` у `maps`, `deploy/` и `package.json`
+# у оркестратора.
+WRITE_ZONES = (
+    SRC,
+    CONTENT / "persons", CONTENT / "parties", CONTENT / "states",
+    CONTENT / "events", CONTENT / "chronicle", CONTENT / "media",
+)
+
+
+def _assert_own_zone(path: Path) -> None:
+    """Сторож на границе зоны.
+
+    Разовой проверки мало: список каталогов ещё будет меняться, и однажды
+    кто-то добавит в `DIRS` лонгриды — тогда `archive_stale` начнёт удалять
+    файлы соседней зоны, и узнается это по пропавшему разделу. Дешевле
+    падать сразу и с именем файла.
+    """
+    p = path.resolve()
+    for zone in WRITE_ZONES:
+        try:
+            p.relative_to(zone.resolve())
+            return
+        except ValueError:
+            continue
+    raise PermissionError(
+        "запись за пределы зоны content: %s (CLAUDE.md §4)" % path)
+
+
 def write_json(path: Path, data) -> bool:
     """Записать, если содержимое изменилось. Возвращает True при записи."""
+    _assert_own_zone(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     if path.exists() and path.read_text(encoding="utf-8") == text:
@@ -438,7 +471,11 @@ def archive_stale(kind: str, imported: set, stats: Stats):
             continue
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001
+            # Битый json в своём каталоге — не повод пройти мимо: файл
+            # останется на диске, а в индексе его не будет.
+            stats.legacy.append("%s/%s: не разобран (%s), оставлен как есть"
+                                % (kind, name, type(exc).__name__))
             continue
         if isinstance(data, dict) and data.get("schema") == 1:
             continue
@@ -494,6 +531,76 @@ def assign_person_camp(data: dict, ctx: "Ctx") -> None:
         ctx.reports.append(
             "лагерь person/%s не определён: %s — размечать руками через patch"
             % (data["id"], {k: v for k, v in verdict["scores"].items() if v}))
+
+
+KIND_RU = {"person": "личность", "party": "партия",
+           "state": "гособразование", "event": "карточка события"}
+
+TZ_LIMIT = 3000
+
+
+def visible_len(s: str) -> int:
+    """Длина ТЕКСТА, а не строки: markdown-разметка не считается.
+
+    Норма ТЗ про то, сколько читает посетитель. Ссылка
+    `[меньшевикам](#/party/mensheviks)` весит 38 знаков при 12 видимых,
+    и после роста связности до 82 % сырая длина распухла так, что 42 справки
+    числились нарушителями, укладываясь в норму. Считать по строке — значит
+    просить заказчика сократить текст, которого он не писал.
+    """
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s or "")
+    s = re.sub(r"\*{1,3}([^*]*)\*{1,3}", r"\1", s)
+    return len(s)
+
+
+def write_tz_report(by_kind: Dict[str, List[dict]]) -> None:
+    """Таблица превышений нормы ТЗ — готовый блок для письма музею.
+
+    Резать текст заказчика самовольно нельзя, но норма ТЗ — его же, и выбор
+    между «менять норму» и «сокращать тексты» за ним. Наше дело — точные
+    цифры по каждой справке.
+    """
+    rows = []
+    band = 0
+    for kind, ents in by_kind.items():
+        for e in ents:
+            n = visible_len(e.get("summary_ru"))
+            if n > TZ_LIMIT:
+                rows.append((n - TZ_LIMIT, n, kind, e["id"],
+                             e.get("title_ru") or e["id"]))
+            elif n > 2500:
+                band += 1
+    if not rows:
+        return
+    rows.sort(reverse=True)
+
+    def plural(n, one, few, many):
+        m10, m100 = n % 10, n % 100
+        if m10 == 1 and m100 != 11:
+            return one
+        if 2 <= m10 <= 4 and not (12 <= m100 <= 14):
+            return few
+        return many
+
+    total = sum(len(v) for v in by_kind.values())
+    out = ["# Превышение нормы ТЗ по объёму справки", "",
+           "Норма ТЗ — **%d знаков** основного текста. Считаются видимые знаки:"
+           % TZ_LIMIT,
+           "markdown-разметка ссылок в объём не входит, посетитель её не видит.",
+           "",
+           "Превышают норму: **%d %s из %d**. Ещё %d в диапазоне 2500–3000 —"
+           % (len(rows), plural(len(rows), "справка", "справки", "справок"),
+              total, band),
+           "к ним вопросов нет, но запас невелик.", "",
+           "| + сверх нормы | знаков | вид | id | название |",
+           "|---:|---:|---|---|---|"]
+    for over, n, kind, eid, title in rows:
+        out.append("| +%d | %d | %s | `%s` | %s |"
+                   % (over, n, KIND_RU.get(kind, kind), eid, title[:60]))
+    out += ["",
+            "Резать текст заказчика самовольно мы не будем. Норма ТЗ — его же:",
+            "либо норма меняется, либо тексты сокращает автор."]
+    (SRC / "_tz-limit.md").write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
 def write_camp_report() -> None:
@@ -581,13 +688,22 @@ def lookup_camp(kind: str, eid: str) -> Optional[str]:
     key = {"party": "parties", "state": "states"}.get(kind)
     if key is None and kind == "person":
         if "person" not in _CAMP_CACHE:
-            js = (ROOT / "public/expo/people-data.js").read_text("utf-8")
+            # Запасной источник лагеря — подборка design-pass. Он НЕОБЯЗАТЕЛЕН:
+            # основной разбор идёт по регалиям (camps.py, 68 из 70), а этот файл
+            # принадлежит зоне ui и уже переезжал (`people-data.js` →
+            # `persons-data.js`). Отсутствие файла не должно ронять импорт:
+            # один переименованный чужой файл убивал все 70 персон разом.
             table = {}
-            for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
-                pid = chunk.split("'", 1)[0]
-                m = re.search(r"side:\s*'([a-z-]+)'", chunk)
-                if m:
-                    table[pid] = m.group(1)
+            for name in ("public/expo/people-data.js", "public/expo/persons-data.js"):
+                path = ROOT / name
+                if not path.exists():
+                    continue
+                js = path.read_text("utf-8")
+                for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
+                    pid = chunk.split("'", 1)[0]
+                    m = re.search(r"side:\s*'([a-z-]+)'", chunk)
+                    if m:
+                        table.setdefault(pid, m.group(1))
             _CAMP_CACHE["person"] = table
         return _CAMP_CACHE["person"].get(eid)
     if key is None:
@@ -661,6 +777,10 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["abbr_ru"] = ent["abbr_ru"]
         if ent.get("camp") and not rec.get("camp"):
             rec["camp"] = ent["camp"]
+        if ent.get("venn_groups"):
+            # Раскладку диаграммы строит зона design по индексу, а не по
+            # карточкам: тянуть 33 файла ради координат чипа она не будет.
+            rec["venn_groups"] = ent["venn_groups"]
         dates = ent.get("dates") or {}
         if dates.get("display_ru"):
             # В плитку идёт одна строка. У «Большевиков» в «Годах деятельности»
@@ -814,7 +934,7 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
     lines.append("| без изменений | %d |" % stats.same)
     lines.append("| конфликтов с патчем | %d |" % len(stats.conflicts))
     for kind, n in sorted(counts.items()):
-        lines.append("| %s | %d |" % (kind, n))
+        lines.append("| %s | %s |" % (kind, n))
     lines.append("")
     if stats.conflicts:
         lines += ["## Конфликты с ручными патчами", "",
@@ -841,13 +961,18 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
 
 
 def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
-    """Сид словаря алиасов из разметки заказчика.
+    """Сид словаря алиасов из разметки заказчика, с поправкой на склонение.
 
-    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками.
-    Русский склоняется, `большевиков` / `большевиками` / `большевики` —
-    три формы одной сущности, и морфологию тут не разводят. Автомат кладёт
-    очевидные совпадения с заголовками, остальное уезжает в
-    `_aliases-todo.csv` по убыванию частоты — оттуда и добираются руками.
+    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками,
+    автомат только дописывает недостающее. Сопоставление — `ruforms`:
+    точное сравнение строк ловит хорошо если половину, потому что заказчик
+    пометил упоминания прямо в тексте, а русский склоняется.
+
+    Берём только однозначные совпадения. Фраза, похожая сразу на две
+    сущности («Краснова» — персона `krasnov` или партия `reds-general`),
+    уходит в `_aliases-todo.csv` с обоими кандидатами: неверная ссылка хуже
+    отсутствующей, она уводит посетителя не туда, а неразрезолвленное
+    упоминание просто остаётся жирным курсивом.
     """
     from collections import Counter
 
@@ -858,56 +983,75 @@ def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
         except Exception as exc:  # noqa: BLE001
             print("  не открылся %s: %s" % (p.name, exc))
             continue
-        cells = [c for t in doc.tables for row in t for c in row.cells]
-        for c in cells:
-            for phrase in richtext.mentions(c.paras):
-                counter[phrase.strip()] += 1
+        for t in doc.tables:
+            for row in t:
+                for c in row.cells:
+                    for phrase in richtext.mentions(c.paras):
+                        counter[phrase.strip()] += 1
 
+    def load_index(folder):
+        return read_json(CONTENT / folder / "_index.json")
+
+    def load_card(folder, eid):
+        return read_json(CONTENT / folder / ("%s.json" % eid))
+
+    targets = ruforms.build_targets(load_index, load_card)
     existing = richtext.Aliases()
-    auto: Dict[str, str] = {}
-    titles = {}
-    for kind in ("person", "party", "state", "event"):
-        for eid, rec in registry.bucket(kind).items():
-            t = fold(rec.get("title_ru") or "")
-            if t:
-                titles.setdefault(t, "%s:%s" % (kind, eid))
 
+    # Кураторские решения перекрывают автомат: спорные пары и сущности,
+    # названные в тексте иначе, чем в проекте (разбор — aliases_manual).
+    by_key = {ruforms.key(ph): tgt for ph, tgt in aliases_manual.BY_KEY.items()}
+    deny = {ruforms.key(ph) for ph in aliases_manual.DENY}
+
+    auto: Dict[str, str] = {}
     todo = []
+    ambiguous = []
     for phrase, n in counter.most_common():
-        key = fold(phrase)
-        if not key or len(key) < 3:
+        if not phrase or len(phrase) < 3 or phrase in existing.map:
             continue
-        if key in existing.map:
+        k = ruforms.key(phrase)
+        if phrase in aliases_manual.EXACT:
+            auto[phrase] = aliases_manual.EXACT[phrase]
             continue
-        hit = titles.get(key)
-        if hit:
-            auto[phrase] = hit
+        if k in deny:
+            todo.append((n, phrase, "снято вручную: слишком общая фраза"))
+            continue
+        if k in by_key:
+            auto[phrase] = by_key[k]
+            continue
+        cands = targets.get(k)
+        if not cands:
+            todo.append((n, phrase, ""))
+        elif len(cands) == 1:
+            auto[phrase] = next(iter(cands))
         else:
-            todo.append((n, phrase))
+            ambiguous.append((n, phrase, sorted(cands)))
+            todo.append((n, phrase, " | ".join(sorted(cands))))
 
     path = richtext.ALIASES
-    if path.exists():
-        data = json.loads(path.read_text(encoding="utf-8"))
-        merged = dict(data.get("map") or {})
-        added = {k: v for k, v in auto.items() if k not in merged}
-        merged.update(added)
-        data["map"] = dict(sorted(merged.items()))
-        write_json(path, data)
-        print("  алиасов дописано автоматически: %d (файл вёлся руками, не перезаписан)"
-              % len(added))
-    else:
-        write_json(path, {
-            "schema": 1,
-            "_note": ("Словарь «фраза → сущность». Ведётся РУКАМИ: русский "
-                      "склоняется, одной сущности соответствует несколько форм. "
-                      "Ключ — фраза как в тексте, значение — «kind:id». "
-                      "Реалистичная цель — 350–400 записей ≈ 80 % упоминаний."),
-            "map": dict(sorted(auto.items())),
-        })
-        print("  создан %s, автоматом легло %d" % (path.name, len(auto)))
+    data = read_json(path) or {
+        "schema": 1,
+        "_note": ("Словарь «фраза → сущность». Ключ — фраза как в тексте, "
+                  "значение — «kind:id». Автомат дописывает однозначные "
+                  "совпадения (scripts/import/ruforms.py), спорные и "
+                  "ненайденные уходят в _aliases-todo.csv."),
+    }
+    merged = dict(data.get("map") or {})
+    added = {k: v for k, v in auto.items() if k not in merged}
+    manual_hits = sum(1 for k in added if k in aliases_manual.EXACT
+                      or ruforms.key(k) in by_key)
+    merged.update(added)
+    data["map"] = dict(sorted(merged.items()))
+    write_json(path, data)
+    print("  алиасов дописано: %d (из них по кураторским правилам %d), всего %d"
+          % (len(added), manual_hits, len(merged)))
+    if ambiguous:
+        print("  неоднозначных, оставлены человеку: %d" % len(ambiguous))
+        for n, ph, cands in ambiguous[:6]:
+            print("     %-34s → %s" % (ph[:34], ", ".join(cands)))
 
-    lines = ["count;phrase"]
-    lines += ["%d;%s" % (n, ph.replace(";", ",")) for n, ph in todo]
+    lines = ["count;phrase;candidates"]
+    lines += ["%d;%s;%s" % (n, ph.replace(";", ","), c) for n, ph, c in todo]
     (SRC / "_aliases-todo.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("  неразрезолвленных фраз: %d → content-src/_aliases-todo.csv" % len(todo))
 
@@ -960,6 +1104,8 @@ def main(argv=None) -> int:
     counts: Dict[str, int] = {}
     by_kind: Dict[str, List[dict]] = {}
 
+    failures: List[str] = []
+
     for kind in [k for k in kinds if k != "chronicle"]:
         paths = sources_for(kind, args.only, args.pilot)
         built = []
@@ -967,18 +1113,28 @@ def main(argv=None) -> int:
             try:
                 data = import_unit(kind, path, ctx, stats, manifest, notes_acc)
             except Exception as exc:  # noqa: BLE001
-                reports.append("СБОЙ на %s: %s: %s"
-                               % (path.relative_to(IN), type(exc).__name__, exc))
+                msg = "СБОЙ на %s: %s: %s" % (path.relative_to(IN),
+                                              type(exc).__name__, exc)
+                reports.append(msg)
+                failures.append(msg)
                 continue
             if data:
                 built.append(data)
         by_kind[kind] = built
-        counts[kind] = len(built)
+        counts[kind] = "%d/%d" % (len(built), len(paths))
+        # Источник есть, а на выходе пусто — это сбой, а не «нечего импортировать».
+        # Именно так выглядел переезд people-data.js: прогон отчитался
+        # «person 0», вернул успех и оставил на диске файлы прошлого прогона.
+        if paths and not built:
+            failures.append("%s: источников %d, импортировано 0 — раздел "
+                            "не обновлён, на диске данные прошлого прогона"
+                            % (kind, len(paths)))
         if built:
             archive_stale(kind, {e["id"] for e in built}, stats)
             rebuild_index(kind, built, registry, reports)
 
     reserve_event_index(ctx.events_by_no, reports)
+    write_tz_report(by_kind)
 
     date_rows: List[dict] = []
     years_done: List[int] = []
@@ -987,7 +1143,12 @@ def main(argv=None) -> int:
         for year in years:
             path = IN / "Хроника конфликта" / ("%d.docx" % year)
             if not path.exists():
-                reports.append("нет файла хроники: %s" % path.name)
+                # Не «нечего импортировать», а пропавший источник: год
+                # запрошен явно. Переименуют папку хроники — молча уцелеют
+                # файлы прошлого прогона, и заметят это на приёмке.
+                msg = "нет файла хроники: %s" % path.name
+                reports.append(msg)
+                failures.append(msg)
                 continue
             ctx.src_rel = str(path.relative_to(IN))
             ctx.scope = None
@@ -1052,9 +1213,23 @@ def main(argv=None) -> int:
     print("новых %d · изменённых %d · без изменений %d · конфликтов с патчем %d"
           % (stats.new, stats.changed, stats.same, len(stats.conflicts)))
     for kind, n in sorted(counts.items()):
-        print("  %-16s %d" % (kind, n))
+        print("  %-16s %s" % (kind, n))
     if reports:
         print("аномалии (%d) → content-src/_import-report.md" % len(reports))
+
+    # Сбой обязан быть громким. Раньше он уходил строкой в файл отчёта,
+    # прогон печатал «person 0» и возвращал успех — и переезд одного чужого
+    # файла молча выбил 70 персон из семидесяти. Отчёт, который выглядит
+    # правдоподобно, опаснее упавшего прогона.
+    if failures:
+        print("\n%s\nСБОЕВ: %d — раздел(ы) НЕ обновлены\n%s"
+              % ("!" * 60, len(failures), "!" * 60), file=sys.stderr)
+        for msg in failures[:10]:
+            print("  " + msg, file=sys.stderr)
+        if len(failures) > 10:
+            print("  … ещё %d, все в content-src/_import-report.md"
+                  % (len(failures) - 10), file=sys.stderr)
+        return 1
     return 0
 
 

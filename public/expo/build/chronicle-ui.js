@@ -66,9 +66,10 @@ function EventRow({ item, lang, onOpenCard }) {
       color: chTheme.ink,
       textWrap: "pretty"
     } }, richText(text, c)), withCard && item.card && /* @__PURE__ */ React.createElement("button", { onClick: () => onOpenCard(item.card), style: {
+      // «Справка →» — управляющий элемент раздела, ≥64 px (§1).
       marginTop: 16,
-      minHeight: 56,
-      padding: "0 26px",
+      minHeight: 64,
+      padding: "0 28px",
       fontFamily: chFonts.mono,
       fontSize: 12,
       letterSpacing: "0.24em",
@@ -179,8 +180,9 @@ function EventCard({ card, lang, onClose }) {
     lineHeight: 1.4,
     color: chTheme.inkFade
   } }, lang === "ru" ? ph.ru : ph.en || ph.ru, ph.inv && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 3, opacity: 0.8 } }, ph.inv))))), /* @__PURE__ */ React.createElement("button", { onClick: onClose, style: {
+    // Возврат к ленте — управляющий элемент раздела, ≥64 px (§1).
     marginTop: 36,
-    minHeight: 60,
+    minHeight: 64,
     padding: "0 32px",
     fontFamily: chFonts.mono,
     fontSize: 13,

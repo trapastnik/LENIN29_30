@@ -174,14 +174,16 @@ function ChronicleApp() {
             <button onClick={() => {
               if (window.parent !== window) window.parent.postMessage('mtk29:close-section', '*');
             }} style={{
-              minHeight: 56, padding: '0 22px',
+              // «к экспозиции» — основная навигация, ≥120 px (§1).
+              minHeight: 'var(--touch-hit, 120px)', padding: '0 28px',
               fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.22em',
               color: chTheme.paper, background: 'transparent',
               border: `1px solid ${chBrand.brass}`, borderRadius: 28,
               textTransform: 'uppercase',
             }}>← {lang === 'ru' ? 'къ экспозиціи' : 'to the exhibit'}</button>
             <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
-              minHeight: 56, padding: '0 20px',
+              // Переключатель языка — основная навигация, ≥120 px (§1).
+              minWidth: 120, minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
               fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.24em',
               color: chTheme.paper, background: 'transparent',
               border: `1px solid ${chBrand.brass}`, borderRadius: 28,
@@ -196,7 +198,8 @@ function ChronicleApp() {
             const on = y.year === year;
             return (
               <button key={y.year} onClick={() => setYear(y.year)} style={{
-                minWidth: 150, minHeight: 76,
+                // Кнопка года — основная навигация по ленте, ≥120 px (§1).
+                minWidth: 150, minHeight: 'var(--touch-hit, 120px)',
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 gap: 2,
                 background: on ? chBrand.brass : 'transparent',
@@ -224,7 +227,8 @@ function ChronicleApp() {
             const on = track === t.id;
             return (
               <button key={t.id} onClick={() => setTrack(t.id)} style={{
-                minHeight: 52, padding: '0 20px',
+                // Фильтр трека — управляющий элемент раздела, ≥64 px (§1).
+                minHeight: 64, padding: '0 22px',
                 fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 background: on ? t.color : 'transparent',
