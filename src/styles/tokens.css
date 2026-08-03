@@ -182,6 +182,7 @@
   --map-uprising:         var(--camp-uprising);            /* восстания */
   --map-rev-dem:          var(--camp-rev-dem);             /* революционная демократия */
   --map-intervention:     var(--camp-intervention);        /* интервенция */
+  --map-front:            var(--ink-2);                    /* линия фронта. Дата кодируется штрихом, а не цветом: цвет занят стороной */
   --map-paper:            var(--paper-light);              /* подложка листа */
   --map-territory:        var(--paper-5);                  /* нейтральная территория, без стороны */
   --map-border:           var(--ink-3);                    /* административные границы, ж/д */
