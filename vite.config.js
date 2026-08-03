@@ -51,7 +51,6 @@ export default defineConfig({
         povolzhye: 'demo-povolzhye.html', // Поволжье 1918–1919 (зона maps)
         parties:  'parties.html',     // Раздел 2 · Партии (Венн + Список)
         states:   'states.html',      // Раздел 3 · Гос-образования (Группы + Сетка)
-        sections: 'sections.html',    // Старый каталог 4 разделов
         brand:    'brand.html',       // Каталог визуальных примитивов (бренд-система)
         // calendar: 'calendar.html' — СНЯТ СО СБОРКИ 2026-08-03, файл на месте.
         // R&D-стенд: перекидной календарь 1917—1924 живым DOM в 3D. В ТЗ его нет,
