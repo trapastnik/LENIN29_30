@@ -172,8 +172,10 @@ Id меняются при пересоздании сессии — сверя�
 инлайнового `text/babel` в `boot-*.jsx`), и параллельная правка встаёт поперёк.
 
 ### `simbirsk`
-- `simbirsk.html`, `src/components/longread-*.js`
-- `public/content/longreads/**` (схема согласуется с `content`)
+- `simbirsk.html`, `src/components/longread-*.js`, `scripts/simbirsk/**`
+- `public/longread/**` — собранный рантайм. Лежит ОТДЕЛЬНО от контента
+  намеренно: код внутри `public/content/**` затёрло бы прогоном импорта
+- `public/content/longreads/**` — данные лонгрида (схема согласуется с `content`)
 
 ### `main` / оркестратор
 - `vite.config.js`, `package.json`, `package-lock.json`, `.gitignore`, `index.html`
@@ -181,7 +183,13 @@ Id меняются при пересоздании сессии — сверя�
 - `docs/deploy.md`, `docs/architecture.md`, `docs/HANDOFF-mtk29-full.md`
 
 ### Заморожено — не трогать без согласования
-- `public/prototypes/calendar-3d-paper-realistic/**`, `calendar.html` — R&D-стенд
+- `public/prototypes/calendar-3d-paper-realistic/**`, `calendar.html` — R&D-стенд.
+  **Снят со сборки 2026-08-03** (`vite.config.js`), файл в репозитории на месте.
+  Причина: держал `paths:check` красным одной строкой, а постоянно красный
+  гейт учит его пропускать. Долг не списан, а отложен — чтобы вернуть,
+  раскомментировать строку в `rollupOptions.input` и убрать ведущий слэш
+  у `/expo/pin-gate.js`. Пока не вернули — стенд открывается только
+  из исходников, `npm run dev`.
 - `public/expo/uploads/**` — импортированные ассеты design-pass
 - `../IN/**` — материалы заказчика, **только чтение**
 
