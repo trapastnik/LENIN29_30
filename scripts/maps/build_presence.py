@@ -35,6 +35,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _zone import owned_write, fail_if_empty  # noqa: E402
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 INDEX = os.path.join(ROOT, "public", "content", "geo", "_index.json")
 OUT_DIR = os.path.join(ROOT, "public", "content", "geo", "presence")
@@ -162,6 +165,7 @@ def main():
               file=sys.stderr)
         return 1
 
+    fail_if_empty(len(SITES), "точек присутствия в таблице SITES")
     svg = build_svg(SITES)
     rel = f"content/geo/presence/{TARGET}.svg"
     print(f"участников {len(ACTORS)}, точек {len(SITES)}, зон {len(ZONES)}")
@@ -172,7 +176,7 @@ def main():
 
     if args.write:
         os.makedirs(OUT_DIR, exist_ok=True)
-        with open(os.path.join(OUT_DIR, f"{TARGET}.svg"), "w",
+        with open(owned_write(os.path.join(OUT_DIR, f"{TARGET}.svg")), "w",
                   encoding="utf-8") as f:
             f.write(svg)
         item["geometry_kind"] = "presence"
@@ -180,7 +184,7 @@ def main():
         item["actors"] = ACTORS
         item["sites"] = SITES
         item["zones"] = ZONES
-        with open(INDEX, "w", encoding="utf-8") as f:
+        with open(owned_write(INDEX), "w", encoding="utf-8") as f:
             json.dump(doc, f, ensure_ascii=False, indent=2)
             f.write("\n")
         print(f"записано: {rel} и поля записи «{TARGET}»")

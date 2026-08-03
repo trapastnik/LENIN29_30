@@ -27,6 +27,8 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 MAPS = os.path.join(ROOT, "public", "content", "maps")
 
@@ -34,8 +36,11 @@ MAPS = os.path.join(ROOT, "public", "content", "maps")
 # id (пути, клипы, маркеры) слоями не считаются.
 G_ID = re.compile(r'<g\b[^>]*\bid="([^"]+)"')
 
+from _zone import fail_if_empty  # noqa: E402
+
 problems = 0
 checked = 0
+found = 0
 
 if not os.path.isdir(MAPS):
     print("check_orphans: нет public/content/maps/", file=sys.stderr)
@@ -44,7 +49,12 @@ if not os.path.isdir(MAPS):
 for map_id in sorted(os.listdir(MAPS)):
     map_dir = os.path.join(MAPS, map_id)
     map_json = os.path.join(map_dir, "map.json")
-    if not os.path.isdir(map_dir) or not os.path.exists(map_json):
+    if not os.path.isdir(map_dir):
+        continue
+    found += 1
+    if not os.path.exists(map_json):
+        print(f"✗ {map_id}\n    каталог есть, а map.json нет")
+        problems += 1
         continue
 
     with open(map_json, encoding="utf-8") as f:
@@ -100,8 +110,12 @@ for map_id in sorted(os.listdir(MAPS)):
         on = sum(1 for l in layers if l.get("default"))
         print(f"✓ {map_id}: {len(layers)} слоёв, {on} включено по умолчанию")
 
+fail_if_empty(found, "каталогов карт в public/content/maps/",
+              "если карты действительно снесены — это надо увидеть, "
+              "а не прочитать «чисто»")
+
 print()
 if problems:
-    print(f"check_orphans: {problems} рассинхронов в {checked} картах")
+    print(f"check_orphans: {problems} рассинхронов, чистых {checked}/{found}")
     sys.exit(1)
-print(f"check_orphans: чисто — {checked} карт(ы)")
+print(f"check_orphans: чисто — {checked}/{found} карт")

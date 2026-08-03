@@ -35,6 +35,9 @@ import sys
 import cv2
 import numpy as np
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _zone import fail_if_empty  # noqa: E402
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 INDEX = os.path.join(ROOT, "public", "content", "geo", "_index.json")
 
@@ -238,7 +241,20 @@ def main():
 
     ok = [r for r in out if "error" not in r]
     bad = [r for r in out if "error" in r]
-    print(f"листов обработано: {len(out)}, привязано: {len(ok)}, не привязано: {len(bad)}")
+
+    # ПОЧЕМУ НЕ «ЕСТЬ НЕПРИВЯЗАННЫЕ — КРАСНЫЙ». 17 регионных листов
+    # не привязываются по устройству: у них другая генерализация, это
+    # разобрано в registration_ru и решением оркестратора ждёт подробной
+    # базы. Возврат 1 на этом означал бы вечно красный гейт, а постоянно
+    # красный гейт учат пропускать (CLAUDE.md §8 про brand:lint — ровно
+    # этот случай). Поэтому красным становится только НОВЫЙ сбой:
+    # тот, что реестр ещё не признал как transform: null.
+    known_null = {(i["id"], p["n"]) for i in doc["items"]
+                  for p in i.get("phases", []) if not p.get("transform")}
+    fresh = [r for r in bad if (r["id"], r["n"]) not in known_null]
+    print(f"листов обработано: {len(out)}, привязано: {len(ok)}/{len(out)}, "
+          f"не привязано: {len(bad)} (из них признанных реестром "
+          f"{len(bad) - len(fresh)}, новых {len(fresh)})")
     print()
     print(f"{'территория':38} {'ф':>2} {'инл':>9} {'масшт':>6} {'пов':>6}  окно в базе")
     for r in sorted(out, key=lambda r: (r["id"], r["n"])):
@@ -253,7 +269,16 @@ def main():
         print(line + mark)
         if "error" in r:
             print(f"{'':41} └─ {r['error']}")
-    return 1 if bad else 0
+
+    fail_if_empty(len(out), "листов с картографией в реестре",
+                  "проверь phases и src_file в public/content/geo/_index.json")
+
+    if fresh:
+        for r in fresh:
+            print(f"register_sheets: НОВЫЙ сбой привязки — {r['id']} фаза "
+                  f"{r['n']}: {r['error']}", file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
