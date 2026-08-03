@@ -128,7 +128,11 @@
 
       var tier = (m.tiers && m.tiers.indexOf('lg') >= 0) ? 'lg' : 'sm';
       var img = this.shadowRoot.querySelector('img');
-      img.src = window.MTK_URL(m.file + '-' + tier + '.webp');
+      // file отсчитывается от public/content/ — общая конвенция проекта,
+      // а не от корня сборки. Отсюда префикс. У временных изображений путь
+      // начинается с «../», потому что они лежат в public/longread/;
+      // «content/../longread/…» браузер нормализует сам.
+      img.src = window.MTK_URL('content/' + m.file + '-' + tier + '.webp');
       img.alt = m.caption_ru || '';
       if (m.w) this.shadowRoot.querySelector('.frame').style.maxWidth = m.w + 'px';
 
