@@ -1,0 +1,67 @@
+{
+  "id": "simbirsk-september-1918",
+  "kind": "map",
+  "title_ru": "Симбирская операция. Сентябрь 1918 г.",
+  "title_en": "",
+  "period": {
+    "from": "1918-09",
+    "to": "1918-09"
+  },
+  "viewBox": "11.3 83.5 46.4 47.5",
+  "layers": [
+    {
+      "id": "background_paper",
+      "label_ru": "Фон (бежевая бумага)",
+      "kind": "vector",
+      "default": true
+    },
+    {
+      "id": "rivers",
+      "label_ru": "Реки",
+      "kind": "vector",
+      "default": true
+    },
+    {
+      "id": "admin_borders",
+      "label_ru": "Административные границы",
+      "kind": "vector",
+      "default": true
+    },
+    {
+      "id": "city_dots",
+      "label_ru": "Точки городов",
+      "kind": "vector",
+      "default": true
+    },
+    {
+      "id": "labels_cities",
+      "label_ru": "Подписи городов",
+      "kind": "vector",
+      "default": true
+    },
+    {
+      "id": "arrows_gai",
+      "label_ru": "Железная дивизия Г. Д. Гая, 9–11 сентября",
+      "kind": "vector",
+      "default": true,
+      "anim": "wipe"
+    },
+    {
+      "id": "arrows_north",
+      "label_ru": "Наступление с севера, Буинск",
+      "kind": "vector",
+      "default": true,
+      "anim": "wipe"
+    },
+    {
+      "id": "arrows_bryandino",
+      "label_ru": "Окружение отряда Каппеля у Бряндино, 28 сентября",
+      "kind": "vector",
+      "default": true,
+      "anim": "wipe"
+    }
+  ],
+  "svg": "layers.svg",
+  "source_ru": "Построено по тексту справки «Симбирск 1918–1919 гг.»; готовых изображений заказчик не дал, в докладной обе схемы помечены «см. литература».",
+  "notes_ru": "Пункты поставлены по координатам через привязку на якорях к карте povolzhye-1918-1919 (Казань, Симбирск, Самара, Сызрань), СКО 0.25 px при ширине кадра 302. Реки и границы скопированы оттуда же. Рамка, заголовок и легенда — UI, в слои не запекались (§10)."
+}

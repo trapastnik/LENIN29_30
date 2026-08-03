@@ -20,6 +20,24 @@
       "to": "1918-11",
       "pipeline": "quiver",
       "calibrated": false
+    },
+    {
+      "id": "simbirsk-july-1918",
+      "title_ru": "Бои за Симбирск. Июль 1918 г.",
+      "dir": "content/maps/simbirsk-july-1918",
+      "from": "1918-07",
+      "to": "1918-07",
+      "pipeline": "anchors",
+      "calibrated": true
+    },
+    {
+      "id": "simbirsk-september-1918",
+      "title_ru": "Симбирская операция. Сентябрь 1918 г.",
+      "dir": "content/maps/simbirsk-september-1918",
+      "from": "1918-09",
+      "to": "1918-09",
+      "pipeline": "anchors",
+      "calibrated": true
     }
   ]
 }
