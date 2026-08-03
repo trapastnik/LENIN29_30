@@ -179,7 +179,8 @@ const RULES = {
   R6: { level: 'error', title: 'внешний CDN — киоск офлайн' },
   R7: { level: 'warn',  title: 'тач-цель меньше 48px' },
   R8: { level: 'error', title: 'артефакты разошлись с tokens.json' },
-  R9: { level: 'error', title: 'var(--метрика) без запаса — приёмочный параметр отвалится молча' },
+  R9:  { level: 'error', title: 'var(--метрика) без запаса — приёмочный параметр отвалится молча' },
+  R10: { level: 'error', title: 'цвет слоя в map.json мимо словаря --map-*' },
 };
 
 const violations = [];
@@ -320,6 +321,44 @@ function lintFile(file) {
   }
 }
 
+// ── R10 · цвет слоя карты ──────────────────────────────────────────────────
+// map.json лежит в public/content/, который в SKIP_DIRS: содержимое карт —
+// не дизайн-код. Но ОДНО поле в нём дизайнерское, и его сюда пускаем точечно.
+//
+// Договор: слой пишет ИМЯ из словаря (группа map в tokens.json), а не значение.
+//   { "id": "arrows_red", "color": "map-red" }
+// Тогда легенда и слой берут цвет из одного места и разойтись не могут
+// по устройству, а не по дисциплине. Сейчас поля color нет вовсе — поэтому
+// 17 плашек в панели «Поволжья» рисуются серым #888.
+function lintMapLayers() {
+  const MAP_NAMES = new Set(
+    Object.entries(tokensJson.tokens).filter(([, t]) => t.group === 'map').map(([n]) => n),
+  );
+  const dir = resolve(ROOT, 'public/content/maps');
+  let entries = [];
+  try { entries = readdirSync(dir); } catch { return; }
+
+  for (const slug of entries) {
+    const file = join(dir, slug, 'map.json');
+    let json, text;
+    try { text = readFileSync(file, 'utf8'); json = JSON.parse(text); } catch { continue }
+
+    for (const layer of json.layers ?? []) {
+      for (const key of ['color', 'stroke', 'fill']) {
+        const v = layer[key];
+        if (v == null) continue;
+        if (MAP_NAMES.has(String(v))) continue;
+        const index = Math.max(0, text.indexOf(`"${layer.id}"`));
+        add('R10', file, index, text, `${layer.id}.${key} = ${JSON.stringify(v)}`,
+            // Не HEX: у него флаг /g, и .test() тащил бы lastIndex между вызовами.
+            /^(#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\()/.test(String(v))
+              ? 'сырое значение вместо имени — заведи роль в группе map или возьми готовую'
+              : `нет такой роли; есть: ${[...MAP_NAMES].join(', ')}`);
+      }
+    }
+  }
+}
+
 // ── R8 · артефакты против источника ────────────────────────────────────────
 function lintArtifacts() {
   try {
@@ -335,6 +374,7 @@ function lintArtifacts() {
 
 // ── прогон ─────────────────────────────────────────────────────────────────
 for (const f of walk(ROOT)) lintFile(f);
+lintMapLayers();
 lintArtifacts();
 
 const kept = violations.filter(v => !isAllowed(v));
