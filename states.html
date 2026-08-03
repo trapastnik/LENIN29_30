@@ -40,7 +40,16 @@
     .hidden { display: none !important; }
 
     /* ───── Экран 1: выбор группы (крупные блоки) ───── */
-    #groups-mode { display: flex; flex-direction: column; gap: 28px; }
+    /* pages.css держит body и main блоками — намеренно, на этом стоит
+       sticky-шапка. Но тогда `flex: 1` у пикера не от чего растягиваться,
+       и шесть плиток жмутся в верхнюю половину 1080, а низ экрана пустой.
+       Переопределяем только здесь и только display: overflow не трогаем,
+       поэтому sticky остаётся рабочим (проверено на обоих режимах).
+       Если решение приживётся — забирайте в pages.css, зона design. */
+    body.scrollable { display: flex; flex-direction: column; }
+    body.scrollable main { display: flex; flex-direction: column; flex: 1; }
+
+    #groups-mode { display: flex; flex-direction: column; gap: 28px; flex: 1; min-height: 0; }
 
     /* Групп шесть, а не четыре: к «красным», «белым», «революционной
        демократии» и «интервенции» добавились повстанческие движения (8)
