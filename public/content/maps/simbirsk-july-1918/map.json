@@ -13,52 +13,60 @@
       "id": "background_paper",
       "label_ru": "Фон (бежевая бумага)",
       "kind": "vector",
-      "default": true
+      "default": true,
+      "color": "map-paper"
     },
     {
       "id": "rivers",
       "label_ru": "Реки",
       "kind": "vector",
-      "default": true
+      "default": true,
+      "color": "map-river"
     },
     {
       "id": "admin_borders",
       "label_ru": "Административные границы",
       "kind": "vector",
-      "default": true
+      "default": true,
+      "color": "map-border"
     },
     {
       "id": "city_dots",
       "label_ru": "Точки городов",
       "kind": "vector",
-      "default": true
+      "default": true,
+      "color": "map-city"
     },
     {
       "id": "labels_cities",
       "label_ru": "Подписи городов",
       "kind": "vector",
-      "default": true
+      "default": true,
+      "color": "map-label"
     },
     {
       "id": "arrows_kappel",
       "label_ru": "Главный удар: отряд В. О. Каппеля от Сызрани",
       "kind": "vector",
       "default": true,
-      "anim": "wipe"
+      "anim": "wipe",
+      "color": "map-white"
     },
     {
       "id": "arrows_stepanov",
       "label_ru": "Отряд полковника Степанова от Мелекесса",
       "kind": "vector",
       "default": true,
-      "anim": "wipe"
+      "anim": "wipe",
+      "color": "map-white"
     },
     {
       "id": "arrows_stavropol",
       "label_ru": "Занятие Ставрополя-на-Волге, 13 июля",
       "kind": "vector",
       "default": true,
-      "anim": "wipe"
+      "anim": "wipe",
+      "color": "map-white"
     }
   ],
   "svg": "layers.svg",
