@@ -126,11 +126,7 @@
       "has_card": true,
       "title_full_ru": "Брест-Литовский мирный договор",
       "dates_display_ru": "3 марта 1918 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "брест-литовский мир",
-      "lead_tiers": []
+      "sort_key_ru": "брест-литовский мир"
     },
     {
       "id": "vystuplenie-chekhoslovatskogo-korpusa",
@@ -138,11 +134,15 @@
       "no": "27",
       "has_card": true,
       "dates_display_ru": "Вторая половина мая 1918 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/vystuplenie-chekhoslovatskogo-korpusa/03",
+      "lead_w": 1287,
+      "lead_h": 709,
       "sort_key_ru": "выступление чехословацкого корпуса",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vystuplenie-levykh-eserov",
@@ -201,11 +201,7 @@
       "has_card": true,
       "title_full_ru": "Оборона Царицына красными",
       "dates_display_ru": "Июль 1918 – февраль 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "оборона царицына",
-      "lead_tiers": []
+      "sort_key_ru": "оборона царицына"
     },
     {
       "id": "vzyatie-kazani-chastyami-narodnoy-armii",
@@ -213,11 +209,15 @@
       "no": "32",
       "has_card": true,
       "dates_display_ru": "6–7 августа 1918 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/vzyatie-kazani-chastyami-narodnoy-armii/02",
+      "lead_w": 2800,
+      "lead_h": 1889,
       "sort_key_ru": "взятие казани частями народной армии комуча",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "krasnyy-terror",
@@ -243,11 +243,7 @@
       "has_card": true,
       "title_full_ru": "Наступление Восточного фронта РККА",
       "dates_display_ru": "Сентябрь 1918 – февраль 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "наступление восточного фронта ркка 1918-1919",
-      "lead_tiers": []
+      "sort_key_ru": "наступление восточного фронта ркка 1918-1919"
     },
     {
       "id": "perevorot-v-omske",
@@ -256,11 +252,7 @@
       "has_card": true,
       "title_full_ru": "Приход к власти адмирала А. В. Колчака в Омске",
       "dates_display_ru": "18 ноября 1918 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "переворот в омске",
-      "lead_tiers": []
+      "sort_key_ru": "переворот в омске"
     },
     {
       "id": "permskaya-operatsiya-russkoy-armii",
@@ -269,11 +261,7 @@
       "has_card": true,
       "title_full_ru": "Пермская операция Русской армии («Пермская катастрофа» РККА)",
       "dates_display_ru": "29 ноября 1918 – 28 января 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "пермская операция русской армии",
-      "lead_tiers": []
+      "sort_key_ru": "пермская операция русской армии"
     },
     {
       "id": "vesennee-nastuplenie-russkoy-armii",
@@ -290,11 +278,15 @@
       "no": "39",
       "has_card": true,
       "dates_display_ru": "28 апреля – 20 июня 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/kontrnastuplenie-vostochnogo-fronta-rkka/02",
+      "lead_w": 2040,
+      "lead_h": 1443,
       "sort_key_ru": "контрнаступление восточного фронта ркка",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "voennye-deystviya-na-severo-zapade",
@@ -302,11 +294,14 @@
       "no": "40",
       "has_card": true,
       "dates_display_ru": "Май–декабрь 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/voennye-deystviya-na-severo-zapade/03",
+      "lead_w": 1220,
+      "lead_h": 834,
       "sort_key_ru": "военные действия на северо-западе россии",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "krasnaya-gorka-i-seraya-loshad",
@@ -315,11 +310,7 @@
       "has_card": true,
       "title_full_ru": "Восстание гарнизонов форта «Красная Горка» и батареи «Серая Лошадь»",
       "dates_display_ru": "13–16 июня 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "красная горка и серая лошадь",
-      "lead_tiers": []
+      "sort_key_ru": "красная горка и серая лошадь"
     },
     {
       "id": "nastuplenie-vostochnogo-fronta-1919-1920",
@@ -328,11 +319,14 @@
       "has_card": true,
       "title_full_ru": "Наступление Восточного фронта РККА",
       "dates_display_ru": "21 июня 1919 – 7 января 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/nastuplenie-vostochnogo-fronta-1919-1920/05",
+      "lead_w": 429,
+      "lead_h": 642,
       "sort_key_ru": "наступление восточного фронта 1919-1920 гг",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "moskovskiy-pokhod-vsyur",
@@ -341,11 +335,7 @@
       "has_card": true,
       "title_full_ru": "Московский поход Вооруженных сил Юга России",
       "dates_display_ru": "3 июля – 10 октября 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "московский поход",
-      "lead_tiers": []
+      "sort_key_ru": "московский поход"
     },
     {
       "id": "turkestanskiy-front",
@@ -353,11 +343,7 @@
       "no": "44",
       "has_card": true,
       "dates_display_ru": "11 августа 1919 – 1926 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "туркестанский фронт",
-      "lead_tiers": []
+      "sort_key_ru": "туркестанский фронт"
     },
     {
       "id": "kontrnastuplenie-yuzhnogo-fronta-rkka",
@@ -366,11 +352,15 @@
       "has_card": true,
       "title_full_ru": "Контрнаступление Южного фронта РККА",
       "dates_display_ru": "11 октября – 18 ноября 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/kontrnastuplenie-yuzhnogo-fronta-rkka/02",
+      "lead_w": 959,
+      "lead_h": 1996,
       "sort_key_ru": "контрнаступление южного фронта",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "pervaya-konnaya-armiya",
@@ -378,11 +368,7 @@
       "no": "46",
       "has_card": true,
       "dates_display_ru": "19 ноября 1919 – 26 октября 1923 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "первая конная армия",
-      "lead_tiers": []
+      "sort_key_ru": "первая конная армия"
     },
     {
       "id": "kharkovskaya-operatsiya-rkka",
@@ -390,11 +376,15 @@
       "no": "47",
       "has_card": true,
       "dates_display_ru": "24 ноября – 12 декабря 1919 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/kharkovskaya-operatsiya-rkka/03",
+      "lead_w": 1756,
+      "lead_h": 2505,
       "sort_key_ru": "харьковская операция ркка",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "rostovo-novocherkasskaya-operatsiya",
@@ -403,11 +393,14 @@
       "has_card": true,
       "title_full_ru": "Ростово-Новочеркасская операция РККА",
       "dates_display_ru": "3–10 января 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/rostovo-novocherkasskaya-operatsiya/02",
+      "lead_w": 1216,
+      "lead_h": 795,
       "sort_key_ru": "ростово-новочеркасская операция",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "sovetsko-polskaya-voyna",
@@ -415,11 +408,7 @@
       "no": "50",
       "has_card": true,
       "dates_display_ru": "Февраль 1919 – 18 марта 1921 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "советско-польская война",
-      "lead_tiers": []
+      "sort_key_ru": "советско-польская война"
     },
     {
       "id": "bakinskaya-operatsiya-rkka",
@@ -427,11 +416,7 @@
       "no": "51",
       "has_card": true,
       "dates_display_ru": "28 апреля – 1 мая 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "бакинская операция ркка",
-      "lead_tiers": []
+      "sort_key_ru": "бакинская операция ркка"
     },
     {
       "id": "kakhovka",
@@ -440,11 +425,13 @@
       "has_card": true,
       "title_full_ru": "Бои на Каховском плацдарме",
       "dates_display_ru": "7 августа – 28 октября 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/kakhovka/04",
+      "lead_w": 277,
+      "lead_h": 469,
       "sort_key_ru": "каховка",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg"
+      ]
     },
     {
       "id": "bukharskaya-operatsiya",
@@ -453,11 +440,15 @@
       "has_card": true,
       "title_full_ru": "Бухарская операция Туркестанского фронта РККА",
       "dates_display_ru": "29 августа – 2 сентября 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/bukharskaya-operatsiya/04",
+      "lead_w": 2343,
+      "lead_h": 1560,
       "sort_key_ru": "бухарская операция",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "perekopsko-chongarskaya-operatsiya",
@@ -465,11 +456,7 @@
       "no": "54",
       "has_card": true,
       "dates_display_ru": "7–17 ноября 1920 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "перекопско-чонгарская операция",
-      "lead_tiers": []
+      "sort_key_ru": "перекопско-чонгарская операция"
     },
     {
       "id": "volochaevskaya-operatsiya",
@@ -495,11 +482,15 @@
       "has_card": true,
       "title_full_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
       "dates_display_ru": "4–25 октября 1922 г.",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/events/primorskaya-operatsiya/02",
+      "lead_w": 2056,
+      "lead_h": 1264,
       "sort_key_ru": "приморская операция",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     }
   ]
 }

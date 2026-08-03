@@ -776,12 +776,16 @@
       "has_card": true,
       "title_full_ru": "П. Н. МИЛЮКОВ",
       "dates_display_ru": "1859–1943",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
+      "lead_media": "media/persons/milyukov/02",
+      "lead_w": 1186,
+      "lead_h": 1028,
       "sort_key_ru": "милюков",
       "camp": "rev-dem",
-      "lead_tiers": []
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "myasnikov",

@@ -667,7 +667,17 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             # шесть строк с перечнем переименований партии — это текст карточки,
             # а не подпись плитки.
             rec["dates_display_ru"] = dates["display_ru"].split("\n")[0].strip()
-        lead = next((m for m in ent.get("media", []) if m.get("slot") == "lead"), None)
+        # Плитке нужна ЛЮБАЯ картинка с производными, а не обязательно первая
+        # по порядку. У Милюкова не прислан `_01`, но в карточке ещё четыре
+        # фотографии — при жёсткой привязке к slot=lead плитка оставалась
+        # пустой при непустой карточке. Порядок в самой карточке при этом
+        # не меняется: отсутствующая аннотация остаётся аннотацией №1.
+        lead = next((m for m in ent.get("media", [])
+                     if m.get("slot") == "lead" and m.get("file") and m.get("tiers")),
+                    None)
+        if lead is None:
+            lead = next((m for m in ent.get("media", [])
+                         if m.get("file") and m.get("tiers")), None)
         if lead:
             rec["lead_media"] = lead.get("file")
             rec["lead_w"] = lead.get("w")
@@ -678,6 +688,12 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             # быть самодостаточным, иначе плитка остаётся заглушкой при
             # собранных и отдающихся по http производных.
             rec["lead_tiers"] = lead.get("tiers") or []
+        else:
+            # Ни одной картинки с производными — ключей быть не должно вовсе.
+            # `lead_media: null` UI отличить от «поля нет» не обязан, и такая
+            # запись уезжает в отрисовку миниатюры с пустым путём.
+            for k in ("lead_media", "lead_w", "lead_h", "lead_tiers"):
+                rec.pop(k, None)
         # Сортировка — по тому, что написано на плитке. Иначе «РСФСР» едет
         # в списке на «российская социалистическая…», а глазом это не сходится.
         rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")

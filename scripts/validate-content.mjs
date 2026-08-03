@@ -285,6 +285,11 @@ for (const [id, { item, kind, dir, path }] of indexRecords) {
   if (item.lead_media && !(item.lead_tiers || []).length) {
     err(where, 'есть lead_media, но нет lead_tiers — миниатюра останется заглушкой');
   }
+  // Пустой ключ хуже отсутствующего: UI не обязан отличать null от «поля нет»
+  // и уходит рисовать миниатюру по пустому пути.
+  if ('lead_media' in item && !item.lead_media) {
+    err(where, 'lead_media присутствует, но пуст — ключ должен отсутствовать');
+  }
   // Карточки событий лагерю не принадлежат — фильтр есть только у личностей,
   // партий и гособразований.
   if (!item.camp && kind !== 'event') {
