@@ -38,10 +38,17 @@
       "extra_ru": null,
       "w": 976,
       "h": 1500,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kaledin/01"
       ]
     },
     {
@@ -56,7 +63,14 @@
       "extra_ru": null,
       "w": 1210,
       "h": 1703,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kaledin/02"
+      ]
     },
     {
       "n": 3,
@@ -70,10 +84,17 @@
       "extra_ru": null,
       "w": 1776,
       "h": 1270,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/kaledin/03"
       ]
     }
   ],

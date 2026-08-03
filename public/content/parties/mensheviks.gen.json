@@ -49,7 +49,14 @@
       "extra_ru": "*Мартов (Цедербаум) Юлий Осипович (1873–1923), лидер меньшевиков.*",
       "w": 1353,
       "h": 1684,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/mensheviks/01"
+      ]
     },
     {
       "n": 2,
@@ -63,7 +70,14 @@
       "extra_ru": null,
       "w": 624,
       "h": 974,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/mensheviks/02"
+      ]
     },
     {
       "n": 3,
@@ -77,7 +91,14 @@
       "extra_ru": "*Дан (Гурвич) Фёдор Ильич (1871–1947), один из лидеров меньшевиков, в 1917 г. член Исполнительного комитета Петроградского Совета рабочих и солдатских депутатов и Президиума ВЦИК.*",
       "w": 990,
       "h": 1359,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/mensheviks/03"
+      ]
     },
     {
       "n": 4,
@@ -91,12 +112,19 @@
       "extra_ru": null,
       "w": 869,
       "h": 1261,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Фото ранее использовалось в Чхеидзе.",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "Чхеидзе"
+      "duplicate_of": "Чхеидзе",
+      "files": [
+        "media/parties/mensheviks/04"
+      ]
     },
     {
       "n": 5,
@@ -110,7 +138,14 @@
       "extra_ru": null,
       "w": 1221,
       "h": 1851,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/mensheviks/05"
+      ]
     }
   ],
   "related": {

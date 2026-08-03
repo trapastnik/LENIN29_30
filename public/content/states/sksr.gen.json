@@ -38,7 +38,14 @@
       "extra_ru": "*Полуян Ян (Яков) Васильевич (1891–1937), председатель Совета народных комиссаров Кубано-Черноморской Советской Республики, член Центрального исполнительного комитета Северо-Кавказской Советской Республики.*",
       "w": 682,
       "h": 1080,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/sksr/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1420,
       "h": 862,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/sksr/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,11 @@
       "extra_ru": null,
       "w": 1380,
       "h": 973,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "02 СКСР 03 1.jpg",
         "02 СКСР 03 2.jpg"
@@ -75,6 +93,10 @@
       "directives": [
         "trim",
         "spread"
+      ],
+      "files": [
+        "media/states/sksr/03",
+        "media/states/sksr/03p2"
       ]
     },
     {
@@ -89,7 +111,11 @@
       "extra_ru": null,
       "w": 1559,
       "h": 961,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "02 СКСР 04 1.jpg",
         "02 СКСР 04 2.jpg"
@@ -98,6 +124,10 @@
       "directives": [
         "trim",
         "spread"
+      ],
+      "files": [
+        "media/states/sksr/04",
+        "media/states/sksr/04p2"
       ]
     }
   ],

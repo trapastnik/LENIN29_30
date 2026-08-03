@@ -51,7 +51,14 @@
       "extra_ru": null,
       "w": 1001,
       "h": 1526,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/litovskaya-respublika/01"
+      ]
     }
   ],
   "related": {

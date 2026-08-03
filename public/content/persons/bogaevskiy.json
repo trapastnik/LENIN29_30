@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 800,
       "h": 1025,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bogaevskiy/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1373,
       "h": 902,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bogaevskiy/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,14 @@
       "extra_ru": null,
       "w": 1013,
       "h": 1536,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bogaevskiy/03"
+      ]
     },
     {
       "n": 4,
@@ -80,7 +101,14 @@
       "extra_ru": null,
       "w": 1391,
       "h": 872,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bogaevskiy/04"
+      ]
     },
     {
       "n": 5,
@@ -94,7 +122,14 @@
       "extra_ru": null,
       "w": 5412,
       "h": 3466,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/bogaevskiy/05"
+      ]
     }
   ],
   "related": {

@@ -36,10 +36,17 @@
       "extra_ru": null,
       "w": 2770,
       "h": 3900,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/states/northern-region/01"
       ]
     },
     {
@@ -54,10 +61,17 @@
       "extra_ru": null,
       "w": 3983,
       "h": 2683,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/states/northern-region/02"
       ]
     },
     {
@@ -72,10 +86,17 @@
       "extra_ru": null,
       "w": 2592,
       "h": 1764,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/states/northern-region/03"
       ]
     },
     {
@@ -90,10 +111,16 @@
       "extra_ru": "*Награда была введена командованием армии Северной области* *для награждения отличившихся в боях с РККА.*",
       "w": 695,
       "h": 673,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "note_ru": "Повернуть крестик ровно и обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/states/northern-region/04"
       ]
     },
     {
@@ -108,7 +135,14 @@
       "extra_ru": "*Подписано Председателем Временного правительства Н. В. Чайковским.*",
       "w": 3872,
       "h": 1496,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/northern-region/05"
+      ]
     }
   ],
   "related": {

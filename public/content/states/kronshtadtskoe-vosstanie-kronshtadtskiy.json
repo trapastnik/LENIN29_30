@@ -36,7 +36,14 @@
       "extra_ru": null,
       "w": 1899,
       "h": 1320,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/01"
+      ]
     },
     {
       "n": 2,
@@ -50,7 +57,14 @@
       "extra_ru": "*Сидят в санях командующий Южной группой войск А. И. Седякин (слева) и военный комиссар Южной группы К. Е. Ворошилов.*",
       "w": 1940,
       "h": 1343,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/02"
+      ]
     },
     {
       "n": 3,
@@ -64,7 +78,14 @@
       "extra_ru": null,
       "w": 1960,
       "h": 1363,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/03"
+      ]
     },
     {
       "n": 4,
@@ -78,7 +99,14 @@
       "extra_ru": null,
       "w": 1955,
       "h": 1385,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/04"
+      ]
     },
     {
       "n": 5,
@@ -92,7 +120,14 @@
       "extra_ru": "*Принимает парад А. И. Седякин, возглавляет колонну П. Е. Дыбенко.*",
       "w": 1876,
       "h": 1341,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/05"
+      ]
     }
   ],
   "related": {

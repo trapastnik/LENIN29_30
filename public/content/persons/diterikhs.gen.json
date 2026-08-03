@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 652,
       "h": 1000,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/diterikhs/01"
+      ]
     },
     {
       "n": 2,
@@ -53,7 +60,14 @@
       "extra_ru": null,
       "w": 2616,
       "h": 3984,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/diterikhs/02"
+      ]
     }
   ],
   "related": {

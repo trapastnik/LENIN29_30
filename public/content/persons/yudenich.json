@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 800,
       "h": 1282,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/yudenich/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1452,
       "h": 2164,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/yudenich/02"
+      ]
     },
     {
       "n": 3,
@@ -66,10 +80,17 @@
       "extra_ru": null,
       "w": 1200,
       "h": 1939,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Дизайнерам: подрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/persons/yudenich/03"
       ]
     }
   ],

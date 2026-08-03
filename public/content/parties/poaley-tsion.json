@@ -46,7 +46,13 @@
       "extra_ru": null,
       "w": 461,
       "h": 615,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/poaley-tsion/01"
+      ]
     },
     {
       "n": 2,
@@ -60,10 +66,17 @@
       "extra_ru": "*Печатный орган Еврейской социал-демократической рабочей партии «Поалей Цион» в России.*",
       "w": 2656,
       "h": 3900,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать черные поля.",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/poaley-tsion/02"
       ]
     }
   ],

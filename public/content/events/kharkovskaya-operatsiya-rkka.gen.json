@@ -68,10 +68,17 @@
       "extra_ru": null,
       "w": 1756,
       "h": 2505,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/kharkovskaya-operatsiya-rkka/03"
       ]
     }
   ],

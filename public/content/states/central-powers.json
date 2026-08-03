@@ -62,7 +62,14 @@
       "extra_ru": null,
       "w": 1698,
       "h": 1145,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/central-powers/01"
+      ]
     },
     {
       "n": 2,
@@ -76,7 +83,13 @@
       "extra_ru": null,
       "w": 1193,
       "h": 827,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/states/central-powers/02"
+      ]
     },
     {
       "n": 3,
@@ -90,7 +103,14 @@
       "extra_ru": null,
       "w": 3780,
       "h": 2784,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/central-powers/03"
+      ]
     },
     {
       "n": 4,
@@ -104,7 +124,11 @@
       "extra_ru": null,
       "w": 1851,
       "h": 1164,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "66 Центральные державы 04 1.jpg",
         "66 Центральные державы 04 2.jpg"
@@ -112,6 +136,10 @@
       "note_ru": "Разместить обе стороны купюры на одной странице",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/central-powers/04",
+        "media/states/central-powers/04p2"
       ]
     }
   ],

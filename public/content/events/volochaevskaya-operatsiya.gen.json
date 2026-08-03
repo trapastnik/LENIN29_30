@@ -39,7 +39,14 @@
       "extra_ru": null,
       "w": 2057,
       "h": 1304,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/volochaevskaya-operatsiya/01"
+      ]
     },
     {
       "n": 2,
@@ -53,10 +60,17 @@
       "extra_ru": null,
       "w": 2770,
       "h": 2106,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать лишние поля",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/events/volochaevskaya-operatsiya/02"
       ]
     },
     {
@@ -85,7 +99,12 @@
       "extra_ru": null,
       "w": 323,
       "h": 239,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/events/volochaevskaya-operatsiya/04"
+      ]
     }
   ],
   "related": {

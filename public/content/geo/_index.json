@@ -1,0 +1,824 @@
+{
+  "schema": 1,
+  "kind": "geo",
+  "note_ru": "Реестр территорий. Владеет зона maps (CLAUDE.md §4, §5). Справка гособразования ссылается сюда через territory_id; territory_id равен id записи. Идентификаторы append-only — выданный id не переназначается никогда, иначе переимпорт осиротит привязанные карточки и полигоны. polygon: null — геометрии ещё нет, UI показывает заглушку.",
+  "base": {
+    "id": "geo-base",
+    "svg": null,
+    "viewBox": null,
+    "note_ru": "Единая векторная география (CLAUDE.md §10) ещё не построена. Когда появится — сюда лягут путь к geo-base.svg и viewBox, а polygon в записях станет ссылкой на контур в этой системе координат."
+  },
+  "src_roots": {
+    "note_ru": "Provenance, а не пути к ресурсам: это исходники заказчика вне репозитория, движок их не запрашивает. Требование «без ведущего слэша» (§5) к ним не относится, в dist/ они не резолвятся.",
+    "in": "../IN/new/МТК №29",
+    "assembly": "../Все карты (сборка)"
+  },
+  "camps": [
+    {
+      "id": "red",
+      "title_ru": "Красные",
+      "src_dir": "Территория/Красные"
+    },
+    {
+      "id": "white",
+      "title_ru": "Белые",
+      "src_dir": "Территория/Белые"
+    },
+    {
+      "id": "national",
+      "title_ru": "Национальные государства",
+      "src_dir": "Территория/Национальные государства"
+    },
+    {
+      "id": "rev-dem",
+      "title_ru": "Революционная демократия",
+      "src_dir": "Территория/Революционная демократия"
+    },
+    {
+      "id": "uprising",
+      "title_ru": "Восстания",
+      "src_dir": "Территория/Восстания"
+    },
+    {
+      "id": "intervention",
+      "title_ru": "Интервенция",
+      "src_dir": "Территория/Интервенция"
+    }
+  ],
+  "items": [
+    {
+      "id": "rsfsr",
+      "state_id": "rsfsr",
+      "title_ru": "РСФСР",
+      "camp": "red",
+      "src_no": 1,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Август 1918 г.",
+          "from": "1918-08",
+          "to": "1918-08",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 1 Август 1918.jpg"
+        },
+        {
+          "n": 2,
+          "label_ru": "Июль 1919 г.",
+          "from": "1919-07",
+          "to": "1919-07",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 2 Июль 1919.jpg"
+        },
+        {
+          "n": 3,
+          "label_ru": "Август 1920 г.",
+          "from": "1920-08",
+          "to": "1920-08",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 3 Август 1920.jpg"
+        },
+        {
+          "n": 4,
+          "label_ru": "Декабрь 1922 г.",
+          "from": "1922-12",
+          "to": "1922-12",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 4 Декабрь 1922.jpg"
+        }
+      ]
+    },
+    {
+      "id": "sksr",
+      "state_id": "sksr",
+      "title_ru": "Северо-Кавказская Советская Республика",
+      "camp": "red",
+      "src_no": 2,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "turkestan-sfr",
+      "state_id": "turkestan-sfr",
+      "title_ru": "Туркестанская СФР / АСР",
+      "camp": "red",
+      "src_no": 3,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "azerbaijani-ssr",
+      "state_id": "azerbaijani-ssr",
+      "title_ru": "Азербайджанская ССР",
+      "camp": "red",
+      "src_no": 4,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "armenian-ssr",
+      "state_id": "armenian-ssr",
+      "title_ru": "Армянская ССР",
+      "camp": "red",
+      "src_no": 5,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "georgian-ssr",
+      "state_id": "georgian-ssr",
+      "title_ru": "Грузинская ССР",
+      "camp": "red",
+      "src_no": 6,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "zsfsr",
+      "state_id": "zsfsr",
+      "title_ru": "Закавказская СФСР",
+      "camp": "red",
+      "src_no": 7,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "bnsr",
+      "state_id": "bnsr",
+      "title_ru": "Бухарская Народная Советская Республика",
+      "camp": "red",
+      "src_no": 8,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "khnsr",
+      "state_id": "khnsr",
+      "title_ru": "Хорезмская Народная Советская Республика",
+      "camp": "red",
+      "src_no": 9,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "unrs",
+      "state_id": "unrs",
+      "title_ru": "Украинская Народная Республика Советов",
+      "camp": "red",
+      "src_no": 10,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "ukrainian-ssr",
+      "state_id": "ukrainian-ssr",
+      "title_ru": "Украинская ССР",
+      "camp": "red",
+      "src_no": 11,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "osr",
+      "state_id": "osr",
+      "title_ru": "Одесская Советская Республика",
+      "camp": "red",
+      "src_no": 12,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "belorussian-ssr",
+      "state_id": "belorussian-ssr",
+      "title_ru": "Белорусская ССР",
+      "camp": "red",
+      "src_no": 13,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "finlyandskaya-sotsialisticheskaya-raboch",
+      "state_id": "finlyandskaya-sotsialisticheskaya-raboch",
+      "title_ru": "Финляндская Социалистическая Рабочая Республика",
+      "camp": "red",
+      "src_no": 14,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "fer",
+      "state_id": "fer",
+      "title_ru": "Дальневосточная Республика",
+      "camp": "red",
+      "src_no": 15,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "litovsko-belorusskaya-sotsialisticheskay",
+      "state_id": "litovsko-belorusskaya-sotsialisticheskay",
+      "title_ru": "Литовско-Белорусская Социалистическая Советская Республика",
+      "camp": "red",
+      "src_no": 16,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "etk",
+      "state_id": "etk",
+      "title_ru": "Эстляндская Трудовая Коммуна",
+      "camp": "red",
+      "src_no": 17,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "dksr",
+      "state_id": "dksr",
+      "title_ru": "Донецко-Криворожская Советская Республика",
+      "camp": "red",
+      "src_no": 18,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "latvssr",
+      "state_id": "latvssr",
+      "title_ru": "Латвийская Социалистическая Советская Республика",
+      "camp": "red",
+      "src_no": 19,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "northern-region",
+      "state_id": "northern-region",
+      "title_ru": "Северная область",
+      "camp": "white",
+      "src_no": 20,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Конец августа 1918 г.",
+          "from": "1918-08",
+          "to": "1918-08",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Северная область/20_Северная область _01.jpg"
+        },
+        {
+          "n": 2,
+          "label_ru": "Октябрь 1918 г.",
+          "from": "1918-10",
+          "to": "1918-10",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Северная область/20_Северная область _02.jpg"
+        },
+        {
+          "n": 3,
+          "label_ru": "Конец января 1919 г.",
+          "from": "1919-01",
+          "to": "1919-01",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Северная область/20_Северная область _03.jpg"
+        },
+        {
+          "n": 4,
+          "label_ru": "Ноябрь 1919 г.",
+          "from": "1919-11",
+          "to": "1919-11",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Северная область/20_Северная область _04.jpg"
+        },
+        {
+          "n": 5,
+          "label_ru": "Март 1920 г.",
+          "from": "1920-03",
+          "to": "1920-03",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Северная область/20_Северная область _05.jpg"
+        }
+      ]
+    },
+    {
+      "id": "vsyur",
+      "state_id": "vsyur",
+      "title_ru": "Вооружённые силы Юга России",
+      "camp": "white",
+      "src_no": 22,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Январь 1919 г.",
+          "from": "1919-01",
+          "to": "1919-01",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Вооруженные силы Юга России (ВСЮР)/22_ВСЮР 1.jpg"
+        },
+        {
+          "n": 2,
+          "label_ru": "Начало июля 1919 г.",
+          "from": "1919-07",
+          "to": "1919-07",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Вооруженные силы Юга России (ВСЮР)/22_ВСЮР 2.jpg"
+        },
+        {
+          "n": 3,
+          "label_ru": "Октябрь 1919 г.",
+          "from": "1919-10",
+          "to": "1919-10",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Вооруженные силы Юга России (ВСЮР)/22_ВСЮР 3.jpg"
+        },
+        {
+          "n": 4,
+          "label_ru": "Середина марта 1920 г.",
+          "from": "1920-03",
+          "to": "1920-03",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Вооруженные силы Юга России (ВСЮР)/22_ВСЮР 4.jpg"
+        }
+      ]
+    },
+    {
+      "id": "great-don-host",
+      "state_id": "great-don-host",
+      "title_ru": "Всевеликое Войско Донское",
+      "camp": "white",
+      "src_no": 23,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Май 1918 г.",
+          "from": "1918-05",
+          "to": "1918-05",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Всевеликое Войско Донское/23_Область Войска Донского (Всевеликое Войско Донское).jpg"
+        }
+      ]
+    },
+    {
+      "id": "orenburg-cossack-host",
+      "state_id": "orenburg-cossack-host",
+      "title_ru": "Оренбургское казачье войско",
+      "camp": "white",
+      "src_no": 26,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Декабрь 1917 г.",
+          "from": "1917-12",
+          "to": "1917-12",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Оренбургское казачье войско/26-Оренбургское казачье войско.jpg"
+        }
+      ]
+    },
+    {
+      "id": "russian-state-kolchak",
+      "state_id": "russian-state-kolchak",
+      "title_ru": "Российское Государство · А.В. Колчак",
+      "camp": "white",
+      "src_no": 27,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Конец апреля 1919 г.",
+          "from": "1919-04",
+          "to": "1919-04",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Российское Государство/27_Российское государство.jpg"
+        }
+      ]
+    },
+    {
+      "id": "rossiyskaya-vostochnaya-okraina",
+      "state_id": "rossiyskaya-vostochnaya-okraina",
+      "title_ru": "Российская Восточная окраина",
+      "camp": "white",
+      "src_no": 28,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Январь—октябрь 1920 г.",
+          "from": "1920-01",
+          "to": "1920-10",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Российская Восточная окраина/28_Российская Восточная Окраина.jpg"
+        }
+      ]
+    },
+    {
+      "id": "priamur-state",
+      "state_id": "priamur-state",
+      "title_ru": "Приамурское государственное образование",
+      "camp": "white",
+      "src_no": 30,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Январь 1922 г.",
+          "from": "1922-01",
+          "to": "1922-01",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Приамурский Земский Край/30 Приамурский Земский Край.jpg"
+        }
+      ]
+    },
+    {
+      "id": "south-russia-gov",
+      "state_id": "south-russia-gov",
+      "title_ru": "Правительство Юга России",
+      "camp": "white",
+      "src_no": 31,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Октябрь 1920 г.",
+          "from": "1920-10",
+          "to": "1920-10",
+          "polygon": null,
+          "src_root": "in",
+          "src_file": "Территория/Белые/Правительство Юга России/31_Правительство Юга России.jpg"
+        }
+      ]
+    },
+    {
+      "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+      "state_id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+      "title_ru": "Временное правительство (Российская республика)",
+      "camp": "rev-dem",
+      "src_no": 32,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Сентябрь—октябрь 1917 г.",
+          "from": "1917-09",
+          "to": "1917-10",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карта Осень 1917 — 32.jpg"
+        }
+      ]
+    },
+    {
+      "id": "zakaspiyskoe-vremennoe-pravitelstvo",
+      "state_id": "zakaspiyskoe-vremennoe-pravitelstvo",
+      "title_ru": "Закаспийское временное правительство",
+      "camp": "rev-dem",
+      "src_no": 33,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "komuch",
+      "state_id": "komuch",
+      "title_ru": "Комитет членов Учредительного собрания",
+      "camp": "rev-dem",
+      "src_no": 34,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Август 1918 г.",
+          "from": "1918-08",
+          "to": "1918-08",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты регионы — Карта Комуч — 34_Комуч.jpg"
+        }
+      ]
+    },
+    {
+      "id": "vopu",
+      "state_id": "vopu",
+      "title_ru": "Временное областное правительство Урала",
+      "camp": "rev-dem",
+      "src_no": 35,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "vsp",
+      "state_id": "vsp",
+      "title_ru": "Временное Сибирское правительство",
+      "camp": "rev-dem",
+      "src_no": 36,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "politcenter",
+      "state_id": "politcenter",
+      "title_ru": "Политцентр",
+      "camp": "rev-dem",
+      "src_no": 37,
+      "polygon": null,
+      "phases": [],
+      "note_ru": "Отдельной территории у Политцентра, по-видимому, нет: власть в Иркутске в январе 1920 г. Нужно решение заказчика — контур или заглушка."
+    },
+    {
+      "id": "gruzinskaya-demokraticheskaya-respublika",
+      "state_id": "gruzinskaya-demokraticheskaya-respublika",
+      "title_ru": "Грузинская Демократическая Республика",
+      "camp": "national",
+      "src_no": 38,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "unr",
+      "state_id": "unr",
+      "title_ru": "Украинская Народная Республика",
+      "camp": "national",
+      "src_no": 40,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "ukrainskaya-derzhava",
+      "state_id": "ukrainskaya-derzhava",
+      "title_ru": "Украинская держава",
+      "camp": "national",
+      "src_no": 41,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "estonskaya-respublika",
+      "state_id": "estonskaya-respublika",
+      "title_ru": "Эстонская Республика",
+      "camp": "national",
+      "src_no": 42,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "latviyskaya-respublika",
+      "state_id": "latviyskaya-respublika",
+      "title_ru": "Латвийская Республика",
+      "camp": "national",
+      "src_no": 43,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "litovskaya-respublika",
+      "state_id": "litovskaya-respublika",
+      "title_ru": "Литовская Республика",
+      "camp": "national",
+      "src_no": 44,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "zdfr",
+      "state_id": "zdfr",
+      "title_ru": "Закавказская Демократическая Федеративная Республика",
+      "camp": "national",
+      "src_no": 45,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "respublika-armeniya",
+      "state_id": "respublika-armeniya",
+      "title_ru": "Республика Армения",
+      "camp": "national",
+      "src_no": 46,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "adr",
+      "state_id": "adr",
+      "title_ru": "Азербайджанская Демократическая Республика",
+      "camp": "national",
+      "src_no": 47,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "bukharskiy-emirat",
+      "state_id": "bukharskiy-emirat",
+      "title_ru": "Бухарский эмират",
+      "camp": "national",
+      "src_no": 49,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "khivinskoe-khanstvo",
+      "state_id": "khivinskoe-khanstvo",
+      "title_ru": "Хивинское ханство",
+      "camp": "national",
+      "src_no": 50,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "finlyandskaya-respublika-s-10-avgusta-19",
+      "state_id": "finlyandskaya-respublika-s-10-avgusta-19",
+      "title_ru": "Финляндская Республика (с 10 августа 1918 по 17 июля 1919 г. – Королевство Финляндия)",
+      "camp": "national",
+      "src_no": 51,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "polskaya-respublika",
+      "state_id": "polskaya-respublika",
+      "title_ru": "Польская Республика",
+      "camp": "national",
+      "src_no": 52,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "bashkir-assr",
+      "state_id": "bashkir-assr",
+      "title_ru": "Башкирская АССР",
+      "camp": "red",
+      "src_no": 53,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
+      "state_id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
+      "title_ru": "Тамбовское восстание под руководством А. С. Антонова",
+      "camp": "uprising",
+      "src_no": 54,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+      "state_id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+      "title_ru": "Движение под руководством Н. И. Махно",
+      "camp": "uprising",
+      "src_no": 55,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "kochg",
+      "state_id": "kochg",
+      "title_ru": "Комитет освобождения Черноморской губернии",
+      "camp": "uprising",
+      "src_no": 57,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+      "state_id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+      "title_ru": "Красное партизанское движение в Сибири и на Дальнем Востоке",
+      "camp": "uprising",
+      "src_no": 58,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "chapannaya-voyna",
+      "state_id": "chapannaya-voyna",
+      "title_ru": "«Чапанная война»",
+      "camp": "uprising",
+      "src_no": 59,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "zapadno-sibirskoe-vosstanie",
+      "state_id": "zapadno-sibirskoe-vosstanie",
+      "title_ru": "Западно-Сибирское восстание",
+      "camp": "uprising",
+      "src_no": 61,
+      "polygon": null,
+      "phases": []
+    },
+    {
+      "id": "kronshtadtskoe-vosstanie-kronshtadtskiy",
+      "state_id": "kronshtadtskoe-vosstanie-kronshtadtskiy",
+      "title_ru": "Кронштадтское восстание («Кронштадтский мятеж»)",
+      "camp": "uprising",
+      "src_no": 63,
+      "polygon": null,
+      "phases": [],
+      "note_ru": "Кронштадт — крепость, а не область: на общей географии это точка, а не полигон. Нужно решение заказчика о форме показа."
+    },
+    {
+      "id": "allies-entente",
+      "state_id": "allies-entente",
+      "title_ru": "Союзники · Антанта",
+      "camp": "intervention",
+      "src_no": 64,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "1919 г.",
+          "from": "1919",
+          "to": "1919",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карта Союзная интервенция — 64.jpg"
+        }
+      ]
+    },
+    {
+      "id": "czechoslovak-corps",
+      "state_id": "czechoslovak-corps",
+      "title_ru": "Чехословацкий корпус",
+      "camp": "intervention",
+      "src_no": 65,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Конец мая – июнь 1918 г.",
+          "from": "1918-05",
+          "to": "1918-06",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карта Чехословацкий корпус — 65-rus.jpg"
+        }
+      ]
+    },
+    {
+      "id": "central-powers",
+      "state_id": "central-powers",
+      "title_ru": "Центральные державы",
+      "camp": "intervention",
+      "src_no": 66,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "Май 1918 г.",
+          "from": "1918-05",
+          "to": "1918-05",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты регионы — Карта Германская оккупация — 66. Центральные державы.jpg"
+        }
+      ]
+    },
+    {
+      "id": "ufa-directory",
+      "state_id": "ufa-directory",
+      "title_ru": "Временное Всероссийское правительство · Уфимская директория",
+      "camp": "rev-dem",
+      "src_no": 67,
+      "polygon": null,
+      "phases": [],
+      "note_ru": "Директория управляла той же территорией, что и Российское Государство (27). Возможно, полигон общий, а не свой."
+    },
+    {
+      "id": "ussr",
+      "state_id": "ussr",
+      "title_ru": "СССР",
+      "camp": "red",
+      "src_no": 71,
+      "polygon": null,
+      "phases": [
+        {
+          "n": 1,
+          "label_ru": "30 декабря 1922 г.",
+          "from": "1922-12-30",
+          "to": "1922-12-30",
+          "polygon": null,
+          "src_root": "assembly",
+          "src_file": "ТЗ Карты общие - вся страна — Карта СССР — Карта СССР.jpg"
+        }
+      ]
+    }
+  ]
+}

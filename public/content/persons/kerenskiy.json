@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 963,
       "h": 1280,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kerenskiy/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,14 @@
       "extra_ru": null,
       "w": 1083,
       "h": 1646,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kerenskiy/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +80,12 @@
       "extra_ru": null,
       "w": 388,
       "h": 427,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/persons/kerenskiy/03"
+      ]
     },
     {
       "n": 4,
@@ -80,7 +99,14 @@
       "extra_ru": null,
       "w": 1600,
       "h": 960,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kerenskiy/04"
+      ]
     },
     {
       "n": 5,
@@ -94,7 +120,14 @@
       "extra_ru": "*Временный совет Российской республики (Предпарламент) – совещательный орган при Временном правительстве. Образован в сентябре 1917 г.*",
       "w": 4174,
       "h": 3116,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/kerenskiy/05"
+      ]
     }
   ],
   "related": {

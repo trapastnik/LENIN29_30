@@ -44,7 +44,14 @@
       "extra_ru": null,
       "w": 889,
       "h": 1197,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/committee-salvation/01"
+      ]
     },
     {
       "n": 2,
@@ -58,7 +65,14 @@
       "extra_ru": null,
       "w": 916,
       "h": 1200,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/committee-salvation/02"
+      ]
     },
     {
       "n": 3,
@@ -72,7 +86,14 @@
       "extra_ru": null,
       "w": 2524,
       "h": 3798,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/committee-salvation/03"
+      ]
     },
     {
       "n": 4,
@@ -86,8 +107,15 @@
       "extra_ru": null,
       "w": 1632,
       "h": 1016,
-      "tiers": [],
-      "note_ru": "Удалить подпись на черном фоне внизу фотографии, оставить только изображение"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "Удалить подпись на черном фоне внизу фотографии, оставить только изображение",
+      "files": [
+        "media/parties/committee-salvation/04"
+      ]
     }
   ],
   "related": {

@@ -51,7 +51,14 @@
       "extra_ru": null,
       "w": 1588,
       "h": 1002,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/estonskaya-respublika/01"
+      ]
     },
     {
       "n": 2,
@@ -65,10 +72,18 @@
       "extra_ru": null,
       "w": 1295,
       "h": 760,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "42 Эстонская 02 1.jpg",
         "42 Эстонская 02 2.jpg"
+      ],
+      "files": [
+        "media/states/estonskaya-respublika/02",
+        "media/states/estonskaya-respublika/02p2"
       ]
     },
     {
@@ -83,7 +98,14 @@
       "extra_ru": null,
       "w": 1797,
       "h": 1221,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/estonskaya-respublika/03"
+      ]
     }
   ],
   "related": {

@@ -43,10 +43,17 @@
       "extra_ru": null,
       "w": 768,
       "h": 1063,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Обрезать белые поля фото",
       "directives": [
         "trim"
+      ],
+      "files": [
+        "media/parties/basmachestvo/01"
       ]
     },
     {
@@ -61,7 +68,14 @@
       "extra_ru": null,
       "w": 692,
       "h": 1024,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/basmachestvo/02"
+      ]
     },
     {
       "n": 3,
@@ -75,7 +89,14 @@
       "extra_ru": null,
       "w": 1926,
       "h": 1328,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/basmachestvo/03"
+      ]
     },
     {
       "n": 4,
@@ -89,7 +110,14 @@
       "extra_ru": "*Фузайл Максум, полевой командир (курбаши) басмачей. Воевал с РККА в Душанбе и Гиссаре. Сотрудничал с Ибрагим-беком, Курширматом, Энвер-пашой. В 1923 г. группа Максума была окружена РККА, а сам он бежал в Афганистан. Неоднократно вторгался на советскую территорию. Убит в 1930-е гг.*",
       "w": 1956,
       "h": 1170,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/parties/basmachestvo/04"
+      ]
     },
     {
       "n": 5,
@@ -103,7 +131,13 @@
       "extra_ru": null,
       "w": 1000,
       "h": 624,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/parties/basmachestvo/05"
+      ]
     }
   ],
   "related": {

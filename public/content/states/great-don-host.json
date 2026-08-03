@@ -51,7 +51,14 @@
       "extra_ru": null,
       "w": 2887,
       "h": 3700,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/great-don-host/01"
+      ]
     },
     {
       "n": 2,
@@ -65,7 +72,13 @@
       "extra_ru": null,
       "w": 580,
       "h": 808,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/states/great-don-host/02"
+      ]
     },
     {
       "n": 3,
@@ -79,7 +92,14 @@
       "extra_ru": "*Богаевский Африкан Петрович (1872–1934), один из руководителей Белого движения на Юге России, в 1919–1920 гг. войсковой атаман Всевеликого войска Донского.*",
       "w": 885,
       "h": 1333,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/states/great-don-host/03"
+      ]
     },
     {
       "n": 4,
@@ -93,7 +113,11 @@
       "extra_ru": null,
       "w": 2137,
       "h": 1163,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "23 ВВД 04 1.TIF",
         "23 ВВД 04 2.TIF"
@@ -101,6 +125,10 @@
       "note_ru": "Разместить обе стороны купюры на одной странице",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/great-don-host/04",
+        "media/states/great-don-host/04p2"
       ]
     }
   ],

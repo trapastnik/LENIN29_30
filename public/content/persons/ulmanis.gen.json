@@ -38,7 +38,13 @@
       "extra_ru": null,
       "w": 850,
       "h": 553,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ulmanis/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +58,14 @@
       "extra_ru": null,
       "w": 900,
       "h": 1307,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ulmanis/02"
+      ]
     },
     {
       "n": 3,
@@ -66,7 +79,14 @@
       "extra_ru": null,
       "w": 1468,
       "h": 1080,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/ulmanis/03"
+      ]
     }
   ],
   "related": {

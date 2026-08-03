@@ -81,7 +81,12 @@
       "extra_ru": null,
       "w": 277,
       "h": 469,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/events/kakhovka/04"
+      ]
     }
   ],
   "related": {

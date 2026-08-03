@@ -38,7 +38,13 @@
       "extra_ru": null,
       "w": 920,
       "h": 693,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "xs"
+      ],
+      "files": [
+        "media/persons/petlyura/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +58,12 @@
       "extra_ru": "*Из серии почтовых марок, заказанных в 1919 г. Директорией УНР венской типографии. Печатание марок было завершено в мае 1921 г., почтового применения они не имели.*",
       "w": 331,
       "h": 374,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/persons/petlyura/02"
+      ]
     },
     {
       "n": 3,
@@ -66,12 +77,19 @@
       "extra_ru": null,
       "w": 900,
       "h": 682,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "xs"
+      ],
       "parts": [
         "ПЕТЛЮРА С.В._03а.jpg",
         "ПЕТЛЮРА С.В._03б.jpg"
       ],
-      "note_ru": "Одна на выбор"
+      "note_ru": "Одна на выбор",
+      "files": [
+        "media/persons/petlyura/03",
+        "media/persons/petlyura/03p2"
+      ]
     }
   ],
   "related": {

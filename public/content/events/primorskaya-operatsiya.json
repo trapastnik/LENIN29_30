@@ -53,7 +53,14 @@
       "extra_ru": null,
       "w": 2056,
       "h": 1264,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/primorskaya-operatsiya/02"
+      ]
     },
     {
       "n": 3,
@@ -67,7 +74,14 @@
       "extra_ru": null,
       "w": 1530,
       "h": 909,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/primorskaya-operatsiya/03"
+      ]
     },
     {
       "n": 4,
@@ -81,7 +95,14 @@
       "extra_ru": "*Уборевич Иероним Петрович (1896–1937), военачальник Рабоче-крестьянской Красной армии (РККА), в 1922 г. военный министр, Главнокомандующий Народно-революционной армией и флотом Дальневосточной Республики (ДВР).*",
       "w": 1911,
       "h": 1281,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/events/primorskaya-operatsiya/04"
+      ]
     }
   ],
   "related": {

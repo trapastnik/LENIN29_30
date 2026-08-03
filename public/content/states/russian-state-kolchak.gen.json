@@ -44,13 +44,20 @@
       "extra_ru": null,
       "w": 2908,
       "h": 3900,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
       "directives": [
         "trim",
         "duplicate_of"
       ],
-      "duplicate_of": "хронике (переворот в Омске)"
+      "duplicate_of": "хронике (переворот в Омске)",
+      "files": [
+        "media/states/russian-state-kolchak/01"
+      ]
     },
     {
       "n": 2,
@@ -64,13 +71,20 @@
       "extra_ru": null,
       "w": 2889,
       "h": 2158,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
       "directives": [
         "trim",
         "duplicate_of"
       ],
-      "duplicate_of": "хронике (переворот в Омске)"
+      "duplicate_of": "хронике (переворот в Омске)",
+      "files": [
+        "media/states/russian-state-kolchak/02"
+      ]
     },
     {
       "n": 3,
@@ -84,12 +98,19 @@
       "extra_ru": null,
       "w": 1314,
       "h": 885,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Использовалось в хронике (переворот в Омске)",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "хронике (переворот в Омске)"
+      "duplicate_of": "хронике (переворот в Омске)",
+      "files": [
+        "media/states/russian-state-kolchak/03"
+      ]
     },
     {
       "n": 4,
@@ -103,13 +124,20 @@
       "extra_ru": null,
       "w": 3986,
       "h": 2953,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Использовалось в хронике (переворот в Омске)\nОбрезать поля",
       "directives": [
         "trim",
         "duplicate_of"
       ],
-      "duplicate_of": "хронике (переворот в Омске)"
+      "duplicate_of": "хронике (переворот в Омске)",
+      "files": [
+        "media/states/russian-state-kolchak/04"
+      ]
     },
     {
       "n": 5,
@@ -123,12 +151,19 @@
       "extra_ru": null,
       "w": 1686,
       "h": 1134,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "note_ru": "Использовалось в хронике (переворот в Омске)",
       "directives": [
         "duplicate_of"
       ],
-      "duplicate_of": "хронике (переворот в Омске)"
+      "duplicate_of": "хронике (переворот в Омске)",
+      "files": [
+        "media/states/russian-state-kolchak/05"
+      ]
     },
     {
       "n": 6,
@@ -142,7 +177,11 @@
       "extra_ru": "*Выпуск 1919 г. Российского правительства А. В. Колчака.*",
       "w": 1409,
       "h": 903,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "27 Российское гос 06 1.jpg",
         "27 Российское гос 06 2.jpg"
@@ -150,6 +189,10 @@
       "note_ru": "Разместить обе стороны купюры на одной странице",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/russian-state-kolchak/06",
+        "media/states/russian-state-kolchak/06p2"
       ]
     }
   ],

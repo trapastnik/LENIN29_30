@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mtk29/geo-index",
+  "title": "Реестр территорий — public/content/geo/_index.json",
+  "description": "Владеет зона maps (CLAUDE.md §4, §5). Лежит рядом с данными, а не в public/content/_schema/ — тот каталог принадлежит зоне content. Если content захочет свести схемы в одно место, перенос стоит одной строки в валидаторе.",
+  "type": "object",
+  "required": ["schema", "kind", "base", "camps", "items"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": 1 },
+    "kind": { "const": "geo" },
+    "note_ru": { "type": "string" },
+    "base": {
+      "type": "object",
+      "required": ["id", "svg", "viewBox"],
+      "description": "Единая векторная география (§10). Пока не построена — svg и viewBox null.",
+      "properties": {
+        "id": { "type": "string" },
+        "svg": { "type": ["string", "null"] },
+        "viewBox": { "type": ["string", "null"] },
+        "note_ru": { "type": "string" }
+      }
+    },
+    "src_roots": {
+      "type": "object",
+      "description": "Корни исходников заказчика вне репозитория. Provenance, а не пути к ресурсам: движок их не запрашивает."
+    },
+    "camps": {
+      "type": "array",
+      "description": "Шесть лагерей заказчика. Слаги совпадают с полем camp в public/content/states/*.json — расхождение ловит check_geo_index.py.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title_ru"],
+        "properties": {
+          "id": { "enum": ["red", "white", "national", "rev-dem", "uprising", "intervention"] },
+          "title_ru": { "type": "string" },
+          "src_dir": { "type": "string" }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "state_id", "title_ru", "camp", "polygon", "phases"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Значение territory_id в справке гособразования. APPEND-ONLY: выданный id не переназначается никогда."
+          },
+          "state_id": {
+            "type": ["string", "null"],
+            "description": "Обратная ссылка на public/content/states/<id>.json. Сейчас всегда равен id; поле существует, чтобы связь оставалась данными, а не совпадением имён, если территория когда-нибудь перестанет быть 1:1 с государством."
+          },
+          "title_ru": { "type": "string" },
+          "camp": { "enum": ["red", "white", "national", "rev-dem", "uprising", "intervention"] },
+          "src_no": {
+            "type": ["integer", "null"],
+            "description": "Номер заказчика в именах файлов (01…71). Устойчив, на него можно опираться."
+          },
+          "polygon": {
+            "type": ["string", "null"],
+            "description": "Контур в системе координат base. null — геометрии нет, UI показывает заглушку. Заполняется только когда полигон реально построен."
+          },
+          "phases": {
+            "type": "array",
+            "description": "Временные срезы контура. Пустой массив — картография от заказчика ещё не пришла. У «Северной области» и ВСЮР срезы запечёны в исходные картинки таймлайном справа; по §10 этот таймлайн должен стать UI, а не пикселями.",
+            "items": {
+              "type": "object",
+              "required": ["n", "label_ru", "from", "to", "polygon"],
+              "additionalProperties": false,
+              "properties": {
+                "n": { "type": "integer", "minimum": 1 },
+                "label_ru": { "type": "string", "description": "Подпись среза дословно с карты заказчика." },
+                "from": { "type": ["string", "null"], "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$" },
+                "to": { "type": ["string", "null"], "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$" },
+                "polygon": { "type": ["string", "null"] },
+                "src_root": { "enum": ["in", "assembly"] },
+                "src_file": { "type": "string" }
+              }
+            }
+          },
+          "note_ru": { "type": "string", "description": "Открытый вопрос по записи. Не для описания государства — это дело справки." }
+        }
+      }
+    }
+  }
+}

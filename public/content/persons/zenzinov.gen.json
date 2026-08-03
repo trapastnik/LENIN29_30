@@ -38,7 +38,14 @@
       "extra_ru": null,
       "w": 1250,
       "h": 1874,
-      "tiers": []
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "files": [
+        "media/persons/zenzinov/01"
+      ]
     },
     {
       "n": 2,
@@ -52,7 +59,12 @@
       "extra_ru": null,
       "w": 461,
       "h": 489,
-      "tiers": []
+      "tiers": [
+        "lg"
+      ],
+      "files": [
+        "media/persons/zenzinov/02"
+      ]
     },
     {
       "n": 3,
@@ -66,8 +78,15 @@
       "extra_ru": null,
       "w": 729,
       "h": 1000,
-      "tiers": [],
-      "note_ru": "УДАЛИТЬ ИЛИ ЗАТЕРЕТЬ НАДПИСИ ВНИЗУ ФОТО"
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
+      "note_ru": "УДАЛИТЬ ИЛИ ЗАТЕРЕТЬ НАДПИСИ ВНИЗУ ФОТО",
+      "files": [
+        "media/persons/zenzinov/03"
+      ]
     }
   ],
   "related": {

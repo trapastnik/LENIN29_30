@@ -39,7 +39,11 @@
       "extra_ru": null,
       "w": 1775,
       "h": 1240,
-      "tiers": [],
+      "tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ],
       "parts": [
         "33 ЗВП 01 1.jpg",
         "33 ЗВП 01 2.jpg"
@@ -47,6 +51,10 @@
       "note_ru": "Разместить обе стороны купюры на одной странице",
       "directives": [
         "spread"
+      ],
+      "files": [
+        "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01",
+        "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01p2"
       ]
     }
   ],
