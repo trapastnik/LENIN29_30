@@ -35,7 +35,7 @@ const TEMPLATE = `
     display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
     padding: 12px 18px;
     background: rgba(30, 20, 10, 0.88);
-    color: var(--paper-light, #efe4cd);
+    color: var(--paper-light);
     border: 1px solid var(--brass);
     border-radius: 10px;
     font-size: 14px;
@@ -76,7 +76,7 @@ const TEMPLATE = `
   .layer-row input[type="checkbox"] {
     appearance: none; -webkit-appearance: none;
     width: 18px; height: 18px;
-    border: 1.5px solid var(--paper-warm, #d9c398);
+    border: 1.5px solid var(--paper-warm);
     border-radius: 4px;
     cursor: pointer;
     position: relative;
@@ -103,8 +103,8 @@ const TEMPLATE = `
     padding: 6px 12px;
     font-size: 12px;
     background: rgba(250, 240, 210, 0.12);
-    color: var(--paper-light, #efe4cd);
-    border: 1px solid var(--paper-warm, #d9c398);
+    color: var(--paper-light);
+    border: 1px solid var(--paper-warm);
     border-radius: 5px;
     cursor: pointer;
     min-width: auto; min-height: auto;

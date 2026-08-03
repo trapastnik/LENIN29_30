@@ -194,8 +194,39 @@ def patch_keys(patch: Optional[dict]) -> set:
 # ------------------------------------------------------------------ запись
 
 
+# Каталоги, в которые зоне `content` можно писать (CLAUDE.md §4). Всё
+# остальное — чужое: `public/expo/**` у `ui`, `public/content/longreads/**`
+# у `simbirsk`, `maps/` и `geo/` у `maps`, `deploy/` и `package.json`
+# у оркестратора.
+WRITE_ZONES = (
+    SRC,
+    CONTENT / "persons", CONTENT / "parties", CONTENT / "states",
+    CONTENT / "events", CONTENT / "chronicle", CONTENT / "media",
+)
+
+
+def _assert_own_zone(path: Path) -> None:
+    """Сторож на границе зоны.
+
+    Разовой проверки мало: список каталогов ещё будет меняться, и однажды
+    кто-то добавит в `DIRS` лонгриды — тогда `archive_stale` начнёт удалять
+    файлы соседней зоны, и узнается это по пропавшему разделу. Дешевле
+    падать сразу и с именем файла.
+    """
+    p = path.resolve()
+    for zone in WRITE_ZONES:
+        try:
+            p.relative_to(zone.resolve())
+            return
+        except ValueError:
+            continue
+    raise PermissionError(
+        "запись за пределы зоны content: %s (CLAUDE.md §4)" % path)
+
+
 def write_json(path: Path, data) -> bool:
     """Записать, если содержимое изменилось. Возвращает True при записи."""
+    _assert_own_zone(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     if path.exists() and path.read_text(encoding="utf-8") == text:
@@ -440,7 +471,11 @@ def archive_stale(kind: str, imported: set, stats: Stats):
             continue
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001
+            # Битый json в своём каталоге — не повод пройти мимо: файл
+            # останется на диске, а в индексе его не будет.
+            stats.legacy.append("%s/%s: не разобран (%s), оставлен как есть"
+                                % (kind, name, type(exc).__name__))
             continue
         if isinstance(data, dict) and data.get("schema") == 1:
             continue
@@ -899,7 +934,7 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
     lines.append("| без изменений | %d |" % stats.same)
     lines.append("| конфликтов с патчем | %d |" % len(stats.conflicts))
     for kind, n in sorted(counts.items()):
-        lines.append("| %s | %d |" % (kind, n))
+        lines.append("| %s | %s |" % (kind, n))
     lines.append("")
     if stats.conflicts:
         lines += ["## Конфликты с ручными патчами", "",
@@ -1069,6 +1104,8 @@ def main(argv=None) -> int:
     counts: Dict[str, int] = {}
     by_kind: Dict[str, List[dict]] = {}
 
+    failures: List[str] = []
+
     for kind in [k for k in kinds if k != "chronicle"]:
         paths = sources_for(kind, args.only, args.pilot)
         built = []
@@ -1076,13 +1113,22 @@ def main(argv=None) -> int:
             try:
                 data = import_unit(kind, path, ctx, stats, manifest, notes_acc)
             except Exception as exc:  # noqa: BLE001
-                reports.append("СБОЙ на %s: %s: %s"
-                               % (path.relative_to(IN), type(exc).__name__, exc))
+                msg = "СБОЙ на %s: %s: %s" % (path.relative_to(IN),
+                                              type(exc).__name__, exc)
+                reports.append(msg)
+                failures.append(msg)
                 continue
             if data:
                 built.append(data)
         by_kind[kind] = built
-        counts[kind] = len(built)
+        counts[kind] = "%d/%d" % (len(built), len(paths))
+        # Источник есть, а на выходе пусто — это сбой, а не «нечего импортировать».
+        # Именно так выглядел переезд people-data.js: прогон отчитался
+        # «person 0», вернул успех и оставил на диске файлы прошлого прогона.
+        if paths and not built:
+            failures.append("%s: источников %d, импортировано 0 — раздел "
+                            "не обновлён, на диске данные прошлого прогона"
+                            % (kind, len(paths)))
         if built:
             archive_stale(kind, {e["id"] for e in built}, stats)
             rebuild_index(kind, built, registry, reports)
@@ -1097,7 +1143,12 @@ def main(argv=None) -> int:
         for year in years:
             path = IN / "Хроника конфликта" / ("%d.docx" % year)
             if not path.exists():
-                reports.append("нет файла хроники: %s" % path.name)
+                # Не «нечего импортировать», а пропавший источник: год
+                # запрошен явно. Переименуют папку хроники — молча уцелеют
+                # файлы прошлого прогона, и заметят это на приёмке.
+                msg = "нет файла хроники: %s" % path.name
+                reports.append(msg)
+                failures.append(msg)
                 continue
             ctx.src_rel = str(path.relative_to(IN))
             ctx.scope = None
@@ -1162,9 +1213,23 @@ def main(argv=None) -> int:
     print("новых %d · изменённых %d · без изменений %d · конфликтов с патчем %d"
           % (stats.new, stats.changed, stats.same, len(stats.conflicts)))
     for kind, n in sorted(counts.items()):
-        print("  %-16s %d" % (kind, n))
+        print("  %-16s %s" % (kind, n))
     if reports:
         print("аномалии (%d) → content-src/_import-report.md" % len(reports))
+
+    # Сбой обязан быть громким. Раньше он уходил строкой в файл отчёта,
+    # прогон печатал «person 0» и возвращал успех — и переезд одного чужого
+    # файла молча выбил 70 персон из семидесяти. Отчёт, который выглядит
+    # правдоподобно, опаснее упавшего прогона.
+    if failures:
+        print("\n%s\nСБОЕВ: %d — раздел(ы) НЕ обновлены\n%s"
+              % ("!" * 60, len(failures), "!" * 60), file=sys.stderr)
+        for msg in failures[:10]:
+            print("  " + msg, file=sys.stderr)
+        if len(failures) > 10:
+            print("  … ещё %d, все в content-src/_import-report.md"
+                  % (len(failures) - 10), file=sys.stderr)
+        return 1
     return 0
 
 
