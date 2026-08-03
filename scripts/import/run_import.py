@@ -498,6 +498,76 @@ def assign_person_camp(data: dict, ctx: "Ctx") -> None:
             % (data["id"], {k: v for k, v in verdict["scores"].items() if v}))
 
 
+KIND_RU = {"person": "личность", "party": "партия",
+           "state": "гособразование", "event": "карточка события"}
+
+TZ_LIMIT = 3000
+
+
+def visible_len(s: str) -> int:
+    """Длина ТЕКСТА, а не строки: markdown-разметка не считается.
+
+    Норма ТЗ про то, сколько читает посетитель. Ссылка
+    `[меньшевикам](#/party/mensheviks)` весит 38 знаков при 12 видимых,
+    и после роста связности до 82 % сырая длина распухла так, что 42 справки
+    числились нарушителями, укладываясь в норму. Считать по строке — значит
+    просить заказчика сократить текст, которого он не писал.
+    """
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s or "")
+    s = re.sub(r"\*{1,3}([^*]*)\*{1,3}", r"\1", s)
+    return len(s)
+
+
+def write_tz_report(by_kind: Dict[str, List[dict]]) -> None:
+    """Таблица превышений нормы ТЗ — готовый блок для письма музею.
+
+    Резать текст заказчика самовольно нельзя, но норма ТЗ — его же, и выбор
+    между «менять норму» и «сокращать тексты» за ним. Наше дело — точные
+    цифры по каждой справке.
+    """
+    rows = []
+    band = 0
+    for kind, ents in by_kind.items():
+        for e in ents:
+            n = visible_len(e.get("summary_ru"))
+            if n > TZ_LIMIT:
+                rows.append((n - TZ_LIMIT, n, kind, e["id"],
+                             e.get("title_ru") or e["id"]))
+            elif n > 2500:
+                band += 1
+    if not rows:
+        return
+    rows.sort(reverse=True)
+
+    def plural(n, one, few, many):
+        m10, m100 = n % 10, n % 100
+        if m10 == 1 and m100 != 11:
+            return one
+        if 2 <= m10 <= 4 and not (12 <= m100 <= 14):
+            return few
+        return many
+
+    total = sum(len(v) for v in by_kind.values())
+    out = ["# Превышение нормы ТЗ по объёму справки", "",
+           "Норма ТЗ — **%d знаков** основного текста. Считаются видимые знаки:"
+           % TZ_LIMIT,
+           "markdown-разметка ссылок в объём не входит, посетитель её не видит.",
+           "",
+           "Превышают норму: **%d %s из %d**. Ещё %d в диапазоне 2500–3000 —"
+           % (len(rows), plural(len(rows), "справка", "справки", "справок"),
+              total, band),
+           "к ним вопросов нет, но запас невелик.", "",
+           "| + сверх нормы | знаков | вид | id | название |",
+           "|---:|---:|---|---|---|"]
+    for over, n, kind, eid, title in rows:
+        out.append("| +%d | %d | %s | `%s` | %s |"
+                   % (over, n, KIND_RU.get(kind, kind), eid, title[:60]))
+    out += ["",
+            "Резать текст заказчика самовольно мы не будем. Норма ТЗ — его же:",
+            "либо норма меняется, либо тексты сокращает автор."]
+    (SRC / "_tz-limit.md").write_text("\n".join(out) + "\n", encoding="utf-8")
+
+
 def write_camp_report() -> None:
     if not CAMP_ROWS:
         return
@@ -1018,6 +1088,7 @@ def main(argv=None) -> int:
             rebuild_index(kind, built, registry, reports)
 
     reserve_event_index(ctx.events_by_no, reports)
+    write_tz_report(by_kind)
 
     date_rows: List[dict] = []
     years_done: List[int] = []
