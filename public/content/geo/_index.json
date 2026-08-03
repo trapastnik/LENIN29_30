@@ -57,14 +57,14 @@
       "title_ru": "РСФСР",
       "camp": "red",
       "src_no": 1,
-      "polygon": null,
+      "polygon": "content/geo/polygons/rsfsr-4.svg",
       "phases": [
         {
           "n": 1,
           "label_ru": "Август 1918 г.",
           "from": "1918-08",
           "to": "1918-08",
-          "polygon": null,
+          "polygon": "content/geo/polygons/rsfsr-1.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 1 Август 1918.jpg",
           "transform": {
@@ -101,7 +101,7 @@
           "label_ru": "Июль 1919 г.",
           "from": "1919-07",
           "to": "1919-07",
-          "polygon": null,
+          "polygon": "content/geo/polygons/rsfsr-2.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 2 Июль 1919.jpg",
           "transform": {
@@ -138,7 +138,7 @@
           "label_ru": "Август 1920 г.",
           "from": "1920-08",
           "to": "1920-08",
-          "polygon": null,
+          "polygon": "content/geo/polygons/rsfsr-3.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 3 Август 1920.jpg",
           "transform": {
@@ -175,7 +175,7 @@
           "label_ru": "Декабрь 1922 г.",
           "from": "1922-12",
           "to": "1922-12",
-          "polygon": null,
+          "polygon": "content/geo/polygons/rsfsr-4.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карты РСФСР — Карта РСФСР 4 Декабрь 1922.jpg",
           "transform": {
@@ -634,14 +634,14 @@
       "title_ru": "Временное правительство (Российская республика)",
       "camp": "rev-dem",
       "src_no": 32,
-      "polygon": null,
+      "polygon": "content/geo/polygons/vremennoe-pravitelstvo-rossiyskaya-respu-1.svg",
       "phases": [
         {
           "n": 1,
           "label_ru": "Сентябрь—октябрь 1917 г.",
           "from": "1917-09",
           "to": "1917-10",
-          "polygon": null,
+          "polygon": "content/geo/polygons/vremennoe-pravitelstvo-rossiyskaya-respu-1.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карта Осень 1917 — 32.jpg",
           "transform": {
@@ -1025,14 +1025,14 @@
       "title_ru": "СССР",
       "camp": "red",
       "src_no": 71,
-      "polygon": null,
+      "polygon": "content/geo/polygons/ussr-1.svg",
       "phases": [
         {
           "n": 1,
           "label_ru": "30 декабря 1922 г.",
           "from": "1922-12-30",
           "to": "1922-12-30",
-          "polygon": null,
+          "polygon": "content/geo/polygons/ussr-1.svg",
           "src_root": "assembly",
           "src_file": "ТЗ Карты общие - вся страна — Карта СССР — Карта СССР.jpg",
           "transform": {
