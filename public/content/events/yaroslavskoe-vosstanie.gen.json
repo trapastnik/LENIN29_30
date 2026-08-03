@@ -65,7 +65,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ],
@@ -90,7 +89,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "обрезать поля, выровнять фото",
       "directives": [
         "trim"
       ],
@@ -115,7 +113,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ],

@@ -40,7 +40,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ]
@@ -58,7 +57,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ]
@@ -89,8 +87,7 @@
       "extra_ru": null,
       "w": null,
       "h": null,
-      "tiers": [],
-      "note_ru": "Есть КОЛЧАК_03"
+      "tiers": []
     }
   ],
   "related": {

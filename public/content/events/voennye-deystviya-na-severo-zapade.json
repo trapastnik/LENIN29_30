@@ -39,8 +39,7 @@
       "extra_ru": null,
       "w": null,
       "h": null,
-      "tiers": [],
-      "note_ru": "Название карты не надо давать в подписи, оно уже есть на карте."
+      "tiers": []
     },
     {
       "n": 2,
@@ -55,7 +54,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Удалить поля",
       "directives": [
         "trim"
       ]
@@ -121,7 +119,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Сделать размер поменьше, качество хромает.",
       "files": [
         "media/events/voennye-deystviya-na-severo-zapade/05"
       ]

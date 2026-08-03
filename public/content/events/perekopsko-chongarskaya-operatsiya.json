@@ -39,8 +39,7 @@
       "extra_ru": null,
       "w": null,
       "h": null,
-      "tiers": [],
-      "note_ru": "Удалить подпись снизу. Оставить только изображение"
+      "tiers": []
     },
     {
       "n": 2,
@@ -97,7 +96,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Удалить поля",
       "directives": [
         "trim"
       ]
