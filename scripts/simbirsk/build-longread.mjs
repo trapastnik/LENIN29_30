@@ -52,7 +52,23 @@ if (missing.length) {
   process.exit(2);
 }
 
-const parts = ORDER.filter((f) => existsSync(join(SRC_DIR, f)));
+// Каждый файл из ORDER обязателен. Раньше отсутствующие просто отфильтровывались,
+// и это давало худший из возможных отказов: без единого компонента сборка
+// возвращала 0, писала рантайм из одной шапки, а --check на нём говорил
+// «совпадает». То есть `npm run check` был бы ЗЕЛЁНЫМ при мёртвой странице —
+// лонгрид на киоске пустой, в консоли ни слова. Пустой вход это ошибка,
+// а не «нечего делать».
+const absent = ORDER.filter((f) => !existsSync(join(SRC_DIR, f)));
+if (absent.length) {
+  console.error(`build-longread: не найдено ${absent.length} из ${ORDER.length} `
+    + `компонентов: ${absent.join(', ')}`);
+  console.error(`Искал в ${relative(ROOT, SRC_DIR)}. Файлы переименовали или снесли?`);
+  console.error('Собирать рантайм из остатка нельзя: страница молча останется '
+    + 'без компонентов, а гейт этого не заметит.');
+  process.exit(2);
+}
+
+const parts = ORDER;
 
 const header = `/* ┌────────────────────────────────────────────────────────────────┐
    │  ФАЙЛ СГЕНЕРИРОВАН. РУЧНЫЕ ПРАВКИ БУДУТ ЗАТЁРТЫ.               │
@@ -107,5 +123,7 @@ if (process.argv.includes('--check')) {
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, next);
-console.log(`build-longread: ${parts.length} файлов → ${rel} `
+// Счётчик со знаменателем: «3/3» и «0/3» различаются мгновенно, а «3» и «0»
+// требуют помнить, сколько должно было быть.
+console.log(`build-longread: ${parts.length}/${ORDER.length} компонентов → ${rel} `
   + `(${(next.length / 1024).toFixed(1)} КБ)`);
