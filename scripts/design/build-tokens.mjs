@@ -24,6 +24,8 @@ const SRC       = p('src/design/tokens.json');
 const TAIL      = p('scripts/design/tokens-tail.css');
 const OUT_CSS   = p('src/styles/tokens.css');
 const OUT_JS    = p('public/expo/brand-tokens.js');
+const OUT_FONTS = p('src/styles/fonts.css');
+const OUT_SCENE = p('public/expo/brand-tokens.css');
 
 const BANNER_CSS = (src) => `/* ┌──────────────────────────────────────────────────────────────────────┐
    │  ФАЙЛ СГЕНЕРИРОВАН. РУЧНЫЕ ПРАВКИ БУДУТ ЗАТЁРТЫ.                     │
@@ -174,6 +176,56 @@ function buildCss() {
   return L.join('\n');
 }
 
+// ── @font-face ─────────────────────────────────────────────────────────────
+// Один реестр, два файла: они лежат на разной глубине и путь к public/fonts/
+// у них разный. src/styles/ обрабатывает vite, public/expo/ — нет.
+function buildFontFaces(prefix) {
+  const L = [];
+  for (const f of raw.fontFaces.faces) {
+    const src = f.src.map(([file, fmt]) => `url('${prefix}${file}') format('${fmt}')`);
+    L.push('@font-face {');
+    L.push(`  font-family: '${f.family}';`);
+    L.push(`  font-weight: ${f.weight};`);
+    L.push(`  font-style: ${f.style};`);
+    L.push('  font-display: swap;');
+    L.push(`  src: ${src.join(',\n       ')};`);
+    L.push('}');
+  }
+  return L.join('\n');
+}
+
+function buildFontsCss() {
+  return [
+    BANNER_CSS(relative(ROOT, SRC)),
+    '',
+    ...[].concat(raw.fontFaces.comment).map(c => (c ? `/* ${c} */` : '')),
+    '',
+    buildFontFaces('/fonts/'),
+    '',
+  ].join('\n');
+}
+
+// CSS для сцены /expo/: те же @font-face и те же :root-переменные, но пути
+// относительные. Подключается страницами сцены ОДНОЙ строкой — они не могут
+// сослаться на src/styles/, потому что в dist/ этого каталога нет.
+function buildSceneCss() {
+  const tokensBlock = buildCss()
+    .split('\n')
+    .slice(BANNER_CSS('x').split('\n').length + 1)   // отрезаем баннер, свой ниже
+    .join('\n');
+  return [
+    BANNER_CSS(relative(ROOT, SRC)),
+    '',
+    '/* Для страниц public/expo/**. В dist/ каталога src/styles/ не существует:',
+    '   /expo/ лежит в public/, vite копирует его как есть и ссылки не правит.',
+    '   Поэтому здесь и @font-face, и :root — одним файлом с путями «../fonts/». */',
+    '',
+    buildFontFaces('../fonts/'),
+    '',
+    tokensBlock,
+  ].join('\n');
+}
+
 // ── JS ─────────────────────────────────────────────────────────────────────
 const j = (v) => JSON.stringify(v);
 
@@ -242,8 +294,10 @@ function buildJs() {
 
 // ── запись / проверка ──────────────────────────────────────────────────────
 const artifacts = [
-  [OUT_CSS, buildCss()],
-  [OUT_JS,  buildJs()],
+  [OUT_CSS,   buildCss()],
+  [OUT_JS,    buildJs()],
+  [OUT_FONTS, buildFontsCss()],
+  [OUT_SCENE, buildSceneCss()],
 ];
 
 const check = process.argv.includes('--check');
