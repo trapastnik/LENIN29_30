@@ -57,6 +57,17 @@
     .toc-btn:active { background: var(--brass); color: var(--iron-grey); }
     .toc-btn .glyph { font-size: calc(20px * var(--ui-scale, 1)); line-height: 1; }
 
+    /* Тач-цель «к экспозиции». `.back-link` приходит из pages.css (зона design)
+       с padding 14/24 и без min-height — это 48 px при норме §1 в 120, и на
+       4K столько же: pages.css целиком в сырых пикселях. Переопределяем
+       у себя, чужой файл не трогаем — так же, как зона ui сделала
+       в states.html. Общая починка pages.css за design, заявка подана. */
+    .back-link {
+      min-height: var(--touch-hit, 120px);
+      padding: 0 calc(24px * var(--ui-scale, 1));
+      justify-content: center;
+    }
+
     /* Лонгрид сам центрирует свою колонку, поэтому у main здесь нет
        ни своих отступов по бокам, ни ограничения ширины. */
     body.scrollable main { padding: 0; max-width: none; }
