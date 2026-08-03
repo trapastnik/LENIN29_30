@@ -2,6 +2,7 @@
   "schema": 1,
   "camp": "green",
   "venn_groups": [
-    "green"
+    "green",
+    "national"
   ]
 }
