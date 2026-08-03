@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "zinovev",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Г. Е. ЗИНОВЬЕВ",
   "title_en": null,
   "sort_key_ru": "зиновьев радомысльский",
@@ -159,5 +159,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

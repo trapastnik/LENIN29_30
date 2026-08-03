@@ -39,6 +39,8 @@ IN = ROOT.parent / "IN" / "new" / "МТК №29"
 CONTENT = ROOT / "public" / "content"
 SRC = ROOT / "content-src"
 
+import aliases_manual  # noqa: E402
+import camps  # noqa: E402
 import docxlib  # noqa: E402
 import entity_chronicle  # noqa: E402
 import entity_event  # noqa: E402
@@ -46,6 +48,7 @@ import entity_party  # noqa: E402
 import entity_person  # noqa: E402
 import entity_state  # noqa: E402
 import richtext  # noqa: E402
+import ruforms  # noqa: E402
 import spravka  # noqa: E402
 from docxlib import Document, Table, fold  # noqa: E402
 from ids import IdRegistry  # noqa: E402
@@ -340,13 +343,13 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
     # camp для партий и персон берём из уже выверенных индексов, а не выдумываем
     data = builder(doc, ctx)
     eid = data["id"]
-    if kind in ("party", "person") and ctx.camp is None:
+    if kind == "person" and ctx.camp is None:
+        assign_person_camp(data, ctx)
+    elif kind == "party" and ctx.camp is None:
         camp = lookup_camp(kind, eid)
         if camp:
             data["camp"] = camp
-            if kind == "person":
-                data["side"] = camp
-            if kind == "party" and not data.get("venn_groups"):
+            if not data.get("venn_groups"):
                 data["venn_groups"] = [camp]
 
     apply_media_manifest(data)
@@ -397,7 +400,10 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
     if unused:
         ctx.reports.append("%s/%s: файлы в папке без аннотации: %s"
                            % (kind, eid, ", ".join(unused[:8])))
-    return merged if wrote or True else merged
+    # В индекс идёт СЛИЯНИЕ, а не машинный слепок: ручные правки из
+    # `<id>.patch.json` (лагерь партии, координаты Венна) обязаны попасть
+    # в плитку, иначе патч виден в карточке и не виден в списке.
+    return merged
 
 
 def _collect_notes(kind: str, eid: str, data: dict, acc: dict):
@@ -444,6 +450,65 @@ def archive_stale(kind: str, imported: set, stats: Stats):
         path.unlink()
         stats.legacy.append("%s/%s → content-src/legacy/%s/%s (справка ещё не импортирована, "
                             "запись индекса помечена stub)" % (kind, eid, kind, name))
+
+
+CAMP_ROWS: List[dict] = []
+
+
+def assign_person_camp(data: dict, ctx: "Ctx") -> None:
+    """Проставить лагерь личности по регалиям.
+
+    Поля «лагерь» в справках личностей нет — заказчик его не заводил, а
+    `people-data.js` для этого не источник: там 17 человек и три значения,
+    куда всё небелое и некрасное свалено в `green` (Авксентьев — лидер
+    эсеров — «зелёный», Пилсудский — глава Польши — тоже).
+
+    Разбор регалий даёт 68 из 70; двое спорных остаются `null` — пустой
+    фильтр честнее неправильного. Итог помечается `camp_source` и
+    перебивается вручную через `<id>.patch.json`.
+    """
+    verdict = camps.classify(data.get("regalia_ru") or [], data.get("summary_ru"))
+    camp = verdict["camp"]
+    source = "regalia"
+    legacy = lookup_camp("person", data["id"])
+
+    if camp is None and legacy:
+        camp, source = legacy, "people-data"
+
+    if camp:
+        data["camp"] = camp
+        data["side"] = camp
+        data["camp_source"] = source
+
+    CAMP_ROWS.append({
+        "id": data["id"],
+        "camp": camp or "",
+        "source": source if camp else "",
+        "legacy": legacy or "",
+        "scores": verdict["scores"],
+        "first_regalia": (data.get("regalia_ru") or [""])[0],
+    })
+    if legacy and camp and legacy != camp:
+        ctx.reports.append(
+            "лагерь person/%s: по регалиям «%s», в people-data.js «%s» — "
+            "взяты регалии" % (data["id"], camp, legacy))
+    elif not camp:
+        ctx.reports.append(
+            "лагерь person/%s не определён: %s — размечать руками через patch"
+            % (data["id"], {k: v for k, v in verdict["scores"].items() if v}))
+
+
+def write_camp_report() -> None:
+    if not CAMP_ROWS:
+        return
+    head = "id;camp;source;people_data_js;first_regalia;" + ";".join(camps.CAMPS)
+    lines = [head]
+    for r in sorted(CAMP_ROWS, key=lambda x: (x["camp"], x["id"])):
+        sc = ";".join(str(r["scores"].get(c, 0)) for c in camps.CAMPS)
+        lines.append("%s;%s;%s;%s;%s;%s" % (
+            r["id"], r["camp"], r["source"], r["legacy"],
+            r["first_regalia"].replace(";", ",")[:80], sc))
+    (SRC / "_camps-persons.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 _MEDIA_MANIFEST: Optional[dict] = None
@@ -518,13 +583,22 @@ def lookup_camp(kind: str, eid: str) -> Optional[str]:
     key = {"party": "parties", "state": "states"}.get(kind)
     if key is None and kind == "person":
         if "person" not in _CAMP_CACHE:
-            js = (ROOT / "public/expo/people-data.js").read_text("utf-8")
+            # Запасной источник лагеря — подборка design-pass. Он НЕОБЯЗАТЕЛЕН:
+            # основной разбор идёт по регалиям (camps.py, 68 из 70), а этот файл
+            # принадлежит зоне ui и уже переезжал (`people-data.js` →
+            # `persons-data.js`). Отсутствие файла не должно ронять импорт:
+            # один переименованный чужой файл убивал все 70 персон разом.
             table = {}
-            for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
-                pid = chunk.split("'", 1)[0]
-                m = re.search(r"side:\s*'([a-z-]+)'", chunk)
-                if m:
-                    table[pid] = m.group(1)
+            for name in ("public/expo/people-data.js", "public/expo/persons-data.js"):
+                path = ROOT / name
+                if not path.exists():
+                    continue
+                js = path.read_text("utf-8")
+                for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
+                    pid = chunk.split("'", 1)[0]
+                    m = re.search(r"side:\s*'([a-z-]+)'", chunk)
+                    if m:
+                        table.setdefault(pid, m.group(1))
             _CAMP_CACHE["person"] = table
         return _CAMP_CACHE["person"].get(eid)
     if key is None:
@@ -558,19 +632,30 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
     idx = read_json(path) or {}
     idx["schema"] = 1
     idx["kind"] = kind
+    if kind == "person" and not idx.get("camps"):
+        # Словарь лагерей для фильтра. У партий и территорий он кураторский
+        # и пришёл из M0, у личностей раздела не было вовсе — заводим тот же,
+        # чтобы фильтр по лагерям читал одну и ту же таблицу везде.
+        idx["camps"] = [{"id": c, "title_ru": t} for c, t in (
+            ("red", "Красные"),
+            ("white", "Белые"),
+            ("rev-dem", "Революционная демократия"),
+            ("national", "Национальные движения"),
+            ("green", "Зелёные"),
+        )]
     items = idx.get("items") or []
     by_id = {it["id"]: it for it in items if "id" in it}
     order = [it["id"] for it in items if "id" in it]
 
-    # Все закреплённые id обязаны быть в индексе, даже если справка ещё не
-    # импортирована: словарь алиасов ссылается на них уже сейчас, а индекс —
-    # единственная таблица разрешения ссылок. Нет записи → битая ссылка.
-    for eid, rec in registry.bucket(kind).items():
-        if eid in by_id:
-            continue
-        by_id[eid] = {"id": eid, "title_ru": rec.get("title_ru") or eid,
-                      "has_card": False, "stub": True}
-        order.append(eid)
+    # Раньше сюда досевались все закреплённые id — на случай, если словарь
+    # алиасов сошлётся на ещё не импортированную справку. Досев убран:
+    # ссылок на такие записи нет ни одной, а UI считает разделы по длине
+    # `items` и рисует плитку на каждый элемент. Заглушки давали завышенные
+    # счётчики и карточки-призраки, открывающиеся в пустоту.
+    #
+    # Индекс описывает то, что UI может показать. Нет файла справки — нет
+    # и записи; id при этом остаётся закреплённым в `_ids.json` (реестр
+    # append-only), так что при поставке справки запись вернётся с тем же id.
 
     for ent in entities:
         eid = ent["id"]
@@ -587,17 +672,43 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["abbr_ru"] = ent["abbr_ru"]
         if ent.get("camp") and not rec.get("camp"):
             rec["camp"] = ent["camp"]
+        if ent.get("venn_groups"):
+            # Раскладку диаграммы строит зона design по индексу, а не по
+            # карточкам: тянуть 33 файла ради координат чипа она не будет.
+            rec["venn_groups"] = ent["venn_groups"]
         dates = ent.get("dates") or {}
         if dates.get("display_ru"):
             # В плитку идёт одна строка. У «Большевиков» в «Годах деятельности»
             # шесть строк с перечнем переименований партии — это текст карточки,
             # а не подпись плитки.
             rec["dates_display_ru"] = dates["display_ru"].split("\n")[0].strip()
-        lead = next((m for m in ent.get("media", []) if m.get("slot") == "lead"), None)
+        # Плитке нужна ЛЮБАЯ картинка с производными, а не обязательно первая
+        # по порядку. У Милюкова не прислан `_01`, но в карточке ещё четыре
+        # фотографии — при жёсткой привязке к slot=lead плитка оставалась
+        # пустой при непустой карточке. Порядок в самой карточке при этом
+        # не меняется: отсутствующая аннотация остаётся аннотацией №1.
+        lead = next((m for m in ent.get("media", [])
+                     if m.get("slot") == "lead" and m.get("file") and m.get("tiers")),
+                    None)
+        if lead is None:
+            lead = next((m for m in ent.get("media", [])
+                         if m.get("file") and m.get("tiers")), None)
         if lead:
             rec["lead_media"] = lead.get("file")
             rec["lead_w"] = lead.get("w")
             rec["lead_h"] = lead.get("h")
+            # Без списка собранных тиров `mediaUrl()` в зоне ui честно
+            # возвращает null: достроить имя файла по шаблону нельзя — у мелких
+            # сканов тиров меньше трёх, апскейла мы не делаем. Индекс обязан
+            # быть самодостаточным, иначе плитка остаётся заглушкой при
+            # собранных и отдающихся по http производных.
+            rec["lead_tiers"] = lead.get("tiers") or []
+        else:
+            # Ни одной картинки с производными — ключей быть не должно вовсе.
+            # `lead_media: null` UI отличить от «поля нет» не обязан, и такая
+            # запись уезжает в отрисовку миниатюры с пустым путём.
+            for k in ("lead_media", "lead_w", "lead_h", "lead_tiers"):
+                rec.pop(k, None)
         # Сортировка — по тому, что написано на плитке. Иначе «РСФСР» едет
         # в списке на «российская социалистическая…», а глазом это не сходится.
         rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
@@ -611,17 +722,23 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
     # Пересчитываем всегда: значение с прошлого прогона может быть протухшим
     # (справку убрали в архив, а `has_card: true` в индексе остался).
     imported = {e["id"] for e in entities}
-    for eid, rec in by_id.items():
-        if eid in imported:
-            continue
-        if (outdir / ("%s.json" % eid)).exists():
+    dropped = []
+    for eid, rec in list(by_id.items()):
+        if eid in imported or (outdir / ("%s.json" % eid)).exists():
             rec["has_card"] = True
             rec.pop("stub", None)
-        else:
-            rec["has_card"] = False
-            rec["stub"] = True
+            continue
+        # Карточки нет и не будет: справку не прислали либо запись осталась
+        # от снятого дубля транслитерации. Держать её в индексе — значит
+        # завышать счётчик раздела и открывать плитку в пустоту.
+        del by_id[eid]
+        dropped.append("%s «%s»" % (eid, (rec.get("title_ru") or "")[:40]))
 
-    idx["items"] = [by_id[i] for i in order]
+    if dropped:
+        reports.append("из индекса %s убраны записи без карточки (%d): %s"
+                       % (kind, len(dropped), "; ".join(sorted(dropped))))
+
+    idx["items"] = [by_id[i] for i in order if i in by_id]
     if write_json(path, idx):
         reports.append("индекс обновлён: %s" % path.relative_to(ROOT))
 
@@ -720,6 +837,8 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
                   "Значит, заказчик поправил ровно то место, что правили руками — "
                   "патч надо пересмотреть.", ""]
         lines += ["- `%s`" % c for c in stats.conflicts] + [""]
+    write_camp_report()
+
     if stats.legacy:
         lines += ["## Черновики M0, убранные в архив", "",
                   "Файлы существовали до первого прогона импорта. Копии сохранены, "
@@ -737,13 +856,18 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
 
 
 def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
-    """Сид словаря алиасов из разметки заказчика.
+    """Сид словаря алиасов из разметки заказчика, с поправкой на склонение.
 
-    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками.
-    Русский склоняется, `большевиков` / `большевиками` / `большевики` —
-    три формы одной сущности, и морфологию тут не разводят. Автомат кладёт
-    очевидные совпадения с заголовками, остальное уезжает в
-    `_aliases-todo.csv` по убыванию частоты — оттуда и добираются руками.
+    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками,
+    автомат только дописывает недостающее. Сопоставление — `ruforms`:
+    точное сравнение строк ловит хорошо если половину, потому что заказчик
+    пометил упоминания прямо в тексте, а русский склоняется.
+
+    Берём только однозначные совпадения. Фраза, похожая сразу на две
+    сущности («Краснова» — персона `krasnov` или партия `reds-general`),
+    уходит в `_aliases-todo.csv` с обоими кандидатами: неверная ссылка хуже
+    отсутствующей, она уводит посетителя не туда, а неразрезолвленное
+    упоминание просто остаётся жирным курсивом.
     """
     from collections import Counter
 
@@ -754,56 +878,75 @@ def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
         except Exception as exc:  # noqa: BLE001
             print("  не открылся %s: %s" % (p.name, exc))
             continue
-        cells = [c for t in doc.tables for row in t for c in row.cells]
-        for c in cells:
-            for phrase in richtext.mentions(c.paras):
-                counter[phrase.strip()] += 1
+        for t in doc.tables:
+            for row in t:
+                for c in row.cells:
+                    for phrase in richtext.mentions(c.paras):
+                        counter[phrase.strip()] += 1
 
+    def load_index(folder):
+        return read_json(CONTENT / folder / "_index.json")
+
+    def load_card(folder, eid):
+        return read_json(CONTENT / folder / ("%s.json" % eid))
+
+    targets = ruforms.build_targets(load_index, load_card)
     existing = richtext.Aliases()
-    auto: Dict[str, str] = {}
-    titles = {}
-    for kind in ("person", "party", "state", "event"):
-        for eid, rec in registry.bucket(kind).items():
-            t = fold(rec.get("title_ru") or "")
-            if t:
-                titles.setdefault(t, "%s:%s" % (kind, eid))
 
+    # Кураторские решения перекрывают автомат: спорные пары и сущности,
+    # названные в тексте иначе, чем в проекте (разбор — aliases_manual).
+    by_key = {ruforms.key(ph): tgt for ph, tgt in aliases_manual.BY_KEY.items()}
+    deny = {ruforms.key(ph) for ph in aliases_manual.DENY}
+
+    auto: Dict[str, str] = {}
     todo = []
+    ambiguous = []
     for phrase, n in counter.most_common():
-        key = fold(phrase)
-        if not key or len(key) < 3:
+        if not phrase or len(phrase) < 3 or phrase in existing.map:
             continue
-        if key in existing.map:
+        k = ruforms.key(phrase)
+        if phrase in aliases_manual.EXACT:
+            auto[phrase] = aliases_manual.EXACT[phrase]
             continue
-        hit = titles.get(key)
-        if hit:
-            auto[phrase] = hit
+        if k in deny:
+            todo.append((n, phrase, "снято вручную: слишком общая фраза"))
+            continue
+        if k in by_key:
+            auto[phrase] = by_key[k]
+            continue
+        cands = targets.get(k)
+        if not cands:
+            todo.append((n, phrase, ""))
+        elif len(cands) == 1:
+            auto[phrase] = next(iter(cands))
         else:
-            todo.append((n, phrase))
+            ambiguous.append((n, phrase, sorted(cands)))
+            todo.append((n, phrase, " | ".join(sorted(cands))))
 
     path = richtext.ALIASES
-    if path.exists():
-        data = json.loads(path.read_text(encoding="utf-8"))
-        merged = dict(data.get("map") or {})
-        added = {k: v for k, v in auto.items() if k not in merged}
-        merged.update(added)
-        data["map"] = dict(sorted(merged.items()))
-        write_json(path, data)
-        print("  алиасов дописано автоматически: %d (файл вёлся руками, не перезаписан)"
-              % len(added))
-    else:
-        write_json(path, {
-            "schema": 1,
-            "_note": ("Словарь «фраза → сущность». Ведётся РУКАМИ: русский "
-                      "склоняется, одной сущности соответствует несколько форм. "
-                      "Ключ — фраза как в тексте, значение — «kind:id». "
-                      "Реалистичная цель — 350–400 записей ≈ 80 % упоминаний."),
-            "map": dict(sorted(auto.items())),
-        })
-        print("  создан %s, автоматом легло %d" % (path.name, len(auto)))
+    data = read_json(path) or {
+        "schema": 1,
+        "_note": ("Словарь «фраза → сущность». Ключ — фраза как в тексте, "
+                  "значение — «kind:id». Автомат дописывает однозначные "
+                  "совпадения (scripts/import/ruforms.py), спорные и "
+                  "ненайденные уходят в _aliases-todo.csv."),
+    }
+    merged = dict(data.get("map") or {})
+    added = {k: v for k, v in auto.items() if k not in merged}
+    manual_hits = sum(1 for k in added if k in aliases_manual.EXACT
+                      or ruforms.key(k) in by_key)
+    merged.update(added)
+    data["map"] = dict(sorted(merged.items()))
+    write_json(path, data)
+    print("  алиасов дописано: %d (из них по кураторским правилам %d), всего %d"
+          % (len(added), manual_hits, len(merged)))
+    if ambiguous:
+        print("  неоднозначных, оставлены человеку: %d" % len(ambiguous))
+        for n, ph, cands in ambiguous[:6]:
+            print("     %-34s → %s" % (ph[:34], ", ".join(cands)))
 
-    lines = ["count;phrase"]
-    lines += ["%d;%s" % (n, ph.replace(";", ",")) for n, ph in todo]
+    lines = ["count;phrase;candidates"]
+    lines += ["%d;%s;%s" % (n, ph.replace(";", ","), c) for n, ph, c in todo]
     (SRC / "_aliases-todo.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("  неразрезолвленных фраз: %d → content-src/_aliases-todo.csv" % len(todo))
 

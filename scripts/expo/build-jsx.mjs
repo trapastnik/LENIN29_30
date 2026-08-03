@@ -39,8 +39,11 @@ const SOURCES = [
   'shared.jsx',
   'main-screen.jsx',
   'boot-expo.jsx',
+  'rich-text.jsx',
   'people-ui.jsx',
   'boot-people.jsx',
+  'chronicle-ui.jsx',
+  'boot-chronicle.jsx',
 ];
 
 // direction-a/b/c.jsx здесь намеренно нет. Это заготовки design-pass —
@@ -55,8 +58,9 @@ const SOURCES = [
 // одинаковое top-level имя в двух файлах — SyntaxError, и увидишь ты его
 // только в браузере. Раньше это пряталось: Babel опускал const до var.
 const PAGES = {
-  'index.html':  ['shared.jsx', 'main-screen.jsx', 'boot-expo.jsx'],
-  'people.html': ['people-ui.jsx', 'boot-people.jsx'],
+  'index.html':     ['shared.jsx', 'main-screen.jsx', 'boot-expo.jsx'],
+  'people.html':    ['rich-text.jsx', 'people-ui.jsx', 'boot-people.jsx'],
+  'chronicle.html': ['rich-text.jsx', 'chronicle-ui.jsx', 'boot-chronicle.jsx'],
 };
 
 // Локальные копии React. Держим здесь, чтобы скрипт падал с внятным текстом,

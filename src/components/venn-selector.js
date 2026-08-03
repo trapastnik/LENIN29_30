@@ -8,6 +8,8 @@
 //   .headers    — массив { camp, x, y } — позиции заголовков групп
 //   .items      — массив партий с x/y и _is_general
 
+import { t, onLangChange } from '../data/i18n.js';
+
 const ICONS = {
   star:   `<path d="M12 2l2.9 6.9L22 10l-5.3 4.6L18.2 22 12 18.3 5.8 22l1.5-7.4L2 10l7.1-1.1L12 2z" fill="currentColor"/>`,
   shield: `<path d="M12 2L4 5v7c0 5.5 3.4 9.5 8 10 4.6-.5 8-4.5 8-10V5l-8-3z" fill="none" stroke="currentColor" stroke-width="1.8"/>`,
@@ -184,12 +186,12 @@ const TEMPLATE = `
   .all-btn:active { background: rgba(196, 154, 46, 0.2); }
 </style>
 
-<div class="ornament">Пересекающиеся области показывают возможные идеологические связи и участие партий в нескольких направлениях политической жизни.</div>
+<div class="ornament"></div>
 <img class="bg" alt="">
 <div class="stage"></div>
 <footer>
-  <div class="stats"><b>Всего справок: 20</b>&nbsp;&nbsp;·&nbsp;&nbsp;Максимум 3000 знаков текста, до 5 изображений</div>
-  <button class="all-btn" type="button">Все справки →</button>
+  <div class="stats"><b></b>&nbsp;&nbsp;·&nbsp;&nbsp;<span class="stats-note"></span></div>
+  <button class="all-btn" type="button"></button>
 </footer>
 `;
 
@@ -210,6 +212,34 @@ export class VennSelector extends HTMLElement {
     if (url) this._bg.src = url;
     else this._bg.removeAttribute('src');
   }
+
+  // Интерфейсные подписи двуязычны, содержание справки — нет (CLAUDE.md §9).
+  // Перерисовываемся сами: страница не знает, какие компоненты на ней живут.
+  connectedCallback() {
+    this._paintStatic();
+    if (this._unLang) return;
+    this._unLang = onLangChange(() => { this._paintStatic(); this._render(); });
+  }
+
+  // Подписи из шаблона нельзя переводить в самом шаблоне: он строкой лежит
+  // в модуле и вычисляется один раз при загрузке, то есть замораживает язык
+  // на том, что стоял в момент открытия страницы.
+  _paintStatic() {
+    const set = (sel, text) => {
+      const el = this.shadowRoot.querySelector(sel);
+      if (el) el.textContent = text;
+    };
+    set('.ornament', t(
+      'Пересекающиеся области показывают возможные идеологические связи и участие партий в нескольких направлениях политической жизни.',
+      'Overlapping areas show possible ideological ties and the involvement of parties in several strands of political life.'));
+    set('.stats b', t('Всего справок: 20', 'Dossiers in total: 20'));
+    set('.stats-note', t('Максимум 3000 знаков текста, до 5 изображений', 'Up to 3000 characters of text, up to 5 images'));
+    set('.all-btn', t('Все справки →', 'All dossiers →'));
+  }
+  disconnectedCallback() {
+    if (this._unLang) { this._unLang(); this._unLang = null; }
+  }
+
   set camps(v)   { this._camps = v || []; this._render(); }
   set headers(v) { this._headers = v || []; this._render(); }
   set items(v)   { this._items = v || []; this._render(); }
@@ -243,7 +273,7 @@ export class VennSelector extends HTMLElement {
       const btn = document.createElement('button');
       btn.className = 'group-button';
       btn.type = 'button';
-      btn.textContent = 'Справка';
+      btn.textContent = t('Справка', 'Dossier');
       btn.addEventListener('click', () => this._emitParty(general));
 
       wrap.append(icon, title, btn);

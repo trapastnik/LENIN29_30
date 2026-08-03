@@ -4,7 +4,7 @@
 const SECTIONS = [
   {
     id: "chronicle",
-    src: null,
+    src: "chronicle.html",
     ru: "\u0425\u0440\u043E\u043D\u0438\u043A\u0430 \u0441\u043E\u0431\u044B\u0442\u0456\u0439",
     en: "Chronicle of events",
     noteRu: "\u041B\u0435\u043D\u0442\u0430 \u0432\u0440\u0435\u043C\u0435\u043D\u0438 1917\u20131922, \u0441\u043E\u0431\u044B\u0442\u0456\u044F \u043F\u043E \u0433\u043E\u0434\u0430\u043C\u044A",
@@ -98,6 +98,33 @@ function Expo() {
       alive = false;
     };
   }, []);
+  const pendingYear = React.useRef(null);
+  const postYear = React.useCallback((year) => {
+    const frame = [...document.querySelectorAll("iframe")].find((f) => f.title === "chronicle");
+    if (!frame || !frame.contentWindow || !frame.dataset.ready) {
+      pendingYear.current = year;
+      return;
+    }
+    try {
+      frame.contentWindow.postMessage({ type: "mtk29:goto-year", year }, "*");
+    } catch {
+    }
+  }, []);
+  const onChronicleLoad = React.useCallback((e) => {
+    const frame = e.currentTarget;
+    frame.dataset.ready = "1";
+    if (pendingYear.current == null) return;
+    try {
+      frame.contentWindow.postMessage({ type: "mtk29:goto-year", year: pendingYear.current }, "*");
+    } catch {
+    }
+    pendingYear.current = null;
+  }, []);
+  const openYear = React.useCallback((year) => {
+    setActiveYear(year);
+    openSectionRef.current("chronicle");
+    postYear(year);
+  }, [postYear]);
   const openSection = React.useCallback((id) => {
     setActiveSection(id);
     setLoadedSections((prev) => {
@@ -118,6 +145,10 @@ function Expo() {
     });
   }, []);
   const closeSection = React.useCallback(() => setActiveSection(null), []);
+  const openSectionRef = React.useRef(openSection);
+  React.useEffect(() => {
+    openSectionRef.current = openSection;
+  }, [openSection]);
   React.useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") setActiveSection(null);
@@ -186,7 +217,7 @@ function Expo() {
     flexShrink: 0,
     boxShadow: "0 0 120px rgba(0,0,0,.9)",
     overflow: "hidden"
-  } }, /* @__PURE__ */ React.createElement(Backdrop, null), /* @__PURE__ */ React.createElement(MainHeader, { lang, setLang }), /* @__PURE__ */ React.createElement(Timeline, { years, active: activeYear, onPick: setActiveYear, lang }), /* @__PURE__ */ React.createElement(SectionTiles, { sections, lang, onOpen: openSection }), /* @__PURE__ */ React.createElement("div", { style: {
+  } }, /* @__PURE__ */ React.createElement(Backdrop, null), /* @__PURE__ */ React.createElement(MainHeader, { lang, setLang }), /* @__PURE__ */ React.createElement(Timeline, { years, active: activeYear, onPick: openYear, lang }), /* @__PURE__ */ React.createElement(SectionTiles, { sections, lang, onOpen: openSection }), /* @__PURE__ */ React.createElement("div", { style: {
     position: "absolute",
     bottom: 26,
     left: 0,
@@ -210,6 +241,7 @@ function Expo() {
     {
       src: s.src,
       title: s.id,
+      onLoad: s.id === "chronicle" ? onChronicleLoad : void 0,
       style: {
         position: "absolute",
         inset: 0,

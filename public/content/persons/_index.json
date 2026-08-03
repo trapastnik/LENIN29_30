@@ -11,7 +11,12 @@
       "lead_w": 2628,
       "lead_h": 1892,
       "sort_key_ru": "в. и. ленин ульянов",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kolchak",
@@ -22,7 +27,12 @@
       "lead_w": 1350,
       "lead_h": 1245,
       "sort_key_ru": "а. в. колчак",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "grigorev",
@@ -32,13 +42,13 @@
       "lead_w": 788,
       "lead_h": 1562,
       "sort_key_ru": "н. а. григорьев серветников",
-      "has_card": true
-    },
-    {
-      "id": "antonov",
-      "title_ru": "Антоновъ",
-      "has_card": false,
-      "stub": true
+      "has_card": true,
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "avksentiev",
@@ -50,7 +60,12 @@
       "lead_media": "media/persons/avksentiev/01",
       "lead_w": 2506,
       "lead_h": 3430,
-      "sort_key_ru": "авксентьев"
+      "sort_key_ru": "авксентьев",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "budyonny",
@@ -62,13 +77,12 @@
       "lead_media": "media/persons/budyonny/01",
       "lead_w": 2540,
       "lead_h": 3306,
-      "sort_key_ru": "буденный"
-    },
-    {
-      "id": "chapaev",
-      "title_ru": "Чапаевъ",
-      "has_card": false,
-      "stub": true
+      "sort_key_ru": "буденный",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "denikin",
@@ -80,7 +94,12 @@
       "lead_media": "media/persons/denikin/01",
       "lead_w": 1375,
       "lead_h": 2106,
-      "sort_key_ru": "деникинъ"
+      "sort_key_ru": "деникинъ",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "frunze",
@@ -92,7 +111,12 @@
       "lead_media": "media/persons/frunze/01",
       "lead_w": 1271,
       "lead_h": 1764,
-      "sort_key_ru": "фрунзе"
+      "sort_key_ru": "фрунзе",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kornilov",
@@ -104,7 +128,12 @@
       "lead_media": "media/persons/kornilov/01",
       "lead_w": 1297,
       "lead_h": 1856,
-      "sort_key_ru": "корниловъ"
+      "sort_key_ru": "корниловъ",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "makhno",
@@ -116,7 +145,12 @@
       "lead_media": "media/persons/makhno/01",
       "lead_w": 1872,
       "lead_h": 2400,
-      "sort_key_ru": "махно"
+      "sort_key_ru": "махно",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "pilsudski",
@@ -128,13 +162,12 @@
       "lead_media": "media/persons/pilsudski/01",
       "lead_w": 3513,
       "lead_h": 4799,
-      "sort_key_ru": "пилсудскій"
-    },
-    {
-      "id": "romanov",
-      "title_ru": "Романовъ",
-      "has_card": false,
-      "stub": true
+      "sort_key_ru": "пилсудскій",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "semyonov",
@@ -146,7 +179,11 @@
       "lead_media": "media/persons/semyonov/01",
       "lead_w": 600,
       "lead_h": 789,
-      "sort_key_ru": "семеновъ"
+      "sort_key_ru": "семеновъ",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "trotsky",
@@ -158,7 +195,12 @@
       "lead_media": "media/persons/trotsky/01",
       "lead_w": 2349,
       "lead_h": 3535,
-      "sort_key_ru": "троцкій"
+      "sort_key_ru": "троцкій",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "tukhachevsky",
@@ -170,7 +212,12 @@
       "lead_media": "media/persons/tukhachevsky/01",
       "lead_w": 1119,
       "lead_h": 1719,
-      "sort_key_ru": "тухачевскій"
+      "sort_key_ru": "тухачевскій",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "wrangel",
@@ -182,7 +229,12 @@
       "lead_media": "media/persons/wrangel/01",
       "lead_w": 1734,
       "lead_h": 2685,
-      "sort_key_ru": "врангель"
+      "sort_key_ru": "врангель",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "yudenich",
@@ -194,7 +246,12 @@
       "lead_media": "media/persons/yudenich/01",
       "lead_w": 800,
       "lead_h": 1282,
-      "sort_key_ru": "юденичъ"
+      "sort_key_ru": "юденичъ",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "alekseev",
@@ -205,7 +262,13 @@
       "lead_media": "media/persons/alekseev/01",
       "lead_w": 756,
       "lead_h": 1199,
-      "sort_key_ru": "алексеев"
+      "sort_key_ru": "алексеев",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "anvelt",
@@ -216,7 +279,13 @@
       "lead_media": "media/persons/anvelt/01",
       "lead_w": 884,
       "lead_h": 1136,
-      "sort_key_ru": "анвельт"
+      "sort_key_ru": "анвельт",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "blyukher",
@@ -227,7 +296,13 @@
       "lead_media": "media/persons/blyukher/01",
       "lead_w": 1017,
       "lead_h": 1544,
-      "sort_key_ru": "блюхер"
+      "sort_key_ru": "блюхер",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bogaevskiy",
@@ -238,7 +313,13 @@
       "lead_media": "media/persons/bogaevskiy/01",
       "lead_w": 800,
       "lead_h": 1025,
-      "sort_key_ru": "богаевский"
+      "sort_key_ru": "богаевский",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "boldyrev",
@@ -249,7 +330,12 @@
       "lead_media": "media/persons/boldyrev/01",
       "lead_w": 848,
       "lead_h": 1184,
-      "sort_key_ru": "болдырев"
+      "sort_key_ru": "болдырев",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bukeykhanov",
@@ -260,7 +346,13 @@
       "lead_media": "media/persons/bukeykhanov/01",
       "lead_w": 923,
       "lead_h": 1204,
-      "sort_key_ru": "букейханов"
+      "sort_key_ru": "букейханов",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bych",
@@ -271,7 +363,12 @@
       "lead_media": "media/persons/bych/01",
       "lead_w": 620,
       "lead_h": 870,
-      "sort_key_ru": "быч"
+      "sort_key_ru": "быч",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "vatsetis",
@@ -282,7 +379,13 @@
       "lead_media": "media/persons/vatsetis/01",
       "lead_w": 1535,
       "lead_h": 2046,
-      "sort_key_ru": "вацетис"
+      "sort_key_ru": "вацетис",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vologodskiy",
@@ -293,7 +396,12 @@
       "lead_media": "media/persons/vologodskiy/01",
       "lead_w": 560,
       "lead_h": 810,
-      "sort_key_ru": "вологодский"
+      "sort_key_ru": "вологодский",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "volskiy",
@@ -304,7 +412,11 @@
       "lead_media": "media/persons/volskiy/01",
       "lead_w": 249,
       "lead_h": 400,
-      "sort_key_ru": "вольский"
+      "sort_key_ru": "вольский",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg"
+      ]
     },
     {
       "id": "voroshilov",
@@ -315,7 +427,13 @@
       "lead_media": "media/persons/voroshilov/01",
       "lead_w": 1014,
       "lead_h": 1610,
-      "sort_key_ru": "ворошилов"
+      "sort_key_ru": "ворошилов",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "gayda",
@@ -326,7 +444,12 @@
       "lead_media": "media/persons/gayda/01",
       "lead_w": 611,
       "lead_h": 900,
-      "sort_key_ru": "гайда"
+      "sort_key_ru": "гайда",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "gegechkori",
@@ -337,7 +460,12 @@
       "lead_media": "media/persons/gegechkori/01",
       "lead_w": 800,
       "lead_h": 1249,
-      "sort_key_ru": "гегечкори"
+      "sort_key_ru": "гегечкори",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "grishin",
@@ -348,19 +476,13 @@
       "lead_media": "media/persons/grishin/01",
       "lead_w": 768,
       "lead_h": 1007,
-      "sort_key_ru": "гришин алмазов"
-    },
-    {
-      "id": "denikin-a-i",
-      "title_ru": "ДЕНИКИН А.И.",
-      "has_card": false,
-      "sort_key_ru": "деникин а.и",
-      "title_full_ru": "А. И. ДЕНИКИН",
-      "dates_display_ru": "1872–1947",
-      "lead_media": "media/persons/denikin-a-i/01",
-      "lead_w": 1375,
-      "lead_h": 2106,
-      "stub": true
+      "sort_key_ru": "гришин алмазов",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "derber",
@@ -371,7 +493,12 @@
       "lead_media": "media/persons/derber/01",
       "lead_w": 600,
       "lead_h": 671,
-      "sort_key_ru": "дербер"
+      "sort_key_ru": "дербер",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "dzerzhinskiy",
@@ -382,7 +509,13 @@
       "lead_media": "media/persons/dzerzhinskiy/01",
       "lead_w": 3086,
       "lead_h": 4396,
-      "sort_key_ru": "дзержинский"
+      "sort_key_ru": "дзержинский",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "diterikhs",
@@ -393,7 +526,13 @@
       "lead_media": "media/persons/diterikhs/01",
       "lead_w": 652,
       "lead_h": 1000,
-      "sort_key_ru": "дитерихс"
+      "sort_key_ru": "дитерихс",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "dutov",
@@ -404,7 +543,13 @@
       "lead_media": "media/persons/dutov/01",
       "lead_w": 915,
       "lead_h": 1324,
-      "sort_key_ru": "дутов"
+      "sort_key_ru": "дутов",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "egorov",
@@ -415,7 +560,13 @@
       "lead_media": "media/persons/egorov/01",
       "lead_w": 959,
       "lead_h": 1996,
-      "sort_key_ru": "егоров"
+      "sort_key_ru": "егоров",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zhordaniya",
@@ -426,7 +577,13 @@
       "lead_media": "media/persons/zhordaniya/01",
       "lead_w": 800,
       "lead_h": 1155,
-      "sort_key_ru": "жордания"
+      "sort_key_ru": "жордания",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zenzinov",
@@ -437,7 +594,13 @@
       "lead_media": "media/persons/zenzinov/01",
       "lead_w": 1250,
       "lead_h": 1874,
-      "sort_key_ru": "зензинов"
+      "sort_key_ru": "зензинов",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zinovev",
@@ -448,7 +611,13 @@
       "lead_media": "media/persons/zinovev/01",
       "lead_w": 984,
       "lead_h": 1559,
-      "sort_key_ru": "зиновьев радомысльский"
+      "sort_key_ru": "зиновьев радомысльский",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ibragim-bek",
@@ -459,7 +628,13 @@
       "lead_media": "media/persons/ibragim-bek/01",
       "lead_w": 1472,
       "lead_h": 1054,
-      "sort_key_ru": "ибрагим-бек чакабай, чакабаев"
+      "sort_key_ru": "ибрагим-бек чакабай, чакабаев",
+      "camp": "green",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kaledin",
@@ -470,7 +645,13 @@
       "lead_media": "media/persons/kaledin/01",
       "lead_w": 976,
       "lead_h": 1500,
-      "sort_key_ru": "каледин"
+      "sort_key_ru": "каледин",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kamenev",
@@ -481,7 +662,13 @@
       "lead_media": "media/persons/kamenev/01",
       "lead_w": 1584,
       "lead_h": 2292,
-      "sort_key_ru": "каменев"
+      "sort_key_ru": "каменев",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kappel",
@@ -492,7 +679,13 @@
       "lead_media": "media/persons/kappel/01",
       "lead_w": 872,
       "lead_h": 1259,
-      "sort_key_ru": "каппель"
+      "sort_key_ru": "каппель",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kerenskiy",
@@ -503,7 +696,13 @@
       "lead_media": "media/persons/kerenskiy/01",
       "lead_w": 963,
       "lead_h": 1280,
-      "sort_key_ru": "керенский"
+      "sort_key_ru": "керенский",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "krasnov",
@@ -514,7 +713,13 @@
       "lead_media": "media/persons/krasnov/01",
       "lead_w": 1300,
       "lead_h": 1882,
-      "sort_key_ru": "краснов"
+      "sort_key_ru": "краснов",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "krivoshein",
@@ -525,7 +730,12 @@
       "lead_media": "media/persons/krivoshein/01",
       "lead_w": 500,
       "lead_h": 561,
-      "sort_key_ru": "кривошеин"
+      "sort_key_ru": "кривошеин",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "karl-gustav-emil",
@@ -536,7 +746,12 @@
       "lead_media": "media/persons/karl-gustav-emil/01",
       "lead_w": 424,
       "lead_h": 658,
-      "sort_key_ru": "карл густав эмиль густав карлович"
+      "sort_key_ru": "карл густав эмиль густав карлович",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "miller",
@@ -547,7 +762,13 @@
       "lead_media": "media/persons/miller/01",
       "lead_w": 802,
       "lead_h": 1223,
-      "sort_key_ru": "миллер"
+      "sort_key_ru": "миллер",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "milyukov",
@@ -555,10 +776,16 @@
       "has_card": true,
       "title_full_ru": "П. Н. МИЛЮКОВ",
       "dates_display_ru": "1859–1943",
-      "lead_media": null,
-      "lead_w": null,
-      "lead_h": null,
-      "sort_key_ru": "милюков"
+      "lead_media": "media/persons/milyukov/02",
+      "lead_w": 1186,
+      "lead_h": 1028,
+      "sort_key_ru": "милюков",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "myasnikov",
@@ -569,7 +796,13 @@
       "lead_media": "media/persons/myasnikov/01",
       "lead_w": 1189,
       "lead_h": 1806,
-      "sort_key_ru": "мясников мясникян"
+      "sort_key_ru": "мясников мясникян",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "nabokov",
@@ -580,7 +813,13 @@
       "lead_media": "media/persons/nabokov/01",
       "lead_w": 860,
       "lead_h": 908,
-      "sort_key_ru": "набоков"
+      "sort_key_ru": "набоков",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ordzhonikidze",
@@ -591,7 +830,13 @@
       "lead_media": "media/persons/ordzhonikidze/01",
       "lead_w": 1962,
       "lead_h": 2652,
-      "sort_key_ru": "орджоникидзе"
+      "sort_key_ru": "орджоникидзе",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "petlyura",
@@ -602,7 +847,12 @@
       "lead_media": "media/persons/petlyura/01",
       "lead_w": 920,
       "lead_h": 693,
-      "sort_key_ru": "петлюра"
+      "sort_key_ru": "петлюра",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "petrovskiy",
@@ -613,19 +863,13 @@
       "lead_media": "media/persons/petrovskiy/01",
       "lead_w": 773,
       "lead_h": 938,
-      "sort_key_ru": "петровский"
-    },
-    {
-      "id": "pilsudskiy",
-      "title_ru": "ПИЛСУДСКИЙ",
-      "has_card": false,
-      "title_full_ru": "Ю. ПИЛСУДСКИЙ",
-      "dates_display_ru": "1867–1935",
-      "lead_media": "media/persons/pilsudskiy/01",
-      "lead_w": 3513,
-      "lead_h": 4799,
-      "sort_key_ru": "пилсудский",
-      "stub": true
+      "sort_key_ru": "петровский",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "poluyan",
@@ -636,7 +880,13 @@
       "lead_media": "media/persons/poluyan/01",
       "lead_w": 1906,
       "lead_h": 2498,
-      "sort_key_ru": "полуян"
+      "sort_key_ru": "полуян",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "pyats",
@@ -647,7 +897,13 @@
       "lead_media": "media/persons/pyats/01",
       "lead_w": 2772,
       "lead_h": 3875,
-      "sort_key_ru": "пятс"
+      "sort_key_ru": "пятс",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "savinkov",
@@ -658,7 +914,13 @@
       "lead_media": "media/persons/savinkov/01",
       "lead_w": 688,
       "lead_h": 1011,
-      "sort_key_ru": "савинков"
+      "sort_key_ru": "савинков",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "sverdlov",
@@ -669,19 +931,13 @@
       "lead_media": "media/persons/sverdlov/01",
       "lead_w": 1450,
       "lead_h": 2034,
-      "sort_key_ru": "свердлов"
-    },
-    {
-      "id": "semenov",
-      "title_ru": "СЕМЁНОВ",
-      "has_card": false,
-      "title_full_ru": "Г. М. СЕМЁНОВ",
-      "dates_display_ru": "1890–1946",
-      "lead_media": "media/persons/semenov/01",
-      "lead_w": 600,
-      "lead_h": 789,
-      "sort_key_ru": "семенов",
-      "stub": true
+      "sort_key_ru": "свердлов",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "skoropadskiy",
@@ -692,7 +948,13 @@
       "lead_media": "media/persons/skoropadskiy/01",
       "lead_w": 882,
       "lead_h": 1197,
-      "sort_key_ru": "скоропадский"
+      "sort_key_ru": "скоропадский",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "spiridonova",
@@ -703,7 +965,13 @@
       "lead_media": "media/persons/spiridonova/01",
       "lead_w": 2688,
       "lead_h": 2044,
-      "sort_key_ru": "спиридонова"
+      "sort_key_ru": "спиридонова",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "stalin",
@@ -714,7 +982,12 @@
       "lead_media": "media/persons/stalin/01",
       "lead_w": 1200,
       "lead_h": 897,
-      "sort_key_ru": "сталин джугашвили"
+      "sort_key_ru": "сталин джугашвили",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "struve",
@@ -725,7 +998,13 @@
       "lead_media": "media/persons/struve/01",
       "lead_w": 1332,
       "lead_h": 1990,
-      "sort_key_ru": "струве"
+      "sort_key_ru": "струве",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "stuchka",
@@ -736,31 +1015,13 @@
       "lead_media": "media/persons/stuchka/01",
       "lead_w": 1452,
       "lead_h": 1932,
-      "sort_key_ru": "стучка"
-    },
-    {
-      "id": "trotskiy",
-      "title_ru": "ТРОЦКИЙ (БРОНШТЕЙН)",
-      "has_card": false,
-      "title_full_ru": "Л. Д. ТРОЦКИЙ",
-      "dates_display_ru": "1879–1940",
-      "lead_media": "media/persons/trotskiy/01",
-      "lead_w": 2349,
-      "lead_h": 3535,
-      "sort_key_ru": "троцкий бронштейн",
-      "stub": true
-    },
-    {
-      "id": "tukhachevskiy",
-      "title_ru": "ТУХАЧЕВСКИЙ",
-      "has_card": false,
-      "title_full_ru": "М. Н. Тухачевский",
-      "dates_display_ru": "1893–1937",
-      "lead_media": "media/persons/tukhachevskiy/01",
-      "lead_w": 1119,
-      "lead_h": 1719,
-      "sort_key_ru": "тухачевский",
-      "stub": true
+      "sort_key_ru": "стучка",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "uborevich",
@@ -771,7 +1032,13 @@
       "lead_media": "media/persons/uborevich/01",
       "lead_w": 1603,
       "lead_h": 2327,
-      "sort_key_ru": "уборевич"
+      "sort_key_ru": "уборевич",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ulmanis",
@@ -782,7 +1049,12 @@
       "lead_media": "media/persons/ulmanis/01",
       "lead_w": 850,
       "lead_h": 553,
-      "sort_key_ru": "улманис"
+      "sort_key_ru": "улманис",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "uritskiy",
@@ -793,7 +1065,13 @@
       "lead_media": "media/persons/uritskiy/01",
       "lead_w": 1324,
       "lead_h": 1912,
-      "sort_key_ru": "урицкий"
+      "sort_key_ru": "урицкий",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "khodzhaev",
@@ -804,7 +1082,13 @@
       "lead_media": "media/persons/khodzhaev/01",
       "lead_w": 1200,
       "lead_h": 1600,
-      "sort_key_ru": "ходжаев"
+      "sort_key_ru": "ходжаев",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "chaykovskiy",
@@ -815,7 +1099,13 @@
       "lead_media": "media/persons/chaykovskiy/01",
       "lead_w": 1049,
       "lead_h": 1596,
-      "sort_key_ru": "чайковский"
+      "sort_key_ru": "чайковский",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "chernov",
@@ -826,7 +1116,12 @@
       "lead_media": "media/persons/chernov/01",
       "lead_w": 592,
       "lead_h": 794,
-      "sort_key_ru": "чернов"
+      "sort_key_ru": "чернов",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "chkheidze",
@@ -837,7 +1132,13 @@
       "lead_media": "media/persons/chkheidze/01",
       "lead_w": 869,
       "lead_h": 1261,
-      "sort_key_ru": "чхеидзе"
+      "sort_key_ru": "чхеидзе",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "shulgin",
@@ -848,7 +1149,13 @@
       "lead_media": "media/persons/shulgin/01",
       "lead_w": 1287,
       "lead_h": 1814,
-      "sort_key_ru": "шульгин"
+      "sort_key_ru": "шульгин",
+      "camp": "white",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "schetinkin",
@@ -859,7 +1166,35 @@
       "lead_media": "media/persons/schetinkin/01",
       "lead_w": 1303,
       "lead_h": 1890,
-      "sort_key_ru": "щетинкин"
+      "sort_key_ru": "щетинкин",
+      "camp": "red",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
+    }
+  ],
+  "camps": [
+    {
+      "id": "red",
+      "title_ru": "Красные"
+    },
+    {
+      "id": "white",
+      "title_ru": "Белые"
+    },
+    {
+      "id": "rev-dem",
+      "title_ru": "Революционная демократия"
+    },
+    {
+      "id": "national",
+      "title_ru": "Национальные движения"
+    },
+    {
+      "id": "green",
+      "title_ru": "Зелёные"
     }
   ]
 }

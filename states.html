@@ -40,7 +40,16 @@
     .hidden { display: none !important; }
 
     /* ───── Экран 1: выбор группы (крупные блоки) ───── */
-    #groups-mode { display: flex; flex-direction: column; gap: 28px; }
+    /* pages.css держит body и main блоками — намеренно, на этом стоит
+       sticky-шапка. Но тогда `flex: 1` у пикера не от чего растягиваться,
+       и шесть плиток жмутся в верхнюю половину 1080, а низ экрана пустой.
+       Переопределяем только здесь и только display: overflow не трогаем,
+       поэтому sticky остаётся рабочим (проверено на обоих режимах).
+       Если решение приживётся — забирайте в pages.css, зона design. */
+    body.scrollable { display: flex; flex-direction: column; }
+    body.scrollable main { display: flex; flex-direction: column; flex: 1; }
+
+    #groups-mode { display: flex; flex-direction: column; gap: 28px; flex: 1; min-height: 0; }
 
     /* Групп шесть, а не четыре: к «красным», «белым», «революционной
        демократии» и «интервенции» добавились повстанческие движения (8)
@@ -181,19 +190,23 @@
       content: '  ·  карта';
       color: var(--camp-red-deep);
     }
+    /* applyStaticLabels() проставляет html[lang]; подпись из ::after
+       иначе осталась бы русской при английском интерфейсе. */
+    html[lang='en'] .state-plate.has-map .abbr::after { content: '  ·  map'; }
   </style>
 </head>
 <body>
   <header class="page-header" data-section-num="03">
     <div class="page-title">
-      <div class="kicker">Раздел · 03</div>
-      <h1>Государственные образования</h1>
+      <div class="kicker" data-ru="Раздел · 03" data-en="Section · 03">Раздел · 03</div>
+      <h1 data-ru="Государственные образования" data-en="State formations">Государственные образования</h1>
     </div>
     <div class="view-toggle" role="tablist">
-      <button id="btn-groups" class="active">По группам</button>
-      <button id="btn-grid">Сетка</button>
+      <button id="btn-groups" class="active" data-ru="По группам" data-en="By group">По группам</button>
+      <button id="btn-grid" data-ru="Сетка" data-en="Grid">Сетка</button>
     </div>
-    <a class="back-link" href="index.html" id="back-link">← К экспозиции</a>
+    <a class="back-link" href="index.html" id="back-link" data-ru="← К экспозиции" data-en="← To the exhibit">← К экспозиции</a>
+    <button class="back-link" id="btn-lang" type="button">EN</button>
   </header>
 
   <main id="page-root">
@@ -201,7 +214,7 @@
       <div id="group-picker" class="group-picker"></div>
       <div id="group-detail" class="hidden">
         <div class="crumbs">
-          <button class="back-btn" id="back-to-groups">← К группам</button>
+          <button class="back-btn" id="back-to-groups" data-ru="← К группам" data-en="← To groups">← К группам</button>
           <div class="group-name" id="group-title"></div>
         </div>
         <div id="group-items"></div>
@@ -212,7 +225,7 @@
     <div id="modal" class="modal hidden" aria-hidden="true">
       <div class="modal-backdrop"></div>
       <div class="modal-sheet">
-        <button class="modal-close" aria-label="Закрыть">×</button>
+        <button class="modal-close" aria-label="Закрыть" data-ru="Закрыть" data-en="Close" data-attr="aria-label">×</button>
         <div id="modal-body"></div>
       </div>
     </div>
@@ -232,7 +245,13 @@
   <script type="module">
     import { CollectionPage } from '/src/pages/collection-page.js';
     import { fetchJSON } from '/src/data/loader.js';
+    import { applyStaticLabels, wireLangToggle, onLangChange, t } from '/src/data/i18n.js';
     import '/src/components/state-card.js';
+
+    // Интерфейс двуязычен, содержание справок — нет: перевода 198 справок
+    // не будет, в контенте *_en = null (CLAUDE.md §9). Названия групп —
+    // тоже контент, они приходят из индекса и остаются русскими.
+    applyStaticLabels();
 
     const idx = await fetchJSON(MTK_URL('content/states/_index.json'));
 
@@ -293,9 +312,9 @@
         b.className = 'group-btn';
         b.style.setProperty('--camp-color', c.color);
         b.innerHTML = `
-          <div class="kicker">Группа</div>
+          <div class="kicker">${t('Группа', 'Group')}</div>
           <h3>${c.title_ru}</h3>
-          <div class="count">${countFor(c.id)} образований</div>
+          <div class="count">${countFor(c.id)} ${t('образований', 'formations')}</div>
           <div class="arrow">→</div>
         `;
         b.addEventListener('click', () => openGroup(c.id));
@@ -310,7 +329,8 @@
       const camp = groupsFromItems().find(c => c.id === campId);
       const list = idx.items.filter(i => i.camp === campId);
       detailEl.style.setProperty('--camp-color', camp.color);
-      titleEl.innerHTML = `${camp.title_ru}<span class="cnt">· ${list.length} ${list.length === 1 ? 'образование' : 'образований'}</span>`;
+      titleEl.innerHTML = `${camp.title_ru}<span class="cnt">· ${list.length} `
+        + `${t(list.length === 1 ? 'образование' : 'образований', list.length === 1 ? 'formation' : 'formations')}</span>`;
       itemsEl.innerHTML = '';
       for (const it of list) {
         const row = document.createElement('div');
@@ -385,6 +405,13 @@
     // init
     document.body.classList.add('scrollable');
     renderPicker();
+    wireLangToggle(document.getElementById('btn-lang'), () => {
+      applyStaticLabels();
+      // Перерисовываем то, что собрано из строк: плитки групп и, если
+      // посетитель уже внутри группы, её заголовок со счётчиком.
+      renderPicker();
+      if (activeCamp) openGroup(activeCamp);
+    });
     // ESC на drill-down возвращает к группам (если модалка не открыта)
     window.addEventListener('keydown', e => {
       if (e.key !== 'Escape') return;

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Хроника событий · Гражданская война 1917—1922</title>
+<!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
+     ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
+<script src="../base.js"></script>
+<link rel="stylesheet" href="/src/styles/fonts.css">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: #0a0502;
+    color: #f0dcae;
+    font-family: '21 Cent', 'PT Serif', Georgia, serif;
+    overflow: hidden;
+  }
+  #root { position: absolute; inset: 0; }
+  /* скрываем скроллбар везде, кроме блоков с .brand-scroll (см. tokens.css) */
+  :not(.brand-scroll)::-webkit-scrollbar { display: none; }
+  :not(.brand-scroll) { scrollbar-width: none; cursor: default; }
+  button, a { cursor: pointer; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- React как локальные UMD-сборки. Киоск работает офлайн (CLAUDE.md §1),
+     внешних запросов быть не должно. Production-сборки, не development. -->
+<script src="vendor/react-18.3.1.production.min.js"></script>
+<script src="vendor/react-dom-18.3.1.production.min.js"></script>
+
+<!-- Единственный источник палитры: генерируется из src/design/tokens.json. -->
+<script src="brand-tokens.js?v=20260802"></script>
+<!-- Данные раздела: public/content/chronicle/, по одному году за раз. -->
+<script src="chronicle-data.js"></script>
+<!-- Предкомпилированный JSX, исходники — соседние *.jsx.
+     Компилятор: scripts/expo/build-jsx.mjs (esbuild). -->
+<script src="build/rich-text.js"></script>
+<script src="build/chronicle-ui.js"></script>
+<script src="build/boot-chronicle.js"></script>
+</body>
+</html>

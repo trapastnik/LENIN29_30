@@ -81,6 +81,33 @@ const PLURAL = {
   events: 'event', longreads: 'longread',
 };
 
+// Справочник лагерей — объединение блоков `camps` из всех индексов.
+// Проверять `venn_groups` по нему, а не по списку в коде: лагеря заводит
+// индекс, и жёсткий список тут разошёлся бы с данными молча.
+const campVocabulary = new Set();
+for (const { dir } of KINDS) {
+  const idx = readJSON(join(CONTENT, dir, '_index.json'));
+  for (const c of (idx && idx.camps) || []) {
+    if (c && c.id) campVocabulary.add(c.id);
+  }
+}
+
+// Лонгриды живут без `_index.json` — их по одному на раздел. Но ссылаться
+// на них можно (`related.longreads`), поэтому id заводятся в общую таблицу
+// разрешения так же, как записи индексов.
+const LONGREADS = join(CONTENT, 'longreads');
+if (existsSync(LONGREADS)) {
+  for (const file of readdirSync(LONGREADS)) {
+    if (!file.endsWith('.json') || file.startsWith('_')) continue;
+    if (file.endsWith('.gen.json') || file.endsWith('.patch.json')) continue;
+    const id = basename(file, '.json');
+    if (index.has(id) && index.get(id) !== 'longread') {
+      err(rel(join(LONGREADS, file)), `id «${id}» уже занят видом ${index.get(id)}`);
+    }
+    index.set(id, 'longread');
+  }
+}
+
 // ---------------------------------------------------------------- кросс-чек
 
 /**
@@ -211,22 +238,58 @@ for (const { kind, dir } of KINDS) {
     if (kind === 'person' && !data.surname_ru) {
       err(where, 'у личности не разобрана фамилия');
     }
-    if (kind === 'party' && data.venn_groups && !Array.isArray(data.venn_groups)) {
-      err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+    if (kind === 'party' && data.venn_groups) {
+      const g = data.venn_groups;
+      if (!Array.isArray(g)) {
+        err(where, 'venn_groups должен быть массивом, а не одним лагерем');
+      } else {
+        // Порядок значим: первый лагерь — основной, по нему запись попадает
+        // в фильтр и красится. Разъедется с `camp` — партия будет одного
+        // цвета в списке и другого на диаграмме.
+        if (data.camp && g[0] !== data.camp) {
+          err(where, `venn_groups[0] = «${g[0]}», а camp = «${data.camp}» — `
+            + 'на диаграмме и в фильтре партия окажется в разных лагерях');
+        }
+        if (new Set(g).size !== g.length) {
+          err(where, 'venn_groups содержит повтор');
+        }
+        for (const c of g) {
+          if (!campVocabulary.has(c)) {
+            err(where, `venn_groups: «${c}» нет в справочнике лагерей индекса`);
+          }
+        }
+      }
     }
   }
 }
+
+// Временные иллюстрации — превью с Госкаталога, скачанные, пока заказчик
+// не поставил файлы. Считаем и печатаем громко, но НЕ роняем: заглушки обязаны
+// спокойно жить, пока идёт запрос, а вечно красный гейт учит себя игнорировать.
+const placeholders = [];
 
 function checkMedia(where, data) {
   const seen = new Set();
   let unbuilt = 0;
   for (const m of data.media || []) {
+    if (m.placeholder) {
+      placeholders.push({ where, n: m.n, holder: m.holder_ru, gk: m.gk_no });
+      if (!m.source_url) {
+        warn(where, `media n=${m.n}: placeholder без source_url — `
+          + 'заменить временную картинку будет нечем');
+      }
+    }
     if (typeof m.n !== 'number') { err(where, 'media без ключа n'); continue; }
     if (seen.has(m.n)) err(where, `media: номер n=${m.n} встречается дважды`);
     seen.add(m.n);
 
     if (!m.src_file) {
-      warn(where, `media n=${m.n}: аннотация «${m.src_name || '?'}» без файла на диске`);
+      // Внешний источник — не пропажа: файла в поставке нет и не будет,
+      // изображение живёт в госкаталоге и подписано ссылкой.
+      if (!m.source_url) {
+        warn(where, `media n=${m.n}: аннотация «${m.src_name || m.caption_ru || '?'}»`
+          + ' без файла на диске');
+      }
       continue;
     }
     // ── каждый заявленный тир обязан существовать у КАЖДОЙ части записи:
@@ -268,14 +331,33 @@ function checkMedia(where, data) {
 for (const [id, { item, kind, dir, path }] of indexRecords) {
   const file = join(CONTENT, dir, `${id}.json`);
   const where = `${rel(path)} → ${id}`;
+  // Записи без файла в индексе быть не должно вовсе. Раньше такие помечались
+  // `stub: true` и пропускались — а UI считает раздел по длине `items` и
+  // рисует плитку на каждый элемент, так что заглушки давали завышенные
+  // счётчики и карточки, открывающиеся в пустоту.
   if (!existsSync(file)) {
-    if (!item.stub) {
-      err(where, 'нет файла справки и не помечено stub: true');
-    }
+    err(where, `нет файла справки${item.stub ? ' (помечено stub: true — так больше нельзя)' : ''}`
+      + ' — запись показывает плитку-призрак и завышает счётчик раздела');
   } else if (item.stub) {
     warn(where, 'помечено stub: true, но файл справки существует');
   }
   if (!item.title_ru) err(where, 'в индексе нет title_ru — плитку нечем рисовать');
+  // Индекс обязан быть самодостаточным. Достроить имя тира по шаблону нельзя:
+  // апскейла нет, у мелких сканов тиров меньше трёх. Без списка `mediaUrl()`
+  // возвращает null, и миниатюра остаётся заглушкой при собранных производных.
+  if (item.lead_media && !(item.lead_tiers || []).length) {
+    err(where, 'есть lead_media, но нет lead_tiers — миниатюра останется заглушкой');
+  }
+  // Пустой ключ хуже отсутствующего: UI не обязан отличать null от «поля нет»
+  // и уходит рисовать миниатюру по пустому пути.
+  if ('lead_media' in item && !item.lead_media) {
+    err(where, 'lead_media присутствует, но пуст — ключ должен отсутствовать');
+  }
+  // Карточки событий лагерю не принадлежат — фильтр есть только у личностей,
+  // партий и гособразований.
+  if (!item.camp && kind !== 'event') {
+    warn(where, 'нет camp — запись выпадает из фильтра по лагерям');
+  }
 }
 
 // ---------------------------------------------------------------- хроника
@@ -323,6 +405,108 @@ if (existsSync(chronDir)) {
   }
 }
 
+// ---------------------------------------------------------------- лонгриды
+
+/**
+ * Лонгрид устроен иначе справки: текст разложен по секциям, медиа и ссылки
+ * живут внутри них, `summary_ru` пуст. Поэтому отдельный проход, а не общий
+ * цикл по KINDS.
+ *
+ * Главное здесь — `ref_labels`. Это денормализованный кэш подписей из наших
+ * индексов: киоск запускается по `file://`, где `fetch` и XHR запрещены
+ * (проверено в Chrome: без `--allow-file-access-from-files` оба падают),
+ * и подтянуть индекс, чтобы подписать плашку связи, нечем. Плата за кэш —
+ * он протухает от переименования в индексе, причём молча. Сверяем каждую
+ * запись с индексом: тогда протухание — красный гейт, а не сюрприз приёмки.
+ */
+function checkRefs(where, refs, what) {
+  for (const [bucket, ids] of Object.entries(refs || {})) {
+    const want = PLURAL[bucket];
+    if (!want) { err(where, `неизвестный раздел ${what}.${bucket}`); continue; }
+    for (const ref of ids || []) {
+      if (!index.has(ref)) {
+        err(where, `${what}.${bucket} → «${ref}» вне индекса`);
+      } else if (index.get(ref) !== want) {
+        err(where, `${what}.${bucket} → «${ref}», а это ${index.get(ref)}`);
+      }
+    }
+  }
+}
+
+if (existsSync(LONGREADS)) {
+  const files = readdirSync(LONGREADS)
+    .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
+    .filter((f) => !f.endsWith('.gen.json') && !f.endsWith('.patch.json'));
+
+  for (const file of files) {
+    const path = join(LONGREADS, file);
+    const id = basename(file, '.json');
+    const data = readJSON(path);
+    if (!data) continue;
+    checked += 1;
+    const where = rel(path);
+
+    if (data.schema !== 1) err(where, 'нет поля schema: 1');
+    if (data.id !== id) err(where, `поле id = «${data.id}», а файл называется «${id}»`);
+    if (data.kind !== 'longread') err(where, `kind = «${data.kind}», ожидался «longread»`);
+    if (!data.title_ru) err(where, 'пустой title_ru');
+    if (!['ok', 'missing', 'copy_of_ru'].includes(data.en_status)) {
+      err(where, `en_status = «${data.en_status}», допустимы ok/missing/copy_of_ru`);
+    }
+
+    checkRefs(where, data.related, 'related');
+    checkMedia(where, data);
+
+    const used = new Set();
+    const seenSection = new Set();
+    for (const s of data.sections || []) {
+      const sw = `${where} § ${s.id || s.n}`;
+      if (!s.id) err(sw, 'секция без id — по нему строится якорь скролла');
+      else if (seenSection.has(s.id)) err(where, `секция «${s.id}» встречается дважды`);
+      else seenSection.add(s.id);
+      if (!s.title_ru) err(sw, 'секция без title_ru');
+      if (!(s.paragraphs_ru || []).length && !(s.media || []).length) {
+        warn(sw, 'секция пуста: ни абзацев, ни медиа');
+      }
+      checkRefs(sw, s.refs, 'refs');
+      for (const ids of Object.values(s.refs || {})) {
+        for (const r of ids || []) used.add(r);
+      }
+      checkMedia(sw, s);
+    }
+
+    // ── кэш подписей обязан совпадать с индексом
+    const labels = data.ref_labels || {};
+    for (const ref of used) {
+      if (!(ref in labels)) {
+        err(where, `ref_labels: нет подписи для «${ref}» — плашка связи выйдет пустой`);
+      }
+    }
+    for (const [ref, lab] of Object.entries(labels)) {
+      const rec = indexRecords.get(ref);
+      if (!rec) {
+        err(where, `ref_labels: «${ref}» нет ни в одном индексе`);
+        continue;
+      }
+      if (lab.kind !== rec.kind) {
+        err(where, `ref_labels[${ref}].kind = «${lab.kind}», в индексе ${rec.kind}`);
+      }
+      if (lab.title_ru !== rec.item.title_ru) {
+        err(where, `ref_labels[${ref}].title_ru протух: «${lab.title_ru}» ≠ `
+          + `«${rec.item.title_ru}» в индексе — перегенерировать лонгрид`);
+      }
+      if ((lab.camp || null) !== (rec.item.camp || null)) {
+        err(where, `ref_labels[${ref}].camp протух: «${lab.camp}» ≠ `
+          + `«${rec.item.camp}» в индексе — перегенерировать лонгрид`);
+      }
+      if (lab.href && lab.href.startsWith('/')) {
+        err(where, `ref_labels[${ref}].href начинается со слэша — `
+          + 'под file:// это уедет в корень файловой системы');
+      }
+    }
+  }
+}
+
 // ---------------------------------------------------------------- вывод
 
 const label = (n, one, few, many) => {
@@ -336,6 +520,23 @@ if (!quiet || errors.length) {
   console.log(`content:check — проверено файлов: ${checked}, `
     + `записей в индексах: ${indexRecords.size}`
     + (crosschecked ? `, сверено с pandoc: ${crosschecked}` : ''));
+}
+
+if (placeholders.length) {
+  const byHolder = new Map();
+  for (const p of placeholders) {
+    const k = p.holder || 'держатель не указан';
+    byHolder.set(k, (byHolder.get(k) || 0) + 1);
+  }
+  const n = placeholders.length;
+  console.log(`\n⚠  ВРЕМЕННЫХ ИЛЛЮСТРАЦИЙ: ${n} `
+    + `${label(n, 'штука', 'штуки', 'штук')} — превью с Госкаталога вместо `
+    + 'поставки заказчика.');
+  for (const [holder, cnt] of [...byHolder].sort((a, b) => b[1] - a[1])) {
+    console.log(`     ${cnt}× ${holder}`);
+  }
+  console.log('     Официальные файлы запрошены. Гейт на этом не падает '
+    + 'намеренно — заменить их надо до приёмки, а не до мержа.');
 }
 if (warnings.length && !quiet) {
   console.log(`\nПредупреждения (${warnings.length}):`);

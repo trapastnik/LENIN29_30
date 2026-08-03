@@ -72,8 +72,52 @@ if (cors.length) {
   process.exit(1);
 }
 
+// ── битые ссылки: href/src, указывающие в никуда ──────────────────────────
+// Зачем отдельно от проверки абсолютных путей: `/expo/` лежит в public/, vite
+// его НЕ обрабатывает, и `<link href="/src/styles/fonts.css">` уезжает
+// в сборку как написан — а `dist/src/` не существует вовсе. Отвалившийся
+// <link> не даёт ошибки в консоли: страница просто рисуется системным
+// шрифтом, и на скриншоте засечковый фолбэк от бренда не отличить.
+// Так три страницы сцены месяц ехали без Nolde и без :root-переменных,
+// из-за чего заодно не действовал `--touch-hit` (§1, тач-цель ≥120px).
+const REF = /(?:href|src)\s*=\s*["']([^"'#?]+)/g;
+const broken = [];
+for (const file of walk(DIST)) {
+  if (!file.endsWith('.html')) continue;
+  const rel = relative(DIST, file);
+  // Гасим то, что ссылками не является, сохраняя переносы строк (номера
+  // строк остаются верными): HTML-комментарии и ТЕЛА <style>/<script>.
+  // Иначе ловятся примеры разметки, которыми файлы документируют сами себя —
+  // `brand.html` в CSS-комментарии объясняет, куда vite ставит <link>.
+  // Открывающие теги не трогаем: `<script src=…>` — настоящая ссылка.
+  const blank = (s) => s.replace(/[^\n]/g, ' ');
+  const text = readFileSync(file, 'utf8')
+    .replace(/<!--[\s\S]*?-->/g, blank)
+    .replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, (_, a, b, c) => a + blank(b) + c)
+    .replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (_, a, b, c) => a + blank(b) + c);
+  const lines = text.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    for (const m of lines[i].matchAll(REF)) {
+      const ref = m[1].trim();
+      if (!ref || /^[a-z][a-z0-9+.-]*:/i.test(ref) || ref.startsWith('//')) continue;
+      const target = ref.startsWith('/')
+        ? join(DIST, ref.slice(1))
+        : join(DIST, relative(DIST, file), '..', ref);
+      if (!existsSync(target)) broken.push({ rel, line: i + 1, ref });
+    }
+  }
+}
+
+if (broken.length) {
+  console.error(`check-paths: ${broken.length} ссылок в никуда.`);
+  console.error('Отвалившийся <link>/<script> не даёт ошибки — страница молча теряет стиль или код.\n');
+  for (const b of broken) console.error(`  ${b.rel}:${b.line}  ${b.ref}`);
+  console.error('');
+  process.exit(1);
+}
+
 if (hits.length === 0) {
-  console.log('check-paths: чисто — абсолютных путей и crossorigin в dist/ нет');
+  console.log('check-paths: чисто — абсолютных путей, crossorigin и битых ссылок в dist/ нет');
   process.exit(0);
 }
 

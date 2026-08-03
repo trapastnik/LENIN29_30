@@ -9,6 +9,13 @@
       "autoPort": true
     },
     {
+      "name": "mtk29-kiosk",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "kiosk:serve"],
+      "port": 8080,
+      "autoPort": true
+    },
+    {
       "name": "mtk29-dist",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview"],
