@@ -8,7 +8,7 @@ html, body {
   background: var(--page-bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: var(--fs-body, 32px);
   line-height: 1.4;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -25,8 +25,8 @@ button {
   background: none;
   border: 0;
   cursor: pointer;
-  min-width: var(--touch-hit);
-  min-height: var(--touch-hit);
+  min-width: var(--touch-hit, 120px);
+  min-height: var(--touch-hit, 120px);
 }
 
 /* Глобально скрываем скроллбар; показываем только на блоках с `.brand-scroll`
