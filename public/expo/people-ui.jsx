@@ -15,16 +15,80 @@ if (!window.MTK_TOKENS) {
 // tokens.json как deprecated, сводится к --camp-* на шаге 3.
 const SIDE_META = window.MTK_SIDE_META;
 
-// Лагерь известен не у всех: в индексе camp стоит у 14 записей из 78.
-// Без запасного значения meta.flag роняет всю сетку.
+// Лагерь известен почти у всех (68 из 70), но не у всех. Без запасного
+// значения meta.flag роняет всю сетку на первой же записи без camp.
 const SIDE_NEUTRAL = {
   ru: 'Внѣ лагерей', en: 'Unaligned',
   color: '#5D6970',   // BRAND.slateBlue
   accent: '#9DA3A6',  // BRAND.slateWindow
   flag: '#555D61',    // BRAND.ironGrey
 };
+// ⚠️ MTK_SIDE_META знает только red/white/green — остаток палитры design-pass.
+// В данных лагерей шесть. Подписи для недостающих держим здесь, словами
+// самого content; заявка в design — дописать их в MTK_SIDE_META, тогда
+// SIDE_EXTRA отомрёт сам.
+
+const SIDE_EXTRA = {
+  'rev-dem':    { ru: 'Революціонная демократія', en: 'Revolutionary democracy' },
+  national:     { ru: 'Національныя движенія',    en: 'National movements' },
+  uprising:     { ru: 'Повстанческія движенія',   en: 'Insurgent movements' },
+  intervention: { ru: 'Интервенція',              en: 'Intervention' },
+};
+
+// Цвет лагеря — из бренд-токена --camp-<id>: в brand-tokens.css они есть
+// на все шесть, выдумывать свой незачем. Читаем один раз на лагерь.
+const campColorCache = {};
+function campColor(side) {
+  if (!side) return null;
+  if (!(side in campColorCache)) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(`--camp-${side}`).trim();
+    campColorCache[side] = v || null;
+  }
+  return campColorCache[side];
+}
+
+// Светлый ли фон — по яркости, а не по списку хексов: лагерей шесть,
+// перечислять их руками это ровно та ловушка, из-за которой фильтры
+// и разошлись с данными.
+function isLight(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec((hex || '').trim());
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 150;
+}
+
+// Список фильтров строим из самих записей. Жёсткий перечень уже разошёлся
+// с данными: content добавил rev-dem (14 персон) и national (9), и эти 23
+// перестали отбираться чем-либо, кроме «Всѣ», — без ошибки, просто их не видно.
+const CAMP_ORDER = ['red', 'white', 'rev-dem', 'green', 'national', 'uprising', 'intervention'];
+
+function campFilters(people) {
+  const seen = [...new Set(people.map(p => p.side).filter(Boolean))];
+  seen.sort((a, b) => {
+    const ia = CAMP_ORDER.indexOf(a), ib = CAMP_ORDER.indexOf(b);
+    const na = ia < 0 ? 99 : ia, nb = ib < 0 ? 99 : ib;
+    return na !== nb ? na - nb : a.localeCompare(b);
+  });
+  const out = [{ id: 'all', ru: 'Всѣ', en: 'All', count: people.length, brand: '#D2B773' }];
+  for (const id of seen) {
+    const meta = sideMeta(id);
+    out.push({ id, ru: meta.ru, en: meta.en, brand: meta.color,
+               count: people.filter(p => p.side === id).length });
+  }
+  const noneCount = people.filter(p => !p.side).length;
+  if (noneCount) out.push({ id: 'none', ru: SIDE_NEUTRAL.ru, en: SIDE_NEUTRAL.en,
+                            brand: SIDE_NEUTRAL.accent, count: noneCount });
+  return out.filter(f => f.count > 0);
+}
+
 function sideMeta(side) {
-  return (side && SIDE_META[side]) || SIDE_NEUTRAL;
+  if (side && SIDE_META[side]) return SIDE_META[side];
+  if (side && SIDE_EXTRA[side]) {
+    const c = campColor(side) || SIDE_NEUTRAL.color;
+    return { ...SIDE_EXTRA[side], color: c, accent: c, flag: c };
+  }
+  return SIDE_NEUTRAL;
 }
 
 // richText() приходит из rich-text.jsx — та же разметка в хронике,
@@ -382,6 +446,7 @@ function SideFlag({ side, lang }) {
 // Карточка-миниатюра персоналии
 function PersonCard({ person, lang, onOpen, delay }) {
   const meta = sideMeta(person.side);
+  const [portraitFailed, setPortraitFailed] = React.useState(false);
   return (
     <button onClick={onOpen || undefined} disabled={!onOpen} style={{
       // Заглушка без справки не кликается: файла <id>.json у неё нет,
@@ -422,11 +487,17 @@ function PersonCard({ person, lang, onOpen, delay }) {
           border: `1px solid ${theme.inkSoft}`,
           marginBottom: 10,
         }}>
-          {person.portrait ? (
-            <img src={person.portrait} alt="" loading="lazy" style={{
-              width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
-              display: 'block', filter: 'sepia(0.18) contrast(1.05)',
-            }}/>
+          {person.portrait && !portraitFailed ? (
+            <img src={person.portrait} alt="" loading="lazy"
+              // Производные собираются на сервере и мимо git, поэтому файла
+              // может не быть даже при заполненном lead_tiers. Битая иконка
+              // на киоске читается как поломка раздела — откатываемся
+              // на тот же силуэт, что и при отсутствующем портрете.
+              onError={() => setPortraitFailed(true)}
+              style={{
+                width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
+                display: 'block', filter: 'sepia(0.18) contrast(1.05)',
+              }}/>
           ) : (
             <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice"
               style={{ width: '100%', height: '100%', display: 'block' }}>
@@ -574,6 +645,10 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
   const [viewMode, setViewMode] = React.useState(() => {
     try { return localStorage.getItem('expo:peopleViewMode') || 'flow'; } catch { return 'flow'; }
   });
+  // Тот же откат, что и на плитке: несобравшаяся производная не должна
+  // выглядеть как сломанная карточка.
+  const [leadFailed, setLeadFailed] = React.useState(false);
+  React.useEffect(() => { setLeadFailed(false); }, [person.id]);
   React.useEffect(() => { try { localStorage.setItem('expo:peopleViewMode', viewMode); } catch {} }, [viewMode]);
 
   if (!person) return null;
@@ -617,11 +692,13 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           color: card.ink,
         }}>
           <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1.3', overflow: 'hidden', background: '#F7F9EF', flexShrink: 0 }}>
-            {person.portrait ? (
-              <img src={person.portrait} alt="" style={{
-                width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
-                display: 'block', filter: 'sepia(0.15) contrast(1.04)',
-              }}/>
+            {person.portrait && !leadFailed ? (
+              <img src={person.portrait} alt=""
+                onError={() => setLeadFailed(true)}
+                style={{
+                  width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
+                  display: 'block', filter: 'sepia(0.15) contrast(1.04)',
+                }}/>
             ) : (
               <>
                 <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice" style={{ width: '100%', height: '100%' }}>
@@ -1105,21 +1182,13 @@ function PersonalitiesApp() {
         padding: '0 40px 18px', display: 'flex', gap: 10, flexWrap: 'wrap',
         alignItems: 'center',
       }}>
-        {/* Лагерь проставлен только у 14 персон из 78 — импорт берёт его из
-            справки, а в большинстве справок его нет. Без пятой кнопки
-            остальные 64 не отбираются ничем, кроме «Всѣ», и выглядит это
-            как потерянные записи. Кнопки с нулём не показываем. */}
-        {[
-          { id: 'all',   ru: 'Всѣ',         en: 'All',         count: people.length, brand: '#D2B773' /* BRAND.brass */ },
-          { id: 'red',   ru: 'Красные',     en: 'Reds',        count: people.filter(p => p.side==='red').length,   brand: '#A02128' /* BRAND.signalRed */ },
-          { id: 'white', ru: 'Бѣлые',       en: 'Whites',      count: people.filter(p => p.side==='white').length, brand: '#CFD0CF' /* BRAND.telegrey4 */ },
-          { id: 'green', ru: 'Третья сила', en: 'Third force', count: people.filter(p => p.side==='green').length, brand: '#5D6970' /* BRAND.slateBlue */ },
-          { id: 'none',  ru: 'Внѣ лагерей', en: 'Unaligned',   count: people.filter(p => !p.side).length,          brand: '#9DA3A6' /* BRAND.slateWindow */ },
-        ].filter(f => f.count > 0).map(f => {
+        {/* Пятая кнопка — для записей без лагеря: импорт берёт camp из справки,
+            и у части персон его нет. Без неё они не отбираются ничем, кроме
+            «Всѣ», и выглядят потерянными. Кнопки с нулём не показываем,
+            поэтому когда content проставит лагерь всем, она исчезнет сама. */}
+        {campFilters(people).map(f => {
           const active = filter === f.id;
-          // На активном фоне signalRed/slateBlue текст белый, на brass/telegrey4/slateWindow — чёрный
-          const lightBg = (f.brand === '#D2B773' || f.brand === '#CFD0CF' || f.brand === '#9DA3A6');
-          const activeText = lightBg ? '#000' : '#F7F9EF';
+          const activeText = isLight(f.brand) ? '#000' : '#F7F9EF';
           return (
             <button key={f.id} onClick={() => setFilter(f.id)} style={{
               // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).

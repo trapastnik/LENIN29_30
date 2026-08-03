@@ -15,8 +15,64 @@ const SIDE_NEUTRAL = {
   flag: "#555D61"
   // BRAND.ironGrey
 };
+const SIDE_EXTRA = {
+  "rev-dem": { ru: "\u0420\u0435\u0432\u043E\u043B\u044E\u0446\u0456\u043E\u043D\u043D\u0430\u044F \u0434\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0456\u044F", en: "Revolutionary democracy" },
+  national: { ru: "\u041D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u044F \u0434\u0432\u0438\u0436\u0435\u043D\u0456\u044F", en: "National movements" },
+  uprising: { ru: "\u041F\u043E\u0432\u0441\u0442\u0430\u043D\u0447\u0435\u0441\u043A\u0456\u044F \u0434\u0432\u0438\u0436\u0435\u043D\u0456\u044F", en: "Insurgent movements" },
+  intervention: { ru: "\u0418\u043D\u0442\u0435\u0440\u0432\u0435\u043D\u0446\u0456\u044F", en: "Intervention" }
+};
+const campColorCache = {};
+function campColor(side) {
+  if (!side) return null;
+  if (!(side in campColorCache)) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(`--camp-${side}`).trim();
+    campColorCache[side] = v || null;
+  }
+  return campColorCache[side];
+}
+function isLight(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  const r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
+  return 0.299 * r + 0.587 * g + 0.114 * b > 150;
+}
+const CAMP_ORDER = ["red", "white", "rev-dem", "green", "national", "uprising", "intervention"];
+function campFilters(people) {
+  const seen = [...new Set(people.map((p) => p.side).filter(Boolean))];
+  seen.sort((a, b) => {
+    const ia = CAMP_ORDER.indexOf(a), ib = CAMP_ORDER.indexOf(b);
+    const na = ia < 0 ? 99 : ia, nb = ib < 0 ? 99 : ib;
+    return na !== nb ? na - nb : a.localeCompare(b);
+  });
+  const out = [{ id: "all", ru: "\u0412\u0441\u0463", en: "All", count: people.length, brand: "#D2B773" }];
+  for (const id of seen) {
+    const meta = sideMeta(id);
+    out.push({
+      id,
+      ru: meta.ru,
+      en: meta.en,
+      brand: meta.color,
+      count: people.filter((p) => p.side === id).length
+    });
+  }
+  const noneCount = people.filter((p) => !p.side).length;
+  if (noneCount) out.push({
+    id: "none",
+    ru: SIDE_NEUTRAL.ru,
+    en: SIDE_NEUTRAL.en,
+    brand: SIDE_NEUTRAL.accent,
+    count: noneCount
+  });
+  return out.filter((f) => f.count > 0);
+}
 function sideMeta(side) {
-  return side && SIDE_META[side] || SIDE_NEUTRAL;
+  if (side && SIDE_META[side]) return SIDE_META[side];
+  if (side && SIDE_EXTRA[side]) {
+    const c = campColor(side) || SIDE_NEUTRAL.color;
+    return { ...SIDE_EXTRA[side], color: c, accent: c, flag: c };
+  }
+  return SIDE_NEUTRAL;
 }
 const BRAND = window.BRAND_THEME;
 const theme = window.MTK_PEOPLE_THEME;
@@ -370,6 +426,7 @@ function SideFlag({ side, lang }) {
 }
 function PersonCard({ person, lang, onOpen, delay }) {
   const meta = sideMeta(person.side);
+  const [portraitFailed, setPortraitFailed] = React.useState(false);
   return /* @__PURE__ */ React.createElement(
     "button",
     {
@@ -418,14 +475,23 @@ function PersonCard({ person, lang, onOpen, delay }) {
       background: "#F7F9EF",
       border: `1px solid ${theme.inkSoft}`,
       marginBottom: 10
-    } }, person.portrait ? /* @__PURE__ */ React.createElement("img", { src: person.portrait, alt: "", loading: "lazy", style: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      objectPosition: "top",
-      display: "block",
-      filter: "sepia(0.18) contrast(1.05)"
-    } }) : /* @__PURE__ */ React.createElement(
+    } }, person.portrait && !portraitFailed ? /* @__PURE__ */ React.createElement(
+      "img",
+      {
+        src: person.portrait,
+        alt: "",
+        loading: "lazy",
+        onError: () => setPortraitFailed(true),
+        style: {
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "top",
+          display: "block",
+          filter: "sepia(0.18) contrast(1.05)"
+        }
+      }
+    ) : /* @__PURE__ */ React.createElement(
       "svg",
       {
         viewBox: "0 0 100 125",
@@ -606,6 +672,10 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       return "flow";
     }
   });
+  const [leadFailed, setLeadFailed] = React.useState(false);
+  React.useEffect(() => {
+    setLeadFailed(false);
+  }, [person.id]);
   React.useEffect(() => {
     try {
       localStorage.setItem("expo:peopleViewMode", viewMode);
@@ -665,14 +735,22 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         flexDirection: "column",
         overflow: "hidden",
         color: card.ink
-      } }, /* @__PURE__ */ React.createElement("div", { style: { position: "relative", width: "100%", aspectRatio: "1/1.3", overflow: "hidden", background: "#F7F9EF", flexShrink: 0 } }, person.portrait ? /* @__PURE__ */ React.createElement("img", { src: person.portrait, alt: "", style: {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        objectPosition: "top",
-        display: "block",
-        filter: "sepia(0.15) contrast(1.04)"
-      } }) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("svg", { viewBox: "0 0 100 130", preserveAspectRatio: "xMidYMid slice", style: { width: "100%", height: "100%" } }, /* @__PURE__ */ React.createElement("defs", null, /* @__PURE__ */ React.createElement("radialGradient", { id: `mbg-${person.id}`, cx: "50%", cy: "35%", r: "80%" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#F7F9EF" }), /* @__PURE__ */ React.createElement("stop", { offset: "60%", stopColor: "#CFD0CF" }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#9DA3A6" }))), /* @__PURE__ */ React.createElement("rect", { width: "100", height: "130", fill: `url(#mbg-${person.id})` }), /* @__PURE__ */ React.createElement(
+      } }, /* @__PURE__ */ React.createElement("div", { style: { position: "relative", width: "100%", aspectRatio: "1/1.3", overflow: "hidden", background: "#F7F9EF", flexShrink: 0 } }, person.portrait && !leadFailed ? /* @__PURE__ */ React.createElement(
+        "img",
+        {
+          src: person.portrait,
+          alt: "",
+          onError: () => setLeadFailed(true),
+          style: {
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "top",
+            display: "block",
+            filter: "sepia(0.15) contrast(1.04)"
+          }
+        }
+      ) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("svg", { viewBox: "0 0 100 130", preserveAspectRatio: "xMidYMid slice", style: { width: "100%", height: "100%" } }, /* @__PURE__ */ React.createElement("defs", null, /* @__PURE__ */ React.createElement("radialGradient", { id: `mbg-${person.id}`, cx: "50%", cy: "35%", r: "80%" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#F7F9EF" }), /* @__PURE__ */ React.createElement("stop", { offset: "60%", stopColor: "#CFD0CF" }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#9DA3A6" }))), /* @__PURE__ */ React.createElement("rect", { width: "100", height: "130", fill: `url(#mbg-${person.id})` }), /* @__PURE__ */ React.createElement(
         "path",
         {
           d: "M 15 130 Q 15 85 32 77 Q 40 74 42 68 Q 34 64 34 48 Q 34 28 50 28 Q 66 28 66 48 Q 66 64 58 68 Q 60 74 68 77 Q 85 85 85 130 Z",
@@ -1185,51 +1263,9 @@ function PersonalitiesApp() {
     gap: 10,
     flexWrap: "wrap",
     alignItems: "center"
-  } }, [
-    {
-      id: "all",
-      ru: "\u0412\u0441\u0463",
-      en: "All",
-      count: people.length,
-      brand: "#D2B773"
-      /* BRAND.brass */
-    },
-    {
-      id: "red",
-      ru: "\u041A\u0440\u0430\u0441\u043D\u044B\u0435",
-      en: "Reds",
-      count: people.filter((p) => p.side === "red").length,
-      brand: "#A02128"
-      /* BRAND.signalRed */
-    },
-    {
-      id: "white",
-      ru: "\u0411\u0463\u043B\u044B\u0435",
-      en: "Whites",
-      count: people.filter((p) => p.side === "white").length,
-      brand: "#CFD0CF"
-      /* BRAND.telegrey4 */
-    },
-    {
-      id: "green",
-      ru: "\u0422\u0440\u0435\u0442\u044C\u044F \u0441\u0438\u043B\u0430",
-      en: "Third force",
-      count: people.filter((p) => p.side === "green").length,
-      brand: "#5D6970"
-      /* BRAND.slateBlue */
-    },
-    {
-      id: "none",
-      ru: "\u0412\u043D\u0463 \u043B\u0430\u0433\u0435\u0440\u0435\u0439",
-      en: "Unaligned",
-      count: people.filter((p) => !p.side).length,
-      brand: "#9DA3A6"
-      /* BRAND.slateWindow */
-    }
-  ].filter((f) => f.count > 0).map((f) => {
+  } }, campFilters(people).map((f) => {
     const active = filter === f.id;
-    const lightBg = f.brand === "#D2B773" || f.brand === "#CFD0CF" || f.brand === "#9DA3A6";
-    const activeText = lightBg ? "#000" : "#F7F9EF";
+    const activeText = isLight(f.brand) ? "#000" : "#F7F9EF";
     return /* @__PURE__ */ React.createElement("button", { key: f.id, onClick: () => setFilter(f.id), style: {
       // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).
       minHeight: 64,

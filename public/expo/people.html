@@ -7,8 +7,13 @@
 <!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
      ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
 <script src="../base.js"></script>
-<link rel="stylesheet" href="/src/styles/fonts.css">
-<link rel="stylesheet" href="/src/styles/tokens.css">
+<!-- Палитра, шрифты и метрики — один генерируемый артефакт из
+     src/design/tokens.json. Раньше здесь стояли /src/styles/{fonts,tokens}.css:
+     vite их в dist не кладёт: каталог expo лежит в public и идёт мимо
+     сборки. Обе
+     ссылки отдавали 404 — сцена месяц ехала без Nolde и без --touch-hit,
+     причём молча: отвалившийся <link> не даёт ошибки в консоли. -->
+<link rel="stylesheet" href="brand-tokens.css?v=20260803">
 <style>
   * { box-sizing: border-box; }
   html, body {
