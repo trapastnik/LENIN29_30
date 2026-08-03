@@ -81,6 +81,22 @@ const PLURAL = {
   events: 'event', longreads: 'longread',
 };
 
+// Лонгриды живут без `_index.json` — их по одному на раздел. Но ссылаться
+// на них можно (`related.longreads`), поэтому id заводятся в общую таблицу
+// разрешения так же, как записи индексов.
+const LONGREADS = join(CONTENT, 'longreads');
+if (existsSync(LONGREADS)) {
+  for (const file of readdirSync(LONGREADS)) {
+    if (!file.endsWith('.json') || file.startsWith('_')) continue;
+    if (file.endsWith('.gen.json') || file.endsWith('.patch.json')) continue;
+    const id = basename(file, '.json');
+    if (index.has(id) && index.get(id) !== 'longread') {
+      err(rel(join(LONGREADS, file)), `id «${id}» уже занят видом ${index.get(id)}`);
+    }
+    index.set(id, 'longread');
+  }
+}
+
 // ---------------------------------------------------------------- кросс-чек
 
 /**
@@ -226,7 +242,12 @@ function checkMedia(where, data) {
     seen.add(m.n);
 
     if (!m.src_file) {
-      warn(where, `media n=${m.n}: аннотация «${m.src_name || '?'}» без файла на диске`);
+      // Внешний источник — не пропажа: файла в поставке нет и не будет,
+      // изображение живёт в госкаталоге и подписано ссылкой.
+      if (!m.source_url) {
+        warn(where, `media n=${m.n}: аннотация «${m.src_name || m.caption_ru || '?'}»`
+          + ' без файла на диске');
+      }
       continue;
     }
     // ── каждый заявленный тир обязан существовать у КАЖДОЙ части записи:
@@ -339,6 +360,108 @@ if (existsSync(chronDir)) {
       }
     }
     checked += 1;
+  }
+}
+
+// ---------------------------------------------------------------- лонгриды
+
+/**
+ * Лонгрид устроен иначе справки: текст разложен по секциям, медиа и ссылки
+ * живут внутри них, `summary_ru` пуст. Поэтому отдельный проход, а не общий
+ * цикл по KINDS.
+ *
+ * Главное здесь — `ref_labels`. Это денормализованный кэш подписей из наших
+ * индексов: киоск запускается по `file://`, где `fetch` и XHR запрещены
+ * (проверено в Chrome: без `--allow-file-access-from-files` оба падают),
+ * и подтянуть индекс, чтобы подписать плашку связи, нечем. Плата за кэш —
+ * он протухает от переименования в индексе, причём молча. Сверяем каждую
+ * запись с индексом: тогда протухание — красный гейт, а не сюрприз приёмки.
+ */
+function checkRefs(where, refs, what) {
+  for (const [bucket, ids] of Object.entries(refs || {})) {
+    const want = PLURAL[bucket];
+    if (!want) { err(where, `неизвестный раздел ${what}.${bucket}`); continue; }
+    for (const ref of ids || []) {
+      if (!index.has(ref)) {
+        err(where, `${what}.${bucket} → «${ref}» вне индекса`);
+      } else if (index.get(ref) !== want) {
+        err(where, `${what}.${bucket} → «${ref}», а это ${index.get(ref)}`);
+      }
+    }
+  }
+}
+
+if (existsSync(LONGREADS)) {
+  const files = readdirSync(LONGREADS)
+    .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
+    .filter((f) => !f.endsWith('.gen.json') && !f.endsWith('.patch.json'));
+
+  for (const file of files) {
+    const path = join(LONGREADS, file);
+    const id = basename(file, '.json');
+    const data = readJSON(path);
+    if (!data) continue;
+    checked += 1;
+    const where = rel(path);
+
+    if (data.schema !== 1) err(where, 'нет поля schema: 1');
+    if (data.id !== id) err(where, `поле id = «${data.id}», а файл называется «${id}»`);
+    if (data.kind !== 'longread') err(where, `kind = «${data.kind}», ожидался «longread»`);
+    if (!data.title_ru) err(where, 'пустой title_ru');
+    if (!['ok', 'missing', 'copy_of_ru'].includes(data.en_status)) {
+      err(where, `en_status = «${data.en_status}», допустимы ok/missing/copy_of_ru`);
+    }
+
+    checkRefs(where, data.related, 'related');
+    checkMedia(where, data);
+
+    const used = new Set();
+    const seenSection = new Set();
+    for (const s of data.sections || []) {
+      const sw = `${where} § ${s.id || s.n}`;
+      if (!s.id) err(sw, 'секция без id — по нему строится якорь скролла');
+      else if (seenSection.has(s.id)) err(where, `секция «${s.id}» встречается дважды`);
+      else seenSection.add(s.id);
+      if (!s.title_ru) err(sw, 'секция без title_ru');
+      if (!(s.paragraphs_ru || []).length && !(s.media || []).length) {
+        warn(sw, 'секция пуста: ни абзацев, ни медиа');
+      }
+      checkRefs(sw, s.refs, 'refs');
+      for (const ids of Object.values(s.refs || {})) {
+        for (const r of ids || []) used.add(r);
+      }
+      checkMedia(sw, s);
+    }
+
+    // ── кэш подписей обязан совпадать с индексом
+    const labels = data.ref_labels || {};
+    for (const ref of used) {
+      if (!(ref in labels)) {
+        err(where, `ref_labels: нет подписи для «${ref}» — плашка связи выйдет пустой`);
+      }
+    }
+    for (const [ref, lab] of Object.entries(labels)) {
+      const rec = indexRecords.get(ref);
+      if (!rec) {
+        err(where, `ref_labels: «${ref}» нет ни в одном индексе`);
+        continue;
+      }
+      if (lab.kind !== rec.kind) {
+        err(where, `ref_labels[${ref}].kind = «${lab.kind}», в индексе ${rec.kind}`);
+      }
+      if (lab.title_ru !== rec.item.title_ru) {
+        err(where, `ref_labels[${ref}].title_ru протух: «${lab.title_ru}» ≠ `
+          + `«${rec.item.title_ru}» в индексе — перегенерировать лонгрид`);
+      }
+      if ((lab.camp || null) !== (rec.item.camp || null)) {
+        err(where, `ref_labels[${ref}].camp протух: «${lab.camp}» ≠ `
+          + `«${rec.item.camp}» в индексе — перегенерировать лонгрид`);
+      }
+      if (lab.href && lab.href.startsWith('/')) {
+        err(where, `ref_labels[${ref}].href начинается со слэша — `
+          + 'под file:// это уедет в корень файловой системы');
+      }
+    }
   }
 }
 
