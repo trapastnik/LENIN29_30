@@ -17,7 +17,7 @@
 // Симбирск — зона simbirsk, его страницу заводит она, не мы.
 const SECTIONS = [
   {
-    id: 'chronicle', src: null,
+    id: 'chronicle', src: 'chronicle.html',
     ru: 'Хроника событій', en: 'Chronicle of events',
     noteRu: 'Лента времени 1917–1922, событія по годамъ',
     noteEn: 'Timeline 1917–1922, events by year',
@@ -101,6 +101,40 @@ function Expo() {
   }, []);
 
   // ── Разделы-оверлеи ──────────────────────────────────────────────────────
+  // ТЗ раздела «Хроника»: «возможность перейти сразу на другой год». Год
+  // с главного таймлайна доезжает сообщением, а не через ?year= — iframe
+  // разделов монтируется один раз и остаётся в DOM, перезагружать его
+  // ради смены года значило бы терять весь смысл этой схемы.
+  //
+  // При первом тапе iframe ещё только монтируется и ничего не слушает —
+  // сообщение, посланное сразу, уходит в пустоту, и раздел открывается
+  // на том годе, что лежит у него в localStorage. Поэтому год запоминаем
+  // и досылаем по onLoad; для уже открытого раздела шлём сразу.
+  const pendingYear = React.useRef(null);
+
+  const postYear = React.useCallback((year) => {
+    const frame = [...document.querySelectorAll('iframe')].find(f => f.title === 'chronicle');
+    if (!frame || !frame.contentWindow || !frame.dataset.ready) {
+      pendingYear.current = year;
+      return;
+    }
+    try { frame.contentWindow.postMessage({ type: 'mtk29:goto-year', year }, '*'); } catch {}
+  }, []);
+
+  const onChronicleLoad = React.useCallback((e) => {
+    const frame = e.currentTarget;
+    frame.dataset.ready = '1';
+    if (pendingYear.current == null) return;
+    try { frame.contentWindow.postMessage({ type: 'mtk29:goto-year', year: pendingYear.current }, '*'); } catch {}
+    pendingYear.current = null;
+  }, []);
+
+  const openYear = React.useCallback((year) => {
+    setActiveYear(year);
+    openSectionRef.current('chronicle');
+    postYear(year);
+  }, [postYear]);
+
   const openSection = React.useCallback((id) => {
     setActiveSection(id);
     setLoadedSections(prev => {
@@ -121,6 +155,11 @@ function Expo() {
     });
   }, []);
   const closeSection = React.useCallback(() => setActiveSection(null), []);
+
+  // openYear объявлен выше openSection и зовёт его через ref: менять порядок
+  // объявлений ради этого — хуже, чем одна явная ссылка.
+  const openSectionRef = React.useRef(openSection);
+  React.useEffect(() => { openSectionRef.current = openSection; }, [openSection]);
 
   // Esc и postMessage('mtk29:close-section') закрывают оверлей.
   React.useEffect(() => {
@@ -191,7 +230,7 @@ function Expo() {
       }}>
         <Backdrop/>
         <MainHeader lang={lang} setLang={setLang}/>
-        <Timeline years={years} active={activeYear} onPick={setActiveYear} lang={lang}/>
+        <Timeline years={years} active={activeYear} onPick={openYear} lang={lang}/>
         <SectionTiles sections={sections} lang={lang} onOpen={openSection}/>
 
         <div style={{
@@ -219,6 +258,7 @@ function Expo() {
             <iframe
               src={s.src}
               title={s.id}
+              onLoad={s.id === 'chronicle' ? onChronicleLoad : undefined}
               style={{
                 position: 'absolute', inset: 0,
                 width: '100%', height: '100%',

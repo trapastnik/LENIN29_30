@@ -2,6 +2,7 @@
 // Отличие от <party-card>: в expanded-режиме встраивает <map-unit> с картой территории.
 
 import { fetchJSON } from '../data/loader.js';
+import { t, onLangChange } from '../data/i18n.js';
 import './map-unit.js';
 
 const TEMPLATE = `
@@ -92,10 +93,26 @@ const TEMPLATE = `
 
   .loading { padding: 40px; text-align: center; color: var(--ink-faint); font-family: var(--font-mono); }
 </style>
-<div id="root" class="loading">Загрузка…</div>
+<div id="root" class="loading"></div>
 `;
 
 export class StateCard extends HTMLElement {
+
+  // Интерфейсные подписи двуязычны, содержание справки — нет (CLAUDE.md §9).
+  // Перерисовываемся сами: страница не знает, какие компоненты на ней живут.
+  connectedCallback() {
+    // Шаблон компонента вычисляется один раз при загрузке модуля, поэтому
+    // подпись загрузки ставим здесь — иначе она заморозила бы язык.
+    if (this._root && this._root.classList.contains('loading') && !this._root.textContent) {
+      this._root.textContent = t('Загрузка…', 'Loading…');
+    }
+    if (this._unLang) return;
+    this._unLang = onLangChange(() => this._render());
+  }
+  disconnectedCallback() {
+    if (this._unLang) { this._unLang(); this._unLang = null; }
+  }
+
   static get observedAttributes() { return ['state-id', 'expanded', 'stub']; }
 
   constructor() {
@@ -125,7 +142,7 @@ export class StateCard extends HTMLElement {
         id,
         title_ru: (this._stub && this._stub.title_ru) || id,
         camp: (this._stub && this._stub.camp) || 'red',
-        summary_ru: 'Карточка в подготовке.',
+        summary_ru: t('Карточка в подготовке.', 'Dossier in preparation.'),
         _placeholder: true,
       };
     }
@@ -157,7 +174,7 @@ export class StateCard extends HTMLElement {
       <div class="body">${paras}</div>
       ${hasMap
         ? `<div class="map-wrap"><map-unit map-id="${d.map_id}"${layers ? ` initial-layers="${layers}"` : ''} show-panel="true"></map-unit></div>`
-        : `<div class="no-map">Карта территории в производстве. Доступна только для Комуч (пример технологии).</div>`}
+        : `<div class="no-map">${t('Карта территории в производстве. Доступна только для Комуч (пример технологии).', 'Territory map in production. Available for Komuch only (technology sample).')}</div>`}
     `;
   }
 }

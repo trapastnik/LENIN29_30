@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Персоналии · Гражданская война 1917—1922</title>
+<title>Хроника событий · Гражданская война 1917—1922</title>
 <!-- Первым скриптом: даёт MTK_URL() для путей к ресурсам. Под file:// киоска
      ведущий слэш резолвится в корень ФС, и раздел молча пуст. См. public/base.js. -->
 <script src="../base.js"></script>
@@ -34,16 +34,14 @@
 <script src="vendor/react-18.3.1.production.min.js"></script>
 <script src="vendor/react-dom-18.3.1.production.min.js"></script>
 
-<!-- Единственный источник палитры: генерируется из src/design/tokens.json.
-     Заменил theme.js. Правки — в tokens.json, не здесь. -->
+<!-- Единственный источник палитры: генерируется из src/design/tokens.json. -->
 <script src="brand-tokens.js?v=20260802"></script>
-<!-- Данные раздела: public/content/persons/ (импорт зоны content, 78 записей).
-     Заменил people-data.js — подборку design-pass на 17 человек. -->
-<script src="persons-data.js"></script>
+<!-- Данные раздела: public/content/chronicle/, по одному году за раз. -->
+<script src="chronicle-data.js"></script>
 <!-- Предкомпилированный JSX, исходники — соседние *.jsx.
      Компилятор: scripts/expo/build-jsx.mjs (esbuild). -->
 <script src="build/rich-text.js"></script>
-<script src="build/people-ui.js"></script>
-<script src="build/boot-people.js"></script>
+<script src="build/chronicle-ui.js"></script>
+<script src="build/boot-chronicle.js"></script>
 </body>
 </html>
