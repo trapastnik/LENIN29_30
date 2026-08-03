@@ -6,7 +6,15 @@
   public/content/parties/_index.json   20 партий
   public/content/states/_index.json    24 гособразования (в т.ч. `komuch`,
                                        к нему привязана единственная готовая карта)
-  public/expo/people-data.js           17 персон сцены
+  public/expo/*-data.js                17 персон сцены
+
+⚠️ Подборка персон принадлежит зоне `ui` и уже переезжала:
+`people-data.js` → `persons-data.js`, причём старого файла больше нет.
+Поэтому источник **необязательный**: перебираем оба имени, ни одного нет —
+пропускаем с сообщением. Жёсткое чтение одного имени роняло весь посев
+`FileNotFoundError`, и падало оно там, куда не смотрят: реестр уже наполнен,
+семьдесят импортированных персон давно перекрыли семнадцать из подборки,
+и запускают этот скрипт раз в полгода.
 
 Запуск:  python3 scripts/import/seed_ids.py
 """
@@ -55,18 +63,24 @@ def main() -> int:
                         match=_match_keys(it))
             added += 0 if before else 1
 
-    # people-data.js: { id: 'lenin', … ru: { name: 'Владимир Ильич', sur: 'Ленин (Ульянов)' … } }
-    people_js = (ROOT / "public/expo/people-data.js").read_text("utf-8")
-    chunks = re.split(r"\{\s*id:\s*'", people_js)[1:]
-    for chunk in chunks:
-        eid = chunk.split("'", 1)[0]
-        if not re.fullmatch(r"[a-z0-9-]+", eid):
-            continue
-        m = re.search(r"ru:\s*\{[^}]*?sur:\s*'([^']*)'", chunk, re.S)
-        title = m.group(1) if m else ""
-        before = eid in reg.bucket("person")
-        reg.reserve("person", eid, title, origin="expo/people-data.js")
-        added += 0 if before else 1
+    # Подборка персон сцены: { id: 'lenin', … ru: { sur: 'Ленин (Ульянов)' … } }
+    # Файл принадлежит зоне ui и уже переезжал — перебираем оба имени.
+    people_path = next(
+        (p for p in (ROOT / "public/expo/people-data.js",
+                     ROOT / "public/expo/persons-data.js") if p.exists()), None)
+    if people_path is None:
+        print("  подборки персон сцены нет (public/expo/*-data.js) — "
+              "пропущено; id персон давно закреплены импортом")
+    else:
+        for chunk in re.split(r"\{\s*id:\s*'", people_path.read_text("utf-8"))[1:]:
+            eid = chunk.split("'", 1)[0]
+            if not re.fullmatch(r"[a-z0-9-]+", eid):
+                continue
+            m = re.search(r"ru:\s*\{[^}]*?sur:\s*'([^']*)'", chunk, re.S)
+            before = eid in reg.bucket("person")
+            reg.reserve("person", eid, m.group(1) if m else "",
+                        origin="expo/" + people_path.name)
+            added += 0 if before else 1
 
     changed = reg.save()
     total = sum(len(reg.bucket(k)) for k in ("person", "party", "state"))
