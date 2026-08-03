@@ -37,53 +37,53 @@
 <style>
   :host {
     display: block;
-    scroll-margin-top: 140px;   /* шапка sticky — иначе якорь уезжает под неё */
+    scroll-margin-top: calc(140px * var(--ui-scale, 1));   /* шапка sticky — иначе якорь уезжает под неё */
   }
 
   .sheet {
     background: var(--paper);
     color: var(--ink);
-    padding: 56px 72px 48px;
-    border: 1px solid var(--rule);
-    border-top: 6px solid var(--accent-alt);
+    padding: calc(56px * var(--ui-scale, 1)) calc(72px * var(--ui-scale, 1)) calc(48px * var(--ui-scale, 1));
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
+    border-top: calc(6px * var(--ui-scale, 1)) solid var(--accent-alt);
   }
 
-  header { margin-bottom: 34px; }
+  header { margin-bottom: calc(34px * var(--ui-scale, 1)); }
 
   .num {
     font-family: var(--font-display);
-    font-size: 92px;
+    font-size: calc(92px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 0.8;
     color: var(--accent-alt);
     letter-spacing: -0.04em;
   }
   h2 {
-    margin: 14px 0 0;
+    margin: calc(14px * var(--ui-scale, 1)) 0 0;
     /* Nolde. Курсив на нём запрещён — файла начертания нет, браузер
        синтезирует наклон, и на 46 px это видно как дефект засечек. §8 */
     font-family: var(--font-display);
     font-style: normal;
-    font-size: 46px;
+    font-size: calc(46px * var(--ui-scale, 1));
     font-weight: 700;
     line-height: 1.1;
     color: var(--ink);
   }
   .lede {
-    margin: 18px 0 0;
+    margin: calc(18px * var(--ui-scale, 1)) 0 0;
     /* 21 Cent — курсивное начертание у него есть, подключено в fonts.css */
     font-family: var(--font-body);
     font-style: italic;
-    font-size: 27px;
+    font-size: calc(27px * var(--ui-scale, 1));
     line-height: 1.4;
     color: var(--ink-soft);
     max-width: 46em;
   }
 
   .body p {
-    margin: 0 0 26px;
+    margin: 0 0 calc(26px * var(--ui-scale, 1));
     font-family: var(--font-body);
-    font-size: 25px;
+    font-size: calc(25px * var(--ui-scale, 1));
     line-height: 1.62;
     color: var(--ink);
     max-width: 42em;      /* мера строки: длиннее с полутора метров не читается */
@@ -91,22 +91,22 @@
   .body p:last-child { margin-bottom: 0; }
 
   /* ── связи ─────────────────────────────────────────────────────────── */
-  .refs { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .refs { margin-top: calc(44px * var(--ui-scale, 1)); padding-top: calc(28px * var(--ui-scale, 1)); border-top: calc(1px * var(--ui-scale, 1)) solid var(--rule); }
   .refs-title {
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    margin-bottom: 20px;
+    margin-bottom: calc(20px * var(--ui-scale, 1));
   }
   /* Сетка, а не flex-wrap: у плашек разная длина подписи, и во flex каждая
      сжимается по своему содержимому — колонки не выстраиваются, ряды идут
      лесенкой. Равные колонки читаются как список, а не как россыпь. */
   .chips {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(calc(320px * var(--ui-scale, 1)), 1fr));
+    gap: calc(16px * var(--ui-scale, 1));
   }
 
   a.chip {
@@ -114,29 +114,29 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
+    gap: calc(6px * var(--ui-scale, 1));
     min-height: var(--touch-hit, 120px);
-    padding: 18px 26px;
+    padding: calc(18px * var(--ui-scale, 1)) calc(26px * var(--ui-scale, 1));
     text-decoration: none;
     color: var(--ink);
     background: var(--paper-pure);
-    border: 1px solid var(--rule);
-    border-left: 8px solid var(--camp-color);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
+    border-left: calc(8px * var(--ui-scale, 1)) solid var(--camp-color);
     transition: transform .12s, background .12s;
   }
   /* Только :active. Тач-палец не наводится, :hover в киоске запрещён (§8). */
-  a.chip:active { transform: translateX(3px); background: var(--paper); }
+  a.chip:active { transform: translateX(calc(3px * var(--ui-scale, 1))); background: var(--paper); }
 
   .chip .kind {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: calc(13px * var(--ui-scale, 1));
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--ink-faint);
   }
   .chip .name {
     font-family: var(--font-body);
-    font-size: 22px;
+    font-size: calc(22px * var(--ui-scale, 1));
     line-height: 1.2;
   }
 </style>
