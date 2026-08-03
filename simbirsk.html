@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МТК 29 · Симбирск 1918—1919</title>
+
+  <link rel="stylesheet" href="./src/styles/fonts.css">
+  <link rel="stylesheet" href="./src/styles/tokens.css">
+  <link rel="stylesheet" href="./src/styles/base.css">
+  <link rel="stylesheet" href="./src/styles/pages.css">
+
+  <!--
+    ВСЕ СКРИПТЫ НА ЭТОЙ СТРАНИЦЕ — КЛАССИЧЕСКИЕ, И ЭТО НЕ СТИЛЬ, А ТРЕБОВАНИЕ.
+
+    Киоск запускается как file:///opt/mtk29/dist/index.html. Под file:// Chromium
+    блокирует и fetch, и внешние module-скрипты (проверено: классический
+    <script src> исполняется, type="module" — нет, fetch падает с «Failed to
+    fetch»). Страница, которая грузит контент через fetch или собирается из
+    ES-модулей, на целевом железе окажется пустой БЕЗ ошибки в консоли, а на
+    stage по http будет работать — то есть дефект не виден нигде, кроме приёмки.
+    CLAUDE.md §5.
+
+    Отсюда же порядок: base.js даёт MTK_URL, data.js кладёт контент на window,
+    runtime определяет кастомные элементы — и только потом разбирается <body>.
+  -->
+  <script src="base.js"></script>
+  <script src="expo/pin-gate.js?v=20260427"></script>
+  <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: 'expo/people.html' });</script>
+  <script src="content/longreads/simbirsk.data.js"></script>
+  <script src="longread/longread-runtime.js"></script>
+
+  <style>
+    /* Кнопка «Разделы» в шапке. Геометрия — как у .back-link из pages.css,
+       но это <button>, а не ссылка: оглавление открывается на месте. */
+    .toc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: auto;
+      min-height: 64px;
+      padding: 14px 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--brass);
+      background: transparent;
+      border: 1.5px solid var(--brass);
+      border-radius: 30px;
+      transition: background .15s, color .15s;
+    }
+    /* Только :active — на тач-панели пальцу нечем «наводиться» (§8). */
+    .toc-btn:active { background: var(--brass); color: var(--iron-grey); }
+    .toc-btn .glyph { font-size: 20px; line-height: 1; }
+
+    /* Лонгрид сам центрирует свою колонку, поэтому у main здесь нет
+       ни своих отступов по бокам, ни ограничения ширины. */
+    body.scrollable main { padding: 0; max-width: none; }
+  </style>
+</head>
+<body class="scrollable">
+  <header class="page-header" data-section-num="05">
+    <div class="page-title">
+      <div class="kicker">Раздел · 05</div>
+      <h1>Симбирск</h1>
+    </div>
+    <button class="toc-btn" id="toc-btn" type="button">
+      <span class="glyph">☰</span> Разделы
+    </button>
+    <a class="back-link" href="index.html" id="back-link">← К экспозиции</a>
+  </header>
+
+  <main>
+    <longread-view longread-id="simbirsk"></longread-view>
+  </main>
+
+  <script>
+    // Раздел открывается и как отдельная страница, и в iframe из сцены /expo/.
+    // Во втором случае «назад» — это не переход, а просьба к родителю закрыться.
+    (function () {
+      if (window.parent === window) return;
+      var a = document.getElementById('back-link');
+      if (!a) return;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.parent.postMessage('mtk29:close-section', '*');
+      });
+    })();
+
+    (function () {
+      var view = document.querySelector('longread-view');
+      var btn = document.getElementById('toc-btn');
+      if (!view || !btn) return;
+      btn.addEventListener('click', function () { view.openToc(); });
+    })();
+  </script>
+</body>
+</html>
