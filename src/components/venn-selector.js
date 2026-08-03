@@ -4,11 +4,12 @@
 //
 // API:
 //   .camps      — список { id, title_ru, icon, general_id }
-//   .background — URL картинки без подписей (venn-bg.png)
+//   .background — устарел: фон векторный, из src/data/venn-layout.js
 //   .headers    — массив { camp, x, y } — позиции заголовков групп
 //   .items      — массив партий с x/y и _is_general
 
 import { t, onLangChange } from '../data/i18n.js';
+import { VENN_BLOBS, VENN_VIEWBOX, vennPos } from '../data/venn-layout.js';
 
 const ICONS = {
   star:   `<path d="M12 2l2.9 6.9L22 10l-5.3 4.6L18.2 22 12 18.3 5.8 22l1.5-7.4L2 10l7.1-1.1L12 2z" fill="currentColor"/>`,
@@ -24,8 +25,8 @@ const TEMPLATE = `
     display: block;
     position: relative;
     width: 100%;
-    /* Аспект точно по картинке venn-bg.png, чтобы чипы в %% align'ились с blob'ами. */
-    aspect-ratio: 1672 / 941;
+    /* Кадр раскладки: блобы и проценты чипов посчитаны в 1920×1080. */
+    aspect-ratio: 1920 / 1080;
     max-height: 86vh;
     background: #0b0d12;
     border: 1px solid rgba(200, 182, 138, 0.2);
@@ -52,12 +53,12 @@ const TEMPLATE = `
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
   }
 
-  img.bg {
+  svg.bg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    display: block;
     pointer-events: none;
     user-select: none;
     z-index: 1;
@@ -124,6 +125,10 @@ const TEMPLATE = `
 
   .chip {
     position: absolute;
+    /* Координата — ЛЕВЫЙ край чипа, вертикально по центру. Так задумано
+       раскладкой: design считала под уже существующее поведение компонента
+       («он уже ставит chip.style.left»), и центрирование сдвинуло бы все
+       подписи влево на половину их ширины. */
     transform: translate(0, -50%);
     display: flex;
     align-items: center;
@@ -190,7 +195,7 @@ const TEMPLATE = `
 </style>
 
 <div class="ornament"></div>
-<img class="bg" alt="">
+<svg class="bg" viewBox="${VENN_VIEWBOX}" preserveAspectRatio="none" aria-hidden="true">${VENN_BLOBS.map(b => `<path d="${b.d}" fill="var(--camp-${b.camp})" fill-opacity="0.42" stroke="var(--camp-${b.camp})" stroke-width="2"/>`).join('')}</svg>
 <div class="stage"></div>
 <footer>
   <div class="stats"><b></b>&nbsp;&nbsp;·&nbsp;&nbsp;<span class="stats-note"></span></div>
@@ -203,7 +208,6 @@ export class VennSelector extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = TEMPLATE;
-    this._bg = this.shadowRoot.querySelector('img.bg');
     this._stage = this.shadowRoot.querySelector('.stage');
     this._allBtn = this.shadowRoot.querySelector('.all-btn');
     this._allBtn.addEventListener('click', () => {
@@ -211,10 +215,10 @@ export class VennSelector extends HTMLElement {
     });
   }
 
-  set background(url) {
-    if (url) this._bg.src = url;
-    else this._bg.removeAttribute('src');
-  }
+  // Растрового фона больше нет: блобы векторные и встроены в разметку.
+  // Сеттер оставлен пустым, чтобы старый вызов `venn.background = …`
+  // не падал, — но ничего не делает и подлежит удалению у потребителей.
+  set background(_url) {}
 
   // Интерфейсные подписи двуязычны, содержание справки — нет (CLAUDE.md §9).
   // Перерисовываемся сами: страница не знает, какие компоненты на ней живут.
@@ -260,9 +264,14 @@ export class VennSelector extends HTMLElement {
 
       const wrap = document.createElement('div');
       wrap.className = 'group-header';
-      wrap.style.left = h.x + '%';
-      wrap.style.top = h.y + '%';
-      wrap.style.setProperty('--camp-color', `var(--camp-${camp.id}, #888)`);
+      // Блобы пересчитаны заново, поэтому старые venn_headers к ним не
+      // относятся: они подбирались под растровый фон. Берём позицию
+      // «генеральной» справки лагеря из той же раскладки, что и чипы,
+      // и только если её там нет — падаем на venn_headers.
+      const hp = vennPos({ id: camp.general_id }) || { x: h.x, y: h.y };
+      wrap.style.left = hp.x + '%';
+      wrap.style.top = hp.y + '%';
+      wrap.style.setProperty('--camp-color', `var(--camp-${camp.id})`);
 
       const icon = document.createElement('div');
       icon.className = 'group-icon';
@@ -284,12 +293,19 @@ export class VennSelector extends HTMLElement {
     }
 
     for (const it of this._items) {
-      if (it._is_general || it.x == null) continue;
+      if (it._is_general) continue;
+      // Координаты: сперва индекс (их туда положит content), иначе принятая
+      // раскладка из src/data/venn-layout.js. Нет ни там, ни там — чипа нет.
+      const pos = vennPos(it);
+      if (!pos) continue;
       const chip = document.createElement('div');
       chip.className = 'chip';
-      chip.style.left = it.x + '%';
-      chip.style.top = it.y + '%';
-      chip.style.setProperty('--camp-color', `var(--camp-${it.camp}, #888)`);
+      chip.style.left = pos.x + '%';
+      chip.style.top = pos.y + '%';
+      // Без запаса: все --camp-* существуют, и неизвестный лагерь должен
+      // падать заметно, а не становиться серым. Ровно на таком запасе
+      // фильтры персон молча разошлись с данными.
+      chip.style.setProperty('--camp-color', `var(--camp-${it.camp})`);
       chip.innerHTML = `<span class="dot"></span><span class="name">${it.title_ru}</span>`;
       chip.addEventListener('click', () => this._emitParty(it));
       this._stage.appendChild(chip);
