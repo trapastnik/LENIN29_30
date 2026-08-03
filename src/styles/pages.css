@@ -101,7 +101,7 @@ header.page-header::after {
   left: 172px; top: 16px; bottom: 16px;
   width: 2px;
   background: var(--brass);
-  transform: skewX(var(--brand-skew));
+  transform: skewX(var(--brand-skew, -15deg));
   opacity: 0.45;
   pointer-events: none;
 }

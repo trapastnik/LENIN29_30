@@ -58,7 +58,9 @@ const SKIP_DIRS = new Set([
 ]);
 const SKIP_FILES = new Set([
   'public/expo/brand-tokens.js',  // генерируется из tokens.json
+  'public/expo/brand-tokens.css', // генерируется из tokens.json
   'src/styles/tokens.css',        // генерируется из tokens.json
+  'src/styles/fonts.css',         // генерируется из tokens.json
   'calendar.html',                // R&D-стенд на заморозке (CLAUDE.md §4)
 ]);
 const EXT = new Set(['.css', '.js', '.jsx', '.html', '.mjs']);
@@ -134,6 +136,27 @@ const TOKEN_VALUES = new Set(
   Object.values(tokensJson.tokens).map(t => String(t.value).toLowerCase()),
 );
 
+/** Разрешает {ref} до конечного значения — нужно, чтобы отличить цвет от метрики. */
+function resolveToken(name, seen = []) {
+  const t = tokensJson.tokens[name];
+  if (!t || seen.includes(name)) return '';
+  const v = String(t.value);
+  const ref = v.match(/^\{([a-z0-9-]+)\}$/);
+  return ref ? resolveToken(ref[1], [...seen, name]) : v;
+}
+
+// Цвет, шрифт или метрика — от этого зависит, обязателен запас или запрещён.
+// mix() всегда даёт цвет: это смесь двух бренд-цветов.
+const KIND = new Map();
+for (const name of Object.keys(tokensJson.tokens)) {
+  const v = resolveToken(name);
+  if (/^mix\(|^#|^rgba?\(|^hsla?\(|^transparent$/i.test(v)) KIND.set(name, 'color');
+  else if (name.startsWith('font-')) KIND.set(name, 'font');
+  else KIND.set(name, 'metric');
+}
+/** Метрики, у которых отсутствие токена меняет ГЕОМЕТРИЮ, а не палитру. */
+const METRIC_TOKENS = new Set([...KIND].filter(([, k]) => k === 'metric').map(([n]) => n));
+
 // ── постоянные исключения + долг ───────────────────────────────────────────
 let baseline = { allow: [], debt: {} };
 try { baseline = { allow: [], debt: {}, ...JSON.parse(readFileSync(BASELINE_FILE, 'utf8')) }; } catch {}
@@ -149,13 +172,14 @@ function isAllowed(v) {
 // ── правила ────────────────────────────────────────────────────────────────
 const RULES = {
   R1: { level: 'error', title: 'сырой hex вне tokens.json и исключений' },
-  R2: { level: 'error', title: 'var(--x, #hex) — fallback это скрытая вторая палитра' },
+  R2: { level: 'error', title: 'var(--цвет, запас) — запас это скрытая вторая палитра' },
   R3: { level: 'error', title: 'курсив на Nolde / --font-display' },
   R4: { level: 'error', title: 'var(--x) для несуществующего токена' },
   R5: { level: 'error', title: ':hover в киосковом коде' },
   R6: { level: 'error', title: 'внешний CDN — киоск офлайн' },
   R7: { level: 'warn',  title: 'тач-цель меньше 48px' },
   R8: { level: 'error', title: 'артефакты разошлись с tokens.json' },
+  R9: { level: 'error', title: 'var(--метрика) без запаса — приёмочный параметр отвалится молча' },
 };
 
 const violations = [];
@@ -187,11 +211,32 @@ function lintFile(file) {
     add('R6', file, m.index, src, 'import');
   }
 
-  // ── R2 · var() с запасным значением ─────────────────────────────────────
-  for (const m of src.matchAll(/var\(\s*(--[a-z0-9-]+)\s*,([^)]*)\)/gi)) {
-    const fallback = m[2].trim();
+  // ── R2 · запас у ЦВЕТА запрещён ─────────────────────────────────────────
+  // Правило разошлось надвое 2026-08-04 (CLAUDE.md §8), и не по вкусу:
+  //   цвет   — запас это вторая палитра, включается молча при опечатке
+  //            в имени токена и рисует «почти бренд»;
+  //   метрика — запас единственное, что спасает приёмочный параметр,
+  //            когда токена нет: min-height становится auto, и требование
+  //            «тач-цель ≥ 120px» отваливается без следа. Это R9 ниже.
+  for (const m of src.matchAll(/var\(\s*--([a-z0-9-]+)\s*,([^)]*)\)/gi)) {
+    const [name, fallback] = [m[1], m[2].trim()];
     if (!fallback) continue;
-    add('R2', file, m.index, src, `var(${m[1]}, ${fallback})`);
+    const kind = KIND.get(name);
+    if (kind === 'metric') continue;                       // теперь обязателен
+    if (kind === undefined && !/#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\(/.test(fallback)) continue;
+    add('R2', file, m.index, src, `var(--${name}, ${fallback})`,
+        kind === 'font' ? 'запас у шрифта — вторая точка правды на гарнитуру' : undefined);
+  }
+
+  // ── R9 · запас у МЕТРИКИ обязателен ─────────────────────────────────────
+  // Ловит ровно тот случай, что нашёлся в brand.html:632: width/height
+  // на var(--touch-hit) без запаса. Если tokens.css не подключён —
+  // а в собранной сцене /expo/ так и было, — размер молча уходит в auto.
+  for (const m of src.matchAll(/var\(\s*--([a-z0-9-]+)\s*\)/gi)) {
+    const name = m[1];
+    if (!METRIC_TOKENS.has(name)) continue;
+    add('R9', file, m.index, src, `var(--${name})`,
+        `метрика без запаса; надо var(--${name}, ${resolveToken(name)})`);
   }
 
   // ── R4 · ссылка на неизвестный токен ────────────────────────────────────
