@@ -39,6 +39,7 @@ IN = ROOT.parent / "IN" / "new" / "МТК №29"
 CONTENT = ROOT / "public" / "content"
 SRC = ROOT / "content-src"
 
+import aliases_manual  # noqa: E402
 import camps  # noqa: E402
 import docxlib  # noqa: E402
 import entity_chronicle  # noqa: E402
@@ -47,6 +48,7 @@ import entity_party  # noqa: E402
 import entity_person  # noqa: E402
 import entity_state  # noqa: E402
 import richtext  # noqa: E402
+import ruforms  # noqa: E402
 import spravka  # noqa: E402
 from docxlib import Document, Table, fold  # noqa: E402
 from ids import IdRegistry  # noqa: E402
@@ -581,13 +583,22 @@ def lookup_camp(kind: str, eid: str) -> Optional[str]:
     key = {"party": "parties", "state": "states"}.get(kind)
     if key is None and kind == "person":
         if "person" not in _CAMP_CACHE:
-            js = (ROOT / "public/expo/people-data.js").read_text("utf-8")
+            # Запасной источник лагеря — подборка design-pass. Он НЕОБЯЗАТЕЛЕН:
+            # основной разбор идёт по регалиям (camps.py, 68 из 70), а этот файл
+            # принадлежит зоне ui и уже переезжал (`people-data.js` →
+            # `persons-data.js`). Отсутствие файла не должно ронять импорт:
+            # один переименованный чужой файл убивал все 70 персон разом.
             table = {}
-            for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
-                pid = chunk.split("'", 1)[0]
-                m = re.search(r"side:\s*'([a-z-]+)'", chunk)
-                if m:
-                    table[pid] = m.group(1)
+            for name in ("public/expo/people-data.js", "public/expo/persons-data.js"):
+                path = ROOT / name
+                if not path.exists():
+                    continue
+                js = path.read_text("utf-8")
+                for chunk in re.split(r"\{\s*id:\s*'", js)[1:]:
+                    pid = chunk.split("'", 1)[0]
+                    m = re.search(r"side:\s*'([a-z-]+)'", chunk)
+                    if m:
+                        table.setdefault(pid, m.group(1))
             _CAMP_CACHE["person"] = table
         return _CAMP_CACHE["person"].get(eid)
     if key is None:
@@ -841,13 +852,18 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
 
 
 def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
-    """Сид словаря алиасов из разметки заказчика.
+    """Сид словаря алиасов из разметки заказчика, с поправкой на склонение.
 
-    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками.
-    Русский склоняется, `большевиков` / `большевиками` / `большевики` —
-    три формы одной сущности, и морфологию тут не разводят. Автомат кладёт
-    очевидные совпадения с заголовками, остальное уезжает в
-    `_aliases-todo.csv` по убыванию частоты — оттуда и добираются руками.
+    Существующий `_aliases.json` НЕ перезаписывается: он ведётся руками,
+    автомат только дописывает недостающее. Сопоставление — `ruforms`:
+    точное сравнение строк ловит хорошо если половину, потому что заказчик
+    пометил упоминания прямо в тексте, а русский склоняется.
+
+    Берём только однозначные совпадения. Фраза, похожая сразу на две
+    сущности («Краснова» — персона `krasnov` или партия `reds-general`),
+    уходит в `_aliases-todo.csv` с обоими кандидатами: неверная ссылка хуже
+    отсутствующей, она уводит посетителя не туда, а неразрезолвленное
+    упоминание просто остаётся жирным курсивом.
     """
     from collections import Counter
 
@@ -858,56 +874,75 @@ def seed_aliases(paths: List[Path], registry: IdRegistry) -> None:
         except Exception as exc:  # noqa: BLE001
             print("  не открылся %s: %s" % (p.name, exc))
             continue
-        cells = [c for t in doc.tables for row in t for c in row.cells]
-        for c in cells:
-            for phrase in richtext.mentions(c.paras):
-                counter[phrase.strip()] += 1
+        for t in doc.tables:
+            for row in t:
+                for c in row.cells:
+                    for phrase in richtext.mentions(c.paras):
+                        counter[phrase.strip()] += 1
 
+    def load_index(folder):
+        return read_json(CONTENT / folder / "_index.json")
+
+    def load_card(folder, eid):
+        return read_json(CONTENT / folder / ("%s.json" % eid))
+
+    targets = ruforms.build_targets(load_index, load_card)
     existing = richtext.Aliases()
-    auto: Dict[str, str] = {}
-    titles = {}
-    for kind in ("person", "party", "state", "event"):
-        for eid, rec in registry.bucket(kind).items():
-            t = fold(rec.get("title_ru") or "")
-            if t:
-                titles.setdefault(t, "%s:%s" % (kind, eid))
 
+    # Кураторские решения перекрывают автомат: спорные пары и сущности,
+    # названные в тексте иначе, чем в проекте (разбор — aliases_manual).
+    by_key = {ruforms.key(ph): tgt for ph, tgt in aliases_manual.BY_KEY.items()}
+    deny = {ruforms.key(ph) for ph in aliases_manual.DENY}
+
+    auto: Dict[str, str] = {}
     todo = []
+    ambiguous = []
     for phrase, n in counter.most_common():
-        key = fold(phrase)
-        if not key or len(key) < 3:
+        if not phrase or len(phrase) < 3 or phrase in existing.map:
             continue
-        if key in existing.map:
+        k = ruforms.key(phrase)
+        if phrase in aliases_manual.EXACT:
+            auto[phrase] = aliases_manual.EXACT[phrase]
             continue
-        hit = titles.get(key)
-        if hit:
-            auto[phrase] = hit
+        if k in deny:
+            todo.append((n, phrase, "снято вручную: слишком общая фраза"))
+            continue
+        if k in by_key:
+            auto[phrase] = by_key[k]
+            continue
+        cands = targets.get(k)
+        if not cands:
+            todo.append((n, phrase, ""))
+        elif len(cands) == 1:
+            auto[phrase] = next(iter(cands))
         else:
-            todo.append((n, phrase))
+            ambiguous.append((n, phrase, sorted(cands)))
+            todo.append((n, phrase, " | ".join(sorted(cands))))
 
     path = richtext.ALIASES
-    if path.exists():
-        data = json.loads(path.read_text(encoding="utf-8"))
-        merged = dict(data.get("map") or {})
-        added = {k: v for k, v in auto.items() if k not in merged}
-        merged.update(added)
-        data["map"] = dict(sorted(merged.items()))
-        write_json(path, data)
-        print("  алиасов дописано автоматически: %d (файл вёлся руками, не перезаписан)"
-              % len(added))
-    else:
-        write_json(path, {
-            "schema": 1,
-            "_note": ("Словарь «фраза → сущность». Ведётся РУКАМИ: русский "
-                      "склоняется, одной сущности соответствует несколько форм. "
-                      "Ключ — фраза как в тексте, значение — «kind:id». "
-                      "Реалистичная цель — 350–400 записей ≈ 80 % упоминаний."),
-            "map": dict(sorted(auto.items())),
-        })
-        print("  создан %s, автоматом легло %d" % (path.name, len(auto)))
+    data = read_json(path) or {
+        "schema": 1,
+        "_note": ("Словарь «фраза → сущность». Ключ — фраза как в тексте, "
+                  "значение — «kind:id». Автомат дописывает однозначные "
+                  "совпадения (scripts/import/ruforms.py), спорные и "
+                  "ненайденные уходят в _aliases-todo.csv."),
+    }
+    merged = dict(data.get("map") or {})
+    added = {k: v for k, v in auto.items() if k not in merged}
+    manual_hits = sum(1 for k in added if k in aliases_manual.EXACT
+                      or ruforms.key(k) in by_key)
+    merged.update(added)
+    data["map"] = dict(sorted(merged.items()))
+    write_json(path, data)
+    print("  алиасов дописано: %d (из них по кураторским правилам %d), всего %d"
+          % (len(added), manual_hits, len(merged)))
+    if ambiguous:
+        print("  неоднозначных, оставлены человеку: %d" % len(ambiguous))
+        for n, ph, cands in ambiguous[:6]:
+            print("     %-34s → %s" % (ph[:34], ", ".join(cands)))
 
-    lines = ["count;phrase"]
-    lines += ["%d;%s" % (n, ph.replace(";", ",")) for n, ph in todo]
+    lines = ["count;phrase;candidates"]
+    lines += ["%d;%s;%s" % (n, ph.replace(";", ","), c) for n, ph, c in todo]
     (SRC / "_aliases-todo.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("  неразрезолвленных фраз: %d → content-src/_aliases-todo.csv" % len(todo))
 
