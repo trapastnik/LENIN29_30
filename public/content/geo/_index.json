@@ -527,14 +527,14 @@
       "title_ru": "Российское Государство · А.В. Колчак",
       "camp": "white",
       "src_no": 27,
-      "polygon": null,
+      "polygon": "content/geo/polygons/russian-state-kolchak-1.svg",
       "phases": [
         {
           "n": 1,
           "label_ru": "Конец апреля 1919 г.",
           "from": "1919-04",
           "to": "1919-04",
-          "polygon": null,
+          "polygon": "content/geo/polygons/russian-state-kolchak-1.svg",
           "src_root": "in",
           "src_file": "Территория/Белые/Российское Государство/27_Российское государство.jpg",
           "transform": {

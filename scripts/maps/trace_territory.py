@@ -47,17 +47,79 @@ def hex_bgr(s):
     return np.array([b, g, r], dtype=np.int16)
 
 
-def trace(sheet, spec):
-    """Контуры заливки в координатах рамки листа."""
+def flood_mask(sheet, spec):
+    """Заливка от семени — для территорий, закрашенных БЕЛЫМ.
+
+    Прямая маска по цвету тут не работает: белым на листе нарисованы и своя
+    территория, и суша соседей, и незакрашенные области. Зато белое поле
+    ограничено нарисованными тёмными линиями — берегом и границами. Поэтому
+    берём «всё белое», отсекаем линии и разливаемся от точки внутри своей
+    территории: барьером служит сама графика листа.
+
+    Уязвимое место — разрыв в линии границы: заливка утечёт к соседу того же
+    тона (у листа Колчака рядом заштрихованная «Северная область»). Поэтому
+    линии перед заливкой утолщаются на `barrier_dilate`, а результат
+    обязательно смотрится глазами.
+    """
     target = hex_bgr(spec["fill"])
     tol = int(spec.get("tol", 30))
-    dist = np.abs(sheet.astype(np.int16) - target).max(axis=2)
-    mask = (dist <= tol).astype(np.uint8) * 255
+    white = (np.abs(sheet.astype(np.int16) - target).max(axis=2) <= tol)
 
-    # Заливки на листах перебиты подписями, точками городов и штриховкой.
-    # Закрываем разрывы, иначе одна территория распадается на десятки кусков.
-    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, k, iterations=2)
+    # РЕКИ РАССЕКАЮТ ТЕРРИТОРИЮ. Обь, Енисей, Лена и Амур идут через неё
+    # насквозь, и заливка по одному белому останавливается на них: залилось
+    # 16 % листа при 50 % белого. Значит реки надо сделать проходимыми.
+    #
+    # Но река и море одного цвета, и «всё бирюзовое проходимо» утекает
+    # в океан (залилось 73 %). Различаем по толщине: море переживает эрозию,
+    # тонкая река нет. Эрозия + обратная дилатация даёт море вместе с кромкой,
+    # река остаётся в остатке.
+    sea_c = spec.get("sea_fill")
+    if sea_c:
+        teal = (np.abs(sheet.astype(np.int16) - hex_bgr(sea_c)).max(axis=2)
+                <= int(spec.get("sea_tol", 34)))
+        er = int(spec.get("sea_erode", 4))
+        ke = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (er * 2 + 1,) * 2)
+        kd = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, ((er + 2) * 2 + 1,) * 2)
+        sea = cv2.dilate(cv2.erode(teal.astype(np.uint8) * 255, ke), kd) > 0
+        white = white | (teal & ~sea)
+
+    # Утолщаем барьер — заклеиваем разрывы в линиях границ.
+    dil = int(spec.get("barrier_dilate", 0))
+    if dil > 0:
+        k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (dil * 2 + 1,) * 2)
+        white = cv2.dilate((~white).astype(np.uint8) * 255, k) == 0
+
+    free = white.astype(np.uint8) * 255
+    out = np.zeros((free.shape[0] + 2, free.shape[1] + 2), np.uint8)
+    got = np.zeros_like(free)
+    for sx, sy in spec["seed_at"]:
+        if not free[int(sy), int(sx)]:
+            continue
+        tmp = free.copy()
+        cv2.floodFill(tmp, out, (int(sx), int(sy)), 128)
+        got = np.maximum(got, (tmp == 128).astype(np.uint8) * 255)
+
+    # Реки и подписи внутри территории — тонкие вычеты, возвращаем их закрытием.
+    kk = int(spec.get("close", 9))
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kk, kk))
+    return cv2.morphologyEx(got, cv2.MORPH_CLOSE, k, iterations=2)
+
+
+def trace(sheet, spec):
+    """Контуры заливки в координатах рамки листа."""
+    if spec.get("mode") == "flood":
+        mask = flood_mask(sheet, spec)
+    else:
+        target = hex_bgr(spec["fill"])
+        tol = int(spec.get("tol", 30))
+        dist = np.abs(sheet.astype(np.int16) - target).max(axis=2)
+        mask = (dist <= tol).astype(np.uint8) * 255
+
+        # Заливки перебиты подписями, точками городов и штриховкой. Закрываем
+        # разрывы, иначе одна территория распадается на десятки кусков.
+        # У flood-режима закрытие уже сделано внутри flood_mask.
+        k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, k, iterations=2)
 
     n, lab, stats, _ = cv2.connectedComponentsWithStats(mask, 8)
     min_area = int(spec.get("min_area", 400))
@@ -94,11 +156,19 @@ def trace(sheet, spec):
     return polys, mask
 
 
-def to_base(pts, M, frame_off):
-    """Из координат рамки листа в координаты base."""
-    p = pts.astype(np.float32) + np.array(frame_off, dtype=np.float32)
-    M = np.array(M, dtype=np.float32)
-    return cv2.transform(p.reshape(-1, 1, 2), M).reshape(-1, 2)
+def to_base(pts, M):
+    """Из координат ОБРЕЗАННОГО ПО РАМКЕ листа в координаты base.
+
+    Смещение рамки прибавлять НЕ НАДО, и это стоило одного тихого дефекта.
+    register_sheets.py оценивает M по листу, уже обрезанному по рамке, то есть
+    M переводит координаты обрезка. Прибавленный сверху (x1, y1) даёт двойной
+    учёт: у листа Колчака рамка (27, 107) при масштабе 1.7 — сдвиг на 46 и 182
+    пикселя базы. Полигон уезжал на юго-восток, накрывал Монголию и не доходил
+    до Арктики, но сам по себе выглядел правдоподобно — ловится только
+    наложением на базу.
+    """
+    return cv2.transform(pts.astype(np.float32).reshape(-1, 1, 2),
+                         np.array(M, dtype=np.float32)).reshape(-1, 2)
 
 
 def svg(polys_base, view_box, title):
@@ -156,7 +226,7 @@ def main():
                 rows.append((key, "пусто", "маска ничего не дала", 0, 0))
                 continue
 
-            base_polys = [to_base(p, ph["transform"]["M"], (x1, y1)) for p in polys]
+            base_polys = [to_base(p, ph["transform"]["M"]) for p in polys]
             pts = sum(len(p) for p in base_polys)
             area_pct = 100.0 * (mask > 0).sum() / mask.size
             rows.append((key, "ок", f"{len(polys)} контур(ов)", pts, area_pct))
