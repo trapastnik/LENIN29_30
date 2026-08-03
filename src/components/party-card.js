@@ -119,8 +119,30 @@ export class PartyCard extends HTMLElement {
       try { this._stub = JSON.parse(newV); } catch { this._stub = null; }
       if (!this._data) this._render();
     }
-    if (name === 'party-id' && newV) this._load(newV);
-    if (name === 'expanded') this._render();
+    if (name === 'party-id' && newV) {
+      this._id = newV;
+      if (this.hasAttribute('expanded')) this._loadOnce();
+      else this._render();
+    }
+    if (name === 'expanded') {
+      if (newV !== null) this._loadOnce();
+      else this._render();
+    }
+  }
+
+  // Загружаем справку ТОЛЬКО у раскрытой карточки. Плитка в сетке рисуется
+  // из stub — записи индекса, которая для того и сделана самодостаточной.
+  //
+  // Раньше запрос уходил на установку id, то есть при отрисовке сетки летело
+  // столько запросов, сколько карточек. Посетитель за сеанс открывает три-пять
+  // из семидесяти — остальное грузилось в никуда.
+  //
+  // Порядок атрибутов не важен: id может прийти раньше expanded и наоборот,
+  // поэтому загрузку запускает тот из них, который окажется вторым.
+  _loadOnce() {
+    if (this._data || this._loading || !this._id) { this._render(); return; }
+    this._loading = true;
+    this._load(this._id).finally(() => { this._loading = false; });
   }
 
   async _load(id) {
@@ -140,14 +162,19 @@ export class PartyCard extends HTMLElement {
   }
 
   _render() {
-    const d = this._data;
+    // Пока справка не загружена, рисуем из stub: заголовок, даты и лагерь
+    // в нём есть, а тело справки плитке и не нужно — оно обрезано стилями.
+    const d = this._data || this._stub;
     if (!d) return;
+    const full = !!this._data;
     const campVar = `var(--camp-${d.camp.replace(/_/g, '-')}, #888)`;
     this.style.setProperty('--camp-color', campVar);
 
-    const dates = d.dates
-      ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '')
-      : '';
+    // Строку заказчика («Конец октября – начало ноября») цифрами не передать,
+    // поэтому display_ru важнее собранного from—to (docs/content.md).
+    const dates = (d.dates && d.dates.display_ru)
+      || d.dates_display_ru
+      || (d.dates ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '') : '');
 
     const paras = (d.summary_ru || '').split(/\n\n+/).map(p => `<p>${p}</p>`).join('');
 
