@@ -84,7 +84,12 @@
       "lead_w": 3401,
       "lead_h": 2338,
       "sort_key_ru": "большевики",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "left-srs",
@@ -100,7 +105,12 @@
       "lead_media": "media/parties/left-srs/01",
       "lead_w": 2688,
       "lead_h": 2044,
-      "sort_key_ru": "левые эсеры"
+      "sort_key_ru": "левые эсеры",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "revdem-general",
@@ -124,7 +134,11 @@
       "lead_w": 1000,
       "lead_h": 667,
       "sort_key_ru": "социалисты-революционеры",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "mensheviks",
@@ -141,7 +155,12 @@
       "lead_media": "media/parties/mensheviks/01",
       "lead_w": 1353,
       "lead_h": 1684,
-      "sort_key_ru": "меньшевики"
+      "sort_key_ru": "меньшевики",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "narodnie-socialists",
@@ -157,7 +176,12 @@
       "lead_media": "media/parties/narodnie-socialists/01",
       "lead_w": 1287,
       "lead_h": 1854,
-      "sort_key_ru": "трудовая народно-социалистическая партия"
+      "sort_key_ru": "трудовая народно-социалистическая партия",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "committee-salvation",
@@ -170,7 +194,12 @@
       "lead_media": "media/parties/committee-salvation/01",
       "lead_w": 889,
       "lead_h": 1197,
-      "sort_key_ru": "комитет спасения родины и революции"
+      "sort_key_ru": "комитет спасения родины и революции",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "union-constituent",
@@ -186,7 +215,12 @@
       "lead_media": "media/parties/union-constituent/01",
       "lead_w": 2544,
       "lead_h": 3900,
-      "sort_key_ru": "союз защиты учредительного собрания"
+      "sort_key_ru": "союз защиты учредительного собрания",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "whites-general",
@@ -211,7 +245,12 @@
       "lead_media": "media/parties/cadets/01",
       "lead_w": 2805,
       "lead_h": 3973,
-      "sort_key_ru": "конституционно-демократическая партия"
+      "sort_key_ru": "конституционно-демократическая партия",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "alekseev-org",
@@ -225,7 +264,12 @@
       "lead_media": "media/parties/alekseev-org/01",
       "lead_w": 2802,
       "lead_h": 1989,
-      "sort_key_ru": "алексеевская организация · добровольческая армия"
+      "sort_key_ru": "алексеевская организация · добровольческая армия",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "right-center",
@@ -238,7 +282,11 @@
       "lead_media": "media/parties/right-center/01",
       "lead_w": 589,
       "lead_h": 800,
-      "sort_key_ru": "правый центр"
+      "sort_key_ru": "правый центр",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "national-center",
@@ -255,7 +303,11 @@
       "lead_media": "media/parties/national-center/01",
       "lead_w": 640,
       "lead_h": 851,
-      "sort_key_ru": "национальный центр"
+      "sort_key_ru": "национальный центр",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "union-defence",
@@ -271,7 +323,12 @@
       "lead_media": "media/parties/union-defence/01",
       "lead_w": 688,
       "lead_h": 1011,
-      "sort_key_ru": "союз защиты родины и свободы"
+      "sort_key_ru": "союз защиты родины и свободы",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "union-renewal",
@@ -287,7 +344,10 @@
       "lead_media": "media/parties/union-renewal/01",
       "lead_w": 320,
       "lead_h": 435,
-      "sort_key_ru": "союз возрождения россии"
+      "sort_key_ru": "союз возрождения россии",
+      "lead_tiers": [
+        "lg"
+      ]
     },
     {
       "id": "greens-general",
@@ -308,7 +368,12 @@
       "lead_media": "media/parties/anarchists/01",
       "lead_w": 1144,
       "lead_h": 1736,
-      "sort_key_ru": "анархисты"
+      "sort_key_ru": "анархисты",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "national-movements",
@@ -332,7 +397,12 @@
       "lead_media": "media/parties/muslim-socialists/01",
       "lead_w": 827,
       "lead_h": 908,
-      "sort_key_ru": "мусульманские социалистические комитеты"
+      "sort_key_ru": "мусульманские социалистические комитеты",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "alash",
@@ -342,18 +412,12 @@
       "lead_media": "media/parties/alash/01",
       "lead_w": 1280,
       "lead_h": 720,
-      "sort_key_ru": "алаш"
-    },
-    {
-      "id": "alekseevskaya-organizatsiya-dobrovolches",
-      "title_ru": "Алексеевская организация (Добровольческая армия)",
-      "has_card": false,
-      "dates_display_ru": "Октябрь–декабрь 1917 г.",
-      "lead_media": "media/parties/alekseevskaya-organizatsiya-dobrovolches/01",
-      "lead_w": 2802,
-      "lead_h": 1989,
-      "sort_key_ru": "алексеевская организация добровольческая армия",
-      "stub": true
+      "sort_key_ru": "алаш",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "basmachestvo",
@@ -363,7 +427,13 @@
       "lead_media": "media/parties/basmachestvo/01",
       "lead_w": 768,
       "lead_h": 1063,
-      "sort_key_ru": "басмачество"
+      "sort_key_ru": "басмачество",
+      "camp": "green",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "belorusskaya-sotsialisticheskaya-gromada",
@@ -376,7 +446,12 @@
       "lead_media": "media/parties/belorusskaya-sotsialisticheskaya-gromada/01",
       "lead_w": 533,
       "lead_h": 768,
-      "sort_key_ru": "белорусская социалистическая громада"
+      "sort_key_ru": "белорусская социалистическая громада",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "borotbisty",
@@ -391,7 +466,13 @@
       "lead_media": "media/parties/borotbisty/01",
       "lead_w": 2541,
       "lead_h": 3228,
-      "sort_key_ru": "боротьбисты"
+      "sort_key_ru": "боротьбисты",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bund",
@@ -401,7 +482,13 @@
       "lead_media": "media/parties/bund/01",
       "lead_w": 2044,
       "lead_h": 2900,
-      "sort_key_ru": "бунд"
+      "sort_key_ru": "бунд",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
@@ -411,7 +498,13 @@
       "lead_media": "media/parties/gruzinskaya-sotsial-demokraticheskaya-pa/01",
       "lead_w": 800,
       "lead_h": 1155,
-      "sort_key_ru": "грузинская социал-демократическая партия"
+      "sort_key_ru": "грузинская социал-демократическая партия",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "dashnaktsutyun",
@@ -421,7 +514,12 @@
       "lead_media": "media/parties/dashnaktsutyun/01",
       "lead_w": 1200,
       "lead_h": 748,
-      "sort_key_ru": "дашнакцутюн"
+      "sort_key_ru": "дашнакцутюн",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "latyshskiy-krestyanskiy-soyuz",
@@ -434,7 +532,13 @@
       "lead_media": "media/parties/latyshskiy-krestyanskiy-soyuz/01",
       "lead_w": 900,
       "lead_h": 1307,
-      "sort_key_ru": "латышский крестьянский союз"
+      "sort_key_ru": "латышский крестьянский союз",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "musavat",
@@ -444,7 +548,12 @@
       "lead_media": "media/parties/musavat/01",
       "lead_w": 872,
       "lead_h": 587,
-      "sort_key_ru": "мусават"
+      "sort_key_ru": "мусават",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "poaley-tsion",
@@ -459,7 +568,12 @@
       "lead_media": "media/parties/poaley-tsion/01",
       "lead_w": 461,
       "lead_h": 615,
-      "sort_key_ru": "поалей цион"
+      "sort_key_ru": "поалей цион",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "sibirskoe-oblastnichestvo",
@@ -469,7 +583,13 @@
       "lead_media": "media/parties/sibirskoe-oblastnichestvo/01",
       "lead_w": 1343,
       "lead_h": 2007,
-      "sort_key_ru": "сибирское областничество"
+      "sort_key_ru": "сибирское областничество",
+      "camp": "rev-dem",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "sotsial-demokraticheskaya-partiya-finlya",
@@ -482,7 +602,13 @@
       "lead_media": "media/parties/sotsial-demokraticheskaya-partiya-finlya/01",
       "lead_w": 960,
       "lead_h": 1030,
-      "sort_key_ru": "социал-демократическая партия финляндии"
+      "sort_key_ru": "социал-демократическая партия финляндии",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
@@ -495,7 +621,13 @@
       "lead_media": "media/parties/ukrainskaya-sotsial-demokraticheskaya-ra/01",
       "lead_w": 1172,
       "lead_h": 1527,
-      "sort_key_ru": "украинская социал-демократическая рабочая партия"
+      "sort_key_ru": "украинская социал-демократическая рабочая партия",
+      "camp": "national",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     }
   ],
   "schema": 1,

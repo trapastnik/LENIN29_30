@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "chkheidze",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "Н. С. ЧХЕИДЗЕ",
   "title_en": null,
   "sort_key_ru": "чхеидзе",
@@ -154,5 +154,6 @@
     "sha256": "5357ba911a512d81159a03895988437cc913bef127b3575502ec079518d512d0",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

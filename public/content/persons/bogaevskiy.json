@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "bogaevskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "А. П. БОГАЕВСКИЙ",
   "title_en": null,
   "sort_key_ru": "богаевский",
@@ -152,5 +152,6 @@
     "sha256": "2fb384b29fa02b2617dfc3b90bc9da093cf05c1fe158507b460efa1d07458ac5",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "savinkov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "Б. В. САВИНКОВ",
   "title_en": null,
   "sort_key_ru": "савинков",
@@ -154,5 +154,6 @@
     "sha256": "81ebdc020d1b20b5b834a2a799a85e4b1ef2aafaa1639da4d321573d7b78e5aa",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

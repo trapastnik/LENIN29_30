@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "poluyan",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Я. В. ПОЛУЯН",
   "title_en": null,
   "sort_key_ru": "полуян",
@@ -95,5 +95,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

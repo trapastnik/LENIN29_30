@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "anvelt",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "Я. Я. АНВЕЛЬТ",
   "title_en": null,
   "sort_key_ru": "анвельт",
@@ -152,5 +152,6 @@
     "sha256": "f02ab52400e93c2e98b73db9df7bab03a144d1026264937bfd9c59b139a3e483",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

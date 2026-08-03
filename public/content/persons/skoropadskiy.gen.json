@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "skoropadskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "П. П. СКОРОПАДСКИЙ",
   "title_en": null,
   "sort_key_ru": "скоропадский",
@@ -144,5 +144,6 @@
     "sha256": "354614657a5cb1a02c47c6fec306feaf04421ce012b1529a63283f8e39c2b6e6",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

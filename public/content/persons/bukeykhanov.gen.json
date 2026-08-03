@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "bukeykhanov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "national",
+  "side": "national",
   "title_ru": "А. Н. БУКЕЙХАНОВ",
   "title_en": null,
   "sort_key_ru": "букейханов",
@@ -125,5 +125,6 @@
   },
   "flags": [
     "media-missing"
-  ]
+  ],
+  "camp_source": "regalia"
 }

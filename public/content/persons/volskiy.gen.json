@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "volskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "В. К. ВОЛЬСКИЙ",
   "title_en": null,
   "sort_key_ru": "вольский",
@@ -91,5 +91,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "camp_source": "regalia"
 }

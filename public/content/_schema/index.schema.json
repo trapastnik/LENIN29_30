@@ -4,30 +4,111 @@
   "title": "Индекс раздела — _index.json",
   "description": "Индекс обязан быть САМОДОСТАТОЧНЫМ: зона ui переводит карточки на ленивую загрузку, плитка рендерится из индекса, а при 404 карточка собирается из записи индекса (party-card.js stub-fallback). Поля из items хватает, чтобы нарисовать плитку без единой дозагрузки.",
   "type": "object",
-  "required": ["schema", "items"],
+  "required": [
+    "schema",
+    "items"
+  ],
   "additionalProperties": true,
   "properties": {
-    "schema": { "const": 1 },
-    "kind": { "enum": ["person", "party", "state", "event", "chronicle", "longread"] },
-    "camps": { "type": "array", "description": "Справочник лагерей раздела. Ведётся руками, импорт не перетирает." },
+    "schema": {
+      "const": 1
+    },
+    "kind": {
+      "enum": [
+        "person",
+        "party",
+        "state",
+        "event",
+        "chronicle",
+        "longread"
+      ]
+    },
+    "camps": {
+      "type": "array",
+      "description": "Справочник лагерей раздела. Ведётся руками, импорт не перетирает."
+    },
     "items": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "title_ru"],
+        "required": [
+          "id",
+          "title_ru"
+        ],
         "additionalProperties": true,
         "properties": {
-          "id": { "type": "string" },
-          "title_ru": { "type": "string" },
-          "abbr_ru": { "type": ["array", "string", "null"], "items": { "type": "string" } },
-          "camp": { "type": ["string", "null"] },
-          "dates_display_ru": { "type": ["string", "null"] },
-          "lead_media": { "type": ["string", "null"], "description": "База пути ведущего изображения — для плитки." },
-          "lead_w": { "type": ["integer", "null"] },
-          "lead_h": { "type": ["integer", "null"] },
-          "has_card": { "type": "boolean", "description": "false = файла справки нет, плитка рисуется из индекса." },
-          "stub": { "type": "boolean", "description": "Запись заведена заранее, содержимого ещё нет. Валидатор не ругается на отсутствие файла." },
-          "sort_key_ru": { "type": ["string", "null"] }
+          "id": {
+            "type": "string"
+          },
+          "title_ru": {
+            "type": "string"
+          },
+          "abbr_ru": {
+            "type": [
+              "array",
+              "string",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "camp": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dates_display_ru": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lead_media": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "База пути ведущего изображения — для плитки."
+          },
+          "lead_tiers": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "lg",
+                "sm",
+                "xs"
+              ]
+            },
+            "description": "Тиры, собранные для lead_media. Обязателен рядом с lead_media: достроить имя файла по шаблону нельзя — апскейла нет, у мелких сканов тиров меньше трёх, и без списка миниатюра остаётся заглушкой."
+          },
+          "lead_w": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lead_h": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "has_card": {
+            "type": "boolean",
+            "description": "false = файла справки нет, плитка рисуется из индекса."
+          },
+          "stub": {
+            "type": "boolean",
+            "description": "Запись заведена заранее, содержимого ещё нет. Валидатор не ругается на отсутствие файла."
+          },
+          "sort_key_ru": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     }

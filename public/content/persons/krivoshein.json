@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "krivoshein",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "white",
+  "side": "white",
   "title_ru": "А. В. КРИВОШЕИН",
   "title_en": null,
   "sort_key_ru": "кривошеин",
@@ -109,5 +109,6 @@
     "sha256": "90ac0f903155df2f3aedff32ff5c2077252098d62710063ce4a7be75a7f34a78",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

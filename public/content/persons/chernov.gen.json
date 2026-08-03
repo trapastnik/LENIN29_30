@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "chernov",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "rev-dem",
+  "side": "rev-dem",
   "title_ru": "В. М. ЧЕРНОВ",
   "title_en": null,
   "sort_key_ru": "чернов",
@@ -150,5 +150,6 @@
     "sha256": "02822e43163969167489d6c0ff0ed53962e22f7e01e60d8856f6350cc0ceac4a",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }

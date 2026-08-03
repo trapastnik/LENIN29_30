@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "uritskiy",
   "kind": "person",
-  "camp": null,
-  "side": null,
+  "camp": "red",
+  "side": "red",
   "title_ru": "М. С. УРИЦКИЙ",
   "title_en": null,
   "sort_key_ru": "урицкий",
@@ -153,5 +153,6 @@
     "sha256": "14429fc3149f5a387e36e56116cc7ad99b43d8ae599b111d2867fc7409b3e9fa",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "camp_source": "regalia"
 }
