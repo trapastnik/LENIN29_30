@@ -38,7 +38,10 @@ const TEMPLATE = `
     font-family: var(--font-mono);
     font-size: 16px;
     letter-spacing: 0.18em;
-    color: var(--camp-color, #888);
+    /* Текст по светлой карточке — начертательный токен: --camp-white как
+       текст давал контраст 1.45. Заливки (полоса, рамка) остаются на
+       --camp-color. */
+    color: var(--camp-ink, var(--camp-color, #888));
     font-weight: 700;
     text-transform: uppercase;
   }
@@ -154,6 +157,8 @@ export class StateCard extends HTMLElement {
     if (!d) return;
     const campVar = `var(--camp-${(d.camp || 'red').replace(/_/g, '-')}, #888)`;
     this.style.setProperty('--camp-color', campVar);
+    this.style.setProperty('--camp-ink',
+      `var(--camp-${(d.camp || 'red').replace(/_/g, '-')}-ink, ${campVar})`);
 
     const dates = d.dates
       ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '')
