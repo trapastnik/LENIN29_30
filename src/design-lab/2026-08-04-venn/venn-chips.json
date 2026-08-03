@@ -1,0 +1,344 @@
+[
+ {
+  "id": "belorusskaya-sotsialisticheskaya-gromada",
+  "title_ru": "Белорусская социалистическая громада",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "x": 47.6,
+  "y": 49.44
+ },
+ {
+  "id": "bund",
+  "title_ru": "Бунд",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "x": 58.85,
+  "y": 47.96
+ },
+ {
+  "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+  "title_ru": "Грузинская социал-демократическая партия",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "x": 36.98,
+  "y": 50.93
+ },
+ {
+  "id": "poaley-tsion",
+  "title_ru": "Поалей Цион",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "x": 53.44,
+  "y": 54.26
+ },
+ {
+  "id": "muslim-socialists",
+  "title_ru": "Мусульманские социалистические комитеты",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 13.44,
+  "y": 66.85
+ },
+ {
+  "id": "borotbisty",
+  "title_ru": "Боротьбисты",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 26.98,
+  "y": 66.85
+ },
+ {
+  "id": "sotsial-demokraticheskaya-partiya-finlya",
+  "title_ru": "Социал-демократическая партия Финляндии",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 20.1,
+  "y": 58.7
+ },
+ {
+  "id": "union-defence",
+  "title_ru": "Союз защиты Родины и свободы",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem",
+   "white"
+  ],
+  "x": 82.81,
+  "y": 24.63
+ },
+ {
+  "id": "union-renewal",
+  "title_ru": "Союз возрождения России",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem",
+   "white"
+  ],
+  "x": 74.48,
+  "y": 37.59
+ },
+ {
+  "id": "left-srs",
+  "title_ru": "Левые эсеры",
+  "camp": "red",
+  "venn_groups": [
+   "red",
+   "rev-dem"
+  ],
+  "x": 26.56,
+  "y": 25.37
+ },
+ {
+  "id": "alash",
+  "title_ru": "Алаш",
+  "camp": "national",
+  "venn_groups": [
+   "national",
+   "white"
+  ],
+  "x": 79.69,
+  "y": 67.59
+ },
+ {
+  "id": "basmachestvo",
+  "title_ru": "Басмачество",
+  "camp": "green",
+  "venn_groups": [
+   "green",
+   "national"
+  ],
+  "x": 40.1,
+  "y": 79.07
+ },
+ {
+  "id": "reds-general",
+  "title_ru": "Красные",
+  "camp": "red",
+  "venn_groups": [
+   "red"
+  ],
+  "x": 13.85,
+  "y": 36.48
+ },
+ {
+  "id": "bolsheviks",
+  "title_ru": "Большевики",
+  "camp": "red",
+  "venn_groups": [
+   "red"
+  ],
+  "x": 6.56,
+  "y": 51.67
+ },
+ {
+  "id": "greens-general",
+  "title_ru": "Зелёные",
+  "camp": "green",
+  "venn_groups": [
+   "green"
+  ],
+  "x": 7.81,
+  "y": 91.67
+ },
+ {
+  "id": "anarchists",
+  "title_ru": "Анархисты",
+  "camp": "green",
+  "venn_groups": [
+   "green"
+  ],
+  "x": 21.98,
+  "y": 90.19
+ },
+ {
+  "id": "whites-general",
+  "title_ru": "Белые",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "x": 92.81,
+  "y": 48.7
+ },
+ {
+  "id": "cadets",
+  "title_ru": "Конституционно-демократическая партия",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "x": 82.81,
+  "y": 47.59
+ },
+ {
+  "id": "alekseev-org",
+  "title_ru": "Алексеевская организация · Добровольческая армия",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "x": 91.35,
+  "y": 32.04
+ },
+ {
+  "id": "right-center",
+  "title_ru": "Правый центр",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "x": 89.27,
+  "y": 20.56
+ },
+ {
+  "id": "national-center",
+  "title_ru": "Национальный центр",
+  "camp": "white",
+  "venn_groups": [
+   "white"
+  ],
+  "x": 86.15,
+  "y": 37.96
+ },
+ {
+  "id": "national-movements",
+  "title_ru": "Национальные движения",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 63.23,
+  "y": 82.04
+ },
+ {
+  "id": "dashnaktsutyun",
+  "title_ru": "Дашнакцутюн",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 51.98,
+  "y": 75.37
+ },
+ {
+  "id": "latyshskiy-krestyanskiy-soyuz",
+  "title_ru": "Латышский крестьянский союз",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 65.1,
+  "y": 63.15
+ },
+ {
+  "id": "musavat",
+  "title_ru": "Мусават",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 73.44,
+  "y": 82.04
+ },
+ {
+  "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+  "title_ru": "Украинская социал-демократическая рабочая партия",
+  "camp": "national",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 42.81,
+  "y": 63.52
+ },
+ {
+  "id": "revdem-general",
+  "title_ru": "Революционная демократия",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 60.52,
+  "y": 13.89
+ },
+ {
+  "id": "srs",
+  "title_ru": "Социалисты-революционеры",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 43.23,
+  "y": 16.85
+ },
+ {
+  "id": "mensheviks",
+  "title_ru": "Меньшевики",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 52.6,
+  "y": 29.81
+ },
+ {
+  "id": "narodnie-socialists",
+  "title_ru": "Трудовая народно-социалистическая партия",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 71.77,
+  "y": 15.0
+ },
+ {
+  "id": "committee-salvation",
+  "title_ru": "Комитет спасения Родины и революции",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 64.27,
+  "y": 31.67
+ },
+ {
+  "id": "union-constituent",
+  "title_ru": "Союз защиты Учредительного собрания",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 36.56,
+  "y": 32.04
+ },
+ {
+  "id": "sibirskoe-oblastnichestvo",
+  "title_ru": "Сибирское областничество",
+  "camp": "rev-dem",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 34.27,
+  "y": 16.48
+ }
+]
