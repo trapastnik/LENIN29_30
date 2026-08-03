@@ -1,0 +1,235 @@
+/* ┌──────────────────────────────────────────────────────────────────────┐
+   │  ФАЙЛ СГЕНЕРИРОВАН. РУЧНЫЕ ПРАВКИ БУДУТ ЗАТЁРТЫ.                     │
+   │  Источник:  src/design/tokens.json
+   │  Генератор: node scripts/design/build-tokens.mjs                     │
+   │  Хвост (.brand-scroll) — scripts/design/tokens-tail.css              │
+   └──────────────────────────────────────────────────────────────────────┘ */
+
+/* Для страниц public/expo/**. В dist/ каталога src/styles/ не существует:
+   /expo/ лежит в public/, vite копирует его как есть и ссылки не правит.
+   Поэтому здесь и @font-face, и :root — одним файлом с путями «../fonts/». */
+
+@font-face {
+  font-family: 'Nolde';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/nolde/nolde.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-book.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-book-italic.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-demibold.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-demibold-italic.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-bold.otf') format('opentype');
+}
+@font-face {
+  font-family: '20 Kopeek';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url('../fonts/kopeek/20-kopeek-bold-italic.otf') format('opentype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/cent/21Cent.woff') format('woff'),
+       url('../fonts/cent/21Cent.ttf') format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url('../fonts/cent/21Cent-Italic.woff') format('woff'),
+       url('../fonts/cent/21Cent-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/cent/21Cent-Bold.woff') format('woff'),
+       url('../fonts/cent/21Cent-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url('../fonts/cent/21Cent-BoldItalic.woff') format('woff'),
+       url('../fonts/cent/21Cent-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: '21 Cent';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/cent/21Cent-Black.woff') format('woff'),
+       url('../fonts/cent/21Cent-Black.ttf') format('truetype');
+}
+
+:root {
+  /* ── Бренд-палитра RAL ───────────────────────────────────────── */
+  /* Стр. 5–6 гайдбука. Значения не меняются никогда — это RAL. */
+  --ink-black:        #000000;                             /* RAL 9005 «Чёрный янтарь» */
+  --paper-white:      #F7F9EF;                             /* RAL 9010 «Чистый белый» (тёплый) */
+  --paper-pure:       #FFFFFF;                             /* чистый белый для мультимедиа */
+  --brass:            #D2B773;                             /* RAL 1002 «Латунь» — акцент, заголовки */
+  --signal-red:       #A02128;                             /* RAL 3001 «Сигнальный красный» */
+  --slate-blue:       #5D6970;                             /* RAL 7031 «Сине-серый» — 2 этаж */
+  --slate-window:     #9DA3A6;                             /* RAL 7040 «Серое окно» — вторичный фон */
+  --iron-grey:        #555D61;                             /* RAL 7011 «Железо-серый» — 3 этаж (наш) */
+  --graphite:         #435059;                             /* «Графитовый» для тёмных мультимедиа-полей */
+  --telegrey-4:       #CFD0CF;                             /* RAL 7047 «Телегрей 4» */
+
+  /* ── Семантические токены ────────────────────────────────────── */
+  /* Что каким бренд-цветом красим. Меняется здесь, а не в компонентах. */
+  --page-bg:          var(--iron-grey);                    /* фон наших страниц-разделов */
+  --page-bg-deep:     var(--graphite);                     /* тёмные панели, venn-board */
+  --paper:            var(--paper-white);                  /* карточки на светлом */
+  --accent:           var(--brass);                        /* ведущий акцент */
+  --accent-alt:       var(--signal-red);                   /* вторичный акцент */
+  --ink:              var(--ink-black);                    /* текст на светлом */
+  --ink-on-dark:      var(--paper-white);                  /* текст на тёмном */
+  --ink-soft:         #2a2f33;                             /* полутон на светлом */
+  --ink-faint:        #6c737a;                             /* тонкая мета на светлом */
+  --rule:             rgba(255,255,255,0.12);              /* тонкая линия разделителя */
+
+  /* ── Полутона — производные от бренд-цвета ───────────────────── */
+  /* «Своих» цветов не бывает (§8): каждый полутон — формула от RAL, */
+  /* процент виден в комментарии сгенерированного CSS. */
+  /* Лестница бумаги заменяет тёплый слой design-pass-1: --paper-light */
+  /* и --paper-warm были ХЕКСОВЫМИ FALLBACK'АМИ на несуществующие токены */
+  /* в семи файлах зон maps и ui. Значения подобраны так, чтобы вид */
+  /* не поехал: ΔE 2.2 и 4.3 к прежним #efe4cd и #d9c398 — это порог */
+  /* различимости, глазом не поймать. */
+  --paper-2:         #F4F4E5;                              /* чуть тёплая подложка · = mix({paper-white}, {brass}, 8%) */
+  --paper-3:         #F1EEDB;                              /* карточка на бумаге · = mix({paper-white}, {brass}, 16%) */
+  --paper-4:         #EDE7CC;                              /* загорелая бумага · = mix({paper-white}, {brass}, 28%) */
+  --paper-5:         #E6DBB7;                              /* тень на бумаге · = mix({paper-white}, {brass}, 45%) */
+  --paper-6:         #DFCD9D;                              /* край листа, самый тёплый · = mix({paper-white}, {brass}, 66%) */
+  --ink-2:           #212527;                              /* длинный текст на светлом · = mix({ink-black}, {slate-blue}, 35%) */
+  --ink-3:           #383F43;                              /* мета, подписи · = mix({ink-black}, {slate-blue}, 60%) */
+  --paper-light:     var(--paper-4);                       /* роль для карт: было var(--paper-light, #efe4cd), ΔE 2.2 */
+  --paper-warm:      var(--paper-6);                       /* роль для карт: было var(--paper-warm, #d9c398), ΔE 4.3 */
+
+  /* ── Палитра лагерей ─────────────────────────────────────────── */
+  /* Выровнено с брендом там, где это возможно. */
+  --camp-red:              var(--signal-red);              /* Красные ← сигнальный красный */
+  --camp-red-deep:         #6a0f14;
+  --camp-white:            var(--telegrey-4);              /* Белые ← Телегрей 4 */
+  --camp-rev-dem:          #8C4A99;                        /* пурпур (вне бренд-палитры, идентифицирует лагерь) */
+  --camp-green:            #5A8E55;                        /* оливковый */
+  --camp-national:         var(--brass);                   /* Национальные ← латунь */
+  --camp-intervention:     #2F4A6B;                        /* грозовой синий */
+  --camp-uprising:         #2A8079;                        /* Восстания (вне бренд-палитры, идентифицирует лагерь) — 22 записи в данных, токена не было */
+
+  /* ── Палитра лагерей — начертание ────────────────────────────── */
+  /* Цвет лагеря опознаёт территорию заливкой, но как ТЕКСТ на светлом */
+  /* читается не всякий: --camp-white даёт 1.45, --camp-national 1.84 */
+  /* при пороге WCAG 4.5. На тач-столе с 70 см это нечитаемо. */
+  /* Правило вызова простое: заливка — --camp-x, текст — --camp-x-ink. */
+  /* Там, где заливка и так проходит порог, -ink ссылается на неё же, */
+  /* поэтому на месте вызова выбирать не нужно. */
+  --camp-red-ink:              var(--camp-red);            /* 7.20 — затемнять нечего */
+  --camp-white-ink:            var(--iron-grey);           /* RAL 7011: та же серая семья, 6.32 вместо 1.45 */
+  --camp-rev-dem-ink:          var(--camp-rev-dem);        /* 5.56 — затемнять нечего */
+  --camp-green-ink:            #4D7948;                    /* 3.63 → 4.77 · = mix({camp-green}, {ink-black}, 15%) */
+  --camp-national-ink:         #7E6E45;                    /* 1.84 → 4.70 · = mix({camp-national}, {ink-black}, 40%) */
+  --camp-intervention-ink:     var(--camp-intervention);   /* 8.54 — затемнять нечего */
+  --camp-uprising-ink:         #287A73;                    /* 4.43 → 4.79 · = mix({camp-uprising}, {ink-black}, 5%) */
+
+  /* ── Шрифты ──────────────────────────────────────────────────── */
+  /* docs/brand/Fonts-requirements.docx. Курсив на Nolde запрещён — файла начертания нет. */
+  --font-display:     "Nolde", "Playfair Display", Georgia, serif; /* заголовки, крупные цифры, буквицы. КУРСИВ ЗАПРЕЩЁН */
+  --font-body:        "21 Cent", "PT Serif", Georgia, serif; /* основной длинный текст, параграфы */
+  --font-accent:      "20 Kopeek", "21 Cent", Georgia, serif; /* короткие надписи, кнопки, метки с «косой чертой» */
+  --font-mono:        "20 Kopeek", "JetBrains Mono", "Courier New", monospace; /* акцентные капс-надписи */
+  --font-stamp:       "20 Kopeek", "Special Elite", monospace; /* штампы, телеграммы. Special Elite в проект не загружается */
+
+  /* ── Метрики ─────────────────────────────────────────────────── */
+  --touch-hit:      120px;                                 /* минимальная тач-цель */
+  --fs-body:        32px;
+  --brand-skew:     -15deg;                                /* угол наклонных полос — 75° от вертикали */
+
+  /* ── Скроллбары ──────────────────────────────────────────────── */
+  /* На тач-столе скроллбар должен быть виден — иначе не понять, что блок скроллится. */
+  --scroll-thumb:            var(--brass);
+  --scroll-thumb-active:     #b88e3a;
+  --scroll-track:            rgba(0,0,0,0.45);
+  --scroll-width:            14px;
+
+  /* ── Слои карт ───────────────────────────────────────────────── */
+  /* Совпадают с HSV-парами из map_v6.ipynb. */
+  --layer-background:       transparent;
+  --layer-borders-dark:     #1a1a1a;
+  --layer-arrows-red:       var(--signal-red);
+  --layer-arrows-pink:      #cc0066;
+  --layer-front-blue:       #0033cc;
+  --layer-front-green:      #006600;
+  --layer-rivers-cyan:      #5ba8a0;
+}
+
+/* Ручной хвост tokens.css. Генератор дописывает этот файл без изменений
+   после сгенерированного блока :root.
+
+   Здесь живёт только то, что не является токеном, но обязано ехать вместе
+   с ними: правила, которые нужны страницам /expo/, а те подключают
+   tokens.css и НЕ подключают base.css. Переносить в base.css нельзя —
+   на экспо-страницах пропадут скроллбары.
+
+   Значения брать только из var(--…). Сырой hex здесь ловит brand-lint (R1). */
+
+/* Универсальный класс для скроллящихся областей — везде один brass-thumb.
+   На тач-столе пользователь должен видеть, что блок скроллится. */
+.brand-scroll {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar {
+  width: var(--scroll-width);
+  height: var(--scroll-width);
+}
+.brand-scroll::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.brand-scroll::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 3px solid var(--scroll-track);
+  border-radius: 8px;
+  min-height: 60px;
+}
+.brand-scroll::-webkit-scrollbar-thumb:active {
+  background: var(--scroll-thumb-active);
+}
