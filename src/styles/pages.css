@@ -64,13 +64,13 @@ body.scrollable {
    Фон — железо-серый, тонкая латунная линия снизу, заголовок — серифный курсив
    цвета латуни. Слева крупная буквица-номер раздела + косая чёрточка `/`. */
 header.page-header {
-  padding: 28px 48px 24px;
+  padding: calc(28px * var(--ui-scale, 1)) var(--sp-5, 48px) var(--sp-3, 24px);
   background:
     linear-gradient(180deg, rgba(15, 20, 24, 0.96), rgba(15, 20, 24, 0.88));
-  border-bottom: 1.5px solid var(--brass);
+  border-bottom: var(--bd-1, 1.5px) solid var(--brass);
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: calc(28px * var(--ui-scale, 1));
   flex-wrap: wrap;
   position: sticky;
   top: 0;
@@ -82,11 +82,11 @@ header.page-header {
 header.page-header::before {
   content: attr(data-section-num);
   position: absolute;
-  left: -16px; top: 50%;
+  left: calc(-16px * var(--ui-scale, 1)); top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 220px;
+  font-size: calc(220px * var(--ui-scale, 1));
   line-height: 0.82;
   color: var(--brass);
   opacity: 0.10;
@@ -98,8 +98,9 @@ header.page-header::before {
 header.page-header::after {
   content: '';
   position: absolute;
-  left: 172px; top: 16px; bottom: 16px;
-  width: 2px;
+  left: calc(172px * var(--ui-scale, 1));
+  top: var(--sp-2, 16px); bottom: var(--sp-2, 16px);
+  width: var(--bd-2, 3px);
   background: var(--brass);
   transform: skewX(var(--brand-skew, -15deg));
   opacity: 0.45;
@@ -109,54 +110,74 @@ header.page-header > * { position: relative; z-index: 1; }
 
 .page-title {
   flex: 1;
-  min-width: 320px;
+  min-width: calc(320px * var(--ui-scale, 1));
 }
 .page-title h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 44px;
+  font-size: var(--ds-6, 44px);
   font-weight: 900;
   color: var(--brass);
   letter-spacing: -0.01em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: var(--sh-1, 0 2px 8px rgba(0,0,0,0.18));
 }
 .page-title .kicker {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: calc(12px * var(--ui-scale, 1));
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--paper-white);
-  margin-bottom: 10px;
+  margin-bottom: calc(10px * var(--ui-scale, 1));
   opacity: 0.7;
 }
+
+/* «К экспозиции» — ОСНОВНАЯ НАВИГАЦИЯ, порог тач-цели 120px (§1).
+   Пилюля визуально 56px: 120px высотой в шапке выглядели бы плашкой,
+   а не ссылкой. Поэтому размер и хит-зона разведены — ::before растягивает
+   область нажатия до нормы, не трогая внешний вид. Ширина уже 206px.
+
+   До 2026-08-04 здесь был сплошной хардкод: 49px на любом экране,
+   то есть вдвое ниже нормы и без удвоения на киоске. */
 .back-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
+  gap: calc(10px * var(--ui-scale, 1));
+  min-height: calc(56px * var(--ui-scale, 1));
+  padding: calc(14px * var(--ui-scale, 1)) var(--sp-3, 24px);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: calc(13px * var(--ui-scale, 1));
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--brass);
   text-decoration: none;
-  border: 1.5px solid var(--brass);
-  border-radius: 30px;
+  border: var(--bd-1, 1.5px) solid var(--brass);
+  border-radius: var(--r-pill, 999px);
   background: transparent;
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast, 160ms), color var(--dur-fast, 160ms);
+}
+.back-link::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: var(--touch-hit, 120px);
+  transform: translateY(-50%);
 }
 .back-link:active { background: var(--brass); color: var(--iron-grey); }
 
 main {
-  padding: 20px 32px 20px;
+  padding: var(--sp-3, 24px) var(--sp-4, 32px);
   width: 100%;
+  /* Не множится на --ui-scale намеренно: это предел ЛОГИЧЕСКОЙ вёрстки.
+     На киоске 3840 контент занимает 1920 логических, то есть весь экран. */
   max-width: 1920px;
   margin: 0 auto;
   min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--sp-2, 16px);
 }
 body.scrollable main {
   overflow: visible;
@@ -166,13 +187,13 @@ body.scrollable main {
 }
 
 #filter-wrap {
-  margin-bottom: 28px;
+  margin-bottom: calc(28px * var(--ui-scale, 1));
 }
 
 #grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(calc(420px * var(--ui-scale, 1)), 1fr));
+  gap: var(--sp-3, 24px);
 }
 
 /* Модалка: открытая карточка */
@@ -192,11 +213,11 @@ body.scrollable main {
 }
 .modal-sheet {
   position: relative;
-  width: min(1200px, calc(100vw - 64px));
-  max-height: calc(100vh - 64px);
+  width: min(calc(1200px * var(--ui-scale, 1)), calc(100vw - var(--sp-6, 64px)));
+  max-height: calc(100vh - var(--sp-6, 64px));
   overflow: auto;
-  border-radius: 8px;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+  border-radius: var(--r-md, 8px);
+  box-shadow: var(--sh-3, 0 24px 64px rgba(0,0,0,0.42));
 }
 .modal-sheet > party-card,
 .modal-sheet > state-card,
@@ -205,16 +226,17 @@ body.scrollable main {
 }
 .modal-close {
   position: absolute;
-  top: 16px; right: 16px;
-  z-index: 10;
-  width: 56px; height: 56px;
-  min-width: 56px; min-height: 56px;
-  border-radius: 50%;
+  top: var(--sp-2, 16px); right: var(--sp-2, 16px);
+  z-index: var(--z-modal, 300);
+  /* 64, а не прежние 56: порог управляющего элемента по §1. */
+  width: calc(64px * var(--ui-scale, 1)); height: calc(64px * var(--ui-scale, 1));
+  min-width: calc(64px * var(--ui-scale, 1)); min-height: calc(64px * var(--ui-scale, 1));
+  border-radius: var(--r-pill, 999px);
   background: var(--signal-red);
   color: var(--paper-white);
-  font-size: 28px;
+  font-size: calc(28px * var(--ui-scale, 1));
   line-height: 1;
-  border: 2px solid var(--brass);
+  border: var(--bd-2, 3px) solid var(--brass);
   cursor: pointer;
   transition: transform .15s;
 }
