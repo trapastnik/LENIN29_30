@@ -16,10 +16,10 @@
 | chronicle-1920 | 77 |
 | chronicle-1921 | 19 |
 | chronicle-1922 | 19 |
-| event | 36 |
-| party | 33 |
-| person | 70 |
-| state | 59 |
+| event | 36/36 |
+| party | 33/33 |
+| person | 70/70 |
+| state | 59/59 |
 
 ## Аномалии
 

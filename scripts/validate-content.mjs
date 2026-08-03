@@ -80,7 +80,12 @@ const indexRecords = new Map();
 
 for (const { kind, dir } of KINDS) {
   const path = join(CONTENT, dir, '_index.json');
-  if (!existsSync(path)) continue;
+  // Пропавший индекс — ошибка, а не «нечего проверять». Иначе гейт на
+  // исчезнувшем разделе отвечает «Ошибок нет», и это выглядит правдоподобно.
+  if (!existsSync(path)) {
+    err(rel(path), `индекса раздела «${kind}» нет — раздел не отрисуется`);
+    continue;
+  }
   const idx = readJSON(path);
   if (!idx) continue;
   if (idx.schema !== 1) warn(rel(path), 'нет поля schema: 1');
@@ -197,7 +202,11 @@ let checked = 0;
 
 for (const { kind, dir } of KINDS) {
   const folder = join(CONTENT, dir);
-  if (!existsSync(folder)) continue;
+  if (!existsSync(folder)) {
+    err(rel(folder), `каталога раздела «${kind}» нет — проверять нечего, `
+      + 'и это не повод считать проверку пройденной');
+    continue;
+  }
 
   const files = readdirSync(folder)
     .filter((f) => f.endsWith('.json'))
