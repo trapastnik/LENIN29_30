@@ -7,9 +7,9 @@
 | Показатель | Значение |
 |---|---|
 | новых | 0 |
-| изменённых | 0 |
-| без изменений | 204 |
-| конфликтов с патчем | 0 |
+| изменённых | 13 |
+| без изменений | 191 |
+| конфликтов с патчем | 13 |
 | chronicle-1917 | 35 |
 | chronicle-1918 | 139 |
 | chronicle-1919 | 107 |
@@ -20,6 +20,24 @@
 | party | 33 |
 | person | 70 |
 | state | 59 |
+
+## Конфликты с ручными патчами
+
+Импорт изменил поле, которое перекрыто `.patch.json`. Значит, заказчик поправил ровно то место, что правили руками — патч надо пересмотреть.
+
+- `party/alash: camp, venn_groups`
+- `party/basmachestvo: camp, venn_groups`
+- `party/belorusskaya-sotsialisticheskaya-gromada: camp, venn_groups`
+- `party/borotbisty: camp, venn_groups`
+- `party/bund: camp, venn_groups`
+- `party/gruzinskaya-sotsial-demokraticheskaya-pa: camp, venn_groups`
+- `party/dashnaktsutyun: camp, venn_groups`
+- `party/latyshskiy-krestyanskiy-soyuz: camp, venn_groups`
+- `party/musavat: camp, venn_groups`
+- `party/poaley-tsion: camp, venn_groups`
+- `party/sibirskoe-oblastnichestvo: camp, venn_groups`
+- `party/sotsial-demokraticheskaya-partiya-finlya: camp, venn_groups`
+- `party/ukrainskaya-sotsial-demokraticheskaya-ra: camp, venn_groups`
 
 ## Аномалии
 

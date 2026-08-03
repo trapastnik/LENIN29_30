@@ -31,7 +31,12 @@
       "lead_w": 1921,
       "lead_h": 2578,
       "sort_key_ru": "рсфср",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ussr",
@@ -46,7 +51,12 @@
       "lead_media": "media/states/ussr/01",
       "lead_w": 2628,
       "lead_h": 1892,
-      "sort_key_ru": "ссср"
+      "sort_key_ru": "ссср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ukrainian-ssr",
@@ -62,7 +72,12 @@
       "lead_media": "media/states/ukrainian-ssr/01",
       "lead_w": 1086,
       "lead_h": 1638,
-      "sort_key_ru": "украинская сср"
+      "sort_key_ru": "украинская сср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "belorussian-ssr",
@@ -78,7 +93,12 @@
       "lead_media": "media/states/belorussian-ssr/01",
       "lead_w": 1189,
       "lead_h": 1806,
-      "sort_key_ru": "белорусская сср"
+      "sort_key_ru": "белорусская сср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zsfsr",
@@ -94,7 +114,12 @@
       "lead_media": "media/states/zsfsr/01",
       "lead_w": 2010,
       "lead_h": 2808,
-      "sort_key_ru": "закавказская сфср"
+      "sort_key_ru": "закавказская сфср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "azerbaijani-ssr",
@@ -112,7 +137,12 @@
       "lead_media": "media/states/azerbaijani-ssr/01",
       "lead_w": 890,
       "lead_h": 1072,
-      "sort_key_ru": "азербайджанская сср"
+      "sort_key_ru": "азербайджанская сср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "armenian-ssr",
@@ -128,7 +158,12 @@
       "lead_media": "media/states/armenian-ssr/01",
       "lead_w": 1804,
       "lead_h": 1272,
-      "sort_key_ru": "армянская сср"
+      "sort_key_ru": "армянская сср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "georgian-ssr",
@@ -143,7 +178,12 @@
       "lead_media": "media/states/georgian-ssr/01",
       "lead_w": 2010,
       "lead_h": 2808,
-      "sort_key_ru": "грузинская сср"
+      "sort_key_ru": "грузинская сср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bashkir-assr",
@@ -161,7 +201,12 @@
       "lead_media": "media/states/bashkir-assr/01",
       "lead_w": 2074,
       "lead_h": 1374,
-      "sort_key_ru": "башкирская асср"
+      "sort_key_ru": "башкирская асср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "fer",
@@ -175,7 +220,12 @@
       "lead_media": "media/states/fer/01",
       "lead_w": 2052,
       "lead_h": 1644,
-      "sort_key_ru": "дальневосточная республика"
+      "sort_key_ru": "дальневосточная республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "turkestan-sfr",
@@ -194,7 +244,12 @@
       "lead_media": "media/states/turkestan-sfr/01",
       "lead_w": 828,
       "lead_h": 1073,
-      "sort_key_ru": "туркестанская сфр / аср"
+      "sort_key_ru": "туркестанская сфр / аср",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vsyur",
@@ -209,7 +264,12 @@
       "lead_w": 1562,
       "lead_h": 2045,
       "sort_key_ru": "вооруженные силы юга россии",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "great-don-host",
@@ -220,7 +280,12 @@
       "lead_media": "media/states/great-don-host/01",
       "lead_w": 2887,
       "lead_h": 3700,
-      "sort_key_ru": "всевеликое войско донское"
+      "sort_key_ru": "всевеликое войско донское",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "orenburg-cossack-host",
@@ -231,7 +296,12 @@
       "lead_media": "media/states/orenburg-cossack-host/01",
       "lead_w": 4442,
       "lead_h": 3147,
-      "sort_key_ru": "оренбургское казачье войско"
+      "sort_key_ru": "оренбургское казачье войско",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "south-russia-gov",
@@ -243,7 +313,12 @@
       "lead_media": "media/states/south-russia-gov/01",
       "lead_w": 1332,
       "lead_h": 1990,
-      "sort_key_ru": "правительство юга россии"
+      "sort_key_ru": "правительство юга россии",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "priamur-state",
@@ -255,7 +330,12 @@
       "lead_media": "media/states/priamur-state/01",
       "lead_w": 2616,
       "lead_h": 3984,
-      "sort_key_ru": "приамурское государственное образование"
+      "sort_key_ru": "приамурское государственное образование",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "russian-state-kolchak",
@@ -267,7 +347,12 @@
       "lead_media": "media/states/russian-state-kolchak/01",
       "lead_w": 2908,
       "lead_h": 3900,
-      "sort_key_ru": "российское государство · а.в. колчак"
+      "sort_key_ru": "российское государство · а.в. колчак",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "northern-region",
@@ -278,7 +363,12 @@
       "lead_media": "media/states/northern-region/01",
       "lead_w": 2770,
       "lead_h": 3900,
-      "sort_key_ru": "северная область"
+      "sort_key_ru": "северная область",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "komuch",
@@ -294,7 +384,12 @@
       "lead_w": 2135,
       "lead_h": 2876,
       "sort_key_ru": "комитет членов учредительного собрания",
-      "has_card": true
+      "has_card": true,
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "politcenter",
@@ -315,7 +410,12 @@
       "lead_media": "media/states/ufa-directory/01",
       "lead_w": 2506,
       "lead_h": 3430,
-      "sort_key_ru": "временное всероссийское правительство · уфимская директория"
+      "sort_key_ru": "временное всероссийское правительство · уфимская директория",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "allies-entente",
@@ -327,7 +427,12 @@
       "lead_media": "media/states/allies-entente/01",
       "lead_w": 1206,
       "lead_h": 911,
-      "sort_key_ru": "союзники · антанта"
+      "sort_key_ru": "союзники · антанта",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "czechoslovak-corps",
@@ -338,7 +443,12 @@
       "lead_media": "media/states/czechoslovak-corps/01",
       "lead_w": 2340,
       "lead_h": 1896,
-      "sort_key_ru": "чехословацкий корпус"
+      "sort_key_ru": "чехословацкий корпус",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "central-powers",
@@ -350,7 +460,12 @@
       "lead_media": "media/states/central-powers/01",
       "lead_w": 1698,
       "lead_h": 1145,
-      "sort_key_ru": "центральные державы"
+      "sort_key_ru": "центральные державы",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "rossiyskaya-vostochnaya-okraina",
@@ -361,7 +476,12 @@
       "lead_media": "media/states/rossiyskaya-vostochnaya-okraina/01",
       "lead_w": 2832,
       "lead_h": 3948,
-      "sort_key_ru": "российская восточная окраина"
+      "sort_key_ru": "российская восточная окраина",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
@@ -372,7 +492,12 @@
       "lead_media": "media/states/tambovskoe-vosstanie-pod-rukovodstvom-a/01",
       "lead_w": 825,
       "lead_h": 1045,
-      "sort_key_ru": "тамбовское восстание под руководством а. с. антонова"
+      "sort_key_ru": "тамбовское восстание под руководством а. с. антонова",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
@@ -394,7 +519,12 @@
       "lead_media": "media/states/kochg/01",
       "lead_w": 1004,
       "lead_h": 1335,
-      "sort_key_ru": "комитет освобождения черноморской губернии"
+      "sort_key_ru": "комитет освобождения черноморской губернии",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
@@ -405,7 +535,12 @@
       "lead_media": "media/states/krasnoe-partizanskoe-dvizhenie-v-sibiri/01",
       "lead_w": 1289,
       "lead_h": 884,
-      "sort_key_ru": "красное партизанское движение в сибири и на дальнем востоке"
+      "sort_key_ru": "красное партизанское движение в сибири и на дальнем востоке",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "chapannaya-voyna",
@@ -416,7 +551,12 @@
       "lead_media": "media/states/chapannaya-voyna/01",
       "lead_w": 2937,
       "lead_h": 3700,
-      "sort_key_ru": "чапанная война"
+      "sort_key_ru": "чапанная война",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zapadno-sibirskoe-vosstanie",
@@ -427,7 +567,12 @@
       "lead_media": "media/states/zapadno-sibirskoe-vosstanie/01",
       "lead_w": 3480,
       "lead_h": 2550,
-      "sort_key_ru": "западно-сибирское восстание"
+      "sort_key_ru": "западно-сибирское восстание",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "sksr",
@@ -441,7 +586,12 @@
       "lead_media": "media/states/sksr/01",
       "lead_w": 682,
       "lead_h": 1080,
-      "sort_key_ru": "северо-кавказская советская республика"
+      "sort_key_ru": "северо-кавказская советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bnsr",
@@ -455,7 +605,12 @@
       "lead_media": "media/states/bnsr/01",
       "lead_w": 2343,
       "lead_h": 1560,
-      "sort_key_ru": "бухарская народная советская республика"
+      "sort_key_ru": "бухарская народная советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "khnsr",
@@ -469,7 +624,12 @@
       "lead_media": "media/states/khnsr/01",
       "lead_w": 1722,
       "lead_h": 1408,
-      "sort_key_ru": "хорезмская народная советская республика"
+      "sort_key_ru": "хорезмская народная советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "unrs",
@@ -484,7 +644,12 @@
       "lead_media": "media/states/unrs/01",
       "lead_w": 1015,
       "lead_h": 1344,
-      "sort_key_ru": "украинская народная республика советов"
+      "sort_key_ru": "украинская народная республика советов",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "osr",
@@ -498,7 +663,12 @@
       "lead_media": "media/states/osr/01",
       "lead_w": 780,
       "lead_h": 1122,
-      "sort_key_ru": "одесская советская республика"
+      "sort_key_ru": "одесская советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "finlyandskaya-sotsialisticheskaya-raboch",
@@ -509,7 +679,11 @@
       "lead_media": "media/states/finlyandskaya-sotsialisticheskaya-raboch/01",
       "lead_w": 1274,
       "lead_h": 858,
-      "sort_key_ru": "финляндская социалистическая рабочая республика"
+      "sort_key_ru": "финляндская социалистическая рабочая республика",
+      "lead_tiers": [
+        "lg",
+        "xs"
+      ]
     },
     {
       "id": "litovsko-belorusskaya-sotsialisticheskay",
@@ -520,7 +694,12 @@
       "lead_media": "media/states/litovsko-belorusskaya-sotsialisticheskay/01",
       "lead_w": 1301,
       "lead_h": 1848,
-      "sort_key_ru": "литовско-белорусская социалистическая советская республика"
+      "sort_key_ru": "литовско-белорусская социалистическая советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "etk",
@@ -534,7 +713,12 @@
       "lead_media": "media/states/etk/01",
       "lead_w": 884,
       "lead_h": 1136,
-      "sort_key_ru": "эстляндская трудовая коммуна"
+      "sort_key_ru": "эстляндская трудовая коммуна",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "dksr",
@@ -548,7 +732,12 @@
       "lead_media": "media/states/dksr/01",
       "lead_w": 1218,
       "lead_h": 1578,
-      "sort_key_ru": "донецко-криворожская советская республика"
+      "sort_key_ru": "донецко-криворожская советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "latvssr",
@@ -564,7 +753,12 @@
       "lead_media": "media/states/latvssr/01",
       "lead_w": 1452,
       "lead_h": 1932,
-      "sort_key_ru": "латвийская социалистическая советская республика"
+      "sort_key_ru": "латвийская социалистическая советская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "gruzinskaya-demokraticheskaya-respublika",
@@ -575,7 +769,12 @@
       "lead_media": "media/states/gruzinskaya-demokraticheskaya-respublika/01",
       "lead_w": 783,
       "lead_h": 1137,
-      "sort_key_ru": "грузинская демократическая республика"
+      "sort_key_ru": "грузинская демократическая республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "unr",
@@ -589,7 +788,12 @@
       "lead_media": "media/states/unr/01",
       "lead_w": 1172,
       "lead_h": 1527,
-      "sort_key_ru": "украинская народная республика"
+      "sort_key_ru": "украинская народная республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "ukrainskaya-derzhava",
@@ -600,7 +804,12 @@
       "lead_media": "media/states/ukrainskaya-derzhava/01",
       "lead_w": 4216,
       "lead_h": 3112,
-      "sort_key_ru": "украинская держава"
+      "sort_key_ru": "украинская держава",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "estonskaya-respublika",
@@ -611,7 +820,12 @@
       "lead_media": "media/states/estonskaya-respublika/01",
       "lead_w": 1588,
       "lead_h": 1002,
-      "sort_key_ru": "эстонская республика"
+      "sort_key_ru": "эстонская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "latviyskaya-respublika",
@@ -622,7 +836,12 @@
       "lead_media": "media/states/latviyskaya-respublika/01",
       "lead_w": 1658,
       "lead_h": 1056,
-      "sort_key_ru": "латвийская республика"
+      "sort_key_ru": "латвийская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "litovskaya-respublika",
@@ -633,7 +852,12 @@
       "lead_media": "media/states/litovskaya-respublika/01",
       "lead_w": 1001,
       "lead_h": 1526,
-      "sort_key_ru": "литовская республика"
+      "sort_key_ru": "литовская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zdfr",
@@ -647,7 +871,12 @@
       "lead_media": "media/states/zdfr/01",
       "lead_w": 1265,
       "lead_h": 1918,
-      "sort_key_ru": "закавказская демократическая федеративная республика"
+      "sort_key_ru": "закавказская демократическая федеративная республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "respublika-armeniya",
@@ -658,7 +887,12 @@
       "lead_media": "media/states/respublika-armeniya/01",
       "lead_w": 1712,
       "lead_h": 1192,
-      "sort_key_ru": "республика армения"
+      "sort_key_ru": "республика армения",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "adr",
@@ -672,7 +906,12 @@
       "lead_media": "media/states/adr/01",
       "lead_w": 1865,
       "lead_h": 1343,
-      "sort_key_ru": "азербайджанская демократическая республика"
+      "sort_key_ru": "азербайджанская демократическая республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "bukharskiy-emirat",
@@ -683,7 +922,12 @@
       "lead_media": "media/states/bukharskiy-emirat/01",
       "lead_w": 2343,
       "lead_h": 1560,
-      "sort_key_ru": "бухарский эмират"
+      "sort_key_ru": "бухарский эмират",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "khivinskoe-khanstvo",
@@ -702,7 +946,12 @@
       "lead_media": "media/states/finlyandskaya-respublika-s-10-avgusta-19/01",
       "lead_w": 1218,
       "lead_h": 1722,
-      "sort_key_ru": "финляндская республика с 10 августа 1918 по 17 июля 1919 г. – королевство финляндия"
+      "sort_key_ru": "финляндская республика с 10 августа 1918 по 17 июля 1919 г. – королевство финляндия",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "polskaya-respublika",
@@ -713,7 +962,12 @@
       "lead_media": "media/states/polskaya-respublika/01",
       "lead_w": 3513,
       "lead_h": 4799,
-      "sort_key_ru": "польская республика"
+      "sort_key_ru": "польская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
@@ -724,7 +978,12 @@
       "lead_media": "media/states/vremennoe-pravitelstvo-rossiyskaya-respu/01",
       "lead_w": 980,
       "lead_h": 1559,
-      "sort_key_ru": "временное правительство российская республика"
+      "sort_key_ru": "временное правительство российская республика",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "zakaspiyskoe-vremennoe-pravitelstvo",
@@ -735,7 +994,12 @@
       "lead_media": "media/states/zakaspiyskoe-vremennoe-pravitelstvo/01",
       "lead_w": 1775,
       "lead_h": 1240,
-      "sort_key_ru": "закаспийское временное правительство"
+      "sort_key_ru": "закаспийское временное правительство",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vopu",
@@ -749,7 +1013,12 @@
       "lead_media": "media/states/vopu/01",
       "lead_w": 2647,
       "lead_h": 1810,
-      "sort_key_ru": "временное областное правительство урала"
+      "sort_key_ru": "временное областное правительство урала",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "vsp",
@@ -763,7 +1032,12 @@
       "lead_media": "media/states/vsp/01",
       "lead_w": 884,
       "lead_h": 1137,
-      "sort_key_ru": "временное сибирское правительство"
+      "sort_key_ru": "временное сибирское правительство",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     },
     {
       "id": "kronshtadtskoe-vosstanie-kronshtadtskiy",
@@ -774,7 +1048,12 @@
       "lead_media": "media/states/kronshtadtskoe-vosstanie-kronshtadtskiy/01",
       "lead_w": 1899,
       "lead_h": 1320,
-      "sort_key_ru": "кронштадтское восстание кронштадтский мятеж"
+      "sort_key_ru": "кронштадтское восстание кронштадтский мятеж",
+      "lead_tiers": [
+        "lg",
+        "sm",
+        "xs"
+      ]
     }
   ],
   "schema": 1,

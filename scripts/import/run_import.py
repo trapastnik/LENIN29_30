@@ -398,7 +398,10 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
     if unused:
         ctx.reports.append("%s/%s: файлы в папке без аннотации: %s"
                            % (kind, eid, ", ".join(unused[:8])))
-    return merged if wrote or True else merged
+    # В индекс идёт СЛИЯНИЕ, а не машинный слепок: ручные правки из
+    # `<id>.patch.json` (лагерь партии, координаты Венна) обязаны попасть
+    # в плитку, иначе патч виден в карточке и не виден в списке.
+    return merged
 
 
 def _collect_notes(kind: str, eid: str, data: dict, acc: dict):
@@ -669,6 +672,12 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["lead_media"] = lead.get("file")
             rec["lead_w"] = lead.get("w")
             rec["lead_h"] = lead.get("h")
+            # Без списка собранных тиров `mediaUrl()` в зоне ui честно
+            # возвращает null: достроить имя файла по шаблону нельзя — у мелких
+            # сканов тиров меньше трёх, апскейла мы не делаем. Индекс обязан
+            # быть самодостаточным, иначе плитка остаётся заглушкой при
+            # собранных и отдающихся по http производных.
+            rec["lead_tiers"] = lead.get("tiers") or []
         # Сортировка — по тому, что написано на плитке. Иначе «РСФСР» едет
         # в списке на «российская социалистическая…», а глазом это не сходится.
         rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
