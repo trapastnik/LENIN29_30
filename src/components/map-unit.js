@@ -99,6 +99,18 @@ const TEMPLATE = `
     border: 1px solid rgba(255,255,255,0.2);
     flex-shrink: 0;
   }
+  /* Растровому слою цвет линии не соответствует — у него нет линии.
+     Косая штриховка читается как «это подложка», а не как цвет. */
+  .swatch-raster {
+    background: repeating-linear-gradient(
+      45deg, transparent 0 3px, var(--paper-warm) 3px 6px);
+  }
+  /* Цвет не задан. Пустая плашка честнее серой: серая читается как
+     «слой серого цвета», пустая — как «цвет неизвестен». */
+  .swatch-none {
+    background: none;
+    border-style: dashed;
+  }
   button.ctrl {
     padding: 6px 12px;
     font-size: 12px;
@@ -256,11 +268,36 @@ export class MapUnit extends HTMLElement {
       cb.checked = initial.has(l.id);
       cb.addEventListener('change', () => this.setLayer(l.id, cb.checked));
 
+      // ЦВЕТ ПЛАШКИ — ПО РОЛИ ИЗ ПАСПОРТА КАРТЫ.
+      //
+      // Раньше цвет брался из токена `--layer-<id>`, а такие токены есть
+      // только для семи слоёв карты komuch. У Поволжья слоёв 19, и 17 плашек
+      // из 20 рисовались серым по умолчанию: легенда не показывала, какой
+      // линией управляет галка.
+      //
+      // Договор зоны design (правило R10 линтера): слой в map.json пишет
+      // ИМЯ РОЛИ из группы `map` словаря токенов, а не значение цвета.
+      // Значение живёт в палитре, поэтому плашка и линия не могут разойтись:
+      // расходиться нечему. Роли назначает scripts/maps/layer_colors.py.
+      //
+      // Роль семантическая, а не колориметрическая: синие стрелки Поволжья
+      // это удары Русской армии, то есть роль map-white при синей линии.
+      //
+      // `--layer-*` остаётся приоритетным там, где он есть, — это роль-цвета,
+      // общие всем картам. Своего значения по умолчанию здесь нет намеренно:
+      // нет роли — плашка рисуется контуром, и это читается как «цвет
+      // не задан», а не как «слой серого цвета».
       const swatch = document.createElement('span');
       swatch.className = 'swatch';
-      swatch.style.background = l.kind === 'raster'
-        ? 'linear-gradient(135deg, #aaa, #666)'
-        : `var(--layer-${l.id.replace(/_/g, '-')}, #888)`;
+      if (l.kind === 'raster') {
+        swatch.classList.add('swatch-raster');
+      } else {
+        const legacy = `--layer-${l.id.replace(/_/g, '-')}`;
+        const fromLegacy = getComputedStyle(this).getPropertyValue(legacy).trim();
+        if (fromLegacy) swatch.style.background = fromLegacy;
+        else if (l.color) swatch.style.background = `var(--${l.color})`;
+        else swatch.classList.add('swatch-none');
+      }
 
       const name = document.createElement('span');
       name.textContent = l.label_ru;
