@@ -125,7 +125,6 @@
     const vennWrap = document.getElementById('venn-mode');
     const venn = document.createElement('venn-selector');
     venn.camps = idx.camps;
-    venn.background = MTK_URL('content/parties/') + (idx.venn_background || 'venn-bg.png');
     venn.headers = idx.venn_headers;
     venn.items = idx.items;
     vennWrap.appendChild(venn);
