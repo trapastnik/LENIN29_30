@@ -3,6 +3,7 @@
 
 import { fetchJSON } from '../data/loader.js';
 import { t, onLangChange } from '../data/i18n.js';
+import { richParagraphs, escapeHtml } from '../data/rich-text.js';
 import './map-unit.js';
 
 const TEMPLATE = `
@@ -95,6 +96,16 @@ const TEMPLATE = `
   :host(:not([expanded])) .no-map { display: none; }
 
   .loading { padding: 40px; text-align: center; color: var(--ink-faint); font-family: var(--font-mono); }
+  /* Подсветка разметки справок. Живёт здесь, а не в src/data/rich-text.js,
+     потому что --camp-ink и --camp-color ставит этот же компонент через
+     setProperty: правило и свойство должны лежать вместе, иначе brand-lint
+     справедливо считает их ссылками на несуществующий токен. */
+  .rt-ref {
+    color: var(--camp-ink, var(--camp-color, currentColor));
+    border-bottom: 1px dotted var(--camp-ink, var(--camp-color, currentColor));
+  }
+  .rt-unresolved { color: var(--camp-ink, var(--camp-color, currentColor)); font-weight: 700; }
+  .rt-em { font-weight: 600; }
 </style>
 <div id="root" class="loading"></div>
 `;
@@ -194,7 +205,11 @@ export class StateCard extends HTMLElement {
     // abbr_ru — массив: аббревиатур бывает несколько («РСДРП(б)», «РКП(б)»).
     // Прямая подстановка давала бы их через запятую без пробела.
     const abbr = Array.isArray(d.abbr_ru) ? d.abbr_ru.join(' · ') : (d.abbr_ru || '');
-    const paras = (d.summary_ru || '').split(/\n\n+/).map(p => `<p>${p}</p>`).join('');
+    // Разметку разбираем, а не печатаем: без этого в тексте видны
+    // «[большевиков](#/party/bolsheviks)» — на 2026-08-04 таких ссылок
+    // было 1197 в 91 справке из 92. Заодно экранируем: до сих пор текст
+    // справки уходил в innerHTML сырым.
+    const paras = richParagraphs(d.summary_ru);
     // map_id живёт ТОЛЬКО в _index.json: в самой справке его нет, там
     // territory_id (и он у всех null, реестра карт ещё нет). Раньше hasMap
     // считался по загруженной справке и потому был всегда false — карта
@@ -208,9 +223,9 @@ export class StateCard extends HTMLElement {
     this._root.innerHTML = `
       <div class="camp-stripe"></div>
       <header>
-        <h2>${d.title_ru}</h2>
-        ${abbr ? `<div class="abbr">${abbr}</div>` : ''}
-        <div class="meta">${dates || '&nbsp;'}</div>
+        <h2>${escapeHtml(d.title_ru)}</h2>
+        ${abbr ? `<div class="abbr">${escapeHtml(abbr)}</div>` : ''}
+        <div class="meta">${dates ? escapeHtml(dates) : '&nbsp;'}</div>
       </header>
       <div class="body">${paras}</div>
       ${hasMap && full
