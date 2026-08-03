@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Сборка рантайма лонгрида:
 //
-//     src/components/longread-*.js  →  public/content/longreads/longread-runtime.js
+//     src/components/longread-*.js  →  public/longread/longread-runtime.js
 //
 //     node scripts/simbirsk/build-longread.mjs           собрать
 //     node scripts/simbirsk/build-longread.mjs --check    сверить, не собирая
@@ -17,6 +17,11 @@
 // Verbatim в сборку копируется только public/**, поэтому собранный рантайм
 // кладём туда.
 //
+// Каталог — public/longread/, а НЕ public/content/longreads/, где он лежал
+// сначала. Причина не косметическая: public/content/** по §4 принадлежит зоне
+// content, и код внутри её каталога рано или поздно затрётся прогоном импорта.
+// Данные лонгрида при этом остаются у content — там им и место.
+//
 // Та же схема, что у tokens.css и public/expo/build/*.js: исходник и артефакт
 // оба коммитятся, сборка на сервере не зависит от прогона генератора. И та же
 // расплата: ПРАВКА .js БЕЗ ПЕРЕСБОРКИ В СТРАНИЦУ НЕ ПОПАДЁТ — ничего не упадёт,
@@ -29,7 +34,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SRC_DIR = join(ROOT, 'src', 'components');
-const OUT = join(ROOT, 'public', 'content', 'longreads', 'longread-runtime.js');
+const OUT = join(ROOT, 'public', 'longread', 'longread-runtime.js');
 
 // Порядок важен: longread-section обращается к window.LongreadMedia на разборе
 // списка иллюстраций, а longread-view — к обоим. Сортировка по имени случайно

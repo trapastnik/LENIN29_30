@@ -8,9 +8,10 @@
 | Файл | Что это |
 |---|---|
 | `public/content/_schema/longread.schema.json` | схема лонгрида, согласуется с `common` |
-| `public/content/longreads/simbirsk.json` | канон: 11 секций, 24 абзаца, 12 077 знаков |
+| `public/content/longreads/simbirsk.gen.json` | машинный результат импорта, трёхфайловая модель §9 |
+| `public/content/longreads/simbirsk.json` | канон, слияние с `.patch.json`: 11 секций, 24 абзаца, 12 077 знаков |
 | `public/content/longreads/simbirsk.data.js` | тот же контент классическим скриптом — для `file://` |
-| `public/content/longreads/longread-runtime.js` | собранные компоненты, классический скрипт |
+| `public/longread/longread-runtime.js` | собранные компоненты, классический скрипт |
 | `scripts/simbirsk/import_simbirsk.py` | docx → json + data.js + сводка медиа-долга, есть `--check` |
 | `scripts/simbirsk/build-longread.mjs` | `src/components/longread-*.js` → рантайм, есть `--check` |
 | `src/components/longread-{view,section,media}.js` | компоненты |
@@ -25,6 +26,11 @@
 «левый эсер Муравьёв» — это левые эсеры, а не ПСР.
 
 ## ⛔ Главное: `crossorigin` от vite убивает ВСЕ стили под `file://`
+
+> **Закрыто оркестратором.** Плагин `mtk-strip-crossorigin` в `vite.config.js`
+> плюс проверка в `check-paths.mjs`, чтобы не вернулось, — коммит `583fb32`.
+> Замер воспроизведён независимо: атрибут стоял на всех восьми собранных
+> страницах. Ниже — исходный разбор.
 
 Это не про мою зону — это про весь проект, и видно только на приёмке.
 
@@ -61,6 +67,12 @@ const stripCrossorigin = {
 
 ## ⛔ Второе: `states.html` и `parties.html` под `file://` не работают
 
+> **Закрыто оркестратором.** Лечится одним флагом запуска
+> `--allow-file-access-from-files`; прописан в CLAUDE.md §1 и в обе команды
+> в `docs/deploy.md`, коммит `0f2d972`. Замер оказался шире моего: пустыми на
+> киоске были бы ещё и персоналии — `expo/people.html` отдавал 6 629 байт
+> против 231 468 с флагом. Ниже — исходный разбор.
+
 Тот же класс дефекта, зона `ui`. Замеры в настоящем Chrome под `file://`:
 
 | Что | Результат |
@@ -82,14 +94,16 @@ const stripCrossorigin = {
 
 ## Заявки помельче
 
-1. **Зарегистрировать страницу** в `vite.config.js` → `rollupOptions.input`:
+1. **Зарегистрировать страницу** в `vite.config.js` → `rollupOptions.input`
+   (*принято, оркестратор делает при мерже*):
    ```js
    simbirsk: 'simbirsk.html',   // Раздел 5 · Лонгрид «Симбирск 1918–1919»
    ```
    Без неё страница не попадает в `dist/`, и это не заметно до приёмки.
    Собирал и проверял через временный конфиг в скретчпаде, сам файл не трогал.
 
-2. **Скрипты в `package.json`** (файл оркестратора):
+2. **Скрипты в `package.json`** (файл оркестратора; *принято, `longread:check`
+   идёт в `npm run check` при мерже*):
    ```json
    "simbirsk:import": "python3 scripts/simbirsk/import_simbirsk.py",
    "simbirsk:check":  "python3 scripts/simbirsk/import_simbirsk.py --check",
@@ -114,13 +128,17 @@ const stripCrossorigin = {
    Просьба к `content` подключить каталог: сейчас битую ссылку в лонгриде
    `content:check` не поймает.
 
-6. **Спорное место, прошу ратифицировать.** Собранный рантайм компонентов лежит
-   в `public/content/longreads/longread-runtime.js` — то есть код в каталоге
-   контента. Так вышло не от хорошей жизни: классический `<script src>` обязан
-   лежать в `public/**`, иначе vite его не эмитит (печатает «can't be bundled
-   without type="module"» и оставляет путь как есть, файла в `dist/` нет), а из
-   `public/**` моей зоне принадлежит только `content/longreads/**`. Если удобнее
-   `public/longread/` — скажите, это одна строка в генераторе.
+6. ~~**Спорное место, прошу ратифицировать.**~~ **Решено: переехало.** Собранный
+   рантайм лежал в `public/content/longreads/longread-runtime.js` — код внутри
+   каталога зоны `content`, где его рано или поздно затёр бы прогон импорта.
+   Перенесён в **`public/longread/longread-runtime.js`**; оркестратор закрепляет
+   каталог за зоной `simbirsk` в §4 при мерже. Данные лонгрида остались
+   в `public/content/longreads/` — там им и место.
+
+   Почему рантайм вообще обязан лежать в `public/**`: классический
+   `<script src>` иначе не доедет. Vite такой файл не эмитит — печатает
+   «can't be bundled without type="module"», оставляет путь как есть, и в
+   `dist/` его просто нет. Verbatim копируется только `public/**`.
 
 ## Для зоны `design`
 
