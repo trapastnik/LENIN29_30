@@ -57,14 +57,15 @@
 <body>
   <header class="page-header" data-section-num="02">
     <div class="page-title">
-      <div class="kicker">Раздел · 02</div>
-      <h1>Политические партии и организации</h1>
+      <div class="kicker" data-ru="Раздел · 02" data-en="Section · 02">Раздел · 02</div>
+      <h1 data-ru="Политические партии и организации" data-en="Political parties and organizations">Политические партии и организации</h1>
     </div>
     <div class="view-toggle" role="tablist">
-      <button id="btn-venn" class="active">Диаграмма</button>
-      <button id="btn-grid">Список</button>
+      <button id="btn-venn" class="active" data-ru="Диаграмма" data-en="Diagram">Диаграмма</button>
+      <button id="btn-grid" data-ru="Список" data-en="List">Список</button>
     </div>
-    <a class="back-link" href="index.html" id="back-link">← К экспозиции</a>
+    <a class="back-link" href="index.html" id="back-link" data-ru="← К экспозиции" data-en="← To the exhibit">← К экспозиции</a>
+    <button class="back-link" id="btn-lang" type="button">EN</button>
   </header>
 
   <main id="page-root">
@@ -74,7 +75,7 @@
     <div id="modal" class="modal hidden" aria-hidden="true">
       <div class="modal-backdrop"></div>
       <div class="modal-sheet">
-        <button class="modal-close" aria-label="Закрыть">×</button>
+        <button class="modal-close" aria-label="Закрыть" data-ru="Закрыть" data-en="Close" data-attr="aria-label">×</button>
         <div id="modal-body"></div>
       </div>
     </div>
@@ -94,9 +95,15 @@
   </script>
   <script type="module">
     import { fetchJSON } from '/src/data/loader.js';
+    import { applyStaticLabels, wireLangToggle, onLangChange } from '/src/data/i18n.js';
     import '/src/components/party-card.js';
     import '/src/components/venn-selector.js';
     import '/src/components/camp-filter.js';
+
+    // Интерфейс двуязычен, содержание справок — нет: перевода 198 справок
+    // не будет, в контенте *_en = null (CLAUDE.md §9).
+    applyStaticLabels();
+    wireLangToggle(document.getElementById('btn-lang'), () => applyStaticLabels());
 
     const idx = await fetchJSON(MTK_URL('content/parties/_index.json'));
 
@@ -142,6 +149,9 @@
       renderGrid();
     });
     renderGrid();
+    // Карточки и фильтр перерисовывают себя сами, а сетку надо пересобрать:
+    // подписи внутри карточек приезжают с новым языком только при перерисовке.
+    onLangChange(() => renderGrid());
 
     // --- Переключатель видов ---
     const btnVenn = document.getElementById('btn-venn');
