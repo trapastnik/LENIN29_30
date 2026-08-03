@@ -43,5 +43,7 @@
     "parser": "1.0.0"
   },
   "flags": [],
-  "_is_general": true
+  "_is_general": true,
+  "x": 50.41,
+  "y": 64.81
 }
