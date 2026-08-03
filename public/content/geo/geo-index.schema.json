@@ -10,15 +10,26 @@
     "schema": { "const": 1 },
     "kind": { "const": "geo" },
     "note_ru": { "type": "string" },
+    "registration_ru": { "type": "string", "description": "Как считалась привязка листов к base и что из неё вышло. Ведёт scripts/maps/register_sheets.py." },
     "base": {
       "type": "object",
       "required": ["id", "svg", "viewBox"],
-      "description": "Единая векторная география (§10). Пока не построена — svg и viewBox null.",
+      "description": "Единая география (§10). viewBox задаёт каноническую систему координат и заполняется раньше svg: система координат от векторной отрисовки не зависит.",
       "properties": {
         "id": { "type": "string" },
-        "svg": { "type": ["string", "null"] },
+        "svg": { "type": ["string", "null"], "description": "Векторная отрисовка базы. null — ещё не построена, координатная система при этом уже действует." },
         "viewBox": { "type": ["string", "null"] },
-        "note_ru": { "type": "string" }
+        "reference_raster": {
+          "type": "object",
+          "description": "Лист заказчика, чьё пиксельное пространство принято за каноническое. Без него register_sheets.py не знает, к чему привязывать.",
+          "required": ["src_root", "src_file"],
+          "properties": {
+            "src_root": { "enum": ["in", "assembly"] },
+            "src_file": { "type": "string" }
+          }
+        },
+        "note_ru": { "type": "string" },
+        "lineage_ru": { "type": "string" }
       }
     },
     "src_roots": {
@@ -78,7 +89,35 @@
                 "to": { "type": ["string", "null"], "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$" },
                 "polygon": { "type": ["string", "null"] },
                 "src_root": { "enum": ["in", "assembly"] },
-                "src_file": { "type": "string" }
+                "src_file": { "type": "string" },
+                "transform": {
+                  "type": ["object", "null"],
+                  "description": "Подобие лист → base, считает scripts/maps/register_sheets.py (SIFT + RANSAC). null — привязка не сошлась; у регионных листов это не сбой метода, а разная генерализация, см. registration_ru. Хранится, а не пересчитывается: вычисление дорогое, а результат воспроизводим тем же скриптом.",
+                  "required": ["kind", "scale", "M"],
+                  "properties": {
+                    "kind": { "const": "similarity" },
+                    "scale": { "type": "number", "exclusiveMinimum": 0 },
+                    "rotation_deg": { "type": "number", "description": "Проверочная величина: листы заказчика не повёрнуты, отклонение больше градуса означает ложную модель RANSAC." },
+                    "M": {
+                      "type": "array", "minItems": 2, "maxItems": 2,
+                      "description": "Матрица 2×3 в порядке cv2: [[a, b, tx], [-b, a, ty]].",
+                      "items": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number" } }
+                    },
+                    "base_window": {
+                      "type": "array", "minItems": 4, "maxItems": 4,
+                      "description": "Окно листа в координатах base: x, y, width, height.",
+                      "items": { "type": "number" }
+                    },
+                    "fit": {
+                      "type": "object",
+                      "properties": {
+                        "inliers": { "type": "integer" },
+                        "matches": { "type": "integer" },
+                        "inlier_ratio": { "type": "number" }
+                      }
+                    }
+                  }
+                }
               }
             }
           },
