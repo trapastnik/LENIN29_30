@@ -65,6 +65,11 @@ OUT_JSON = LONGREADS / "simbirsk.json"
 OUT_DATA = LONGREADS / "simbirsk.data.js"
 OUT_WANTED = ROOT / "content-src" / "simbirsk-media-wanted.md"
 
+# Второй машинный вход: временные изображения из Госкаталога, снятые
+# scripts/simbirsk/fetch_goskatalog.py. Не патч и не ручной файл — поэтому
+# подмешивается в .gen.json, а не поверх него.
+PLACEHOLDERS = ROOT / "content-src" / "simbirsk-placeholders.json"
+
 LONGREAD_ID = "simbirsk"
 
 # ── связи с уже импортированным ────────────────────────────────────────────
@@ -315,6 +320,104 @@ def _media_slot(n: int, caption: str | None, url: str | None = None) -> dict:
     }
 
 
+GK_ID_RE = re.compile(r"[?&]id=(\d+)")
+
+
+def gk_id(url: str | None) -> str | None:
+    """Числовой id позиции из ссылки вида …/#/collections?id=67744736."""
+    if not url:
+        return None
+    m = GK_ID_RE.search(url)
+    return m.group(1) if m else None
+
+
+def attach_placeholders(sections: list[dict]) -> int:
+    """Подмешать временные изображения к слотам по id позиции каталога.
+
+    Аннотацию из docx НЕ трогаем: в каталоге у предмета своё название, иногда
+    расходящееся с тем, что написал заказчик, а на экране должна стоять его
+    формулировка. Из каталога берём только то, чего в docx нет физически:
+    файл, размеры и реквизиты, по которым музею предъявляют запрос.
+    """
+    if not PLACEHOLDERS.exists():
+        return 0
+    items = json.loads(PLACEHOLDERS.read_text(encoding="utf-8")).get("items", {})
+    n = 0
+    for sec in sections:
+        for m in sec["media"]:
+            p = items.get(gk_id(m.get("source_url")) or "")
+            if not p:
+                continue
+            m["file"] = p["file"]
+            m["w"], m["h"] = p["w"], p["h"]
+            m["tiers"] = p["tiers"]
+            m["placeholder"] = True
+            m["holder_ru"] = p.get("holder_ru")
+            m["gk_no"] = p.get("gk_no")
+            m["kp_no"] = p.get("kp_no")
+            n += 1
+    return n
+
+
+def render_requisites(data: dict) -> list[str]:
+    """Таблица реквизитов — с ней заказчик идёт в музей за оригиналами.
+
+    Пустые клетки не прячем: пустая колонка «номер по КП» и есть перечень того,
+    что предстоит выяснить. Заполняется генератором заглушек со страниц
+    госкаталога, руками — только через .patch.json.
+    """
+    rows = [(s, m) for s in data["sections"] for m in s["media"] if m.get("source_url")]
+    if not rows:
+        return []
+
+    known = sum(1 for _, m in rows if m.get("kp_no"))
+    holders = {m.get("holder_ru") for _, m in rows if m.get("holder_ru")}
+
+    L = [
+        "## Реквизиты позиций госкаталога",
+        "",
+        f"Позиций со ссылкой — {len(rows)}, реквизиты сняты у {known}.",
+        "Номер по книге поступлений — то, что называют в музее; по нему",
+        "и запрашиваются оригиналы.",
+        "",
+    ]
+
+    # Держатель у всех один — выносим строкой, а не повторяем в 13 строках
+    # таблицы: с такой таблицей идут в музей, и лишняя колонка в ней мешает.
+    single_holder = holders.pop() if len(holders) == 1 else None
+    if single_holder:
+        L += [f"**Держатель всех позиций — {single_holder}.**",
+              "То есть фонд самого заказчика.", ""]
+
+    # Сколько изображений у предмета в каталоге: два — это лицо и оборот,
+    # и в запросе надо назвать, какая сторона нужна.
+    if PLACEHOLDERS.exists():
+        items = json.loads(PLACEHOLDERS.read_text(encoding="utf-8")).get("items", {})
+        multi = sum(1 for v in items.values() if (v.get("images_count") or 1) > 1)
+        if multi:
+            L += [f"У {multi} из {len(items)} предметов в каталоге по нескольку "
+                  "изображений (лицо и оборот).", "Временным взято первое — какое "
+                  "нужно на самом деле, в музее скажут точнее нас.", ""]
+
+    head = "| № | Предмет | Госкаталог | № по КП | Файл |"
+    if not single_holder:
+        head = "| № | Предмет | Госкаталог | Держатель | № по КП | Файл |"
+    L += [head, "|" + "---|" * (head.count("|") - 1)]
+
+    for s, m in rows:
+        cap = (m.get("caption_ru") or "—").replace("|", "/")
+        if len(cap) > 54:
+            cap = cap[:54].rstrip() + "…"
+        state = "заглушка" if m.get("placeholder") else ("оригинал" if m.get("file") else "нет")
+        cells = [f"{s['n']}.{m['n']}", cap, gk_id(m["source_url"]) or "—"]
+        if not single_holder:
+            cells.append(m.get("holder_ru") or "—")
+        cells += [m.get("kp_no") or "—", state]
+        L.append("| " + " | ".join(cells) + " |")
+    L.append("")
+    return L
+
+
 def _split_wanted(s: str) -> list[str]:
     """«портрет Гимова; виды Симбирска; завод.» → три заявки."""
     return [x for x in (norm_space(p).strip(" .;") for p in s.split(";")) if x]
@@ -407,13 +510,21 @@ def build(doc: Document) -> dict:
     indexes = {b: load_index(b) for b in ("persons", "parties", "states", "events")}
     labels = attach_refs(sections, indexes)
 
+    attach_placeholders(sections)
+
     n_media = sum(len(s["media"]) for s in sections)
     n_files = sum(1 for s in sections for m in s["media"] if m["file"])
+    n_stub = sum(1 for s in sections for m in s["media"] if m.get("placeholder"))
     n_wanted = sum(len(s["media_wanted_ru"]) for s in sections)
 
     flags = []
     if n_files == 0 and n_media:
         flags.append("media-missing")
+    if n_stub:
+        # Ни одного выкупленного оригинала: всё, что показано, — превью
+        # из витрины каталога. Флаг виден в json и уходит в предприёмочный
+        # чеклист, чтобы «картинки есть» не приняли за «вопрос закрыт».
+        flags.append("media-placeholder")
     if n_wanted:
         flags.append("media-wanted")
 
@@ -590,6 +701,8 @@ def render_wanted(data: dict) -> str:
                 L.append(f"- {w}")
             L.append("")
 
+    L += render_requisites(data)
+
     if data["notes_ru"]:
         L.append("## Примечания из источника")
         L.append("")
@@ -656,7 +769,11 @@ def main() -> int:
     chars = sum(len(p) for s in data["sections"] for p in s["paragraphs_ru"])
 
     print(f"разделов {n_sec}, абзацев {n_par}, знаков {chars}")
-    print(f"слотов иллюстраций {n_media} (со ссылкой {n_links}, с файлом 0), "
+    n_stub = sum(1 for s in data["sections"] for m in s["media"] if m.get("placeholder"))
+    n_real = sum(1 for s in data["sections"] for m in s["media"]
+                 if m.get("file") and not m.get("placeholder"))
+    print(f"слотов иллюстраций {n_media} (со ссылкой {n_links}, "
+          f"временных {n_stub}, выкупленных {n_real}), "
           f"заявок «нужно подобрать» {n_wanted}")
     print(f"связей с импортированным {n_refs}: "
           + ", ".join(f"{k} {len(v)}" for k, v in data["related"].items()))

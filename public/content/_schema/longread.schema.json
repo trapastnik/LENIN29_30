@@ -3,20 +3,43 @@
   "$id": "mtk29/longread",
   "title": "Лонгрид",
   "description": "Длинный связный текст, разбитый на секции: «Симбирск 1918–1919». В отличие от справки лонгрид не описывает одну сущность, а ссылается на уже импортированные — через refs по id. Схему завела зона simbirsk по согласованию с content (CLAUDE.md §4): это единственная схема контента не за авторством content.",
-  "allOf": [{ "$ref": "mtk29/common" }],
+  "allOf": [
+    {
+      "$ref": "mtk29/common"
+    }
+  ],
   "type": "object",
-  "required": ["schema", "id", "kind", "title_ru", "en_status", "sections"],
+  "required": [
+    "schema",
+    "id",
+    "kind",
+    "title_ru",
+    "en_status",
+    "sections"
+  ],
   "properties": {
-    "kind": { "const": "longread" },
-    "subtitle_ru": { "type": ["string", "null"] },
-    "subtitle_en": { "type": ["string", "null"] },
-
+    "kind": {
+      "const": "longread"
+    },
+    "subtitle_ru": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subtitle_en": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "sections": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/definitions/section" }
+      "items": {
+        "$ref": "#/definitions/section"
+      }
     },
-
     "sources": {
       "type": "array",
       "description": "Блок «Литература и карты» из источника. Это библиография для составителя, а не ссылки для киоска: url наружу, киоск офлайн и никуда по ним не ходит.",
@@ -24,39 +47,75 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "title_ru": { "type": ["string", "null"] },
-          "url": { "type": ["string", "null"] }
+          "title_ru": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
-
     "notes_ru": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Примечания составителя ко всему лонгриду — производственные, не контент. Например: где физически лежат фотографии патронного завода и что нужен официальный запрос."
     },
-
     "ref_labels": {
       "type": "object",
       "description": "ДЕНОРМАЛИЗОВАННЫЙ КЭШ, регенерируется импортом — не редактировать. id → подпись и лагерь из соответствующего _index.json. Нужен ровно потому, что киоск живёт под file://, где fetch запрещён: без кэша нечем подписать плашку связи, не подгрузив индексы. Канон остаётся в refs, здесь только ярлыки.",
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["kind", "title_ru"],
+        "required": [
+          "kind",
+          "title_ru"
+        ],
         "properties": {
-          "kind": { "enum": ["person", "party", "state", "event"] },
-          "title_ru": { "type": "string" },
-          "camp": { "type": ["string", "null"] },
-          "href": { "type": ["string", "null"], "description": "Путь БЕЗ ведущего слэша, от корня сборки (CLAUDE.md §5). Потребитель гонит его через MTK_URL()." }
+          "kind": {
+            "enum": [
+              "person",
+              "party",
+              "state",
+              "event"
+            ]
+          },
+          "title_ru": {
+            "type": "string"
+          },
+          "camp": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "href": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Путь БЕЗ ведущего слэша, от корня сборки (CLAUDE.md §5). Потребитель гонит его через MTK_URL()."
+          }
         }
       }
     }
   },
-
   "definitions": {
     "section": {
       "type": "object",
-      "required": ["n", "id", "title_ru"],
+      "required": [
+        "n",
+        "id",
+        "title_ru"
+      ],
       "additionalProperties": false,
       "properties": {
         "n": {
@@ -69,65 +128,95 @@
           "pattern": "^[a-z0-9][a-z0-9-]*$",
           "description": "Слаг секции. Якорь в вёрстке и цель ссылки из оглавления. Внутри лонгрида, в _ids.json не регистрируется."
         },
-        "title_ru": { "type": "string", "minLength": 1 },
-        "title_en": { "type": ["string", "null"] },
+        "title_ru": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title_en": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "lede_ru": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Курсивная строка-подзаголовок под заголовком раздела: «Весна 1918: советская власть, патронный завод и первый конфликт с деревней»."
         },
-        "lede_en": { "type": ["string", "null"] },
-        "paragraphs_ru": { "type": "array", "items": { "type": "string" } },
-        "paragraphs_en": { "type": "array", "items": { "type": "string" } },
-        "media": { "type": "array", "items": { "$ref": "#/definitions/media" } },
+        "lede_en": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "paragraphs_ru": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "paragraphs_en": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/media"
+          }
+        },
         "media_wanted_ru": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Строка «Нужно подобрать: …» из источника, разобранная по «;». Это ЗАЯВКА заказчику, а не слот: у неё нет ни файла, ни ссылки, и UI её не рисует вообще. Сводный список — content-src/simbirsk-media-wanted.md."
         },
-        "refs": { "$ref": "#/definitions/refs" },
-        "dates": { "$ref": "mtk29/common#/definitions/dates" }
+        "refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "dates": {
+          "$ref": "mtk29/common#/definitions/dates"
+        }
       }
     },
-
     "media": {
-      "type": "object",
-      "required": ["n"],
-      "additionalProperties": false,
-      "description": "Слот иллюстрации. Поля намеренно названы как в common#/definitions/media, чтобы медиа-конвейер зоны content смог наполнить их без переходника. Отличие одно: в исходнике Симбирска НЕТ ни одного встроенного изображения, поэтому file здесь у всех null, а вместо файла стоит source_url на госкаталог. Пустой file — не ошибка и не заглушка в вёрстке: секция без иллюстраций обязана выглядеть законченной.",
-      "properties": {
-        "n": { "type": "integer", "minimum": 1, "description": "Номер внутри секции. Ключ слияния с .patch.json." },
-        "slot": { "enum": ["lead", "gallery"] },
-        "file": {
-          "type": ["string", "null"],
-          "description": "База пути производной без тира и расширения. null — файла ещё нет; UI такой слот не рисует."
-        },
-        "src_file": { "type": ["string", "null"], "description": "Имя оригинала в IN/ — для media:build." },
-        "caption_ru": { "type": ["string", "null"], "description": "Аннотация как в источнике. Без инв. номера." },
-        "caption_en": { "type": ["string", "null"] },
-        "inv_ru": { "type": ["string", "null"] },
-        "source_url": {
-          "type": ["string", "null"],
-          "description": "Ссылка на внешний каталог (goskatalog.ru) из источника. Хранится как справка для запроса заказчику. Киоск офлайн — по ней никто не ходит и ничего не выкачивает."
-        },
-        "source_note_ru": {
-          "type": ["string", "null"],
-          "description": "Хвост-пояснение из источника: «см. литература в конце», «Уместно использовать в части про 1919 г.»."
-        },
-        "w": { "type": ["integer", "null"], "minimum": 1 },
-        "h": { "type": ["integer", "null"], "minimum": 1 },
-        "tiers": { "type": "array", "items": { "enum": ["lg", "sm", "xs"] } }
-      }
+      "$ref": "mtk29/common#/definitions/media",
+      "description": "Слот иллюстрации — ОБЩАЯ media из common. Своя копия держалась ради source_url и source_note_ru; зона content внесла их в common (ратификация c4473b0), вместе с placeholder/holder_ru/gk_no/kp_no, и копия снята. ⚠️ Путь в file отсчитывается ОТ public/content/, как и везде: «media/longreads/simbirsk/01» у файла из медиа-конвейера и «../longread/placeholders/67744736» у временного изображения. Ведущий «../» не описка: заглушки лежат в public/longread/, потому что public/content/ принадлежит зоне content и переписывается прогоном импорта. Потребитель дописывает «-<тир>.webp» и гонит через MTK_URL('content/' + file). Пустой file — не ошибка: секция без иллюстраций обязана выглядеть законченной."
     },
-
     "refs": {
       "type": "object",
       "additionalProperties": false,
       "description": "Связи секции с уже импортированными справками. Лонгрид их не пересказывает, а ссылается: UI открывает карточку. Каждый id обязан существовать в соответствующем _index.json и приходить из content-src/_ids.json — свои не выдумываются.",
       "properties": {
-        "persons": { "type": "array", "items": { "type": "string" } },
-        "parties": { "type": "array", "items": { "type": "string" } },
-        "states": { "type": "array", "items": { "type": "string" } },
-        "events": { "type": "array", "items": { "type": "string" } }
+        "persons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     }
   }
