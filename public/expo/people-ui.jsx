@@ -446,7 +446,7 @@ function SideFlag({ side, lang }) {
 }
 
 // Карточка-миниатюра персоналии
-function PersonCard({ person, lang, onOpen, delay }) {
+function PersonCard({ person, lang, onOpen, delay, flash }) {
   const meta = sideMeta(person.side);
   const [portraitFailed, setPortraitFailed] = React.useState(false);
   return (
@@ -465,6 +465,10 @@ function PersonCard({ person, lang, onOpen, delay }) {
       // соседние карточки в гриде не перекрывали друг друга в углах
       transform: `rotate(${(person._rot || 0) * 0.5}deg)`,
       animation: `fadeUp 600ms ${delay}ms both`,
+      // Цель прыжка по алфавиту: обводка держится секунду и гаснет.
+      outline: flash ? `3px solid ${theme.brass}` : 'none',
+      outlineOffset: 4,
+      transition: 'outline-color 240ms ease',
     }}
     >
       <div style={{
@@ -1067,6 +1071,52 @@ function PersonalitiesApp() {
       ? people.filter(p => !p.side)
       : people.filter(p => p.side === filter);
 
+  // ── Алфавитный указатель ─────────────────────────────────────────────────
+  // 70 плиток без него листаются вслепую: посетитель ищет фамилию глазами
+  // по всей сетке, а на 4K это ещё и физически дальше — до нижнего края
+  // экрана полметра. Буквы берём из того, что реально показано: при фильтре
+  // по лагерю их становится меньше, и пустых кнопок быть не должно.
+  const scrollRef = React.useRef(null);
+  const gridRef = React.useRef(null);
+  const headerRef = React.useRef(null);
+
+  const letters = React.useMemo(() => {
+    const seen = new Map();
+    shown.forEach((p, i) => {
+      const ch = (p.sortKey || p.title || '').charAt(0).toUpperCase();
+      if (ch && !seen.has(ch)) seen.set(ch, i);
+    });
+    return [...seen.entries()]
+      .map(([ch, i]) => [ch, i, shown[i].id])
+      .sort((a, b) => a[0].localeCompare(b[0], 'ru'));
+  }, [shown]);
+
+  // Подсветка цели прыжка. Без неё указатель выглядит сломанным: при семи
+  // колонках первые буквы попадают в верхний ряд, экран не двигается, и тап
+  // по «Б» внешне ничем не отличается от нажатия на мёртвую кнопку.
+  const [flashId, setFlashId] = React.useState(null);
+  const flashTimer = React.useRef(null);
+  React.useEffect(() => () => clearTimeout(flashTimer.current), []);
+
+  const jumpToLetter = React.useCallback((firstIndex, id) => {
+    setFlashId(id);
+    clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlashId(null), 1100);
+    const scroller = scrollRef.current, grid = gridRef.current;
+    if (!scroller || !grid) return;
+    const tile = grid.children[firstIndex];
+    if (!tile) return;
+    // scrollIntoView увёл бы плитку под липкую шапку — считаем сами.
+    const headH = headerRef.current ? headerRef.current.offsetHeight : 0;
+    // Прокручиваем мгновенно, а не behavior:'smooth'. Плавную анимацию
+    // браузер выключает при prefers-reduced-motion и замораживает, когда
+    // вкладка не на переднем плане, — и тогда указатель просто не работает,
+    // без всякой ошибки. Проверено: smooth здесь не сдвинул ничего, прямая
+    // запись scrollTop сработала. Прыжок на киоске к тому же честнее:
+    // посетителю не надо ждать, пока доедет.
+    scroller.scrollTop = Math.max(0, tile.offsetTop - headH - 20);
+  }, []);
+
   // Esc: сначала закрывает лайтбокс, затем модалку. Стрелки — навигация по фото.
   React.useEffect(() => {
     const onKey = (e) => {
@@ -1084,7 +1134,7 @@ function PersonalitiesApp() {
   }, [lightboxIdx, openId, opened]);
 
   return (
-    <div className="brand-scroll" style={{
+    <div ref={scrollRef} className="brand-scroll" style={{
       position: 'absolute', inset: 0,
       ...bgForVariant(bgVariant),
       overflow: opened ? 'hidden' : 'auto',
@@ -1120,7 +1170,7 @@ function PersonalitiesApp() {
       {/* HEADER (TOP BAR + FILTERS) — единый sticky-блок,
            не двигается при скролле списка. Цвет — из BRAND-палитры,
            переключатель ниже фильтров. */}
-      <div style={{
+      <div ref={headerRef} style={{
         position: 'sticky', top: 0, zIndex: 20,
         background: headerCfg.bg,
         backdropFilter: 'blur(6px) saturate(0.9)',
@@ -1216,10 +1266,31 @@ function PersonalitiesApp() {
         </div>
       </div>
 
+      {/* УКАЗАТЕЛЬ. Буквы русские при любом языке интерфейса: фамилии
+          приходят из контента и остаются русскими — латинский указатель
+          к ним не привёл бы никуда. */}
+      {letters.length > 1 && (
+        <div style={{
+          padding: '0 40px 16px', display: 'flex', gap: 4, flexWrap: 'wrap',
+          alignItems: 'center',
+        }}>
+          {letters.map(([ch, firstIndex, firstId]) => (
+            <button key={ch} onClick={() => jumpToLetter(firstIndex, firstId)} style={{
+              // Управляющий элемент раздела — ≥64 px (§1).
+              minWidth: 64, minHeight: 64,
+              fontFamily: fonts.display, fontSize: 22, lineHeight: 1,
+              color: headerInk, background: 'transparent',
+              border: `1px solid ${headerInkDim}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>{ch}</button>
+          ))}
+        </div>
+      )}
+
       </div>
 
       {/* GRID */}
-      <div style={{
+      <div ref={gridRef} style={{
         padding: '28px 40px 120px',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
@@ -1227,7 +1298,7 @@ function PersonalitiesApp() {
         maxWidth: 1800, margin: '0 auto',
       }}>
         {shown.map((p, i) => (
-          <PersonCard key={p.id} person={p} lang={lang}
+          <PersonCard key={p.id} person={p} lang={lang} flash={p.id === flashId}
             // Анимацию въезда лесенкой держим короткой: при 78 плитках
             // прежние 45 мс на карточку растягивали появление на 3,5 с.
             delay={Math.min(i, 12) * 45}
