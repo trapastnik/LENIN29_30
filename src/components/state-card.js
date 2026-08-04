@@ -210,11 +210,22 @@ export class StateCard extends HTMLElement {
     // было 1197 в 91 справке из 92. Заодно экранируем: до сих пор текст
     // справки уходил в innerHTML сырым.
     const paras = richParagraphs(d.summary_ru);
-    // map_id живёт ТОЛЬКО в _index.json: в самой справке его нет, там
-    // territory_id (и он у всех null, реестра карт ещё нет). Раньше hasMap
-    // считался по загруженной справке и потому был всегда false — карта
-    // Комуча, единственная собранная, не монтировалась никогда, а на её
-    // месте стояло «карта в производстве».
+    // map_id живёт ТОЛЬКО в _index.json: в самой справке его нет. Раньше
+    // hasMap считался по загруженной справке и потому был всегда false —
+    // карта Комуча, единственная собранная, не монтировалась никогда,
+    // а на её месте стояло «карта в производстве».
+    //
+    // ⚠️ Полигоны территорий сюда пока не приходят, и это не одно и то же,
+    // что карта. Сверено 2026-08-04: в geo/_index.json шесть записей
+    // с геометрией (РСФСР, Колчак, СССР, Российская Республика, Антанта,
+    // Чехословацкий корпус), в states/_index.json map_id по-прежнему один —
+    // komuch, а territory_id во всех 59 справках null. Связь при этом уже
+    // есть, но обратная: запись реестра несёт state_id.
+    // Подключать их как map-id нельзя — полигон это контур в общей системе
+    // координат (content/geo/polygons/*.svg), а map-id адресует собранную
+    // карту со слоями в content/maps/. Нужен отдельный путь: база плюс
+    // полигон слоем. Пока его нет, шесть собранных полигонов на экран
+    // не попадают ничем.
     const mapId = d.map_id || (this._stub && this._stub.map_id) || null;
     const hasMap = !!mapId;
     const layers = (d.initial_layers || []).join(',');
@@ -230,7 +241,7 @@ export class StateCard extends HTMLElement {
       <div class="body">${paras}</div>
       ${hasMap && full
         ? `<div class="map-wrap"><map-unit map-id="${mapId}"${layers ? ` initial-layers="${layers}"` : ''} show-panel="true"></map-unit></div>`
-        : `<div class="no-map">${t('Карта территории в производстве. Доступна только для Комуч (пример технологии).', 'Territory map in production. Available for Komuch only (technology sample).')}</div>`}
+        : `<div class="no-map">${t('Карта территории не подготовлена', 'Territory map not prepared')}</div>`}
     `;
   }
 }
