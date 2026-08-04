@@ -206,7 +206,8 @@
       ],
       "venn_groups": [
         "rev-dem"
-      ]
+      ],
+      "title_chip_ru": "Народные социалисты"
     },
     {
       "id": "committee-salvation",
@@ -227,7 +228,8 @@
       ],
       "venn_groups": [
         "rev-dem"
-      ]
+      ],
+      "title_chip_ru": "Комитет спасения"
     },
     {
       "id": "union-constituent",
@@ -251,7 +253,8 @@
       ],
       "venn_groups": [
         "rev-dem"
-      ]
+      ],
+      "title_chip_ru": "Союз защиты Учред. собрания"
     },
     {
       "id": "whites-general",
@@ -289,7 +292,8 @@
       ],
       "venn_groups": [
         "white"
-      ]
+      ],
+      "title_chip_ru": "Кадеты"
     },
     {
       "id": "alekseev-org",
@@ -311,7 +315,8 @@
       ],
       "venn_groups": [
         "white"
-      ]
+      ],
+      "title_chip_ru": "Добровольческая армия"
     },
     {
       "id": "right-center",
@@ -475,7 +480,8 @@
       "venn_groups": [
         "national",
         "red"
-      ]
+      ],
+      "title_chip_ru": "Мусульманские соцкомитеты"
     },
     {
       "id": "alash",
@@ -542,7 +548,8 @@
         "rev-dem"
       ],
       "x": 40.86,
-      "y": 46.11
+      "y": 46.11,
+      "title_chip_ru": "Белорусская громада"
     },
     {
       "id": "borotbisty",
@@ -613,7 +620,8 @@
         "rev-dem"
       ],
       "x": 47.2,
-      "y": 46.11
+      "y": 46.11,
+      "title_chip_ru": "Грузинские меньшевики"
     },
     {
       "id": "dashnaktsutyun",
@@ -749,7 +757,8 @@
         "red"
       ],
       "x": 19.77,
-      "y": 59.63
+      "y": 59.63,
+      "title_chip_ru": "СДП Финляндии"
     },
     {
       "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
@@ -773,7 +782,8 @@
         "national"
       ],
       "x": 56.74,
-      "y": 72.22
+      "y": 72.22,
+      "title_chip_ru": "Украинская СДРП"
     }
   ],
   "schema": 1,

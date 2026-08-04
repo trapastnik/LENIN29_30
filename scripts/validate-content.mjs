@@ -28,6 +28,8 @@ const KINDS = [
 ];
 
 const TZ_SUMMARY_MAX = 3000;
+const CHIP_MAX = 34;   // знаков ≈ 340 px в 21 Cent, замеры зоны design
+const chipLabels = new Map();
 
 // Формы редакторских пометок, встречающиеся в справках заказчика.
 // «Стоит отметить, что…» — обычная проза, поэтому «отметить» ловится только
@@ -323,6 +325,28 @@ for (const { kind, dir } of KINDS) {
 
     if (kind === 'person' && !data.surname_ru) {
       err(where, 'у личности не разобрана фамилия');
+    }
+    // ── подпись чипа диаграммы
+    // Порог 34 знака ≈ 340 px в 21 Cent по замерам design. Длиннее — чип
+    // не помещается в блоб, и перестановкой это не чинится: блоб стоит
+    // у кромки кадра, а подпись растёт вправо.
+    if (kind === 'party') {
+      const chip = data.title_chip_ru;
+      const shown = chip || data.title_ru || '';
+      if (chip && chip.length > CHIP_MAX) {
+        err(where, `title_chip_ru ${chip.length} знаков, порог ${CHIP_MAX} — `
+          + 'подпись не поместится в блоб диаграммы');
+      }
+      if (!chip && (data.title_ru || '').length > CHIP_MAX) {
+        warn(where, `title_ru ${data.title_ru.length} знаков и нет `
+          + `title_chip_ru — на диаграмме подпись выйдет за кромку кадра`);
+      }
+      const key = shown.toLowerCase();
+      if (chipLabels.has(key) && chipLabels.get(key) !== data.id) {
+        err(where, `подпись чипа «${shown}» уже занята записью `
+          + `«${chipLabels.get(key)}» — на диаграмме их будет не различить`);
+      }
+      chipLabels.set(key, data.id);
     }
     if (kind === 'party' && data.venn_groups) {
       const g = data.venn_groups;
