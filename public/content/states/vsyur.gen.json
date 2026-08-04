@@ -121,6 +121,7 @@
         "22 ВСЮР 04 1.jpg",
         "22 ВСЮР 04 2 .jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"
@@ -172,6 +173,7 @@
         "22 ВСЮР 06 1.jpg",
         "22 ВСЮР 06 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],

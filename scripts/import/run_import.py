@@ -416,6 +416,14 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
 
     write_json(gen_path, data)
     merged = deep_merge(data, patch)
+    # Флаг рядом с текстом вопроса: текст читает человек, флаг — счётчик
+    # и фильтр. Считается ПОСЛЕ слияния: `open_question_ru` приходит патчем,
+    # то есть рукой, и в машинном слепке его ещё нет.
+    if merged.get("open_question_ru"):
+        fl = list(merged.get("flags") or [])
+        if "open-question" not in fl:
+            fl.append("open-question")
+            merged["flags"] = fl
     wrote = write_json(merged_path, merged)
 
     if old_gen is None:

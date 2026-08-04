@@ -117,6 +117,7 @@
         "СДПФ_04 1.jpg",
         "СДПФ_04 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "trim"
       ],
@@ -163,8 +164,11 @@
     "sha256": "2af4e7cfc54dc297fb050fa550cbd9332f16d503e7ae458546cdf547fa88c72f",
     "parser": "1.0.0"
   },
-  "flags": [],
+  "flags": [
+    "open-question"
+  ],
   "x": 19.77,
   "y": 59.63,
-  "title_chip_ru": "СДП Финляндии"
+  "title_chip_ru": "СДП Финляндии",
+  "open_question_ru": "Лагерь `national`, но в 1918 году партия возглавила Финляндскую Социалистическую Рабочую Республику — довод за `red`."
 }

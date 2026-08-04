@@ -62,6 +62,7 @@
         "46 Армянская 01 1.tif",
         "46 Армянская 01 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"
