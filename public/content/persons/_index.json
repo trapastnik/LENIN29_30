@@ -55,7 +55,7 @@
       "title_ru": "Авксентьев",
       "has_card": true,
       "title_full_ru": "Н. Д. АВКСЕНТЬЕВ",
-      "camp": "green",
+      "camp": "rev-dem",
       "dates_display_ru": "1878–1943",
       "lead_media": "media/persons/avksentiev/01",
       "lead_w": 2506,
@@ -157,7 +157,7 @@
       "title_ru": "Пилсудскій",
       "has_card": true,
       "title_full_ru": "Ю. ПИЛСУДСКИЙ",
-      "camp": "green",
+      "camp": "national",
       "dates_display_ru": "1867–1935",
       "lead_media": "media/persons/pilsudski/01",
       "lead_w": 3513,
@@ -335,7 +335,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "open_question_ru": "Лагерь не определён: Уфимская директория и антибольшевистские правительства Сибири. Зависит от того, считается ли директория революционной демократией."
     },
     {
       "id": "bukeykhanov",
@@ -465,7 +466,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "open_question_ru": "Лагерь не определён: меньшевик по идеологии, деятель Грузинской Демократической Республики по должности."
     },
     {
       "id": "grishin",
@@ -785,7 +787,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "open_question_ru": "Лагерь `rev-dem` по Временному правительству, но партия кадетов в разделе отнесена к белым. Требует сверки с музеем."
     },
     {
       "id": "myasnikov",
@@ -819,7 +822,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "open_question_ru": "То же, что у Милюкова: `rev-dem` по должности, кадеты в разделе — белые."
     },
     {
       "id": "ordzhonikidze",
