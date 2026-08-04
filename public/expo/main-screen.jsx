@@ -19,6 +19,25 @@
 // и указать путь здесь — размер фиксирован канвасом 1920×1080.
 const BACKDROP_SRC = null;
 
+// ── Тач-цель на канве — числом, а не токеном --touch-hit ───────────────────
+// Канва главной живёт в фиксированных логических 1920×1080 и увеличивается
+// transform'ом (boot-expo.jsx). Токены метрик в brand-tokens.css уже домножены
+// на --ui-scale, поэтому на 4K --touch-hit отдаёт 240 логических,
+// transform добавляет свои ×2 — 480 физических вместо 240.
+// Замерено на dist при 3840×2160: так шли все 12 элементов главной.
+//
+// Погасить масштаб на узле канвы нельзя, и это стоит знать: множитель
+// сворачивается там, где токен ОБЪЯВЛЕН (:root), потомки наследуют уже готовое
+// `calc(120px * 2)`. Переопределение --ui-scale ниже по дереву меняет только
+// формулы, написанные руками в стилях потомков, а на токены не действует —
+// проверено пробным узлом внутри канвы.
+//
+// Это не «свой размер» в обход §8: порог тот же, просто выраженный
+// в логических пикселях — как 1920, 1080 и все остальные числа канвы.
+// Разделы вне канвы (people, chronicle, parties, states) масштабируются
+// нормально и пользуются токеном.
+const TOUCH_HIT = 120;
+
 function Backdrop() {
   return (
     <div style={{
@@ -72,7 +91,7 @@ function MainHeader({ lang, setLang }) {
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
         <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
           // Переключатель языка — основная навигация, ≥120 px (§1).
-          minWidth: 120, minHeight: 'var(--touch-hit, 120px)',
+          minWidth: 120, minHeight: TOUCH_HIT,
           fontFamily: fonts.mono, fontSize: 15, letterSpacing: '0.25em',
           color: theme.paperLight, background: 'transparent',
           border: `1.5px solid ${theme.brass}`, borderRadius: 32,
@@ -108,7 +127,7 @@ function Timeline({ years, active, onPick, lang }) {
             <button key={y.year} onClick={() => onPick(y.year)} style={{
               flex: 1,
               // ≥120px по CLAUDE.md §1: тач-палец, а не курсор
-              minHeight: 'var(--touch-hit, 120px)',
+              minHeight: TOUCH_HIT,
               display: 'flex', flexDirection: 'column',
               alignItems: 'stretch', justifyContent: 'flex-end',
               gap: 10, padding: 0,
@@ -183,7 +202,7 @@ function SectionTiles({ sections, lang, onOpen }) {
             onClick={ready ? () => onOpen(s.id) : undefined}
             disabled={!ready}
             style={{
-              minHeight: 'var(--touch-hit, 120px)',
+              minHeight: TOUCH_HIT,
               height: 470,
               display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
               textAlign: 'left', gap: 0,
