@@ -28,13 +28,30 @@
     html.brand-scroll body { display: block; overflow: visible; height: auto; min-height: 100vh; }
     body::before { position: fixed; }
 
-    main {
+    /* #catalog, а НЕ main. Найдено зоной ui её же гейтом check-css-order:
+       правило было мёртвым целиком — в сборке применялись значения
+       из pages.css (max-width 1920 вместо 1280, gap 16 вместо 56,
+       padding 24/32 вместо 32/48/120).
+
+       Причина: vite переносит свои <link> в конец <head>, поэтому
+       инлайновый <style> оказывается ВЫШЕ pages.css и при равной
+       специфичности проигрывает. В исходнике порядок обратный —
+       на dev каталог выглядел правильно, а на dist нет.
+
+       Цена была не косметическая: по этому каталогу ставятся задачи
+       другим зонам, и «свёрстай по brand.html#c-…» показывало образец
+       в чужой раскладке. Расхождение с реализацией списали бы
+       на исполнителя.
+
+       Проверила остальные инлайновые правила тем же способом — из двух
+       голых тегов конфликтует только main. */
+    #catalog {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 32px 48px 120px;
+      padding: var(--sp-4, 32px) var(--sp-5, 48px) var(--sp-8, 128px);
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: calc(56px * var(--ui-scale, 1));
     }
 
     /* — Заголовок раздела каталога — */
@@ -1529,7 +1546,12 @@
     <a class="back-link" href="index.html" id="back-link">← На стартовую</a>
   </header>
 
-  <main>
+  <!-- id, а не тег: инлайновый <style> в сборке оказывается ВЫШЕ
+       pages.css (vite переносит свои <link> в конец <head>), и при равной
+       специфичности выигрывает внешний файл. В исходнике порядок обратный,
+       поэтому расхождение видно только на dist. Селектор с id порядку
+       не подвержен. Ловит npm run check → check-css-order.mjs. -->
+  <main id="catalog">
     <!-- ── 01. Палитра ─────────────────────────────────────────── -->
     <section class="cat-section">
       <p class="lede">01 · Палитра</p>
