@@ -11,6 +11,9 @@ if (!window.MTK_TOKENS) {
   throw new Error('chronicle-ui.jsx: не подключён brand-tokens.js (см. public/expo/chronicle.html)');
 }
 
+
+// S() — общий помощник масштаба из ui-scale.jsx.
+
 const chTheme = window.MTK_PEOPLE_THEME;
 const chFonts = window.MTK_FONTS;
 const chBrand = window.BRAND_THEME;
@@ -65,26 +68,26 @@ function EventRow({ item, lang, onOpenCard }) {
       <div style={{
         background: chTheme.paper,
         borderLeft: `4px solid ${c}`,
-        padding: '18px 22px',
+        padding: S('18px 22px'),
         boxShadow: '0 8px 20px rgba(0,0,0,.45)',
       }}>
         <div style={{
-          fontFamily: chFonts.mono, fontSize: 11, letterSpacing: '0.24em',
-          color: c, textTransform: 'uppercase', marginBottom: 8,
+          fontFamily: chFonts.mono, fontSize: S(11), letterSpacing: '0.24em',
+          color: c, textTransform: 'uppercase', marginBottom: S(8),
         }}>
           {lang === 'ru' ? TRACKS[kind].ru : TRACKS[kind].en}
           {isMonth && ` · ${lang === 'ru' ? 'весь мѣсяцъ' : 'whole month'}`}
         </div>
         <div style={{
-          fontFamily: chFonts.body, fontSize: 16, lineHeight: 1.5,
+          fontFamily: chFonts.body, fontSize: S(16), lineHeight: 1.5,
           color: chTheme.ink, textWrap: 'pretty',
         }}>{richText(text, c)}</div>
 
         {withCard && item.card && (
           <button onClick={() => onOpenCard(item.card)} style={{
             // «Справка →» — управляющий элемент раздела, ≥64 px (§1).
-            marginTop: 16, minHeight: 64, padding: '0 28px',
-            fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.24em',
+            marginTop: S(16), minHeight: S(64), padding: S('0 28px'),
+            fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.24em',
             color: chTheme.ink, background: 'transparent',
             border: `1px solid ${c}`, borderRadius: 28,
             textTransform: 'uppercase',
@@ -101,15 +104,15 @@ function EventRow({ item, lang, onOpenCard }) {
   const axis = (
     <div style={{
       display: 'flex', flexDirection: 'column',
-      alignItems: 'center', gap: 8, paddingTop: 14,
+      alignItems: 'center', gap: S(8), paddingTop: S(14),
     }}>
       <div style={{
-        fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.14em',
+        fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.14em',
         color: chTheme.paperDim, textAlign: 'center', lineHeight: 1.35,
-        background: chTheme.bgDeep, padding: '2px 8px',
+        background: chTheme.bgDeep, padding: S('2px 8px'),
       }}>{item.date && item.date.display_ru}</div>
       <div style={{
-        width: 13, height: 13, borderRadius: 7,
+        width: S(13), height: S(13), borderRadius: 7,
         background: track.color,
         boxShadow: `0 0 0 5px ${chTheme.bgDeep}`,
       }}/>
@@ -119,9 +122,9 @@ function EventRow({ item, lang, onOpenCard }) {
   if (wide) {
     // Событие сразу в обоих треках — дата над парой колонок.
     return (
-      <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 180px' }}>
+      <div style={{ contentVisibility: 'auto', containIntrinsicSize: `0 ${S(180)}` }}>
         {axis}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginTop: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: S(18), marginTop: S(10) }}>
           {cell(polText, 'pol', true)}
           {cell(milText, 'mil', false)}
         </div>
@@ -132,11 +135,11 @@ function EventRow({ item, lang, onOpenCard }) {
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: '1fr 190px 1fr',
-      gap: 18, alignItems: 'start',
+      gridTemplateColumns: `1fr ${S(190)} 1fr`,
+      gap: S(18), alignItems: 'start',
       // Событий в году до 139: браузер может не размечать то, что за экраном.
       contentVisibility: 'auto',
-      containIntrinsicSize: '0 150px',
+      containIntrinsicSize: `0 ${S(150)}`,
     }}>
       <div>{item.track === 'pol' ? cell(polText, 'pol', true) : null}</div>
       {axis}
@@ -158,29 +161,29 @@ function EventCard({ card, lang, onClose }) {
       backdropFilter: 'blur(10px) saturate(0.6)',
       WebkitBackdropFilter: 'blur(10px) saturate(0.6)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: 40, overscrollBehavior: 'contain',
+      padding: S(40), overscrollBehavior: 'contain',
     }} onClick={onClose}>
       <div className="brand-scroll" style={{
-        width: 1180, maxWidth: '100%', maxHeight: '92vh', overflowY: 'auto',
+        width: S(1180), maxWidth: '100%', maxHeight: '92vh', overflowY: 'auto',
         background: chTheme.paper, color: chTheme.ink,
         border: `1px solid ${chBrand.brass}`,
-        padding: '38px 46px 46px',
+        padding: S('38px 46px 46px'),
         boxShadow: '0 30px 90px rgba(0,0,0,.85)',
         overscrollBehavior: 'contain',
       }} onClick={e => e.stopPropagation()}>
         <div style={{
-          fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.3em',
+          fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.3em',
           color: chTheme.inkFade, textTransform: 'uppercase',
         }}>{dates}</div>
 
         <div style={{
-          fontFamily: chFonts.display, fontSize: 42, lineHeight: 1.06,
-          color: chTheme.ink, marginTop: 12,
+          fontFamily: chFonts.display, fontSize: S(42), lineHeight: 1.06,
+          color: chTheme.ink, marginTop: S(12),
         }}>{lang === 'ru' ? card.title_ru : (card.title_en || card.title_ru)}</div>
 
         <div style={{
-          marginTop: 26, fontFamily: chFonts.body, fontSize: 17,
-          lineHeight: 1.62, color: chTheme.inkSoft, maxWidth: 860,
+          marginTop: S(26), fontFamily: chFonts.body, fontSize: S(17),
+          lineHeight: 1.62, color: chTheme.inkSoft, maxWidth: S(860),
           textWrap: 'pretty',
         }}>
           {summary.split(/\n\s*\n/).map((p, i) => (
@@ -192,9 +195,9 @@ function EventCard({ card, lang, onClose }) {
 
         {photos.length > 0 && (
           <div style={{
-            marginTop: 34, display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-            gap: 22,
+            marginTop: S(34), display: 'grid',
+            gridTemplateColumns: `repeat(auto-fill, minmax(${S(240)}, 1fr))`,
+            gap: S(22),
           }}>
             {photos.map((ph, i) => (
               <figure key={i} style={{ margin: 0 }}>
@@ -206,11 +209,11 @@ function EventCard({ card, lang, onClose }) {
                 </div>
                 {(ph.ru || ph.en) && (
                   <figcaption style={{
-                    marginTop: 8, fontFamily: chFonts.body, fontSize: 12,
+                    marginTop: S(8), fontFamily: chFonts.body, fontSize: S(12),
                     lineHeight: 1.4, color: chTheme.inkFade,
                   }}>
                     {lang === 'ru' ? ph.ru : (ph.en || ph.ru)}
-                    {ph.inv && <div style={{ marginTop: 3, opacity: .8 }}>{ph.inv}</div>}
+                    {ph.inv && <div style={{ marginTop: S(3), opacity: .8 }}>{ph.inv}</div>}
                   </figcaption>
                 )}
               </figure>
@@ -220,8 +223,8 @@ function EventCard({ card, lang, onClose }) {
 
         <button onClick={onClose} style={{
           // Возврат к ленте — управляющий элемент раздела, ≥64 px (§1).
-          marginTop: 36, minHeight: 64, padding: '0 32px',
-          fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.26em',
+          marginTop: S(36), minHeight: S(64), padding: S('0 32px'),
+          fontFamily: chFonts.mono, fontSize: S(13), letterSpacing: '0.26em',
           color: chTheme.paper, background: chTheme.ink,
           border: 'none', borderRadius: 30, textTransform: 'uppercase',
         }}>{lang === 'ru' ? '← Назадъ къ лентѣ' : '← Back to the timeline'}</button>
@@ -247,8 +250,8 @@ function ChroniclePhoto({ photo, lang }) {
     <div style={{
       width: '100%', height: '100%',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontFamily: chFonts.mono, fontSize: 10, letterSpacing: '0.18em',
-      color: chBrand.slateWindow, textTransform: 'uppercase', textAlign: 'center', padding: 12,
+      fontFamily: chFonts.mono, fontSize: S(10), letterSpacing: '0.18em',
+      color: chBrand.slateWindow, textTransform: 'uppercase', textAlign: 'center', padding: S(12),
     }}>
       {lang === 'ru' ? 'изображеніе не доставлено' : 'image not delivered'}
     </div>

@@ -15,6 +15,9 @@ if (!window.MTK_TOKENS) {
 // tokens.json как deprecated, сводится к --camp-* на шаге 3.
 // (Значения намеренно не приводим: сырой hex в коде — нарушение §8,
 // даже в комментарии, и линтер его честно считает.)
+
+// S() — общий помощник масштаба из ui-scale.jsx.
+
 const SIDE_META = window.MTK_SIDE_META;
 
 // Лагерь известен почти у всех (68 из 70), но не у всех. Без запасного
@@ -275,18 +278,18 @@ function SettingsPanel({ lang,
   // pill-кнопка варианта
   const pill = (id, label, active, onClick, swatch) => (
     <button key={id} onClick={onClick} style={{
-      display: 'flex', alignItems: 'center', gap: 8,
+      display: 'flex', alignItems: 'center', gap: S(8),
       width: '100%', textAlign: 'left',
-      padding: '7px 10px',
+      padding: S('7px 10px'),
       background: active ? '#D2B773' : 'transparent',
       color: active ? '#000' : '#F7F9EF',
       border: `1px solid ${active ? '#D2B773' : 'rgba(210,183,115,0.45)'}`,
       borderRadius: 30,
-      fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.18em',
+      fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.18em',
       textTransform: 'uppercase', cursor: 'pointer',
     }}>
       {swatch && <span style={{
-        width: 10, height: 10, borderRadius: 2, flexShrink: 0,
+        width: S(10), height: S(10), borderRadius: 2, flexShrink: 0,
         background: swatch === 'transparent'
           ? 'linear-gradient(135deg, transparent 0 45%, #A02128 45% 55%, transparent 55% 100%), #F7F9EF'
           : swatch,
@@ -300,7 +303,7 @@ function SettingsPanel({ lang,
     <div style={{
       // z-index выше overlay модалки персоналии (100) и лайтбокса (200),
       // чтобы панель оставалась видна и работала во всех слоях.
-      position: 'fixed', top: 96, right: open ? 12 : 0, zIndex: 250,
+      position: 'fixed', top: S(96), right: open ? 12 : 0, zIndex: 250,
       transition: 'right 220ms ease',
       pointerEvents: 'auto',
     }}>
@@ -308,32 +311,32 @@ function SettingsPanel({ lang,
       <button onClick={() => setOpen(o => !o)} title={lang === 'ru' ? 'Настройки' : 'Settings'} style={{
         position: 'absolute', top: 0, right: open ? 'auto' : 0,
         left: open ? -32 : 'auto',
-        width: 32, height: 56,
+        width: S(32), height: S(56),
         background: '#000', color: '#D2B773',
         border: '1px solid #D2B773',
         borderRight: open ? 'none' : '1px solid #D2B773',
         borderTopLeftRadius: 6, borderBottomLeftRadius: 6,
-        fontFamily: fonts.mono, fontSize: 18, lineHeight: 1,
+        fontFamily: fonts.mono, fontSize: S(18), lineHeight: 1,
         cursor: 'pointer',
       }}>{open ? '›' : '‹'}</button>
 
       {open && (
         <div style={{
-          width: 230,
+          width: S(230),
           background: 'rgba(0,0,0,0.92)',
           backdropFilter: 'blur(6px)',
           WebkitBackdropFilter: 'blur(6px)',
           border: '1px solid #D2B773',
           borderRadius: 6,
-          padding: '14px 12px',
+          padding: S('14px 12px'),
           boxShadow: '0 20px 50px rgba(0,0,0,0.65)',
-          maxHeight: 'calc(100vh - 120px)',
+          maxHeight: S('calc(100vh - 120px)'),
           overflowY: 'auto',
         }} className="brand-scroll">
           <div style={{
-            fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.32em',
+            fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.32em',
             color: '#D2B773', textTransform: 'uppercase',
-            marginBottom: 10, paddingBottom: 8,
+            marginBottom: S(10), paddingBottom: S(8),
             borderBottom: '1px solid rgba(210,183,115,0.35)',
           }}>
             {lang === 'ru' ? '◇ Стиль' : '◇ Style'}
@@ -341,11 +344,11 @@ function SettingsPanel({ lang,
           {groups.map((g, gi) => (
             <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 14 : 0 }}>
               <div style={{
-                fontFamily: fonts.mono, fontSize: 9, letterSpacing: '0.28em',
+                fontFamily: fonts.mono, fontSize: S(9), letterSpacing: '0.28em',
                 color: 'rgba(247,249,239,0.55)', textTransform: 'uppercase',
-                marginBottom: 6,
+                marginBottom: S(6),
               }}>{g[lang]}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: S(5) }}>
                 {Object.entries(g.variants).map(([id, v]) =>
                   pill(id, v[lang], g.value === id, () => g.set(id),
                     // swatch — bg цвет варианта (для card / header это hex)
@@ -431,15 +434,15 @@ function SideFlag({ side, lang }) {
   const meta = sideMeta(side);
   return (
     <div style={{
-      display: 'inline-flex', alignItems: 'center', gap: 8,
-      padding: '4px 10px 4px 6px',
+      display: 'inline-flex', alignItems: 'center', gap: S(8),
+      padding: S('4px 10px 4px 6px'),
       background: meta.flag, color: '#f0dcae',
-      fontFamily: fonts.mono, fontSize: 11,
+      fontFamily: fonts.mono, fontSize: S(11),
       letterSpacing: '0.22em', textTransform: 'uppercase',
       clipPath: 'polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%)',
-      paddingRight: 18,
+      paddingRight: S(18),
     }}>
-      <span style={{ width: 10, height: 10, background: '#f0dcae', opacity: .85 }}/>
+      <span style={{ width: S(10), height: S(10), background: '#f0dcae', opacity: .85 }}/>
       {meta[lang]}
     </div>
   );
@@ -474,7 +477,7 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
       <div style={{
         ...paperFill(),
         border: `1px solid ${theme.inkFade}`,
-        padding: 10,
+        padding: S(10),
         boxShadow: '0 10px 22px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.3)',
         position: 'relative',
       }}>
@@ -491,7 +494,7 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
           overflow: 'hidden', position: 'relative',
           background: '#F7F9EF',
           border: `1px solid ${theme.inkSoft}`,
-          marginBottom: 10,
+          marginBottom: S(10),
         }}>
           {person.portrait && !portraitFailed ? (
             <img src={person.portrait} alt="" loading="lazy"
@@ -530,8 +533,8 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
           }}/>
           {/* годы */}
           <div style={{
-            position: 'absolute', bottom: 6, left: 8,
-            fontFamily: fonts.mono, fontSize: 10, color: '#f0dcae', letterSpacing: '0.15em',
+            position: 'absolute', bottom: S(6), left: S(8),
+            fontFamily: fonts.mono, fontSize: S(10), color: '#f0dcae', letterSpacing: '0.15em',
             textShadow: '0 1px 2px #000',
           }}>{person.years}</div>
         </div>
@@ -541,15 +544,15 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
             без единой дозагрузки. Регалии показывает уже справка. */}
         <div style={{
           fontFamily: fonts.display,
-          fontSize: 22, lineHeight: 1.05, color: theme.ink, marginTop: 2,
+          fontSize: S(22), lineHeight: 1.05, color: theme.ink, marginTop: S(2),
         }}>{person.title}</div>
         <div style={{
-          marginTop: 8, fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.2em',
+          marginTop: S(8), fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.2em',
           color: meta.color, textTransform: 'uppercase',
         }}>{meta[lang]}</div>
         {person.stub && (
           <div style={{
-            marginTop: 6, fontFamily: fonts.mono, fontSize: 10,
+            marginTop: S(6), fontFamily: fonts.mono, fontSize: S(10),
             letterSpacing: '0.15em', color: theme.inkFade, textTransform: 'uppercase',
           }}>{lang === 'ru' ? 'справки пока нѣтъ' : 'no dossier yet'}</div>
         )}
@@ -576,9 +579,9 @@ function PhotoFrame({ photo, lang }) {
     <div style={{
       width: '100%', height: '100%',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      textAlign: 'center', padding: 10,
+      textAlign: 'center', padding: S(10),
       background: 'linear-gradient(160deg, #435059 0%, #2a2f33 100%)',
-      fontFamily: fonts.mono, fontSize: 9, lineHeight: 1.5,
+      fontFamily: fonts.mono, fontSize: S(9), lineHeight: 1.5,
       letterSpacing: '0.16em', color: '#9DA3A6', textTransform: 'uppercase',
     }}>
       {lang === 'ru' ? 'изображеніе не собрано' : 'image not built'}
@@ -597,7 +600,7 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
     }} onClick={onClose}>
       <div style={{
         flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '40px 80px 20px', minHeight: 0,
+        padding: S('40px 80px 20px'), minHeight: 0,
       }}>
         <img src={photo.src} alt="" style={{
           maxWidth: '100%', maxHeight: '100%', objectFit: 'contain',
@@ -606,29 +609,29 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
         }} onClick={e => e.stopPropagation()}/>
       </div>
       <div style={{
-        padding: '14px 80px 32px',
-        fontFamily: fonts.body, fontSize: 16, lineHeight: 1.5,
-        color: theme.paperLit, textAlign: 'center', maxWidth: 1100, margin: '0 auto',
+        padding: S('14px 80px 32px'),
+        fontFamily: fonts.body, fontSize: S(16), lineHeight: 1.5,
+        color: theme.paperLit, textAlign: 'center', maxWidth: S(1100), margin: '0 auto',
       }} onClick={e => e.stopPropagation()}>{photo[lang]}</div>
 
       {/* кнопки */}
       <button onClick={(e) => { e.stopPropagation(); onClose(); }} style={{
-        position: 'absolute', top: 24, right: 24,
+        position: 'absolute', top: S(24), right: S(24),
         background: 'transparent', border: `1px solid ${theme.paperDim}`,
-        color: theme.paper, width: 56, height: 56,
-        fontFamily: fonts.mono, fontSize: 22,
+        color: theme.paper, width: S(56), height: S(56),
+        fontFamily: fonts.mono, fontSize: S(22),
       }}>×</button>
       {hasPrev && <button onClick={(e) => { e.stopPropagation(); onPrev(); }} style={{
-        position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+        position: 'absolute', left: S(16), top: '50%', transform: 'translateY(-50%)',
         background: 'transparent', border: `1px solid ${theme.paperDim}`,
-        color: theme.paper, width: 56, height: 56,
-        fontFamily: fonts.mono, fontSize: 22,
+        color: theme.paper, width: S(56), height: S(56),
+        fontFamily: fonts.mono, fontSize: S(22),
       }}>‹</button>}
       {hasNext && <button onClick={(e) => { e.stopPropagation(); onNext(); }} style={{
-        position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+        position: 'absolute', right: S(16), top: '50%', transform: 'translateY(-50%)',
         background: 'transparent', border: `1px solid ${theme.paperDim}`,
-        color: theme.paper, width: 56, height: 56,
-        fontFamily: fonts.mono, fontSize: 22,
+        color: theme.paper, width: S(56), height: S(56),
+        fontFamily: fonts.mono, fontSize: S(22),
       }}>›</button>}
     </div>
   );
@@ -669,16 +672,16 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       zIndex: 100,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       animation: 'fadeIn 250ms ease',
-      padding: 40,
+      padding: S(40),
       overscrollBehavior: 'contain',
     }}
     onClick={onClose}
     >
       <div className="person-detail-card" style={{
-        width: 1280, maxWidth: '100%', height: '90vh',
-        display: 'grid', gridTemplateColumns: '380px 1fr',
-        gap: 28, position: 'relative',
-        padding: 22, background: frame.bg,
+        width: S(1280), maxWidth: '100%', height: '90vh',
+        display: 'grid', gridTemplateColumns: `${S(380)} 1fr`,
+        gap: S(28), position: 'relative',
+        padding: S(22), background: frame.bg,
         border: `1px solid #D2B773`,                  // BRAND.brass
         boxShadow: '0 0 0 1px rgba(0,0,0,.6), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(210,183,115,.18)',
         animation: 'popIn 400ms cubic-bezier(.2,.7,.3,1.1)',
@@ -690,7 +693,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         <div style={{
           background: card.bg,
           border: `1px solid ${card.rule}`,
-          padding: 18,
+          padding: S(18),
           boxShadow: '0 20px 50px rgba(0,0,0,.8)',
           position: 'relative',
           display: 'flex', flexDirection: 'column',
@@ -723,8 +726,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                     fill="#5D6970"/>
                 </svg>
                 <div style={{
-                  position: 'absolute', top: 10, left: 10,
-                  fontFamily: fonts.mono, fontSize: 10, color: '#435059',
+                  position: 'absolute', top: S(10), left: S(10),
+                  fontFamily: fonts.mono, fontSize: S(10), color: '#435059',
                   letterSpacing: '0.2em', textShadow: '0 1px 2px rgba(247,249,239,0.6)',
                 }}>
                   {lang === 'ru' ? '[фотография отсутствует]' : '[photograph missing]'}
@@ -736,23 +739,23 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
               background: 'repeating-linear-gradient(91deg, rgba(0,0,0,.1) 0 1px, transparent 1px 3px)',
             }}/>
           </div>
-          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+          <div style={{ marginTop: S(14), display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
             <SideFlag side={person.side} lang={lang}/>
-            <div style={{ fontFamily: fonts.mono, fontSize: 11, color: card.muted, letterSpacing: '0.15em' }}>
+            <div style={{ fontFamily: fonts.mono, fontSize: S(11), color: card.muted, letterSpacing: '0.15em' }}>
               {person.years}
             </div>
           </div>
           <div style={{
-            marginTop: 14, fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
+            marginTop: S(14), fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.25em',
             color: card.muted, textTransform: 'uppercase',
           }}>{d.name}</div>
           <div style={{
             fontFamily: fonts.display,
-            fontSize: 38, lineHeight: 0.95, color: card.ink, marginTop: 2,
+            fontSize: S(38), lineHeight: 0.95, color: card.ink, marginTop: S(2),
             letterSpacing: '-0.01em',
           }}>{d.sur}</div>
           <div style={{
-            marginTop: 10, fontFamily: fonts.stamp, fontSize: 13,
+            marginTop: S(10), fontFamily: fonts.stamp, fontSize: S(13),
             color: card.accent, letterSpacing: '0.06em',
           }}>· {d.tag}</div>
           <div style={{ flex: 1 }}/>
@@ -760,11 +763,11 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           {/* Переключатель режима показа — только если есть фото */}
           {photos.length > 0 && (
             <div style={{
-              marginTop: 18, display: 'flex', flexDirection: 'column', gap: 6,
+              marginTop: S(18), display: 'flex', flexDirection: 'column', gap: S(6),
               flexShrink: 0,
             }}>
               <div style={{
-                fontFamily: fonts.mono, fontSize: 9, letterSpacing: '0.32em',
+                fontFamily: fonts.mono, fontSize: S(9), letterSpacing: '0.32em',
                 color: card.muted, textTransform: 'uppercase',
               }}>
                 {lang === 'ru' ? 'Раскладка' : 'Layout'}
@@ -780,8 +783,8 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                   const active = viewMode === m.id;
                   return (
                     <button key={m.id} onClick={() => setViewMode(m.id)} style={{
-                      padding: '10px 8px',
-                      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.18em',
+                      padding: S('10px 8px'),
+                      fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.18em',
                       textTransform: 'uppercase',
                       background: active ? card.ink : 'transparent',
                       color: active ? card.bg : card.ink,
@@ -794,10 +797,10 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           )}
 
           <button onClick={onClose} style={{
-            marginTop: 14, background: 'transparent',
+            marginTop: S(14), background: 'transparent',
             border: `1px solid ${card.rule}`,
-            color: card.ink, padding: '12px 22px',
-            fontFamily: fonts.mono, fontSize: 12,
+            color: card.ink, padding: S('12px 22px'),
+            fontFamily: fonts.mono, fontSize: S(12),
             letterSpacing: '0.3em', textTransform: 'uppercase',
             flexShrink: 0,
           }}>
@@ -810,7 +813,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         <div style={{
           display: 'grid',
           gridTemplateRows: viewMode === 'gallery' && photos.length > 0 ? '1fr auto' : '1fr',
-          gap: 16, minHeight: 0, overflow: 'hidden',
+          gap: S(16), minHeight: 0, overflow: 'hidden',
         }}>
           <div className="brand-scroll" style={{
             color: textInk,
@@ -824,13 +827,13 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
             overscrollBehavior: 'contain',
           }}>
             <div style={{
-              fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.3em',
+              fontFamily: fonts.mono, fontSize: S(12), letterSpacing: '0.3em',
               color: meta.accent, textTransform: 'uppercase',
             }}>{d.role}</div>
 
             <div style={{
-              marginTop: 22, fontFamily: fonts.body, fontSize: 18,
-              color: textInk, lineHeight: 1.6, maxWidth: 720,
+              marginTop: S(22), fontFamily: fonts.body, fontSize: S(18),
+              color: textInk, lineHeight: 1.6, maxWidth: S(720),
               textWrap: 'pretty',
             }}>
               {(d.bio || '').split(/\n\s*\n/).map((p, i) => (
@@ -840,17 +843,17 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
 
             {d.facts && d.facts.length > 0 && (
               <div style={{
-                marginTop: 28, display: 'grid',
+                marginTop: S(28), display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '10px 28px', maxWidth: 720,
+                gap: S('10px 28px'), maxWidth: S(720),
               }}>
                 {d.facts.map((f, i) => (
                   <div key={i} style={{
-                    fontFamily: fonts.mono, fontSize: 13,
+                    fontFamily: fonts.mono, fontSize: S(13),
                     color: textInk, lineHeight: 1.4,
-                    paddingLeft: 14, position: 'relative',
+                    paddingLeft: S(14), position: 'relative',
                     borderLeft: `2px solid ${meta.accent}`,
-                    paddingTop: 2, paddingBottom: 2,
+                    paddingTop: S(2), paddingBottom: S(2),
                   }}>{f}</div>
                 ))}
               </div>
@@ -858,16 +861,16 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
 
             {/* Фото-сетка во flow-режиме (полная, с подписями под каждым) */}
             {viewMode === 'flow' && photos.length > 0 && (
-              <div style={{ marginTop: 36 }}>
+              <div style={{ marginTop: S(36) }}>
                 <div style={{
-                  fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
-                  color: theme.ochre, textTransform: 'uppercase', marginBottom: 14,
+                  fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.3em',
+                  color: theme.ochre, textTransform: 'uppercase', marginBottom: S(14),
                 }}>
                   {lang === 'ru' ? 'Фотодокументы и предметы — нажмите для увеличения' : 'Photographs and objects — tap to enlarge'}
                 </div>
                 <div style={{
-                  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                  gap: 18, maxWidth: 820,
+                  display: 'grid', gridTemplateColumns: `repeat(auto-fill, minmax(${S(200)}, 1fr))`,
+                  gap: S(18), maxWidth: S(820),
                 }}>
                   {photos.map((ph, i) => (
                     <figure key={i} style={{ margin: 0 }}>
@@ -886,7 +889,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                         </div>
                       </button>
                       <figcaption style={{
-                        marginTop: 8, fontFamily: fonts.body, fontSize: 12,
+                        marginTop: S(8), fontFamily: fonts.body, fontSize: S(12),
                         color: theme.paperDim, lineHeight: 1.4,
                       }}>{ph[lang]}</figcaption>
                     </figure>
@@ -900,12 +903,12 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           {viewMode === 'gallery' && photos.length > 0 && (
             <div style={{
               borderTop: `1px solid ${theme.inkFade}55`,
-              paddingTop: 14,
+              paddingTop: S(14),
               minHeight: 0,
             }}>
               <div style={{
-                fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.3em',
-                color: theme.ochre, textTransform: 'uppercase', marginBottom: 10,
+                fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.3em',
+                color: theme.ochre, textTransform: 'uppercase', marginBottom: S(10),
               }}>
                 {lang === 'ru' ? 'Фотодокументы — нажмите для увеличения' : 'Photographs — tap to enlarge'}
               </div>
@@ -914,7 +917,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                 // Фиксированный шаг под максимум 5 фото — если фото меньше,
                 // они занимают левую часть, не растягиваются на всю ширину
                 gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
-                gap: 12,
+                gap: S(12),
               }}>
                 {photos.map((ph, i) => (
                   <figure key={i} style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
@@ -933,7 +936,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
                       </div>
                     </button>
                     <figcaption style={{
-                      marginTop: 6, fontFamily: fonts.body, fontSize: 11,
+                      marginTop: S(6), fontFamily: fonts.body, fontSize: S(11),
                       color: theme.paperDim, lineHeight: 1.35,
                       // обрезаем до 3 строк — полная подпись доступна в лайтбоксе
                       display: '-webkit-box', WebkitBoxOrient: 'vertical',
@@ -1141,7 +1144,7 @@ function PersonalitiesApp() {
       // тач-стол: scroll-chain не должен уносить открытую карточку
       overscrollBehavior: 'contain',
       color: theme.paper,
-      paddingBottom: 80,
+      paddingBottom: S(80),
     }}>
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: rotate(0deg) translateY(22px); } }
@@ -1179,29 +1182,29 @@ function PersonalitiesApp() {
         borderBottom: `1px solid ${headerCfg.border}`,
       }}>
       <div style={{
-        padding: '24px 40px 18px',
-        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24,
+        padding: S('24px 40px 18px'),
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: S(24),
       }}>
         <div>
           <div style={{
-            fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.35em',
+            fontFamily: fonts.mono, fontSize: S(12), letterSpacing: '0.35em',
             color: '#D2B773', textTransform: 'uppercase',  // BRAND.brass — RAL 1002
           }}>
             {lang === 'ru' ? 'Музей В.И. Ленина · Гражданская война' : 'Lenin Museum · Russian Civil War'}
           </div>
           <div style={{
             fontFamily: fonts.display,
-            fontSize: 52, lineHeight: 1, color: headerInk, marginTop: 6,
+            fontSize: S(52), lineHeight: 1, color: headerInk, marginTop: S(6),
             letterSpacing: '-0.01em',
           }}>{lang === 'ru' ? 'Персоналіи. 1917—1922' : 'People. 1917—1922'}</div>
         </div>
 
-        <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: S(14), alignItems: 'center' }}>
           <a href="index.html" style={{
             // «к экспозиции» — основная навигация, ≥120 px (§1).
-            minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
+            minHeight: S('var(--touch-hit, 120px)'), padding: S('0 24px'),
             display: 'inline-flex', alignItems: 'center',
-            fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
+            fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.25em',
             color: headerInkDim, textDecoration: 'none',
             border: `1px solid ${headerInkDim}`,
             textTransform: 'uppercase',
@@ -1217,8 +1220,8 @@ function PersonalitiesApp() {
           </a>
           <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
             // Переключатель языка — основная навигация, ≥120 px (§1).
-            minWidth: 120, minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
-            fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
+            minWidth: S(120), minHeight: S('var(--touch-hit, 120px)'), padding: S('0 24px'),
+            fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.25em',
             color: headerInk, background: 'transparent',
             border: `1px solid #D2B773`,  // BRAND.brass border
             textTransform: 'uppercase',
@@ -1231,7 +1234,7 @@ function PersonalitiesApp() {
       {/* FILTERS — внутри того же sticky-блока, прибиты к шапке.
            Цвета лагерей — bg signalRed/telegrey4/brass из BRAND. */}
       <div style={{
-        padding: '0 40px 18px', display: 'flex', gap: 10, flexWrap: 'wrap',
+        padding: S('0 40px 18px'), display: 'flex', gap: S(10), flexWrap: 'wrap',
         alignItems: 'center',
       }}>
         {/* Пятая кнопка — для записей без лагеря: импорт берёт camp из справки,
@@ -1244,22 +1247,22 @@ function PersonalitiesApp() {
           return (
             <button key={f.id} onClick={() => setFilter(f.id)} style={{
               // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).
-              minHeight: 64, padding: '0 20px',
-              fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.2em',
+              minHeight: S(64), padding: S('0 20px'),
+              fontFamily: fonts.mono, fontSize: S(12), letterSpacing: '0.2em',
               background: active ? f.brand : 'transparent',
               color: active ? activeText : headerInkDim,
               border: `1px solid ${active ? f.brand : headerInkDim}`,
               textTransform: 'uppercase',
-              display: 'flex', alignItems: 'center', gap: 8,
+              display: 'flex', alignItems: 'center', gap: S(8),
             }}>
               {f[lang]}
-              <span style={{ fontSize: 10, opacity: .7 }}>· {f.count}</span>
+              <span style={{ fontSize: S(10), opacity: .7 }}>· {f.count}</span>
             </button>
           );
         })}
         <div style={{ flex: 1 }}/>
         <div style={{
-          fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em',
+          fontFamily: fonts.mono, fontSize: S(11), letterSpacing: '0.2em',
           color: headerInkDim, textTransform: 'uppercase',
         }}>
           {lang === 'ru' ? 'Нажмите карточку — откроется справка' : 'Tap a card — opens a dossier'}
@@ -1271,14 +1274,14 @@ function PersonalitiesApp() {
           к ним не привёл бы никуда. */}
       {letters.length > 1 && (
         <div style={{
-          padding: '0 40px 16px', display: 'flex', gap: 4, flexWrap: 'wrap',
+          padding: S('0 40px 16px'), display: 'flex', gap: S(4), flexWrap: 'wrap',
           alignItems: 'center',
         }}>
           {letters.map(([ch, firstIndex, firstId]) => (
             <button key={ch} onClick={() => jumpToLetter(firstIndex, firstId)} style={{
               // Управляющий элемент раздела — ≥64 px (§1).
-              minWidth: 64, minHeight: 64,
-              fontFamily: fonts.display, fontSize: 22, lineHeight: 1,
+              minWidth: S(64), minHeight: S(64),
+              fontFamily: fonts.display, fontSize: S(22), lineHeight: 1,
               color: headerInk, background: 'transparent',
               border: `1px solid ${headerInkDim}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -1291,11 +1294,11 @@ function PersonalitiesApp() {
 
       {/* GRID */}
       <div ref={gridRef} style={{
-        padding: '28px 40px 120px',
+        padding: S('28px 40px 120px'),
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-        gap: '28px 22px',
-        maxWidth: 1800, margin: '0 auto',
+        gridTemplateColumns: `repeat(auto-fill, minmax(${S(220)}, 1fr))`,
+        gap: S('28px 22px'),
+        maxWidth: S(1800), margin: '0 auto',
       }}>
         {shown.map((p, i) => (
           <PersonCard key={p.id} person={p} lang={lang} flash={p.id === flashId}
@@ -1308,7 +1311,7 @@ function PersonalitiesApp() {
 
       {indexError && (
         <div style={{
-          padding: '40px', fontFamily: fonts.mono, fontSize: 14,
+          padding: S('40px'), fontFamily: fonts.mono, fontSize: S(14),
           color: theme.brass, letterSpacing: '0.1em',
         }}>
           {lang === 'ru' ? 'Не удалось загрузить списокъ персоналій: ' : 'Could not load the list of people: '}
@@ -1322,7 +1325,7 @@ function PersonalitiesApp() {
           position: 'fixed', inset: 0, zIndex: 100,
           background: 'rgba(10,6,3,0.72)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: fonts.mono, fontSize: 13, letterSpacing: '0.3em',
+          fontFamily: fonts.mono, fontSize: S(13), letterSpacing: '0.3em',
           color: theme.brass, textTransform: 'uppercase',
         }} onClick={() => setOpenId(null)}>
           {lang === 'ru' ? 'загружаемъ справку…' : 'loading dossier…'}
@@ -1332,14 +1335,14 @@ function PersonalitiesApp() {
         <div style={{
           position: 'fixed', inset: 0, zIndex: 100,
           background: 'rgba(10,6,3,0.82)',
-          display: 'flex', flexDirection: 'column', gap: 18,
+          display: 'flex', flexDirection: 'column', gap: S(18),
           alignItems: 'center', justifyContent: 'center',
-          fontFamily: fonts.mono, fontSize: 13, letterSpacing: '0.2em',
-          color: theme.brass, textAlign: 'center', padding: 40,
+          fontFamily: fonts.mono, fontSize: S(13), letterSpacing: '0.2em',
+          color: theme.brass, textAlign: 'center', padding: S(40),
         }} onClick={() => setOpenId(null)}>
           <div>{lang === 'ru' ? 'Справка не открылась' : 'Dossier failed to open'}</div>
-          <div style={{ fontSize: 11, opacity: .7 }}>{String(openError.message || openError)}</div>
-          <div style={{ fontSize: 11, opacity: .7 }}>{lang === 'ru' ? 'нажмите, чтобы закрыть' : 'tap to close'}</div>
+          <div style={{ fontSize: S(11), opacity: .7 }}>{String(openError.message || openError)}</div>
+          <div style={{ fontSize: S(11), opacity: .7 }}>{lang === 'ru' ? 'нажмите, чтобы закрыть' : 'tap to close'}</div>
         </div>
       )}
 
