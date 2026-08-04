@@ -234,7 +234,11 @@ function lintFile(file) {
   // первыми, мы бы потеряли границы области.
   const src = maskComments(maskSpecimens(raw));
   const ext = extname(file);
-  const isCssLike = ext === '.css' || ext === '.html';
+  // .js/.jsx тоже: веб-компоненты носят свой CSS в шаблонных строках,
+  // и до 2026-08-04 весь этот слой не проверялся на тач-цели вовсе —
+  // map-unit, venn-selector, party-card, state-card, camp-filter.
+  // Правило было, а половина кнопок проекта под него не попадала.
+  const isCssLike = ext === '.css' || ext === '.html' || ext === '.js' || ext === '.jsx';
 
   // ── R6 · внешние ресурсы ────────────────────────────────────────────────
   for (const m of src.matchAll(/\b(?:src|href)\s*=\s*["']\s*(https?:)?\/\/([^"'\s/]+)/gi)) {
@@ -344,8 +348,45 @@ function lintFile(file) {
   if (isCssLike) {
     for (const m of src.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
       const [selector, body] = [m[1], m[2]];
-      if (!/(^|[\s,>+~])(button|a)\b|\.btn|\[role=["']?button/i.test(selector)) continue;
-      if (/min-(width|height)\s*:\s*var\(--touch-hit\)/i.test(body)) continue;
+
+      // Кнопкой должен быть САМ субъект правила, а не его предок:
+      // `button .swatch { width: 12px }` красит цветной квадратик внутри
+      // чипа, а нажимают чип. Смотрим последний компаунд каждого селектора.
+      const subjectIsControl = selector.split(',').some((sel) => {
+        const last = sel.trim().split(/[\s>+~]+/).pop() ?? '';
+        return /^(button|a)\b/i.test(last) || /\.btn/i.test(last) || /\[role=["']?button/i.test(last);
+      });
+      if (!subjectIsControl) continue;
+      if (/min-(width|height)\s*:\s*var\(--touch-hit/i.test(body)) continue;
+
+      // Хит-зона может быть больше видимого элемента, и это ПРАВИЛЬНЫЙ
+      // приём, а не обход: ряд из девяти свотчей по 64 px не помещается,
+      // а нажимать по 28 нельзя — поэтому кружок остаётся 28, а область
+      // добирается невидимым ::before. Правило, которое меряет бокс,
+      // ругалось бы ровно на верное решение и учило бы себя игнорировать.
+      //
+      // Ищем в том же файле правило для ::before/::after этого же
+      // селектора с высотой ≥ порога или через --touch-hit.
+      const subj = selector.trim().split(',')[0].trim();
+      const pseudo = new RegExp(
+        subj.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*::(before|after)[^{]*\\{([^}]*)\\}', 'i');
+      const pm = src.match(pseudo);
+      if (pm && /height\s*:\s*(var\(--touch-hit|(4[89]|[5-9]\d|\d{3,})px|max\([^)]*\b(4[89]|[5-9]\d|\d{3,})px)/i.test(pm[2])) continue;
+
+      // Явная ОТМЕНА порога. Опаснее маленького числа: числа видно
+      // в ревью, а `min-height: auto` выглядит уборкой, хотя снимает
+      // приёмочный параметр §1. Так в map-unit.js кнопка панели
+      // осталась 26px, перебив базовое button { min-height: --touch-hit }.
+      // Ловим отмену ВЫСОТЫ. Ширину не трогаем: у широкой пилюли с текстом
+      // `min-width: auto` безвреден — тач-цель там держит высота, а флаг
+      // на каждый такой случай сделал бы правило шумом, и его начали бы
+      // пропускать. Высота же — дефицитное измерение в ряду контролов,
+      // и её отмена роняет цель до высоты строки.
+      for (const d of body.matchAll(/\bmin-height\s*:\s*(auto|0|none)\b/gi)) {
+        add('R7', file, m.index + m[0].indexOf(d[0]), src,
+            `${selector.trim().slice(0, 48)} { ${d[0]} }`,
+            'отменяет порог §1, заданный базовым правилом для button');
+      }
       for (const d of body.matchAll(/\b(min-)?(width|height)\s*:\s*(\d+(?:\.\d+)?)px/gi)) {
         if (Number(d[3]) < 48) {
           add('R7', file, m.index + m[0].indexOf(d[0]), src,

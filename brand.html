@@ -947,9 +947,14 @@
       cursor: grab;
       border: 2px solid #1a1a1a;
     }
+    /* Управляющие элементы лаборатории — порог §1 это 64.
+       Видимая пилюля остаётся компактной, хит-зону добирает ::before:
+       ряд из десяти пилюль по 64 в высоту съел бы поллаборатории.
+       Тот же приём показан в разделе «Запрещено», #c-no-small-target. */
     .font-lab .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .font-lab .pill-row button {
-      min-height: auto; min-width: auto;
+      position: relative;
+      min-height: 34px; min-width: auto;
       padding: 6px 14px;
       border-radius: 14px;
       border: 1px solid rgba(210,183,115,0.45);
@@ -973,13 +978,28 @@
       display: flex; flex-wrap: wrap; gap: 6px;
     }
     .font-lab .bg-swatches button {
+      position: relative;
       width: 28px; height: 28px;
+      min-height: 28px;
       border-radius: 50%;
       border: 1.5px solid rgba(210,183,115,0.4);
       cursor: pointer;
       padding: 0;
-      min-width: auto; min-height: auto;
+      min-width: auto;
       transition: transform 0.12s, border-color 0.12s;
+    }
+    /* Хит-зона 64 при видимом кружке 28: девять свотчей по 64 в ряд
+       не помещаются, а нажимать по 28 нельзя. Зазор между кружками 6,
+       то есть зоны соседей смыкаются, но не перехватывают центр —
+       у круглой цели промах уходит к ближайшему, а не к чужому. */
+    .font-lab .pill-row button::before,
+    .font-lab .bg-swatches button::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      width: max(100%, 64px);
+      height: 64px;
+      transform: translate(-50%, -50%);
     }
     .font-lab .bg-swatches button.active {
       border-color: var(--brass);
