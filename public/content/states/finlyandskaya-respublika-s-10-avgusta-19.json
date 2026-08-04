@@ -130,6 +130,7 @@
         "51 Финляндия 04 1.jpg",
         "51 Финляндия 04 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

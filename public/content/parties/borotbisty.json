@@ -107,8 +107,10 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "over-tz-limit"
+    "over-tz-limit",
+    "open-question"
   ],
   "x": 13.44,
-  "y": 67.04
+  "y": 67.04,
+  "open_question_ru": "Лагерь `national`, но в 1920 году партия влилась в КП(б)У — довод за `red`."
 }

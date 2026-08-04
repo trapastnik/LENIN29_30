@@ -89,6 +89,7 @@
         "02 СКСР 03 1.jpg",
         "02 СКСР 03 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"
@@ -119,6 +120,7 @@
         "02 СКСР 04 1.jpg",
         "02 СКСР 04 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

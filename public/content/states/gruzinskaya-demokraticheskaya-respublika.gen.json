@@ -148,6 +148,7 @@
         "38 ГДР 05 1.tif",
         "38 ГДР 05 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

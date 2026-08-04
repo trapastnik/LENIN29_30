@@ -93,6 +93,7 @@
         "45 ЗДФР 03 1.tif",
         "45 ЗДФР 03 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

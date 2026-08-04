@@ -390,6 +390,12 @@ def build_media(media_rows: List[SpravkaRow], scope, aliases, self_target,
         }
         if len(hits) > 1:
             item["parts"] = [h.name for h in hits]
+            # Одна аннотация покрывает несколько файлов (две стороны купюры,
+            # разворот). КАКАЯ из них лицевая — заказчик не сказал, а показываем
+            # мы первую по имени файла. Признак нужен, чтобы приёмка отличила
+            # «так и задумано» от «взяли что попалось»: без него 37 записей
+            # выглядят проверенными.
+            item["sides"] = "unverified"
         if hits:
             from media_link import image_size
             size = image_size(hits[0])
