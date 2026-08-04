@@ -424,7 +424,7 @@ function SideFlag({ side, lang }) {
     paddingRight: 18
   } }, /* @__PURE__ */ React.createElement("span", { style: { width: 10, height: 10, background: "#f0dcae", opacity: 0.85 } }), meta[lang]);
 }
-function PersonCard({ person, lang, onOpen, delay }) {
+function PersonCard({ person, lang, onOpen, delay, flash }) {
   const meta = sideMeta(person.side);
   const [portraitFailed, setPortraitFailed] = React.useState(false);
   return /* @__PURE__ */ React.createElement(
@@ -450,7 +450,11 @@ function PersonCard({ person, lang, onOpen, delay }) {
         // Угол ротации уменьшен вдвое (raw `_rot` теперь делим), чтобы
         // соседние карточки в гриде не перекрывали друг друга в углах
         transform: `rotate(${(person._rot || 0) * 0.5}deg)`,
-        animation: `fadeUp 600ms ${delay}ms both`
+        animation: `fadeUp 600ms ${delay}ms both`,
+        // Цель прыжка по алфавиту: обводка держится секунду и гаснет.
+        outline: flash ? `3px solid ${theme.brass}` : "none",
+        outlineOffset: 4,
+        transition: "outline-color 240ms ease"
       }
     },
     /* @__PURE__ */ React.createElement("div", { style: {
@@ -1143,6 +1147,31 @@ function PersonalitiesApp() {
     };
   }, [openId]);
   const shown = filter === "all" ? people : filter === "none" ? people.filter((p) => !p.side) : people.filter((p) => p.side === filter);
+  const scrollRef = React.useRef(null);
+  const gridRef = React.useRef(null);
+  const headerRef = React.useRef(null);
+  const letters = React.useMemo(() => {
+    const seen = /* @__PURE__ */ new Map();
+    shown.forEach((p, i) => {
+      const ch = (p.sortKey || p.title || "").charAt(0).toUpperCase();
+      if (ch && !seen.has(ch)) seen.set(ch, i);
+    });
+    return [...seen.entries()].map(([ch, i]) => [ch, i, shown[i].id]).sort((a, b) => a[0].localeCompare(b[0], "ru"));
+  }, [shown]);
+  const [flashId, setFlashId] = React.useState(null);
+  const flashTimer = React.useRef(null);
+  React.useEffect(() => () => clearTimeout(flashTimer.current), []);
+  const jumpToLetter = React.useCallback((firstIndex, id) => {
+    setFlashId(id);
+    clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlashId(null), 1100);
+    const scroller = scrollRef.current, grid = gridRef.current;
+    if (!scroller || !grid) return;
+    const tile = grid.children[firstIndex];
+    if (!tile) return;
+    const headH = headerRef.current ? headerRef.current.offsetHeight : 0;
+    scroller.scrollTop = Math.max(0, tile.offsetTop - headH - 20);
+  }, []);
   React.useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
@@ -1157,7 +1186,7 @@ function PersonalitiesApp() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [lightboxIdx, openId, opened]);
-  return /* @__PURE__ */ React.createElement("div", { className: "brand-scroll", style: {
+  return /* @__PURE__ */ React.createElement("div", { ref: scrollRef, className: "brand-scroll", style: {
     position: "absolute",
     inset: 0,
     ...bgForVariant(bgVariant),
@@ -1188,7 +1217,7 @@ function PersonalitiesApp() {
           min-height: 60px;
         }
         .brand-scroll::-webkit-scrollbar-thumb:active { background: ${theme.ochre}; }
-      `), /* @__PURE__ */ React.createElement("div", { style: {
+      `), /* @__PURE__ */ React.createElement("div", { ref: headerRef, style: {
     position: "sticky",
     top: 0,
     zIndex: 20,
@@ -1287,7 +1316,26 @@ function PersonalitiesApp() {
     letterSpacing: "0.2em",
     color: headerInkDim,
     textTransform: "uppercase"
-  } }, lang === "ru" ? "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u2014 \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043F\u0440\u0430\u0432\u043A\u0430" : "Tap a card \u2014 opens a dossier"))), /* @__PURE__ */ React.createElement("div", { style: {
+  } }, lang === "ru" ? "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u2014 \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043F\u0440\u0430\u0432\u043A\u0430" : "Tap a card \u2014 opens a dossier")), letters.length > 1 && /* @__PURE__ */ React.createElement("div", { style: {
+    padding: "0 40px 16px",
+    display: "flex",
+    gap: 4,
+    flexWrap: "wrap",
+    alignItems: "center"
+  } }, letters.map(([ch, firstIndex, firstId]) => /* @__PURE__ */ React.createElement("button", { key: ch, onClick: () => jumpToLetter(firstIndex, firstId), style: {
+    // Управляющий элемент раздела — ≥64 px (§1).
+    minWidth: 64,
+    minHeight: 64,
+    fontFamily: fonts.display,
+    fontSize: 22,
+    lineHeight: 1,
+    color: headerInk,
+    background: "transparent",
+    border: `1px solid ${headerInkDim}`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  } }, ch)))), /* @__PURE__ */ React.createElement("div", { ref: gridRef, style: {
     padding: "28px 40px 120px",
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
@@ -1300,6 +1348,7 @@ function PersonalitiesApp() {
       key: p.id,
       person: p,
       lang,
+      flash: p.id === flashId,
       delay: Math.min(i, 12) * 45,
       onOpen: p.stub ? null : () => setOpenId(p.id)
     }
