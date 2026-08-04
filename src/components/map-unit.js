@@ -57,7 +57,17 @@ const TEMPLATE = `
     overflow-y: auto;
     font-size: 13px;
   }
-  :host([panel-side="right"]) #panel .layer-row { min-height: 26px; }
+  /* Тач-цель управляющего элемента. 64 — порог из §1 для элементов
+     ВНУТРИ разделов (основная навигация ≥120). Пишется через --ui-scale,
+     как во всём проекте: states.html:33 задаёт ровно так же.
+     Замерено на киоске при ×2: было 26 CSS = 52 физических px, пальцем
+     не берётся. Двадцать строк по 64 требуют 1280 при видимых 887,
+     то есть панель прокручивается — прокрутка здесь была и раньше
+     (overflow-y: auto). Обмен согласован: ненажимаемая цель бесполезна,
+     а прокрутка — известное действие. */
+  :host([panel-side="right"]) #panel .layer-row {
+    min-height: calc(64px * var(--ui-scale, 1));
+  }
   :host([panel-side="right"]) #panel > div {
     /* «btns»-контейнер из _buildPanel: возвращаем его в нормальный поток
        (там стоит margin-left:auto для центральной раскладки). */
@@ -71,11 +81,15 @@ const TEMPLATE = `
   .layer-row {
     display: flex; align-items: center; gap: 6px;
     cursor: pointer; white-space: nowrap;
-    min-height: 32px;
+    min-height: calc(64px * var(--ui-scale, 1));
   }
   .layer-row input[type="checkbox"] {
     appearance: none; -webkit-appearance: none;
-    width: 18px; height: 18px;
+    /* Сам квадратик — не тач-цель: строка это <label>, и попадание идёт
+       по всей её высоте. Размер поднят с 18 до 24 только для видимости
+       на 4K, порог держит строка. */
+    width: calc(24px * var(--ui-scale, 1));
+    height: calc(24px * var(--ui-scale, 1));
     border: 1.5px solid var(--paper-warm);
     border-radius: 4px;
     cursor: pointer;
@@ -119,7 +133,9 @@ const TEMPLATE = `
     border: 1px solid var(--paper-warm);
     border-radius: 5px;
     cursor: pointer;
-    min-width: auto; min-height: auto;
+    /* Было min-height: auto, то есть 28 CSS = 56 физических при ×2. */
+    min-height: calc(64px * var(--ui-scale, 1));
+    min-width: calc(64px * var(--ui-scale, 1));
   }
   button.ctrl:active { background: rgba(250, 240, 210, 0.28); }
   /* Прозрачность всего векторного слоя поверх растра. Управляется

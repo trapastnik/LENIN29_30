@@ -41,6 +41,9 @@
     }
     .opacity-control input[type="range"] {
       width: 160px;
+      /* Тач-цель ползунка. Замерено: было 16 CSS = 32 физических при ×2,
+         самая мелкая цель на странице. */
+      height: calc(64px * var(--ui-scale, 1));
       accent-color: var(--accent);
     }
     .opacity-control output { min-width: 36px; text-align: right; }
