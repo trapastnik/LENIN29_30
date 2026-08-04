@@ -2,7 +2,7 @@
 // Источник: public/expo/main-screen.jsx
 // Пересобрать: node scripts/expo/build-jsx.mjs
 const BACKDROP_SRC = null;
-const TOUCH_HIT = 120;
+const TOUCH_HIT = "var(--touch-hit, 120px)";
 function Backdrop() {
   return /* @__PURE__ */ React.createElement("div", { style: {
     position: "absolute",
