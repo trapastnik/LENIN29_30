@@ -108,7 +108,6 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }
