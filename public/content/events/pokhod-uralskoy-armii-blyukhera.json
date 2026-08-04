@@ -44,7 +44,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Обрезать подпись внизу",
       "files": [
         "media/events/pokhod-uralskoy-armii-blyukhera/01"
       ]
@@ -66,7 +65,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Фото уже использовалось в персоналиях БЛЮХЕР_01",
       "directives": [
         "duplicate_of"
       ],

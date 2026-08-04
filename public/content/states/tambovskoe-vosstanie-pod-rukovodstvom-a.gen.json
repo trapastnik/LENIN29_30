@@ -104,7 +104,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ],

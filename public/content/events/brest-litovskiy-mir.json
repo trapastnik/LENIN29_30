@@ -82,7 +82,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ]
