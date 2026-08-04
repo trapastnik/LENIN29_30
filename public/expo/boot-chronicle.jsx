@@ -1,3 +1,6 @@
+
+// S() — общий помощник масштаба из ui-scale.jsx.
+
 // Точка входа раздела «Хроника событий».
 //
 // chTheme, chFonts, chBrand, EventRow, EventCard и помощники по месяцам
@@ -152,39 +155,39 @@ function ChronicleApp() {
         borderBottom: `1px solid ${chBrand.brass}55`,
       }}>
         <div style={{
-          padding: '26px 40px 0', display: 'flex',
-          alignItems: 'flex-start', justifyContent: 'space-between', gap: 24,
+          padding: S('26px 40px 0'), display: 'flex',
+          alignItems: 'flex-start', justifyContent: 'space-between', gap: S(24),
         }}>
           <div>
             <div style={{
-              fontFamily: chFonts.mono, fontSize: 11, letterSpacing: '0.34em',
+              fontFamily: chFonts.mono, fontSize: S(11), letterSpacing: '0.34em',
               color: chBrand.brass, textTransform: 'uppercase',
             }}>
               {lang === 'ru' ? 'Разделъ · 01' : 'Section · 01'}
             </div>
             <div style={{
-              fontFamily: chFonts.display, fontSize: 44, lineHeight: 1.05,
-              color: chTheme.paper, marginTop: 6,
+              fontFamily: chFonts.display, fontSize: S(44), lineHeight: 1.05,
+              color: chTheme.paper, marginTop: S(6),
             }}>
               {lang === 'ru' ? 'Хроника событій. 1917—1922' : 'Chronicle of events. 1917—1922'}
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: S(12), alignItems: 'center', flexShrink: 0 }}>
             <button onClick={() => {
               if (window.parent !== window) window.parent.postMessage('mtk29:close-section', '*');
             }} style={{
               // «к экспозиции» — основная навигация, ≥120 px (§1).
-              minHeight: 'var(--touch-hit, 120px)', padding: '0 28px',
-              fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.22em',
+              minHeight: S('var(--touch-hit, 120px)'), padding: S('0 28px'),
+              fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.22em',
               color: chTheme.paper, background: 'transparent',
               border: `1px solid ${chBrand.brass}`, borderRadius: 28,
               textTransform: 'uppercase',
             }}>← {lang === 'ru' ? 'къ экспозиціи' : 'to the exhibit'}</button>
             <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
               // Переключатель языка — основная навигация, ≥120 px (§1).
-              minWidth: 120, minHeight: 'var(--touch-hit, 120px)', padding: '0 24px',
-              fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.24em',
+              minWidth: S(120), minHeight: S('var(--touch-hit, 120px)'), padding: S('0 24px'),
+              fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.24em',
               color: chTheme.paper, background: 'transparent',
               border: `1px solid ${chBrand.brass}`, borderRadius: 28,
               textTransform: 'uppercase',
@@ -193,22 +196,22 @@ function ChronicleApp() {
         </div>
 
         {/* Годы — ТЗ: «возможность перейти сразу на другой год» */}
-        <div style={{ padding: '18px 40px 0', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ padding: S('18px 40px 0'), display: 'flex', gap: S(10), flexWrap: 'wrap' }}>
           {yearList.map(y => {
             const on = y.year === year;
             return (
               <button key={y.year} onClick={() => setYear(y.year)} style={{
                 // Кнопка года — основная навигация по ленте, ≥120 px (§1).
-                minWidth: 150, minHeight: 'var(--touch-hit, 120px)',
+                minWidth: S(150), minHeight: S('var(--touch-hit, 120px)'),
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                gap: 2,
+                gap: S(2),
                 background: on ? chBrand.brass : 'transparent',
                 color: on ? chBrand.inkBlack : chTheme.paperDim,
                 border: `1px solid ${on ? chBrand.brass : chTheme.paperDim}`,
               }}>
-                <span style={{ fontFamily: chFonts.display, fontSize: 26, lineHeight: 1 }}>{y.year}</span>
+                <span style={{ fontFamily: chFonts.display, fontSize: S(26), lineHeight: 1 }}>{y.year}</span>
                 {y.count != null && (
-                  <span style={{ fontFamily: chFonts.mono, fontSize: 10, letterSpacing: '0.2em', opacity: .8 }}>
+                  <span style={{ fontFamily: chFonts.mono, fontSize: S(10), letterSpacing: '0.2em', opacity: .8 }}>
                     {y.count}
                   </span>
                 )}
@@ -218,7 +221,7 @@ function ChronicleApp() {
         </div>
 
         {/* Треки — параллельный рассказ политического и военного */}
-        <div style={{ padding: '14px 40px 18px', display: 'flex', gap: 10, alignItems: 'center' }}>
+        <div style={{ padding: S('14px 40px 18px'), display: 'flex', gap: S(10), alignItems: 'center' }}>
           {[
             { id: 'all', ru: 'Всё',  en: 'All',      color: chBrand.brass,      n: counts.all },
             { id: 'pol', ru: CHRONICLE_TRACKS.pol.ru, en: CHRONICLE_TRACKS.pol.en, color: CHRONICLE_TRACKS.pol.color, n: counts.pol },
@@ -228,22 +231,22 @@ function ChronicleApp() {
             return (
               <button key={t.id} onClick={() => setTrack(t.id)} style={{
                 // Фильтр трека — управляющий элемент раздела, ≥64 px (§1).
-                minHeight: 64, padding: '0 22px',
-                fontFamily: chFonts.mono, fontSize: 12, letterSpacing: '0.2em',
+                minHeight: S(64), padding: S('0 22px'),
+                fontFamily: chFonts.mono, fontSize: S(12), letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 background: on ? t.color : 'transparent',
                 color: on ? chBrand.inkBlack : chTheme.paperDim,
                 border: `1px solid ${on ? t.color : chTheme.paperDim}`,
-                display: 'flex', alignItems: 'center', gap: 8,
+                display: 'flex', alignItems: 'center', gap: S(8),
               }}>
                 {lang === 'ru' ? t.ru : t.en}
-                <span style={{ fontSize: 10, opacity: .75 }}>· {t.n}</span>
+                <span style={{ fontSize: S(10), opacity: .75 }}>· {t.n}</span>
               </button>
             );
           })}
           <div style={{ flex: 1 }}/>
           <div style={{
-            fontFamily: chFonts.mono, fontSize: 11, letterSpacing: '0.2em',
+            fontFamily: chFonts.mono, fontSize: S(11), letterSpacing: '0.2em',
             color: chTheme.paperDim, textTransform: 'uppercase',
           }}>
             {lang === 'ru' ? 'Прокрутите ленту · справка есть не у каждаго событія' : 'Scroll the timeline · not every event has a dossier'}
@@ -252,29 +255,29 @@ function ChronicleApp() {
       </div>
 
       {/* ── Лента ── */}
-      <div style={{ padding: '34px 40px 120px', maxWidth: 1800, margin: '0 auto', position: 'relative' }}>
+      <div style={{ padding: S('34px 40px 120px'), maxWidth: S(1800), margin: '0 auto', position: 'relative' }}>
         {/* Ось времени — одна линия на всю ленту, под карточками. Рисовать её
             кусками в каждой строке нельзя: между событиями остаются разрывы,
             и лента перестаёт читаться как непрерывное время. */}
         {!loading && !error && shown.length > 0 && (
           <div style={{
-            position: 'absolute', top: 0, bottom: 120, left: '50%',
-            width: 1, marginLeft: -0.5, background: `${chBrand.brass}33`,
+            position: 'absolute', top: 0, bottom: S(120), left: '50%',
+            width: S(1), marginLeft: -0.5, background: `${chBrand.brass}33`,
             pointerEvents: 'none', zIndex: 0,
           }}/>
         )}
         {loading && (
           <div style={{
-            padding: 60, textAlign: 'center',
-            fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.3em',
+            padding: S(60), textAlign: 'center',
+            fontFamily: chFonts.mono, fontSize: S(13), letterSpacing: '0.3em',
             color: chBrand.brass, textTransform: 'uppercase',
           }}>{lang === 'ru' ? 'загружаемъ ' + year + ' годъ…' : 'loading ' + year + '…'}</div>
         )}
 
         {error && (
           <div style={{
-            padding: 60, textAlign: 'center',
-            fontFamily: chFonts.mono, fontSize: 13, color: chBrand.signalRed,
+            padding: S(60), textAlign: 'center',
+            fontFamily: chFonts.mono, fontSize: S(13), color: chBrand.signalRed,
           }}>
             {lang === 'ru' ? 'Годъ не загрузился: ' : 'Year failed to load: '}
             {String(error.message || error)}
@@ -282,24 +285,24 @@ function ChronicleApp() {
         )}
 
         {!loading && !error && months.map((g, gi) => (
-          <div key={g.key || gi} style={{ marginBottom: 46 }}>
+          <div key={g.key || gi} style={{ marginBottom: S(46) }}>
             <div style={{
-              display: 'flex', alignItems: 'center', gap: 18,
-              margin: '0 0 22px', position: 'relative', zIndex: 1,
+              display: 'flex', alignItems: 'center', gap: S(18),
+              margin: S('0 0 22px'), position: 'relative', zIndex: 1,
               background: chTheme.bgDeep,
             }}>
               <div style={{
-                fontFamily: chFonts.display, fontSize: 30, lineHeight: 1,
+                fontFamily: chFonts.display, fontSize: S(30), lineHeight: 1,
                 color: chBrand.brass,
               }}>{chronicleMonthLabel(g.key, lang)}</div>
-              <div style={{ flex: 1, height: 1, background: `${chBrand.brass}44` }}/>
+              <div style={{ flex: 1, height: S(1), background: `${chBrand.brass}44` }}/>
               <div style={{
-                fontFamily: chFonts.mono, fontSize: 11, letterSpacing: '0.2em',
+                fontFamily: chFonts.mono, fontSize: S(11), letterSpacing: '0.2em',
                 color: chTheme.paperDim,
               }}>{g.items.length}</div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 22, position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: S(22), position: 'relative', zIndex: 1 }}>
               {g.items.map(it => (
                 <EventRow key={it.id} item={it} lang={lang} onOpenCard={setCardId}/>
               ))}
@@ -309,8 +312,8 @@ function ChronicleApp() {
 
         {!loading && !error && shown.length === 0 && (
           <div style={{
-            padding: 60, textAlign: 'center',
-            fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.24em',
+            padding: S(60), textAlign: 'center',
+            fontFamily: chFonts.mono, fontSize: S(13), letterSpacing: '0.24em',
             color: chTheme.paperDim, textTransform: 'uppercase',
           }}>{lang === 'ru' ? 'въ этомъ году такихъ событій нѣтъ' : 'no such events this year'}</div>
         )}
@@ -322,7 +325,7 @@ function ChronicleApp() {
           position: 'fixed', inset: 0, zIndex: 100,
           background: 'rgba(8,5,2,.8)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.3em',
+          fontFamily: chFonts.mono, fontSize: S(13), letterSpacing: '0.3em',
           color: chBrand.brass, textTransform: 'uppercase',
         }} onClick={() => setCardId(null)}>
           {lang === 'ru' ? 'загружаемъ справку…' : 'loading dossier…'}
@@ -332,12 +335,12 @@ function ChronicleApp() {
         <div style={{
           position: 'fixed', inset: 0, zIndex: 100,
           background: 'rgba(8,5,2,.88)',
-          display: 'flex', flexDirection: 'column', gap: 16,
-          alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 40,
-          fontFamily: chFonts.mono, fontSize: 13, letterSpacing: '0.2em', color: chBrand.brass,
+          display: 'flex', flexDirection: 'column', gap: S(16),
+          alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: S(40),
+          fontFamily: chFonts.mono, fontSize: S(13), letterSpacing: '0.2em', color: chBrand.brass,
         }} onClick={() => setCardId(null)}>
           <div>{lang === 'ru' ? 'Справка не открылась' : 'Dossier failed to open'}</div>
-          <div style={{ fontSize: 11, opacity: .7 }}>{String(cardError.message || cardError)}</div>
+          <div style={{ fontSize: S(11), opacity: .7 }}>{String(cardError.message || cardError)}</div>
         </div>
       )}
       {card && <EventCard card={card} lang={lang} onClose={() => setCardId(null)}/>}

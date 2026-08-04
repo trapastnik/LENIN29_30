@@ -288,22 +288,22 @@ function SettingsPanel({
   const pill = (id, label, active, onClick, swatch) => /* @__PURE__ */ React.createElement("button", { key: id, onClick, style: {
     display: "flex",
     alignItems: "center",
-    gap: 8,
+    gap: S(8),
     width: "100%",
     textAlign: "left",
-    padding: "7px 10px",
+    padding: S("7px 10px"),
     background: active ? "#D2B773" : "transparent",
     color: active ? "#000" : "#F7F9EF",
     border: `1px solid ${active ? "#D2B773" : "rgba(210,183,115,0.45)"}`,
     borderRadius: 30,
     fontFamily: fonts.mono,
-    fontSize: 10,
+    fontSize: S(10),
     letterSpacing: "0.18em",
     textTransform: "uppercase",
     cursor: "pointer"
   } }, swatch && /* @__PURE__ */ React.createElement("span", { style: {
-    width: 10,
-    height: 10,
+    width: S(10),
+    height: S(10),
     borderRadius: 2,
     flexShrink: 0,
     background: swatch === "transparent" ? "linear-gradient(135deg, transparent 0 45%, #A02128 45% 55%, transparent 55% 100%), #F7F9EF" : swatch,
@@ -313,7 +313,7 @@ function SettingsPanel({
     // z-index выше overlay модалки персоналии (100) и лайтбокса (200),
     // чтобы панель оставалась видна и работала во всех слоях.
     position: "fixed",
-    top: 96,
+    top: S(96),
     right: open ? 12 : 0,
     zIndex: 250,
     transition: "right 220ms ease",
@@ -323,8 +323,8 @@ function SettingsPanel({
     top: 0,
     right: open ? "auto" : 0,
     left: open ? -32 : "auto",
-    width: 32,
-    height: 56,
+    width: S(32),
+    height: S(56),
     background: "#000",
     color: "#D2B773",
     border: "1px solid #D2B773",
@@ -332,37 +332,37 @@ function SettingsPanel({
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
     fontFamily: fonts.mono,
-    fontSize: 18,
+    fontSize: S(18),
     lineHeight: 1,
     cursor: "pointer"
   } }, open ? "\u203A" : "\u2039"), open && /* @__PURE__ */ React.createElement("div", { style: {
-    width: 230,
+    width: S(230),
     background: "rgba(0,0,0,0.92)",
     backdropFilter: "blur(6px)",
     WebkitBackdropFilter: "blur(6px)",
     border: "1px solid #D2B773",
     borderRadius: 6,
-    padding: "14px 12px",
+    padding: S("14px 12px"),
     boxShadow: "0 20px 50px rgba(0,0,0,0.65)",
-    maxHeight: "calc(100vh - 120px)",
+    maxHeight: S("calc(100vh - 120px)"),
     overflowY: "auto"
   }, className: "brand-scroll" }, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: fonts.mono,
-    fontSize: 10,
+    fontSize: S(10),
     letterSpacing: "0.32em",
     color: "#D2B773",
     textTransform: "uppercase",
-    marginBottom: 10,
-    paddingBottom: 8,
+    marginBottom: S(10),
+    paddingBottom: S(8),
     borderBottom: "1px solid rgba(210,183,115,0.35)"
   } }, lang === "ru" ? "\u25C7 \u0421\u0442\u0438\u043B\u044C" : "\u25C7 Style"), groups.map((g, gi) => /* @__PURE__ */ React.createElement("div", { key: gi, style: { marginBottom: gi < groups.length - 1 ? 14 : 0 } }, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: fonts.mono,
-    fontSize: 9,
+    fontSize: S(9),
     letterSpacing: "0.28em",
     color: "rgba(247,249,239,0.55)",
     textTransform: "uppercase",
-    marginBottom: 6
-  } }, g[lang]), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 5 } }, Object.entries(g.variants).map(
+    marginBottom: S(6)
+  } }, g[lang]), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: S(5) } }, Object.entries(g.variants).map(
     ([id, v]) => pill(
       id,
       v[lang],
@@ -412,17 +412,17 @@ function SideFlag({ side, lang }) {
   return /* @__PURE__ */ React.createElement("div", { style: {
     display: "inline-flex",
     alignItems: "center",
-    gap: 8,
-    padding: "4px 10px 4px 6px",
+    gap: S(8),
+    padding: S("4px 10px 4px 6px"),
     background: meta.flag,
     color: "#f0dcae",
     fontFamily: fonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.22em",
     textTransform: "uppercase",
     clipPath: "polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%)",
-    paddingRight: 18
-  } }, /* @__PURE__ */ React.createElement("span", { style: { width: 10, height: 10, background: "#f0dcae", opacity: 0.85 } }), meta[lang]);
+    paddingRight: S(18)
+  } }, /* @__PURE__ */ React.createElement("span", { style: { width: S(10), height: S(10), background: "#f0dcae", opacity: 0.85 } }), meta[lang]);
 }
 function PersonCard({ person, lang, onOpen, delay, flash }) {
   const meta = sideMeta(person.side);
@@ -460,7 +460,7 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
     /* @__PURE__ */ React.createElement("div", { style: {
       ...paperFill(),
       border: `1px solid ${theme.inkFade}`,
-      padding: 10,
+      padding: S(10),
       boxShadow: "0 10px 22px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.3)",
       position: "relative"
     } }, /* @__PURE__ */ React.createElement("div", { style: {
@@ -478,7 +478,7 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
       position: "relative",
       background: "#F7F9EF",
       border: `1px solid ${theme.inkSoft}`,
-      marginBottom: 10
+      marginBottom: S(10)
     } }, person.portrait && !portraitFailed ? /* @__PURE__ */ React.createElement(
       "img",
       {
@@ -525,30 +525,30 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
       background: "repeating-linear-gradient(91deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px)"
     } }), /* @__PURE__ */ React.createElement("div", { style: {
       position: "absolute",
-      bottom: 6,
-      left: 8,
+      bottom: S(6),
+      left: S(8),
       fontFamily: fonts.mono,
-      fontSize: 10,
+      fontSize: S(10),
       color: "#f0dcae",
       letterSpacing: "0.15em",
       textShadow: "0 1px 2px #000"
     } }, person.years)), /* @__PURE__ */ React.createElement("div", { style: {
       fontFamily: fonts.display,
-      fontSize: 22,
+      fontSize: S(22),
       lineHeight: 1.05,
       color: theme.ink,
-      marginTop: 2
+      marginTop: S(2)
     } }, person.title), /* @__PURE__ */ React.createElement("div", { style: {
-      marginTop: 8,
+      marginTop: S(8),
       fontFamily: fonts.mono,
-      fontSize: 10,
+      fontSize: S(10),
       letterSpacing: "0.2em",
       color: meta.color,
       textTransform: "uppercase"
     } }, meta[lang]), person.stub && /* @__PURE__ */ React.createElement("div", { style: {
-      marginTop: 6,
+      marginTop: S(6),
       fontFamily: fonts.mono,
-      fontSize: 10,
+      fontSize: S(10),
       letterSpacing: "0.15em",
       color: theme.inkFade,
       textTransform: "uppercase"
@@ -573,10 +573,10 @@ function PhotoFrame({ photo, lang }) {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: 10,
+    padding: S(10),
     background: "linear-gradient(160deg, #435059 0%, #2a2f33 100%)",
     fontFamily: fonts.mono,
-    fontSize: 9,
+    fontSize: S(9),
     lineHeight: 1.5,
     letterSpacing: "0.16em",
     color: "#9DA3A6",
@@ -597,7 +597,7 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "40px 80px 20px",
+    padding: S("40px 80px 20px"),
     minHeight: 0
   } }, /* @__PURE__ */ React.createElement("img", { src: photo.src, alt: "", style: {
     maxWidth: "100%",
@@ -606,58 +606,58 @@ function PhotoLightbox({ photo, lang, onClose, onPrev, onNext, hasPrev, hasNext 
     filter: "sepia(0.08) contrast(1.04)",
     boxShadow: "0 30px 80px rgba(0,0,0,.9)"
   }, onClick: (e) => e.stopPropagation() })), /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "14px 80px 32px",
+    padding: S("14px 80px 32px"),
     fontFamily: fonts.body,
-    fontSize: 16,
+    fontSize: S(16),
     lineHeight: 1.5,
     color: theme.paperLit,
     textAlign: "center",
-    maxWidth: 1100,
+    maxWidth: S(1100),
     margin: "0 auto"
   }, onClick: (e) => e.stopPropagation() }, photo[lang]), /* @__PURE__ */ React.createElement("button", { onClick: (e) => {
     e.stopPropagation();
     onClose();
   }, style: {
     position: "absolute",
-    top: 24,
-    right: 24,
+    top: S(24),
+    right: S(24),
     background: "transparent",
     border: `1px solid ${theme.paperDim}`,
     color: theme.paper,
-    width: 56,
-    height: 56,
+    width: S(56),
+    height: S(56),
     fontFamily: fonts.mono,
-    fontSize: 22
+    fontSize: S(22)
   } }, "\xD7"), hasPrev && /* @__PURE__ */ React.createElement("button", { onClick: (e) => {
     e.stopPropagation();
     onPrev();
   }, style: {
     position: "absolute",
-    left: 16,
+    left: S(16),
     top: "50%",
     transform: "translateY(-50%)",
     background: "transparent",
     border: `1px solid ${theme.paperDim}`,
     color: theme.paper,
-    width: 56,
-    height: 56,
+    width: S(56),
+    height: S(56),
     fontFamily: fonts.mono,
-    fontSize: 22
+    fontSize: S(22)
   } }, "\u2039"), hasNext && /* @__PURE__ */ React.createElement("button", { onClick: (e) => {
     e.stopPropagation();
     onNext();
   }, style: {
     position: "absolute",
-    right: 16,
+    right: S(16),
     top: "50%",
     transform: "translateY(-50%)",
     background: "transparent",
     border: `1px solid ${theme.paperDim}`,
     color: theme.paper,
-    width: 56,
-    height: 56,
+    width: S(56),
+    height: S(56),
     fontFamily: fonts.mono,
-    fontSize: 22
+    fontSize: S(22)
   } }, "\u203A"));
 }
 function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, cardCfg, textBgCfg, textInkCfg, frameCfg }) {
@@ -703,7 +703,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         alignItems: "center",
         justifyContent: "center",
         animation: "fadeIn 250ms ease",
-        padding: 40,
+        padding: S(40),
         overscrollBehavior: "contain"
       },
       onClick: onClose
@@ -713,14 +713,14 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       {
         className: "person-detail-card",
         style: {
-          width: 1280,
+          width: S(1280),
           maxWidth: "100%",
           height: "90vh",
           display: "grid",
-          gridTemplateColumns: "380px 1fr",
-          gap: 28,
+          gridTemplateColumns: `${S(380)} 1fr`,
+          gap: S(28),
           position: "relative",
-          padding: 22,
+          padding: S(22),
           background: frame.bg,
           border: `1px solid #D2B773`,
           // BRAND.brass
@@ -732,7 +732,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       /* @__PURE__ */ React.createElement("div", { style: {
         background: card.bg,
         border: `1px solid ${card.rule}`,
-        padding: 18,
+        padding: S(18),
         boxShadow: "0 20px 50px rgba(0,0,0,.8)",
         position: "relative",
         display: "flex",
@@ -768,10 +768,10 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         }
       )), /* @__PURE__ */ React.createElement("div", { style: {
         position: "absolute",
-        top: 10,
-        left: 10,
+        top: S(10),
+        left: S(10),
         fontFamily: fonts.mono,
-        fontSize: 10,
+        fontSize: S(10),
         color: "#435059",
         letterSpacing: "0.2em",
         textShadow: "0 1px 2px rgba(247,249,239,0.6)"
@@ -780,35 +780,35 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         inset: 0,
         pointerEvents: "none",
         background: "repeating-linear-gradient(91deg, rgba(0,0,0,.1) 0 1px, transparent 1px 3px)"
-      } })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14, display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 } }, /* @__PURE__ */ React.createElement(SideFlag, { side: person.side, lang }), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: fonts.mono, fontSize: 11, color: card.muted, letterSpacing: "0.15em" } }, person.years)), /* @__PURE__ */ React.createElement("div", { style: {
-        marginTop: 14,
+      } })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: S(14), display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 } }, /* @__PURE__ */ React.createElement(SideFlag, { side: person.side, lang }), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: fonts.mono, fontSize: S(11), color: card.muted, letterSpacing: "0.15em" } }, person.years)), /* @__PURE__ */ React.createElement("div", { style: {
+        marginTop: S(14),
         fontFamily: fonts.mono,
-        fontSize: 11,
+        fontSize: S(11),
         letterSpacing: "0.25em",
         color: card.muted,
         textTransform: "uppercase"
       } }, d.name), /* @__PURE__ */ React.createElement("div", { style: {
         fontFamily: fonts.display,
-        fontSize: 38,
+        fontSize: S(38),
         lineHeight: 0.95,
         color: card.ink,
-        marginTop: 2,
+        marginTop: S(2),
         letterSpacing: "-0.01em"
       } }, d.sur), /* @__PURE__ */ React.createElement("div", { style: {
-        marginTop: 10,
+        marginTop: S(10),
         fontFamily: fonts.stamp,
-        fontSize: 13,
+        fontSize: S(13),
         color: card.accent,
         letterSpacing: "0.06em"
       } }, "\xB7 ", d.tag), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }), photos.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
-        marginTop: 18,
+        marginTop: S(18),
         display: "flex",
         flexDirection: "column",
-        gap: 6,
+        gap: S(6),
         flexShrink: 0
       } }, /* @__PURE__ */ React.createElement("div", { style: {
         fontFamily: fonts.mono,
-        fontSize: 9,
+        fontSize: S(9),
         letterSpacing: "0.32em",
         color: card.muted,
         textTransform: "uppercase"
@@ -823,9 +823,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       ].map((m) => {
         const active = viewMode === m.id;
         return /* @__PURE__ */ React.createElement("button", { key: m.id, onClick: () => setViewMode(m.id), style: {
-          padding: "10px 8px",
+          padding: S("10px 8px"),
           fontFamily: fonts.mono,
-          fontSize: 11,
+          fontSize: S(11),
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           background: active ? card.ink : "transparent",
@@ -834,13 +834,13 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
           cursor: "pointer"
         } }, m[lang]);
       }))), /* @__PURE__ */ React.createElement("button", { onClick: onClose, style: {
-        marginTop: 14,
+        marginTop: S(14),
         background: "transparent",
         border: `1px solid ${card.rule}`,
         color: card.ink,
-        padding: "12px 22px",
+        padding: S("12px 22px"),
         fontFamily: fonts.mono,
-        fontSize: 12,
+        fontSize: S(12),
         letterSpacing: "0.3em",
         textTransform: "uppercase",
         flexShrink: 0
@@ -848,7 +848,7 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
       /* @__PURE__ */ React.createElement("div", { style: {
         display: "grid",
         gridTemplateRows: viewMode === "gallery" && photos.length > 0 ? "1fr auto" : "1fr",
-        gap: 16,
+        gap: S(16),
         minHeight: 0,
         overflow: "hidden"
       } }, /* @__PURE__ */ React.createElement("div", { className: "brand-scroll", style: {
@@ -865,46 +865,46 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         overscrollBehavior: "contain"
       } }, /* @__PURE__ */ React.createElement("div", { style: {
         fontFamily: fonts.mono,
-        fontSize: 12,
+        fontSize: S(12),
         letterSpacing: "0.3em",
         color: meta.accent,
         textTransform: "uppercase"
       } }, d.role), /* @__PURE__ */ React.createElement("div", { style: {
-        marginTop: 22,
+        marginTop: S(22),
         fontFamily: fonts.body,
-        fontSize: 18,
+        fontSize: S(18),
         color: textInk,
         lineHeight: 1.6,
-        maxWidth: 720,
+        maxWidth: S(720),
         textWrap: "pretty"
       } }, (d.bio || "").split(/\n\s*\n/).map((p, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: { margin: i === 0 ? "0 0 0.85em" : "0.85em 0" } }, richText(p, meta.accent)))), d.facts && d.facts.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
-        marginTop: 28,
+        marginTop: S(28),
         display: "grid",
         gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "10px 28px",
-        maxWidth: 720
+        gap: S("10px 28px"),
+        maxWidth: S(720)
       } }, d.facts.map((f, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: {
         fontFamily: fonts.mono,
-        fontSize: 13,
+        fontSize: S(13),
         color: textInk,
         lineHeight: 1.4,
-        paddingLeft: 14,
+        paddingLeft: S(14),
         position: "relative",
         borderLeft: `2px solid ${meta.accent}`,
-        paddingTop: 2,
-        paddingBottom: 2
-      } }, f))), viewMode === "flow" && photos.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 36 } }, /* @__PURE__ */ React.createElement("div", { style: {
+        paddingTop: S(2),
+        paddingBottom: S(2)
+      } }, f))), viewMode === "flow" && photos.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { marginTop: S(36) } }, /* @__PURE__ */ React.createElement("div", { style: {
         fontFamily: fonts.mono,
-        fontSize: 11,
+        fontSize: S(11),
         letterSpacing: "0.3em",
         color: theme.ochre,
         textTransform: "uppercase",
-        marginBottom: 14
+        marginBottom: S(14)
       } }, lang === "ru" ? "\u0424\u043E\u0442\u043E\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B \u0438 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u2014 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u0434\u043B\u044F \u0443\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u044F" : "Photographs and objects \u2014 tap to enlarge"), /* @__PURE__ */ React.createElement("div", { style: {
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-        gap: 18,
-        maxWidth: 820
+        gridTemplateColumns: `repeat(auto-fill, minmax(${S(200)}, 1fr))`,
+        gap: S(18),
+        maxWidth: S(820)
       } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: ph.src ? () => setLightboxIdx(i) : void 0, disabled: !ph.src, style: {
         // Без производной открывать нечего — лайтбокс дал бы пустой экран.
         cursor: ph.src ? "pointer" : "default",
@@ -921,28 +921,28 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         background: "#1a0d05",
         border: `1px solid ${theme.inkSoft}`
       } }, /* @__PURE__ */ React.createElement(PhotoFrame, { photo: ph, lang }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
-        marginTop: 8,
+        marginTop: S(8),
         fontFamily: fonts.body,
-        fontSize: 12,
+        fontSize: S(12),
         color: theme.paperDim,
         lineHeight: 1.4
       } }, ph[lang])))))), viewMode === "gallery" && photos.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
         borderTop: `1px solid ${theme.inkFade}55`,
-        paddingTop: 14,
+        paddingTop: S(14),
         minHeight: 0
       } }, /* @__PURE__ */ React.createElement("div", { style: {
         fontFamily: fonts.mono,
-        fontSize: 10,
+        fontSize: S(10),
         letterSpacing: "0.3em",
         color: theme.ochre,
         textTransform: "uppercase",
-        marginBottom: 10
+        marginBottom: S(10)
       } }, lang === "ru" ? "\u0424\u043E\u0442\u043E\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B \u2014 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u0434\u043B\u044F \u0443\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u044F" : "Photographs \u2014 tap to enlarge"), /* @__PURE__ */ React.createElement("div", { style: {
         display: "grid",
         // Фиксированный шаг под максимум 5 фото — если фото меньше,
         // они занимают левую часть, не растягиваются на всю ширину
         gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-        gap: 12
+        gap: S(12)
       } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ React.createElement("button", { onClick: ph.src ? () => setLightboxIdx(i) : void 0, disabled: !ph.src, style: {
         // Без производной открывать нечего — лайтбокс дал бы пустой экран.
         cursor: ph.src ? "pointer" : "default",
@@ -959,9 +959,9 @@ function PersonDetail({ person, lang, onClose, lightboxIdx, setLightboxIdx, card
         background: "#1a0d05",
         border: `1px solid ${theme.inkSoft}`
       } }, /* @__PURE__ */ React.createElement(PhotoFrame, { photo: ph, lang }))), /* @__PURE__ */ React.createElement("figcaption", { style: {
-        marginTop: 6,
+        marginTop: S(6),
         fontFamily: fonts.body,
-        fontSize: 11,
+        fontSize: S(11),
         color: theme.paperDim,
         lineHeight: 1.35,
         // обрезаем до 3 строк — полная подпись доступна в лайтбоксе
@@ -1194,7 +1194,7 @@ function PersonalitiesApp() {
     // тач-стол: scroll-chain не должен уносить открытую карточку
     overscrollBehavior: "contain",
     color: theme.paper,
-    paddingBottom: 80
+    paddingBottom: S(80)
   } }, /* @__PURE__ */ React.createElement("style", null, `
         @keyframes fadeUp { from { opacity: 0; transform: rotate(0deg) translateY(22px); } }
         @keyframes fadeIn { from { opacity: 0; } }
@@ -1227,37 +1227,37 @@ function PersonalitiesApp() {
     boxShadow: "0 2px 0 rgba(0,0,0,0.4), 0 14px 24px rgba(0,0,0,0.45)",
     borderBottom: `1px solid ${headerCfg.border}`
   } }, /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "24px 40px 18px",
+    padding: S("24px 40px 18px"),
     display: "flex",
     alignItems: "flex-end",
     justifyContent: "space-between",
-    gap: 24
+    gap: S(24)
   } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: fonts.mono,
-    fontSize: 12,
+    fontSize: S(12),
     letterSpacing: "0.35em",
     color: "#D2B773",
     textTransform: "uppercase"
     // BRAND.brass — RAL 1002
   } }, lang === "ru" ? "\u041C\u0443\u0437\u0435\u0439 \u0412.\u0418. \u041B\u0435\u043D\u0438\u043D\u0430 \xB7 \u0413\u0440\u0430\u0436\u0434\u0430\u043D\u0441\u043A\u0430\u044F \u0432\u043E\u0439\u043D\u0430" : "Lenin Museum \xB7 Russian Civil War"), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: fonts.display,
-    fontSize: 52,
+    fontSize: S(52),
     lineHeight: 1,
     color: headerInk,
-    marginTop: 6,
+    marginTop: S(6),
     letterSpacing: "-0.01em"
-  } }, lang === "ru" ? "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438. 1917\u20141922" : "People. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 14, alignItems: "center" } }, /* @__PURE__ */ React.createElement(
+  } }, lang === "ru" ? "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0438. 1917\u20141922" : "People. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: S(14), alignItems: "center" } }, /* @__PURE__ */ React.createElement(
     "a",
     {
       href: "index.html",
       style: {
         // «к экспозиции» — основная навигация, ≥120 px (§1).
-        minHeight: "var(--touch-hit, 120px)",
-        padding: "0 24px",
+        minHeight: S("var(--touch-hit, 120px)"),
+        padding: S("0 24px"),
         display: "inline-flex",
         alignItems: "center",
         fontFamily: fonts.mono,
-        fontSize: 11,
+        fontSize: S(11),
         letterSpacing: "0.25em",
         color: headerInkDim,
         textDecoration: "none",
@@ -1275,11 +1275,11 @@ function PersonalitiesApp() {
     lang === "ru" ? "\u043A\u044A \u044D\u043A\u0441\u043F\u043E\u0437\u0438\u0446\u0456\u0438" : "to the exhibit"
   ), /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
     // Переключатель языка — основная навигация, ≥120 px (§1).
-    minWidth: 120,
-    minHeight: "var(--touch-hit, 120px)",
-    padding: "0 24px",
+    minWidth: S(120),
+    minHeight: S("var(--touch-hit, 120px)"),
+    padding: S("0 24px"),
     fontFamily: fonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.25em",
     color: headerInk,
     background: "transparent",
@@ -1287,9 +1287,9 @@ function PersonalitiesApp() {
     // BRAND.brass border
     textTransform: "uppercase"
   } }, lang === "ru" ? "EN" : "RU"))), /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "0 40px 18px",
+    padding: S("0 40px 18px"),
     display: "flex",
-    gap: 10,
+    gap: S(10),
     flexWrap: "wrap",
     alignItems: "center"
   } }, campFilters(people).map((f) => {
@@ -1297,10 +1297,10 @@ function PersonalitiesApp() {
     const activeText = isLight(f.brand) ? "#000" : "#F7F9EF";
     return /* @__PURE__ */ React.createElement("button", { key: f.id, onClick: () => setFilter(f.id), style: {
       // Фильтр лагеря — управляющий элемент раздела, ≥64 px (§1).
-      minHeight: 64,
-      padding: "0 20px",
+      minHeight: S(64),
+      padding: S("0 20px"),
       fontFamily: fonts.mono,
-      fontSize: 12,
+      fontSize: S(12),
       letterSpacing: "0.2em",
       background: active ? f.brand : "transparent",
       color: active ? activeText : headerInkDim,
@@ -1308,26 +1308,26 @@ function PersonalitiesApp() {
       textTransform: "uppercase",
       display: "flex",
       alignItems: "center",
-      gap: 8
-    } }, f[lang], /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, opacity: 0.7 } }, "\xB7 ", f.count));
+      gap: S(8)
+    } }, f[lang], /* @__PURE__ */ React.createElement("span", { style: { fontSize: S(10), opacity: 0.7 } }, "\xB7 ", f.count));
   }), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: fonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.2em",
     color: headerInkDim,
     textTransform: "uppercase"
   } }, lang === "ru" ? "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u2014 \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043F\u0440\u0430\u0432\u043A\u0430" : "Tap a card \u2014 opens a dossier")), letters.length > 1 && /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "0 40px 16px",
+    padding: S("0 40px 16px"),
     display: "flex",
-    gap: 4,
+    gap: S(4),
     flexWrap: "wrap",
     alignItems: "center"
   } }, letters.map(([ch, firstIndex, firstId]) => /* @__PURE__ */ React.createElement("button", { key: ch, onClick: () => jumpToLetter(firstIndex, firstId), style: {
     // Управляющий элемент раздела — ≥64 px (§1).
-    minWidth: 64,
-    minHeight: 64,
+    minWidth: S(64),
+    minHeight: S(64),
     fontFamily: fonts.display,
-    fontSize: 22,
+    fontSize: S(22),
     lineHeight: 1,
     color: headerInk,
     background: "transparent",
@@ -1336,11 +1336,11 @@ function PersonalitiesApp() {
     alignItems: "center",
     justifyContent: "center"
   } }, ch)))), /* @__PURE__ */ React.createElement("div", { ref: gridRef, style: {
-    padding: "28px 40px 120px",
+    padding: S("28px 40px 120px"),
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-    gap: "28px 22px",
-    maxWidth: 1800,
+    gridTemplateColumns: `repeat(auto-fill, minmax(${S(220)}, 1fr))`,
+    gap: S("28px 22px"),
+    maxWidth: S(1800),
     margin: "0 auto"
   } }, shown.map((p, i) => /* @__PURE__ */ React.createElement(
     PersonCard,
@@ -1353,9 +1353,9 @@ function PersonalitiesApp() {
       onOpen: p.stub ? null : () => setOpenId(p.id)
     }
   ))), indexError && /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "40px",
+    padding: S("40px"),
     fontFamily: fonts.mono,
-    fontSize: 14,
+    fontSize: S(14),
     color: theme.brass,
     letterSpacing: "0.1em"
   } }, lang === "ru" ? "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A\u044A \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u0456\u0439: " : "Could not load the list of people: ", String(indexError.message || indexError)), openId && !opened && !openError && /* @__PURE__ */ React.createElement("div", { style: {
@@ -1367,7 +1367,7 @@ function PersonalitiesApp() {
     alignItems: "center",
     justifyContent: "center",
     fontFamily: fonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.3em",
     color: theme.brass,
     textTransform: "uppercase"
@@ -1378,16 +1378,16 @@ function PersonalitiesApp() {
     background: "rgba(10,6,3,0.82)",
     display: "flex",
     flexDirection: "column",
-    gap: 18,
+    gap: S(18),
     alignItems: "center",
     justifyContent: "center",
     fontFamily: fonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.2em",
     color: theme.brass,
     textAlign: "center",
-    padding: 40
-  }, onClick: () => setOpenId(null) }, /* @__PURE__ */ React.createElement("div", null, lang === "ru" ? "\u0421\u043F\u0440\u0430\u0432\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C" : "Dossier failed to open"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, opacity: 0.7 } }, String(openError.message || openError)), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, opacity: 0.7 } }, lang === "ru" ? "\u043D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0437\u0430\u043A\u0440\u044B\u0442\u044C" : "tap to close")), opened && /* @__PURE__ */ React.createElement(
+    padding: S(40)
+  }, onClick: () => setOpenId(null) }, /* @__PURE__ */ React.createElement("div", null, lang === "ru" ? "\u0421\u043F\u0440\u0430\u0432\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C" : "Dossier failed to open"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: S(11), opacity: 0.7 } }, String(openError.message || openError)), /* @__PURE__ */ React.createElement("div", { style: { fontSize: S(11), opacity: 0.7 } }, lang === "ru" ? "\u043D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0437\u0430\u043A\u0440\u044B\u0442\u044C" : "tap to close")), opened && /* @__PURE__ */ React.createElement(
     PersonDetail,
     {
       person: opened,
