@@ -656,6 +656,123 @@
       color: var(--brass);
     }
 
+    /* — Шкалы (раздел 13). Рисуются из токенов, значений тут нет — */
+    .lede-note {
+      /* Кегль задан явно: без него абзац наследует --fs-body (32px),
+         рассчитанный на чтение с 70 см, и подавляет саму шкалу,
+         которую поясняет. */
+      font-size: var(--fs-3, 20px);
+      max-width: 78ch;
+      margin: 0 0 var(--sp-4, 32px);
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+    .lede-note code, .scale-row code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 7px;
+      border-radius: var(--r-sm, 4px);
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+    .scale-block {
+      margin-bottom: var(--sp-5, 48px);
+      /* Подложка не украшение: страница идёт по фирменным диагоналям,
+         и на красной полосе строки шкалы перестают читаться.
+         --page-bg-deep для этого и заведён — «тёмные панели». */
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    /* Кегли и приёмочные метрики — в НАТУРАЛЬНУЮ величину: --ds-1 это
+       280px, --touch-hit 120×120, и увидеть их целиком — единственный
+       смысл этих строк. Обрезанная тач-цель обманывает вдвойне: она
+       выглядит меньше нормы, которую сама же и задаёт. */
+    .scale-block[data-scale-group="type"] .spec,
+    .scale-block[data-scale-group="metric"] .spec { max-height: none; }
+    .scale-block h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin: 0 0 var(--sp-1, 8px);
+    }
+    .scale-block .why {
+      font-size: 13px;
+      opacity: 0.62;
+      margin: 0 0 var(--sp-3, 24px);
+      max-width: 78ch;
+      line-height: 1.45;
+    }
+    .scale-row {
+      display: grid;
+      grid-template-columns: 15ch 13ch 4ch 1fr;
+      gap: var(--sp-2, 16px);
+      align-items: center;
+      padding: var(--sp-1, 8px) 0;
+      border-top: var(--bd-hair, 1px) solid var(--rule);
+    }
+    .scale-row b {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--brass);
+      font-weight: 400;
+    }
+    .scale-row .val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      opacity: 0.68;
+    }
+    /* Пометка «множится на --ui-scale». Ставится не руками: рендерер
+       смотрит, есть ли var(--ui-scale) в значении самого токена. */
+    .x2 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--brass);
+      border: var(--bd-hair, 1px) solid var(--brass);
+      border-radius: var(--r-sm, 4px);
+      padding: 0 4px;
+      opacity: 0.75;
+    }
+    /* Образец живёт в своей ячейке и не растягивает строку: у --touch-hit
+       он 120×120, у --ds-1 кегль 280 — без ограничения ряд ломается,
+       и шкалу перестаёт быть видно как шкалу. Крупные образцы
+       показываются в масштабе, число рядом остаётся точным. */
+    .scale-row .spec {
+      min-height: 22px;
+      max-height: 72px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .scale-row .spec > * { flex: none; }
+    .spec-bar { height: 12px; background: var(--brass); opacity: 0.75; }
+    .spec-box { height: 44px; width: 72px; background: var(--slate-window); opacity: 0.5; }
+    .spec-line { width: 120px; background: var(--brass); }
+    .spec-type { font-family: var(--font-display); color: var(--paper-white); line-height: 1; }
+    .spec-text { font-family: var(--font-body); color: var(--paper-white); line-height: 1.2; }
+    .spec-card {
+      width: 96px; height: 44px;
+      background: var(--paper-white);
+      border-radius: var(--r-md, 8px);
+    }
+    .spec-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--brass);
+      animation: spec-slide var(--d, 280ms) ease-in-out infinite alternate;
+    }
+    @keyframes spec-slide { from { transform: translateX(0); } to { transform: translateX(140px); } }
+    .spec-z { position: relative; height: 40px; width: 120px; }
+    .spec-z i {
+      position: absolute; top: 0; height: 40px; width: 40px;
+      border: var(--bd-hair, 1px) solid var(--brass);
+      background: var(--page-bg-deep);
+      display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: 11px; color: var(--brass);
+      font-style: normal;
+    }
+
     /* — Typography Lab — */
     .font-lab {
       background: rgba(8, 12, 15, 0.55);
@@ -1584,26 +1701,45 @@
       <p class="token-strip">Backdrop: <code>rgba(15,22,28,.88)</code> + <code>backdrop-filter: blur(6px)</code>. Sheet — <code>--paper-white</code>. Кнопка-закрытия — <code>--signal-red</code> с обводкой <code>--brass</code>.</p>
     </section>
 
-    <!-- ── 13. Камертоны (touch + skew) ────────────────────────── -->
-    <section class="cat-section">
-      <p class="lede">13 · Тач-метрики</p>
-      <h2>Минимальные размеры и углы</h2>
+    <!-- ── 13. Шкалы ───────────────────────────────────────────────
+         Всё ниже рисуется из tokens.json. Значений в разметке нет:
+         и число, и образец, и пометка «×2 на киоске» приходят из токена.
+         Каталог, который сам описывает шкалу словами, устаревает первым. -->
+    <section class="cat-section" id="c-scales">
+      <p class="lede">13 · Шкалы</p>
+      <h2>Отступы, кегли, тени, длительности</h2>
 
-      <div class="grid-2">
-        <div class="ruler">
-          <div style="margin-bottom: 16px;">Touch-hit: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--touch-hit: 120px</code></div>
-          <div class="touch-target">120 × 120</div>
-          <p style="margin-top: 16px; opacity: 0.7;">Минимум для всех тач-целей. Чувствительная зона круглая или прямоугольная.</p>
-        </div>
-        <div class="ruler">
-          <div style="margin-bottom: 24px;">Brand-skew: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--brand-skew: -15deg</code></div>
-          <div style="display: flex; gap: 24px; align-items: center;">
-            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); transform: skewX(-15deg);"></span>
-            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); opacity: 0.5;"></span>
-          </div>
-          <p style="margin-top: 16px; opacity: 0.7;">Слева — наклонная (бренд), справа — вертикаль для сравнения. Угол ≈ 75° от горизонтали (15° от вертикали).</p>
-        </div>
-      </div>
+      <p class="lede-note">
+        Самодельных отступов, радиусов и теней не бывает — есть шкала.
+        <b>Длины умножены на <code>--ui-scale</code></b>: вёрстка ведётся
+        в 1920×1080 логических, на киоске 3840×2160 всё удваивается одним
+        переключателем. Время, угол и <code>z-index</code> не множатся —
+        экран стал больше, а секунда осталась секундой.
+      </p>
+
+      <div class="scale-block" data-scale-group="metric"></div>
+      <div class="scale-block" data-scale-group="scale"></div>
+      <div class="scale-block" data-scale-group="type"></div>
+      <div class="scale-block" data-scale-group="shadow"></div>
+      <div class="scale-block" data-scale-group="motion"></div>
+      <div class="scale-block" data-scale-group="z"></div>
+
+      <p class="token-strip">
+        Пометка <span class="x2">×2</span> стоит там, где значение
+        множится на <code>--ui-scale</code>. Она не проставлена руками:
+        каталог смотрит, есть ли <!-- brand-lint:off --><code>var(--ui-scale)</code><!-- brand-lint:on --> в самом
+        значении токена. Заведёте новую метрику — пометка появится сама,
+        а если не появится, значит метрика не масштабируется, и это видно
+        до того, как дойдёт до киоска.
+      </p>
+
+      <p class="token-strip">
+        ⚠️ В сцене <code>/expo/</code> размеры задаются <b>числами в JSX</b>,
+        а не только через CSS. Такие числа на <code>--ui-scale</code>
+        не отреагируют: их переводят руками, иначе примитив на киоске
+        останется логического размера. Если верстаете по этому каталогу —
+        сверяйтесь, откуда берётся размер, а не только каким он выглядит.
+      </p>
     </section>
 
     <!-- ── 14. Логотип LENIN CENTRE ─────────────────────────────── -->
@@ -2326,6 +2462,58 @@
           <div class="fill" style="background: var(--${name});"></div>
           <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span></div>
         </div>`).join('');
+    });
+
+    // 13 · Шкалы — и число, и образец, и пометка «×2» из самого токена ──────
+    //
+    // Единственное, что задано здесь, — КАК показать ступень. Сколько
+    // ступеней, чему они равны и что из них масштабируется, каталог
+    // не знает и знать не должен: заведёте --sp-9 — строка появится сама.
+    const SCALE_TITLES = {
+      metric: ['Метрики', 'Приёмочные величины. --touch-hit — основная навигация по §1; управляющим элементам внутри разделов хватает 64.'],
+      scale:  ['Отступы, радиусы, толщины', 'База отступов 8, а не 4: с 70 см разница в 4 px неразличима, и половина ступеней была бы мусором.'],
+      type:   ['Кегли', '--ds-* — Nolde, заголовки и крупные цифры. --fs-* — 21 Cent, читаемый текст; нижняя ступень 16 — предел для 70 см, ниже не опускаться.'],
+      shadow: ['Тени', 'Три ступени по НАЗНАЧЕНИЮ, а не по размеру: чужая тень читается как другой материал.'],
+      motion: ['Длительности', 'Реакция на касание обязана уложиться в --dur-base: выше 280 мс палец решает, что стенд не ответил, и жмёт второй раз.'],
+      z:      ['Слои по глубине', 'Шаг 100 — между соседями всегда есть место для незапланированного.'],
+    };
+
+    /** Множится ли значение на --ui-scale. Не список имён, а разбор
+        самого значения: список пришлось бы дополнять руками, и он бы врал. */
+    const scales2x = (v) => /var\(--ui-scale/.test(String(v));
+
+    /** Образец ступени. `var(--name)` вместо числа — чтобы каталог показывал
+        ровно то, что получит вёрстка, включая удвоение на киоске. */
+    function specimen(name, value) {
+      const v = `var(--${name})`;
+      if (/^sp-/.test(name))   return `<div class="spec-bar" style="width: ${v};"></div>`;
+      if (/^r-/.test(name))    return `<div class="spec-box" style="border-radius: ${v};"></div>`;
+      if (/^bd-/.test(name))   return `<div class="spec-line" style="height: ${v};"></div>`;
+      if (/^ds-/.test(name))   return `<div class="spec-type" style="font-size: ${v};">Аа</div>`;
+      if (/^fs-/.test(name))   return `<div class="spec-text" style="font-size: ${v};">Совѣтская Россія выходитъ изъ войны</div>`;
+      if (/^sh-/.test(name))   return `<div class="spec-card" style="box-shadow: ${v};"></div>`;
+      if (/^dur-/.test(name))  return `<div class="spec-dot" style="--d: ${v};"></div>`;
+      if (/^z-/.test(name))    return `<div class="spec-z">${[0,1,2].map((i) =>
+                                        `<i style="left: ${i * 28}px; z-index: ${i};">${i ? '' : value}</i>`).join('')}</div>`;
+      if (name === 'touch-hit') return `<div class="touch-target" style="width: ${v}; height: ${v};"></div>`;
+      if (name === 'brand-skew') return `<span style="display:inline-block;width:4px;height:44px;background:var(--brass);transform:skewX(${v});"></span>`;
+      if (name === 'ui-scale')  return `<span class="val">1 на стенде · 2 на киоске, единственный media-query проекта</span>`;
+      return `<div class="spec-bar" style="width: ${v};"></div>`;
+    }
+
+    document.querySelectorAll('[data-scale-group]').forEach((host) => {
+      const id = host.dataset.scaleGroup;
+      const g = group(id);
+      if (!g) return;
+      const [title, why] = SCALE_TITLES[id] ?? [g.title, ''];
+      host.innerHTML = `<h3>${title}</h3>${why ? `<p class="why">${why}</p>` : ''}` +
+        g.tokens.map((name) => `
+          <div class="scale-row">
+            <b>--${name}</b>
+            <span class="val">${T[name].replace(/calc\((\S+) \* var\(--ui-scale, 1\)\)/g, '$1')}</span>
+            <span>${scales2x(T[name]) ? '<span class="x2">×2</span>' : ''}</span>
+            <span class="spec">${specimen(name, T[name])}</span>
+          </div>`).join('');
     });
 
     // 02 · Лагеря — цвет из токена, подпись отсюда

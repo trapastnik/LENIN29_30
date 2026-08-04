@@ -78,13 +78,32 @@ function walk(dir, acc = []) {
 
 // ── утилиты разбора ────────────────────────────────────────────────────────
 
+const keepWs = (m) => m.replace(/[^\n]/g, ' ');
+
 /** Затирает содержимое комментариев пробелами: длина и переводы строк целы,
  *  поэтому номера строк и смещения остаются верными. */
 function maskComments(text) {
-  const keepWs = (m) => m.replace(/[^\n]/g, ' ');
   return text
     .replace(/\/\*[\s\S]*?\*\//g, keepWs)
     .replace(/<!--[\s\S]*?-->/g, keepWs);
+}
+
+/** Область-ОБРАЗЕЦ: между маркерами лежит не код, а цитата.
+ *
+ *      brand-lint:off ... brand-lint:on
+ *
+ *  Без этого каталог не может делать свою работу. Раздел «Запрещено»
+ *  состоит из запрещённых конструкций по определению: курсив на Nolde
+ *  рядом с легальным акцентом, :hover рядом с :active, самодельная тень
+ *  рядом с --sh-2. Показать их — и есть смысл раздела, а линтер честно
+ *  ловил бы каждую и требовал убрать ровно то, ради чего страница есть.
+ *
+ *  Это НЕ лазейка «выключить правило, когда мешает»: маркер помечает
+ *  область, где конструкция заведомо не исполняется как код, — текст
+ *  в <code>, содержимое data-атрибута, демонстрационная разметка.
+ *  В рабочем коде маркеру делать нечего, и его там ловит ревью. */
+function maskSpecimens(text) {
+  return text.replace(/brand-lint:off[\s\S]*?brand-lint:on/g, keepWs);
 }
 
 function lineOf(text, index) {
@@ -197,7 +216,10 @@ const SAFE_FONT_HINT = /21\s*Cent|20\s*Kopeek|--font-(body|accent|mono|stamp)|fo
 
 function lintFile(file) {
   const raw = readFileSync(file, 'utf8');
-  const src = maskComments(raw);
+  // Порядок важен: сначала образцы, потом комментарии. Маркеры
+  // brand-lint:off/on сами живут в комментариях, и затерев комментарии
+  // первыми, мы бы потеряли границы области.
+  const src = maskComments(maskSpecimens(raw));
   const ext = extname(file);
   const isCssLike = ext === '.css' || ext === '.html';
 
