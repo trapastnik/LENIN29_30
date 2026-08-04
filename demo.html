@@ -13,7 +13,7 @@
     body { display: flex; flex-direction: column; }
     header {
       padding: 18px 24px;
-      background: var(--wood);
+      background: var(--page-bg-deep);
       color: var(--paper-light);
       border-bottom: 2px solid var(--brass);
       display: flex; align-items: baseline; gap: 18px;
@@ -21,7 +21,9 @@
     header h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-style: italic;
+      /* Курсива у Nolde нет — файла курсивного начертания не существует,
+         и браузер синтезирует наклон. На 26px bold это видно как дефект
+         засечек, поэтому §8 его запрещает. Было font-style: italic. */
       font-size: 26px;
       font-weight: 700;
     }
