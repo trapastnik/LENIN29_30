@@ -143,13 +143,36 @@ if os.path.exists(states_index):
             fail(f"{it['id']}: camp «{it.get('camp')}» расходится со справкой «{want}»")
 
     # 4. territory_id в справках ведёт в реестр
+    pointed = set()
     for sid in sorted(state_camp):
         card = os.path.join(STATES, f"{sid}.json")
         if not os.path.exists(card):
             continue
         tid = load(card).get("territory_id")
-        if tid is not None and tid not in ids:
+        if tid is None:
+            continue
+        pointed.add(tid)
+        if tid not in ids:
             fail(f"states/{sid}.json: territory_id «{tid}» не найден в реестре")
+
+    # 4б. ДОСТИЖИМОСТЬ ГЕОМЕТРИИ. Проверка была односторонней: ссылка
+    # из справки обязана вести в реестр, но обратное не проверялось —
+    # и геометрия могла существовать, не будучи ни для кого видимой.
+    #
+    # Так и вышло: 6 записей с полигонами при territory_id: null во всех
+    # 59 справках. Работа сделана, проверена наложением на базу, сведена
+    # в main — и на экран не попадает, потому что на неё никто не ссылается.
+    #
+    # Тот же класс, что карта Комуча у зоны ui: обе стороны считали себя
+    # правыми по своей половине контракта, а карта не показывалась ни разу.
+    # Предупреждение, а не ошибка: заполнять territory_id — работа зоны
+    # content, ронять её прогон за это нельзя.
+    unreachable = sorted(i["id"] for i in items
+                         if i.get("polygon") and i["id"] not in pointed)
+    if unreachable:
+        warn(f"геометрия есть, а ссылки из справки нет — на экран не попадёт "
+             f"({len(unreachable)}): {', '.join(unreachable)}. "
+             f"territory_id заполняет зона content, значение равно id записи")
 else:
     notes.append("public/content/states/ нет в этой ветке — сверка со справками "
                  "пропущена, прогнать после мержа content")
