@@ -22,7 +22,7 @@
   "summary_en": null,
   "en_status": "missing",
   "symbols": [],
-  "territory_id": null,
+  "territory_id": "czechoslovak-corps",
   "media": [
     {
       "n": 1,
@@ -160,7 +160,5 @@
     "sha256": "9340d013c75be2cc04b7dfa630d3db816f4e273f9965cc3f6541c59d3b6836c8",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ]
+  "flags": []
 }

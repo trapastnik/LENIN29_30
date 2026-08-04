@@ -118,8 +118,6 @@
     "sha256": "9421f06d29119d2792e7832c0742571d0e7ae2a2300bf637113056f7527d223a",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ],
+  "flags": [],
   "camp_source": "regalia"
 }

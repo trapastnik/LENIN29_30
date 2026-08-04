@@ -19,8 +19,8 @@
   html, body {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    background: #0a0502;
-    color: #f0dcae;
+    background: var(--scene-bg);
+    color: var(--scene-ink);
     font-family: '21 Cent', 'PT Serif', Georgia, serif;
     overflow: hidden;
   }
@@ -48,6 +48,7 @@
 <!-- Предкомпилированный JSX, исходники — соседние *.jsx.
      Компилятор: scripts/expo/build-jsx.mjs (esbuild). -->
 <script src="build/rich-text.js"></script>
+<script src="build/ui-scale.js"></script>
 <script src="build/people-ui.js"></script>
 <script src="build/boot-people.js"></script>
 </body>

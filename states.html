@@ -23,14 +23,14 @@
     }
     .view-toggle button {
       /* Переключатель вида — управляющий элемент раздела, ≥64 px (§1). */
-      padding: 0 22px;
-      font-size: 13px;
+      padding: 0 calc(22px * var(--ui-scale, 1));
+      font-size: calc(13px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--paper-light);
       background: transparent;
       border: none;
-      min-height: 64px;
+      min-height: calc(64px * var(--ui-scale, 1));
       min-width: auto;
     }
     .view-toggle button.active {
@@ -47,8 +47,13 @@
        Переопределяем только здесь и только display: overflow не трогаем,
        поэтому sticky остаётся рабочим (проверено на обоих режимах).
        Если решение приживётся — забирайте в pages.css, зона design. */
-    body.scrollable { display: flex; flex-direction: column; }
-    body.scrollable main { display: flex; flex-direction: column; flex: 1; }
+    /* Селектор по id, а не по классу: vite переносит <link> в конец <head>,
+       поэтому pages.css в сборке идёт ПОСЛЕ этого блока, и правило с равной
+       специфичностью проигрывает. Так эта правка уже один раз умерла молча —
+       экран групп вернулся к 455 px из 1080, и заметно это было только
+       замером. Через id порядок подключения перестаёт что-либо решать. */
+    html body.scrollable { display: flex; flex-direction: column; }
+    html body.scrollable main#page-root { display: flex; flex-direction: column; flex: 1; }
 
     #groups-mode { display: flex; flex-direction: column; gap: 28px; flex: 1; min-height: 0; }
 
@@ -60,12 +65,12 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      gap: 24px;
+      gap: calc(24px * var(--ui-scale, 1));
       flex: 1;
       min-height: 0;
     }
     .group-btn {
-      padding: 40px 36px;
+      padding: calc(40px * var(--ui-scale, 1)) calc(36px * var(--ui-scale, 1));
       background: var(--paper);
       color: var(--ink);
       border: 1.5px solid var(--brass);
@@ -77,17 +82,17 @@
       text-align: left;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: calc(14px * var(--ui-scale, 1));
       transition: transform .16s, box-shadow .16s;
       position: relative;
     }
     .group-btn:active {
-      transform: translateY(2px);
+      transform: translateY(calc(2px * var(--ui-scale, 1)));
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
     }
     .group-btn .kicker {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: calc(13px * var(--ui-scale, 1));
       letter-spacing: 0.3em;
       color: var(--ink-faint);
       text-transform: uppercase;
@@ -96,7 +101,7 @@
       margin: 0;
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 48px;
+      font-size: calc(48px * var(--ui-scale, 1));
       font-weight: 700;
       line-height: 1.05;
       /* Текст по светлой бумаге — начертательный токен, не заливочный.
@@ -108,29 +113,29 @@
     .group-btn .count {
       margin-top: auto;
       font-family: var(--font-mono);
-      font-size: 18px;
+      font-size: calc(18px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--ink-soft);
     }
     .group-btn .arrow {
       position: absolute;
-      bottom: 28px; right: 36px;
-      font-size: 34px;
+      bottom: calc(28px * var(--ui-scale, 1)); right: calc(36px * var(--ui-scale, 1));
+      font-size: calc(34px * var(--ui-scale, 1));
       color: var(--camp-ink, var(--camp-color));
       line-height: 1;
     }
 
     /* ───── Экран 2: drill-down в группу ───── */
     #group-detail .crumbs {
-      display: flex; align-items: center; gap: 18px;
-      margin-bottom: 22px;
+      display: flex; align-items: center; gap: calc(18px * var(--ui-scale, 1));
+      margin-bottom: calc(22px * var(--ui-scale, 1));
     }
     #group-detail .back-btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 12px 22px;
+      display: inline-flex; align-items: center; gap: calc(10px * var(--ui-scale, 1));
+      padding: calc(12px * var(--ui-scale, 1)) calc(22px * var(--ui-scale, 1));
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: calc(13px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--paper-light);
@@ -138,35 +143,35 @@
       border: 1px solid var(--brass);
       border-radius: 30px;
       cursor: pointer;
-      min-width: auto; min-height: 44px;
+      min-width: auto; min-height: calc(44px * var(--ui-scale, 1));
     }
     #group-detail .back-btn:active { background: rgba(250, 240, 210, 0.26); }
     #group-detail .group-name {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 32px;
+      font-size: calc(32px * var(--ui-scale, 1));
       font-weight: 700;
       color: var(--camp-color, var(--paper-light));
     }
     #group-detail .group-name .cnt {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: calc(14px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       color: var(--paper-warm);
       font-weight: 400;
       font-style: normal;
-      margin-left: 14px;
+      margin-left: calc(14px * var(--ui-scale, 1));
     }
     #group-items {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(calc(360px * var(--ui-scale, 1)), 1fr));
+      gap: calc(18px * var(--ui-scale, 1));
     }
     .state-plate {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding: 22px 24px;
+      gap: calc(8px * var(--ui-scale, 1));
+      padding: calc(22px * var(--ui-scale, 1)) calc(24px * var(--ui-scale, 1));
       background: var(--paper-light);
       color: var(--ink);
       border: 1px solid rgba(168, 135, 90, 0.45);
@@ -174,19 +179,19 @@
       border-radius: 4px;
       cursor: pointer;
       transition: transform .12s, background .12s;
-      min-height: 120px;
+      min-height: calc(120px * var(--ui-scale, 1));
     }
     .state-plate:active { background: var(--paper); transform: translateX(2px); }
     .state-plate .name {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 22px;
+      font-size: calc(22px * var(--ui-scale, 1));
       font-weight: 700;
       line-height: 1.15;
     }
     .state-plate .abbr {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: calc(12px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--ink-faint);
@@ -199,18 +204,16 @@
        иначе осталась бы русской при английском интерфейсе. */
     html[lang='en'] .state-plate.has-map .abbr::after { content: '  ·  map'; }
 
-    /* Пороги тач-целей §1. .back-link приходит из pages.css (зона design)
-       с padding 14/24 — это ≈45 px, ниже порога. Переопределяем у себя,
-       чужой файл не трогаем.
-         основная навигация      ≥120 px — «к экспозиции», переключатель языка
-         управляющий элемент     ≥64 px  — переключатель вида, «к группам» */
-    .back-link,
-    #btn-lang {
-      min-height: var(--touch-hit, 120px);
-      padding: 0 24px;
-      justify-content: center;
-    }
-    #btn-lang { min-width: 120px; }
+    /* Тач-цели «к экспозиции» и языка держит сама .back-link из pages.css:
+       видимый размер 56, а зона нажатия — невидимый ::before высотой
+       --touch-hit. Своё переопределение здесь было и МЕРТВО: vite переносит
+       <link> в конец <head>, поэтому в сборке pages.css идёт ПОСЛЕ этого
+       блока, хотя в исходнике наоборот. Замер на собранном dist: видимая 56,
+       computed min-height 56px — выигрывала design, не мы.
+       Мёртвое переопределение опаснее отсутствующего: выглядит рабочим
+       и просыпается при следующей правке источника. Нашла зона simbirsk.
+       #btn-lang при этом жил — id перебивает класс, — и кнопка языка была
+       120 против 56 у соседней. Теперь обе одинаковые. */
 
     #group-detail .back-btn { min-height: 64px; }
   </style>

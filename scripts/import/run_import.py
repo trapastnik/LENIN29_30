@@ -105,6 +105,7 @@ class Ctx:
         self.ns = None
         self.group = None
         self.events_by_no: Dict[str, List[dict]] = {}
+        self.geo_failures: List[str] = []
 
     def resolve_id(self, kind: str, title: str, slug_hint: Optional[str] = None,
                    match_on: Optional[list] = None) -> str:
@@ -384,6 +385,12 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
                 data["venn_groups"] = [camp]
 
     apply_media_manifest(data)
+    if kind == "state":
+        # Связь со слоем карт. Ставится по реестру `maps`, а не руками:
+        # полигоны прибывают её прогонами.
+        tid = geo_links(ctx.reports, ctx.geo_failures).get(eid)
+        if tid:
+            data["territory_id"] = tid
     _collect_notes(kind, eid, data, notes_acc)
 
     outdir = DIRS[kind]
@@ -409,6 +416,14 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
 
     write_json(gen_path, data)
     merged = deep_merge(data, patch)
+    # Флаг рядом с текстом вопроса: текст читает человек, флаг — счётчик
+    # и фильтр. Считается ПОСЛЕ слияния: `open_question_ru` приходит патчем,
+    # то есть рукой, и в машинном слепке его ещё нет.
+    if merged.get("open_question_ru"):
+        fl = list(merged.get("flags") or [])
+        if "open-question" not in fl:
+            fl.append("open-question")
+            merged["flags"] = fl
     wrote = write_json(merged_path, merged)
 
     if old_gen is None:
@@ -485,6 +500,51 @@ def archive_stale(kind: str, imported: set, stats: Stats):
         path.unlink()
         stats.legacy.append("%s/%s → content-src/legacy/%s/%s (справка ещё не импортирована, "
                             "запись индекса помечена stub)" % (kind, eid, kind, name))
+
+
+_GEO_CACHE: Optional[dict] = None
+
+
+def geo_links(reports: List[str], failures: List[str]) -> dict:
+    """`state_id` → id записи реестра карт, но только там, где есть полигон.
+
+    Реестр `public/content/geo/_index.json` ведёт зона `maps`. Связь ставится
+    автоматически, а не патчами: полигоны прибывают её прогонами, и ручной
+    список пришлось бы догонять каждый раз — а не догнав, мы получили бы ровно
+    то, что уже случилось: шесть готовых полигонов, ноль ссылок на них,
+    и два зелёных прогона при пустом экране.
+
+    §5 запрещает заводить `territory_id` «на будущее», поэтому берём только
+    записи с непустым `polygon`: нет геометрии — нет и ссылки, UI покажет
+    заглушку.
+
+    Вход НЕОБЯЗАТЕЛЬНЫЙ по последствиям (без него карточка просто без карты),
+    но пропажа файла — не норма: он лежит в том же репозитории. Поэтому мягко
+    читаем и громко жалуемся.
+    """
+    global _GEO_CACHE
+    if _GEO_CACHE is not None:
+        return _GEO_CACHE
+    path = CONTENT / "geo" / "_index.json"
+    if not path.exists():
+        msg = ("нет реестра карт %s — ни одна справка не получит territory_id, "
+               "карты не покажутся" % path.relative_to(ROOT))
+        reports.append(msg)
+        failures.append(msg)
+        _GEO_CACHE = {}
+        return _GEO_CACHE
+    data = read_json(path) or {}
+    out = {}
+    for rec in data.get("items", []):
+        if not rec.get("polygon"):
+            continue
+        sid = rec.get("state_id") or rec.get("id")
+        if sid:
+            out[sid] = rec["id"]
+    reports.append("реестр карт: геометрия у %d записей из %d"
+                   % (len(out), len(data.get("items", []))))
+    _GEO_CACHE = out
+    return _GEO_CACHE
 
 
 CAMP_ROWS: List[dict] = []
@@ -1118,6 +1178,7 @@ def main(argv=None) -> int:
     by_kind: Dict[str, List[dict]] = {}
 
     failures: List[str] = []
+    ctx.geo_failures = failures
 
     for kind in [k for k in kinds if k != "chronicle"]:
         paths = sources_for(kind, args.only, args.pilot)

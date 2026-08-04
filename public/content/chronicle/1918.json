@@ -30,6 +30,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Январь"
@@ -54,6 +56,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "lenin"
@@ -81,6 +85,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -108,6 +114,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "otkrytie-i-razgon-us",
+      "card_pol": "otkrytie-i-razgon-us",
+      "card_mil": null,
       "refs": {},
       "weight": 3
     },
@@ -131,6 +139,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "cadets"
@@ -158,6 +168,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -181,6 +193,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "gegechkori",
@@ -209,6 +223,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -236,6 +252,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "myasnikov",
@@ -269,6 +287,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -299,6 +319,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -332,6 +354,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "osr",
@@ -361,6 +385,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -388,6 +414,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -416,6 +444,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unr"
@@ -443,6 +473,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsp"
@@ -473,6 +505,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -496,6 +530,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -519,6 +555,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kaledin"
@@ -546,6 +584,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "dksr"
@@ -573,6 +613,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Февраль"
@@ -597,6 +639,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "litovskaya-respublika"
@@ -624,6 +668,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "brest-litovskie-peregovory",
+      "card_pol": null,
+      "card_mil": "brest-litovskie-peregovory",
       "refs": {},
       "weight": 3
     },
@@ -647,6 +693,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "lenin"
@@ -677,6 +725,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks",
@@ -707,6 +757,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -734,6 +786,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "estonskaya-respublika"
@@ -761,6 +815,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -788,6 +844,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "right-center"
@@ -815,6 +873,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "turkestan-sfr"
@@ -843,6 +903,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "union-defence"
@@ -871,6 +933,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "brest-litovskiy-mir",
+      "card_pol": "brest-litovskiy-mir",
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -901,6 +965,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -928,6 +994,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -955,6 +1023,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "srs",
@@ -983,6 +1053,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -1010,6 +1082,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "osr"
@@ -1037,6 +1111,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -1064,6 +1140,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "brest-litovskiy-mir",
+      "card_pol": "brest-litovskiy-mir",
+      "card_mil": null,
       "refs": {},
       "weight": 3
     },
@@ -1087,6 +1165,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -1114,6 +1194,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1137,6 +1219,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "gegechkori"
@@ -1164,6 +1248,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1187,6 +1273,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "union-renewal"
@@ -1214,6 +1302,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unrs",
@@ -1244,6 +1334,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general",
@@ -1272,6 +1364,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1295,6 +1389,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1318,6 +1414,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "anarchists"
@@ -1345,6 +1443,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1368,6 +1468,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kornilov",
@@ -1399,6 +1501,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "zdfr"
@@ -1429,6 +1533,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "dashnaktsutyun"
@@ -1456,6 +1562,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "skoropadskiy"
@@ -1486,6 +1594,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "turkestan-sfr",
@@ -1514,6 +1624,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1537,6 +1649,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1560,6 +1674,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general",
@@ -1588,6 +1704,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "krasnov"
@@ -1618,6 +1736,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr",
@@ -1649,6 +1769,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1672,6 +1794,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "krasnov"
@@ -1699,6 +1823,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1722,6 +1848,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1745,6 +1873,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general",
@@ -1776,6 +1906,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "great-don-host"
@@ -1806,6 +1938,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vystuplenie-chekhoslovatskogo-korpusa",
+      "card_pol": null,
+      "card_mil": "vystuplenie-chekhoslovatskogo-korpusa",
       "refs": {
         "states": [
           "czechoslovak-corps"
@@ -1833,6 +1967,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "zdfr",
@@ -1861,6 +1997,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1884,6 +2022,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -1911,6 +2051,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "krasnov"
@@ -1941,6 +2083,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "national-center"
@@ -1968,6 +2112,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vystuplenie-chekhoslovatskogo-korpusa",
+      "card_pol": null,
+      "card_mil": "vystuplenie-chekhoslovatskogo-korpusa",
       "refs": {
         "states": [
           "komuch",
@@ -1996,6 +2142,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2019,6 +2167,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -2050,6 +2200,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vystuplenie-chekhoslovatskogo-korpusa",
+      "card_pol": null,
+      "card_mil": "vystuplenie-chekhoslovatskogo-korpusa",
       "refs": {
         "parties": [
           "reds-general"
@@ -2080,6 +2232,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -2107,6 +2261,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -2134,6 +2290,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsp",
@@ -2165,6 +2323,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2188,6 +2348,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vystuplenie-levykh-eserov",
+      "card_pol": "vystuplenie-levykh-eserov",
+      "card_mil": null,
       "refs": {
         "parties": [
           "left-srs"
@@ -2215,6 +2377,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "yaroslavskoe-vosstanie",
+      "card_pol": null,
+      "card_mil": "yaroslavskoe-vosstanie",
       "refs": {
         "parties": [
           "union-defence",
@@ -2243,6 +2407,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "dutov"
@@ -2273,6 +2439,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "sksr"
@@ -2300,6 +2468,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -2327,6 +2497,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "zakaspiyskoe-vremennoe-pravitelstvo"
@@ -2354,6 +2526,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2377,6 +2551,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "pokhod-uralskoy-armii-blyukhera",
+      "card_pol": null,
+      "card_mil": "pokhod-uralskoy-armii-blyukhera",
       "refs": {
         "persons": [
           "blyukher"
@@ -2404,6 +2580,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -2431,6 +2609,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks",
@@ -2461,6 +2641,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "oborona-tsaritsyna",
+      "card_pol": null,
+      "card_mil": "oborona-tsaritsyna",
       "refs": {
         "persons": [
           "krasnov"
@@ -2488,6 +2670,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2511,6 +2695,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "northern-region"
@@ -2541,6 +2727,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2564,6 +2752,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vzyatie-kazani-chastyami-narodnoy-armii",
+      "card_pol": null,
+      "card_mil": "vzyatie-kazani-chastyami-narodnoy-armii",
       "refs": {
         "states": [
           "komuch",
@@ -2595,6 +2785,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "komuch"
@@ -2622,6 +2814,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vopu"
@@ -2652,6 +2846,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -2682,6 +2878,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -2709,6 +2907,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "krasnyy-terror",
+      "card_pol": "krasnyy-terror",
+      "card_mil": null,
       "refs": {
         "persons": [
           "uritskiy",
@@ -2743,6 +2943,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "alekseev-org"
@@ -2774,6 +2976,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsp"
@@ -2804,6 +3008,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "krasnyy-terror",
+      "card_pol": "krasnyy-terror",
+      "card_mil": "nastuplenie-vostochnogo-fronta-rkka",
       "refs": {
         "states": [
           "rsfsr"
@@ -2839,6 +3045,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "czechoslovak-corps"
@@ -2866,6 +3074,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "northern-region"
@@ -2893,6 +3103,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "pokhod-uralskoy-armii-blyukhera",
+      "card_pol": null,
+      "card_mil": "pokhod-uralskoy-armii-blyukhera",
       "refs": {
         "persons": [
           "blyukher"
@@ -2920,6 +3132,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "musavat"
@@ -2947,6 +3161,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "oborona-tsaritsyna",
+      "card_pol": null,
+      "card_mil": "oborona-tsaritsyna",
       "refs": {
         "persons": [
           "krasnov"
@@ -2974,6 +3190,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "left-srs",
@@ -3002,6 +3220,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "makhno"
@@ -3029,6 +3249,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "ufa-directory",
@@ -3058,6 +3280,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "northern-region"
@@ -3092,6 +3316,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3115,6 +3341,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "oborona-tsaritsyna",
+      "card_pol": null,
+      "card_mil": "oborona-tsaritsyna",
       "refs": {
         "persons": [
           "krasnov"
@@ -3146,6 +3374,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsp",
@@ -3177,6 +3407,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vopu",
@@ -3205,6 +3437,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3228,6 +3462,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsp",
@@ -3259,6 +3495,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3282,6 +3520,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "brest-litovskiy-mir",
+      "card_pol": "brest-litovskiy-mir",
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -3309,6 +3549,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3332,6 +3574,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unr"
@@ -3363,6 +3607,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general",
@@ -3391,6 +3637,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "perevorot-v-omske",
+      "card_pol": "perevorot-v-omske",
+      "card_mil": null,
       "refs": {
         "states": [
           "ufa-directory",
@@ -3422,6 +3670,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "latviyskaya-respublika"
@@ -3449,6 +3699,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3472,6 +3724,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "ukrainian-ssr"
@@ -3499,6 +3753,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "estonskaya-respublika"
@@ -3527,6 +3783,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -3554,6 +3812,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3577,6 +3837,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "permskaya-operatsiya-russkoy-armii",
+      "card_pol": null,
+      "card_mil": "permskaya-operatsiya-russkoy-armii",
       "refs": {
         "states": [
           "etk",
@@ -3611,6 +3873,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "lenin"
@@ -3641,6 +3905,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "alekseev-org"
@@ -3668,6 +3934,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "skoropadskiy"
@@ -3699,6 +3967,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -3722,6 +3992,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -3749,6 +4021,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -3776,6 +4050,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "permskaya-operatsiya-russkoy-armii",
+      "card_pol": null,
+      "card_mil": "permskaya-operatsiya-russkoy-armii",
       "refs": {
         "persons": [
           "gayda"
@@ -3806,6 +4082,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kolchak"

@@ -163,9 +163,7 @@
     "sha256": "3e9f44c85be377b529f323e2ef12664149acdc5484f5dec6e2bbe30b7658dcec",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ],
+  "flags": [],
   "x": 74.48,
   "y": 36.25
 }

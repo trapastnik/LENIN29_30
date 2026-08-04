@@ -15,12 +15,21 @@
      причём молча: отвалившийся <link> не даёт ошибки в консоли. -->
 <link rel="stylesheet" href="brand-tokens.css?v=20260803">
 <style>
+  /* Главная масштабирует свой canvas 1920 → 3840 сама, поэтому общее
+     удвоение --ui-scale здесь лишнее: ×2 поверх ×2 дало бы ×4.
+     Пин адресный и должен остаться адресным — people.html
+     и chronicle.html прокручиваются, своего масштабирования не имеют,
+     и им общее удвоение НУЖНО. Не выносить в brand-tokens.css:
+     его грузят все три страницы. */
+  :root { --ui-scale: 1; }
+</style>
+<style>
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    background: #0a0502;
-    color: #f0dcae;
+    background: var(--scene-bg);
+    color: var(--scene-ink);
     font-family: '21 Cent', 'PT Serif', Georgia, serif;
     overflow: hidden;
   }

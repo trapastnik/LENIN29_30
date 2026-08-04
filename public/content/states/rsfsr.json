@@ -38,7 +38,7 @@
       "h": 640
     }
   ],
-  "territory_id": null,
+  "territory_id": "rsfsr",
   "media": [
     {
       "n": 1,
@@ -152,6 +152,7 @@
         "01 РСФСР 05 1.jpg",
         "01 РСФСР 05 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],

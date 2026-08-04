@@ -85,6 +85,7 @@
         "ПЕТЛЮРА С.В._03а.jpg",
         "ПЕТЛЮРА С.В._03б.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/persons/petlyura/03",
         "media/persons/petlyura/03p2"
@@ -114,8 +115,6 @@
     "sha256": "a8f090e3f1a3d4c021a5115c4f69cdde40541e63490d33209fcadf1ee03619be",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ],
+  "flags": [],
   "camp_source": "regalia"
 }

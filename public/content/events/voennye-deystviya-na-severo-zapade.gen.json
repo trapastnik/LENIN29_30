@@ -78,6 +78,7 @@
         "Северо-запад _02 1.jpg",
         "Северо-запад_02 2.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/events/voennye-deystviya-na-severo-zapade/03",
         "media/events/voennye-deystviya-na-severo-zapade/03p2"
@@ -161,7 +162,6 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }

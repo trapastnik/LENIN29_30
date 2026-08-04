@@ -133,6 +133,7 @@
         "04 АзССР 04 1.jpg",
         "04 АзССР 04 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],
@@ -166,7 +167,5 @@
     "sha256": "004490ae63b399de1444b40f0788a194c9fcfe6c2d37930f95a1ef8b4e8152cc",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ]
+  "flags": []
 }

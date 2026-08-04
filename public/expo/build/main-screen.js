@@ -2,6 +2,7 @@
 // Источник: public/expo/main-screen.jsx
 // Пересобрать: node scripts/expo/build-jsx.mjs
 const BACKDROP_SRC = null;
+const TOUCH_HIT = "var(--touch-hit, 120px)";
 function Backdrop() {
   return /* @__PURE__ */ React.createElement("div", { style: {
     position: "absolute",
@@ -54,7 +55,7 @@ function MainHeader({ lang, setLang }) {
   } }, "1917 \u2014 1922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 14, alignItems: "center" } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
     // Переключатель языка — основная навигация, ≥120 px (§1).
     minWidth: 120,
-    minHeight: "var(--touch-hit, 120px)",
+    minHeight: TOUCH_HIT,
     fontFamily: fonts.mono,
     fontSize: 15,
     letterSpacing: "0.25em",
@@ -84,7 +85,7 @@ function Timeline({ years, active, onPick, lang }) {
     return /* @__PURE__ */ React.createElement("button", { key: y.year, onClick: () => onPick(y.year), style: {
       flex: 1,
       // ≥120px по CLAUDE.md §1: тач-палец, а не курсор
-      minHeight: "var(--touch-hit, 120px)",
+      minHeight: TOUCH_HIT,
       display: "flex",
       flexDirection: "column",
       alignItems: "stretch",
@@ -143,7 +144,7 @@ function SectionTiles({ sections, lang, onOpen }) {
         onClick: ready ? () => onOpen(s.id) : void 0,
         disabled: !ready,
         style: {
-          minHeight: "var(--touch-hit, 120px)",
+          minHeight: TOUCH_HIT,
           height: 470,
           display: "flex",
           flexDirection: "column",

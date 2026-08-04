@@ -30,7 +30,7 @@
       "h": 6
     }
   ],
-  "territory_id": null,
+  "territory_id": "russian-state-kolchak",
   "media": [
     {
       "n": 1,
@@ -181,6 +181,7 @@
         "27 Российское гос 06 1.jpg",
         "27 Российское гос 06 2.jpg"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],
