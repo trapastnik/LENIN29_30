@@ -25,30 +25,30 @@
 
   .wrap {
     width: 100%;
-    max-width: 1180px;
+    max-width: calc(1180px * var(--ui-scale, 1));
     margin: 0 auto;
-    padding: 0 32px 220px;   /* хвост под пагинатор, чтобы он не закрывал текст */
+    padding: 0 calc(32px * var(--ui-scale, 1)) calc(220px * var(--ui-scale, 1));   /* хвост под пагинатор, чтобы он не закрывал текст */
   }
 
   /* ── титул ─────────────────────────────────────────────────────────── */
   .hero {
-    padding: 64px 0 52px;
+    padding: calc(64px * var(--ui-scale, 1)) 0 calc(52px * var(--ui-scale, 1));
     color: var(--ink-on-dark);
   }
   .hero .kicker {
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.34em;
     text-transform: uppercase;
     color: var(--brass);
-    margin-bottom: 22px;
+    margin-bottom: calc(22px * var(--ui-scale, 1));
   }
   .hero h1 {
     margin: 0;
     /* Nolde, прямое начертание: курсива у него нет (§8) */
     font-family: var(--font-display);
     font-style: normal;
-    font-size: 78px;
+    font-size: calc(78px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 1.04;
     letter-spacing: -0.015em;
@@ -56,46 +56,46 @@
     max-width: 18em;
   }
   .hero .dates {
-    margin-top: 26px;
+    margin-top: calc(26px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--telegrey-4);
   }
   .hero .rule {
-    margin-top: 34px;
-    height: 2px;
+    margin-top: calc(34px * var(--ui-scale, 1));
+    height: calc(2px * var(--ui-scale, 1));
     background: var(--brass);
     opacity: 0.55;
     transform: skewX(var(--brand-skew, -15deg));
   }
 
-  .sections { display: flex; flex-direction: column; gap: 40px; }
+  .sections { display: flex; flex-direction: column; gap: calc(40px * var(--ui-scale, 1)); }
 
   /* ── подвал: источники и примечания ────────────────────────────────── */
   .tail {
-    margin-top: 56px;
-    padding: 40px 48px;
+    margin-top: calc(56px * var(--ui-scale, 1));
+    padding: calc(40px * var(--ui-scale, 1)) calc(48px * var(--ui-scale, 1));
     background: var(--page-bg-deep);
-    border: 1px solid var(--rule);
+    border: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     color: var(--telegrey-4);
   }
   .tail h3 {
-    margin: 0 0 18px;
+    margin: 0 0 calc(18px * var(--ui-scale, 1));
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--brass);
     font-weight: 400;
   }
-  .tail ul { margin: 0 0 28px; padding-left: 24px; }
+  .tail ul { margin: 0 0 calc(28px * var(--ui-scale, 1)); padding-left: calc(24px * var(--ui-scale, 1)); }
   .tail li {
     font-family: var(--font-body);
-    font-size: 19px;
+    font-size: calc(19px * var(--ui-scale, 1));
     line-height: 1.5;
-    margin-bottom: 12px;
+    margin-bottom: calc(12px * var(--ui-scale, 1));
   }
   .tail li:last-child { margin-bottom: 0; }
   .tail .grp:last-child ul { margin-bottom: 0; }
@@ -104,10 +104,10 @@
   .tail .url {
     display: block;
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: calc(15px * var(--ui-scale, 1));
     color: var(--slate-window);
     word-break: break-all;
-    margin-top: 4px;
+    margin-top: calc(4px * var(--ui-scale, 1));
   }
 
   /* ── пагинатор ─────────────────────────────────────────────────────── */
@@ -117,18 +117,18 @@
      а стрелки ↑/↓ на ней читаются вернее, чем на горизонтальной. */
   .pager {
     position: fixed;
-    right: 40px;
-    bottom: 40px;
+    right: calc(40px * var(--ui-scale, 1));
+    bottom: calc(40px * var(--ui-scale, 1));
     z-index: 40;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 16px 12px;
+    gap: calc(10px * var(--ui-scale, 1));
+    padding: calc(16px * var(--ui-scale, 1)) calc(12px * var(--ui-scale, 1));
     background: var(--page-bg-deep);
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     border-radius: 999px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 calc(12px * var(--ui-scale, 1)) calc(40px * var(--ui-scale, 1)) rgba(0, 0, 0, 0.55);
   }
   .pager button {
     width: var(--touch-hit, 120px);
@@ -136,11 +136,11 @@
     min-width: var(--touch-hit, 120px);
     min-height: var(--touch-hit, 120px);
     border-radius: 50%;
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     background: transparent;
     color: var(--brass);
     font-family: var(--font-display);
-    font-size: 40px;
+    font-size: calc(40px * var(--ui-scale, 1));
     line-height: 1;
     transition: background .14s, color .14s, transform .14s;
   }
@@ -149,10 +149,10 @@
   .pager .counter {
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: calc(20px * var(--ui-scale, 1));
     letter-spacing: 0.16em;
     color: var(--telegrey-4);
-    padding: 2px 0;
+    padding: calc(2px * var(--ui-scale, 1)) 0;
   }
   .pager .counter b { color: var(--brass); font-weight: 400; }
 
@@ -174,37 +174,37 @@
      пересечение, а шапка остаётся доступной — «Разделы» закрывают повторным
      нажатием. Значение — высота .page-header (≈142) плюс воздух. */
   .toc-panel {
-    width: min(1080px, calc(100vw - 96px));
-    max-height: calc(100vh - 200px);
-    margin-top: 160px;
+    width: min(calc(1080px * var(--ui-scale, 1)), calc(100vw - calc(96px * var(--ui-scale, 1))));
+    max-height: calc(100vh - calc(200px * var(--ui-scale, 1)));
+    margin-top: calc(160px * var(--ui-scale, 1));
     display: flex;
     flex-direction: column;
     background: var(--page-bg-deep);
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
   }
   .toc-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 26px 32px;
-    border-bottom: 1.5px solid var(--brass);
+    gap: calc(24px * var(--ui-scale, 1));
+    padding: calc(26px * var(--ui-scale, 1)) calc(32px * var(--ui-scale, 1));
+    border-bottom: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
   }
   .toc-head .t {
     font-family: var(--font-mono);
-    font-size: 17px;
+    font-size: calc(17px * var(--ui-scale, 1));
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--brass);
   }
   .toc-close {
-    width: 72px; height: 72px;
-    min-width: 72px; min-height: 72px;
+    width: calc(72px * var(--ui-scale, 1)); height: calc(72px * var(--ui-scale, 1));
+    min-width: calc(72px * var(--ui-scale, 1)); min-height: calc(72px * var(--ui-scale, 1));
     border-radius: 50%;
-    border: 1.5px solid var(--brass);
+    border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
     background: var(--signal-red);
     color: var(--paper-white);
-    font-size: 34px;
+    font-size: calc(34px * var(--ui-scale, 1));
     line-height: 1;
   }
   .toc-close:active { transform: scale(0.96); }
@@ -213,37 +213,37 @@
   .toc-item {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: calc(28px * var(--ui-scale, 1));
     width: 100%;
     min-height: var(--touch-hit, 120px);
-    padding: 20px 32px;
+    padding: calc(20px * var(--ui-scale, 1)) calc(32px * var(--ui-scale, 1));
     text-align: left;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: calc(1px * var(--ui-scale, 1)) solid var(--rule);
     color: var(--ink-on-dark);
   }
   .toc-item:active { background: rgba(210, 183, 115, 0.22); }
   .toc-item[aria-current='true'] { background: rgba(210, 183, 115, 0.13); }
   .toc-item .n {
     flex: 0 0 auto;
-    width: 78px;
+    width: calc(78px * var(--ui-scale, 1));
     font-family: var(--font-display);
-    font-size: 44px;
+    font-size: calc(44px * var(--ui-scale, 1));
     font-weight: 900;
     line-height: 1;
     color: var(--brass);
   }
-  .toc-item .txt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .toc-item .txt { display: flex; flex-direction: column; gap: calc(6px * var(--ui-scale, 1)); min-width: 0; }
   .toc-item .ttl {
     font-family: var(--font-body);
-    font-size: 27px;
+    font-size: calc(27px * var(--ui-scale, 1));
     line-height: 1.2;
   }
   .toc-item .sub {
     font-family: var(--font-body);
     font-style: italic;
-    font-size: 19px;
+    font-size: calc(19px * var(--ui-scale, 1));
     line-height: 1.3;
     color: var(--slate-window);
   }
@@ -440,7 +440,7 @@
           var i = self._sections.indexOf(e.target);
           if (i >= 0) { self._current = i; self._syncPager(); }
         });
-      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      }, { rootMargin: '-45% calc(0px * var(--ui-scale, 1)) -50% calc(0px * var(--ui-scale, 1))', threshold: 0 });
 
       this._sections.forEach(function (el) { self._observer.observe(el); });
     }

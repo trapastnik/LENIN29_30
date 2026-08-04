@@ -57,6 +57,11 @@ if not os.path.exists(INDEX):
 
 doc = load(INDEX)
 items = doc.get("items", [])
+if not items:
+    print("check_geo_index: реестр пуст — это ошибка, а не «нечего "
+          "проверять»: зелёный прогон на пустом входе отключает проверку "
+          "целиком", file=sys.stderr)
+    sys.exit(2)
 
 
 # --- 1. схема ---------------------------------------------------------------
@@ -162,8 +167,18 @@ for it in items:
         if base is None:
             fail(f"{it['id']} фаза {p['n']}: неизвестный src_root «{key}»")
             continue
-        if not os.path.exists(os.path.join(ROOT, base, rel)):
-            warn(f"{it['id']} фаза {p['n']}: исходник не найден — {base}/{rel}")
+        root_dir = os.path.join(ROOT, base)
+        if not os.path.isdir(root_dir):
+            # Корня нет вовсе — это сервер, где исходников заказчика
+            # и не должно быть. Предупреждение, не ошибка.
+            warn(f"{it['id']} фаза {p['n']}: нет корня исходников {base} — "
+                 "на сервере это норма")
+        elif not os.path.exists(os.path.join(root_dir, rel)):
+            # Корень на месте, а файла в нём нет: значит переехал или
+            # переименован. Это реальная поломка ссылки, и молчать нельзя —
+            # строку в отчёте никто не читает, пока не заподозрит неладное.
+            fail(f"{it['id']} фаза {p['n']}: исходник пропал из существующего "
+                 f"корня — {base}/{rel}")
 
 
 # --- 6. заявленные полигоны -------------------------------------------------
@@ -184,6 +199,61 @@ for it in items:
     check_polygon(it["id"], it.get("polygon"))
     for p in it.get("phases", []):
         check_polygon(f"{it['id']} фаза {p['n']}", p.get("polygon"))
+    for z in it.get("zones", []):
+        check_polygon(f"{it['id']} зона {z['id']}", z.get("polygon"))
+
+    # --- 7. записи с нетерриториальной геометрией ---------------------------
+    # geometry_kind != "area" означает, что polygon указывает не на контур.
+    # Проверяем, что за дискриминатором действительно что-то стоит: иначе
+    # запись объявляет особую модель и не даёт по ней ничего, а UI молча
+    # нарисует пустоту.
+    kind = it.get("geometry_kind", "area")
+    if kind != "area":
+        if not it.get("polygon"):
+            fail(f"{it['id']}: geometry_kind «{kind}», а polygon пуст — "
+                 "UI покажет заглушку при объявленной геометрии")
+        known = {a["id"] for a in it.get("actors", [])}
+        if kind == "presence" and not it.get("sites"):
+            fail(f"{it['id']}: geometry_kind «presence» без sites — "
+                 "объявленная модель ничем не наполнена")
+        if kind == "corridor":
+            wps = (it.get("corridor") or {}).get("waypoints") or []
+            if not wps:
+                fail(f"{it['id']}: geometry_kind «corridor» без waypoints — "
+                     "объявленная модель ничем не наполнена")
+            ns = sorted(w["n"] for w in wps)
+            if ns != list(range(1, len(ns) + 1)):
+                fail(f"{it['id']}: n у waypoints должны быть 1..{len(ns)} "
+                     f"без пропусков и дублей, получено {ns}")
+            # n — порядок вдоль линии с запада на восток. Расхождение
+            # с географией значит перепутанные номера или координату,
+            # и глазами это не ловится.
+            byn = sorted(wps, key=lambda w: w["n"])
+            drops = [(a["title_ru"], b["title_ru"])
+                     for a, b in zip(byn, byn[1:]) if b["lon"] < a["lon"]]
+            if drops:
+                fail(f"{it['id']}: порядок n расходится с географией — "
+                     + "; ".join(f"{a} → {b}" for a, b in drops))
+            for w in wps:
+                unknown = [a for a in w.get("actors", []) if a not in known]
+                if unknown:
+                    fail(f"{it['id']} waypoints/{w['id']}: участники "
+                         f"не объявлены: {', '.join(unknown)}")
+        for grp in ("sites", "zones"):
+            for s in it.get(grp, []):
+                unknown = [a for a in s.get("actors", []) if a not in known]
+                if unknown:
+                    fail(f"{it['id']} {grp}/{s['id']}: участники не объявлены "
+                         f"в actors: {', '.join(unknown)}")
+                if grp == "sites" and not (-90 <= s["lat"] <= 90
+                                          and -180 <= s["lon"] <= 180):
+                    fail(f"{it['id']} sites/{s['id']}: координаты вне земного "
+                         f"шара — {s['lat']}, {s['lon']}")
+        # Даты не обязательны, но их отсутствие — заметный факт, а не норма:
+        # карта без дат показывает одновременным то, что растянуто на годы.
+        nodate = [s["id"] for s in it.get("sites", []) if not s.get("from")]
+        if nodate:
+            warn(f"{it['id']}: точки без даты начала — {', '.join(nodate)}")
 
     # Инвариант контракта: если геометрия есть хоть у одной фазы, она обязана
     # быть видна и на уровне записи. Иначе UI, проверяющий одно поле polygon,
@@ -200,15 +270,18 @@ with_src = sum(1 for i in items if i.get("phases"))
 phases = sum(len(i.get("phases", [])) for i in items)
 
 print(f"реестр: {len(items)} территорий, "
-      f"{with_src} с картографией заказчика ({phases} фаз), "
-      f"{with_geom} с построенным полигоном")
+      f"{with_src}/{len(items)} с картографией заказчика ({phases} фаз), "
+      f"{with_geom}/{len(items)} с геометрией; "
+      f"предупреждений {len(warnings)}, ошибок {len(errors)}")
 
 for n in notes:
     print(f"  · {n}")
+# Предупреждения и ошибки — в stderr: строка в стандартном выводе тонет
+# в отчёте, а в логе прогона stderr видно отдельно.
 for w in warnings:
-    print(f"  ! {w}")
+    print(f"  ! {w}", file=sys.stderr)
 for e in errors:
-    print(f"  ✗ {e}")
+    print(f"  ✗ {e}", file=sys.stderr)
 
 if errors:
     print(f"\ncheck_geo_index: {len(errors)} нарушений")

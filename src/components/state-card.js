@@ -3,6 +3,7 @@
 
 import { fetchJSON } from '../data/loader.js';
 import { t, onLangChange } from '../data/i18n.js';
+import { richParagraphs, escapeHtml } from '../data/rich-text.js';
 import './map-unit.js';
 
 const TEMPLATE = `
@@ -38,7 +39,10 @@ const TEMPLATE = `
     font-family: var(--font-mono);
     font-size: 16px;
     letter-spacing: 0.18em;
-    color: var(--camp-color, #888);
+    /* Текст по светлой карточке — начертательный токен: --camp-white как
+       текст давал контраст 1.45. Заливки (полоса, рамка) остаются на
+       --camp-color. */
+    color: var(--camp-ink, var(--camp-color, #888));
     font-weight: 700;
     text-transform: uppercase;
   }
@@ -92,6 +96,16 @@ const TEMPLATE = `
   :host(:not([expanded])) .no-map { display: none; }
 
   .loading { padding: 40px; text-align: center; color: var(--ink-faint); font-family: var(--font-mono); }
+  /* Подсветка разметки справок. Живёт здесь, а не в src/data/rich-text.js,
+     потому что --camp-ink и --camp-color ставит этот же компонент через
+     setProperty: правило и свойство должны лежать вместе, иначе brand-lint
+     справедливо считает их ссылками на несуществующий токен. */
+  .rt-ref {
+    color: var(--camp-ink, var(--camp-color, currentColor));
+    border-bottom: 1px dotted var(--camp-ink, var(--camp-color, currentColor));
+  }
+  .rt-unresolved { color: var(--camp-ink, var(--camp-color, currentColor)); font-weight: 700; }
+  .rt-em { font-weight: 600; }
 </style>
 <div id="root" class="loading"></div>
 `;
@@ -129,8 +143,30 @@ export class StateCard extends HTMLElement {
       try { this._stub = JSON.parse(newV); } catch { this._stub = null; }
       if (!this._data) this._render();
     }
-    if (name === 'state-id' && newV) this._load(newV);
-    if (name === 'expanded') this._render();
+    if (name === 'state-id' && newV) {
+      this._id = newV;
+      if (this.hasAttribute('expanded')) this._loadOnce();
+      else this._render();
+    }
+    if (name === 'expanded') {
+      if (newV !== null) this._loadOnce();
+      else this._render();
+    }
+  }
+
+  // Загружаем справку ТОЛЬКО у раскрытой карточки. Плитка в сетке рисуется
+  // из stub — записи индекса, которая для того и сделана самодостаточной.
+  //
+  // Раньше запрос уходил на установку id, то есть при отрисовке сетки летело
+  // столько запросов, сколько карточек. Посетитель за сеанс открывает три-пять
+  // из семидесяти — остальное грузилось в никуда.
+  //
+  // Порядок атрибутов не важен: id может прийти раньше expanded и наоборот,
+  // поэтому загрузку запускает тот из них, который окажется вторым.
+  _loadOnce() {
+    if (this._data || this._loading || !this._id) { this._render(); return; }
+    this._loading = true;
+    this._load(this._id).finally(() => { this._loading = false; });
   }
 
   async _load(id) {
@@ -150,30 +186,50 @@ export class StateCard extends HTMLElement {
   }
 
   _render() {
-    const d = this._data;
+    // Пока справка не загружена, рисуем из stub: заголовок, даты и лагерь
+    // в нём есть, а тело справки плитке и не нужно — оно обрезано стилями.
+    const d = this._data || this._stub;
     if (!d) return;
+    const full = !!this._data;
     const campVar = `var(--camp-${(d.camp || 'red').replace(/_/g, '-')}, #888)`;
     this.style.setProperty('--camp-color', campVar);
+    this.style.setProperty('--camp-ink',
+      `var(--camp-${(d.camp || 'red').replace(/_/g, '-')}-ink, ${campVar})`);
 
-    const dates = d.dates
-      ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '')
-      : '';
+    // Строку заказчика («Конец октября – начало ноября») цифрами не передать,
+    // поэтому display_ru важнее собранного from—to (docs/content.md).
+    const dates = (d.dates && d.dates.display_ru)
+      || d.dates_display_ru
+      || (d.dates ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '') : '');
 
-    const paras = (d.summary_ru || '').split(/\n\n+/).map(p => `<p>${p}</p>`).join('');
-    const hasMap = !!d.map_id;
+    // abbr_ru — массив: аббревиатур бывает несколько («РСДРП(б)», «РКП(б)»).
+    // Прямая подстановка давала бы их через запятую без пробела.
+    const abbr = Array.isArray(d.abbr_ru) ? d.abbr_ru.join(' · ') : (d.abbr_ru || '');
+    // Разметку разбираем, а не печатаем: без этого в тексте видны
+    // «[большевиков](#/party/bolsheviks)» — на 2026-08-04 таких ссылок
+    // было 1197 в 91 справке из 92. Заодно экранируем: до сих пор текст
+    // справки уходил в innerHTML сырым.
+    const paras = richParagraphs(d.summary_ru);
+    // map_id живёт ТОЛЬКО в _index.json: в самой справке его нет, там
+    // territory_id (и он у всех null, реестра карт ещё нет). Раньше hasMap
+    // считался по загруженной справке и потому был всегда false — карта
+    // Комуча, единственная собранная, не монтировалась никогда, а на её
+    // месте стояло «карта в производстве».
+    const mapId = d.map_id || (this._stub && this._stub.map_id) || null;
+    const hasMap = !!mapId;
     const layers = (d.initial_layers || []).join(',');
 
     this._root.classList.remove('loading');
     this._root.innerHTML = `
       <div class="camp-stripe"></div>
       <header>
-        <h2>${d.title_ru}</h2>
-        ${d.abbr_ru ? `<div class="abbr">${d.abbr_ru}</div>` : ''}
-        <div class="meta">${dates || '&nbsp;'}</div>
+        <h2>${escapeHtml(d.title_ru)}</h2>
+        ${abbr ? `<div class="abbr">${escapeHtml(abbr)}</div>` : ''}
+        <div class="meta">${dates ? escapeHtml(dates) : '&nbsp;'}</div>
       </header>
       <div class="body">${paras}</div>
-      ${hasMap
-        ? `<div class="map-wrap"><map-unit map-id="${d.map_id}"${layers ? ` initial-layers="${layers}"` : ''} show-panel="true"></map-unit></div>`
+      ${hasMap && full
+        ? `<div class="map-wrap"><map-unit map-id="${mapId}"${layers ? ` initial-layers="${layers}"` : ''} show-panel="true"></map-unit></div>`
         : `<div class="no-map">${t('Карта территории в производстве. Доступна только для Комуч (пример технологии).', 'Territory map in production. Available for Komuch only (technology sample).')}</div>`}
     `;
   }

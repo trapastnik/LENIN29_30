@@ -242,7 +242,9 @@ def main() -> int:
                   % (w, h, "+".join(tiers), record[i]["kp_no"] or "—",
                      ", изображений %d" % len(images) if len(images) > 1 else ""))
         except (urllib.error.URLError, OSError, ValueError) as exc:
-            print("ОШИБКА %s: %s" % (type(exc).__name__, exc))
+            # В stderr, а не в stdout: строку в общем выводе никто
+            # не читает, пока не заподозрит неладное, а подозревать нечего.
+            print("ОШИБКА %s: %s" % (type(exc).__name__, exc), file=sys.stderr)
             failed.append(i)
         time.sleep(PAUSE)
 
@@ -256,11 +258,11 @@ def main() -> int:
                    ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
 
-    print("\nЗаписано: %s (%d позиций)"
-          % (OUT_RECORD.relative_to(ROOT), len(record)))
+    print("\nЗаписано: %s (%d/%d позиций)"
+          % (OUT_RECORD.relative_to(ROOT), len(record), len(items)))
     print("Файлы:    %s" % OUT_DIR.relative_to(ROOT))
     if failed:
-        print("Не получилось: %s" % ", ".join(failed))
+        print("Не получилось: %s" % ", ".join(failed), file=sys.stderr)
     print("\nДальше: python3 scripts/simbirsk/import_simbirsk.py")
     return 1 if failed else 0
 

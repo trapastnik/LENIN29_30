@@ -3,6 +3,7 @@
 
 import { fetchJSON } from '../data/loader.js';
 import { t, onLangChange } from '../data/i18n.js';
+import { richParagraphs, escapeHtml } from '../data/rich-text.js';
 
 const TEMPLATE = `
 <style>
@@ -81,6 +82,16 @@ const TEMPLATE = `
     color: var(--ink-faint);
     font-family: var(--font-mono);
   }
+  /* Подсветка разметки справок. Живёт здесь, а не в src/data/rich-text.js,
+     потому что --camp-ink и --camp-color ставит этот же компонент через
+     setProperty: правило и свойство должны лежать вместе, иначе brand-lint
+     справедливо считает их ссылками на несуществующий токен. */
+  .rt-ref {
+    color: var(--camp-ink, var(--camp-color, currentColor));
+    border-bottom: 1px dotted var(--camp-ink, var(--camp-color, currentColor));
+  }
+  .rt-unresolved { color: var(--camp-ink, var(--camp-color, currentColor)); font-weight: 700; }
+  .rt-em { font-weight: 600; }
 </style>
 <div id="root" class="loading"></div>
 `;
@@ -119,8 +130,30 @@ export class PartyCard extends HTMLElement {
       try { this._stub = JSON.parse(newV); } catch { this._stub = null; }
       if (!this._data) this._render();
     }
-    if (name === 'party-id' && newV) this._load(newV);
-    if (name === 'expanded') this._render();
+    if (name === 'party-id' && newV) {
+      this._id = newV;
+      if (this.hasAttribute('expanded')) this._loadOnce();
+      else this._render();
+    }
+    if (name === 'expanded') {
+      if (newV !== null) this._loadOnce();
+      else this._render();
+    }
+  }
+
+  // Загружаем справку ТОЛЬКО у раскрытой карточки. Плитка в сетке рисуется
+  // из stub — записи индекса, которая для того и сделана самодостаточной.
+  //
+  // Раньше запрос уходил на установку id, то есть при отрисовке сетки летело
+  // столько запросов, сколько карточек. Посетитель за сеанс открывает три-пять
+  // из семидесяти — остальное грузилось в никуда.
+  //
+  // Порядок атрибутов не важен: id может прийти раньше expanded и наоборот,
+  // поэтому загрузку запускает тот из них, который окажется вторым.
+  _loadOnce() {
+    if (this._data || this._loading || !this._id) { this._render(); return; }
+    this._loading = true;
+    this._load(this._id).finally(() => { this._loading = false; });
   }
 
   async _load(id) {
@@ -140,26 +173,39 @@ export class PartyCard extends HTMLElement {
   }
 
   _render() {
-    const d = this._data;
+    // Пока справка не загружена, рисуем из stub: заголовок, даты и лагерь
+    // в нём есть, а тело справки плитке и не нужно — оно обрезано стилями.
+    const d = this._data || this._stub;
     if (!d) return;
-    const campVar = `var(--camp-${d.camp.replace(/_/g, '-')}, #888)`;
+    const full = !!this._data;
+    const camp = (d.camp || 'red').replace(/_/g, '-');
+    const campVar = `var(--camp-${camp}, currentColor)`;
     this.style.setProperty('--camp-color', campVar);
+    // Начертательный вариант — для терминов в тексте: тело карточки светлое,
+    // и заливочный --camp-white там даёт контраст 1.45 (см. state-card).
+    this.style.setProperty('--camp-ink', `var(--camp-${camp}-ink, ${campVar})`);
 
-    const dates = d.dates
-      ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '')
-      : '';
+    // Строку заказчика («Конец октября – начало ноября») цифрами не передать,
+    // поэтому display_ru важнее собранного from—to (docs/content.md).
+    const dates = (d.dates && d.dates.display_ru)
+      || d.dates_display_ru
+      || (d.dates ? (d.dates.from || '') + (d.dates.to ? ' — ' + d.dates.to : '') : '');
 
-    const paras = (d.summary_ru || '').split(/\n\n+/).map(p => `<p>${p}</p>`).join('');
+    // Разметку разбираем, а не печатаем: без этого в тексте видны
+    // «[большевиков](#/party/bolsheviks)» — на 2026-08-04 таких ссылок
+    // было 1197 в 91 справке из 92. Заодно экранируем: до сих пор текст
+    // справки уходил в innerHTML сырым.
+    const paras = richParagraphs(d.summary_ru);
 
     this._root.classList.remove('loading');
     this._root.innerHTML = `
       <div class="camp-stripe"></div>
       <header>
-        <h2>${d.title_ru}</h2>
-        <div class="meta">${dates || '&nbsp;'}</div>
+        <h2>${escapeHtml(d.title_ru)}</h2>
+        <div class="meta">${dates ? escapeHtml(dates) : '&nbsp;'}</div>
       </header>
       <div class="body">${paras}</div>
-      ${d.leaders_ru && d.leaders_ru.length ? `<div class="leaders"><b>${t('Лидеры:', 'Leaders:')}</b>${d.leaders_ru.join(' · ')}</div>` : ''}
+      ${d.leaders_ru && d.leaders_ru.length ? `<div class="leaders"><b>${t('Лидеры:', 'Leaders:')}</b>${escapeHtml(d.leaders_ru.join(' · '))}</div>` : ''}
     `;
   }
 }

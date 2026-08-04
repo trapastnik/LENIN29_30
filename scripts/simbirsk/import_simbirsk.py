@@ -72,6 +72,36 @@ PLACEHOLDERS = ROOT / "content-src" / "simbirsk-placeholders.json"
 
 LONGREAD_ID = "simbirsk"
 
+# Разделов в источнике ровно столько. Расхождение роняет прогон: если
+# заказчик пришлёт версию с другой разметкой, молча собранный огрызок
+# опаснее отказа — он выглядит как готовый лонгрид.
+EXPECTED_SECTIONS = 11
+
+# Куда этому скрипту вообще позволено писать. Сторож в самой записи, а не
+# разовая проверка: допишет кто-нибудь путь — и прогон начнёт затирать чужое.
+#
+# Все три пути — зона simbirsk по §4 после разведения границ 2026-08-04:
+# каталог лонгридов закреплён за нами (у content там только схема),
+# а `content-src/simbirsk-*` выделен из общего content-src отдельной строкой.
+# Остальной content-src принадлежит зоне content и трогать его нельзя.
+ALLOWED_WRITES = (
+    "public/content/longreads/",
+    "content-src/simbirsk-media-wanted.md",
+    "content-src/simbirsk-placeholders.json",
+)
+
+
+def write_guarded(path: Path, text: str) -> None:
+    """Запись с проверкой зоны. Чужой путь — отказ, а не тихая перезапись."""
+    rel = path.relative_to(ROOT).as_posix()
+    if not any(rel == a or rel.startswith(a) for a in ALLOWED_WRITES):
+        raise PermissionError(
+            f"{rel} — вне зоны simbirsk (CLAUDE.md §4). "
+            "Запись отменена. Нужен чужой файл — заявка оркестратору."
+        )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+
 # ── связи с уже импортированным ────────────────────────────────────────────
 #
 # В этом docx нет разметки заказчика «жирный курсив = упоминание сущности»
@@ -443,9 +473,32 @@ def parse_sources(doc: Document) -> list[dict]:
 # ── связи ──────────────────────────────────────────────────────────────────
 
 def load_index(kind_dir: str) -> dict:
+    """Индекс чужой зоны — вход ОБЯЗАТЕЛЬНЫЙ, отказ громкий.
+
+    Мягкое «нет файла — работаем без него» здесь было бы хуже отказа: без
+    индекса ref_labels собрался бы пустым, плашки связей молча исчезли бы
+    со всех одиннадцати разделов, а прогон отчитался бы успехом. Файл чужой
+    (зона content), его могут переименовать, имея на то полное право, —
+    поэтому сообщение должно называть файл и владельца, а не падать
+    трассировкой JSONDecodeError.
+    """
     path = ROOT / "public" / "content" / kind_dir / "_index.json"
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return {i["id"]: i for i in data.get("items", [])}
+    if not path.exists():
+        raise SystemExit(
+            f"нет {path.relative_to(ROOT)} — это индекс зоны content, по нему "
+            "строятся подписи плашек связей. Переименовали? Спроси зону content."
+        )
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        raise SystemExit(f"{path.relative_to(ROOT)} не читается: {exc}") from exc
+    items = data.get("items") or []
+    if not items:
+        raise SystemExit(
+            f"{path.relative_to(ROOT)} пуст — связей не построить. "
+            "Пустой вход это ошибка, а не «нечего делать»."
+        )
+    return {i["id"]: i for i in items}
 
 
 def attach_refs(sections: list[dict], indexes: dict) -> dict:
@@ -501,10 +554,10 @@ def aggregate_related(sections: list[dict]) -> dict:
 def build(doc: Document) -> dict:
     parsed = parse(doc)
     sections = parsed["sections"]
-    if len(sections) != 11:
+    if len(sections) != EXPECTED_SECTIONS:
         raise SystemExit(
-            f"разобрано {len(sections)} разделов вместо 11 — источник изменился, "
-            "проверь разметку «Раздел N. Название»"
+            f"разобрано {len(sections)} разделов вместо {EXPECTED_SECTIONS} — "
+            "источник изменился, проверь разметку «Раздел N. Название»"
         )
 
     indexes = {b: load_index(b) for b in ("persons", "parties", "states", "events")}
@@ -757,8 +810,7 @@ def main() -> int:
         return 0
 
     for p, text in artifacts:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(text, encoding="utf-8")
+        write_guarded(p, text)
 
     n_sec = len(data["sections"])
     n_par = sum(len(s["paragraphs_ru"]) for s in data["sections"])
@@ -768,12 +820,14 @@ def main() -> int:
     n_refs = len(data["ref_labels"])
     chars = sum(len(p) for s in data["sections"] for p in s["paragraphs_ru"])
 
-    print(f"разделов {n_sec}, абзацев {n_par}, знаков {chars}")
+    # Со знаменателем: «11/11» и «0/11» различаются мгновенно, а «11» и «0»
+    # требуют помнить, сколько должно было быть.
+    print(f"разделов {n_sec}/{EXPECTED_SECTIONS}, абзацев {n_par}, знаков {chars}")
     n_stub = sum(1 for s in data["sections"] for m in s["media"] if m.get("placeholder"))
     n_real = sum(1 for s in data["sections"] for m in s["media"]
                  if m.get("file") and not m.get("placeholder"))
     print(f"слотов иллюстраций {n_media} (со ссылкой {n_links}, "
-          f"временных {n_stub}, выкупленных {n_real}), "
+          f"временных {n_stub}/{n_links}, выкупленных {n_real}/{n_media}), "
           f"заявок «нужно подобрать» {n_wanted}")
     print(f"связей с импортированным {n_refs}: "
           + ", ".join(f"{k} {len(v)}" for k, v in data["related"].items()))

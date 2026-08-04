@@ -21,7 +21,7 @@ const SECTIONS = [
     ru: 'Хроника событій', en: 'Chronicle of events',
     noteRu: 'Лента времени 1917–1922, событія по годамъ',
     noteEn: 'Timeline 1917–1922, events by year',
-    accent: '#A02128',            // BRAND.signalRed
+    accent: 'var(--camp-red)',
     countKey: 'chronicle',
   },
   {
@@ -29,7 +29,7 @@ const SECTIONS = [
     ru: 'Политическія партіи', en: 'Political parties',
     noteRu: 'Красные, бѣлые, революціонная демократія, зелёные, національныя движенія',
     noteEn: 'Reds, Whites, revolutionary democracy, Greens, national movements',
-    accent: '#8C4A99',            // --camp-rev-dem
+    accent: 'var(--camp-rev-dem)',
     countKey: 'parties',
   },
   {
@@ -37,7 +37,7 @@ const SECTIONS = [
     ru: 'Государственныя образованія', en: 'State formations',
     noteRu: 'Шесть группъ, справки съ инфоблокомъ и картой территоріи',
     noteEn: 'Six groups, dossiers with an info block and a territory map',
-    accent: '#2F4A6B',            // --camp-intervention
+    accent: 'var(--camp-intervention)',
     countKey: 'states',
   },
   {
@@ -45,7 +45,7 @@ const SECTIONS = [
     ru: 'Персоналіи', en: 'People',
     noteRu: 'Справки о участникахъ съ обѣихъ сторонъ',
     noteEn: 'Dossiers on participants from every side',
-    accent: '#D2B773',            // BRAND.brass
+    accent: 'var(--brass)',
     countKey: 'persons',
   },
   {
@@ -53,7 +53,7 @@ const SECTIONS = [
     ru: 'Симбирскъ 1918–1919', en: 'Simbirsk 1918–1919',
     noteRu: 'Лонгридъ о городѣ между красными и Комучемъ',
     noteEn: 'A longread on the town between the Reds and Komuch',
-    accent: '#5A8E55',            // --camp-green
+    accent: 'var(--camp-green)',
     countKey: null,
   },
 ];

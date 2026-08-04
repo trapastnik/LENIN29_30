@@ -32,27 +32,41 @@
 
   <style>
     /* Кнопка «Разделы» в шапке. Геометрия — как у .back-link из pages.css,
-       но это <button>, а не ссылка: оглавление открывается на месте. */
+       но это <button>, а не ссылка: оглавление открывается на месте.
+       Все длины помножены на --ui-scale: на киоске 3840×2160 вёрстка
+       удваивается, и кнопка, оставшаяся в 1×, выглядела бы обмылком
+       рядом с удвоенным контентом. */
     .toc-btn {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: calc(12px * var(--ui-scale, 1));
       min-width: auto;
-      min-height: 64px;
-      padding: 14px 28px;
+      min-height: calc(64px * var(--ui-scale, 1));
+      padding: calc(14px * var(--ui-scale, 1)) calc(28px * var(--ui-scale, 1));
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: calc(13px * var(--ui-scale, 1));
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--brass);
       background: transparent;
-      border: 1.5px solid var(--brass);
-      border-radius: 30px;
+      border: calc(1.5px * var(--ui-scale, 1)) solid var(--brass);
+      border-radius: calc(30px * var(--ui-scale, 1));
       transition: background .15s, color .15s;
     }
     /* Только :active — на тач-панели пальцу нечем «наводиться» (§8). */
     .toc-btn:active { background: var(--brass); color: var(--iron-grey); }
-    .toc-btn .glyph { font-size: 20px; line-height: 1; }
+    .toc-btn .glyph { font-size: calc(20px * var(--ui-scale, 1)); line-height: 1; }
+
+    /* Тач-цель «к экспозиции». `.back-link` приходит из pages.css (зона design)
+       с padding 14/24 и без min-height — это 48 px при норме §1 в 120, и на
+       4K столько же: pages.css целиком в сырых пикселях. Переопределяем
+       у себя, чужой файл не трогаем — так же, как зона ui сделала
+       в states.html. Общая починка pages.css за design, заявка подана. */
+    .back-link {
+      min-height: var(--touch-hit, 120px);
+      padding: 0 calc(24px * var(--ui-scale, 1));
+      justify-content: center;
+    }
 
     /* Лонгрид сам центрирует свою колонку, поэтому у main здесь нет
        ни своих отступов по бокам, ни ограничения ширины. */

@@ -9,8 +9,7 @@ const SECTIONS = [
     en: "Chronicle of events",
     noteRu: "\u041B\u0435\u043D\u0442\u0430 \u0432\u0440\u0435\u043C\u0435\u043D\u0438 1917\u20131922, \u0441\u043E\u0431\u044B\u0442\u0456\u044F \u043F\u043E \u0433\u043E\u0434\u0430\u043C\u044A",
     noteEn: "Timeline 1917\u20131922, events by year",
-    accent: "#A02128",
-    // BRAND.signalRed
+    accent: "var(--camp-red)",
     countKey: "chronicle"
   },
   {
@@ -20,8 +19,7 @@ const SECTIONS = [
     en: "Political parties",
     noteRu: "\u041A\u0440\u0430\u0441\u043D\u044B\u0435, \u0431\u0463\u043B\u044B\u0435, \u0440\u0435\u0432\u043E\u043B\u044E\u0446\u0456\u043E\u043D\u043D\u0430\u044F \u0434\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0456\u044F, \u0437\u0435\u043B\u0451\u043D\u044B\u0435, \u043D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u044F \u0434\u0432\u0438\u0436\u0435\u043D\u0456\u044F",
     noteEn: "Reds, Whites, revolutionary democracy, Greens, national movements",
-    accent: "#8C4A99",
-    // --camp-rev-dem
+    accent: "var(--camp-rev-dem)",
     countKey: "parties"
   },
   {
@@ -31,8 +29,7 @@ const SECTIONS = [
     en: "State formations",
     noteRu: "\u0428\u0435\u0441\u0442\u044C \u0433\u0440\u0443\u043F\u043F\u044A, \u0441\u043F\u0440\u0430\u0432\u043A\u0438 \u0441\u044A \u0438\u043D\u0444\u043E\u0431\u043B\u043E\u043A\u043E\u043C\u044A \u0438 \u043A\u0430\u0440\u0442\u043E\u0439 \u0442\u0435\u0440\u0440\u0438\u0442\u043E\u0440\u0456\u0438",
     noteEn: "Six groups, dossiers with an info block and a territory map",
-    accent: "#2F4A6B",
-    // --camp-intervention
+    accent: "var(--camp-intervention)",
     countKey: "states"
   },
   {
@@ -42,8 +39,7 @@ const SECTIONS = [
     en: "People",
     noteRu: "\u0421\u043F\u0440\u0430\u0432\u043A\u0438 \u043E \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430\u0445\u044A \u0441\u044A \u043E\u0431\u0463\u0438\u0445\u044A \u0441\u0442\u043E\u0440\u043E\u043D\u044A",
     noteEn: "Dossiers on participants from every side",
-    accent: "#D2B773",
-    // BRAND.brass
+    accent: "var(--brass)",
     countKey: "persons"
   },
   {
@@ -53,8 +49,7 @@ const SECTIONS = [
     en: "Simbirsk 1918\u20131919",
     noteRu: "\u041B\u043E\u043D\u0433\u0440\u0438\u0434\u044A \u043E \u0433\u043E\u0440\u043E\u0434\u0463 \u043C\u0435\u0436\u0434\u0443 \u043A\u0440\u0430\u0441\u043D\u044B\u043C\u0438 \u0438 \u041A\u043E\u043C\u0443\u0447\u0435\u043C\u044A",
     noteEn: "A longread on the town between the Reds and Komuch",
-    accent: "#5A8E55",
-    // --camp-green
+    accent: "var(--camp-green)",
     countKey: null
   }
 ];

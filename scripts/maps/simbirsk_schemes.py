@@ -39,6 +39,9 @@ import sys
 
 import numpy as np
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _zone import owned_write, fail_if_empty  # noqa: E402
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 SRC_MAP = os.path.join(ROOT, "public", "content", "maps",
                        "povolzhye-1918-1919", "layers.svg")
@@ -285,8 +288,13 @@ def main():
     print(f"   СКО {np.mean(list(res.values())):.2f} px, "
           f"макс {max(res.values()):.2f} px")
 
+    if not os.path.exists(SRC_MAP):
+        print(f"simbirsk_schemes: нет исходной карты {SRC_MAP} — привязка\n"
+              f"  на якорях берёт геометрию оттуда", file=sys.stderr)
+        return 2
     src = open(SRC_MAP, encoding="utf-8").read()
     print()
+    fail_if_empty(len(SCHEMES), "схем в таблице SCHEMES")
     for sc in SCHEMES:
         svg, meta = build(sc, sol, src)
         print(f"{sc['id']:28} viewBox {meta['viewBox']:24} "
@@ -294,8 +302,10 @@ def main():
         if args.write:
             d = os.path.join(OUT_ROOT, sc["id"])
             os.makedirs(d, exist_ok=True)
-            open(os.path.join(d, "layers.svg"), "w", encoding="utf-8").write(svg)
-            with open(os.path.join(d, "map.json"), "w", encoding="utf-8") as f:
+            open(owned_write(os.path.join(d, "layers.svg")), "w",
+                 encoding="utf-8").write(svg)
+            with open(owned_write(os.path.join(d, "map.json")), "w",
+                      encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=2)
                 f.write("\n")
     if not args.write:
