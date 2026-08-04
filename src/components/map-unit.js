@@ -83,8 +83,8 @@ const TEMPLATE = `
     flex-shrink: 0;
   }
   .layer-row input[type="checkbox"]:checked {
-    background: var(--ochre, #c18f3c);
-    border-color: var(--ochre, #c18f3c);
+    background: var(--accent);
+    border-color: var(--accent);
   }
   .layer-row input[type="checkbox"]:checked::after {
     content: '✓';
