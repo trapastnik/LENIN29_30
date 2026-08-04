@@ -29,7 +29,7 @@ const TEMPLATE = `
   #viewport.dragging { cursor: grabbing; }
   #container { transform-origin: 0 0; position: absolute; left: 0; top: 0; }
   #panel {
-    position: absolute; bottom: var(--sp-2); left: 50%;
+    position: absolute; bottom: var(--sp-2, 16px); left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     display: flex; gap: calc(14px * var(--ui-scale, 1)); flex-wrap: wrap; align-items: center;
@@ -37,7 +37,7 @@ const TEMPLATE = `
     background: rgba(30, 20, 10, 0.88);
     color: var(--paper-light);
     border: 1px solid var(--brass);
-    border-radius: var(--r-md);
+    border-radius: var(--r-md, 8px);
     /* Кегль 14: у шкалы --fs-* нет ступени ниже 16, а панель плотная —
        двадцать строк при ширине 280. Заявка в design на ступень ниже 16
        передана; до неё значение через --ui-scale, как остальные метрики. */
@@ -48,7 +48,7 @@ const TEMPLATE = `
   #panel.hidden { display: none; }
   /* Боковая панель справа — опт-ин через атрибут panel-side="right" на хосте. */
   :host([panel-side="right"]) #panel {
-    top: var(--sp-2); right: var(--sp-2); bottom: var(--sp-2); left: auto;
+    top: var(--sp-2, 16px); right: var(--sp-2, 16px); bottom: var(--sp-2, 16px); left: auto;
     transform: none;
     flex-direction: column;
     align-items: stretch;
@@ -56,7 +56,7 @@ const TEMPLATE = `
     gap: calc(6px * var(--ui-scale, 1));
     padding: calc(12px * var(--ui-scale, 1)) calc(14px * var(--ui-scale, 1));
     max-width: calc(280px * var(--ui-scale, 1));
-    max-height: calc(100% - var(--sp-4));
+    max-height: calc(100% - var(--sp-4, 32px));
     overflow-y: auto;
     font-size: calc(13px * var(--ui-scale, 1));
   }
@@ -94,7 +94,7 @@ const TEMPLATE = `
     width: calc(24px * var(--ui-scale, 1));
     height: calc(24px * var(--ui-scale, 1));
     border: 1.5px solid var(--paper-warm);
-    border-radius: var(--r-sm);
+    border-radius: var(--r-sm, 4px);
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
@@ -112,7 +112,7 @@ const TEMPLATE = `
     font-size: calc(12px * var(--ui-scale, 1));
   }
   .swatch {
-    width: calc(14px * var(--ui-scale, 1)); height: calc(14px * var(--ui-scale, 1)); border-radius: var(--r-sm);
+    width: calc(14px * var(--ui-scale, 1)); height: calc(14px * var(--ui-scale, 1)); border-radius: var(--r-sm, 4px);
     border: 1px solid rgba(255,255,255,0.2);
     flex-shrink: 0;
   }
@@ -134,7 +134,7 @@ const TEMPLATE = `
     background: rgba(250, 240, 210, 0.12);
     color: var(--paper-light);
     border: 1px solid var(--paper-warm);
-    border-radius: var(--r-sm);
+    border-radius: var(--r-sm, 4px);
     cursor: pointer;
     /* Было min-height: auto, то есть 28 CSS = 56 физических при ×2. */
     min-height: calc(64px * var(--ui-scale, 1));
