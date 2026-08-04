@@ -212,7 +212,7 @@ function Expo() {
     <div ref={stageRef} style={{
       position: 'absolute', inset: 0,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: '#050301',
+      background: 'var(--scene-bg)',
       overflow: 'hidden',
     }}>
       <style>{`
@@ -252,7 +252,7 @@ function Expo() {
           <div key={s.id} style={{
             position: 'fixed', inset: 0,
             zIndex: 200,
-            background: '#050301',
+            background: 'var(--scene-bg)',
             display: activeSection === s.id ? 'block' : 'none',
           }}>
             <iframe
