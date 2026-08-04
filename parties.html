@@ -23,14 +23,14 @@
     }
     .view-toggle button {
       /* Переключатель вида — управляющий элемент раздела, ≥64 px (§1). */
-      padding: 0 22px;
-      font-size: 13px;
+      padding: 0 calc(22px * var(--ui-scale, 1));
+      font-size: calc(13px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--paper-light);
       background: transparent;
       border: none;
-      min-height: 64px;
+      min-height: calc(64px * var(--ui-scale, 1));
       min-width: auto;
     }
     .view-toggle button.active {
@@ -54,18 +54,16 @@
     #grid-mode #grid { padding-bottom: 40px; }
     .hidden { display: none !important; }
 
-    /* Пороги тач-целей §1. .back-link приходит из pages.css (зона design)
-       с padding 14/24 — это ≈45 px, ниже порога. Переопределяем у себя,
-       чужой файл не трогаем.
-         основная навигация      ≥120 px — «к экспозиции», переключатель языка
-         управляющий элемент     ≥64 px  — переключатель вида, «к группам» */
-    .back-link,
-    #btn-lang {
-      min-height: var(--touch-hit, 120px);
-      padding: 0 24px;
-      justify-content: center;
-    }
-    #btn-lang { min-width: 120px; }
+    /* Тач-цели «к экспозиции» и языка держит сама .back-link из pages.css:
+       видимый размер 56, а зона нажатия — невидимый ::before высотой
+       --touch-hit. Своё переопределение здесь было и МЕРТВО: vite переносит
+       <link> в конец <head>, поэтому в сборке pages.css идёт ПОСЛЕ этого
+       блока, хотя в исходнике наоборот. Замер на собранном dist: видимая 56,
+       computed min-height 56px — выигрывала design, не мы.
+       Мёртвое переопределение опаснее отсутствующего: выглядит рабочим
+       и просыпается при следующей правке источника. Нашла зона simbirsk.
+       #btn-lang при этом жил — id перебивает класс, — и кнопка языка была
+       120 против 56 у соседней. Теперь обе одинаковые. */
   </style>
 </head>
 <body>
