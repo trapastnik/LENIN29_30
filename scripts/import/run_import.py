@@ -777,6 +777,10 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["abbr_ru"] = ent["abbr_ru"]
         if ent.get("camp") and not rec.get("camp"):
             rec["camp"] = ent["camp"]
+        if ent.get("title_chip_ru"):
+            # Короткая подпись чипа. Полное название остаётся в `title_ru`
+            # и в карточке — на диаграмме оно физически не помещается.
+            rec["title_chip_ru"] = ent["title_chip_ru"]
         if ent.get("venn_groups"):
             # Раскладку диаграммы строит зона design по индексу, а не по
             # карточкам: тянуть 33 файла ради координат чипа она не будет.

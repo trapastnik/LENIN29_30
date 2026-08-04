@@ -83,8 +83,8 @@ const TEMPLATE = `
     flex-shrink: 0;
   }
   .layer-row input[type="checkbox"]:checked {
-    background: var(--ochre, #c18f3c);
-    border-color: var(--ochre, #c18f3c);
+    background: var(--accent);
+    border-color: var(--accent);
   }
   .layer-row input[type="checkbox"]:checked::after {
     content: '✓';
@@ -150,16 +150,70 @@ export class MapUnit extends HTMLElement {
     this._svgEl = null;
     this._panZoom = null;
     this._cancelers = new Map();
+    this._timers = new Set();
+    this._loadingId = null;
   }
 
   connectedCallback() {
     const id = this.getAttribute('map-id');
-    if (id) this.load(id);
+    if (id && this._shouldLoad(id)) this.load(id);
+  }
+
+  /**
+   * Защита от двойной загрузки. Замерено: если `map-id` стоит в разметке
+   * до вставки элемента — а именно так его и собирает `state-card.js`
+   * через innerHTML, — то `attributeChangedCallback` и `connectedCallback`
+   * вызывают `load()` дважды: 2 загрузки, 4 запроса вместо 2.
+   *
+   * Работа при этом делается вся: второй прогон перетирает первый, поэтому
+   * снаружи не видно ничего, кроме удвоенного трафика и удвоенной сборки
+   * DOM. На каждой открытой карточке территории.
+   *
+   * Смена `map-id` на живом элементе продолжает работать — это часть API:
+   * сравнивается именно id, а не факт загрузки.
+   */
+  _shouldLoad(id) {
+    if (this._loadingId === id) return false;
+    this._loadingId = id;
+    return true;
+  }
+
+  /**
+   * Снятие элемента с DOM. Появился по вопросу зоны ui про сброс раздела
+   * по простою — и оказалось, что его не было вовсе.
+   *
+   * ЧТО ЖИВЁТ ДОЛЬШЕ ЭЛЕМЕНТА, если не убрать руками:
+   *   · ResizeObserver — активный наблюдатель держит ссылку на viewport,
+   *     который уже снят. Слушатели этой проблемы не создают: все они висят
+   *     на узлах внутри своего shadow DOM и умирают вместе с ним, а observer
+   *     живёт в браузере отдельно;
+   *   · requestAnimationFrame-циклы анимаций wipe/fade — clip-wipe планирует
+   *     следующий кадр сам, поэтому цикл докручивает свои 1200 мс по снятому
+   *     узлу;
+   *   · цепочка setTimeout из «Все вкл/выкл» — до 20 слоёв по 100 мс, то есть
+   *     ещё две секунды обращений к снятому элементу.
+   *
+   * Каждое по отдельности ограничено по времени и почти незаметно. Но §1
+   * требует ОДИН НЕПРЕРЫВНЫЙ СЕАНС, а утечки видны через час: если раздел
+   * с картой открывают и закрывают сотню раз, наблюдатели накапливаются.
+   */
+  disconnectedCallback() {
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
+    for (const cancel of this._cancelers.values()) cancel();
+    this._cancelers.clear();
+    for (const t of this._timers) clearTimeout(t);
+    this._timers.clear();
+    this._panZoom = null;
+    // Сброс, чтобы повторная вставка того же элемента снова загрузила карту.
+    this._loadingId = null;
   }
 
   attributeChangedCallback(name, oldV, newV) {
     if (oldV === newV) return;
-    if (name === 'map-id' && newV) this.load(newV);
+    if (name === 'map-id' && newV && this._shouldLoad(newV)) this.load(newV);
     if (name === 'show-panel') this._panel.classList.toggle('hidden', newV !== 'true');
   }
 
@@ -326,14 +380,17 @@ export class MapUnit extends HTMLElement {
 
   _toggleAll(on) {
     this._panel.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
-      setTimeout(() => {
+      // Таймеры запоминаются, чтобы disconnectedCallback их снял: у 20 слоёв
+      // цепочка тянется две секунды, и всё это время она обращается к узлам
+      // снятого элемента.
+      const t = setTimeout(() => {
+        this._timers.delete(t);
         cb.checked = on;
-        const row = cb.closest('.layer-row');
-        const nameEl = row.querySelector('span:last-child');
         // Никак не привязано к layer id → используем индекс meta.layers
-        const layer = this._meta.layers[i];
+        const layer = this._meta?.layers[i];
         if (layer) this.setLayer(layer.id, on);
       }, i * 100);
+      this._timers.add(t);
     });
   }
 
