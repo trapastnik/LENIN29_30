@@ -529,6 +529,51 @@ if (existsSync(chronDir)) {
   }
 }
 
+// ------------------------------------------------------ связь со слоем карт
+
+/**
+ * Ссылка проверяется в ОБЕ стороны — седьмой пункт чек-листа, формулировка
+ * зоны `maps`.
+ *
+ * Прямая половина: `territory_id` справки ведёт в существующую запись реестра
+ * и у той есть полигон. Обратная: на собранную геометрию кто-то ссылается.
+ *
+ * Без обратной половины обе зоны показывают зелёное при пустом экране, и обе
+ * правы по своей: у `maps` ни одна ссылка не битая — потому что ссылок нет
+ * вовсе; у меня `territory_id: null` — валидное значение «карты нет». Именно
+ * так шесть готовых полигонов не попадали на экран, и заметили это случайно.
+ */
+const GEO = join(CONTENT, 'geo', '_index.json');
+if (existsSync(GEO)) {
+  const geo = readJSON(GEO) || {};
+  const byId = new Map();
+  for (const r of geo.items || []) if (r && r.id) byId.set(r.id, r);
+
+  const referenced = new Set();
+  for (const [id, { item, kind, dir }] of indexRecords) {
+    if (kind !== 'state') continue;
+    const card = readJSON(join(CONTENT, dir, `${id}.json`));
+    const tid = card && card.territory_id;
+    if (!tid) continue;
+    referenced.add(tid);
+    const where = `${dir}/${id}.json`;
+    const rec = byId.get(tid);
+    if (!rec) {
+      err(where, `territory_id = «${tid}», а записи с таким id нет `
+        + 'в реестре карт — карточка попросит несуществующий слой');
+    } else if (!rec.polygon) {
+      err(where, `territory_id = «${tid}», но полигона у этой записи нет — `
+        + 'ссылка заведена «на будущее», §5 это запрещает');
+    }
+  }
+
+  for (const r of geo.items || []) {
+    if (!r || !r.polygon || referenced.has(r.id)) continue;
+    warn(rel(GEO), `у «${r.id}» есть геометрия, но ни одна справка на неё `
+      + 'не ссылается — полигон собран и на экран не попадёт');
+  }
+}
+
 // ---------------------------------------------------------------- лонгриды
 
 /**
