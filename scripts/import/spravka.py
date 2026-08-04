@@ -419,3 +419,17 @@ def build_media(media_rows: List[SpravkaRow], scope, aliases, self_target,
             item["duplicate_of"] = dup
         out.append(item)
     return out
+
+
+def visible_len(text: str) -> int:
+    """Длина ВИДИМОГО текста: markdown-разметка не считается.
+
+    Норма ТЗ про то, сколько читает посетитель, а в `summary_ru` лежит
+    markdown: ссылка `[меньшевикам](#/party/mensheviks)` весит 38 знаков
+    при 12 видимых. После роста связности с 55 % до 82 % сырая длина
+    распухла так, что флаг `over-tz-limit` встал у 95 справок при
+    настоящих 53 — то есть у сорока двух он врал.
+    """
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text or "")
+    s = re.sub(r"\*{1,3}([^*]*)\*{1,3}", r"\1", s)
+    return len(s)

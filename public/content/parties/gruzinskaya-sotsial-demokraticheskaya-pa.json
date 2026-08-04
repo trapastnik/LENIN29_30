@@ -130,9 +130,7 @@
     "sha256": "83990c3bb29c300d166ca70874d2f94c6c0ebf5c9cfa723edcbaf064215aa400",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ],
+  "flags": [],
   "x": 47.2,
   "y": 46.11,
   "title_chip_ru": "Грузинские меньшевики"
