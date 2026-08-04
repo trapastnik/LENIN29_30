@@ -8,7 +8,15 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <style>
-    body {
+    /* Селектор с id, а не голый `body`: порядок ему безразличен.
+       Vite переносит свои <link rel=stylesheet> в конец <head>, поэтому
+       в собранном dist этот блок оказывается ДО base.css и при равной
+       специфичности проигрывает. Правило было мёртвым — замерено на dist:
+       background-image none вместо полосатого фона, color чёрный вместо
+       --paper-light, а overflow hidden вместо auto, то есть страница
+       просто не прокручивалась. В исходнике всё выглядело правильно.
+       Нашёл scripts/check-css-order.mjs первым же прогоном. */
+    body#page-project {
       overflow: auto;
       background:
         repeating-linear-gradient(91deg, rgba(0,0,0,.14) 0 2px, transparent 2px 24px),
@@ -127,7 +135,7 @@
     }
   </style>
 </head>
-<body>
+<body id="page-project">
   <header>
     <div class="kicker">Музей В.И. Ленина · МТК 29/30</div>
     <h1>Ресурсы проекта</h1>
