@@ -773,6 +773,82 @@
       font-style: normal;
     }
 
+    /* — Раздел «Запрещено» (23). Пары: слева нельзя, справа чем вместо — */
+    .dont-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3, 24px);
+      margin-bottom: var(--sp-4, 32px);
+    }
+    .dont-pair > div {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+      border-left: var(--bd-2, 3px) solid transparent;
+    }
+    .dont-pair .dont { border-left-color: var(--signal-red); }
+    .dont-pair .do   { border-left-color: var(--camp-green); }
+    /* Метка — ЗАЛИВКА, а не цветной текст. Сигнальный красный на панели
+       --page-bg-deep даёт контраст 1.08, то есть не читается вовсе;
+       зелёный 2.15, немногим лучше. Заливкой получается 7.20 и 5.44.
+       Ровно тот же случай, что с --camp-*-ink: палитра лагерей работает
+       заливкой, а как текст — нет. */
+    .dont-pair .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2, 16px);
+      padding: 2px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+    }
+    .dont-pair .dont .tag { background: var(--signal-red); color: var(--paper-white); }
+    .dont-pair .do .tag   { background: var(--camp-green); color: var(--ink-black); }
+    .dont-pair p {
+      font-size: var(--fs-3, 20px);
+      line-height: 1.45;
+      opacity: 0.8;
+      margin: var(--sp-2, 16px) 0 0;
+    }
+    .dont-pair code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 7px;
+      border-radius: var(--r-sm, 4px);
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+    }
+    .dont-pair code.ok { color: var(--camp-green); }
+    .demo-code {
+      display: block;
+      padding: var(--sp-2, 16px) !important;
+      font-size: 15px !important;
+    }
+    .demo-card {
+      width: 140px; height: 64px;
+      background: var(--paper-white);
+      border-radius: var(--r-md, 8px);
+    }
+    .demo-btn {
+      display: inline-flex; align-items: center;
+      min-height: 64px;
+      padding: 0 var(--sp-3, 24px);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brass);
+      border: var(--bd-1, 1.5px) solid var(--brass);
+      border-radius: var(--r-pill, 999px);
+    }
+    /* Демонстрационный :hover. Единственное место в проекте, где он
+       законен, — здесь он ЭКСПОНАТ, а не поведение интерфейса.
+       brand-lint:off */
+    .demo-hover:hover { background: var(--brass); color: var(--iron-grey); }
+    /* brand-lint:on */
+    .demo-active:active { background: var(--brass); color: var(--iron-grey); }
+
     /* — Typography Lab — */
     .font-lab {
       background: rgba(8, 12, 15, 0.55);
@@ -2171,6 +2247,155 @@
           <div class="signature">— Анна</div>
         </div>
       </div>
+    </section>
+
+    <!-- ── 23. Запрещено ───────────────────────────────────────────
+         Раздел устроен парами: слева то, что запрещено, справа —
+         чем это делается правильно. Запрет словами не убеждает,
+         а рядом стоящий правильный вариант убеждает сразу.
+
+         Левые колонки обёрнуты в brand-lint:off — они СОДЕРЖАТ
+         запрещённые конструкции намеренно, это их работа. -->
+    <section class="cat-section" id="c-forbidden">
+      <p class="lede">23 · Запрещено</p>
+      <h2>Шесть правил и чем они заменяются</h2>
+
+      <p class="lede-note">
+        Каждое правило поймано линтером — <code>npm run brand:lint</code>,
+        правила R1–R10. Здесь показано не «нельзя», а <b>чем вместо</b>:
+        запрет, у которого нет замены, обходят.
+      </p>
+
+      <div class="dont-pair" id="c-no-italic">
+        <div class="dont">
+          <span class="tag">R3 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div style="font-family: var(--font-display); font-size: var(--ds-5, 64px); font-style: italic; color: var(--brass);">1918</div>
+          <!-- brand-lint:on -->
+          <p>Курсив на Nolde. Файла курсивного начертания нет, браузер
+            синтезирует наклон — на крупных кеглях это видно как дефект
+            засечек. Правило было записано в трёх документах, и всё равно
+            накопилось 27 нарушений; теперь его держит линтер.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div style="font-family: var(--font-display); font-size: var(--ds-5, 64px); color: var(--brass); letter-spacing: 0.06em;">1918<span style="color: var(--signal-red);">/</span></div>
+          <p>Акцент даётся трекингом, латунным цветом и слэш-меткой.
+            Наклон, если он нужен, берётся параллелограммом
+            <code>--brand-skew</code> — главный мотив брендбука как раз
+            даёт его легально. Курсив 20 Kopeek и 21 Cent разрешён:
+            файлы подключены.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-hover">
+        <div class="dont">
+          <span class="tag">R5 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div class="demo-btn demo-hover">Справка →</div>
+          <!-- brand-lint:on -->
+          <p><!-- brand-lint:off --><code>:hover</code><!-- brand-lint:on -->. Тач-палец не наводится: состояние
+            наступает после нажатия и остаётся висеть, пока посетитель
+            не тронет другое место. На стенде это читается как «кнопка
+            залипла».</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-btn demo-active">Справка →</div>
+          <p><code>:active</code> — отклик ровно на время касания.
+            Уложиться надо в <code>--dur-base</code>: выше 280 мс палец
+            решает, что стенд не ответил, и жмёт второй раз.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-shadow">
+        <div class="dont">
+          <span class="tag">R1 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div class="demo-card" style="box-shadow: 0 3px 11px rgba(0,0,0,0.55);"></div>
+          <!-- brand-lint:on -->
+          <p>Самодельная тень. Чужая тень читается как другой материал:
+            две карточки рядом начинают выглядеть вырезанными из разной
+            бумаги, и посетитель ищет в этом смысл.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-card" style="box-shadow: var(--sh-2);"></div>
+          <p>Три ступени по назначению: <code>--sh-1</code> карточка,
+            <code>--sh-2</code> плашка над сценой, <code>--sh-3</code>
+            модальное. Смещение и размытие множатся на
+            <code>--ui-scale</code> вместе со всем остальным.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-raw-hex">
+        <div class="dont">
+          <span class="tag">R1 · нельзя</span>
+          <!-- brand-lint:off -->
+          <code class="demo-code">color: #D2B773;</code>
+          <!-- brand-lint:on -->
+          <p>Сырой hex, даже если он в точности равен бренд-цвету.
+            Связь с токеном теряется: поменяется латунь — это место
+            останется старым, и никто не узнает.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <code class="demo-code">color: var(--brass);</code>
+          <p>Нужен новый цвет — заявка в <code>design</code>, а не
+            константа в компоненте. «Своих» цветов не бывает: полутона
+            считаются формулой от бренд-цвета, и процент виден
+            в комментарии сгенерированного CSS.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-color-fallback">
+        <div class="dont">
+          <span class="tag">R2 · нельзя</span>
+          <!-- brand-lint:off -->
+          <code class="demo-code">color: var(--brasss, #8e6a2a);</code>
+          <!-- brand-lint:on -->
+          <p>Запас у ЦВЕТА. Это скрытая вторая палитра: опечатались
+            в имени токена — и страница молча красится «почти брендом».
+            Реальный случай: в карте стоял запас <!-- brand-lint:off --><code>#8e6a2a</code><!-- brand-lint:on -->
+            при латуни <!-- brand-lint:off --><code>#D2B773</code><!-- brand-lint:on -->.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <code class="demo-code">color: var(--brass);</code>
+          <p>Без запаса. Опечатка тогда видна сразу — элемент теряет
+            цвет, а не подменяет его. <b>У МЕТРИКИ наоборот:</b>
+            <code class="ok">min-height: var(--touch-hit, 120px)</code> —
+            запас обязателен, он единственное, что спасает приёмочный
+            параметр при отсутствующем токене. R9.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-small-target">
+        <div class="dont">
+          <span class="tag">R7 · нельзя</span>
+          <div class="demo-btn" style="min-height: 0; padding: 6px 12px; font-size: 13px;">Справка →</div>
+          <p>Тач-цель 48 px и меньше. Пороги §1 — два:
+            <b>основная навигация ≥ 120</b> (плитки разделов, кнопки года,
+            «к экспозиции», язык) и <b>управляющие элементы ≥ 64</b>
+            (фильтры, чипы, «Справка», сортировки).</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-btn" style="min-height: 64px;">Справка →</div>
+          <p>Размер и хит-зона могут быть разными: видимая пилюля 56 px,
+            а <code>::before</code> растягивает область нажатия до нормы.
+            Так сделана «к экспозиции» — 120 px высотой в шапке читались
+            бы плашкой, а не ссылкой.</p>
+        </div>
+      </div>
+
+      <p class="token-strip">
+        Левые колонки этого раздела намеренно содержат запрещённые
+        конструкции — иначе показывать было бы нечего. Они обёрнуты
+        в <code>brand-lint:off</code>, и это единственное законное
+        применение маркера: область, где конструкция не исполняется
+        как код, а демонстрируется. В рабочем коде маркера быть не должно.
+      </p>
     </section>
 
     <p class="source">Источник: docs/brand.md · docs/brand/Lenin-guideline-2026.pdf · src/styles/tokens.css · TESTS/fabric canvas/html-in-canvas-brief.md</p>
