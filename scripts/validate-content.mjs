@@ -11,7 +11,7 @@
  * Запуск:  node scripts/validate-content.mjs [--quiet]
  */
 
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,6 +28,21 @@ const KINDS = [
 ];
 
 const TZ_SUMMARY_MAX = 3000;
+
+// Формы редакторских пометок, встречающиеся в справках заказчика.
+// «Стоит отметить, что…» — обычная проза, поэтому «отметить» ловится только
+// в связке с «цифрой N»: иначе первое же вводное слово даст ложную тревогу
+// (проверено на «Дашнакцутюн»).
+const EDITORIAL_NOTE = new RegExp([
+  'отметить[^.]{0,60}цифр',
+  'см\\.\\s*литератур',
+  'нужно подобрать',
+  'подрезать (?:поля|бел)',
+  'обрезать поля',
+  'дизайнерам\\s*:',
+  'разместить обе стороны',
+  'добавлено в последний момент',
+].join('|'), 'i');
 
 /**
  * Длина ТЕКСТА, а не строки: разметка не считается.
@@ -52,6 +67,40 @@ function visibleLength(s) {
 // файлы тиров значит красить ворота в красный на пустом месте. Поэтому
 // наличие файлов проверяем, только если сборка вообще прогонялась.
 const mediaBuilt = existsSync(join(CONTENT, 'media'));
+
+/**
+ * База предупреждений — `content-src/_warnings-baseline.json`.
+ *
+ * Список, который всегда одинаков, перестают читать. Тот же эффект, что
+ * у вечно красного гейта из §8: сто пятьдесят одна строка два дня подряд
+ * приучает искать новое глазами и по памяти вместо механики. Формулировку
+ * принесла зона `maps`: «проверка, красная всегда, не отличается
+ * от выключенной» — роняй на ПРИРОСТЕ, а не на факте.
+ *
+ * База хранит не одно число, а разбивку ПО ПРИЧИНАМ: 94 непоставленных
+ * заказчиком файла и 53 превышения нормы ТЗ — разные вещи. Первые уйдут,
+ * когда музей ответит; вторые могут остаться навсегда. Свалив их в одно
+ * число, потом не разберёшь, что рассосалось само, а что мы приняли.
+ */
+const BASELINE = join(ROOT, 'content-src', '_warnings-baseline.json');
+const updateBaseline = process.argv.includes('--update-baseline');
+
+/** Предупреждение → причина. Порядок важен: первое совпадение выигрывает. */
+const REASONS = [
+  ['media-missing', /без файла на диске/, 'заказчик не поставил файл'],
+  ['tz-limit', /норма ТЗ/, 'справка длиннее нормы ТЗ'],
+  ['no-camp', /нет camp/, 'лагерь не определён'],
+  ['media-unbuilt', /производные не собраны/, 'не прогнан media:build'],
+  ['parser-drift', /меньше текста/, 'парсер разошёлся с pandoc'],
+  ['schema', /schema: 1/, 'нет поля schema'],
+  ['placeholder', /placeholder/, 'временная иллюстрация'],
+  ['other', /.*/, 'прочее'],
+];
+
+function reasonOf(msg) {
+  for (const [key, rx] of REASONS) if (rx.test(msg)) return key;
+  return 'other';
+}
 
 const errors = [];
 const warnings = [];
@@ -172,9 +221,19 @@ function stripImagePlaceholders(s) {
 function crossCheckParser(where, data) {
   if (crosscheckOff) return;
   const src = data.src && data.src.file;
+  // Корня исходников нет — это сервер или свежий клон, там их и не должно
+  // быть. А вот корень есть, а файла в нём нет — оборванная ссылка: справку
+  // нечем переимпортировать, и кросс-чек по ней молча перестаёт работать.
+  // Различение подсказала зона `maps`: у неё переезд каталога «Все карты
+  // (сборка)» в IN/02-maps-src осиротил 10 ссылок из 25 при зелёном прогоне.
   if (!src || !existsSync(IN)) return;
   const docx = join(IN, src);
-  if (!existsSync(docx) || !havePandoc()) return;
+  if (!existsSync(docx)) {
+    err(where, `src.file указывает на «${src}», а файла в ../IN/ нет — `
+      + 'справку нечем переимпортировать, исходник переехал или переименован');
+    return;
+  }
+  if (!havePandoc()) return;
 
   const viaPandoc = spawnSync('pandoc', ['--to=plain', '--wrap=none', docx],
     { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
@@ -341,6 +400,20 @@ function checkMedia(where, data) {
     // ── лайтбокс не должен апскейлить: без натива он этого не узнает
     if (!m.w || !m.h) {
       warn(where, `media n=${m.n}: неизвестны натурные размеры оригинала`);
+    }
+    // ── редакторская пометка в видимом поле
+    // Колонка ПРИМЕЧАНИЕ в докс — инструкции верстальщику, и их место
+    // в `_notes.json`, а не в подписи под экспонатом. Проходят они молча:
+    // пометка выглядит как данные, ни один прогон на ней не краснеет.
+    // Формы, которые встречаются: «Отметить … цифрой 1», «(см. литература
+    // последний лист)», «Нужно подобрать …», «Подрезать поля».
+    for (const f of ['caption_ru', 'extra_ru', 'inv_ru']) {
+      const v = m[f];
+      if (v && EDITORIAL_NOTE.test(v)) {
+        err(where, `media n=${m.n}: в ${f} редакторская пометка — `
+          + `«${v.match(EDITORIAL_NOTE)[0]}». Её место в _notes.json, `
+          + 'иначе посетитель прочитает указание верстальщику');
+      }
     }
     if (m.inv_ru && m.caption_ru && m.caption_ru.includes(m.inv_ru)) {
       err(where, `media n=${m.n}: инвентарный номер слит с аннотацией — `
@@ -565,15 +638,66 @@ if (placeholders.length) {
   console.log('     Официальные файлы запрошены. Гейт на этом не падает '
     + 'намеренно — заменить их надо до приёмки, а не до мержа.');
 }
+const byReason = {};
+for (const w of warnings) {
+  const k = reasonOf(w);
+  byReason[k] = (byReason[k] || 0) + 1;
+}
+
+if (updateBaseline) {
+  const payload = {
+    schema: 1,
+    _note: 'База предупреждений по причинам. Гейт падает на ПРИРОСТЕ, '
+      + 'а не на факте: список, который всегда одинаков, перестают читать. '
+      + 'Обновлять осознанно — `--update-baseline` стирает единственную '
+      + 'метрику, по которой видно, кто добавил.',
+    reasons: Object.fromEntries(REASONS.map(([k, , title]) => [k, title])),
+    counts: byReason,
+  };
+  writeFileSync(BASELINE, JSON.stringify(payload, null, 2) + '\n');
+  console.log(`база предупреждений обновлена: ${rel(BASELINE)}`);
+}
+
+const baseline = existsSync(BASELINE) ? (readJSON(BASELINE) || {}) : null;
+const grown = [];
+if (baseline && baseline.counts && !updateBaseline) {
+  for (const [k, n] of Object.entries(byReason)) {
+    const was = baseline.counts[k] || 0;
+    if (n > was) grown.push({ k, was, now: n, title: (baseline.reasons || {})[k] || k });
+  }
+}
+
 if (warnings.length && !quiet) {
   console.log(`\nПредупреждения (${warnings.length}):`);
   for (const w of warnings) console.log(`  • ${w}`);
 }
+if (baseline && baseline.counts && !updateBaseline && !quiet) {
+  const line = Object.entries(byReason)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, n]) => `${(baseline.reasons || {})[k] || k}: ${n}`
+      + ((baseline.counts[k] || 0) !== n ? ` (было ${baseline.counts[k] || 0})` : ''))
+    .join(', ');
+  console.log(`\nпо причинам — ${line}`);
+}
+
+if (grown.length) {
+  console.log(`\n${'!'.repeat(60)}`);
+  console.log('ПРИРОСТ ПРЕДУПРЕЖДЕНИЙ — стало хуже, чем было:');
+  for (const g of grown) {
+    console.log(`  ${g.title}: ${g.was} → ${g.now}  (+${g.now - g.was})`);
+  }
+  console.log('Разобрать и починить. Если прирост осознан и принят — '
+    + 'node scripts/validate-content.mjs --update-baseline');
+  console.log('!'.repeat(60));
+}
+
 if (errors.length) {
   console.error(`\nОшибки (${errors.length}):`);
   for (const e of errors) console.error(`  ✗ ${e}`);
   console.error(`\nПровалено ${errors.length} `
     + label(errors.length, 'проверка', 'проверки', 'проверок') + '.');
+}
+if (errors.length || grown.length) {
   process.exit(1);
 }
 console.log('\nОшибок нет.');

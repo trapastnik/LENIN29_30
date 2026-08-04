@@ -44,7 +44,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Убрать белые поля и подрезать левый край",
       "files": [
         "media/events/pokhod-kerenskogo-krasnova/01"
       ]
@@ -87,7 +86,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Убрать черные края",
       "files": [
         "media/events/pokhod-kerenskogo-krasnova/03"
       ]
@@ -109,7 +107,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Обрезать надпись внизу, сделать размер чуть меньше, так как качество не очень.",
       "files": [
         "media/events/pokhod-kerenskogo-krasnova/04"
       ]
@@ -127,7 +124,6 @@
       "w": null,
       "h": null,
       "tiers": [],
-      "note_ru": "Обрезать поля",
       "directives": [
         "trim"
       ]

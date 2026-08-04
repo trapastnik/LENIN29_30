@@ -43,7 +43,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Подрезать поля",
       "directives": [
         "trim"
       ],
@@ -89,7 +88,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Подрезать поля",
       "directives": [
         "trim"
       ],

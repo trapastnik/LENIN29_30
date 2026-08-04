@@ -44,7 +44,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Подрезать поля",
       "directives": [
         "trim"
       ],
@@ -69,7 +68,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Попробовать убрать пятна",
       "files": [
         "media/persons/gegechkori/02"
       ]

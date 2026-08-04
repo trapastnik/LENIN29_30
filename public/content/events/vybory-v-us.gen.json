@@ -44,7 +44,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Ранее использовалось в Большевики 02\nПодрезать поля",
       "directives": [
         "trim",
         "duplicate_of"
@@ -71,7 +70,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Подрезать поля",
       "directives": [
         "trim"
       ],
@@ -138,7 +136,6 @@
         "sm",
         "xs"
       ],
-      "note_ru": "Ранее использовалось в Урицком",
       "directives": [
         "duplicate_of"
       ],
