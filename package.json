@@ -18,8 +18,9 @@
     "longread:check": "node scripts/simbirsk/build-longread.mjs --check",
     "media:build": "python3 scripts/media/build_media.py",
     "kiosk:serve": "python3 -m http.server ${PORT:-8080} --bind 127.0.0.1 --directory dist",
-    "check": "npm run build && npm run tokens:check && npm run expo:check && npm run longread:check && npm run content:check && npm run paths:check",
-    "preview": "vite preview --host 127.0.0.1 --port 4173"
+    "check": "npm run build && npm run tokens:check && npm run expo:check && npm run longread:check && npm run content:check && npm run paths:check && npm run css:order",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "css:order": "node scripts/check-css-order.mjs"
   },
   "devDependencies": {
     "vite": "^5.4.0"
