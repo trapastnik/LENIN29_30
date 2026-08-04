@@ -27,6 +27,7 @@ CHIP_H  = 28        # высота чипа: dot 10 / текст 16×1.2 + paddi
 DOT_OFF = 11        # padding 6 + половина дота
 MARGIN  = 24        # поле кадра
 GAP_X   = 28        # горизонтальный зазор между соседними колонками
+ROW_STEP = int(__import__("os").environ.get("ROW_STEP", 66))   # шаг строки; он же глобальный минимум
 NAMES = ["red", "rev-dem", "white", "green", "national"]
 S = "/private/tmp/claude-501/-Users-dvn-Desktop-WWWWW-BMK-29-30-mtk29-design/7193210b-3b83-48b5-82ab-c5ee566dc10a/scratchpad/"
 
@@ -110,11 +111,11 @@ def place(items, mask_pts, taken):
             for x0 in xs_r[::2]:
                 if x0 + span > W - MARGIN: continue
                 for y0 in ys_r[::2]:
-                    if y0 - CHIP_H/2 < MARGIN or y0 + (nrow-1)*HIT + CHIP_H/2 > H - MARGIN: continue
+                    if y0 - CHIP_H/2 < MARGIN or y0 + (nrow-1)*ROW_STEP + CHIP_H/2 > H - MARGIN: continue
                     out, ok = [], True
                     for ci, col in enumerate(cols):
                         for it in col:
-                            x, y = x0 + offs[ci], y0 + col.index(it)*(HIT + SLACK)
+                            x, y = x0 + offs[ci], y0 + col.index(it)*ROW_STEP
                             box = (x, y, it["w"])
                             if not dot_inside(x, y) or any(conflicts(box, t, SLACK) for t in taken + out):
                                 ok = False; break
