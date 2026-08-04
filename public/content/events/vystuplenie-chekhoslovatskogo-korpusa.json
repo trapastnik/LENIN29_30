@@ -134,7 +134,6 @@
   },
   "flags": [
     "dates-unknown",
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }
