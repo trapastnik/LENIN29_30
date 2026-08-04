@@ -199,7 +199,7 @@ function Expo() {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#050301",
+    background: "var(--scene-bg)",
     overflow: "hidden"
   } }, /* @__PURE__ */ React.createElement("style", null, `
         @keyframes fadeUpTile { from { opacity: 0; transform: translateY(26px); } }
@@ -229,7 +229,7 @@ function Expo() {
     position: "fixed",
     inset: 0,
     zIndex: 200,
-    background: "#050301",
+    background: "var(--scene-bg)",
     display: activeSection === s.id ? "block" : "none"
   } }, /* @__PURE__ */ React.createElement(
     "iframe",
