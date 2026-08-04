@@ -1,13 +1,40 @@
-"""Расстановка 33 чипов по найденной геометрии + SVG-превью."""
+"""Расстановка чипов Венна с УЧЁТОМ ПОДПИСИ.
+
+Прошлая версия считала чип точкой. Он не точка: якорь — левый край,
+подпись растёт вправо и не переносится (`white-space: nowrap`), ширины
+от 72 px («Бунд») до 453 px («Украинская социал-демократическая рабочая
+партия»). Отсюда три дефекта, найденные зоной ui на живой странице:
+три подписи ушли за правый край кадра, восемь пар перекрылись,
+а «Мусават» встал на кромку блоба — эрозия защищала якорь, тогда как
+тело чипа уносило визуальный центр наружу.
+
+Модель здесь такая же, как в DOM:
+  чип        = прямоугольник [x, x+w] × [y-H/2, y+H/2]
+  точка      = «дот» в (x + DOT_OFF, y), он и обязан лежать в своей области
+  хит-зона   = сам прямоугольник, растянутый по вертикали до HIT
+
+Из этого следует правило столкновений, которого не было раньше:
+два чипа мешают друг другу, только если их диапазоны по X пересекаются
+И центры ближе HIT по вертикали. Разнесённые по горизонтали чипы
+не конфликтуют вовсе — точечная метрика этого видеть не могла.
+"""
 import json, math, itertools
 import numpy as np
+from scipy import ndimage
 
 W, H, HIT, GRID = 1920, 1080, 64, 4
+CHIP_H  = 28        # высота чипа: dot 10 / текст 16×1.2 + padding 4×2
+DOT_OFF = 11        # padding 6 + половина дота
+MARGIN  = 24        # поле кадра
+GAP_X   = 28        # горизонтальный зазор между соседними колонками
 NAMES = ["red", "rev-dem", "white", "green", "national"]
 S = "/private/tmp/claude-501/-Users-dvn-Desktop-WWWWW-BMK-29-30-mtk29-design/7193210b-3b83-48b5-82ab-c5ee566dc10a/scratchpad/"
 
 P = json.load(open(S + "venn_blobs.json"))
 PARTIES = json.load(open(S + "parties.json"))
+WIDTH = {r["id"]: r["w"] for r in json.load(open(S + "widths.json"))}
+for p in PARTIES:
+    p["w"] = WIDTH[p["id"]]
 
 singles, pairs = {n: [] for n in NAMES}, {}
 for p in PARTIES:
@@ -16,8 +43,8 @@ for p in PARTIES:
 
 xs, ys = np.meshgrid(np.arange(0, W, GRID) + GRID/2, np.arange(0, H, GRID) + GRID/2)
 
-def mask(p, gx=xs, gy=ys):
-    dx, dy = gx - p[0], gy - p[1]
+def mask(p):
+    dx, dy = xs - p[0], ys - p[1]
     c, s = math.cos(-p[4]), math.sin(-p[4])
     x, y = dx*c - dy*s, dx*s + dy*c
     th = np.arctan2(y, x)
@@ -30,127 +57,148 @@ def region(combo):
     for n in NAMES: m = m & (M[n] if n in combo else ~M[n])
     return m
 
-# Отступ от края области, чтобы чип не свисал: эрозия на радиус чипа.
-from scipy import ndimage  # noqa
 def erode(m, r):
-    k = int(r/GRID)
-    return ndimage.binary_erosion(m, np.ones((2*k+1, 2*k+1))) if k else m
+    k = max(1, int(r/GRID))
+    e = ndimage.binary_erosion(m, np.ones((2*k+1, 2*k+1)))
+    return e if e.sum() else m
 
-# Расстановка КОЛОНКАМИ, а не максимальным разбросом.
+SLACK = 2   # запас РАССТАНОВКИ против округления координат в проценты
+
+def conflicts(a, b, slack=0):
+    """Мешают ли друг другу два поставленных чипа.
+
+    РАССТАВЛЯЕМ С ЗАПАСОМ (slack=SLACK), ПРОВЕРЯЕМ ПО ТРЕБОВАНИЮ (slack=0).
+
+    Порог здесь — само требование (HIT, GAP_X), БЕЗ SLACK. Запас живёт
+    в шаге расстановки, и только там.
+
+    Смешивать их нельзя, я на этом уже попалась: подняв и шаг, и порог
+    до HIT + SLACK, я их сократила. Точные координаты давали 66 < 66 —
+    ложь, а округлённые 65.999 < 66 — истину, и раскладка «конфликтовала»
+    сама с собой. Плюс порог стал строже на 2 px по всем осям, и две
+    области перестали помещаться: 21 чип из 33 вместо 33."""
+    (ax, ay, aw), (bx, by, bw) = a, b
+    overlap_x = (ax < bx + bw + GAP_X + slack) and (bx < ax + aw + GAP_X + slack)
+    return overlap_x and abs(ay - by) < HIT + slack
+
+def place(items, mask_pts, taken):
+    """Колонками: порядок чтения сверху вниз, ширина колонки — по самой
+    длинной подписи в ней, чтобы соседняя не наезжала."""
+    pts = set(map(tuple, np.stack([xs[mask_pts], ys[mask_pts]], 1).astype(int)))
+    if not pts: return None
+    def dot_inside(x, y):
+        dx, dy = x + DOT_OFF, y
+        return any(abs(dx-px) <= GRID and abs(dy-py) <= GRID for px, py in pts)
+
+    xs_r = sorted({p[0] for p in pts}); ys_r = sorted({p[1] for p in pts})
+    for ncol in range(1, len(items) + 1):
+        nrow = math.ceil(len(items) / ncol)
+        base = [items[i*nrow:(i+1)*nrow] for i in range(ncol)]
+        if any(not c for c in base): continue
+        # Широкая колонка должна стоять ЛЕВЕЕ: у правого края кадра длинной
+        # подписи некуда расти, а порядок чтения внутри колонки при этом цел.
+        orders = [base]
+        wide_first = sorted(base, key=lambda c: -max(i["w"] for i in c))
+        if wide_first != base: orders.append(wide_first)
+
+        for cols in orders:
+            widths = [max(i["w"] for i in c) for c in cols]
+            offs, acc = [], 0
+            for wcol in widths:
+                offs.append(acc); acc += wcol + GAP_X + SLACK   # запас и по X тоже
+            span = acc - GAP_X - SLACK
+            for x0 in xs_r[::2]:
+                if x0 + span > W - MARGIN: continue
+                for y0 in ys_r[::2]:
+                    if y0 - CHIP_H/2 < MARGIN or y0 + (nrow-1)*HIT + CHIP_H/2 > H - MARGIN: continue
+                    out, ok = [], True
+                    for ci, col in enumerate(cols):
+                        for it in col:
+                            x, y = x0 + offs[ci], y0 + col.index(it)*(HIT + SLACK)
+                            box = (x, y, it["w"])
+                            if not dot_inside(x, y) or any(conflicts(box, t, SLACK) for t in taken + out):
+                                ok = False; break
+                            out.append(box)
+                        if not ok: break
+                    if ok:
+                        flat = [i for c in cols for i in c]
+                        # Самопроверка на выходе, а не после. Если раскладка,
+                        # которую функция считает корректной, ей же и не
+                        # проходит — виновата функция, и это видно сразу,
+                        # без гадания по итоговому json.
+                        assert len(out) == len(flat) == len(items), \
+                            f"чипов {len(items)}, прямоугольников {len(out)}, элементов {len(flat)}"
+                        for i, (bx, by, bw) in enumerate(out):
+                            assert dot_inside(bx, by), f"дот вне области: {flat[i]['t']}"
+                        for a, b in itertools.combinations(out, 2):
+                            assert not conflicts(a, b, SLACK), f"пересечение внутри области: {a} × {b}"
+                        return list(zip(out, flat))
+    return None
+
+# Порядок: СНАЧАЛА САМЫЕ ТЕСНЫЕ области.
 #
-# Так раскладывал куратор: в старом индексе rev-dem стоит двумя колонками
-# (x 24.1 и 43.1), white — двумя (54 и 82.9), внутри колонки шаг по y 4–8 %.
-# Это композиция, которой нет в данных: диаграмма читается списком сверху
-# вниз, а не обшаривается глазами. Разброс «подальше друг от друга» даёт
-# большее расстояние, но теряет порядок чтения — и на 33 чипах это дороже.
-COL_GAP, ROW_GAP = HIT * 1.9, HIT * 1.25
+# Раньше сортировала по суммарной ширине подписей, и «Белые» — пять чипов
+# в углу кадра — вставали последними, когда соседи уже заняли место.
+# Геометрия при этом позволяла: замер показал, что колонка шириной 219 px
+# помещает там семь строк при нужных пяти. Мешал порядок, а не место.
+#
+# Теснота = полезная площадь на один чип. Кому выбирать не из чего —
+# выбирает первым; просторным областям место найдётся в любом случае.
+def tightness(key, items):
+    m = erode(region(tuple(sorted(key))), 32)
+    return (int(m.sum()) * GRID * GRID) / len(items)
 
-def place(m, n, taken):
-    cand = np.stack([xs[m], ys[m]], 1)
-    if not len(cand) or n == 0: return []
-    x0, x1 = cand[:,0].min(), cand[:,0].max()
-    y0, y1 = cand[:,1].min(), cand[:,1].max()
-    inside = set(map(tuple, cand.astype(int)))
-    def ok(px, py):
-        if not any(abs(px-cx) <= GRID and abs(py-cy) <= GRID
-                   for cx, cy in inside if abs(px-cx) <= GRID):
-            return False
-        return all(math.dist((px,py), q) >= HIT for q in taken)
+plan = sorted([(k, v) for k, v in pairs.items()] + [((n,), singles[n]) for n in NAMES],
+              key=lambda kv: tightness(*kv))
 
-    best = None
-    for ncol in range(1, n + 1):                      # сколько колонок пробуем
-        nrow = math.ceil(n / ncol)
-        if (ncol-1)*COL_GAP > (x1-x0) or (nrow-1)*ROW_GAP > (y1-y0): continue
-        for ox in np.linspace(x0, x1 - (ncol-1)*COL_GAP, 9):
-            for oy in np.linspace(y0, y1 - (nrow-1)*ROW_GAP, 9):
-                pts = []
-                for c in range(ncol):
-                    for r in range(nrow):
-                        if len(pts) >= n: break
-                        px, py = ox + c*COL_GAP, oy + r*ROW_GAP
-                        if ok(px, py): pts.append((px, py))
-                if len(pts) == n:
-                    # предпочитаем меньше колонок и вертикальную компактность
-                    cost = ncol * 1000 + (max(p[1] for p in pts) - min(p[1] for p in pts))
-                    if best is None or cost < best[0]: best = (cost, pts)
-        if best: break
-    if best: return best[1]
-
-    # решётка не села — падаем на прежний жадный разброс
-    picked = []
-    c2 = cand.copy()
-    while len(picked) < n and len(c2):
-        ref = picked + taken
-        d = (np.min([np.hypot(c2[:,0]-q[0], c2[:,1]-q[1]) for q in ref], 0) if ref
-             else -np.hypot(c2[:,0]-c2[:,0].mean(), c2[:,1]-c2[:,1].mean()))
-        i = int(d.argmax())
-        if ref and d[i] < HIT: break
-        picked.append((float(c2[i,0]), float(c2[i,1])))
-        c2 = np.delete(c2, i, 0)
-    return picked
-
-plan = ([(k, pairs[k]) for k in sorted(pairs, key=lambda k: -len(pairs[k]))]
-        + [((n,), singles[n]) for n in sorted(NAMES, key=lambda n: len(singles[n]))])
-
-placed, taken, fail = [], [], 0
+placed, taken, failed = [], [], []
 for key, items in plan:
-    m = erode(region(tuple(sorted(key))), 46)
-    if m.sum() == 0: m = region(tuple(sorted(key)))
-    pts = place(m, len(items), taken)
-    if len(pts) < len(items):
-        fail += len(items) - len(pts)
-        print(f"  ✗ {' ∩ '.join(key)}: {len(pts)}/{len(items)}")
-    # Кого в какую точку — решает куратор там, где он высказался.
-    # Позиции уже посчитаны геометрией; кураторские x/y (15 из 33, остаток
-    # раскладки под ~15 чипов) задают лишь НАЗНАЧЕНИЕ внутри области.
-    # Так композиция, которую куратор держал в голове, переживает пересчёт.
-    items = sorted(items, key=lambda i: (i.get("cy") if i.get("cy") is not None else 999))
-    pts = sorted(pts, key=lambda p: (round(p[0]/COL_GAP), p[1]))
-    anchored = [i for i in items if i.get("cx") is not None]
-    rest = [i for i in items if i.get("cx") is None]
-    free = list(pts); ordered = []
-    for it in anchored:
-        tx, ty = it["cx"]/100*W, it["cy"]/100*H
-        k = min(range(len(free)), key=lambda i: math.dist(free[i], (tx, ty)))
-        ordered.append((free.pop(k), it))
-    ordered += list(zip(free, rest))
-    for p, it in ordered:
+    items = sorted(items, key=lambda i: (i.get("cy") if i.get("cy") is not None else 999, -i["w"]))
+    got = None          # ← сброс обязателен: без него провалившаяся область
+                        #   переиспользовала прямоугольники предыдущей, и это
+                        #   дало шесть «конфликтов», которых в раскладке не было
+    for r in (46, 32, 20, 10):
+        got = place(items, erode(region(tuple(sorted(key))), r), taken)
+        if got: break
+    if not got:
+        failed.append((key, len(items))); continue
+    for (x, y, w), it in got:
         placed.append(dict(id=it["id"], title_ru=it["t"], camp=it["camp"],
                            venn_groups=it["g"], curated=it.get("cx") is not None,
-                           x=round(p[0]/W*100, 2), y=round(p[1]/H*100, 2)))
-    taken += pts
+                           w=int(w), ex=float(x), ey=float(y), x=round(x/W*100, 3), y=round(y/H*100, 3)))
+        taken.append((x, y, w))
 
-d = [math.dist((a['x']/100*W, a['y']/100*H), (b['x']/100*W, b['y']/100*H))
-     for a, b in itertools.combinations(placed, 2)]
-print(f"\nразмещено {len(placed)}/{len(PARTIES)}, не влезло {fail}")
-print(f"минимальное расстояние центров {min(d):.1f} px  (требование {HIT})")
-print(f"на киоске ×2 — {min(d)*2:.0f} px")
+print(f"размещено {len(placed)}/{len(PARTIES)}" + (f"  НЕ СЕЛО: {failed}" if failed else ""))
 
-# ── SVG-превью ─────────────────────────────────────────────────────────────
-def path(p, steps=240):
-    pts = []
-    for i in range(steps):
-        th = 2*math.pi*i/steps
-        m = 1.0 + 0.11*math.sin(3*th + p[5]) + 0.06*math.sin(5*th - p[5]*1.7)
-        x, y = p[2]*m*math.cos(th), p[3]*m*math.sin(th)
-        c, s = math.cos(p[4]), math.sin(p[4])
-        pts.append((p[0] + x*c - y*s, p[1] + x*s + y*c))
-    return "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts) + " Z"
+over = [c for c in placed if c["x"]/100*W + c["w"] > W - MARGIN]
+print(f"подписей за правым краем: {len(over)}" + (f" — {[c['title_ru'] for c in over]}" if over else ""))
+bad, badx = [], []
+for a, b in itertools.combinations(placed, 2):
+    r = conflicts((a["x"]/100*W, a["y"]/100*H, a["w"]), (b["x"]/100*W, b["y"]/100*H, b["w"]))
+    e = conflicts((a["ex"], a["ey"], a["w"]), (b["ex"], b["ey"], b["w"]))
+    if r: bad.append((a, b, e))
+print(f"конфликтующих пар: {len(bad)}  (из них и в ТОЧНЫХ координатах: {sum(1 for x in bad if x[2])})")
+for a, b, e in bad[:3]:
+    print(f"    {a['title_ru'][:30]:<32} точно x={a['ex']:8.3f} y={a['ey']:8.3f}  окр x={a['x']/100*W:8.3f} y={a['y']/100*H:8.3f}")
+    print(f"    {b['title_ru'][:30]:<32} точно x={b['ex']:8.3f} y={b['ey']:8.3f}  окр x={b['x']/100*W:8.3f} y={b['y']/100*H:8.3f}")
+    print(f"      Δy точно {abs(a['ey']-b['ey']):.3f}   Δy округл {abs(a['y']-b['y'])/100*H:.3f}   и там и там конфликт: {e}\n")
 
-COL = {"red":"var(--camp-red)","rev-dem":"var(--camp-rev-dem)","white":"var(--camp-white)",
-       "green":"var(--camp-green)","national":"var(--camp-national)"}
-svg = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%">']
-svg.append(f'<rect width="{W}" height="{H}" fill="var(--page-bg-deep)"/>')
-for n in NAMES:
-    svg.append(f'<path d="{path(P[n])}" fill="{COL[n]}" fill-opacity="0.42" '
-               f'stroke="{COL[n]}" stroke-width="2"/>')
+def norm_dist(p, x, y):
+    dx, dy = x - p[0], y - p[1]
+    c, s = math.cos(-p[4]), math.sin(-p[4])
+    X, Y = dx*c - dy*s, dx*s + dy*c
+    th = math.atan2(Y, X)
+    m = 1.0 + 0.11*math.sin(3*th + p[5]) + 0.06*math.sin(5*th - p[5]*1.7)
+    return math.hypot(X/(p[2]*m), Y/(p[3]*m))
+
+worst = []
 for c in placed:
-    x, y = c['x']/100*W, c['y']/100*H
-    svg.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{HIT/2}" fill="none" '
-               f'stroke="var(--brass)" stroke-opacity="0.30" stroke-width="1"/>')
-    svg.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="7" fill="{COL[c["camp"]]}" '
-               f'stroke="var(--paper-white)" stroke-width="1.5"/>')
-svg.append('</svg>')
-open(S + "venn.svg", "w").write("\n".join(svg))
+    xc, y = c["x"]/100*W + c["w"]/2, c["y"]/100*H       # ВИЗУАЛЬНЫЙ центр чипа
+    for n in c["venn_groups"]:
+        worst.append((norm_dist(P[n], xc, y), c["title_ru"], n))
+worst.sort(reverse=True)
+print("\nближе всех к кромке своего блоба (визуальный центр, 1.0 = граница):")
+for d, t, n in worst[:3]:
+    print(f"  {d:.3f}  {t[:44]:<46} «{n}»")
+
 json.dump(placed, open(S + "venn_chips.json", "w"), ensure_ascii=False, indent=1)
-print("SVG и координаты записаны")

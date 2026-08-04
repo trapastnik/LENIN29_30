@@ -1,377 +1,311 @@
 [
  {
-  "id": "belorusskaya-sotsialisticheskaya-gromada",
-  "title_ru": "Белорусская социалистическая громада",
-  "camp": "national",
-  "venn_groups": [
-   "national",
-   "rev-dem"
-  ],
-  "curated": false,
-  "x": 40.86,
-  "y": 46.11
- },
- {
-  "id": "bund",
-  "title_ru": "Бунд",
-  "camp": "national",
-  "venn_groups": [
-   "national",
-   "rev-dem"
-  ],
-  "curated": false,
-  "x": 40.86,
-  "y": 53.52
- },
- {
   "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
-  "title_ru": "Грузинская социал-демократическая партия",
-  "camp": "national",
+  "title_ru": "Грузинские меньшевики",
   "venn_groups": [
    "national",
    "rev-dem"
   ],
-  "curated": false,
-  "x": 47.2,
-  "y": 46.11
+  "x": 40.312,
+  "y": 47.222
+ },
+ {
+  "id": "belorusskaya-sotsialisticheskaya-gromada",
+  "title_ru": "Белорусская громада",
+  "venn_groups": [
+   "national",
+   "rev-dem"
+  ],
+  "x": 40.312,
+  "y": 53.333
  },
  {
   "id": "poaley-tsion",
   "title_ru": "Поалей Цион",
-  "camp": "national",
   "venn_groups": [
    "national",
    "rev-dem"
   ],
-  "curated": false,
-  "x": 47.2,
-  "y": 53.52
+  "x": 53.698,
+  "y": 47.222
  },
  {
-  "id": "muslim-socialists",
-  "title_ru": "Мусульманские социалистические комитеты",
-  "camp": "national",
+  "id": "bund",
+  "title_ru": "Бунд",
   "venn_groups": [
    "national",
-   "red"
-  ],
-  "curated": true,
-  "x": 19.77,
-  "y": 67.04
- },
- {
-  "id": "borotbisty",
-  "title_ru": "Боротьбисты",
-  "camp": "national",
-  "venn_groups": [
-   "national",
-   "red"
-  ],
-  "curated": false,
-  "x": 13.44,
-  "y": 67.04
- },
- {
-  "id": "sotsial-demokraticheskaya-partiya-finlya",
-  "title_ru": "Социал-демократическая партия Финляндии",
-  "camp": "national",
-  "venn_groups": [
-   "national",
-   "red"
-  ],
-  "curated": false,
-  "x": 19.77,
-  "y": 59.63
- },
- {
-  "id": "union-defence",
-  "title_ru": "Союз защиты Родины и свободы",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem",
-   "white"
-  ],
-  "curated": true,
-  "x": 74.48,
-  "y": 36.25
- },
- {
-  "id": "union-renewal",
-  "title_ru": "Союз возрождения России",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem",
-   "white"
-  ],
-  "curated": true,
-  "x": 74.48,
-  "y": 28.84
- },
- {
-  "id": "left-srs",
-  "title_ru": "Левые эсеры",
-  "camp": "red",
-  "venn_groups": [
-   "red",
    "rev-dem"
   ],
-  "curated": true,
-  "x": 24.48,
-  "y": 31.76
- },
- {
-  "id": "alash",
-  "title_ru": "Алаш",
-  "camp": "national",
-  "venn_groups": [
-   "national",
-   "white"
-  ],
-  "curated": false,
-  "x": 70.1,
-  "y": 54.35
- },
- {
-  "id": "basmachestvo",
-  "title_ru": "Басмачество",
-  "camp": "green",
-  "venn_groups": [
-   "green",
-   "national"
-  ],
-  "curated": false,
-  "x": 26.35,
-  "y": 79.26
- },
- {
-  "id": "bolsheviks",
-  "title_ru": "Большевики",
-  "camp": "red",
-  "venn_groups": [
-   "red"
-  ],
-  "curated": true,
-  "x": 8.49,
-  "y": 46.99
- },
- {
-  "id": "reds-general",
-  "title_ru": "Красные",
-  "camp": "red",
-  "venn_groups": [
-   "red"
-  ],
-  "curated": false,
-  "x": 8.49,
-  "y": 54.4
- },
- {
-  "id": "anarchists",
-  "title_ru": "Анархисты",
-  "camp": "green",
-  "venn_groups": [
-   "green"
-  ],
-  "curated": true,
-  "x": 14.56,
-  "y": 84.63
- },
- {
-  "id": "greens-general",
-  "title_ru": "Зелёные",
-  "camp": "green",
-  "venn_groups": [
-   "green"
-  ],
-  "curated": false,
-  "x": 14.56,
-  "y": 92.04
- },
- {
-  "id": "cadets",
-  "title_ru": "Конституционно-демократическая партия",
-  "camp": "white",
-  "venn_groups": [
-   "white"
-  ],
-  "curated": true,
-  "x": 88.91,
-  "y": 26.48
- },
- {
-  "id": "alekseev-org",
-  "title_ru": "Алексеевская организация · Добровольческая армия",
-  "camp": "white",
-  "venn_groups": [
-   "white"
-  ],
-  "curated": true,
-  "x": 88.91,
-  "y": 33.89
- },
- {
-  "id": "right-center",
-  "title_ru": "Правый центр",
-  "camp": "white",
-  "venn_groups": [
-   "white"
-  ],
-  "curated": true,
-  "x": 88.91,
-  "y": 41.3
- },
- {
-  "id": "national-center",
-  "title_ru": "Национальный центр",
-  "camp": "white",
-  "venn_groups": [
-   "white"
-  ],
-  "curated": true,
-  "x": 88.91,
-  "y": 48.7
+  "x": 53.698,
+  "y": 53.333
  },
  {
   "id": "whites-general",
   "title_ru": "Белые",
-  "camp": "white",
   "venn_groups": [
    "white"
   ],
-  "curated": false,
-  "x": 88.91,
-  "y": 19.07
+  "x": 86.979,
+  "y": 29.815
  },
  {
-  "id": "national-movements",
-  "title_ru": "Национальные движения",
-  "camp": "national",
+  "id": "cadets",
+  "title_ru": "Кадеты",
   "venn_groups": [
-   "national"
+   "white"
   ],
-  "curated": false,
-  "x": 50.41,
-  "y": 64.81
+  "x": 86.979,
+  "y": 35.926
  },
  {
-  "id": "dashnaktsutyun",
-  "title_ru": "Дашнакцутюн",
-  "camp": "national",
+  "id": "alekseev-org",
+  "title_ru": "Добровольческая армия",
   "venn_groups": [
-   "national"
+   "white"
   ],
-  "curated": false,
-  "x": 50.41,
-  "y": 72.22
+  "x": 86.979,
+  "y": 42.037
  },
  {
-  "id": "latyshskiy-krestyanskiy-soyuz",
-  "title_ru": "Латышский крестьянский союз",
-  "camp": "national",
+  "id": "right-center",
+  "title_ru": "Правый центр",
   "venn_groups": [
-   "national"
+   "white"
   ],
-  "curated": false,
-  "x": 50.41,
-  "y": 79.63
+  "x": 86.979,
+  "y": 48.148
  },
  {
-  "id": "musavat",
-  "title_ru": "Мусават",
-  "camp": "national",
+  "id": "national-center",
+  "title_ru": "Национальный центр",
   "venn_groups": [
-   "national"
+   "white"
   ],
-  "curated": false,
-  "x": 56.74,
-  "y": 64.81
+  "x": 86.979,
+  "y": 54.259
  },
  {
-  "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
-  "title_ru": "Украинская социал-демократическая рабочая партия",
-  "camp": "national",
+  "id": "union-renewal",
+  "title_ru": "Союз возрождения России",
   "venn_groups": [
-   "national"
+   "rev-dem",
+   "white"
   ],
-  "curated": false,
-  "x": 56.74,
-  "y": 72.22
+  "x": 76.562,
+  "y": 17.593
  },
  {
-  "id": "srs",
-  "title_ru": "Социалисты-революционеры",
-  "camp": "rev-dem",
+  "id": "union-defence",
+  "title_ru": "Союз защиты Родины и свободы",
   "venn_groups": [
+   "rev-dem",
+   "white"
+  ],
+  "x": 76.562,
+  "y": 23.704
+ },
+ {
+  "id": "anarchists",
+  "title_ru": "Анархисты",
+  "venn_groups": [
+   "green"
+  ],
+  "x": 10.938,
+  "y": 86.852
+ },
+ {
+  "id": "greens-general",
+  "title_ru": "Зелёные",
+  "venn_groups": [
+   "green"
+  ],
+  "x": 10.938,
+  "y": 92.963
+ },
+ {
+  "id": "sotsial-demokraticheskaya-partiya-finlya",
+  "title_ru": "СДП Финляндии",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 18.021,
+  "y": 59.444
+ },
+ {
+  "id": "muslim-socialists",
+  "title_ru": "Мусульманские соцкомитеты",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 18.021,
+  "y": 65.556
+ },
+ {
+  "id": "borotbisty",
+  "title_ru": "Боротьбисты",
+  "venn_groups": [
+   "national",
+   "red"
+  ],
+  "x": 18.021,
+  "y": 71.667
+ },
+ {
+  "id": "left-srs",
+  "title_ru": "Левые эсеры",
+  "venn_groups": [
+   "red",
    "rev-dem"
   ],
-  "curated": true,
-  "x": 36.16,
-  "y": 38.66
+  "x": 24.479,
+  "y": 29.074
  },
  {
-  "id": "mensheviks",
-  "title_ru": "Меньшевики",
-  "camp": "rev-dem",
+  "id": "basmachestvo",
+  "title_ru": "Басмачество",
   "venn_groups": [
-   "rev-dem"
+   "green",
+   "national"
   ],
-  "curated": true,
-  "x": 36.16,
-  "y": 31.25
- },
- {
-  "id": "narodnie-socialists",
-  "title_ru": "Трудовая народно-социалистическая партия",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem"
-  ],
-  "curated": true,
-  "x": 42.49,
-  "y": 31.25
- },
- {
-  "id": "committee-salvation",
-  "title_ru": "Комитет спасения Родины и революции",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem"
-  ],
-  "curated": true,
-  "x": 42.49,
-  "y": 23.84
- },
- {
-  "id": "union-constituent",
-  "title_ru": "Союз защиты Учредительного собрания",
-  "camp": "rev-dem",
-  "venn_groups": [
-   "rev-dem"
-  ],
-  "curated": true,
-  "x": 36.16,
-  "y": 23.84
+  "x": 26.354,
+  "y": 78.704
  },
  {
   "id": "revdem-general",
   "title_ru": "Революционная демократия",
-  "camp": "rev-dem",
   "venn_groups": [
    "rev-dem"
   ],
-  "curated": false,
-  "x": 36.16,
-  "y": 16.44
+  "x": 34.479,
+  "y": 16.852
  },
  {
   "id": "sibirskoe-oblastnichestvo",
   "title_ru": "Сибирское областничество",
-  "camp": "rev-dem",
   "venn_groups": [
    "rev-dem"
   ],
-  "curated": false,
-  "x": 42.49,
-  "y": 16.44
+  "x": 34.479,
+  "y": 22.963
+ },
+ {
+  "id": "union-constituent",
+  "title_ru": "Союз защиты Учред. собрания",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 34.479,
+  "y": 29.074
+ },
+ {
+  "id": "committee-salvation",
+  "title_ru": "Комитет спасения",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 34.479,
+  "y": 35.185
+ },
+ {
+  "id": "narodnie-socialists",
+  "title_ru": "Народные социалисты",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 50.052,
+  "y": 16.852
+ },
+ {
+  "id": "mensheviks",
+  "title_ru": "Меньшевики",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 50.052,
+  "y": 22.963
+ },
+ {
+  "id": "srs",
+  "title_ru": "Социалисты-революционеры",
+  "venn_groups": [
+   "rev-dem"
+  ],
+  "x": 50.052,
+  "y": 29.074
+ },
+ {
+  "id": "national-movements",
+  "title_ru": "Национальные движения",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 62.187,
+  "y": 57.222
+ },
+ {
+  "id": "musavat",
+  "title_ru": "Мусават",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 62.187,
+  "y": 63.333
+ },
+ {
+  "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+  "title_ru": "Украинская СДРП",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 62.187,
+  "y": 69.444
+ },
+ {
+  "id": "dashnaktsutyun",
+  "title_ru": "Дашнакцутюн",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 62.187,
+  "y": 75.556
+ },
+ {
+  "id": "latyshskiy-krestyanskiy-soyuz",
+  "title_ru": "Латышский крестьянский союз",
+  "venn_groups": [
+   "national"
+  ],
+  "x": 62.187,
+  "y": 81.667
+ },
+ {
+  "id": "bolsheviks",
+  "title_ru": "Большевики",
+  "venn_groups": [
+   "red"
+  ],
+  "x": 6.979,
+  "y": 47.963
+ },
+ {
+  "id": "reds-general",
+  "title_ru": "Красные",
+  "venn_groups": [
+   "red"
+  ],
+  "x": 6.979,
+  "y": 54.074
+ },
+ {
+  "id": "alash",
+  "title_ru": "Алаш",
+  "venn_groups": [
+   "national",
+   "white"
+  ],
+  "x": 73.021,
+  "y": 63.519
  }
 ]
