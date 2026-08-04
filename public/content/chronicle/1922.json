@@ -30,6 +30,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "volochaevskaya-operatsiya",
+      "card_pol": null,
+      "card_mil": "volochaevskaya-operatsiya",
       "refs": {
         "states": [
           "fer"
@@ -60,6 +62,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -87,6 +91,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -110,6 +116,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -140,6 +148,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -167,6 +177,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -194,6 +206,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -221,6 +235,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "srs",
@@ -253,6 +269,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -276,6 +294,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -303,6 +323,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "diterikhs"
@@ -333,6 +355,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general",
@@ -364,6 +388,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "priamur-state",
@@ -396,6 +422,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -423,6 +451,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "primorskaya-operatsiya",
+      "card_pol": null,
+      "card_mil": "primorskaya-operatsiya",
       "refs": {
         "states": [
           "fer",
@@ -459,6 +489,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "fer",
@@ -487,6 +519,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "poaley-tsion",
@@ -516,6 +550,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -539,6 +575,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "ussr",

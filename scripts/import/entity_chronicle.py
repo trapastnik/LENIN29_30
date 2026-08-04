@@ -72,12 +72,25 @@ def build(doc, ctx, year: int) -> dict:
         else:
             track = "pol"
 
-        jump = pol_jump or mil_jump
-        card = card_hint = None
-        if jump:
-            card = ctx.resolve_card(jump[0], jump[1])
-            if not card:
-                card_hint = "%s %s" % jump
+        # Переход хранится ПО КОЛОНКАМ, а не один на строку. Строка 103
+        # года 1918 несёт два: №33 «Красный террор» в политической колонке
+        # и №34 «Наступление Восточного фронта» в военной. При `pol or mil`
+        # второй отбрасывался молча — и карточка №34 не имела на себя
+        # ни одной ссылки во всей хронике при том, что команда в докс есть.
+        # Такая строка одна из 76, и найти её удалось только обратной
+        # проверкой «на что существующее никто не ссылается».
+        cards = {}
+        hints = []
+        for col, jump in (("pol", pol_jump), ("mil", mil_jump)):
+            if not jump:
+                continue
+            found = ctx.resolve_card(jump[0], jump[1])
+            if found:
+                cards[col] = found
+            else:
+                hints.append("%s %s" % jump)
+        card = cards.get("pol") or cards.get("mil")
+        card_hint = "; ".join(hints) or None
 
         flags = []
         if date["precision"] == "unknown":
@@ -96,6 +109,8 @@ def build(doc, ctx, year: int) -> dict:
             "pol_en": None,
             "mil_en": None,
             "card": card,
+            "card_pol": cards.get("pol"),
+            "card_mil": cards.get("mil"),
             "refs": richtext.related_from(pol_paras + mil_paras, ctx.aliases, self_target),
             "weight": 3 if card else (2 if track == "both" else 1),
         }

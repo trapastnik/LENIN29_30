@@ -30,6 +30,7 @@ const KINDS = [
 const TZ_SUMMARY_MAX = 3000;
 const CHIP_MAX = 34;   // знаков ≈ 340 px в 21 Cent, замеры зоны design
 const chipLabels = new Map();
+const referencedCards = new Set();
 
 // Формы редакторских пометок, встречающиеся в справках заказчика.
 // «Стоит отметить, что…» — обычная проза, поэтому «отметить» ловится только
@@ -506,8 +507,12 @@ if (existsSync(chronDir)) {
       }
       if (!it.pol_ru && !it.mil_ru) err(where, `${it.id}: обе колонки пусты`);
       // ── переход в карточку обязан резолвиться, иначе кнопка ведёт в никуда
-      if (it.card && index.get(it.card) !== 'event') {
-        err(where, `${it.id}: card = «${it.card}» не найден в индексе событий`);
+      for (const f of ['card', 'card_pol', 'card_mil']) {
+        const v = it[f];
+        if (v && index.get(v) !== 'event') {
+          err(where, `${it.id}: ${f} = «${v}» не найден в индексе событий`);
+        }
+        if (v) referencedCards.add(v);
       }
       if (it.card_hint && !it.card) {
         warn(where, `${it.id}: «${it.card_hint}» не разрезолвился в карточку`);
@@ -527,6 +532,16 @@ if (existsSync(chronDir)) {
     }
     checked += 1;
   }
+}
+
+// Обратная половина по карточкам событий: карточка есть, а хроника на неё
+// не ссылается — переход к ней недостижим. Так потерялась карточка №34:
+// строка 1918 года несла ДВА перехода, по одному на колонку, а поле было
+// одно, и второй отбрасывался молча. Одна строка из 76.
+for (const [id, { kind }] of indexRecords) {
+  if (kind !== 'event' || referencedCards.has(id)) continue;
+  warn(`${'events'}/_index.json`, `на карточку «${id}» не ссылается ни одна `
+    + 'строка хроники — перехода к ней нет');
 }
 
 // ------------------------------------------------------ связь со слоем карт

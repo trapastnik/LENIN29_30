@@ -30,6 +30,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Январь"
@@ -54,6 +56,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -81,6 +85,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "rostovo-novocherkasskaya-operatsiya",
+      "card_pol": null,
+      "card_mil": "rostovo-novocherkasskaya-operatsiya",
       "refs": {
         "parties": [
           "reds-general"
@@ -108,6 +114,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kolchak",
@@ -140,6 +148,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "politcenter"
@@ -170,6 +180,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "nastuplenie-vostochnogo-fronta-1919-1920",
+      "card_pol": null,
+      "card_mil": "nastuplenie-vostochnogo-fronta-1919-1920",
       "refs": {
         "parties": [
           "reds-general"
@@ -197,6 +209,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "turkestanskiy-front",
+      "card_pol": null,
+      "card_mil": "turkestanskiy-front",
       "refs": {
         "persons": [
           "frunze"
@@ -228,6 +242,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -255,6 +271,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "latvssr",
@@ -286,6 +304,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "semyonov"
@@ -316,6 +336,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "tukhachevsky"
@@ -343,6 +365,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "politcenter"
@@ -373,6 +397,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "yudenich"
@@ -400,6 +426,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr",
@@ -428,6 +456,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks",
@@ -459,6 +489,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "estonskaya-respublika",
@@ -487,6 +519,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -510,6 +544,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsyur"
@@ -537,6 +573,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kolchak"
@@ -568,6 +606,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -595,6 +635,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "northern-region"
@@ -622,6 +664,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -649,6 +693,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -672,6 +718,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Март"
@@ -696,6 +744,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general"
@@ -723,6 +773,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -746,6 +798,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -769,6 +823,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -792,6 +848,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -815,6 +873,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "wrangel"
@@ -845,6 +905,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -868,6 +930,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "fer"
@@ -895,6 +959,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "reds-general",
@@ -923,6 +989,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "wrangel"
@@ -953,6 +1021,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "petlyura"
@@ -985,6 +1055,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {},
       "weight": 3
     },
@@ -1008,6 +1080,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "khnsr"
@@ -1035,6 +1109,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "bakinskaya-operatsiya-rkka",
+      "card_pol": null,
+      "card_mil": "bakinskaya-operatsiya-rkka",
       "refs": {
         "states": [
           "azerbaijani-ssr",
@@ -1063,6 +1139,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {
         "states": [
           "rsfsr",
@@ -1091,6 +1169,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "vsyur"
@@ -1124,6 +1204,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1147,6 +1229,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {
         "persons": [
           "egorov"
@@ -1174,6 +1258,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "wrangel"
@@ -1201,6 +1287,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {},
       "weight": 3
     },
@@ -1224,6 +1312,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1247,6 +1337,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {
         "persons": [
           "tukhachevsky",
@@ -1275,6 +1367,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {},
       "weight": 3
     },
@@ -1298,6 +1392,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr",
@@ -1329,6 +1425,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {},
       "weight": 3
     },
@@ -1352,6 +1450,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": "sovetsko-polskaya-voyna",
+      "card_mil": null,
       "refs": {
         "persons": [
           "dzerzhinskiy"
@@ -1379,6 +1479,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "belorussian-ssr"
@@ -1406,6 +1508,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "kakhovka",
+      "card_pol": null,
+      "card_mil": "kakhovka",
       "refs": {},
       "weight": 3
     },
@@ -1429,6 +1533,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "latviyskaya-respublika",
@@ -1457,6 +1563,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {},
       "weight": 3
     },
@@ -1480,6 +1588,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "wrangel"
@@ -1510,6 +1620,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1533,6 +1645,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "bukharskaya-operatsiya",
+      "card_pol": null,
+      "card_mil": "bukharskaya-operatsiya",
       "refs": {
         "persons": [
           "frunze"
@@ -1560,6 +1674,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -1587,6 +1703,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "bukharskiy-emirat",
@@ -1615,6 +1733,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr",
@@ -1643,6 +1763,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1666,6 +1788,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "makhno",
@@ -1697,6 +1821,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -1720,6 +1846,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "kakhovka",
+      "card_pol": null,
+      "card_mil": "kakhovka",
       "refs": {
         "states": [
           "bnsr"
@@ -1753,6 +1881,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -1780,6 +1910,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "sovetsko-polskaya-voyna",
+      "card_pol": null,
+      "card_mil": "sovetsko-polskaya-voyna",
       "refs": {
         "states": [
           "polskaya-respublika",
@@ -1808,6 +1940,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "fer"
@@ -1838,6 +1972,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rossiyskaya-vostochnaya-okraina"
@@ -1869,6 +2005,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "fer"
@@ -1896,6 +2034,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unr"
@@ -1926,6 +2066,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "perekopsko-chongarskaya-operatsiya",
+      "card_pol": null,
+      "card_mil": "perekopsko-chongarskaya-operatsiya",
       "refs": {
         "parties": [
           "reds-general"
@@ -1953,6 +2095,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "wrangel"
@@ -1983,6 +2127,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "whites-general"
@@ -2010,6 +2156,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -2033,6 +2181,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "armenian-ssr"
@@ -2060,6 +2210,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "respublika-armeniya"
@@ -2087,6 +2239,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "ukrainian-ssr",
