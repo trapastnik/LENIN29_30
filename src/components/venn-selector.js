@@ -368,7 +368,13 @@ export class VennSelector extends HTMLElement {
       // падать заметно, а не становиться серым. Ровно на таком запасе
       // фильтры персон молча разошлись с данными.
       chip.style.setProperty('--camp-color', `var(--camp-${it.camp})`);
-      chip.innerHTML = `<span class="dot"></span><span class="name">${it.title_ru}</span>`;
+      // Короткая подпись, если заведена: «Кадеты» вместо
+      // «Конституционно-демократическая партия» — 6 знаков против 37.
+      // Заведена у 10 партий из 33, и ровно у тех, чьи подписи уходили
+      // за кромку кадра. Запас обязателен: у 23 партий короткой нет,
+      // и без него они стали бы пустыми чипами.
+      const подпись = it.title_chip_ru || it.title_ru;
+      chip.innerHTML = `<span class="dot"></span><span class="name">${подпись}</span>`;
       chip.addEventListener('click', () => this._emitParty(it));
       this._stage.appendChild(chip);
       placed.push({ chip, x: pos.x });
