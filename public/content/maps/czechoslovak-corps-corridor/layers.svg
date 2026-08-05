@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948.9 213.8">
+  <!-- Чехословацкий корпус. Сгенерировано
+       scripts/maps/build_territory_maps.py.
+       geometry_kind corridor: своя проекция,
+       с базой не складывается. -->
+<!-- Чехословацкий корпус: коридор вдоль Транссиба. -->
+  <!-- Сгенерировано scripts/maps/build_corridor.py из полей
+       corridor.waypoints в public/content/geo/_index.json —
+       руками не править. Источник правды — реестр, координаты
+       там в градусах.
+       Ломаная соединяет точки в ГЕОГРАФИЧЕСКОМ порядке (n),
+       с запада на восток. Хронология в data-from и НЕ совпадает
+       с ним: Пенза на западном конце взята 29 мая, Мариинск
+       в Сибири — к 27 мая. Анимировать по n значит показать
+       волну с запада, которой не было. -->
+  <g id="corridor_line">
+    <polyline points="40.0,73.0 91.5,73.0 204.0,53.4 243.4,50.6 281.5,56.3 323.7,55.1 419.2,54.7 439.7,40.0 467.5,42.9 547.1,43.0 580.3,56.0 908.9,173.8" fill="none"/>
+  </g>
+<g id="waypoints">
+  <circle id="wp-penza" cx="40.0" cy="73.0" r="4" data-n="1" data-from="1918-05-29"/>
+  <circle id="wp-samara" cx="91.5" cy="73.0" r="4" data-n="2" data-from="1918-06-08"/>
+  <circle id="wp-chelyabinsk" cx="204.0" cy="53.4" r="4" data-n="3" data-from="1918-05-27"/>
+  <circle id="wp-kurgan" cx="243.4" cy="50.6" r="4" data-n="4" data-from="1918-05-27"/>
+  <circle id="wp-petropavlovsk" cx="281.5" cy="56.3" r="4" data-n="5" data-from="1918-05-27"/>
+  <circle id="wp-omsk" cx="323.7" cy="55.1" r="4" data-n="6" data-from=""/>
+  <circle id="wp-novonikolaevsk" cx="419.2" cy="54.7" r="4" data-n="7" data-from="1918-05-27"/>
+  <circle id="wp-tomsk" cx="439.7" cy="40.0" r="4" data-n="8" data-from="1918-05"/>
+  <circle id="wp-mariinsk" cx="467.5" cy="42.9" r="4" data-n="9" data-from="1918-05-27"/>
+  <circle id="wp-kansk" cx="547.1" cy="43.0" r="4" data-n="10" data-from="1918-05-27"/>
+  <circle id="wp-nizhneudinsk" cx="580.3" cy="56.0" r="4" data-n="11" data-from="1918-05-27"/>
+  <circle id="wp-vladivostok" cx="908.9" cy="173.8" r="4" data-n="12" data-from="1918-06-29"/>
+</g>
+<g id="labels_waypoints">
+  <text x="46.0" y="68.0" font-size="12">Пенза</text>
+  <text x="97.5" y="68.0" font-size="12">Самара</text>
+  <text x="210.0" y="48.4" font-size="12">Челябинск</text>
+  <text x="249.4" y="45.6" font-size="12">Курган</text>
+  <text x="287.5" y="51.3" font-size="12">Петропавловск</text>
+  <text x="329.7" y="50.1" font-size="12">Омск</text>
+  <text x="425.2" y="49.7" font-size="12">Новониколаевск</text>
+  <text x="445.7" y="35.0" font-size="12">Томск</text>
+  <text x="473.5" y="37.9" font-size="12">Мариинск</text>
+  <text x="553.1" y="38.0" font-size="12">Канск</text>
+  <text x="586.3" y="51.0" font-size="12">Нижнеудинск</text>
+  <text x="914.9" y="168.8" font-size="12">Владивосток</text>
+</g>
+</svg>
