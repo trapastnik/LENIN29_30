@@ -278,7 +278,7 @@ function crossCheckParser(where, data) {
 /** A. Обязаны совпадать значением. Расхождение — ошибка. */
 const AGREE_FIELDS = [
   'camp', 'venn_groups', 'x', 'y', 'title_chip_ru', 'abbr_ru',
-  'territory_id', 'map_status', 'open_question_ru',
+  'territory_id', 'map_id', 'map_status', 'open_question_ru',
   // Только у личностей: индекс берёт ключ из справки, где он считан
   // от фамилии. У остальных видов ключ выводится из подписи плитки —
   // «ЗСФСР» по полному названию уехало бы на «Ф», а посетитель ищет
