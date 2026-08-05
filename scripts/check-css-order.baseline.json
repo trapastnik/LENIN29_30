@@ -1,0 +1,8 @@
+{
+  "note": "Известные места, где исход спора решает порядок в <head>. Падаем на приросте.",
+  "updated": "2026-08-04",
+  "known": [
+    "dist/brand.html | main | gap,max-width,padding | dist/assets/pages.css",
+    "dist/expo/index.html | :root | --ui-scale | dist/expo/brand-tokens.css"
+  ]
+}

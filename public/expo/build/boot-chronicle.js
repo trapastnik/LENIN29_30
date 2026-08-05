@@ -163,31 +163,31 @@ function ChronicleApp() {
     boxShadow: "0 2px 0 rgba(0,0,0,0.4), 0 14px 24px rgba(0,0,0,0.45)",
     borderBottom: `1px solid ${chBrand.brass}55`
   } }, /* @__PURE__ */ React.createElement("div", { style: {
-    padding: "26px 40px 0",
+    padding: S("26px 40px 0"),
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    gap: 24
+    gap: S(24)
   } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.34em",
     color: chBrand.brass,
     textTransform: "uppercase"
   } }, lang === "ru" ? "\u0420\u0430\u0437\u0434\u0435\u043B\u044A \xB7 01" : "Section \xB7 01"), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.display,
-    fontSize: 44,
+    fontSize: S(44),
     lineHeight: 1.05,
     color: chTheme.paper,
-    marginTop: 6
-  } }, lang === "ru" ? "\u0425\u0440\u043E\u043D\u0438\u043A\u0430 \u0441\u043E\u0431\u044B\u0442\u0456\u0439. 1917\u20141922" : "Chronicle of events. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 12, alignItems: "center", flexShrink: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => {
+    marginTop: S(6)
+  } }, lang === "ru" ? "\u0425\u0440\u043E\u043D\u0438\u043A\u0430 \u0441\u043E\u0431\u044B\u0442\u0456\u0439. 1917\u20141922" : "Chronicle of events. 1917\u20141922")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: S(12), alignItems: "center", flexShrink: 0 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => {
     if (window.parent !== window) window.parent.postMessage("mtk29:close-section", "*");
   }, style: {
     // «к экспозиции» — основная навигация, ≥120 px (§1).
-    minHeight: "var(--touch-hit, 120px)",
-    padding: "0 28px",
+    minHeight: S("var(--touch-hit, 120px)"),
+    padding: S("0 28px"),
     fontFamily: chFonts.mono,
-    fontSize: 12,
+    fontSize: S(12),
     letterSpacing: "0.22em",
     color: chTheme.paper,
     background: "transparent",
@@ -196,33 +196,33 @@ function ChronicleApp() {
     textTransform: "uppercase"
   } }, "\u2190 ", lang === "ru" ? "\u043A\u044A \u044D\u043A\u0441\u043F\u043E\u0437\u0438\u0446\u0456\u0438" : "to the exhibit"), /* @__PURE__ */ React.createElement("button", { onClick: () => setLang(lang === "ru" ? "en" : "ru"), style: {
     // Переключатель языка — основная навигация, ≥120 px (§1).
-    minWidth: 120,
-    minHeight: "var(--touch-hit, 120px)",
-    padding: "0 24px",
+    minWidth: S(120),
+    minHeight: S("var(--touch-hit, 120px)"),
+    padding: S("0 24px"),
     fontFamily: chFonts.mono,
-    fontSize: 12,
+    fontSize: S(12),
     letterSpacing: "0.24em",
     color: chTheme.paper,
     background: "transparent",
     border: `1px solid ${chBrand.brass}`,
     borderRadius: 28,
     textTransform: "uppercase"
-  } }, lang === "ru" ? "EN" : "RU"))), /* @__PURE__ */ React.createElement("div", { style: { padding: "18px 40px 0", display: "flex", gap: 10, flexWrap: "wrap" } }, yearList.map((y) => {
+  } }, lang === "ru" ? "EN" : "RU"))), /* @__PURE__ */ React.createElement("div", { style: { padding: S("18px 40px 0"), display: "flex", gap: S(10), flexWrap: "wrap" } }, yearList.map((y) => {
     const on = y.year === year;
     return /* @__PURE__ */ React.createElement("button", { key: y.year, onClick: () => setYear(y.year), style: {
       // Кнопка года — основная навигация по ленте, ≥120 px (§1).
-      minWidth: 150,
-      minHeight: "var(--touch-hit, 120px)",
+      minWidth: S(150),
+      minHeight: S("var(--touch-hit, 120px)"),
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      gap: 2,
+      gap: S(2),
       background: on ? chBrand.brass : "transparent",
       color: on ? chBrand.inkBlack : chTheme.paperDim,
       border: `1px solid ${on ? chBrand.brass : chTheme.paperDim}`
-    } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: chFonts.display, fontSize: 26, lineHeight: 1 } }, y.year), y.count != null && /* @__PURE__ */ React.createElement("span", { style: { fontFamily: chFonts.mono, fontSize: 10, letterSpacing: "0.2em", opacity: 0.8 } }, y.count));
-  })), /* @__PURE__ */ React.createElement("div", { style: { padding: "14px 40px 18px", display: "flex", gap: 10, alignItems: "center" } }, [
+    } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: chFonts.display, fontSize: S(26), lineHeight: 1 } }, y.year), y.count != null && /* @__PURE__ */ React.createElement("span", { style: { fontFamily: chFonts.mono, fontSize: S(10), letterSpacing: "0.2em", opacity: 0.8 } }, y.count));
+  })), /* @__PURE__ */ React.createElement("div", { style: { padding: S("14px 40px 18px"), display: "flex", gap: S(10), alignItems: "center" } }, [
     { id: "all", ru: "\u0412\u0441\u0451", en: "All", color: chBrand.brass, n: counts.all },
     { id: "pol", ru: CHRONICLE_TRACKS.pol.ru, en: CHRONICLE_TRACKS.pol.en, color: CHRONICLE_TRACKS.pol.color, n: counts.pol },
     { id: "mil", ru: CHRONICLE_TRACKS.mil.ru, en: CHRONICLE_TRACKS.mil.en, color: CHRONICLE_TRACKS.mil.color, n: counts.mil }
@@ -230,10 +230,10 @@ function ChronicleApp() {
     const on = track === t.id;
     return /* @__PURE__ */ React.createElement("button", { key: t.id, onClick: () => setTrack(t.id), style: {
       // Фильтр трека — управляющий элемент раздела, ≥64 px (§1).
-      minHeight: 64,
-      padding: "0 22px",
+      minHeight: S(64),
+      padding: S("0 22px"),
       fontFamily: chFonts.mono,
-      fontSize: 12,
+      fontSize: S(12),
       letterSpacing: "0.2em",
       textTransform: "uppercase",
       background: on ? t.color : "transparent",
@@ -241,61 +241,61 @@ function ChronicleApp() {
       border: `1px solid ${on ? t.color : chTheme.paperDim}`,
       display: "flex",
       alignItems: "center",
-      gap: 8
-    } }, lang === "ru" ? t.ru : t.en, /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, opacity: 0.75 } }, "\xB7 ", t.n));
+      gap: S(8)
+    } }, lang === "ru" ? t.ru : t.en, /* @__PURE__ */ React.createElement("span", { style: { fontSize: S(10), opacity: 0.75 } }, "\xB7 ", t.n));
   }), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.2em",
     color: chTheme.paperDim,
     textTransform: "uppercase"
-  } }, lang === "ru" ? "\u041F\u0440\u043E\u043A\u0440\u0443\u0442\u0438\u0442\u0435 \u043B\u0435\u043D\u0442\u0443 \xB7 \u0441\u043F\u0440\u0430\u0432\u043A\u0430 \u0435\u0441\u0442\u044C \u043D\u0435 \u0443 \u043A\u0430\u0436\u0434\u0430\u0433\u043E \u0441\u043E\u0431\u044B\u0442\u0456\u044F" : "Scroll the timeline \xB7 not every event has a dossier"))), /* @__PURE__ */ React.createElement("div", { style: { padding: "34px 40px 120px", maxWidth: 1800, margin: "0 auto", position: "relative" } }, !loading && !error && shown.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
+  } }, lang === "ru" ? "\u041F\u0440\u043E\u043A\u0440\u0443\u0442\u0438\u0442\u0435 \u043B\u0435\u043D\u0442\u0443 \xB7 \u0441\u043F\u0440\u0430\u0432\u043A\u0430 \u0435\u0441\u0442\u044C \u043D\u0435 \u0443 \u043A\u0430\u0436\u0434\u0430\u0433\u043E \u0441\u043E\u0431\u044B\u0442\u0456\u044F" : "Scroll the timeline \xB7 not every event has a dossier"))), /* @__PURE__ */ React.createElement("div", { style: { padding: S("34px 40px 120px"), maxWidth: S(1800), margin: "0 auto", position: "relative" } }, !loading && !error && shown.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
     position: "absolute",
     top: 0,
-    bottom: 120,
+    bottom: S(120),
     left: "50%",
-    width: 1,
+    width: S(1),
     marginLeft: -0.5,
     background: `${chBrand.brass}33`,
     pointerEvents: "none",
     zIndex: 0
   } }), loading && /* @__PURE__ */ React.createElement("div", { style: {
-    padding: 60,
+    padding: S(60),
     textAlign: "center",
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.3em",
     color: chBrand.brass,
     textTransform: "uppercase"
   } }, lang === "ru" ? "\u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C\u044A " + year + " \u0433\u043E\u0434\u044A\u2026" : "loading " + year + "\u2026"), error && /* @__PURE__ */ React.createElement("div", { style: {
-    padding: 60,
+    padding: S(60),
     textAlign: "center",
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     color: chBrand.signalRed
-  } }, lang === "ru" ? "\u0413\u043E\u0434\u044A \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u043B\u0441\u044F: " : "Year failed to load: ", String(error.message || error)), !loading && !error && months.map((g, gi) => /* @__PURE__ */ React.createElement("div", { key: g.key || gi, style: { marginBottom: 46 } }, /* @__PURE__ */ React.createElement("div", { style: {
+  } }, lang === "ru" ? "\u0413\u043E\u0434\u044A \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u043B\u0441\u044F: " : "Year failed to load: ", String(error.message || error)), !loading && !error && months.map((g, gi) => /* @__PURE__ */ React.createElement("div", { key: g.key || gi, style: { marginBottom: S(46) } }, /* @__PURE__ */ React.createElement("div", { style: {
     display: "flex",
     alignItems: "center",
-    gap: 18,
-    margin: "0 0 22px",
+    gap: S(18),
+    margin: S("0 0 22px"),
     position: "relative",
     zIndex: 1,
     background: chTheme.bgDeep
   } }, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.display,
-    fontSize: 30,
+    fontSize: S(30),
     lineHeight: 1,
     color: chBrand.brass
-  } }, chronicleMonthLabel(g.key, lang)), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, height: 1, background: `${chBrand.brass}44` } }), /* @__PURE__ */ React.createElement("div", { style: {
+  } }, chronicleMonthLabel(g.key, lang)), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, height: S(1), background: `${chBrand.brass}44` } }), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.mono,
-    fontSize: 11,
+    fontSize: S(11),
     letterSpacing: "0.2em",
     color: chTheme.paperDim
-  } }, g.items.length)), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 22, position: "relative", zIndex: 1 } }, g.items.map((it) => /* @__PURE__ */ React.createElement(EventRow, { key: it.id, item: it, lang, onOpenCard: setCardId }))))), !loading && !error && shown.length === 0 && /* @__PURE__ */ React.createElement("div", { style: {
-    padding: 60,
+  } }, g.items.length)), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: S(22), position: "relative", zIndex: 1 } }, g.items.map((it) => /* @__PURE__ */ React.createElement(EventRow, { key: it.id, item: it, lang, onOpenCard: setCardId }))))), !loading && !error && shown.length === 0 && /* @__PURE__ */ React.createElement("div", { style: {
+    padding: S(60),
     textAlign: "center",
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.24em",
     color: chTheme.paperDim,
     textTransform: "uppercase"
@@ -308,7 +308,7 @@ function ChronicleApp() {
     alignItems: "center",
     justifyContent: "center",
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.3em",
     color: chBrand.brass,
     textTransform: "uppercase"
@@ -319,16 +319,16 @@ function ChronicleApp() {
     background: "rgba(8,5,2,.88)",
     display: "flex",
     flexDirection: "column",
-    gap: 16,
+    gap: S(16),
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: 40,
+    padding: S(40),
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.2em",
     color: chBrand.brass
-  }, onClick: () => setCardId(null) }, /* @__PURE__ */ React.createElement("div", null, lang === "ru" ? "\u0421\u043F\u0440\u0430\u0432\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C" : "Dossier failed to open"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, opacity: 0.7 } }, String(cardError.message || cardError))), card && /* @__PURE__ */ React.createElement(EventCard, { card, lang, onClose: () => setCardId(null) }));
+  }, onClick: () => setCardId(null) }, /* @__PURE__ */ React.createElement("div", null, lang === "ru" ? "\u0421\u043F\u0440\u0430\u0432\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C" : "Dossier failed to open"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: S(11), opacity: 0.7 } }, String(cardError.message || cardError))), card && /* @__PURE__ */ React.createElement(EventCard, { card, lang, onClose: () => setCardId(null) }));
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/* @__PURE__ */ React.createElement(ChronicleApp, null));

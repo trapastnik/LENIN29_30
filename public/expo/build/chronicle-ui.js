@@ -50,28 +50,28 @@ function EventRow({ item, lang, onOpenCard }) {
     return /* @__PURE__ */ React.createElement("div", { style: {
       background: chTheme.paper,
       borderLeft: `4px solid ${c}`,
-      padding: "18px 22px",
+      padding: S("18px 22px"),
       boxShadow: "0 8px 20px rgba(0,0,0,.45)"
     } }, /* @__PURE__ */ React.createElement("div", { style: {
       fontFamily: chFonts.mono,
-      fontSize: 11,
+      fontSize: S(11),
       letterSpacing: "0.24em",
       color: c,
       textTransform: "uppercase",
-      marginBottom: 8
+      marginBottom: S(8)
     } }, lang === "ru" ? TRACKS[kind].ru : TRACKS[kind].en, isMonth && ` \xB7 ${lang === "ru" ? "\u0432\u0435\u0441\u044C \u043C\u0463\u0441\u044F\u0446\u044A" : "whole month"}`), /* @__PURE__ */ React.createElement("div", { style: {
       fontFamily: chFonts.body,
-      fontSize: 16,
+      fontSize: S(16),
       lineHeight: 1.5,
       color: chTheme.ink,
       textWrap: "pretty"
     } }, richText(text, c)), withCard && item.card && /* @__PURE__ */ React.createElement("button", { onClick: () => onOpenCard(item.card), style: {
       // «Справка →» — управляющий элемент раздела, ≥64 px (§1).
-      marginTop: 16,
-      minHeight: 64,
-      padding: "0 28px",
+      marginTop: S(16),
+      minHeight: S(64),
+      padding: S("0 28px"),
       fontFamily: chFonts.mono,
-      fontSize: 12,
+      fontSize: S(12),
       letterSpacing: "0.24em",
       color: chTheme.ink,
       background: "transparent",
@@ -84,35 +84,35 @@ function EventRow({ item, lang, onOpenCard }) {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: 8,
-    paddingTop: 14
+    gap: S(8),
+    paddingTop: S(14)
   } }, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.mono,
-    fontSize: 12,
+    fontSize: S(12),
     letterSpacing: "0.14em",
     color: chTheme.paperDim,
     textAlign: "center",
     lineHeight: 1.35,
     background: chTheme.bgDeep,
-    padding: "2px 8px"
+    padding: S("2px 8px")
   } }, item.date && item.date.display_ru), /* @__PURE__ */ React.createElement("div", { style: {
-    width: 13,
-    height: 13,
+    width: S(13),
+    height: S(13),
     borderRadius: 7,
     background: track.color,
     boxShadow: `0 0 0 5px ${chTheme.bgDeep}`
   } }));
   if (wide) {
-    return /* @__PURE__ */ React.createElement("div", { style: { contentVisibility: "auto", containIntrinsicSize: "0 180px" } }, axis, /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginTop: 10 } }, cell(polText, "pol", true), cell(milText, "mil", false)));
+    return /* @__PURE__ */ React.createElement("div", { style: { contentVisibility: "auto", containIntrinsicSize: `0 ${S(180)}` } }, axis, /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: S(18), marginTop: S(10) } }, cell(polText, "pol", true), cell(milText, "mil", false)));
   }
   return /* @__PURE__ */ React.createElement("div", { style: {
     display: "grid",
-    gridTemplateColumns: "1fr 190px 1fr",
-    gap: 18,
+    gridTemplateColumns: `1fr ${S(190)} 1fr`,
+    gap: S(18),
     alignItems: "start",
     // Событий в году до 139: браузер может не размечать то, что за экраном.
     contentVisibility: "auto",
-    containIntrinsicSize: "0 150px"
+    containIntrinsicSize: `0 ${S(150)}`
   } }, /* @__PURE__ */ React.createElement("div", null, item.track === "pol" ? cell(polText, "pol", true) : null), axis, /* @__PURE__ */ React.createElement("div", null, item.track === "mil" ? cell(milText, "mil", true) : null));
 }
 function EventCard({ card, lang, onClose }) {
@@ -129,44 +129,44 @@ function EventCard({ card, lang, onClose }) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: 40,
+    padding: S(40),
     overscrollBehavior: "contain"
   }, onClick: onClose }, /* @__PURE__ */ React.createElement("div", { className: "brand-scroll", style: {
-    width: 1180,
+    width: S(1180),
     maxWidth: "100%",
     maxHeight: "92vh",
     overflowY: "auto",
     background: chTheme.paper,
     color: chTheme.ink,
     border: `1px solid ${chBrand.brass}`,
-    padding: "38px 46px 46px",
+    padding: S("38px 46px 46px"),
     boxShadow: "0 30px 90px rgba(0,0,0,.85)",
     overscrollBehavior: "contain"
   }, onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.mono,
-    fontSize: 12,
+    fontSize: S(12),
     letterSpacing: "0.3em",
     color: chTheme.inkFade,
     textTransform: "uppercase"
   } }, dates), /* @__PURE__ */ React.createElement("div", { style: {
     fontFamily: chFonts.display,
-    fontSize: 42,
+    fontSize: S(42),
     lineHeight: 1.06,
     color: chTheme.ink,
-    marginTop: 12
+    marginTop: S(12)
   } }, lang === "ru" ? card.title_ru : card.title_en || card.title_ru), /* @__PURE__ */ React.createElement("div", { style: {
-    marginTop: 26,
+    marginTop: S(26),
     fontFamily: chFonts.body,
-    fontSize: 17,
+    fontSize: S(17),
     lineHeight: 1.62,
     color: chTheme.inkSoft,
-    maxWidth: 860,
+    maxWidth: S(860),
     textWrap: "pretty"
   } }, summary.split(/\n\s*\n/).map((p, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: { margin: i === 0 ? "0 0 0.9em" : "0.9em 0" } }, richText(p, chBrand.signalRed)))), photos.length > 0 && /* @__PURE__ */ React.createElement("div", { style: {
-    marginTop: 34,
+    marginTop: S(34),
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-    gap: 22
+    gridTemplateColumns: `repeat(auto-fill, minmax(${S(240)}, 1fr))`,
+    gap: S(22)
   } }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("figure", { key: i, style: { margin: 0 } }, /* @__PURE__ */ React.createElement("div", { style: {
     width: "100%",
     aspectRatio: "4/3",
@@ -174,18 +174,18 @@ function EventCard({ card, lang, onClose }) {
     background: chTheme.bgDeep,
     border: `1px solid ${chTheme.inkFade}`
   } }, /* @__PURE__ */ React.createElement(ChroniclePhoto, { photo: ph, lang })), (ph.ru || ph.en) && /* @__PURE__ */ React.createElement("figcaption", { style: {
-    marginTop: 8,
+    marginTop: S(8),
     fontFamily: chFonts.body,
-    fontSize: 12,
+    fontSize: S(12),
     lineHeight: 1.4,
     color: chTheme.inkFade
-  } }, lang === "ru" ? ph.ru : ph.en || ph.ru, ph.inv && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 3, opacity: 0.8 } }, ph.inv))))), /* @__PURE__ */ React.createElement("button", { onClick: onClose, style: {
+  } }, lang === "ru" ? ph.ru : ph.en || ph.ru, ph.inv && /* @__PURE__ */ React.createElement("div", { style: { marginTop: S(3), opacity: 0.8 } }, ph.inv))))), /* @__PURE__ */ React.createElement("button", { onClick: onClose, style: {
     // Возврат к ленте — управляющий элемент раздела, ≥64 px (§1).
-    marginTop: 36,
-    minHeight: 64,
-    padding: "0 32px",
+    marginTop: S(36),
+    minHeight: S(64),
+    padding: S("0 32px"),
     fontFamily: chFonts.mono,
-    fontSize: 13,
+    fontSize: S(13),
     letterSpacing: "0.26em",
     color: chTheme.paper,
     background: chTheme.ink,
@@ -212,12 +212,12 @@ function ChroniclePhoto({ photo, lang }) {
     alignItems: "center",
     justifyContent: "center",
     fontFamily: chFonts.mono,
-    fontSize: 10,
+    fontSize: S(10),
     letterSpacing: "0.18em",
     color: chBrand.slateWindow,
     textTransform: "uppercase",
     textAlign: "center",
-    padding: 12
+    padding: S(12)
   } }, lang === "ru" ? "\u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0456\u0435 \u043D\u0435 \u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043E" : "image not delivered");
 }
 window.EventRow = EventRow;

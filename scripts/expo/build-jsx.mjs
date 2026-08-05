@@ -40,6 +40,7 @@ const SOURCES = [
   'main-screen.jsx',
   'boot-expo.jsx',
   'rich-text.jsx',
+  'ui-scale.jsx',
   'people-ui.jsx',
   'boot-people.jsx',
   'chronicle-ui.jsx',
@@ -59,8 +60,8 @@ const SOURCES = [
 // только в браузере. Раньше это пряталось: Babel опускал const до var.
 const PAGES = {
   'index.html':     ['shared.jsx', 'main-screen.jsx', 'boot-expo.jsx'],
-  'people.html':    ['rich-text.jsx', 'people-ui.jsx', 'boot-people.jsx'],
-  'chronicle.html': ['rich-text.jsx', 'chronicle-ui.jsx', 'boot-chronicle.jsx'],
+  'people.html':    ['rich-text.jsx', 'ui-scale.jsx', 'people-ui.jsx', 'boot-people.jsx'],
+  'chronicle.html': ['rich-text.jsx', 'ui-scale.jsx', 'chronicle-ui.jsx', 'boot-chronicle.jsx'],
 };
 
 // Локальные копии React. Держим здесь, чтобы скрипт падал с внятным текстом,

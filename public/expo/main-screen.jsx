@@ -19,6 +19,23 @@
 // и указать путь здесь — размер фиксирован канвасом 1920×1080.
 const BACKDROP_SRC = null;
 
+// ── Тач-цель канвы: токен работает только вместе с пином в index.html ──────
+// Канва главной живёт в фиксированных логических 1920×1080 и увеличивается
+// transform'ом (boot-expo.jsx), а токены метрик в brand-tokens.css домножены
+// на --ui-scale. Без пина это ×2 поверх ×2: замерено на dist при 3840×2160 —
+// все 12 элементов главной шли 480 физических px вместо 240, кнопка года
+// в пятую часть высоты экрана. Дефект тихий, ошибки нет, виден только на 4K.
+//
+// Гасится он ровно одним способом — пином `:root { --ui-scale: 1 }`
+// в index.html, и это стоит знать: погасить масштаб НИЖЕ по дереву,
+// на самом узле канвы, невозможно. Множитель сворачивается там, где токен
+// ОБЪЯВЛЕН, и потомки наследуют уже готовое `calc(120px * 2)`. Пробный узел
+// внутри канвы с --ui-scale: 1 дал height из токена 240px, а width из ручной
+// формулы — 50px: переопределение действует на формулы в стилях потомков
+// и не действует на токены. Поэтому пин именно на :root и именно адресный —
+// people.html и chronicle.html прокручиваются, им удвоение нужно.
+const TOUCH_HIT = 'var(--touch-hit, 120px)';
+
 function Backdrop() {
   return (
     <div style={{
@@ -72,7 +89,7 @@ function MainHeader({ lang, setLang }) {
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
         <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} style={{
           // Переключатель языка — основная навигация, ≥120 px (§1).
-          minWidth: 120, minHeight: 'var(--touch-hit, 120px)',
+          minWidth: 120, minHeight: TOUCH_HIT,
           fontFamily: fonts.mono, fontSize: 15, letterSpacing: '0.25em',
           color: theme.paperLight, background: 'transparent',
           border: `1.5px solid ${theme.brass}`, borderRadius: 32,
@@ -108,7 +125,7 @@ function Timeline({ years, active, onPick, lang }) {
             <button key={y.year} onClick={() => onPick(y.year)} style={{
               flex: 1,
               // ≥120px по CLAUDE.md §1: тач-палец, а не курсор
-              minHeight: 'var(--touch-hit, 120px)',
+              minHeight: TOUCH_HIT,
               display: 'flex', flexDirection: 'column',
               alignItems: 'stretch', justifyContent: 'flex-end',
               gap: 10, padding: 0,
@@ -183,7 +200,7 @@ function SectionTiles({ sections, lang, onOpen }) {
             onClick={ready ? () => onOpen(s.id) : undefined}
             disabled={!ready}
             style={{
-              minHeight: 'var(--touch-hit, 120px)',
+              minHeight: TOUCH_HIT,
               height: 470,
               display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
               textAlign: 'left', gap: 0,
