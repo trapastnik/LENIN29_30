@@ -13,60 +13,52 @@
       "id": "background_paper",
       "label_ru": "Фон (бежевая бумага)",
       "kind": "vector",
-      "default": true,
-      "color": "map-paper"
+      "default": true
     },
     {
       "id": "rivers",
       "label_ru": "Реки",
       "kind": "vector",
-      "default": true,
-      "color": "map-river"
+      "default": true
     },
     {
       "id": "admin_borders",
       "label_ru": "Административные границы",
       "kind": "vector",
-      "default": true,
-      "color": "map-border"
+      "default": true
     },
     {
       "id": "city_dots",
       "label_ru": "Точки городов",
       "kind": "vector",
-      "default": true,
-      "color": "map-city"
+      "default": true
     },
     {
       "id": "labels_cities",
       "label_ru": "Подписи городов",
       "kind": "vector",
-      "default": true,
-      "color": "map-label"
+      "default": true
     },
     {
       "id": "arrows_gai",
       "label_ru": "Железная дивизия Г. Д. Гая, 9–11 сентября",
       "kind": "vector",
       "default": true,
-      "anim": "wipe",
-      "color": "map-red"
+      "anim": "wipe"
     },
     {
       "id": "arrows_north",
       "label_ru": "Наступление с севера, Буинск",
       "kind": "vector",
       "default": true,
-      "anim": "wipe",
-      "color": "map-red"
+      "anim": "wipe"
     },
     {
       "id": "arrows_bryandino",
       "label_ru": "Окружение отряда Каппеля у Бряндино, 28 сентября",
       "kind": "vector",
       "default": true,
-      "anim": "wipe",
-      "color": "map-red"
+      "anim": "wipe"
     }
   ],
   "svg": "layers.svg",
