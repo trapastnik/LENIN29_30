@@ -10,7 +10,7 @@
       "lead_media": "media/persons/lenin/01",
       "lead_w": 2628,
       "lead_h": 1892,
-      "sort_key_ru": "в. и. ленин ульянов",
+      "sort_key_ru": "ленин ульянов",
       "has_card": true,
       "lead_tiers": [
         "lg",
@@ -26,7 +26,7 @@
       "lead_media": "media/persons/kolchak/01",
       "lead_w": 1350,
       "lead_h": 1245,
-      "sort_key_ru": "а. в. колчак",
+      "sort_key_ru": "колчак",
       "has_card": true,
       "lead_tiers": [
         "lg",
@@ -41,7 +41,7 @@
       "lead_media": "media/persons/grigorev/01",
       "lead_w": 788,
       "lead_h": 1562,
-      "sort_key_ru": "н. а. григорьев серветников",
+      "sort_key_ru": "григорьев серветников",
       "has_card": true,
       "camp": "national",
       "lead_tiers": [
@@ -94,7 +94,7 @@
       "lead_media": "media/persons/denikin/01",
       "lead_w": 1375,
       "lead_h": 2106,
-      "sort_key_ru": "деникинъ",
+      "sort_key_ru": "деникин",
       "lead_tiers": [
         "lg",
         "sm",
@@ -128,7 +128,7 @@
       "lead_media": "media/persons/kornilov/01",
       "lead_w": 1297,
       "lead_h": 1856,
-      "sort_key_ru": "корниловъ",
+      "sort_key_ru": "корнилов",
       "lead_tiers": [
         "lg",
         "sm",
@@ -145,7 +145,7 @@
       "lead_media": "media/persons/makhno/01",
       "lead_w": 1872,
       "lead_h": 2400,
-      "sort_key_ru": "махно",
+      "sort_key_ru": "махно махненко",
       "lead_tiers": [
         "lg",
         "sm",
@@ -162,7 +162,7 @@
       "lead_media": "media/persons/pilsudski/01",
       "lead_w": 3513,
       "lead_h": 4799,
-      "sort_key_ru": "пилсудскій",
+      "sort_key_ru": "пилсудский",
       "lead_tiers": [
         "lg",
         "sm",
@@ -179,7 +179,7 @@
       "lead_media": "media/persons/semyonov/01",
       "lead_w": 600,
       "lead_h": 789,
-      "sort_key_ru": "семеновъ",
+      "sort_key_ru": "семенов",
       "lead_tiers": [
         "lg",
         "xs"
@@ -195,7 +195,7 @@
       "lead_media": "media/persons/trotsky/01",
       "lead_w": 2349,
       "lead_h": 3535,
-      "sort_key_ru": "троцкій",
+      "sort_key_ru": "троцкий бронштейн",
       "lead_tiers": [
         "lg",
         "sm",
@@ -212,7 +212,7 @@
       "lead_media": "media/persons/tukhachevsky/01",
       "lead_w": 1119,
       "lead_h": 1719,
-      "sort_key_ru": "тухачевскій",
+      "sort_key_ru": "тухачевский",
       "lead_tiers": [
         "lg",
         "sm",
@@ -246,7 +246,7 @@
       "lead_media": "media/persons/yudenich/01",
       "lead_w": 800,
       "lead_h": 1282,
-      "sort_key_ru": "юденичъ",
+      "sort_key_ru": "юденич",
       "lead_tiers": [
         "lg",
         "sm",
