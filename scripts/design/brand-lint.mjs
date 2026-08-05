@@ -502,15 +502,25 @@ for (const rule of new Set([...Object.keys(counts), ...Object.keys(debt)])) {
 }
 
 if (MODE.json) {
-  console.log(JSON.stringify({
+  // ⚠️ БЕЗ process.exit. В терминал stdout пишется синхронно, а в ПАЙП —
+  // асинхронно, и process.exit обрывает недописанное: отчёт приходил
+  // потребителю обрезанным на ~62 КБ, ровно посередине строки. Прямо
+  // в файл (`> x.json`) при этом всё было цело, поэтому я дважды списала
+  // это на шелл. Нашлось, когда отчёт впервые начал читать не человек,
+  // а другая программа — самопроверка правил.
+  //
+  // Тот же класс, что дефекты, видимые только на dist: в одном режиме
+  // работает, в другом молча портится.
+  process.stdout.write(JSON.stringify({
     generatedBy: 'scripts/design/brand-lint.mjs',
     rules: RULES,
     total: kept.length,
     counts, regressions, improvements,
     violations: kept,
-  }, null, 2));
-  process.exit(0);
+  }, null, 2) + '\n');
+  process.exitCode = 0;
 }
+else {
 
 // ── человекочитаемый отчёт ─────────────────────────────────────────────────
 const RESET = '\x1b[0m', DIM = '\x1b[2m', RED = '\x1b[31m', YEL = '\x1b[33m', GRN = '\x1b[32m';
@@ -562,4 +572,5 @@ for (const r of regressions) {
   }
 }
 console.log('');
-process.exit(MODE.warn ? 0 : 1);
+process.exitCode = MODE.warn ? 0 : 1;
+}
