@@ -547,6 +547,89 @@ def geo_links(reports: List[str], failures: List[str]) -> dict:
     return _GEO_CACHE
 
 
+def write_pending_report(misses: dict, reports: List[str]) -> None:
+    """Развести «ждём музея» и «не доделали сами».
+
+    В одном числе «не разрезолвлено 597» смешаны две разные вещи: упоминания,
+    которые нельзя связать без ответа заказчика, и наша недоработка словаря.
+    Пока они слиты, непонятно ни сколько связности заблокировано снаружи,
+    ни что чинить после ответа.
+
+    Ключ таблицы — номер пункта письма, чтобы счётчик и письмо читались вместе.
+    """
+    import re as _re
+
+    rules = [(title,
+              [_re.compile(p, _re.I) for p in spec["include"]],
+              [_re.compile(p, _re.I) for p in spec.get("exclude", [])])
+             for title, spec in aliases_manual.PENDING_MUSEUM.items()]
+    pending = {r[0]: [] for r in rules}
+    ours = []
+    for phrase, n in misses.items():
+        for title, inc, exc in rules:
+            if any(p.search(phrase) for p in inc) \
+                    and not any(p.search(phrase) for p in exc):
+                pending[title].append((n, phrase))
+                break
+        else:
+            ours.append((n, phrase))
+
+    p_uniq = sum(len(v) for v in pending.values())
+    p_hits = sum(n for v in pending.values() for n, _ in v)
+    o_hits = sum(n for n, _ in ours)
+
+    # `misses` считает НЕУДАЧНЫЕ ОБРАЩЕНИЯ к словарю, а одно упоминание
+    # опрашивается дважды — при отрисовке текста и при сборе `related`.
+    # Для доли это неважно, а как абсолютное число оно вдвое завышено.
+    # Поэтому рядом печатаем то, что реально видит посетитель: сколько
+    # упоминаний осталось жирным курсивом в готовых файлах.
+    visible = 0
+    for folder in ("persons", "parties", "states", "events"):
+        d = CONTENT / folder
+        if not d.is_dir():
+            continue
+        for f in d.glob("*.json"):
+            if f.name.startswith("_") or ".gen." in f.name or ".patch." in f.name:
+                continue
+            txt = f.read_text(encoding="utf-8")
+            visible += len(re.findall(r"\*\*\*[^*]+\*\*\*", txt))
+    for year_file in (CONTENT / "chronicle").glob("19*.json"):
+        visible += len(re.findall(r"\*\*\*[^*]+\*\*\*",
+                                  year_file.read_text(encoding="utf-8")))
+
+    lines = ["# Чего ждём от музея — в упоминаниях", "",
+             "Считается прогоном импорта. Разделено, потому что в общем счётчике",
+             "«не разрезолвлено» смешаны две разные вещи: заблокированное",
+             "заказчиком и наша недоработка словаря алиасов.", "",
+             "| | фраз | упоминаний |", "|---|---:|---:|",
+             "| **ждёт музея** | %d | %d |" % (p_uniq, p_hits),
+             "| наша недоработка | %d | %d |" % (len(ours), o_hits), "",
+             "На экране остаётся жирным курсивом **%d** упоминаний: одно"
+             % visible,
+             "упоминание опрашивается словарём дважды — при отрисовке текста",
+             "и при сборе `related`, поэтому счётчик обращений выше вдвое.", ""]
+    for title, rows in sorted(pending.items()):
+        if not rows:
+            continue
+        rows.sort(reverse=True)
+        lines.append("## %s — %d упоминаний" % (title, sum(n for n, _ in rows)))
+        lines.append("")
+        lines += ["- %s — %d" % (ph, n) for n, ph in rows[:12]]
+        if len(rows) > 12:
+            lines.append("- …ещё %d фраз" % (len(rows) - 12))
+        lines.append("")
+    lines += ["## Наша недоработка — верх очереди", ""]
+    ours.sort(reverse=True)
+    lines += ["- %s — %d" % (ph, n) for n, ph in ours[:15]]
+    (SRC / "_pending-museum.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    reports.append("не разрезолвлено: на экране %d упоминаний курсивом; "
+                   "по обращениям к словарю ждут музея %d %% (%d из %d). "
+                   "Разбор → content-src/_pending-museum.md"
+                   % (visible, round(100 * p_hits / max(p_hits + o_hits, 1)),
+                      p_hits, p_hits + o_hits))
+
+
 def check_source_trace(reports: List[str]) -> None:
     """Свежесть снимков, снятых с файлов ЧУЖИХ зон.
 
@@ -1348,10 +1431,7 @@ def main(argv=None) -> int:
 
     reports.extend(registry.notes)
     if aliases.misses:
-        top = sorted(aliases.misses.items(), key=lambda kv: -kv[1])[:12]
-        reports.append("не разрезолвлено упоминаний: %d уникальных; чаще всего — %s"
-                       % (len(aliases.misses),
-                          ", ".join("%s (%d)" % (p, n) for p, n in top)))
+        write_pending_report(aliases.misses, reports)
     registry.save()
     write_json(SRC / "_manifest.json", manifest)
     write_import_report(stats, reports, counts)

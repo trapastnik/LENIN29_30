@@ -1,0 +1,43 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Touch target</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--graphite);color:var(--paper-white);font-family:var(--font-mono);}
+  .wrap{padding:24px;display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  .t{border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.25;flex:none;}
+  /* 120 — основная навигация */
+  .t120{width:120px;height:120px;border:1.5px dashed var(--brass);color:var(--brass);font-size:11px;letter-spacing:.16em;}
+  /* 64 — управляющий элемент */
+  .t64{width:64px;height:64px;border:1.5px dashed var(--telegrey-4);color:var(--telegrey-4);font-size:10px;letter-spacing:.10em;}
+  /* 27 — исключение диаграммы Венна, показано как есть */
+  .t27{width:27px;height:27px;border:1.5px dashed var(--slate-window);}
+  .meta{flex:1;min-width:280px;font-size:11px;line-height:1.65;letter-spacing:.03em;}
+  .meta b{color:var(--brass);letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:6px;font-size:12px;}
+  .meta p{margin:0 0 10px;}
+  .meta .warn{border-left:3px solid var(--signal-red);padding-left:10px;}
+  .meta code{color:var(--brass);}
+</style></head><body><div class="wrap">
+  <div class="t t120">120 PX<br>ОСНОВНАЯ<br>НАВИГАЦИЯ</div>
+  <div class="t t64">64 PX<br>КОНТРОЛ</div>
+  <div class="t t27" title="27px — исключение Венна"></div>
+  <div class="meta">
+    <b>Тач-цели — два порога</b>
+    <p><b style="display:inline;font-size:11px;letter-spacing:0">120 px</b> — основная навигация:
+      плитки разделов, кнопки года на ленте, «к экспозиции», переключатель языка.
+      Токен <code>--touch-hit</code>.</p>
+    <p><b style="display:inline;font-size:11px;letter-spacing:0">64 px</b> — управляющие элементы
+      внутри разделов: фильтры, чипы, «Справка&nbsp;→», сортировки. Пять чипов
+      по 120 съедают треть экрана, а «Справка&nbsp;→» повторяется в ленте хроники 76 раз.</p>
+    <p>Размер и хит-зона могут различаться: видимая пилюля 56, а область нажатия
+      добирается <code>::before</code> до порога. Так сделана «к экспозиции» —
+      120 в высоту читались бы плашкой, а не ссылкой.</p>
+    <p class="warn">Единственное исключение — чипы диаграммы Венна, 27 px (третий кружок).
+      Ближайшая пара разнесена на 66 px; поднять зону до 64 можно, до 120 — нельзя,
+      наложатся. Перехваченная цель хуже мелкой: мелкая честно не нажимается,
+      перехваченная открывает соседнюю партию, и посетитель этого не замечает.</p>
+    <p>Мерить попаданием, а не стилями: <code>elementFromPoint</code> по верху,
+      центру и низу. Кнопка с честным <code>min-height</code> давала фактические
+      65 px при норме 120 — в computed-стилях выглядело прилично.</p>
+  </div>
+</div></body></html>

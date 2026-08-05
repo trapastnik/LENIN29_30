@@ -36,7 +36,13 @@ const MODE = {
   json:   argv.includes('--json'),
   list:   argv.includes('--list'),
   update: argv.includes('--update-baseline'),
+  report: argv.includes('--report'),
 };
+
+// Отчёт для каталога кладётся JS-файлом, а не json на fetch: brand.html
+// уже грузит brand-tokens.js тем же способом, файл работает офлайн
+// и не зависит от путей. Каталог в public/decor/** — зона design (§4).
+const REPORT_FILE = resolve(ROOT, 'public/decor/brand-lint-report.js');
 
 // ── что сканируем ──────────────────────────────────────────────────────────
 // Не сканируем: чужие зоны на заморозке, приёмники импорта, генерируемое.
@@ -224,7 +230,19 @@ const RULES = {
   R4: { level: 'error', title: 'var(--x) для несуществующего токена' },
   R5: { level: 'error', title: ':hover в киосковом коде' },
   R6: { level: 'error', title: 'внешний CDN — киоск офлайн' },
-  R7: { level: 'warn',  title: 'тач-цель меньше 48px' },
+  // 64 — НИЖНИЙ из двух порогов §1, и правило проверяет только его.
+  // Второй порог, 120 для основной навигации, отличается от первого
+  // не разметкой, а СМЫСЛОМ элемента: «к экспозиции» и «Справка →» —
+  // одинаковые кнопки в CSS. Различить их селектором нельзя, поэтому
+  // 120 проверяет человек, и заголовок правила говорит об этом прямо,
+  // а не притворяется, что закрывает оба.
+  //
+  // Прежние 48 не были опиской: это добросовестно списанное число
+  // из дизайн-системы, preview/touch-target.html, где оно стоит
+  // с апреля. Контракт перешёл на два порога 3 августа, источник
+  // остался на старом. Исправлено в обоих концах — иначе следующий
+  // спишет 48 снова.
+  R7: { level: 'error', title: 'тач-цель меньше 64px — порог управляющего элемента (§1)' },
   R8: { level: 'error', title: 'артефакты разошлись с tokens.json' },
   R9:  { level: 'error', title: 'var(--метрика) без запаса — приёмочный параметр отвалится молча' },
   R10: { level: 'error', title: 'цвет слоя в map.json мимо словаря --map-*' },
@@ -403,7 +421,7 @@ function lintFile(file) {
             'отменяет порог §1, заданный базовым правилом для button');
       }
       for (const d of body.matchAll(/\b(min-)?(width|height)\s*:\s*(\d+(?:\.\d+)?)px/gi)) {
-        if (Number(d[3]) < 48) {
+        if (Number(d[3]) < 64) {
           add('R7', file, m.index + m[0].indexOf(d[0]), src,
               `${selector.trim().slice(0, 48)} { ${d[0]} }`);
         }
@@ -499,6 +517,39 @@ for (const rule of new Set([...Object.keys(counts), ...Object.keys(debt)])) {
     if (n > w) regressions.push({ rule, file, now: n, was: w });
     else if (n < w) improvements.push({ rule, file, now: n, was: w });
   }
+}
+
+if (MODE.report) {
+  // Отчёт СТАРЕЕТ — он снят на конкретном коммите, а долг меняется.
+  // Поэтому вместе с числами едет коммит: увидев чужой хеш, читатель
+  // понимает, что смотрит вчерашнее, а не сегодняшнее. Артефакт,
+  // умалчивающий о своей давности, — та же затычка, выглядящая готовой.
+  let commit = 'не определён';
+  try {
+    commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'],
+      { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {}
+
+  const body = {
+    commit,
+    total: kept.length,
+    rules: Object.fromEntries(Object.entries(RULES).map(([id, m]) => [id, {
+      title: m.title,
+      level: m.level,
+      count: Object.values(counts[id] ?? {}).reduce((a, b) => a + b, 0),
+      files: counts[id] ?? {},
+    }])),
+    allow: baseline.allow.length,
+  };
+
+  writeFileSync(REPORT_FILE,
+    '// ФАЙЛ СГЕНЕРИРОВАН: node scripts/design/brand-lint.mjs --report\n' +
+    '// Читает brand.html, раздел «Состояние дизайн-кода».\n' +
+    '// Снят на коммите ' + commit + ' — если в каталоге чужой хеш,\n' +
+    '// значит отчёт не пересобирали, и числа старые.\n' +
+    'window.MTK_LINT = ' + JSON.stringify(body, null, 2) + ';\n', 'utf8');
+
+  console.log(`  отчёт записан: ${rel(REPORT_FILE)}  (${kept.length} в долге, коммит ${commit})`);
 }
 
 if (MODE.json) {
