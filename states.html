@@ -361,6 +361,13 @@
       itemsEl.innerHTML = '';
       for (const it of list) {
         const row = document.createElement('div');
+        // role, а не просто div с обработчиком: строка территории —
+        // нажимаемая цель, и она должна называть себя так. Иначе её не видит
+        // ни проверка тач-целей, ни вспомогательные технологии. Нашлось
+        // замером: гейт считал на этой сцене 5 целей вместо 21 — все плитки
+        // группы проходили мимо, потому что их нельзя было отличить
+        // от оформления. Тег оставлен div: button принёс бы свои стили.
+        row.setAttribute('role', 'button');
         row.className = 'state-plate' + (it.map_id ? ' has-map' : '');
         row.style.setProperty('--camp-color', camp.color);
         row.style.setProperty('--camp-ink', camp.ink);
