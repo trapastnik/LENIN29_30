@@ -803,6 +803,22 @@
       font-style: normal;
     }
 
+    /* Метка читаемости на свотче. Заливкой, а не цветным текстом —
+       по тому же правилу, которое она сама и объясняет. */
+    .leg {
+      display: inline-block;
+      margin-top: var(--sp-1, 8px);
+      padding: 1px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 0.08em;
+    }
+    .leg-ok  { background: var(--camp-green);  color: var(--ink-black); }
+    .leg-mid { background: var(--brass);       color: var(--ink-black); }
+    .leg-no  { background: var(--slate-window); color: var(--ink-black); }
+
     /* — Раздел «Блоки» (24). Примитивы под 198 справок ————————————
        Всё на токенах: каталог, который сам не следует шкале,
        образцом быть не может. */
@@ -2976,6 +2992,28 @@
         ? T['ink-black'] : T['paper-white'];
     }
 
+    /** Где этим цветом можно ПИСАТЬ.
+     *
+     *  Считает генератор, а не каталог: contrast против --paper-white
+     *  и --page-bg-deep, пороги WCAG 4.5 (обычный текст) и 3.0 (крупный).
+     *  Здесь только показ.
+     *
+     *  Зачем на свотче: палитра работает заливкой, а как текст — только
+     *  на своём фоне, и в имени токена это ничем не выражено. «--ink-3»
+     *  читается как «цвет текста», а он цвет текста ДЛЯ СВЕТЛОГО: на
+     *  тёмной панели даёт 1.29. Я ошиблась так трижды за сутки, и ни
+     *  одну из трёх линтер поймать не мог — фон везде стоял на предке
+     *  через разметку, а не в том же правиле. Подпись у свотча работает
+     *  в момент ВЫБОРА, а правило — в момент прогона; здесь первое дешевле. */
+    function legibilityBadge(L) {
+      if (!L) return '';
+      const RU = { light: 'на светлом', dark: 'на тёмном', both: 'на обоих', none: '—' };
+      if (L.on === 'both') return `<i class="leg leg-ok">текстом на обоих</i>`;
+      if (L.on !== 'none') return `<i class="leg leg-ok">текстом ${RU[L.on]}</i>`;
+      if (L.onLarge !== 'none') return `<i class="leg leg-mid">только крупным ${RU[L.onLarge]}</i>`;
+      return `<i class="leg leg-no">только заливка</i>`;
+    }
+
     // 01 · Палитра — плитки со значением и пояснением из tokens.json
     document.querySelectorAll('[data-palette-group]').forEach((host) => {
       const g = group(host.dataset.paletteGroup);
@@ -2983,7 +3021,8 @@
       host.innerHTML = g.tokens.map((name) => `
         <div class="swatch">
           <div class="fill" style="background: var(--${name});"></div>
-          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span></div>
+          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span>
+            ${legibilityBadge(TMETA[name].legible)}</div>
         </div>`).join('');
     });
 
