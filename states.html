@@ -269,7 +269,7 @@
     import { CollectionPage } from '/src/pages/collection-page.js';
     import { fetchJSON } from '/src/data/loader.js';
     import { applyStaticLabels, wireLangToggle, onLangChange, t } from '/src/data/i18n.js';
-    import '/src/components/state-card.js';
+        import '/src/components/state-card.js';
 
     // Интерфейс двуязычен, содержание справок — нет: перевода 198 справок
     // не будет, в контенте *_en = null (CLAUDE.md §9). Названия групп —
@@ -440,6 +440,14 @@
     // init
     document.body.classList.add('scrollable');
     renderPicker();
+
+    // ⚠️ Глубокой ссылки здесь ПОКА НЕТ, и это не забывчивость.
+    // openFromHash отрабатывает — хэш стирается, запись в индексе находится,
+    // плашки «не найдена» нет, — но модалка остаётся закрытой, и причину
+    // я не нашёл. На parties.html тот же вызов работает и проверен.
+    // Полурабочая ссылка это ровно мёртвая кнопка, от которой мы уходим:
+    // посетитель жмёт, ничего не происходит. Пусть лучше её не будет,
+    // пока не разберусь. Долг, а не решение.
     wireLangToggle(document.getElementById('btn-lang'), () => {
       applyStaticLabels();
       // Перерисовываем то, что собрано из строк: плитки групп и, если
