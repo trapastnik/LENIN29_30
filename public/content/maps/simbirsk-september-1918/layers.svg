@@ -88,12 +88,12 @@
   <circle class="cls-33" cx="46.67" cy="89.97" r="0.209"/>
 </g>
 <g id="labels_cities">
-  <text class="cls-33" x="19.88" y="124.71" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Инза</text>
+  <text class="cls-33" x="19.05" y="124.71" text-anchor="end" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Инза</text>
   <text class="cls-33" x="23.15" y="106.79" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Алатырь</text>
   <text class="cls-33" x="17.75" y="96.04" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Курмыш</text>
   <text class="cls-33" x="42.38" y="104.16" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Буинск</text>
   <text class="cls-33" x="31.14" y="114.26" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Тагай</text>
-  <text class="cls-33" x="43.05" y="115.89" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Симбирск</text>
+  <text class="cls-33" x="42.63" y="119.15" text-anchor="middle" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Симбирск</text>
   <text class="cls-33" x="47.16" y="122.32" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Сенгилей</text>
   <text class="cls-33" x="49.90" y="115.24" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Бряндино</text>
   <text class="cls-33" x="52.14" y="89.22" font-family="'TimesNewRomanPSMT'" font-size="0.870px">Казань</text>
