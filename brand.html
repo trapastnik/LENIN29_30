@@ -358,7 +358,10 @@
       color: #3a2010;
     }
     .doc-imperial .masthead-grid .col-l { text-align: left; }
-    .doc-imperial .masthead-grid .col-c { text-align: center; font-style: italic; }
+    .doc-imperial .masthead-grid .col-c { text-align: center;
+      /* 21 Cent — курсив законен, файл есть. Семейство указано явно:
+         иначе смена родителя молча сделает это курсивом Nolde. */
+      font-family: var(--font-body); font-style: italic; }
     .doc-imperial .masthead-grid .col-r { text-align: right; }
     .doc-imperial .masthead-grid b {
       display: block;
@@ -579,7 +582,8 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.55);
       font-family: var(--font-display);
       color: #2a1810;
-      font-style: italic;
+      /* Курсива у Nolde НЕТ — файла начертания не существует, браузер
+         синтезирует наклон и рвёт засечки. Наклон несёт контейнер. */
       transform: rotate(-3deg);
     }
     .doc-letter .body { font-size: 15px; line-height: 1.55; }
@@ -1398,8 +1402,7 @@
       display: inline-block;
     }
     .year-composition .slash-marks .item .y {
-      font-style: italic;
-      font-weight: 700;
+      /* Nolde — Regular only: ни курсива, ни 700. Оба синтезируются. */
       font-size: 24px;
     }
     .year-composition .slash-marks .item .t {
@@ -1434,8 +1437,7 @@
       position: absolute;
       right: 30px; bottom: -50px;
       font-family: var(--font-display);
-      font-weight: 700;
-      font-style: italic;
+      /* Regular only. На 280px синтезированный наклон — грубый дефект. */
       font-size: 280px;
       line-height: 0.82;
       color: var(--paper-white);
@@ -1532,8 +1534,7 @@
     }
     .multi-year .stack-year .yy {
       font-family: var(--font-display);
-      font-weight: 700;
-      font-style: italic;
+      /* Regular only: 700 и italic синтезировались бы. На 150px видно. */
       font-size: 150px;
       line-height: 0.85;
       color: var(--paper-white);
