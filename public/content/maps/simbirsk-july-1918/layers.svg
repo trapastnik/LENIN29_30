@@ -84,11 +84,11 @@
   <circle class="cls-33" cx="61.54" cy="136.13" r="0.139"/>
 </g>
 <g id="labels_cities">
-  <text class="cls-33" x="42.99" y="136.92" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Сызрань</text>
+  <text class="cls-33" x="42.43" y="136.92" text-anchor="end" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Сызрань</text>
   <text class="cls-33" x="53.87" y="130.27" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Ставрополь-на-Волге</text>
   <text class="cls-33" x="55.95" y="117.24" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Мелекесс</text>
   <text class="cls-33" x="47.02" y="122.43" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Сенгилей</text>
-  <text class="cls-33" x="42.91" y="115.99" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Симбирск</text>
+  <text class="cls-33" x="42.35" y="115.99" text-anchor="end" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Симбирск</text>
   <text class="cls-33" x="61.82" y="135.93" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Самара</text>
 </g>
 <g id="arrows_kappel">
