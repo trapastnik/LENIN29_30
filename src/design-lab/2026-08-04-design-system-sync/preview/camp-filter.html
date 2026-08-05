@@ -1,0 +1,42 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Camp filter</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--iron-grey);}
+  .wrap{padding:18px;}
+  .bar{display:flex;flex-wrap:wrap;gap:6px;padding:6px;background:rgba(255,255,255,.06);
+       backdrop-filter:blur(6px);border:1px solid var(--rule-brass);border-radius:40px;}
+  /* Было 44 — ниже порога управляющего элемента. Стало 64 (--touch-min).
+     Чип фильтра нажимается пальцем так же, как кнопка. */
+  .b{padding:10px 18px;min-height:var(--touch-min,64px);font-family:var(--font-mono);font-size:11px;
+     letter-spacing:.18em;text-transform:uppercase;border:none;border-radius:30px;
+     background:transparent;color:var(--paper-white);cursor:pointer;
+     display:flex;align-items:center;gap:8px;}
+  .b.active{background:var(--brass);color:var(--iron-grey);}
+  /* Метке лагеря обводка нужна ВСЕГДА, а не только светлым: --camp-white
+     и --camp-national на светлой подложке пропадают (1.39 и 1.76).
+     Здесь фон тёмный, но правило ставится всем — выборочное вёрстка
+     не воспроизведёт. */
+  .sw{width:10px;height:10px;border-radius:50%;border:1px solid var(--telegrey-4);flex:none;}
+  .note{font-family:var(--font-mono);font-size:11px;line-height:1.65;color:var(--paper-white);
+        opacity:.8;max-width:70ch;margin:14px 2px 0;}
+  .note b{color:var(--brass);}
+</style></head><body><div class="wrap"><div class="bar">
+  <button class="b active">Все</button>
+  <button class="b"><span class="sw" style="background:var(--camp-red);"></span>Красные</button>
+  <button class="b"><span class="sw" style="background:var(--camp-white);"></span>Белые</button>
+  <button class="b"><span class="sw" style="background:var(--camp-rev-dem);"></span>Рев. дем.</button>
+  <button class="b"><span class="sw" style="background:var(--camp-green);"></span>Зелёные</button>
+  <button class="b"><span class="sw" style="background:var(--camp-national);"></span>Национальные</button>
+  <button class="b"><span class="sw" style="background:var(--camp-uprising);"></span>Восстания</button>
+  <button class="b"><span class="sw" style="background:var(--camp-intervention);"></span>Интервенция</button>
+</div>
+  <p class="note">
+    Лагерей <b>семь</b>, а не пять: добавлены «Восстания»
+    (<code>--camp-uprising</code>, 22 записи в данных) и «Интервенция».
+    Чип — управляющий элемент: <b>64px</b> (<code>--touch-min</code>), было 44.
+    Цвет лагеря несёт <b>точка с обводкой</b>, а не цвет подписи — четыре цвета
+    из семи как текст не читаются.
+  </p>
+</div></body></html>

@@ -1,0 +1,43 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Spacing scale</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--graphite);color:var(--paper-white);font-family:var(--font-mono);}
+  .wrap{padding:18px 24px;display:flex;flex-direction:column;gap:6px;}
+  .row{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.06em;}
+  .tag{width:60px;color:var(--brass);letter-spacing:.18em;text-transform:uppercase;}
+  .px{width:50px;opacity:.55;}
+  .k{width:56px;opacity:.45;font-size:10px;}
+  .bar{height:14px;background:var(--brass);border-radius:2px;}
+  .sep{margin:10px 0 4px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.5;}
+  .warn{margin-top:16px;border-left:3px solid var(--signal-red);padding:2px 0 2px 11px;
+        font-size:11px;line-height:1.65;max-width:74ch;}
+  .warn b{color:var(--brass);}
+</style></head><body><div class="wrap">
+  <div class="row"><div class="tag">sp-1</div><div class="px">4px</div><div class="k">кв 8px</div><div class="bar" style="width:4px;"></div></div>
+  <div class="row"><div class="tag">sp-2</div><div class="px">8px</div><div class="k">кв 16px</div><div class="bar" style="width:8px;"></div></div>
+  <div class="row"><div class="tag">sp-3</div><div class="px">12px</div><div class="k">кв 24px</div><div class="bar" style="width:12px;"></div></div>
+  <div class="row"><div class="tag">sp-4</div><div class="px">16px</div><div class="k">кв 32px</div><div class="bar" style="width:16px;"></div></div>
+  <div class="row"><div class="tag">sp-5</div><div class="px">24px</div><div class="k">кв 48px</div><div class="bar" style="width:24px;"></div></div>
+  <div class="row"><div class="tag">sp-6</div><div class="px">32px</div><div class="k">кв 64px</div><div class="bar" style="width:32px;"></div></div>
+  <div class="row"><div class="tag">sp-7</div><div class="px">48px</div><div class="k">кв 96px</div><div class="bar" style="width:48px;"></div></div>
+  <div class="row"><div class="tag">sp-8</div><div class="px">64px</div><div class="k">кв 128px</div><div class="bar" style="width:64px;"></div></div>
+  <div class="row"><div class="tag">sp-9</div><div class="px">96px</div><div class="k">—</div><div class="bar" style="width:96px;"></div></div>
+
+  <div class="sep">Тач-цели — два порога</div>
+  <div class="row"><div class="tag">touch-min</div><div class="px">64px</div><div class="k">контрол</div><div class="bar" style="width:64px;background:var(--telegrey-4);"></div></div>
+  <div class="row"><div class="tag">touch-hit</div><div class="px">120px</div><div class="k">навигация</div><div class="bar" style="width:120px;background:var(--signal-red);"></div></div>
+
+  <p class="warn">
+    ⚠️ <b>Киоск МТК 29 использует шкалу ×2</b> — колонка «кв».
+    Там <code>--sp-1</code> = <b>8px</b>, а не 4, и так вся шкала вместе
+    с радиусами (<code>--r-md</code> 8 вместо 6, <code>--r-pill</code> 999
+    вместо 30). Это при <b>том же логическом вьюпорте 1920</b>, а не
+    следствие 4K: удвоение под 4K делает браузер флагом
+    <code>--force-device-scale-factor=2</code>.
+    Одно имя означает по сторонам разное — <b>спишешь отсюда,
+    получишь половину</b>. Канон пока не выбран; до выбора смотри,
+    в какой системе верстаешь.
+  </p>
+</div></body></html>
