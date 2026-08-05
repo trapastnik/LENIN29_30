@@ -5,7 +5,6 @@
   "camp": "green",
   "title_ru": "Басмачество",
   "title_en": null,
-  "sort_key_ru": "басмачество",
   "title_full_ru": "Басмаческое движение",
   "abbr_ru": [],
   "aka_ru": [
@@ -167,6 +166,6 @@
   "flags": [
     "over-tz-limit"
   ],
-  "x": 26.35,
-  "y": 79.26
+  "x": 26.354,
+  "y": 78.704
 }

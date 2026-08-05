@@ -5,7 +5,6 @@
   "camp": "rev-dem",
   "title_ru": "Революционная демократия",
   "title_en": null,
-  "sort_key_ru": "революционная демократия",
   "title_full_ru": null,
   "abbr_ru": [],
   "aka_ru": [],
@@ -56,6 +55,6 @@
   },
   "flags": [],
   "_is_general": true,
-  "x": 36.16,
-  "y": 16.44
+  "x": 34.479,
+  "y": 16.852
 }

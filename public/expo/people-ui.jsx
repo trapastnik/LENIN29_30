@@ -249,6 +249,12 @@ function bgForVariant(variant) {
 // Плавающая панель настроек внешнего вида — всегда видна справа.
 // Содержит 3 группы переключателей: ШАПКА / ФОН СПИСКА / БОЛЬШАЯ КАРТОЧКА.
 // Свёртывается в узкую полосу-«вкладку» по тапу на шеврон.
+// Панель стилей рендерится только по флагу в адресе: people.html?style=1
+// Разбор — у места вызова. Считается один раз при загрузке: значение не
+// должно меняться в течение сеанса, иначе получим панель, появляющуюся
+// у посетителя от чужого нажатия.
+const STYLE_PANEL_ON = new URLSearchParams(location.search).has('style');
+
 function SettingsPanel({ lang,
   headerVariant, setHeaderVariant,
   bgVariant, setBgVariant,
@@ -307,7 +313,11 @@ function SettingsPanel({ lang,
       transition: 'right 220ms ease',
       pointerEvents: 'auto',
     }}>
-      {/* Tab to collapse/expand */}
+      {/* Язычок открытия. 32×56 — НИЖЕ порога 64 из §1, и это намеренно:
+          порог посетительской навигации к служебному элементу неприменим,
+          а панель живёт только под флагом ?style=1 и посетителю не видна.
+          Замер тач-целей подаёт его как «хит 56 при норме 64» — это
+          известное и законное отклонение, поднимать не надо. */}
       <button onClick={() => setOpen(o => !o)} title={lang === 'ru' ? 'Настройки' : 'Settings'} style={{
         position: 'absolute', top: 0, right: open ? 'auto' : 0,
         left: open ? -32 : 'auto',
@@ -1353,8 +1363,23 @@ function PersonalitiesApp() {
         textBgCfg={textBgCfg} textInkCfg={textInkCfg}
         frameCfg={frameCfg}/>}
 
-      {/* Плавающая панель стилей — справа, всегда видна */}
-      <SettingsPanel
+      {/* Панель стилей — инструмент разработки, на стенде её быть не должно.
+          Она фиксирована, zIndex 250 выше модалки и лайтбокса, то есть
+          специально сделана недостижимой для перекрытия: разумно для
+          отладки и ровно наоборот для киоска. Замер тач-целей 2026-08-04
+          нашёл её язычок висящим поверх всего раздела.
+
+          Цена промаха тут больше, чем кажется: киоск живёт ОДНИМ
+          непрерывным сеансом (§1). Посетитель, случайно перекрасивший
+          раздел, ломает его не себе, а всем следующим до перезапуска
+          стенда, — сброса в панели нет, и смотритель не догадается, что
+          нажать.
+
+          Флаг именно в адресе, а не в localStorage: localStorage переживёт
+          перезапуск, и включённая однажды панель осталась бы на стенде
+          навсегда. Киоск открывается фиксированным адресом без параметров,
+          посетитель сюда не попадёт никогда. Отладка — people.html?style=1 */}
+      {STYLE_PANEL_ON && <SettingsPanel
         lang={lang}
         headerVariant={headerVariant} setHeaderVariant={setHeaderVariant}
         bgVariant={bgVariant} setBgVariant={setBgVariant}
@@ -1362,7 +1387,7 @@ function PersonalitiesApp() {
         textBgVariant={textBgVariant} setTextBgVariant={setTextBgVariant}
         textInkVariant={textInkVariant} setTextInkVariant={setTextInkVariant}
         frameVariant={frameVariant} setFrameVariant={setFrameVariant}
-      />
+      />}
     </div>
   );
 }

@@ -28,13 +28,30 @@
     html.brand-scroll body { display: block; overflow: visible; height: auto; min-height: 100vh; }
     body::before { position: fixed; }
 
-    main {
+    /* #catalog, а НЕ main. Найдено зоной ui её же гейтом check-css-order:
+       правило было мёртвым целиком — в сборке применялись значения
+       из pages.css (max-width 1920 вместо 1280, gap 16 вместо 56,
+       padding 24/32 вместо 32/48/120).
+
+       Причина: vite переносит свои <link> в конец <head>, поэтому
+       инлайновый <style> оказывается ВЫШЕ pages.css и при равной
+       специфичности проигрывает. В исходнике порядок обратный —
+       на dev каталог выглядел правильно, а на dist нет.
+
+       Цена была не косметическая: по этому каталогу ставятся задачи
+       другим зонам, и «свёрстай по brand.html#c-…» показывало образец
+       в чужой раскладке. Расхождение с реализацией списали бы
+       на исполнителя.
+
+       Проверила остальные инлайновые правила тем же способом — из двух
+       голых тегов конфликтует только main. */
+    #catalog {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 32px 48px 120px;
+      padding: var(--sp-4, 32px) var(--sp-5, 48px) var(--sp-8, 128px);
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: calc(56px * var(--ui-scale, 1));
     }
 
     /* — Заголовок раздела каталога — */
@@ -675,6 +692,19 @@
       font-family: var(--font-mono);
       font-size: 0.88em;
     }
+    /* Сноски этих двух разделов несут РЕШЕНИЯ, а не подписи к картинкам:
+       записанное исключение по кеглю, правило маркера образца,
+       предупреждение про числа в JSX. На фирменной диагонали они
+       теряются, поэтому подложка та же, что у блоков шкал. */
+    #c-scales .token-strip,
+    #c-forbidden .token-strip {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-2, 16px) var(--sp-3, 24px);
+      margin-bottom: var(--sp-2, 16px);
+      line-height: 1.5;
+    }
+
     .scale-block {
       margin-bottom: var(--sp-5, 48px);
       /* Подложка не украшение: страница идёт по фирменным диагоналям,
@@ -771,6 +801,109 @@
       display: grid; place-items: center;
       font-family: var(--font-mono); font-size: 11px; color: var(--brass);
       font-style: normal;
+    }
+
+    /* Метка читаемости на свотче. Заливкой, а не цветным текстом —
+       по тому же правилу, которое она сама и объясняет. */
+    .leg {
+      display: inline-block;
+      margin-top: var(--sp-1, 8px);
+      padding: 1px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 0.08em;
+    }
+    .leg-ok  { background: var(--camp-green);  color: var(--ink-black); }
+    .leg-mid { background: var(--brass);       color: var(--ink-black); }
+    .leg-no  { background: var(--slate-window); color: var(--ink-black); }
+
+    /* — Раздел «Блоки» (24). Примитивы под 198 справок ————————————
+       Всё на токенах: каталог, который сам не следует шкале,
+       образцом быть не может. */
+    .blocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(420px * var(--ui-scale, 1)), 1fr));
+      gap: var(--sp-4, 32px);
+    }
+    .block-demo {
+      margin: 0;
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    .block-demo figcaption {
+      margin-top: var(--sp-3, 24px);
+      font-size: var(--fs-4, 16px);
+      line-height: 1.5;
+      opacity: 0.78;
+    }
+    .block-demo figcaption b { color: var(--brass); font-family: var(--font-mono); font-size: 0.9em; }
+    .block-demo code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 6px; border-radius: var(--r-sm, 4px);
+      color: var(--brass); font-family: var(--font-mono); font-size: 0.85em;
+    }
+
+    /* карточка справки */
+    .d-card { background: var(--paper-white); border-radius: var(--r-md, 8px); overflow: hidden; box-shadow: var(--sh-1); }
+    .d-stripe { height: calc(10px * var(--ui-scale, 1)); }
+    .d-pad { padding: var(--sp-3, 24px); }
+    .d-kicker { font-family: var(--font-mono); font-size: calc(11px * var(--ui-scale, 1)); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+    .d-title { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-display); font-size: var(--ds-6, 44px); color: var(--camp-red-ink); line-height: 1.1; }
+    .d-meta { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+    .d-body { margin: var(--sp-2, 16px) 0 0; font-size: var(--fs-3, 20px); line-height: 1.45; color: var(--ink-2); }
+
+    /* чипы Венна */
+    .d-chips { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-chip { display: inline-flex; align-items: center; gap: var(--sp-1, 8px); font-size: var(--fs-4, 16px); color: var(--paper-white); }
+    .d-chip i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+    /* ячейки территорий */
+    .d-cells { display: flex; flex-wrap: wrap; gap: var(--sp-2, 16px); }
+    .d-cell {
+      padding: var(--sp-2, 16px) var(--sp-3, 24px);
+      min-height: 64px; display: inline-flex; align-items: center;
+      border: var(--bd-1, 1.5px) solid var(--brass);
+      border-radius: var(--r-sm, 4px);
+      font-size: var(--fs-4, 16px); color: var(--paper-white);
+    }
+    /* --telegrey-4, а НЕ --ink-3: ink-токены считаны для тёмного текста
+       на СВЕТЛОМ. На панели --page-bg-deep --ink-3 даёт контраст 1.29,
+       то есть не читается. Третий раз за проект одна и та же ошибка —
+       палитра работает заливкой, а как текст только на своём фоне. */
+    .d-cell-off { border-style: dashed; border-color: var(--telegrey-4); color: var(--telegrey-4); opacity: 0.7; }
+
+    /* строка хроники */
+    .d-rows { display: flex; flex-direction: column; gap: var(--sp-1, 8px); }
+    .d-row { display: flex; align-items: center; gap: var(--sp-2, 16px); min-height: 64px; border-bottom: var(--bd-hair, 1px) solid var(--rule); }
+    .d-date { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; width: 11ch; }
+    .d-txt { flex: 1; font-size: var(--fs-3, 20px); }
+    .d-ref { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; }
+
+    /* лонгрид */
+    .d-long { background: var(--paper-4); border-radius: var(--r-md, 8px); padding: var(--sp-3, 24px); }
+    .d-drop { margin: 0; font-size: var(--fs-3, 20px); line-height: 1.5; color: var(--ink-2); max-width: 78ch; }
+    .d-drop span { float: left; font-family: var(--font-display); font-size: var(--ds-3, 150px); line-height: 0.8; color: var(--camp-red); margin: 0 var(--sp-2, 16px) 0 0; }
+    .d-quote { margin: var(--sp-3, 24px) 0 0; padding-left: var(--sp-2, 16px); border-left: var(--bd-2, 3px) solid var(--brass); font-size: var(--fs-3, 20px); color: var(--ink-2); }
+    .d-quote span { display: block; margin-top: var(--sp-1, 8px); font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+
+    /* легенда карты */
+    .d-legend { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-legend span { display: flex; align-items: center; gap: var(--sp-2, 16px); font-size: var(--fs-4, 16px); }
+    .d-legend i { width: calc(28px * var(--ui-scale, 1)); height: calc(6px * var(--ui-scale, 1)); border-radius: var(--r-sm, 4px); flex: none; }
+
+    /* состояния */
+    .d-states { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-state {
+      padding: var(--sp-3, 24px); text-align: center;
+      border: var(--bd-1, 1.5px) dashed var(--telegrey-4);
+      border-radius: var(--r-sm, 4px);
+      font-family: var(--font-mono); font-size: var(--fs-4, 16px);
+      letter-spacing: 0.08em; color: var(--telegrey-4);
+      opacity: 0.75;
+      background: rgba(0,0,0,0.18);
     }
 
     /* — Раздел «Запрещено» (23). Пары: слева нельзя, справа чем вместо — */
@@ -1516,7 +1649,12 @@
     <a class="back-link" href="index.html" id="back-link">← На стартовую</a>
   </header>
 
-  <main>
+  <!-- id, а не тег: инлайновый <style> в сборке оказывается ВЫШЕ
+       pages.css (vite переносит свои <link> в конец <head>), и при равной
+       специфичности выигрывает внешний файл. В исходнике порядок обратный,
+       поэтому расхождение видно только на dist. Селектор с id порядку
+       не подвержен. Ловит npm run check → check-css-order.mjs. -->
+  <main id="catalog">
     <!-- ── 01. Палитра ─────────────────────────────────────────── -->
     <section class="cat-section">
       <p class="lede">01 · Палитра</p>
@@ -1827,6 +1965,21 @@
         значении токена. Заведёте новую метрику — пометка появится сама,
         а если не появится, значит метрика не масштабируется, и это видно
         до того, как дойдёт до киоска.
+      </p>
+
+      <p class="token-strip" id="c-fs-floor">
+        <b>Нижняя ступень <code>--fs-4</code> = 16 — предел, а не
+        случайность:</b> считано на дистанцию просмотра 70 см. Ступени
+        ниже в шкале нет и не будет — легальная мелкая ступень
+        применялась бы не там, где нужна, а кегль 12 в теле справки
+        запретить стало бы нечем.
+        <br>
+        Единственное записанное исключение — <b>плотный хром карты,
+        13 px</b>: панель слоёв <code>&lt;map-unit&gt;</code>, 20 строк
+        при ширине 280. Ограничено служебным хромом компонента
+        с фиксированной шириной и числом строк ≥ 15; в тело справки,
+        карточку, ленту хроники и лонгрид не переносится. Разбор —
+        <code>docs/brand.md</code>, §2.
       </p>
 
       <p class="token-strip">
@@ -2418,6 +2571,147 @@
       </p>
     </section>
 
+    <!-- ── 24. Блоки под 198 справок ───────────────────────────────
+         Каждый блок — примитив, который встречается в разделах десятки
+         и сотни раз. Якорь у каждого свой, чтобы постановка задачи
+         звучала «свёрстай по brand.html#c-spravka-card», а не пересказом.
+
+         Блоки срисованы с настоящих компонентов, а не выдуманы: структура
+         повторяет party-card.js / state-card.js / venn-selector.js. -->
+    <section class="cat-section" id="c-blocks">
+      <p class="lede">24 · Блоки</p>
+      <h2>Примитивы под 198 справок</h2>
+
+      <p class="lede-note">
+        Ниже то, что повторится сотни раз. Каждый блок назван якорем;
+        ссылка на якорь — законченная постановка задачи, пересказ словами
+        не нужен и вреден.
+      </p>
+
+      <div class="blocks-grid">
+
+        <figure class="block-demo" id="c-spravka-card">
+          <div class="d-card">
+            <div class="d-stripe" style="background: var(--camp-red);"></div>
+            <div class="d-pad">
+              <div class="d-kicker">Партия · лагерь «Красные»</div>
+              <h3 class="d-title">Большевики</h3>
+              <p class="d-meta">РСДРП(б) · 1903 — 1918</p>
+              <p class="d-body">Основная политическая сила, взявшая власть
+                в октябре 1917 года и удержавшая её в Гражданской войне.</p>
+            </div>
+          </div>
+          <figcaption>
+            <b>#c-spravka-card</b> — карточка справки.
+            Полоса лагеря <code>--camp-*</code> сверху, заголовок
+            <code>--ds-6</code>, мета <code>--fs-3</code>, тело
+            <code>--fs-2</code>. Тень <code>--sh-1</code>.
+            <b>Заголовок НЕ курсивом</b> — Nolde курсива не имеет.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-venn-chip">
+          <div class="d-chips">
+            <span class="d-chip"><i style="background: var(--camp-red);"></i>Большевики</span>
+            <span class="d-chip"><i style="background: var(--camp-rev-dem);"></i>Меньшевики</span>
+            <span class="d-chip"><i style="background: var(--camp-national);"></i>Дашнакцутюн</span>
+          </div>
+          <figcaption>
+            <b>#c-venn-chip</b> — чип диаграммы Венна.
+            Якорь — <b>левый край</b>, подпись растёт вправо и не
+            переносится. Цвет точки — <code>--camp-*</code> по
+            <code>venn_groups[0]</code>, он же <code>camp</code>.
+            Хит-зона 64 добирается <code>::before</code>, видимый чип 28.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-territory-cell">
+          <div class="d-cells">
+            <span class="d-cell" style="border-color: var(--camp-white);">Донская армия</span>
+            <span class="d-cell" style="border-color: var(--camp-national);">Алаш-Орда</span>
+            <span class="d-cell d-cell-off">нет полигона</span>
+          </div>
+          <figcaption>
+            <b>#c-territory-cell</b> — ячейка сетки территорий.
+            Рамка <code>--bd-1</code> цветом лагеря, текст
+            <code>--camp-*-ink</code>: заливка как текст не читается
+            (<code>--camp-white</code> даёт 1.45 на светлом).
+            Третья — состояние «полигона нет», <code>territory_id: null</code>.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-chronicle-row">
+          <div class="d-rows">
+            <div class="d-row"><span class="d-date">3 марта</span>
+              <span class="d-txt">Подписан Брестский мир</span>
+              <span class="d-ref">Справка →</span></div>
+            <div class="d-row"><span class="d-date">25 мая</span>
+              <span class="d-txt">Выступление Чехословацкого корпуса</span>
+              <span class="d-ref">Справка →</span></div>
+          </div>
+          <figcaption>
+            <b>#c-chronicle-row</b> — строка ленты хроники.
+            «Справка →» повторяется 76 раз, поэтому у неё порог
+            управляющего элемента 64, а не 120: пять целей по 120
+            съели бы треть экрана. Дата <code>--font-mono</code>.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-longread-block">
+          <div class="d-long">
+            <p class="d-drop"><span>С</span>имбирскъ лета 1918 года —
+              город между двумя фронтами. Комучъ пришёл сюда в июле,
+              красные вернулись в сентябре.</p>
+            <blockquote class="d-quote">«Мы ещё вернёмся к расчётам
+              с историей» <span>— изъ приказа РВСР, декабрь 1918</span></blockquote>
+          </div>
+          <figcaption>
+            <b>#c-longread-block</b> — блок лонгрида.
+            Буквица <code>--ds-3</code>, тело <code>--fs-2</code>,
+            цитата с латунной линейкой <code>--bd-2</code>.
+            Мера строки — не шире 78 знаков.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-map-legend">
+          <div class="d-legend">
+            <span><i style="background: var(--map-red);"></i>РККА</span>
+            <span><i style="background: var(--map-white);"></i>Белые армии</span>
+            <span><i style="background: var(--map-front);"></i>Линия фронта</span>
+            <span><i style="background: var(--map-river);"></i>Реки</span>
+          </div>
+          <figcaption>
+            <b>#c-map-legend</b> — легенда карты.
+            Цвет плашки и цвет слоя берутся из одного места — поля
+            <code>color</code> в <code>map.json</code>, имя из словаря
+            <code>--map-*</code>. Разойтись не могут по устройству.
+            Дата фронта кодируется <b>штрихом</b>, а не оттенком.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-states">
+          <div class="d-states">
+            <div class="d-state d-loading">Загрузка…</div>
+            <div class="d-state d-nomap">Карта территории не поставлена</div>
+          </div>
+          <figcaption>
+            <b>#c-states</b> — состояния «загрузка» и «нет карты».
+            Обе пунктирные и приглушённые: заглушка <b>не должна
+            выглядеть готовой</b>. Приёмка обязана отличать недоделку
+            от поставки — правило затычки из §2.
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <p class="token-strip">
+        Блоки срисованы с настоящих компонентов, а не придуманы:
+        структура повторяет <code>party-card.js</code>,
+        <code>state-card.js</code> и <code>venn-selector.js</code>.
+        Расхождение каталога с реализацией — дефект каталога.
+      </p>
+    </section>
+
     <p class="source">Источник: docs/brand.md · docs/brand/Lenin-guideline-2026.pdf · src/styles/tokens.css · TESTS/fabric canvas/html-in-canvas-brief.md</p>
   </main>
 
@@ -2698,6 +2992,28 @@
         ? T['ink-black'] : T['paper-white'];
     }
 
+    /** Где этим цветом можно ПИСАТЬ.
+     *
+     *  Считает генератор, а не каталог: contrast против --paper-white
+     *  и --page-bg-deep, пороги WCAG 4.5 (обычный текст) и 3.0 (крупный).
+     *  Здесь только показ.
+     *
+     *  Зачем на свотче: палитра работает заливкой, а как текст — только
+     *  на своём фоне, и в имени токена это ничем не выражено. «--ink-3»
+     *  читается как «цвет текста», а он цвет текста ДЛЯ СВЕТЛОГО: на
+     *  тёмной панели даёт 1.29. Я ошиблась так трижды за сутки, и ни
+     *  одну из трёх линтер поймать не мог — фон везде стоял на предке
+     *  через разметку, а не в том же правиле. Подпись у свотча работает
+     *  в момент ВЫБОРА, а правило — в момент прогона; здесь первое дешевле. */
+    function legibilityBadge(L) {
+      if (!L) return '';
+      const RU = { light: 'на светлом', dark: 'на тёмном', both: 'на обоих', none: '—' };
+      if (L.on === 'both') return `<i class="leg leg-ok">текстом на обоих</i>`;
+      if (L.on !== 'none') return `<i class="leg leg-ok">текстом ${RU[L.on]}</i>`;
+      if (L.onLarge !== 'none') return `<i class="leg leg-mid">только крупным ${RU[L.onLarge]}</i>`;
+      return `<i class="leg leg-no">только заливка</i>`;
+    }
+
     // 01 · Палитра — плитки со значением и пояснением из tokens.json
     document.querySelectorAll('[data-palette-group]').forEach((host) => {
       const g = group(host.dataset.paletteGroup);
@@ -2705,7 +3021,8 @@
       host.innerHTML = g.tokens.map((name) => `
         <div class="swatch">
           <div class="fill" style="background: var(--${name});"></div>
-          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span></div>
+          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span>
+            ${legibilityBadge(TMETA[name].legible)}</div>
         </div>`).join('');
     });
 

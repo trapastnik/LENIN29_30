@@ -5,7 +5,6 @@
   "camp": "rev-dem",
   "title_ru": "Сибирское областничество",
   "title_en": null,
-  "sort_key_ru": "сибирское областничество",
   "title_full_ru": null,
   "abbr_ru": [],
   "aka_ru": [],
@@ -146,6 +145,6 @@
   "flags": [
     "dates-unknown"
   ],
-  "x": 42.49,
-  "y": 16.44
+  "x": 34.479,
+  "y": 22.963
 }

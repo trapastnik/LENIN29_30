@@ -547,6 +547,49 @@ def geo_links(reports: List[str], failures: List[str]) -> dict:
     return _GEO_CACHE
 
 
+def check_source_trace(reports: List[str]) -> None:
+    """Свежесть снимков, снятых с файлов ЧУЖИХ зон.
+
+    Часть данных мы не вычисляем, а забираем: координаты чипов Венна
+    считает зона `design` у себя в лаборатории, мы держим снимок.
+    Снимок незаметно устаревает — соседняя зона вправе пересчитать в любой
+    момент и не обязана нам сообщать.
+
+    Это НЕ гейт. Расхождение половину времени означает не дефект,
+    а «источник ушёл вперёд, мы ещё не забрали»: вечно красная проверка
+    не отличается от выключенной. Поэтому строка в отчёте — она отвечает
+    на вопрос «мои данные свежие?» в момент, когда он возникает.
+
+    До этого механизмом оповещения был оркестратор: за один день координаты
+    применялись дважды, и оба раза о новой версии узнавали из переписки,
+    а не из прогона.
+    """
+    import hashlib
+
+    data = read_json(SRC / "_source-trace.json") or {}
+    for rel_path, rec in sorted((data.get("sources") or {}).items()):
+        path = ROOT / rel_path
+        if not path.exists():
+            # Две причины, и вторая вероятнее: своя ветка отстала от main.
+            # Первый же прогон дал именно её, а сообщение винило соседа —
+            # мелочь, но ровно та, из-за которой правило начинают
+            # игнорировать.
+            reports.append("след источника: %s не найден. Либо ветка отстала "
+                           "от main (проверить: git log origin/<ветка>..origin/main), "
+                           "либо зона %s убрала лабораторию. Снимок в %s "
+                           "остаётся рабочим в обоих случаях"
+                           % (rel_path, rec.get("zone", "?"), rec.get("used_by", "?")))
+            continue
+        live = hashlib.sha256(path.read_bytes()).hexdigest()
+        if live == rec.get("sha256"):
+            continue
+        reports.append(
+            "⚠ след источника: %s ИЗМЕНИЛСЯ у зоны %s — снимок от %s (%s…), "
+            "живой файл (%s…). Забрать новую версию: %s"
+            % (rel_path, rec.get("zone", "?"), rec.get("taken", "?"),
+               (rec.get("sha256") or "")[:8], live[:8], rec.get("used_by", "?")))
+
+
 CAMP_ROWS: List[dict] = []
 
 
@@ -835,8 +878,25 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["title_full_ru"] = ent["title_ru"]
         if ent.get("abbr_ru"):
             rec["abbr_ru"] = ent["abbr_ru"]
-        if ent.get("camp") and not rec.get("camp"):
+        # Лагерь ПЕРЕЗАПИСЫВАЕТСЯ из справки, а не сохраняется от M0.
+        # Раньше стояло «поставить, если в индексе пусто», и кураторское
+        # значение переживало пересчёт: у Авксентьева в справке `rev-dem`
+        # по регалиям, а в индексе оставался `green` из подборки design-pass,
+        # где всё небелое и некрасное свалено в один лагерь. Плитка красилась
+        # зелёным, карточка называла революционную демократию — и ни одна
+        # сторона не жаловалась. Нашёл гейт сверки, а не глаз.
+        if ent.get("camp"):
             rec["camp"] = ent["camp"]
+        # Поля, которые ведёт человек или соседняя зона, а плитка обязана
+        # знать. Протаскивание в индекс — ОТДЕЛЬНЫЙ шаг, о котором ничто
+        # не напоминает: три из них я завела и не протащила в тот же день,
+        # когда закрывала ровно этот класс. Ловится гейтом сверки
+        # (scripts/validate-content.mjs), а не памятью автора.
+        for f in ("territory_id", "map_id", "map_status", "open_question_ru"):
+            if ent.get(f) is not None:
+                rec[f] = ent[f]
+            else:
+                rec.pop(f, None)
         if ent.get("title_chip_ru"):
             # Короткая подпись чипа. Полное название остаётся в `title_ru`
             # и в карточке — на диаграмме оно физически не помещается.
@@ -889,7 +949,18 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
                 rec.pop(k, None)
         # Сортировка — по тому, что написано на плитке. Иначе «РСФСР» едет
         # в списке на «российская социалистическая…», а глазом это не сходится.
-        rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
+        # Ключ сортировки списка. У ЛИЧНОСТЕЙ берём ключ справки: он считан
+        # от фамилии, а подпись плитки у трёх записей досталась от M0
+        # с инициалами («В. И. ЛЕНИН»), и по ней Колчак встаёт перед
+        # Авксентьевым — список перестаёт быть алфавитным. Зона `ui` уже
+        # обходила это регуляркой, срезающей инициалы; обход теперь не нужен.
+        # У остальных видов сортируем по подписи плитки: посетитель ищет
+        # глазами то, что написано, а «ЗСФСР» по полному названию уехало бы
+        # на «Ф».
+        if kind == "person" and ent.get("sort_key_ru"):
+            rec["sort_key_ru"] = ent["sort_key_ru"]
+        else:
+            rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
         rec["has_card"] = True
         rec.pop("stub", None)
         by_id[eid] = rec
@@ -1208,6 +1279,7 @@ def main(argv=None) -> int:
             rebuild_index(kind, built, registry, reports)
 
     reserve_event_index(ctx.events_by_no, reports)
+    check_source_trace(reports)
     write_tz_report(by_kind)
 
     date_rows: List[dict] = []

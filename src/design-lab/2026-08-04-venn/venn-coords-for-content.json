@@ -1,0 +1,137 @@
+{
+ "_": "Координаты чипов Венна. Источник: src/design-lab/2026-08-04-venn/. Ключ — id записи в parties/_index.json, значения — проценты кадра 1920x1080.",
+ "chips": {
+  "gruzinskaya-sotsial-demokraticheskaya-pa": {
+   "x": 40.312,
+   "y": 47.222
+  },
+  "belorusskaya-sotsialisticheskaya-gromada": {
+   "x": 40.312,
+   "y": 53.333
+  },
+  "poaley-tsion": {
+   "x": 53.698,
+   "y": 47.222
+  },
+  "bund": {
+   "x": 53.698,
+   "y": 53.333
+  },
+  "whites-general": {
+   "x": 86.979,
+   "y": 29.815
+  },
+  "cadets": {
+   "x": 86.979,
+   "y": 35.926
+  },
+  "alekseev-org": {
+   "x": 86.979,
+   "y": 42.037
+  },
+  "right-center": {
+   "x": 86.979,
+   "y": 48.148
+  },
+  "national-center": {
+   "x": 86.979,
+   "y": 54.259
+  },
+  "union-renewal": {
+   "x": 76.562,
+   "y": 17.593
+  },
+  "union-defence": {
+   "x": 76.562,
+   "y": 23.704
+  },
+  "anarchists": {
+   "x": 10.938,
+   "y": 86.852
+  },
+  "greens-general": {
+   "x": 10.938,
+   "y": 92.963
+  },
+  "sotsial-demokraticheskaya-partiya-finlya": {
+   "x": 18.021,
+   "y": 59.444
+  },
+  "muslim-socialists": {
+   "x": 18.021,
+   "y": 65.556
+  },
+  "borotbisty": {
+   "x": 18.021,
+   "y": 71.667
+  },
+  "left-srs": {
+   "x": 24.479,
+   "y": 29.074
+  },
+  "basmachestvo": {
+   "x": 26.354,
+   "y": 78.704
+  },
+  "revdem-general": {
+   "x": 34.479,
+   "y": 16.852
+  },
+  "sibirskoe-oblastnichestvo": {
+   "x": 34.479,
+   "y": 22.963
+  },
+  "union-constituent": {
+   "x": 34.479,
+   "y": 29.074
+  },
+  "committee-salvation": {
+   "x": 34.479,
+   "y": 35.185
+  },
+  "narodnie-socialists": {
+   "x": 50.052,
+   "y": 16.852
+  },
+  "mensheviks": {
+   "x": 50.052,
+   "y": 22.963
+  },
+  "srs": {
+   "x": 50.052,
+   "y": 29.074
+  },
+  "national-movements": {
+   "x": 62.187,
+   "y": 57.222
+  },
+  "musavat": {
+   "x": 62.187,
+   "y": 63.333
+  },
+  "ukrainskaya-sotsial-demokraticheskaya-ra": {
+   "x": 62.187,
+   "y": 69.444
+  },
+  "dashnaktsutyun": {
+   "x": 62.187,
+   "y": 75.556
+  },
+  "latyshskiy-krestyanskiy-soyuz": {
+   "x": 62.187,
+   "y": 81.667
+  },
+  "bolsheviks": {
+   "x": 6.979,
+   "y": 47.963
+  },
+  "reds-general": {
+   "x": 6.979,
+   "y": 54.074
+  },
+  "alash": {
+   "x": 73.021,
+   "y": 63.519
+  }
+ }
+}

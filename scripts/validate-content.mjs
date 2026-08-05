@@ -258,6 +258,113 @@ function crossCheckParser(where, data) {
   }
 }
 
+// -------------------------------------------- сверка индекса и справки
+
+/**
+ * Индекс и справка обязаны говорить одно и то же.
+ *
+ * За двое суток класс «связь есть в одном файле и нет в другом» дал пять
+ * случаев: карта Комуча, шесть полигонов, карточка события №34, схемы
+ * Симбирска, `territory_id`. У всех общее — **обе стороны зелёные**:
+ * у владельца данных битых ссылок нет, потому что ссылок нет вовсе,
+ * а у потребителя `null` — валидное «пока нет».
+ *
+ * Проверка «сверить все общие поля» не годится: `title_ru` расходится
+ * законно у 110 записей из 198 (в индексе подпись плитки «КАМЕНЕВ»,
+ * в справке полное имя «С. С. КАМЕНЕВ»), и такой гейт был бы красным
+ * с рождения — то есть выключенным. Поэтому поля разведены по трём классам.
+ */
+
+/** A. Обязаны совпадать значением. Расхождение — ошибка. */
+const AGREE_FIELDS = [
+  'camp', 'venn_groups', 'x', 'y', 'title_chip_ru', 'abbr_ru',
+  'territory_id', 'map_id', 'map_status', 'open_question_ru',
+  // Только у личностей: индекс берёт ключ из справки, где он считан
+  // от фамилии. У остальных видов ключ выводится из подписи плитки —
+  // «ЗСФСР» по полному названию уехало бы на «Ф», а посетитель ищет
+  // глазами то, что написано.
+  { field: 'sort_key_ru', kinds: ['person'] },
+];
+
+const agreeField = (f) => (typeof f === 'string' ? f : f.field);
+const agreeApplies = (f, kind) => (typeof f === 'string' || !f.kinds
+  || f.kinds.includes(kind));
+
+/** C. Исключено намеренно. Печатается каждый прогон — исключение, о котором
+ *  знает только комментарий в генераторе, однажды «починят по правилу». */
+const EXCLUDED_FIELDS = [
+  { field: 'title_ru',
+    why: 'подпись плитки против полного имени, решение M0' },
+];
+
+/** Пусто — это `undefined`, `null`, пустая строка и пустой массив.
+ *  Справка пишет `abbr_ru: []`, индекс поле опускает — это одно и то же
+ *  «аббревиатуры нет», и считать их расхождением значит выдать 48 ложных
+ *  тревог и приучить пропускать настоящие. */
+const isEmpty = (v) => v === undefined || v === null || v === ''
+  || (Array.isArray(v) && v.length === 0);
+
+const eq = (a, b) => {
+  if (isEmpty(a) || isEmpty(b)) return isEmpty(a) && isEmpty(b);
+  if (Array.isArray(a) || Array.isArray(b)) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+    return a.every((v, i) => eq(v, b[i]));
+  }
+  return a === b;
+};
+
+const shown = (v) => Array.isArray(v) ? `[${v.join(', ')}]`
+  : (v === undefined ? '(поля нет)' : (v === null ? 'null' : `«${v}»`));
+
+const agreeStats = Object.fromEntries(AGREE_FIELDS.map((f) => [agreeField(f), [0, 0]]));
+const excludedStats = Object.fromEntries(EXCLUDED_FIELDS.map((e) => [e.field, 0]));
+let derivedChecked = 0;
+
+function crossCheckIndexCard(where, card, item, kind) {
+  for (const spec of AGREE_FIELDS) {
+    if (!agreeApplies(spec, kind)) continue;
+    const f = agreeField(spec);
+    const a = card[f];
+    const b = item[f];
+    if (isEmpty(a) && isEmpty(b)) continue;
+    agreeStats[f][1] += 1;
+    if (eq(a, b)) { agreeStats[f][0] += 1; continue; }
+    err(where, `${f}: в справке ${shown(a)}, в индексе ${shown(b)} — `
+      + 'плитка и карточка покажут разное');
+  }
+  for (const { field } of EXCLUDED_FIELDS) {
+    if (card[field] !== undefined && item[field] !== undefined
+        && !eq(card[field], item[field])) excludedStats[field] += 1;
+  }
+
+  // B. Производные: в индексе есть, в справке нет — потому что вычисляются.
+  // Сверяется ПРАВИЛО вывода, а не равенство.
+  derivedChecked += 1;
+  const lead = (card.media || []).find((m) => m.slot === 'lead' && m.file && (m.tiers || []).length)
+    || (card.media || []).find((m) => m.file && (m.tiers || []).length);
+  if (lead) {
+    if (item.lead_media !== lead.file) {
+      err(where, `lead_media в индексе ${shown(item.lead_media)}, а первая `
+        + `картинка с производными — ${shown(lead.file)}`);
+    }
+    if (!eq(item.lead_tiers, lead.tiers)) {
+      err(where, `lead_tiers в индексе ${shown(item.lead_tiers)}, `
+        + `у картинки ${shown(lead.tiers)}`);
+    }
+  } else if (item.lead_media !== undefined) {
+    err(where, 'в индексе есть lead_media, а в справке нет ни одной картинки '
+      + 'с собранными производными');
+  }
+  const disp = card.dates && card.dates.display_ru;
+  if (disp && item.dates_display_ru !== undefined) {
+    const firstLine = String(disp).split('\n')[0].trim();
+    if (item.dates_display_ru !== firstLine) {
+      err(where, `dates_display_ru в индексе ${shown(item.dates_display_ru)}, `
+        + `а первая строка дат справки — ${shown(firstLine)}`);
+    }
+  }
+}
+
 // ---------------------------------------------------------------- справки
 
 let checked = 0;
@@ -291,6 +398,8 @@ for (const { kind, dir } of KINDS) {
     // ── нет справки без записи в индексе: плитка её не покажет
     if (!indexRecords.has(id)) {
       err(where, `нет записи в ${dir}/_index.json`);
+    } else {
+      crossCheckIndexCard(where, data, indexRecords.get(id).item, kind);
     }
 
     // ── английский: копия русского под флагом EN — это баг движка на приёмке
@@ -704,6 +813,25 @@ if (!quiet || errors.length) {
   console.log(`content:check — проверено файлов: ${checked}, `
     + `записей в индексах: ${indexRecords.size}`
     + (crosschecked ? `, сверено с pandoc: ${crosschecked}` : ''));
+}
+
+// Сверка индекса и справки — итог со знаменателями. Печатается всегда,
+// в том числе когда всё сошлось: «сверено 0 полей» обязано быть заметно.
+if (!quiet) {
+  if (!derivedChecked) {
+    err('сверка индекса и справок', 'не сверено ни одной записи — '
+      + 'проверять нечего, и это ошибка, а не «всё хорошо»');
+  }
+  const line = AGREE_FIELDS.map(agreeField)
+    .filter((f) => agreeStats[f][1])
+    .map((f) => `${f} ${agreeStats[f][0]}/${agreeStats[f][1]}`)
+    .join(' · ');
+  console.log(`\nсверка индекса и справки — записей ${derivedChecked}`
+    + (line ? `\n  совпадение: ${line}` : ''));
+  for (const { field, why } of EXCLUDED_FIELDS) {
+    console.log(`  ${field} — исключено намеренно: ${why}`
+      + (excludedStats[field] ? `, расходится у ${excludedStats[field]}/${derivedChecked}` : ''));
+  }
 }
 
 if (placeholders.length) {

@@ -31,43 +31,43 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PARTIES = ROOT / "public" / "content" / "parties"
-SOURCE = ROOT / "src" / "design-lab" / "2026-08-04-venn" / "venn-chips.json"
+SOURCE = ROOT / "src" / "design-lab" / "2026-08-04-venn" / "venn-coords-for-content.json"
 
-# id → (x, y), проценты кадра. Снимок из venn-chips.json зоны `design`.
+# id → (x, y), проценты кадра. Снимок из venn-coords-for-content.json зоны `design`.
 XY = {
-    "alash": (70.10, 54.35),
-    "alekseev-org": (88.91, 33.89),
-    "anarchists": (14.56, 84.63),
-    "basmachestvo": (26.35, 79.26),
-    "belorusskaya-sotsialisticheskaya-gromada": (40.86, 46.11),
-    "bolsheviks": (8.49, 46.99),
-    "borotbisty": (13.44, 67.04),
-    "bund": (40.86, 53.52),
-    "cadets": (88.91, 26.48),
-    "committee-salvation": (42.49, 23.84),
-    "dashnaktsutyun": (50.41, 72.22),
-    "greens-general": (14.56, 92.04),
-    "gruzinskaya-sotsial-demokraticheskaya-pa": (47.20, 46.11),
-    "latyshskiy-krestyanskiy-soyuz": (50.41, 79.63),
-    "left-srs": (24.48, 31.76),
-    "mensheviks": (36.16, 31.25),
-    "musavat": (56.74, 64.81),
-    "muslim-socialists": (19.77, 67.04),
-    "narodnie-socialists": (42.49, 31.25),
-    "national-center": (88.91, 48.70),
-    "national-movements": (50.41, 64.81),
-    "poaley-tsion": (47.20, 53.52),
-    "reds-general": (8.49, 54.40),
-    "revdem-general": (36.16, 16.44),
-    "right-center": (88.91, 41.30),
-    "sibirskoe-oblastnichestvo": (42.49, 16.44),
-    "sotsial-demokraticheskaya-partiya-finlya": (19.77, 59.63),
-    "srs": (36.16, 38.66),
-    "ukrainskaya-sotsial-demokraticheskaya-ra": (56.74, 72.22),
-    "union-constituent": (36.16, 23.84),
-    "union-defence": (74.48, 36.25),
-    "union-renewal": (74.48, 28.84),
-    "whites-general": (88.91, 19.07),
+    "alash": (73.021, 63.519),
+    "alekseev-org": (86.979, 42.037),
+    "anarchists": (10.938, 86.852),
+    "basmachestvo": (26.354, 78.704),
+    "belorusskaya-sotsialisticheskaya-gromada": (40.312, 53.333),
+    "bolsheviks": (6.979, 47.963),
+    "borotbisty": (18.021, 71.667),
+    "bund": (53.698, 53.333),
+    "cadets": (86.979, 35.926),
+    "committee-salvation": (34.479, 35.185),
+    "dashnaktsutyun": (62.187, 75.556),
+    "greens-general": (10.938, 92.963),
+    "gruzinskaya-sotsial-demokraticheskaya-pa": (40.312, 47.222),
+    "latyshskiy-krestyanskiy-soyuz": (62.187, 81.667),
+    "left-srs": (24.479, 29.074),
+    "mensheviks": (50.052, 22.963),
+    "musavat": (62.187, 63.333),
+    "muslim-socialists": (18.021, 65.556),
+    "narodnie-socialists": (50.052, 16.852),
+    "national-center": (86.979, 54.259),
+    "national-movements": (62.187, 57.222),
+    "poaley-tsion": (53.698, 47.222),
+    "reds-general": (6.979, 54.074),
+    "revdem-general": (34.479, 16.852),
+    "right-center": (86.979, 48.148),
+    "sibirskoe-oblastnichestvo": (34.479, 22.963),
+    "sotsial-demokraticheskaya-partiya-finlya": (18.021, 59.444),
+    "srs": (50.052, 29.074),
+    "ukrainskaya-sotsial-demokraticheskaya-ra": (62.187, 69.444),
+    "union-constituent": (34.479, 29.074),
+    "union-defence": (76.562, 23.704),
+    "union-renewal": (76.562, 17.593),
+    "whites-general": (86.979, 29.815),
 }
 
 
@@ -76,8 +76,13 @@ def load() -> dict:
     if not SOURCE.exists():
         print("  %s нет — беру снимок из скрипта" % SOURCE.name)
         return dict(XY)
-    live = {c["id"]: (round(float(c["x"]), 2), round(float(c["y"]), 2))
-            for c in json.loads(SOURCE.read_text(encoding="utf-8"))}
+    raw = json.loads(SOURCE.read_text(encoding="utf-8"))
+    chips = raw.get("chips") if isinstance(raw, dict) else None
+    if chips is None:
+        print("  формат %s не распознан — беру снимок" % SOURCE.name)
+        return dict(XY)
+    live = {k: (round(float(v["x"]), 3), round(float(v["y"]), 3))
+            for k, v in chips.items()}
     drift = {k for k in set(live) & set(XY) if live[k] != XY[k]}
     if drift or set(live) != set(XY):
         print("  ⚠ снимок разошёлся с %s: %d записей — беру живой файл"
