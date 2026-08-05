@@ -209,5 +209,6 @@
   },
   "flags": [
     "over-tz-limit"
-  ]
+  ],
+  "map_id": "allies-entente-presence"
 }

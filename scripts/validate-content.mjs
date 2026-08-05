@@ -110,7 +110,28 @@ const warnings = [];
 const quiet = process.argv.includes('--quiet');
 
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
-const warn = (where, msg) => warnings.push(`${where}: ${msg}`);
+// Пара `where`/`msg` хранится рядом со склеенной строкой: по ней строится
+// устойчивое имя предупреждения для базы долга. Склеенная строка годится
+// человеку, но не ключу — в ней числа, которые меняются при каждой правке.
+const warnPairs = [];
+const warn = (where, msg) => {
+  warnings.push(`${where}: ${msg}`);
+  warnPairs.push({ where, msg });
+};
+
+/**
+ * Устойчивое имя предупреждения: причина, файл, форма сообщения.
+ *
+ * Числа из сообщения вычищаются — длина справки меняется при любой правке
+ * текста, и ключ на её основе уезжал бы каждый раз, показывая обмен там,
+ * где его нет. Исключение — номер аннотации `n=N`: он различает записи
+ * внутри одного файла и от правок не зависит.
+ */
+function warnKey(reason, where, msg) {
+  const n = /\bn=(\d+)/.exec(msg);
+  const shape = msg.replace(/\d+/g, '#');
+  return `${reason} | ${where} | ${shape}${n ? ` | n=${n[1]}` : ''}`;
+}
 
 function readJSON(path) {
   try {
@@ -504,9 +525,16 @@ function checkMedia(where, data) {
     seen.add(m.n);
 
     if (!m.src_file) {
-      // Внешний источник — не пропажа: файла в поставке нет и не будет,
-      // изображение живёт в госкаталоге и подписано ссылкой.
-      if (!m.source_url) {
+      // Слот наполнен, если у него есть ЧТО показать. Источников содержимого
+      // три, и файл — только один из них:
+      //   `src_file`   — поставка заказчика;
+      //   `source_url` — внешний источник (Госкаталог), файла не будет вовсе;
+      //   `map_id`     — карта-схема, отрисовывается `<map-unit>`.
+      // Третий добавлен по заявке зоны `simbirsk` 2026-08-05: две схемы
+      // Симбирска собраны и отрисованы (41 и 49 узлов SVG в теневом дереве,
+      // замерено на живом `dist`), а правило звало их пропажей — оно знало
+      // про файлы и не знало про карты.
+      if (!m.source_url && !m.map_id) {
         warn(where, `media n=${m.n}: аннотация «${m.src_name || m.caption_ru || '?'}»`
           + ' без файла на диске');
       }
@@ -698,6 +726,105 @@ if (existsSync(GEO)) {
   }
 }
 
+/**
+ * СОБРАННАЯ КАРТА — вторая половина того же контракта, и она отдельная.
+ *
+ * `territory_id` ведёт в реестр геометрии, но карточку рисует не он:
+ * `state-card.js:229` читает `map_id`, `:231` — массив `initial_layers`.
+ * Седьмой случай класса «обе стороны зелёные» вскрылся именно здесь —
+ * три карты собраны зоной `maps`, а `map_id` стоял у одной записи из 59.
+ *
+ * ⚠️ Слой проверяется поимённо, потому что `initial-layers` ЗАМЕЩАЕТ
+ * умолчания паспорта. Опечатка в имени не даёт ни ошибки, ни пустого
+ * экрана: карта покажет то, что осталось включённым, — например, все
+ * четыре территории вместо одной. Это молчаливая подмена, а не дырка.
+ *
+ * Обратная половина считает ссылки из ДВУХ мест — справок и медиа-слотов
+ * лонгрида. Иначе схемы Симбирска, на которые ссылается только лонгрид,
+ * попали бы в «карта собрана и никому не нужна» ложно.
+ */
+{
+  const MAPS = join(CONTENT, 'maps');
+  const passports = new Map();
+  if (existsSync(MAPS)) {
+    for (const dir of readdirSync(MAPS)) {
+      const p = join(MAPS, dir, 'map.json');
+      if (!existsSync(p)) continue;
+      const m = readJSON(p);
+      if (!m) continue;
+      passports.set(m.id || dir,
+        new Set((m.layers || []).map((l) => l && l.id).filter(Boolean)));
+    }
+  }
+
+  const usedMaps = new Set();
+  const noteMap = (mapId, where, what) => {
+    if (!mapId) return;
+    usedMaps.add(mapId);
+    if (!passports.has(mapId)) {
+      err(where, `${what} = «${mapId}», а собранной карты с таким id нет — `
+        + 'карточка попросит несуществующую карту');
+    }
+  };
+
+  for (const [id, { item, kind, dir }] of indexRecords) {
+    if (kind !== 'state') continue;
+    const card = readJSON(join(CONTENT, dir, `${id}.json`));
+    if (!card) continue;
+    const where = `${dir}/${id}.json`;
+    noteMap(card.map_id, where, 'map_id');
+    const layers = card.initial_layers || [];
+    if (layers.length && !card.map_id) {
+      err(where, 'initial_layers заведены, а map_id пуст — слои включать не в чем');
+    }
+    const known = passports.get(card.map_id);
+    if (known) {
+      for (const l of layers) {
+        if (!known.has(l)) {
+          err(where, `initial_layers: слоя «${l}» нет в карте «${card.map_id}» — `
+            + 'список замещает умолчания, и карта покажет чужие территории');
+        }
+      }
+    }
+  }
+
+  if (existsSync(LONGREADS)) {
+    for (const file of readdirSync(LONGREADS)) {
+      if (!file.endsWith('.json') || file.startsWith('_')) continue;
+      const data = readJSON(join(LONGREADS, file));
+      if (!data) continue;
+      const where = rel(join(LONGREADS, file));
+      const slots = [...(data.media || []),
+        ...(data.sections || []).flatMap((s) => s.media || [])];
+      for (const m of slots) noteMap(m && m.map_id, where, `media n=${m.n}: map_id`);
+    }
+  }
+
+  // ⚠️ Страницы считаются наравне с данными. Первый прогон этой проверки
+  // объявил `povolzhye-1918-1919` никому не нужной — а её показывает
+  // `demo-povolzhye.html:69`, и страница входит в сборку. Считать надо
+  // ВСЕ ссылки, а не те, что ожидаешь увидеть: фильтр по ожиданию
+  // подтверждает ожидание. Тот же класс, что «59 карточек → 0 запросов».
+  const pageRefs = new Map();
+  for (const dir of [ROOT, join(ROOT, 'public', 'expo')]) {
+    if (!existsSync(dir)) continue;
+    for (const file of readdirSync(dir)) {
+      if (!file.endsWith('.html')) continue;
+      const html = readFileSync(join(dir, file), 'utf-8');
+      for (const m of html.matchAll(/map-id="([^"]+)"/g)) {
+        usedMaps.add(m[1]);
+        if (!pageRefs.has(m[1])) pageRefs.set(m[1], file);
+      }
+    }
+  }
+
+  for (const mapId of passports.keys()) {
+    if (usedMaps.has(mapId)) continue;
+    warn(rel(join(MAPS, mapId)), `карта «${mapId}» собрана, но на неё `
+      + 'не ссылается ничто — ни справка, ни лонгрид, ни страница');
+  }
+}
+
 // ---------------------------------------------------------------- лонгриды
 
 /**
@@ -850,32 +977,82 @@ if (placeholders.length) {
   console.log('     Официальные файлы запрошены. Гейт на этом не падает '
     + 'намеренно — заменить их надо до приёмки, а не до мержа.');
 }
+// ── Обратный индекс: свежесть ────────────────────────────────────────────
+// `public/content/_backlinks.json` генерируется по справкам. Правка текста
+// меняет связи, а закоммиченный файл остаётся прежним — и блок «связанные
+// справки» показывает то, чего уже нет. Класс тот же, что у `expo:check`:
+// артефакт коммитится, и без ворот несвежесть не видна ничем.
+//
+// Пересчёт делает ОДНА реализация — `scripts/import/backlinks.py --check`.
+// Своя копия логики на JS была бы второй, и расхождение двух реализаций
+// печаталось бы как расхождение данных: ложное красное учит пропускать гейт.
+{
+  const script = join(ROOT, 'scripts', 'import', 'backlinks.py');
+  const r = spawnSync('python3', [script, '--check'], { encoding: 'utf-8' });
+  if (r.error || r.status === null) {
+    // Не «пропустим проверку»: молча не выполненная проверка неотличима
+    // от пройденной (§13). Падаем и называем причину.
+    errors.push('обратный индекс НЕ ПРОВЕРЕН — не запустился python3'
+      + `: ${r.error ? r.error.message : 'сигнал ' + r.signal}`
+      + '. python3 нужен и для media:build');
+  } else if (r.status !== 0) {
+    errors.push(((r.stderr || r.stdout || '').trim() || '')
+      .split('\n').join(' ')
+      || `обратный индекс: backlinks.py --check вернул ${r.status}`);
+  } else if (!quiet) {
+    console.log(`\n${(r.stdout || '').trim()}`);
+  }
+}
+
 const byReason = {};
 for (const w of warnings) {
   const k = reasonOf(w);
   byReason[k] = (byReason[k] || 0) + 1;
 }
 
+// Имена признанных предупреждений — вторая половина базы. Без них счётчик
+// не видит ОБМЕНА внутри корзины: одна справка ушла из-под порога, другая
+// пришла, число то же, гейт зелёный, набор другой. У `ussr` 3003 знака при
+// норме 3000, и 51 справка лежит в полосе ±300 — любая правка текста двигает
+// набор. Платится это не техникой: в письме музею стоит список 53 справок
+// сверх нормы, и разойдись он — мы спросим музей про не те.
+const currentKeys = warnPairs.map(({ where, msg }) =>
+  warnKey(reasonOf(`${where}: ${msg}`), where, msg));
+
 if (updateBaseline) {
   const payload = {
-    schema: 1,
-    _note: 'База предупреждений по причинам. Гейт падает на ПРИРОСТЕ, '
-      + 'а не на факте: список, который всегда одинаков, перестают читать. '
-      + 'Обновлять осознанно — `--update-baseline` стирает единственную '
-      + 'метрику, по которой видно, кто добавил.',
+    schema: 2,
+    _note: 'База предупреждений: счётчики по причинам И ИМЕНА признанных. '
+      + 'Гейт падает на ПРИРОСТЕ числа и на ЛЮБОМ новом имени — список, '
+      + 'который всегда одинаков, перестают читать. Обновлять осознанно: '
+      + '`--update-baseline` стирает единственную метрику, по которой видно, '
+      + 'кто добавил.',
+    _updated: '2026-08-05',
+    _why: 'До schema 2 база хранила только числа, и обмен внутри корзины '
+      + 'проходил незамеченным: набор менялся при неизменном счётчике. '
+      + 'Имена заведены по решению оркестратора 2026-08-05.',
     reasons: Object.fromEntries(REASONS.map(([k, , title]) => [k, title])),
     counts: byReason,
+    items: [...currentKeys].sort(),
   };
   writeFileSync(BASELINE, JSON.stringify(payload, null, 2) + '\n');
-  console.log(`база предупреждений обновлена: ${rel(BASELINE)}`);
+  console.log(`база предупреждений обновлена: ${rel(BASELINE)} `
+    + `— ${payload.items.length} имён`);
 }
 
 const baseline = existsSync(BASELINE) ? (readJSON(BASELINE) || {}) : null;
 const grown = [];
+const appeared = [];
 if (baseline && baseline.counts && !updateBaseline) {
   for (const [k, n] of Object.entries(byReason)) {
     const was = baseline.counts[k] || 0;
     if (n > was) grown.push({ k, was, now: n, title: (baseline.reasons || {})[k] || k });
+  }
+  if (Array.isArray(baseline.items)) {
+    const known = new Set(baseline.items);
+    for (const key of new Set(currentKeys)) {
+      if (!known.has(key)) appeared.push(key);
+    }
   }
 }
 
@@ -892,13 +1069,40 @@ if (baseline && baseline.counts && !updateBaseline && !quiet) {
   console.log(`\nпо причинам — ${line}`);
 }
 
-if (grown.length) {
+// Долг ушёл — не ошибка, но сказать надо: вместе с «появилось» это и есть
+// картина обмена. Раньше на его месте было молчание.
+if (baseline && Array.isArray(baseline.items) && !updateBaseline && !quiet) {
+  const now = new Set(currentKeys);
+  const gone = baseline.items.filter((k) => !now.has(k));
+  if (gone.length) {
+    console.log(`\nушло из долга: ${gone.length}`);
+    for (const k of gone.slice(0, 10)) console.log(`  − ${k}`);
+    if (gone.length > 10) console.log(`  … ещё ${gone.length - 10}`);
+    console.log('  Принять новый набор: node scripts/validate-content.mjs '
+      + '--update-baseline');
+  }
+}
+
+if (grown.length || appeared.length) {
   console.log(`\n${'!'.repeat(60)}`);
+}
+if (grown.length) {
   console.log('ПРИРОСТ ПРЕДУПРЕЖДЕНИЙ — стало хуже, чем было:');
   for (const g of grown) {
     console.log(`  ${g.title}: ${g.was} → ${g.now}  (+${g.now - g.was})`);
   }
-  console.log('Разобрать и починить. Если прирост осознан и принят — '
+}
+if (appeared.length) {
+  // Число могло не вырасти вовсе: одно ушло, другое пришло. Именно этот
+  // случай база из одних счётчиков пропускала молча.
+  console.log(`НОВЫЕ ПРЕДУПРЕЖДЕНИЯ — ${appeared.length} `
+    + `${label(appeared.length, 'штука', 'штуки', 'штук')}, `
+    + 'которых нет в признанном долге:');
+  for (const k of appeared.slice(0, 15)) console.log(`  + ${k}`);
+  if (appeared.length > 15) console.log(`  … ещё ${appeared.length - 15}`);
+}
+if (grown.length || appeared.length) {
+  console.log('Разобрать и починить. Если это осознано и принято — '
     + 'node scripts/validate-content.mjs --update-baseline');
   console.log('!'.repeat(60));
 }
@@ -909,7 +1113,7 @@ if (errors.length) {
   console.error(`\nПровалено ${errors.length} `
     + label(errors.length, 'проверка', 'проверки', 'проверок') + '.');
 }
-if (errors.length || grown.length) {
+if (errors.length || grown.length || appeared.length) {
   process.exit(1);
 }
 console.log('\nОшибок нет.');

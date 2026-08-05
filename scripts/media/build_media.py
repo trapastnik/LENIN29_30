@@ -211,6 +211,65 @@ def write_manifest(results: List[dict]) -> None:
                         encoding="utf-8")
 
 
+def write_build_stamp(results: List[dict], tier_count: Dict[str, int]) -> Path:
+    """Когда и на каком коммите собраны производные — ОТДЕЛЬНЫМ файлом.
+
+    ⚠️ **Не в манифест.** `_media-manifest.json` обязан совпадать побайтово
+    между машинами: по этому совпадению проверяется целостность оригиналов
+    на сервере (CLAUDE.md §7). Штамп коммита сделал бы файл разным при каждой
+    пересборке с другого коммита, и осмысленное сравнение превратилось бы
+    в шум — то есть штамп убил бы проверку, ради которой манифест и живёт.
+
+    Почему вообще нужен: у манифеста нет и не может быть `--check`. Его
+    нельзя пересобрать там, где нет `../IN/`, — а оригиналы лежат на сервере
+    и на маке, и больше нигде. Там, где `--check` есть (`tokens.css`,
+    `build/*.js`, `_backlinks.json`), штамп строго слабее: он отвечает
+    «когда сделан», а `--check` — «верен ли сейчас». Довод зоны `design`,
+    и он верный.
+
+    Файл НЕ коммитится: его пишет та машина, которая собирала, и полезен
+    он там же. На сервере он отвечает на вопрос «от какого кода эти
+    производные», когда картинки на стенде вдруг пусты.
+    """
+    import platform
+    import subprocess
+    from datetime import datetime
+
+    def git(*args: str) -> Optional[str]:
+        try:
+            out = subprocess.run(("git", *args), cwd=str(ROOT), timeout=10,
+                                 capture_output=True, text=True)
+        except Exception:
+            return None
+        return out.stdout.strip() if out.returncode == 0 else None
+
+    commit = git("rev-parse", "--short", "HEAD")
+    dirty = git("status", "--porcelain")
+    payload = {
+        "schema": 1,
+        "_note": ("Штамп сборки производных. НЕ коммитится и НЕ сверяется — "
+                  "у манифеста нет `--check`, потому что пересобрать его "
+                  "можно только там, где лежит ../IN/. Отвечает на вопрос "
+                  "«от какого кода эти производные», а не «верны ли они»."),
+        "built_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "commit": commit or "не определён (git недоступен)",
+        "branch": git("rev-parse", "--abbrev-ref", "HEAD") or "?",
+        # Грязное дерево важнее самого коммита: производные собраны не с того,
+        # что лежит в этом коммите, и по хешу это неотличимо.
+        "worktree": "с несохранёнными правками" if dirty else "чистое",
+        "host": platform.node(),
+        "builder": BUILDER_VERSION,
+        "images": sum(1 for r in results if not r["error"]),
+        "failed": sum(1 for r in results if r["error"]),
+        "tiers": dict(sorted(tier_count.items())),
+    }
+    path = ROOT / "content-src" / "_media-build.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    return path
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Сборка веб-производных из ../IN/")
     ap.add_argument("--only", help="подстрока id или имени файла справки")
@@ -249,6 +308,12 @@ def main(argv=None) -> int:
     # затёр бы записи всех остальных справок.
     if not args.only:
         write_manifest(results)
+        stamp = write_build_stamp(results, tier_count)
+        data = json.loads(stamp.read_text(encoding="utf-8"))
+        print("штамп сборки → %s" % stamp.relative_to(ROOT))
+        print("  коммит %s (%s), дерево %s, машина %s, %s"
+              % (data["commit"], data["branch"], data["worktree"],
+                 data["host"], data["built_at"][:16].replace("T", " ")))
 
     print("собрано файлов: %d, свежих пропущено: %d" % (written, skipped))
     print("тиры: %s" % ", ".join("%s %d" % (k, tier_count[k])
