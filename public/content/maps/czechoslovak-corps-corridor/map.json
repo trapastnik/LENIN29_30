@@ -1,0 +1,33 @@
+{
+  "id": "czechoslovak-corps-corridor",
+  "kind": "map",
+  "title_ru": "Чехословацкий корпус",
+  "title_en": "",
+  "viewBox": "0 0 948.9 213.8",
+  "svg": "layers.svg",
+  "layers": [
+    {
+      "id": "corridor_line",
+      "label_ru": "corridor_line",
+      "kind": "vector",
+      "default": true,
+      "color": "map-intervention"
+    },
+    {
+      "id": "waypoints",
+      "label_ru": "waypoints",
+      "kind": "vector",
+      "default": true,
+      "color": "map-intervention"
+    },
+    {
+      "id": "labels_waypoints",
+      "label_ru": "labels_waypoints",
+      "kind": "vector",
+      "default": true,
+      "color": "map-intervention"
+    }
+  ],
+  "source_ru": "Геометрия из реестра, geometry_kind corridor.",
+  "notes_ru": "Своя система координат, не координаты base: сложить с базовой картой нельзя, поэтому отдельная карта."
+}

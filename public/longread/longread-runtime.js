@@ -51,6 +51,31 @@
   }
   img { display: block; width: 100%; height: auto; }
 
+  /* Операционная карта на месте иллюстрации. Компонент зоны maps, тег, а не
+     правка (§10).
+
+     Высота нужна явная: у :host компонента height 100%, то есть он берёт её
+     у родителя, а у родителя её нет — без этого карта схлопнется в ноль
+     и «не покажется» без единой ошибки.
+
+     Фон перебиваем на бумажный. У компонента :host залит «шахматкой» —
+     она показывает прозрачность растра и уместна на стенде карт, а в статье
+     читается как отладочная текстура. Внешнее правило перебивает :host
+     по каскаду, компонент при этом не тронут.
+
+     Высота подобрана под ПРОПОРЦИЮ схемы, а не на глаз. Кадр у обеих
+     почти квадратный (viewBox 30.9 × 32.9), и при высоте 700 карта вписывалась
+     в 624 из 1032 по ширине — 40 % колонки уходило в пустую бумагу, а вместе
+     с картой мельчали подписи городов: они заданы в единицах SVG и растут
+     ровно с отрисованным размером. Высота под ширину колонки убирает и то,
+     и другое разом. */
+  map-unit {
+    display: block;
+    width: 100%;
+    height: calc(1000px * var(--ui-scale, 1));
+    background: var(--paper-pure);
+  }
+
   /* ── плашка временного изображения ─────────────────────────────────────
      Не украшение и не отладка. Превью из госкаталога визуально неотличимо
      от поставленного музеем файла, и без пометки на приёмке его засчитают
@@ -107,9 +132,10 @@
   <div class="holder" hidden></div>
 </figure>`;
 
-  /** Есть ли что показывать. Без файла слот не рисуется вообще. */
+  /** Есть ли что показывать: файл изображения либо операционная карта.
+   *  Пустой слот не рисуется вообще — см. шапку. */
   function isRenderable(m) {
-    return !!(m && m.file);
+    return !!(m && (m.file || m.map_id));
   }
 
   class LongreadMedia extends HTMLElement {
@@ -139,6 +165,22 @@
       this.hidden = false;
       this.shadowRoot.innerHTML = TEMPLATE;
 
+      // Карта вместо снимка. Ставим map-id СРАЗУ в разметке, до вставки
+      // в документ: так требует docs/map-unit-api.md — иначе компонент
+      // грузится дважды.
+      if (m.map_id) {
+        var img0 = this.shadowRoot.querySelector('img');
+        var unit = document.createElement('map-unit');
+        unit.setAttribute('map-id', m.map_id);
+        // Панель слоёв НЕ включаем. В лонгриде карта — иллюстрация, а не
+        // пульт: панель из семи чекбоксов и кнопок «Все вкл / Все выкл /
+        // Сброс» закрывает собой саму схему, ради которой всё и делалось.
+        // Слои включены по умолчанию из map.json — этого здесь достаточно.
+        img0.replaceWith(unit);
+        this._finishCaption(m);
+        return;
+      }
+
       var tier = (m.tiers && m.tiers.indexOf('lg') >= 0) ? 'lg' : 'sm';
       var img = this.shadowRoot.querySelector('img');
       // file отсчитывается от public/content/ — общая конвенция проекта,
@@ -161,6 +203,11 @@
           'calc(' + m.w + 'px * var(--ui-scale, 1))';
       }
 
+      this._finishCaption(m);
+    }
+
+    /** Подпись, инв. номер и пометки — общие и для снимка, и для карты. */
+    _finishCaption(m) {
       var cap = this.shadowRoot.querySelector('figcaption');
       cap.textContent = m.caption_ru || '';
       cap.hidden = !m.caption_ru;
@@ -279,6 +326,44 @@
   }
   .body p:last-child { margin-bottom: 0; }
 
+  /* ── ожидаемые иллюстрации ─────────────────────────────────────────────
+     Заказчик не поставил 21 иллюстрацию, и в источнике они перечислены
+     строками «Нужно подобрать: …». До сих пор эти строки лежали в данных
+     и не рисовались — раздел про город без единого вида города выглядел
+     ЗАКОНЧЕННЫМ, то есть замыслом, а не дыркой.
+
+     §2: затычка не должна выглядеть готовой, приёмка обязана отличать
+     недоделку от поставки. Отсюда пунктир и явный счёт: посетителю это
+     читается спокойно («подбирается»), приёмке — однозначно.
+
+     Пунктир, а не рамка: сплошная рамка выглядит как оформленный блок,
+     то есть как решение. Пунктир читается как незаполненное место. */
+  .wanted {
+    margin: calc(34px * var(--ui-scale, 1)) 0 0;
+    padding: calc(24px * var(--ui-scale, 1)) calc(28px * var(--ui-scale, 1));
+    border: calc(2px * var(--ui-scale, 1)) dashed var(--ink-faint);
+  }
+  .wanted-title {
+    font-family: var(--font-mono);
+    font-size: calc(15px * var(--ui-scale, 1));
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: calc(14px * var(--ui-scale, 1));
+  }
+  .wanted ul {
+    margin: 0;
+    padding-left: calc(22px * var(--ui-scale, 1));
+  }
+  .wanted li {
+    font-family: var(--font-body);
+    font-size: calc(21px * var(--ui-scale, 1));
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: calc(6px * var(--ui-scale, 1));
+  }
+  .wanted li:last-child { margin-bottom: 0; }
+
   /* ── связи ─────────────────────────────────────────────────────────── */
   .refs { margin-top: calc(44px * var(--ui-scale, 1)); padding-top: calc(28px * var(--ui-scale, 1)); border-top: calc(1px * var(--ui-scale, 1)) solid var(--rule); }
   .refs-title {
@@ -337,6 +422,10 @@
   </header>
   <div class="body"></div>
   <div class="media"></div>
+  <div class="wanted" hidden>
+    <div class="wanted-title"></div>
+    <ul></ul>
+  </div>
   <div class="refs">
     <div class="refs-title">Смотрите также</div>
     <div class="chips"></div>
@@ -381,6 +470,7 @@
       });
 
       this._renderMedia($('.media'), s.media || []);
+      this._renderWanted($('.wanted'), s.media_wanted_ru || []);
       this._renderRefs($('.refs'), $('.chips'), s.refs || {});
     }
 
@@ -393,6 +483,33 @@
         var el = document.createElement('longread-media');
         el.data = m;
         host.appendChild(el);
+      });
+    }
+
+    /**
+     * Заявки «нужно подобрать» — место под иллюстрацию, которой ещё нет.
+     *
+     * Рисуется ИМЕННО ПОТОМУ, что иллюстрации нет: пустая секция читалась бы
+     * как задуманная, и приёмка не отличила бы недоделку от поставки (§2).
+     * Пропадёт сама, когда заказчик поставит изображения и строки уйдут
+     * из источника, — отдельной уборки не потребует.
+     */
+    _renderWanted(block, list) {
+      if (!list.length) { block.hidden = true; return; }
+      block.hidden = false;
+
+      var n = list.length;
+      var word = (n % 10 === 1 && n % 100 !== 11) ? 'иллюстрация'
+        : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 'иллюстрации'
+        : 'иллюстраций';
+      block.querySelector('.wanted-title').textContent =
+        'Подбирается ' + n + ' ' + word;
+
+      var ul = block.querySelector('ul');
+      list.forEach(function (text) {
+        var li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
       });
     }
 
@@ -643,6 +760,20 @@
     color: var(--paper-white);
     font-size: calc(34px * var(--ui-scale, 1));
     line-height: 1;
+  }
+  /* Зона нажатия добирается до нормы §1, видимый кружок остаётся 72:
+     кнопка закрытия в 120 px выглядела бы плашкой рядом с заголовком панели.
+     Тот же приём, что у .back-link в pages.css и у кнопки «Разделы».
+     Замерено попаданием: до этого зона была 72 при норме 120 — в стилях
+     этого не видно, промах виден только пальцем. */
+  .toc-close { position: relative; }
+  .toc-close::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: var(--touch-hit, 120px);
+    height: var(--touch-hit, 120px);
+    transform: translate(-50%, -50%);
   }
   .toc-close:active { transform: scale(0.96); }
 

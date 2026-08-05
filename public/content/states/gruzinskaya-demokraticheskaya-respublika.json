@@ -5,7 +5,6 @@
   "camp": "national",
   "title_ru": "Грузинская Демократическая Республика",
   "title_en": null,
-  "sort_key_ru": "грузинская демократическая республика",
   "abbr_ru": [],
   "aka_ru": [],
   "aka_raw_ru": null,
@@ -148,6 +147,7 @@
         "38 ГДР 05 1.tif",
         "38 ГДР 05 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

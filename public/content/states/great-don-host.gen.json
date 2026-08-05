@@ -5,7 +5,6 @@
   "camp": "white",
   "title_ru": "Всевеликое Войско Донское",
   "title_en": null,
-  "sort_key_ru": "всевеликое войско донское",
   "abbr_ru": [],
   "aka_ru": [],
   "aka_raw_ru": null,
@@ -122,6 +121,7 @@
         "23 ВВД 04 1.TIF",
         "23 ВВД 04 2.TIF"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],

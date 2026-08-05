@@ -5,7 +5,6 @@
   "camp": null,
   "title_ru": "Наступление Восточного фронта РККА",
   "title_en": null,
-  "sort_key_ru": "наступление восточного фронта ркка",
   "dates": {
     "raw": "Сентябрь 1918 – февраль 1919 г.",
     "display_ru": "Сентябрь 1918 – февраль 1919 г.",
@@ -114,7 +113,6 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }

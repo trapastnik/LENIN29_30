@@ -150,7 +150,8 @@
   },
   "flags": [
     "media-missing",
-    "over-tz-limit"
+    "open-question"
   ],
-  "camp_source": "regalia"
+  "camp_source": "regalia",
+  "open_question_ru": "Лагерь `rev-dem` по Временному правительству, но партия кадетов в разделе отнесена к белым. Требует сверки с музеем."
 }

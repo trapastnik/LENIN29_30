@@ -5,7 +5,6 @@
   "camp": "red",
   "title_ru": "Социалистическая Советская Республика Армения",
   "title_en": null,
-  "sort_key_ru": "социалистическая советская республика армения",
   "abbr_ru": [
     "Армянская ССР",
     "ССР Армения"
@@ -122,6 +121,7 @@
         "05 ССР Армения 04 1.jpg",
         "05 ССР Армения 04 2.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/states/armenian-ssr/04",
         "media/states/armenian-ssr/04p2"
@@ -155,7 +155,5 @@
     "sha256": "a3b4bb38286d2d012af4cc3774c45d35380f6f84e39e3ad51f82a9ea64c2813f",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ]
+  "flags": []
 }

@@ -15,6 +15,9 @@
        правилам, источником правды быть не может. -->
   <script src="/expo/brand-tokens.js?v=20260802"></script>
   <script src="/expo/pin-gate.js?v=20260427"></script>
+  <!-- Отчёт линтера. Генерируется `brand-lint --report`, читается разделом 25.
+       Файлом, а не fetch: каталог обязан работать офлайн, как и киоск. -->
+  <script src="/decor/brand-lint-report.js?v=20260804"></script>
   <!-- escapeHref идёт через MTK_URL: это строка внутри JS, её vite не переписывает,
        и ведущий слэш уехал бы в сборку. Под file:// он резолвится в корень ФС. -->
   <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: MTK_URL('expo/people.html') });</script>
@@ -28,13 +31,30 @@
     html.brand-scroll body { display: block; overflow: visible; height: auto; min-height: 100vh; }
     body::before { position: fixed; }
 
-    main {
+    /* #catalog, а НЕ main. Найдено зоной ui её же гейтом check-css-order:
+       правило было мёртвым целиком — в сборке применялись значения
+       из pages.css (max-width 1920 вместо 1280, gap 16 вместо 56,
+       padding 24/32 вместо 32/48/120).
+
+       Причина: vite переносит свои <link> в конец <head>, поэтому
+       инлайновый <style> оказывается ВЫШЕ pages.css и при равной
+       специфичности проигрывает. В исходнике порядок обратный —
+       на dev каталог выглядел правильно, а на dist нет.
+
+       Цена была не косметическая: по этому каталогу ставятся задачи
+       другим зонам, и «свёрстай по brand.html#c-…» показывало образец
+       в чужой раскладке. Расхождение с реализацией списали бы
+       на исполнителя.
+
+       Проверила остальные инлайновые правила тем же способом — из двух
+       голых тегов конфликтует только main. */
+    #catalog {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 32px 48px 120px;
+      padding: var(--sp-4, 32px) var(--sp-5, 48px) var(--sp-8, 128px);
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: calc(56px * var(--ui-scale, 1));
     }
 
     /* — Заголовок раздела каталога — */
@@ -233,8 +253,11 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 14px 24px;
-      min-height: 48px;
-      border-radius: 30px;
+      /* 48 было третьим местом с устаревшим числом: контракт перешёл
+         на два порога 120/64 третьего августа, а 48 осталось здесь,
+         в линтере и в дизайн-системе. «Назад» — основная навигация. */
+      min-height: var(--touch-hit, 120px);
+      border-radius: var(--r-pill, 999px);
       cursor: pointer;
       transition: background .12s, color .12s, transform .08s;
       border: 1.5px solid var(--brass);
@@ -656,6 +679,404 @@
       color: var(--brass);
     }
 
+    /* — Шкалы (раздел 13). Рисуются из токенов, значений тут нет — */
+    .lede-note {
+      /* Кегль задан явно: без него абзац наследует --fs-body (32px),
+         рассчитанный на чтение с 70 см, и подавляет саму шкалу,
+         которую поясняет. */
+      font-size: var(--fs-3, 20px);
+      max-width: 78ch;
+      margin: 0 0 var(--sp-4, 32px);
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+    .lede-note code, .scale-row code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 7px;
+      border-radius: var(--r-sm, 4px);
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+    /* Сноски этих двух разделов несут РЕШЕНИЯ, а не подписи к картинкам:
+       записанное исключение по кеглю, правило маркера образца,
+       предупреждение про числа в JSX. На фирменной диагонали они
+       теряются, поэтому подложка та же, что у блоков шкал. */
+    #c-scales .token-strip,
+    #c-forbidden .token-strip {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-2, 16px) var(--sp-3, 24px);
+      margin-bottom: var(--sp-2, 16px);
+      line-height: 1.5;
+    }
+
+    .scale-block {
+      margin-bottom: var(--sp-5, 48px);
+      /* Подложка не украшение: страница идёт по фирменным диагоналям,
+         и на красной полосе строки шкалы перестают читаться.
+         --page-bg-deep для этого и заведён — «тёмные панели». */
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    /* Кегли и приёмочные метрики — в НАТУРАЛЬНУЮ величину: --ds-1 это
+       280px, --touch-hit 120×120, и увидеть их целиком — единственный
+       смысл этих строк. Обрезанная тач-цель обманывает вдвойне: она
+       выглядит меньше нормы, которую сама же и задаёт. */
+    .scale-block[data-scale-group="type"] .spec,
+    .scale-block[data-scale-group="metric"] .spec { max-height: none; }
+    .scale-block h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin: 0 0 var(--sp-1, 8px);
+    }
+    .scale-block .why {
+      font-size: 13px;
+      opacity: 0.62;
+      margin: 0 0 var(--sp-3, 24px);
+      max-width: 78ch;
+      line-height: 1.45;
+    }
+    .scale-row {
+      display: grid;
+      grid-template-columns: 15ch 13ch 4ch 1fr;
+      gap: var(--sp-2, 16px);
+      align-items: center;
+      padding: var(--sp-1, 8px) 0;
+      border-top: var(--bd-hair, 1px) solid var(--rule);
+    }
+    .scale-row b {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--brass);
+      font-weight: 400;
+    }
+    .scale-row .val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      opacity: 0.68;
+    }
+    /* Пометка «множится на --ui-scale». Ставится не руками: рендерер
+       смотрит, есть ли var(--ui-scale) в значении самого токена. */
+    .x2 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--brass);
+      border: var(--bd-hair, 1px) solid var(--brass);
+      border-radius: var(--r-sm, 4px);
+      padding: 0 4px;
+      opacity: 0.75;
+    }
+    /* Образец живёт в своей ячейке и не растягивает строку: у --touch-hit
+       он 120×120, у --ds-1 кегль 280 — без ограничения ряд ломается,
+       и шкалу перестаёт быть видно как шкалу. Крупные образцы
+       показываются в масштабе, число рядом остаётся точным. */
+    .scale-row .spec {
+      min-height: 22px;
+      max-height: 72px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .scale-row .spec > * { flex: none; }
+    .spec-bar { height: 12px; background: var(--brass); opacity: 0.75; }
+    .spec-box { height: 44px; width: 72px; background: var(--slate-window); opacity: 0.5; }
+    .spec-line { width: 120px; background: var(--brass); }
+    .spec-type { font-family: var(--font-display); color: var(--paper-white); line-height: 1; }
+    .spec-text { font-family: var(--font-body); color: var(--paper-white); line-height: 1.2; }
+    .spec-card {
+      width: 96px; height: 44px;
+      background: var(--paper-white);
+      border-radius: var(--r-md, 8px);
+    }
+    .spec-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--brass);
+      animation: spec-slide var(--d, 280ms) ease-in-out infinite alternate;
+    }
+    @keyframes spec-slide { from { transform: translateX(0); } to { transform: translateX(140px); } }
+    .spec-z { position: relative; height: 40px; width: 120px; }
+    .spec-z i {
+      position: absolute; top: 0; height: 40px; width: 40px;
+      border: var(--bd-hair, 1px) solid var(--brass);
+      background: var(--page-bg-deep);
+      display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: 11px; color: var(--brass);
+      font-style: normal;
+    }
+
+    /* — Раздел «Связанные справки» (26) ————————————————————————— */
+    .rel-pair {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(calc(420px * var(--ui-scale, 1)), 1fr));
+      gap: var(--sp-4, 32px);
+      margin-bottom: var(--sp-3, 24px);
+    }
+    .tag-rec, .tag-alt {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 2px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+      margin-bottom: var(--sp-2, 16px);
+    }
+    .tag-rec { background: var(--camp-green); color: var(--ink-black); }
+    .tag-alt { background: var(--slate-window); color: var(--ink-black); }
+
+    .rel-head {
+      font-family: var(--font-mono);
+      font-size: calc(11px * var(--ui-scale, 1));
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      padding-bottom: var(--sp-2, 16px);
+      border-bottom: var(--bd-hair, 1px) solid var(--paper-5);
+      margin-bottom: var(--sp-2, 16px);
+    }
+    .rel-group { margin-bottom: var(--sp-3, 24px); }
+    .rel-cap {
+      display: flex; align-items: center; gap: var(--sp-1, 8px);
+      font-family: var(--font-mono);
+      font-size: calc(11px * var(--ui-scale, 1));
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: var(--sp-1, 8px);
+    }
+    /* Кольцо обязательно и обязательно у ВСЕХ точек. Без него заливка
+       светлого лагеря пропадает на светлой бумаге: --camp-white даёт
+       1.39 на --paper-2, --camp-national 1.76. Обводка --ink-faint —
+       4.33, выше порога 3.0 для графики. Ставится всем, а не только
+       светлым: иначе это правило, о котором вёрстка не узнает. */
+    .rel-cap i, .rel-item i {
+      width: 10px; height: 10px; border-radius: 50%; flex: none;
+      border: var(--bd-hair, 1px) solid var(--ink-faint);
+    }
+    .rel-list { display: flex; flex-wrap: wrap; gap: var(--sp-1, 8px); }
+    /* Порог 64 — управляющий элемент внутри раздела (§1), не навигация.
+       Держится min-height, а не padding: padding уедет от кегля. */
+    .rel-item {
+      display: inline-flex; align-items: center; gap: var(--sp-1, 8px);
+      min-height: 64px;
+      padding: 0 var(--sp-3, 24px);
+      border: var(--bd-1, 1.5px) solid var(--paper-5);
+      border-radius: var(--r-pill, 999px);
+      /* Имя — обычными чернилами. Цвет лагеря несёт ТОЧКА: четыре цвета
+         из семи как текст на карточке не читаются (--camp-white 1.45,
+         --camp-national 1.84, --camp-green 3.63, --camp-uprising 4.43). */
+      color: var(--ink-2);
+      font-size: var(--fs-3, 20px);
+      text-decoration: none;
+      background: var(--paper-2);
+    }
+    .rel-item:active { background: var(--paper-4); }
+    .rel-more { color: var(--ink-3); border-style: dashed; }
+
+    /* — Раздел «Состояние» (25). Отчёт линтера — */
+    .lint-table {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    .lint-row {
+      display: grid;
+      grid-template-columns: 5ch 1fr 6ch 2fr;
+      gap: var(--sp-2, 16px);
+      align-items: baseline;
+      padding: var(--sp-1, 8px) 0;
+      border-top: var(--bd-hair, 1px) solid var(--rule);
+      font-size: var(--fs-4, 16px);
+    }
+    .lint-row b { font-family: var(--font-mono); color: var(--brass); font-weight: 400; }
+    .lint-row .lint-count { font-family: var(--font-mono); text-align: right; }
+    .lint-row .lint-files { font-family: var(--font-mono); font-size: 0.8em; opacity: 0.6; }
+    .lint-clean { opacity: 0.45; }
+    .lint-clean .lint-count { color: var(--camp-green-ink); }
+
+    /* Метка читаемости на свотче. Заливкой, а не цветным текстом —
+       по тому же правилу, которое она сама и объясняет. */
+    .leg {
+      display: inline-block;
+      margin-top: var(--sp-1, 8px);
+      padding: 1px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 0.08em;
+    }
+    .leg-ok  { background: var(--camp-green);  color: var(--ink-black); }
+    .leg-mid { background: var(--brass);       color: var(--ink-black); }
+    .leg-no  { background: var(--slate-window); color: var(--ink-black); }
+
+    /* — Раздел «Блоки» (24). Примитивы под 198 справок ————————————
+       Всё на токенах: каталог, который сам не следует шкале,
+       образцом быть не может. */
+    .blocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(420px * var(--ui-scale, 1)), 1fr));
+      gap: var(--sp-4, 32px);
+    }
+    .block-demo {
+      margin: 0;
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    .block-demo figcaption {
+      margin-top: var(--sp-3, 24px);
+      font-size: var(--fs-4, 16px);
+      line-height: 1.5;
+      opacity: 0.78;
+    }
+    .block-demo figcaption b { color: var(--brass); font-family: var(--font-mono); font-size: 0.9em; }
+    .block-demo code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 6px; border-radius: var(--r-sm, 4px);
+      color: var(--brass); font-family: var(--font-mono); font-size: 0.85em;
+    }
+
+    /* карточка справки */
+    .d-card { background: var(--paper-white); border-radius: var(--r-md, 8px); overflow: hidden; box-shadow: var(--sh-1); }
+    .d-stripe { height: calc(10px * var(--ui-scale, 1)); }
+    .d-pad { padding: var(--sp-3, 24px); }
+    .d-kicker { font-family: var(--font-mono); font-size: calc(11px * var(--ui-scale, 1)); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+    .d-title { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-display); font-size: var(--ds-6, 44px); color: var(--camp-red-ink); line-height: 1.1; }
+    .d-meta { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+    .d-body { margin: var(--sp-2, 16px) 0 0; font-size: var(--fs-3, 20px); line-height: 1.45; color: var(--ink-2); }
+
+    /* чипы Венна */
+    .d-chips { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-chip { display: inline-flex; align-items: center; gap: var(--sp-1, 8px); font-size: var(--fs-4, 16px); color: var(--paper-white); }
+    .d-chip i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+    /* ячейки территорий */
+    .d-cells { display: flex; flex-wrap: wrap; gap: var(--sp-2, 16px); }
+    .d-cell {
+      padding: var(--sp-2, 16px) var(--sp-3, 24px);
+      min-height: 64px; display: inline-flex; align-items: center;
+      border: var(--bd-1, 1.5px) solid var(--brass);
+      border-radius: var(--r-sm, 4px);
+      font-size: var(--fs-4, 16px); color: var(--paper-white);
+    }
+    /* --telegrey-4, а НЕ --ink-3: ink-токены считаны для тёмного текста
+       на СВЕТЛОМ. На панели --page-bg-deep --ink-3 даёт контраст 1.29,
+       то есть не читается. Третий раз за проект одна и та же ошибка —
+       палитра работает заливкой, а как текст только на своём фоне. */
+    .d-cell-off { border-style: dashed; border-color: var(--telegrey-4); color: var(--telegrey-4); opacity: 0.7; }
+
+    /* строка хроники */
+    .d-rows { display: flex; flex-direction: column; gap: var(--sp-1, 8px); }
+    .d-row { display: flex; align-items: center; gap: var(--sp-2, 16px); min-height: 64px; border-bottom: var(--bd-hair, 1px) solid var(--rule); }
+    .d-date { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; width: 11ch; }
+    .d-txt { flex: 1; font-size: var(--fs-3, 20px); }
+    .d-ref { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; }
+
+    /* лонгрид */
+    .d-long { background: var(--paper-4); border-radius: var(--r-md, 8px); padding: var(--sp-3, 24px); }
+    .d-drop { margin: 0; font-size: var(--fs-3, 20px); line-height: 1.5; color: var(--ink-2); max-width: 78ch; }
+    .d-drop span { float: left; font-family: var(--font-display); font-size: var(--ds-3, 150px); line-height: 0.8; color: var(--camp-red); margin: 0 var(--sp-2, 16px) 0 0; }
+    .d-quote { margin: var(--sp-3, 24px) 0 0; padding-left: var(--sp-2, 16px); border-left: var(--bd-2, 3px) solid var(--brass); font-size: var(--fs-3, 20px); color: var(--ink-2); }
+    .d-quote span { display: block; margin-top: var(--sp-1, 8px); font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+
+    /* легенда карты */
+    .d-legend { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-legend span { display: flex; align-items: center; gap: var(--sp-2, 16px); font-size: var(--fs-4, 16px); }
+    .d-legend i { width: calc(28px * var(--ui-scale, 1)); height: calc(6px * var(--ui-scale, 1)); border-radius: var(--r-sm, 4px); flex: none; }
+
+    /* состояния */
+    .d-states { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+    .d-state {
+      padding: var(--sp-3, 24px); text-align: center;
+      border: var(--bd-1, 1.5px) dashed var(--telegrey-4);
+      border-radius: var(--r-sm, 4px);
+      font-family: var(--font-mono); font-size: var(--fs-4, 16px);
+      letter-spacing: 0.08em; color: var(--telegrey-4);
+      opacity: 0.75;
+      background: rgba(0,0,0,0.18);
+    }
+
+    /* — Раздел «Запрещено» (23). Пары: слева нельзя, справа чем вместо — */
+    .dont-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3, 24px);
+      margin-bottom: var(--sp-4, 32px);
+    }
+    .dont-pair > div {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+      border-left: var(--bd-2, 3px) solid transparent;
+    }
+    .dont-pair .dont { border-left-color: var(--signal-red); }
+    .dont-pair .do   { border-left-color: var(--camp-green); }
+    /* Метка — ЗАЛИВКА, а не цветной текст. Сигнальный красный на панели
+       --page-bg-deep даёт контраст 1.08, то есть не читается вовсе;
+       зелёный 2.15, немногим лучше. Заливкой получается 7.20 и 5.44.
+       Ровно тот же случай, что с --camp-*-ink: палитра лагерей работает
+       заливкой, а как текст — нет. */
+    .dont-pair .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2, 16px);
+      padding: 2px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+    }
+    .dont-pair .dont .tag { background: var(--signal-red); color: var(--paper-white); }
+    .dont-pair .do .tag   { background: var(--camp-green); color: var(--ink-black); }
+    .dont-pair p {
+      font-size: var(--fs-3, 20px);
+      line-height: 1.45;
+      opacity: 0.8;
+      margin: var(--sp-2, 16px) 0 0;
+    }
+    .dont-pair code {
+      background: rgba(0,0,0,0.35);
+      padding: 1px 7px;
+      border-radius: var(--r-sm, 4px);
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+    }
+    .dont-pair code.ok { color: var(--camp-green); }
+    .demo-code {
+      display: block;
+      padding: var(--sp-2, 16px) !important;
+      font-size: 15px !important;
+    }
+    .demo-card {
+      width: 140px; height: 64px;
+      background: var(--paper-white);
+      border-radius: var(--r-md, 8px);
+    }
+    .demo-btn {
+      display: inline-flex; align-items: center;
+      min-height: 64px;
+      padding: 0 var(--sp-3, 24px);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brass);
+      border: var(--bd-1, 1.5px) solid var(--brass);
+      border-radius: var(--r-pill, 999px);
+    }
+    /* Демонстрационный :hover. Единственное место в проекте, где он
+       законен, — здесь он ЭКСПОНАТ, а не поведение интерфейса.
+       brand-lint:off */
+    .demo-hover:hover { background: var(--brass); color: var(--iron-grey); }
+    /* brand-lint:on */
+    .demo-active:active { background: var(--brass); color: var(--iron-grey); }
+
     /* — Typography Lab — */
     .font-lab {
       background: rgba(8, 12, 15, 0.55);
@@ -754,9 +1175,14 @@
       cursor: grab;
       border: 2px solid #1a1a1a;
     }
+    /* Управляющие элементы лаборатории — порог §1 это 64.
+       Видимая пилюля остаётся компактной, хит-зону добирает ::before:
+       ряд из десяти пилюль по 64 в высоту съел бы поллаборатории.
+       Тот же приём показан в разделе «Запрещено», #c-no-small-target. */
     .font-lab .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .font-lab .pill-row button {
-      min-height: auto; min-width: auto;
+      position: relative;
+      min-height: 34px; min-width: auto;
       padding: 6px 14px;
       border-radius: 14px;
       border: 1px solid rgba(210,183,115,0.45);
@@ -780,13 +1206,28 @@
       display: flex; flex-wrap: wrap; gap: 6px;
     }
     .font-lab .bg-swatches button {
+      position: relative;
       width: 28px; height: 28px;
+      min-height: 28px;
       border-radius: 50%;
       border: 1.5px solid rgba(210,183,115,0.4);
       cursor: pointer;
       padding: 0;
-      min-width: auto; min-height: auto;
+      min-width: auto;
       transition: transform 0.12s, border-color 0.12s;
+    }
+    /* Хит-зона 64 при видимом кружке 28: девять свотчей по 64 в ряд
+       не помещаются, а нажимать по 28 нельзя. Зазор между кружками 6,
+       то есть зоны соседей смыкаются, но не перехватывают центр —
+       у круглой цели промах уходит к ближайшему, а не к чужому. */
+    .font-lab .pill-row button::before,
+    .font-lab .bg-swatches button::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      width: max(100%, 64px);
+      height: 64px;
+      transform: translate(-50%, -50%);
     }
     .font-lab .bg-swatches button.active {
       border-color: var(--brass);
@@ -1303,7 +1744,12 @@
     <a class="back-link" href="index.html" id="back-link">← На стартовую</a>
   </header>
 
-  <main>
+  <!-- id, а не тег: инлайновый <style> в сборке оказывается ВЫШЕ
+       pages.css (vite переносит свои <link> в конец <head>), и при равной
+       специфичности выигрывает внешний файл. В исходнике порядок обратный,
+       поэтому расхождение видно только на dist. Селектор с id порядку
+       не подвержен. Ловит npm run check → check-css-order.mjs. -->
+  <main id="catalog">
     <!-- ── 01. Палитра ─────────────────────────────────────────── -->
     <section class="cat-section">
       <p class="lede">01 · Палитра</p>
@@ -1584,26 +2030,60 @@
       <p class="token-strip">Backdrop: <code>rgba(15,22,28,.88)</code> + <code>backdrop-filter: blur(6px)</code>. Sheet — <code>--paper-white</code>. Кнопка-закрытия — <code>--signal-red</code> с обводкой <code>--brass</code>.</p>
     </section>
 
-    <!-- ── 13. Камертоны (touch + skew) ────────────────────────── -->
-    <section class="cat-section">
-      <p class="lede">13 · Тач-метрики</p>
-      <h2>Минимальные размеры и углы</h2>
+    <!-- ── 13. Шкалы ───────────────────────────────────────────────
+         Всё ниже рисуется из tokens.json. Значений в разметке нет:
+         и число, и образец, и пометка «×2 на киоске» приходят из токена.
+         Каталог, который сам описывает шкалу словами, устаревает первым. -->
+    <section class="cat-section" id="c-scales">
+      <p class="lede">13 · Шкалы</p>
+      <h2>Отступы, кегли, тени, длительности</h2>
 
-      <div class="grid-2">
-        <div class="ruler">
-          <div style="margin-bottom: 16px;">Touch-hit: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--touch-hit: 120px</code></div>
-          <div class="touch-target">120 × 120</div>
-          <p style="margin-top: 16px; opacity: 0.7;">Минимум для всех тач-целей. Чувствительная зона круглая или прямоугольная.</p>
-        </div>
-        <div class="ruler">
-          <div style="margin-bottom: 24px;">Brand-skew: <code style="background: rgba(0,0,0,.35); padding: 1px 6px; border-radius: 3px; color: var(--brass);">--brand-skew: -15deg</code></div>
-          <div style="display: flex; gap: 24px; align-items: center;">
-            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); transform: skewX(-15deg);"></span>
-            <span style="display: inline-block; width: 4px; height: 80px; background: var(--brass); opacity: 0.5;"></span>
-          </div>
-          <p style="margin-top: 16px; opacity: 0.7;">Слева — наклонная (бренд), справа — вертикаль для сравнения. Угол ≈ 75° от горизонтали (15° от вертикали).</p>
-        </div>
-      </div>
+      <p class="lede-note">
+        Самодельных отступов, радиусов и теней не бывает — есть шкала.
+        <b>Длины умножены на <code>--ui-scale</code></b>: вёрстка ведётся
+        в 1920×1080 логических, на киоске 3840×2160 всё удваивается одним
+        переключателем. Время, угол и <code>z-index</code> не множатся —
+        экран стал больше, а секунда осталась секундой.
+      </p>
+
+      <div class="scale-block" data-scale-group="metric"></div>
+      <div class="scale-block" data-scale-group="scale"></div>
+      <div class="scale-block" data-scale-group="type"></div>
+      <div class="scale-block" data-scale-group="shadow"></div>
+      <div class="scale-block" data-scale-group="motion"></div>
+      <div class="scale-block" data-scale-group="z"></div>
+
+      <p class="token-strip">
+        Пометка <span class="x2">×2</span> стоит там, где значение
+        множится на <code>--ui-scale</code>. Она не проставлена руками:
+        каталог смотрит, есть ли <!-- brand-lint:off --><code>var(--ui-scale)</code><!-- brand-lint:on --> в самом
+        значении токена. Заведёте новую метрику — пометка появится сама,
+        а если не появится, значит метрика не масштабируется, и это видно
+        до того, как дойдёт до киоска.
+      </p>
+
+      <p class="token-strip" id="c-fs-floor">
+        <b>Нижняя ступень <code>--fs-4</code> = 16 — предел, а не
+        случайность:</b> считано на дистанцию просмотра 70 см. Ступени
+        ниже в шкале нет и не будет — легальная мелкая ступень
+        применялась бы не там, где нужна, а кегль 12 в теле справки
+        запретить стало бы нечем.
+        <br>
+        Единственное записанное исключение — <b>плотный хром карты,
+        13 px</b>: панель слоёв <code>&lt;map-unit&gt;</code>, 20 строк
+        при ширине 280. Ограничено служебным хромом компонента
+        с фиксированной шириной и числом строк ≥ 15; в тело справки,
+        карточку, ленту хроники и лонгрид не переносится. Разбор —
+        <code>docs/brand.md</code>, §2.
+      </p>
+
+      <p class="token-strip">
+        ⚠️ В сцене <code>/expo/</code> размеры задаются <b>числами в JSX</b>,
+        а не только через CSS. Такие числа на <code>--ui-scale</code>
+        не отреагируют: их переводят руками, иначе примитив на киоске
+        останется логического размера. Если верстаете по этому каталогу —
+        сверяйтесь, откуда берётся размер, а не только каким он выглядит.
+      </p>
     </section>
 
     <!-- ── 14. Логотип LENIN CENTRE ─────────────────────────────── -->
@@ -2037,6 +2517,437 @@
       </div>
     </section>
 
+    <!-- ── 23. Запрещено ───────────────────────────────────────────
+         Раздел устроен парами: слева то, что запрещено, справа —
+         чем это делается правильно. Запрет словами не убеждает,
+         а рядом стоящий правильный вариант убеждает сразу.
+
+         Левые колонки обёрнуты в brand-lint:off — они СОДЕРЖАТ
+         запрещённые конструкции намеренно, это их работа. -->
+    <section class="cat-section" id="c-forbidden">
+      <p class="lede">23 · Запрещено</p>
+      <h2>Шесть правил и чем они заменяются</h2>
+
+      <p class="lede-note">
+        Каждое правило поймано линтером — <code>npm run brand:lint</code>,
+        правила R1–R10. Здесь показано не «нельзя», а <b>чем вместо</b>:
+        запрет, у которого нет замены, обходят.
+      </p>
+
+      <div class="dont-pair" id="c-no-italic">
+        <div class="dont">
+          <span class="tag">R3 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div style="font-family: var(--font-display); font-size: var(--ds-5, 64px); font-style: italic; color: var(--brass);">1918</div>
+          <!-- brand-lint:on -->
+          <p>Курсив на Nolde. Файла курсивного начертания нет, браузер
+            синтезирует наклон — на крупных кеглях это видно как дефект
+            засечек. Правило было записано в трёх документах, и всё равно
+            накопилось 27 нарушений; теперь его держит линтер.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div style="font-family: var(--font-display); font-size: var(--ds-5, 64px); color: var(--brass); letter-spacing: 0.06em;">1918<span style="color: var(--signal-red);">/</span></div>
+          <p>Акцент даётся трекингом, латунным цветом и слэш-меткой.
+            Наклон, если он нужен, берётся параллелограммом
+            <code>--brand-skew</code> — главный мотив брендбука как раз
+            даёт его легально. Курсив 20 Kopeek и 21 Cent разрешён:
+            файлы подключены.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-hover">
+        <div class="dont">
+          <span class="tag">R5 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div class="demo-btn demo-hover">Справка →</div>
+          <!-- brand-lint:on -->
+          <p><!-- brand-lint:off --><code>:hover</code><!-- brand-lint:on -->. Тач-палец не наводится: состояние
+            наступает после нажатия и остаётся висеть, пока посетитель
+            не тронет другое место. На стенде это читается как «кнопка
+            залипла».</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-btn demo-active">Справка →</div>
+          <p><code>:active</code> — отклик ровно на время касания.
+            Уложиться надо в <code>--dur-base</code>: выше 280 мс палец
+            решает, что стенд не ответил, и жмёт второй раз.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-shadow">
+        <div class="dont">
+          <span class="tag">R1 · нельзя</span>
+          <!-- brand-lint:off -->
+          <div class="demo-card" style="box-shadow: 0 3px 11px rgba(0,0,0,0.55);"></div>
+          <!-- brand-lint:on -->
+          <p>Самодельная тень. Чужая тень читается как другой материал:
+            две карточки рядом начинают выглядеть вырезанными из разной
+            бумаги, и посетитель ищет в этом смысл.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-card" style="box-shadow: var(--sh-2);"></div>
+          <p>Три ступени по назначению: <code>--sh-1</code> карточка,
+            <code>--sh-2</code> плашка над сценой, <code>--sh-3</code>
+            модальное. Смещение и размытие множатся на
+            <code>--ui-scale</code> вместе со всем остальным.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-raw-hex">
+        <div class="dont">
+          <span class="tag">R1 · нельзя</span>
+          <!-- brand-lint:off -->
+          <code class="demo-code">color: #D2B773;</code>
+          <!-- brand-lint:on -->
+          <p>Сырой hex, даже если он в точности равен бренд-цвету.
+            Связь с токеном теряется: поменяется латунь — это место
+            останется старым, и никто не узнает.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <code class="demo-code">color: var(--brass);</code>
+          <p>Нужен новый цвет — заявка в <code>design</code>, а не
+            константа в компоненте. «Своих» цветов не бывает: полутона
+            считаются формулой от бренд-цвета, и процент виден
+            в комментарии сгенерированного CSS.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-color-fallback">
+        <div class="dont">
+          <span class="tag">R2 · нельзя</span>
+          <!-- brand-lint:off -->
+          <code class="demo-code">color: var(--brasss, #8e6a2a);</code>
+          <!-- brand-lint:on -->
+          <p>Запас у ЦВЕТА. Это скрытая вторая палитра: опечатались
+            в имени токена — и страница молча красится «почти брендом».
+            Реальный случай: в карте стоял запас <!-- brand-lint:off --><code>#8e6a2a</code><!-- brand-lint:on -->
+            при латуни <!-- brand-lint:off --><code>#D2B773</code><!-- brand-lint:on -->.</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <code class="demo-code">color: var(--brass);</code>
+          <p>Без запаса. Опечатка тогда видна сразу — элемент теряет
+            цвет, а не подменяет его. <b>У МЕТРИКИ наоборот:</b>
+            <code class="ok">min-height: var(--touch-hit, 120px)</code> —
+            запас обязателен, он единственное, что спасает приёмочный
+            параметр при отсутствующем токене. R9.</p>
+        </div>
+      </div>
+
+      <div class="dont-pair" id="c-no-small-target">
+        <div class="dont">
+          <span class="tag">R7 · нельзя</span>
+          <div class="demo-btn" style="min-height: 0; padding: 6px 12px; font-size: 13px;">Справка →</div>
+          <p>Тач-цель 48 px и меньше. Пороги §1 — два:
+            <b>основная навигация ≥ 120</b> (плитки разделов, кнопки года,
+            «к экспозиции», язык) и <b>управляющие элементы ≥ 64</b>
+            (фильтры, чипы, «Справка», сортировки).</p>
+        </div>
+        <div class="do">
+          <span class="tag">так</span>
+          <div class="demo-btn" style="min-height: 64px;">Справка →</div>
+          <p>Размер и хит-зона могут быть разными: видимая пилюля 56 px,
+            а <code>::before</code> растягивает область нажатия до нормы.
+            Так сделана «к экспозиции» — 120 px высотой в шапке читались
+            бы плашкой, а не ссылкой.</p>
+        </div>
+      </div>
+
+      <p class="token-strip">
+        Левые колонки этого раздела намеренно содержат запрещённые
+        конструкции — иначе показывать было бы нечего. Они обёрнуты
+        в <code>brand-lint:off</code>, и это единственное законное
+        применение маркера: область, где конструкция не исполняется
+        как код, а демонстрируется. В рабочем коде маркера быть не должно.
+      </p>
+    </section>
+
+    <!-- ── 24. Блоки под 198 справок ───────────────────────────────
+         Каждый блок — примитив, который встречается в разделах десятки
+         и сотни раз. Якорь у каждого свой, чтобы постановка задачи
+         звучала «свёрстай по brand.html#c-spravka-card», а не пересказом.
+
+         Блоки срисованы с настоящих компонентов, а не выдуманы: структура
+         повторяет party-card.js / state-card.js / venn-selector.js. -->
+    <section class="cat-section" id="c-blocks">
+      <p class="lede">24 · Блоки</p>
+      <h2>Примитивы под 198 справок</h2>
+
+      <p class="lede-note">
+        Ниже то, что повторится сотни раз. Каждый блок назван якорем;
+        ссылка на якорь — законченная постановка задачи, пересказ словами
+        не нужен и вреден.
+      </p>
+
+      <div class="blocks-grid">
+
+        <figure class="block-demo" id="c-spravka-card">
+          <div class="d-card">
+            <div class="d-stripe" style="background: var(--camp-red);"></div>
+            <div class="d-pad">
+              <div class="d-kicker">Партия · лагерь «Красные»</div>
+              <h3 class="d-title">Большевики</h3>
+              <p class="d-meta">РСДРП(б) · 1903 — 1918</p>
+              <p class="d-body">Основная политическая сила, взявшая власть
+                в октябре 1917 года и удержавшая её в Гражданской войне.</p>
+            </div>
+          </div>
+          <figcaption>
+            <b>#c-spravka-card</b> — карточка справки.
+            Полоса лагеря <code>--camp-*</code> сверху, заголовок
+            <code>--ds-6</code>, мета <code>--fs-3</code>, тело
+            <code>--fs-2</code>. Тень <code>--sh-1</code>.
+            <b>Заголовок НЕ курсивом</b> — Nolde курсива не имеет.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-venn-chip">
+          <div class="d-chips">
+            <span class="d-chip"><i style="background: var(--camp-red);"></i>Большевики</span>
+            <span class="d-chip"><i style="background: var(--camp-rev-dem);"></i>Меньшевики</span>
+            <span class="d-chip"><i style="background: var(--camp-national);"></i>Дашнакцутюн</span>
+          </div>
+          <figcaption>
+            <b>#c-venn-chip</b> — чип диаграммы Венна.
+            Якорь — <b>левый край</b>, подпись растёт вправо и не
+            переносится. Цвет точки — <code>--camp-*</code> по
+            <code>venn_groups[0]</code>, он же <code>camp</code>.
+            Хит-зона 64 добирается <code>::before</code>, видимый чип 28.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-territory-cell">
+          <div class="d-cells">
+            <span class="d-cell" style="border-color: var(--camp-white);">Донская армия</span>
+            <span class="d-cell" style="border-color: var(--camp-national);">Алаш-Орда</span>
+            <span class="d-cell d-cell-off">нет полигона</span>
+          </div>
+          <figcaption>
+            <b>#c-territory-cell</b> — ячейка сетки территорий.
+            Рамка <code>--bd-1</code> цветом лагеря, текст
+            <code>--camp-*-ink</code>: заливка как текст не читается
+            (<code>--camp-white</code> даёт 1.45 на светлом).
+            Третья — состояние «полигона нет», <code>territory_id: null</code>.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-chronicle-row">
+          <div class="d-rows">
+            <div class="d-row"><span class="d-date">3 марта</span>
+              <span class="d-txt">Подписан Брестский мир</span>
+              <span class="d-ref">Справка →</span></div>
+            <div class="d-row"><span class="d-date">25 мая</span>
+              <span class="d-txt">Выступление Чехословацкого корпуса</span>
+              <span class="d-ref">Справка →</span></div>
+          </div>
+          <figcaption>
+            <b>#c-chronicle-row</b> — строка ленты хроники.
+            «Справка →» повторяется 76 раз, поэтому у неё порог
+            управляющего элемента 64, а не 120: пять целей по 120
+            съели бы треть экрана. Дата <code>--font-mono</code>.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-longread-block">
+          <div class="d-long">
+            <p class="d-drop"><span>С</span>имбирскъ лета 1918 года —
+              город между двумя фронтами. Комучъ пришёл сюда в июле,
+              красные вернулись в сентябре.</p>
+            <blockquote class="d-quote">«Мы ещё вернёмся к расчётам
+              с историей» <span>— изъ приказа РВСР, декабрь 1918</span></blockquote>
+          </div>
+          <figcaption>
+            <b>#c-longread-block</b> — блок лонгрида.
+            Буквица <code>--ds-3</code>, тело <code>--fs-2</code>,
+            цитата с латунной линейкой <code>--bd-2</code>.
+            Мера строки — не шире 78 знаков.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-map-legend">
+          <div class="d-legend">
+            <span><i style="background: var(--map-red);"></i>РККА</span>
+            <span><i style="background: var(--map-white);"></i>Белые армии</span>
+            <span><i style="background: var(--map-front);"></i>Линия фронта</span>
+            <span><i style="background: var(--map-river);"></i>Реки</span>
+          </div>
+          <figcaption>
+            <b>#c-map-legend</b> — легенда карты.
+            Цвет плашки и цвет слоя берутся из одного места — поля
+            <code>color</code> в <code>map.json</code>, имя из словаря
+            <code>--map-*</code>. Разойтись не могут по устройству.
+            Дата фронта кодируется <b>штрихом</b>, а не оттенком.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo" id="c-states">
+          <div class="d-states">
+            <div class="d-state d-loading">Загрузка…</div>
+            <div class="d-state d-nomap">Карта территории не поставлена</div>
+          </div>
+          <figcaption>
+            <b>#c-states</b> — состояния «загрузка» и «нет карты».
+            Обе пунктирные и приглушённые: заглушка <b>не должна
+            выглядеть готовой</b>. Приёмка обязана отличать недоделку
+            от поставки — правило затычки из §2.
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <p class="token-strip">
+        Блоки срисованы с настоящих компонентов, а не придуманы:
+        структура повторяет <code>party-card.js</code>,
+        <code>state-card.js</code> и <code>venn-selector.js</code>.
+        Расхождение каталога с реализацией — дефект каталога.
+      </p>
+    </section>
+
+    <!-- ── 25. Связанные справки ───────────────────────────────────
+         Расширение сверх ТЗ, решение dvn 2026-08-04.
+
+         Зачем. В текстах 3020 разрешённых перекрёстных связей, и ни одна
+         никуда не ведёт. Это не дефект: rich-text.js:50 намеренно рисует
+         ссылку подсвеченным термином, потому что строчная ссылка даёт
+         тач-цель ВЫСОТОЙ СТРОКИ — около 20px при пороге 64. Палец попал
+         бы по соседнему слову и открыл не ту справку: перехваченная цель
+         хуже мелкой.
+
+         Но на киоске нет ни поиска, ни соседней вкладки. Связность
+         существует только в базе. Ответ — не кликабельное слово,
+         а честный блок с нормальными целями. -->
+    <section class="cat-section" id="c-related">
+      <p class="lede">25 · Связанные справки</p>
+      <h2>Окружение сущности внизу карточки</h2>
+
+      <p class="lede-note">
+        Цели <b>≥ 64 px</b> — это управляющие элементы внутри раздела,
+        не основная навигация. Блок переживает и две связи, и сорок:
+        группировка по лагерю, внутри группы не больше пяти, дальше «ещё N».
+      </p>
+
+      <div class="rel-pair">
+        <figure class="block-demo">
+          <span class="tag-rec">рекомендую</span>
+          <div class="d-card">
+            <div class="d-pad">
+              <div class="rel-head">Связанные справки · 12</div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-red);"></i>Красные · 4</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>Ленин</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>Троцкий</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСДРП(б)</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСФСР</a>
+                </div>
+              </div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-white);"></i>Белые · 5</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Колчакъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Деникинъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Добровольческая армия</a>
+                  <a class="rel-item rel-more">ещё 2</a>
+                </div>
+              </div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-national);"></i>Национальные · 3</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Алашъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Мусаватъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Дашнакцутюнъ</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            <b>#c-related</b> — <b>вариант с меткой лагеря.</b>
+            Цвет несёт <b>точка</b>, имя набрано обычными чернилами.
+            Так блок читается картой окружения: видно, что у «Комуча»
+            половина связей белые, а у «Левых эсеров» — красные.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo">
+          <span class="tag-alt">без цвета</span>
+          <div class="d-card">
+            <div class="d-pad">
+              <div class="rel-head">Связанные справки · 12</div>
+              <div class="rel-list">
+                <a class="rel-item">Ленин</a>
+                <a class="rel-item">Троцкий</a>
+                <a class="rel-item">РСДРП(б)</a>
+                <a class="rel-item">Колчакъ</a>
+                <a class="rel-item">Деникинъ</a>
+                <a class="rel-item">Алашъ</a>
+                <a class="rel-item rel-more">ещё 6</a>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            Простой список, без лагерей. Честнее при малом числе связей
+            и когда лагерь у части сущностей не проставлен. Но на сорока
+            связях превращается в стену одинаковых кнопок — теряется
+            единственное, что помогает выбрать.
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="token-strip">
+        <b>Цвет лагеря берётся ЗАЛИВКОЙ ТОЧКИ, а не цветом имени</b> —
+        и это не вкус. Четыре цвета из семи как текст на карточке
+        не читаются: <code>--camp-white</code> даёт 1.45,
+        <code>--camp-national</code> 1.84, <code>--camp-green</code> 3.63,
+        <code>--camp-uprising</code> 4.43 при пороге 4.5.
+        Набрать имена в <code>--camp-*-ink</code> можно — там все ≥ 4.7, —
+        но список из семи разных чернил перестаёт сканироваться:
+        цвет начинает спорить с текстом за внимание.
+      </p>
+
+      <p class="token-strip">
+        <b>У точки обязательно кольцо <code>--ink-faint</code></b> — и это
+        не украшение. Перенос цвета с текста на заливку сам по себе проблему
+        не решает: светлое на светлом остаётся светлым на светлом.
+        Точка «Белых» даёт <b>1.39</b> на пилюле, «Национальных» — <b>1.76</b>,
+        то есть у двух лагерей из семи метка просто исчезает, а блок при этом
+        выглядит исправным. Кольцо даёт 4.33 при пороге 3.0 для графики.
+        Ставится <b>всем</b> точкам, а не только светлым: правило, которое
+        срабатывает выборочно, вёрстка не воспроизведёт.
+      </p>
+
+      <p class="token-strip">
+        <b>Пустое состояние: блока просто нет.</b> Не «Связанные справки: —»
+        и не пустая рамка. Здесь ничего не пропало — у сущности
+        действительно нет связей, и отсутствие однозначно. Это НЕ противоречит
+        §2 про затычки: затычка обязана выглядеть недоделанной, когда что-то
+        <b>ждут</b>; тут не ждут ничего. Записано здесь, чтобы решение
+        не принималось заново в вёрстке.
+      </p>
+
+      <p class="token-strip">
+        ⚠️ Число связей ещё не известно: <code>content</code> считает
+        распределение. Вид рассчитан на диапазон — пять на группу и «ещё N», —
+        но если у «Большевиков» окажется три сотни, порог на группу
+        придётся пересмотреть, и это будет правка каталога, а не вёрстки.
+      </p>
+    </section>
+
+    <!-- ── 26. Состояние дизайн-кода ───────────────────────────────
+         Отчёт линтера прямо в каталоге. Каталог, который показывает
+         правила и молчит о том, соблюдаются ли они, — половина работы. -->
+    <section class="cat-section" id="c-lint">
+      <p class="lede">26 · Состояние</p>
+      <h2>Что говорит линтер</h2>
+      <div id="lint-report"></div>
+    </section>
+
     <p class="source">Источник: docs/brand.md · docs/brand/Lenin-guideline-2026.pdf · src/styles/tokens.css · TESTS/fabric canvas/html-in-canvas-brief.md</p>
   </main>
 
@@ -2317,6 +3228,76 @@
         ? T['ink-black'] : T['paper-white'];
     }
 
+    /** Где этим цветом можно ПИСАТЬ.
+     *
+     *  Считает генератор, а не каталог: contrast против --paper-white
+     *  и --page-bg-deep, пороги WCAG 4.5 (обычный текст) и 3.0 (крупный).
+     *  Здесь только показ.
+     *
+     *  Зачем на свотче: палитра работает заливкой, а как текст — только
+     *  на своём фоне, и в имени токена это ничем не выражено. «--ink-3»
+     *  читается как «цвет текста», а он цвет текста ДЛЯ СВЕТЛОГО: на
+     *  тёмной панели даёт 1.29. Я ошиблась так трижды за сутки, и ни
+     *  одну из трёх линтер поймать не мог — фон везде стоял на предке
+     *  через разметку, а не в том же правиле. Подпись у свотча работает
+     *  в момент ВЫБОРА, а правило — в момент прогона; здесь первое дешевле. */
+    function legibilityBadge(L) {
+      if (!L) return '';
+      const RU = { light: 'на светлом', dark: 'на тёмном', both: 'на обоих', none: '—' };
+      if (L.on === 'both') return `<i class="leg leg-ok">текстом на обоих</i>`;
+      if (L.on !== 'none') return `<i class="leg leg-ok">текстом ${RU[L.on]}</i>`;
+      if (L.onLarge !== 'none') return `<i class="leg leg-mid">только крупным ${RU[L.onLarge]}</i>`;
+      return `<i class="leg leg-no">только заливка</i>`;
+    }
+
+    // 25 · Состояние дизайн-кода ────────────────────────────────────────────
+    //
+    // Каталог показывает правила — он обязан показывать и то, соблюдаются ли
+    // они. Иначе «Запрещено» читается как пожелание.
+    //
+    // Отчёт СТАРЕЕТ: он снят на конкретном коммите, а долг меняется каждый
+    // день. Поэтому коммит печатается рядом с числами — артефакт, умалчивающий
+    // о своей давности, это затычка, выглядящая готовой (§2).
+    (function renderLint() {
+      const host = document.getElementById('lint-report');
+      if (!host) return;
+      const R = window.MTK_LINT;
+      if (!R) {
+        host.innerHTML = `<p class="lede-note">Отчёт не сгенерирован.
+          Прогоните <code>node scripts/design/brand-lint.mjs --report</code>
+          — иначе этот раздел молчит, и молчание легко принять за «нарушений нет».</p>`;
+        return;
+      }
+      const rows = Object.entries(R.rules).map(([id, r]) => {
+        const files = Object.entries(r.files).sort((a, b) => b[1] - a[1]);
+        return `
+          <div class="lint-row${r.count ? '' : ' lint-clean'}">
+            <b>${id}</b>
+            <span class="lint-title">${r.title}</span>
+            <span class="lint-count">${r.count || '—'}</span>
+            <span class="lint-files">${files.length
+              ? files.map(([f, n]) => `${f.split('/').pop()}&nbsp;${n}`).join(' · ')
+              : 'чисто'}</span>
+          </div>`;
+      }).join('');
+      host.innerHTML = `
+        <p class="lede-note">
+          Долг в цифрах — это <b>принятые</b> нарушения, зафиксированные
+          пофайловыми счётчиками. Прогон падает не на их наличии, а на
+          <b>приросте</b>: стало больше — красное. Так долг может только
+          уменьшаться, а «сделать зелено» разом нельзя.
+        </p>
+        <div class="lint-table">${rows}</div>
+        <p class="token-strip">
+          Всего в долге <b>${R.total}</b>, постоянных исключений
+          <b>${R.allow}</b>. Снято на коммите <code>${R.commit}</code> —
+          если сейчас в репозитории другой, числа старые: отчёт
+          пересобирается вручную, <code>brand-lint --report</code>.
+          Правила проверяются на себе: <code>lint-selftest.mjs</code>
+          подкладывает каждому нарушение в код и в комментарий.
+        </p>`;
+    })();
+
     // 01 · Палитра — плитки со значением и пояснением из tokens.json
     document.querySelectorAll('[data-palette-group]').forEach((host) => {
       const g = group(host.dataset.paletteGroup);
@@ -2324,8 +3305,61 @@
       host.innerHTML = g.tokens.map((name) => `
         <div class="swatch">
           <div class="fill" style="background: var(--${name});"></div>
-          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span></div>
+          <div class="meta"><b>--${name}</b><span>${T[name]}${TMETA[name].note ? ' · ' + TMETA[name].note : ''}</span>
+            ${legibilityBadge(TMETA[name].legible)}</div>
         </div>`).join('');
+    });
+
+    // 13 · Шкалы — и число, и образец, и пометка «×2» из самого токена ──────
+    //
+    // Единственное, что задано здесь, — КАК показать ступень. Сколько
+    // ступеней, чему они равны и что из них масштабируется, каталог
+    // не знает и знать не должен: заведёте --sp-9 — строка появится сама.
+    const SCALE_TITLES = {
+      metric: ['Метрики', 'Приёмочные величины. --touch-hit — основная навигация по §1; управляющим элементам внутри разделов хватает 64.'],
+      scale:  ['Отступы, радиусы, толщины', 'База отступов 8, а не 4: с 70 см разница в 4 px неразличима, и половина ступеней была бы мусором.'],
+      type:   ['Кегли', '--ds-* — Nolde, заголовки и крупные цифры. --fs-* — 21 Cent, читаемый текст; нижняя ступень 16 — предел для 70 см, ниже не опускаться.'],
+      shadow: ['Тени', 'Три ступени по НАЗНАЧЕНИЮ, а не по размеру: чужая тень читается как другой материал.'],
+      motion: ['Длительности', 'Реакция на касание обязана уложиться в --dur-base: выше 280 мс палец решает, что стенд не ответил, и жмёт второй раз.'],
+      z:      ['Слои по глубине', 'Шаг 100 — между соседями всегда есть место для незапланированного.'],
+    };
+
+    /** Множится ли значение на --ui-scale. Не список имён, а разбор
+        самого значения: список пришлось бы дополнять руками, и он бы врал. */
+    const scales2x = (v) => /var\(--ui-scale/.test(String(v));
+
+    /** Образец ступени. `var(--name)` вместо числа — чтобы каталог показывал
+        ровно то, что получит вёрстка, включая удвоение на киоске. */
+    function specimen(name, value) {
+      const v = `var(--${name})`;
+      if (/^sp-/.test(name))   return `<div class="spec-bar" style="width: ${v};"></div>`;
+      if (/^r-/.test(name))    return `<div class="spec-box" style="border-radius: ${v};"></div>`;
+      if (/^bd-/.test(name))   return `<div class="spec-line" style="height: ${v};"></div>`;
+      if (/^ds-/.test(name))   return `<div class="spec-type" style="font-size: ${v};">Аа</div>`;
+      if (/^fs-/.test(name))   return `<div class="spec-text" style="font-size: ${v};">Совѣтская Россія выходитъ изъ войны</div>`;
+      if (/^sh-/.test(name))   return `<div class="spec-card" style="box-shadow: ${v};"></div>`;
+      if (/^dur-/.test(name))  return `<div class="spec-dot" style="--d: ${v};"></div>`;
+      if (/^z-/.test(name))    return `<div class="spec-z">${[0,1,2].map((i) =>
+                                        `<i style="left: ${i * 28}px; z-index: ${i};">${i ? '' : value}</i>`).join('')}</div>`;
+      if (name === 'touch-hit') return `<div class="touch-target" style="width: ${v}; height: ${v};"></div>`;
+      if (name === 'brand-skew') return `<span style="display:inline-block;width:4px;height:44px;background:var(--brass);transform:skewX(${v});"></span>`;
+      if (name === 'ui-scale')  return `<span class="val">1 на стенде · 2 на киоске, единственный media-query проекта</span>`;
+      return `<div class="spec-bar" style="width: ${v};"></div>`;
+    }
+
+    document.querySelectorAll('[data-scale-group]').forEach((host) => {
+      const id = host.dataset.scaleGroup;
+      const g = group(id);
+      if (!g) return;
+      const [title, why] = SCALE_TITLES[id] ?? [g.title, ''];
+      host.innerHTML = `<h3>${title}</h3>${why ? `<p class="why">${why}</p>` : ''}` +
+        g.tokens.map((name) => `
+          <div class="scale-row">
+            <b>--${name}</b>
+            <span class="val">${T[name].replace(/calc\((\S+) \* var\(--ui-scale, 1\)\)/g, '$1')}</span>
+            <span>${scales2x(T[name]) ? '<span class="x2">×2</span>' : ''}</span>
+            <span class="spec">${specimen(name, T[name])}</span>
+          </div>`).join('');
     });
 
     // 02 · Лагеря — цвет из токена, подпись отсюда

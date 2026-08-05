@@ -36,7 +36,13 @@ const MODE = {
   json:   argv.includes('--json'),
   list:   argv.includes('--list'),
   update: argv.includes('--update-baseline'),
+  report: argv.includes('--report'),
 };
+
+// Отчёт для каталога кладётся JS-файлом, а не json на fetch: brand.html
+// уже грузит brand-tokens.js тем же способом, файл работает офлайн
+// и не зависит от путей. Каталог в public/decor/** — зона design (§4).
+const REPORT_FILE = resolve(ROOT, 'public/decor/brand-lint-report.js');
 
 // ── что сканируем ──────────────────────────────────────────────────────────
 // Не сканируем: чужие зоны на заморозке, приёмники импорта, генерируемое.
@@ -78,13 +84,47 @@ function walk(dir, acc = []) {
 
 // ── утилиты разбора ────────────────────────────────────────────────────────
 
+const keepWs = (m) => m.replace(/[^\n]/g, ' ');
+
 /** Затирает содержимое комментариев пробелами: длина и переводы строк целы,
- *  поэтому номера строк и смещения остаются верными. */
+ *  поэтому номера строк и смещения остаются верными.
+ *
+ *  Строчные `//` гасятся тоже — до 2026-08-04 не гасились, и это был
+ *  дефект, бивший по самому ценному виду комментариев. Зона `ui` написала
+ *  комментарий о том, ПОЧЕМУ нельзя опускать запас у --touch-hit, и
+ *  получила за него два «новых нарушения» R9. Правило, которое нельзя
+ *  объяснить в комментарии, толкает гонять --update-baseline, а это
+ *  запрещено; и следующий человек снимет запас «по правилу» именно
+ *  потому, что объяснения рядом не будет.
+ *
+ *  `[^:]` перед `//` — чтобы не съесть https://. Приём взят дословно
+ *  из scripts/check-paths.mjs, там он уже обкатан.
+ *
+ *  Тела <style> и <script> НЕ гасим, в отличие от check-paths: у нас
+ *  именно там живёт CSS каталога, ради которого правила и написаны. */
 function maskComments(text) {
-  const keepWs = (m) => m.replace(/[^\n]/g, ' ');
   return text
     .replace(/\/\*[\s\S]*?\*\//g, keepWs)
-    .replace(/<!--[\s\S]*?-->/g, keepWs);
+    .replace(/<!--[\s\S]*?-->/g, keepWs)
+    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + keepWs(m.slice(p.length)));
+}
+
+/** Область-ОБРАЗЕЦ: между маркерами лежит не код, а цитата.
+ *
+ *      brand-lint:off ... brand-lint:on
+ *
+ *  Без этого каталог не может делать свою работу. Раздел «Запрещено»
+ *  состоит из запрещённых конструкций по определению: курсив на Nolde
+ *  рядом с легальным акцентом, :hover рядом с :active, самодельная тень
+ *  рядом с --sh-2. Показать их — и есть смысл раздела, а линтер честно
+ *  ловил бы каждую и требовал убрать ровно то, ради чего страница есть.
+ *
+ *  Это НЕ лазейка «выключить правило, когда мешает»: маркер помечает
+ *  область, где конструкция заведомо не исполняется как код, — текст
+ *  в <code>, содержимое data-атрибута, демонстрационная разметка.
+ *  В рабочем коде маркеру делать нечего, и его там ловит ревью. */
+function maskSpecimens(text) {
+  return text.replace(/brand-lint:off[\s\S]*?brand-lint:on/g, keepWs);
 }
 
 function lineOf(text, index) {
@@ -154,8 +194,21 @@ for (const name of Object.keys(tokensJson.tokens)) {
   else if (name.startsWith('font-')) KIND.set(name, 'font');
   else KIND.set(name, 'metric');
 }
-/** Метрики, у которых отсутствие токена меняет ГЕОМЕТРИЮ, а не палитру. */
-const METRIC_TOKENS = new Set([...KIND].filter(([, k]) => k === 'metric').map(([n]) => n));
+/** Метрики, у которых отсутствие токена меняет ГЕОМЕТРИЮ, а не палитру.
+ *
+ *  Тени, длительности и z-index сюда НЕ входят, хотя формально не цвета.
+ *  Причина в цене запаса, а не в цене отказа: запас у них — это вторая
+ *  копия дизайн-решения прямо в вёрстке, то есть ровно та беда, от которой
+ *  R2 защищает палитру. `box-shadow: var(--sh-2, 0 8px 28px rgba(...))`
+ *  расходится с токеном при первой же правке и делает это молча.
+ *  Отказ при этом дешёвый и видимый: пропадает тень, а не приёмочный
+ *  параметр. R9 стережёт геометрию, которую меряют на приёмке. */
+const R9_SKIP_GROUPS = new Set(['shadow', 'motion', 'z']);
+const METRIC_TOKENS = new Set(
+  [...KIND]
+    .filter(([n, k]) => k === 'metric' && !R9_SKIP_GROUPS.has(tokensJson.tokens[n].group))
+    .map(([n]) => n),
+);
 
 // ── постоянные исключения + долг ───────────────────────────────────────────
 let baseline = { allow: [], debt: {} };
@@ -177,7 +230,19 @@ const RULES = {
   R4: { level: 'error', title: 'var(--x) для несуществующего токена' },
   R5: { level: 'error', title: ':hover в киосковом коде' },
   R6: { level: 'error', title: 'внешний CDN — киоск офлайн' },
-  R7: { level: 'warn',  title: 'тач-цель меньше 48px' },
+  // 64 — НИЖНИЙ из двух порогов §1, и правило проверяет только его.
+  // Второй порог, 120 для основной навигации, отличается от первого
+  // не разметкой, а СМЫСЛОМ элемента: «к экспозиции» и «Справка →» —
+  // одинаковые кнопки в CSS. Различить их селектором нельзя, поэтому
+  // 120 проверяет человек, и заголовок правила говорит об этом прямо,
+  // а не притворяется, что закрывает оба.
+  //
+  // Прежние 48 не были опиской: это добросовестно списанное число
+  // из дизайн-системы, preview/touch-target.html, где оно стоит
+  // с апреля. Контракт перешёл на два порога 3 августа, источник
+  // остался на старом. Исправлено в обоих концах — иначе следующий
+  // спишет 48 снова.
+  R7: { level: 'error', title: 'тач-цель меньше 64px — порог управляющего элемента (§1)' },
   R8: { level: 'error', title: 'артефакты разошлись с tokens.json' },
   R9:  { level: 'error', title: 'var(--метрика) без запаса — приёмочный параметр отвалится молча' },
   R10: { level: 'error', title: 'цвет слоя в map.json мимо словаря --map-*' },
@@ -197,9 +262,16 @@ const SAFE_FONT_HINT = /21\s*Cent|20\s*Kopeek|--font-(body|accent|mono|stamp)|fo
 
 function lintFile(file) {
   const raw = readFileSync(file, 'utf8');
-  const src = maskComments(raw);
+  // Порядок важен: сначала образцы, потом комментарии. Маркеры
+  // brand-lint:off/on сами живут в комментариях, и затерев комментарии
+  // первыми, мы бы потеряли границы области.
+  const src = maskComments(maskSpecimens(raw));
   const ext = extname(file);
-  const isCssLike = ext === '.css' || ext === '.html';
+  // .js/.jsx тоже: веб-компоненты носят свой CSS в шаблонных строках,
+  // и до 2026-08-04 весь этот слой не проверялся на тач-цели вовсе —
+  // map-unit, venn-selector, party-card, state-card, camp-filter.
+  // Правило было, а половина кнопок проекта под него не попадала.
+  const isCssLike = ext === '.css' || ext === '.html' || ext === '.js' || ext === '.jsx';
 
   // ── R6 · внешние ресурсы ────────────────────────────────────────────────
   for (const m of src.matchAll(/\b(?:src|href)\s*=\s*["']\s*(https?:)?\/\/([^"'\s/]+)/gi)) {
@@ -309,10 +381,47 @@ function lintFile(file) {
   if (isCssLike) {
     for (const m of src.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
       const [selector, body] = [m[1], m[2]];
-      if (!/(^|[\s,>+~])(button|a)\b|\.btn|\[role=["']?button/i.test(selector)) continue;
-      if (/min-(width|height)\s*:\s*var\(--touch-hit\)/i.test(body)) continue;
+
+      // Кнопкой должен быть САМ субъект правила, а не его предок:
+      // `button .swatch { width: 12px }` красит цветной квадратик внутри
+      // чипа, а нажимают чип. Смотрим последний компаунд каждого селектора.
+      const subjectIsControl = selector.split(',').some((sel) => {
+        const last = sel.trim().split(/[\s>+~]+/).pop() ?? '';
+        return /^(button|a)\b/i.test(last) || /\.btn/i.test(last) || /\[role=["']?button/i.test(last);
+      });
+      if (!subjectIsControl) continue;
+      if (/min-(width|height)\s*:\s*var\(--touch-hit/i.test(body)) continue;
+
+      // Хит-зона может быть больше видимого элемента, и это ПРАВИЛЬНЫЙ
+      // приём, а не обход: ряд из девяти свотчей по 64 px не помещается,
+      // а нажимать по 28 нельзя — поэтому кружок остаётся 28, а область
+      // добирается невидимым ::before. Правило, которое меряет бокс,
+      // ругалось бы ровно на верное решение и учило бы себя игнорировать.
+      //
+      // Ищем в том же файле правило для ::before/::after этого же
+      // селектора с высотой ≥ порога или через --touch-hit.
+      const subj = selector.trim().split(',')[0].trim();
+      const pseudo = new RegExp(
+        subj.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*::(before|after)[^{]*\\{([^}]*)\\}', 'i');
+      const pm = src.match(pseudo);
+      if (pm && /height\s*:\s*(var\(--touch-hit|(4[89]|[5-9]\d|\d{3,})px|max\([^)]*\b(4[89]|[5-9]\d|\d{3,})px)/i.test(pm[2])) continue;
+
+      // Явная ОТМЕНА порога. Опаснее маленького числа: числа видно
+      // в ревью, а `min-height: auto` выглядит уборкой, хотя снимает
+      // приёмочный параметр §1. Так в map-unit.js кнопка панели
+      // осталась 26px, перебив базовое button { min-height: --touch-hit }.
+      // Ловим отмену ВЫСОТЫ. Ширину не трогаем: у широкой пилюли с текстом
+      // `min-width: auto` безвреден — тач-цель там держит высота, а флаг
+      // на каждый такой случай сделал бы правило шумом, и его начали бы
+      // пропускать. Высота же — дефицитное измерение в ряду контролов,
+      // и её отмена роняет цель до высоты строки.
+      for (const d of body.matchAll(/\bmin-height\s*:\s*(auto|0|none)\b/gi)) {
+        add('R7', file, m.index + m[0].indexOf(d[0]), src,
+            `${selector.trim().slice(0, 48)} { ${d[0]} }`,
+            'отменяет порог §1, заданный базовым правилом для button');
+      }
       for (const d of body.matchAll(/\b(min-)?(width|height)\s*:\s*(\d+(?:\.\d+)?)px/gi)) {
-        if (Number(d[3]) < 48) {
+        if (Number(d[3]) < 64) {
           add('R7', file, m.index + m[0].indexOf(d[0]), src,
               `${selector.trim().slice(0, 48)} { ${d[0]} }`);
         }
@@ -410,16 +519,59 @@ for (const rule of new Set([...Object.keys(counts), ...Object.keys(debt)])) {
   }
 }
 
+if (MODE.report) {
+  // Отчёт СТАРЕЕТ — он снят на конкретном коммите, а долг меняется.
+  // Поэтому вместе с числами едет коммит: увидев чужой хеш, читатель
+  // понимает, что смотрит вчерашнее, а не сегодняшнее. Артефакт,
+  // умалчивающий о своей давности, — та же затычка, выглядящая готовой.
+  let commit = 'не определён';
+  try {
+    commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'],
+      { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {}
+
+  const body = {
+    commit,
+    total: kept.length,
+    rules: Object.fromEntries(Object.entries(RULES).map(([id, m]) => [id, {
+      title: m.title,
+      level: m.level,
+      count: Object.values(counts[id] ?? {}).reduce((a, b) => a + b, 0),
+      files: counts[id] ?? {},
+    }])),
+    allow: baseline.allow.length,
+  };
+
+  writeFileSync(REPORT_FILE,
+    '// ФАЙЛ СГЕНЕРИРОВАН: node scripts/design/brand-lint.mjs --report\n' +
+    '// Читает brand.html, раздел «Состояние дизайн-кода».\n' +
+    '// Снят на коммите ' + commit + ' — если в каталоге чужой хеш,\n' +
+    '// значит отчёт не пересобирали, и числа старые.\n' +
+    'window.MTK_LINT = ' + JSON.stringify(body, null, 2) + ';\n', 'utf8');
+
+  console.log(`  отчёт записан: ${rel(REPORT_FILE)}  (${kept.length} в долге, коммит ${commit})`);
+}
+
 if (MODE.json) {
-  console.log(JSON.stringify({
+  // ⚠️ БЕЗ process.exit. В терминал stdout пишется синхронно, а в ПАЙП —
+  // асинхронно, и process.exit обрывает недописанное: отчёт приходил
+  // потребителю обрезанным на ~62 КБ, ровно посередине строки. Прямо
+  // в файл (`> x.json`) при этом всё было цело, поэтому я дважды списала
+  // это на шелл. Нашлось, когда отчёт впервые начал читать не человек,
+  // а другая программа — самопроверка правил.
+  //
+  // Тот же класс, что дефекты, видимые только на dist: в одном режиме
+  // работает, в другом молча портится.
+  process.stdout.write(JSON.stringify({
     generatedBy: 'scripts/design/brand-lint.mjs',
     rules: RULES,
     total: kept.length,
     counts, regressions, improvements,
     violations: kept,
-  }, null, 2));
-  process.exit(0);
+  }, null, 2) + '\n');
+  process.exitCode = 0;
 }
+else {
 
 // ── человекочитаемый отчёт ─────────────────────────────────────────────────
 const RESET = '\x1b[0m', DIM = '\x1b[2m', RED = '\x1b[31m', YEL = '\x1b[33m', GRN = '\x1b[32m';
@@ -471,4 +623,5 @@ for (const r of regressions) {
   }
 }
 console.log('');
-process.exit(MODE.warn ? 0 : 1);
+process.exitCode = MODE.warn ? 0 : 1;
+}

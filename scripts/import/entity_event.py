@@ -63,7 +63,6 @@ def build(doc, ctx) -> dict:
         "camp": None,
         "title_ru": title_ru,
         "title_en": None,
-        "sort_key_ru": spravka.sort_key(title_ru),
         "dates": date,
         "date": date,
         "summary_ru": summary_ru or None,
@@ -83,7 +82,7 @@ def build(doc, ctx) -> dict:
 
     if en_status == "copy_of_ru":
         flags.append("en-copy")
-    if summary_ru and len(summary_ru) > 3000:
+    if summary_ru and spravka.visible_len(summary_ru) > 3000:
         flags.append("over-tz-limit")
     return data
 

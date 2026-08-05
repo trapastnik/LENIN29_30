@@ -5,7 +5,6 @@
   "camp": "red",
   "title_ru": "Союз Советских Социалистических Республик",
   "title_en": null,
-  "sort_key_ru": "союз советских социалистических республик",
   "abbr_ru": [
     "СССР"
   ],
@@ -41,7 +40,7 @@
       "h": 1018
     }
   ],
-  "territory_id": null,
+  "territory_id": "ussr",
   "media": [
     {
       "n": 1,

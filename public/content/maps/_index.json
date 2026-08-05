@@ -38,6 +38,33 @@
       "to": "1918-09",
       "pipeline": "anchors",
       "calibrated": true
+    },
+    {
+      "id": "territories",
+      "title_ru": "Территории гособразований на базовой карте",
+      "dir": "content/maps/territories",
+      "from": null,
+      "to": null,
+      "pipeline": "territory-assembly",
+      "calibrated": true
+    },
+    {
+      "id": "allies-entente-presence",
+      "title_ru": "Союзники · Антанта",
+      "dir": "content/maps/allies-entente-presence",
+      "from": null,
+      "to": null,
+      "pipeline": "territory-assembly",
+      "calibrated": true
+    },
+    {
+      "id": "czechoslovak-corps-corridor",
+      "title_ru": "Чехословацкий корпус",
+      "dir": "content/maps/czechoslovak-corps-corridor",
+      "from": null,
+      "to": null,
+      "pipeline": "territory-assembly",
+      "calibrated": true
     }
   ]
 }

@@ -5,7 +5,6 @@
   "camp": "uprising",
   "title_ru": "«Чапанная война»",
   "title_en": null,
-  "sort_key_ru": "чапанная война",
   "abbr_ru": [],
   "aka_ru": [],
   "aka_raw_ru": null,
@@ -83,5 +82,7 @@
     "sha256": "37f9e049fdd5d551608cd1992204ec42506ab626f77fd6576362923ce5f448ed",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "map_status": "impossible",
+  "map_status_note_ru": "нет уездных границ на 1919 год — рисовать не по чему"
 }

@@ -5,7 +5,6 @@
   "camp": null,
   "title_ru": "Туркестанский фронт",
   "title_en": null,
-  "sort_key_ru": "туркестанский фронт",
   "dates": {
     "raw": "11 августа 1919 – 1926 г.",
     "display_ru": "11 августа 1919 – 1926 г.",
@@ -108,7 +107,6 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }

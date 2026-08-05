@@ -5,7 +5,6 @@
   "camp": "rev-dem",
   "title_ru": "Временное Сибирское правительство",
   "title_en": null,
-  "sort_key_ru": "временное сибирское правительство",
   "abbr_ru": [
     "ВСП"
   ],
@@ -97,6 +96,7 @@
         "36 ВСП 03 1.TIF",
         "36 ВСП 03 2.TIF"
       ],
+      "sides": "unverified",
       "directives": [
         "spread"
       ],
@@ -131,7 +131,5 @@
     "sha256": "0ce7137903f17a394dafef1bf70a49bf9e29d528aed0e99f9555d9277e983985",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ]
+  "flags": []
 }

@@ -5,7 +5,6 @@
   "camp": "white",
   "title_ru": "Белые",
   "title_en": null,
-  "sort_key_ru": "белые",
   "title_full_ru": null,
   "abbr_ru": [],
   "aka_ru": [],
@@ -58,6 +57,6 @@
     "over-tz-limit"
   ],
   "_is_general": true,
-  "x": 88.91,
-  "y": 19.07
+  "x": 86.979,
+  "y": 29.815
 }

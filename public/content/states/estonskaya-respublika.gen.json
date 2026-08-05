@@ -5,7 +5,6 @@
   "camp": "national",
   "title_ru": "Эстонская Республика",
   "title_en": null,
-  "sort_key_ru": "эстонская республика",
   "abbr_ru": [],
   "aka_ru": [],
   "aka_raw_ru": null,
@@ -81,6 +80,7 @@
         "42 Эстонская 02 1.jpg",
         "42 Эстонская 02 2.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/states/estonskaya-respublika/02",
         "media/states/estonskaya-respublika/02p2"

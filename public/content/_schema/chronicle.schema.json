@@ -4,40 +4,152 @@
   "title": "Хроника событий — файл на год",
   "description": "chronicle/_index.json + 1917.json…1922.json. Максимум 139 записей (1918) ≈ 60 КБ — одна загрузка на переключение года.",
   "type": "object",
-  "required": ["schema", "year", "items"],
+  "required": [
+    "schema",
+    "year",
+    "items"
+  ],
   "additionalProperties": false,
   "properties": {
-    "schema": { "const": 1 },
-    "year": { "type": "integer", "minimum": 1917, "maximum": 1922 },
-    "src": { "$ref": "mtk29/common#/definitions/src" },
-    "items": { "type": "array", "items": { "$ref": "#/definitions/entry" } }
+    "schema": {
+      "const": 1
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1917,
+      "maximum": 1922
+    },
+    "src": {
+      "$ref": "mtk29/common#/definitions/src"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/entry"
+      }
+    }
   },
   "definitions": {
     "entry": {
       "type": "object",
-      "required": ["id", "year", "row", "sort", "track"],
+      "required": [
+        "id",
+        "year",
+        "row",
+        "sort",
+        "track"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string", "pattern": "^ch-\\d{4}-\\d{3}$" },
-        "year": { "type": "integer" },
-        "row": { "type": "integer", "description": "Номер строки в таблице заказчика. АВТОРИТЕТЕН для порядка вывода: таблицы упорядочены редакционно, и неточные даты («Конец марта») стоят в конце месячного блока намеренно." },
-        "sort": { "type": "string", "description": "Ключ вида 1917-10-24#0007. Для фильтров и склейки лет, НЕ для порядка внутри года — см. row." },
-        "kind": { "enum": ["event", "month-marker"], "description": "month-marker — 19 строк, где в колонке даты стоит голый месяц («Ноябрь»). Из них sticky-заголовки и якоря скролла. Такая строка ВСЁ РАВНО несёт событие: пустых среди них нет." },
-        "month_label_ru": { "type": ["string", "null"], "description": "Подпись sticky-заголовка для month-marker." },
-        "date": { "$ref": "mtk29/common#/definitions/dates" },
+        "id": {
+          "type": "string",
+          "pattern": "^ch-\\d{4}-\\d{3}$"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "row": {
+          "type": "integer",
+          "description": "Номер строки в таблице заказчика. АВТОРИТЕТЕН для порядка вывода: таблицы упорядочены редакционно, и неточные даты («Конец марта») стоят в конце месячного блока намеренно."
+        },
+        "sort": {
+          "type": "string",
+          "description": "Ключ вида 1917-10-24#0007. Для фильтров и склейки лет, НЕ для порядка внутри года — см. row."
+        },
+        "kind": {
+          "enum": [
+            "event",
+            "month-marker"
+          ],
+          "description": "month-marker — 19 строк, где в колонке даты стоит голый месяц («Ноябрь»). Из них sticky-заголовки и якоря скролла. Такая строка ВСЁ РАВНО несёт событие: пустых среди них нет."
+        },
+        "month_label_ru": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Подпись sticky-заголовка для month-marker."
+        },
+        "date": {
+          "$ref": "mtk29/common#/definitions/dates"
+        },
         "track": {
-          "enum": ["pol", "mil", "both"],
+          "enum": [
+            "pol",
+            "mil",
+            "both"
+          ],
           "description": "Трёхзначное, не булево: 243 политических, 184 военных, 31 строка заполнена в обеих колонках."
         },
-        "pol_ru": { "type": ["string", "null"], "description": "Markdown колонки «Политические события»." },
-        "mil_ru": { "type": ["string", "null"], "description": "Markdown колонки «Военные события»." },
-        "pol_en": { "type": ["string", "null"] },
-        "mil_en": { "type": ["string", "null"] },
-        "card": { "type": ["string", "null"], "description": "id карточки события. Извлекается из команды «Переход к справке 24 Открытие и разгон Учредительного собрания»." },
-        "card_hint": { "type": ["string", "null"], "description": "Исходный текст команды перехода, если id не разрезолвился." },
-        "refs": { "$ref": "mtk29/common#/definitions/related" },
-        "weight": { "type": "integer", "minimum": 1, "maximum": 3, "description": "Значимость для крупной вёрстки: 3 — есть карточка события, 2 — обе колонки, 1 — обычная строка." },
-        "flags": { "type": "array", "items": { "type": "string" } }
+        "pol_ru": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Markdown колонки «Политические события»."
+        },
+        "mil_ru": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Markdown колонки «Военные события»."
+        },
+        "pol_en": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mil_en": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "card": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "id карточки события. Извлекается из команды «Переход к справке 24 Открытие и разгон Учредительного собрания»."
+        },
+        "card_hint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Исходный текст команды перехода, если id не разрезолвился."
+        },
+        "refs": {
+          "$ref": "mtk29/common#/definitions/related"
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3,
+          "description": "Значимость для крупной вёрстки: 3 — есть карточка события, 2 — обе колонки, 1 — обычная строка."
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "card_pol": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Переход из ПОЛИТИЧЕСКОЙ колонки строки. Переходов у строки может быть два — по одному на колонку: строка 103 года 1918 несёт «Красный террор» слева и «Наступление Восточного фронта» справа. `card` остаётся первым непустым для потребителей, которым хватает одного."
+        },
+        "card_mil": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Переход из ВОЕННОЙ колонки строки. Переходов у строки может быть два — по одному на колонку: строка 103 года 1918 несёт «Красный террор» слева и «Наступление Восточного фронта» справа. `card` остаётся первым непустым для потребителей, которым хватает одного."
+        }
       }
     }
   }

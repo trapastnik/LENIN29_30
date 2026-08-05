@@ -114,8 +114,7 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "date-approx",
-    "over-tz-limit"
+    "date-approx"
   ],
   "camp_source": "regalia"
 }

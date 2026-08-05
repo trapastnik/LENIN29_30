@@ -5,7 +5,6 @@
   "camp": null,
   "title_ru": "Военные действия на Северо-Западе России",
   "title_en": null,
-  "sort_key_ru": "военные действия на северо-западе россии",
   "dates": {
     "raw": "Май–декабрь 1919 г.",
     "display_ru": "Май–декабрь 1919 г.",
@@ -78,6 +77,7 @@
         "Северо-запад _02 1.jpg",
         "Северо-запад_02 2.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/events/voennye-deystviya-na-severo-zapade/03",
         "media/events/voennye-deystviya-na-severo-zapade/03p2"
@@ -161,7 +161,6 @@
     "parser": "1.0.0"
   },
   "flags": [
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }

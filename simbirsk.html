@@ -30,6 +30,16 @@
   <script src="content/longreads/simbirsk.data.js"></script>
   <script src="longread/longread-runtime.js"></script>
 
+  <!--
+    <map-unit> — компонент зоны maps, и он ES-модуль. Раньше это было
+    невозможно: под file:// внешние module-скрипты блокируются CORS. С 2026-08-03
+    киоск запускается с локального статик-сервера (§1), и модуль легален.
+
+    Страница при этом остаётся работоспособной и без него: карта живёт в двух
+    слотах из пятнадцати, остальное — классические скрипты и данные на window.
+  -->
+  <script type="module" src="./src/components/map-unit.js"></script>
+
   <style>
     /* Кнопка «Разделы» в шапке. Геометрия — как у .back-link из pages.css,
        но это <button>, а не ссылка: оглавление открывается на месте.

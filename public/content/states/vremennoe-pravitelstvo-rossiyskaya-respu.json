@@ -5,7 +5,6 @@
   "camp": "rev-dem",
   "title_ru": "Временное правительство (Российская республика)",
   "title_en": null,
-  "sort_key_ru": "временное правительство российская республика",
   "abbr_ru": [],
   "aka_ru": [
     "Временное правительство России",
@@ -40,7 +39,7 @@
       "h": null
     }
   ],
-  "territory_id": null,
+  "territory_id": "vremennoe-pravitelstvo-rossiyskaya-respu",
   "media": [
     {
       "n": 1,

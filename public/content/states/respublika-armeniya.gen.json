@@ -5,7 +5,6 @@
   "camp": "national",
   "title_ru": "Республика Армения",
   "title_en": null,
-  "sort_key_ru": "республика армения",
   "abbr_ru": [],
   "aka_ru": [
     "Демократическая Республика Армения"
@@ -62,6 +61,7 @@
         "46 Армянская 01 1.tif",
         "46 Армянская 01 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"

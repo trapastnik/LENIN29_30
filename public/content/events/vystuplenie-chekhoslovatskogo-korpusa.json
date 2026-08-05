@@ -5,7 +5,6 @@
   "camp": null,
   "title_ru": "Выступление Чехословацкого корпуса",
   "title_en": null,
-  "sort_key_ru": "выступление чехословацкого корпуса",
   "dates": {
     "raw": "Вторая половина мая 1918 г.",
     "display_ru": "Вторая половина мая 1918 г.",
@@ -134,7 +133,6 @@
   },
   "flags": [
     "dates-unknown",
-    "media-missing",
-    "over-tz-limit"
+    "media-missing"
   ]
 }

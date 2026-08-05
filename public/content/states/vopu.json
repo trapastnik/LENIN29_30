@@ -5,7 +5,6 @@
   "camp": "rev-dem",
   "title_ru": "Временное областное правительство Урала",
   "title_en": null,
-  "sort_key_ru": "временное областное правительство урала",
   "abbr_ru": [
     "ВОПУ"
   ],
@@ -75,6 +74,7 @@
         "35 ВОПУ 2 1.jpg",
         "35 ВОПУ 2 2.jpg"
       ],
+      "sides": "unverified",
       "files": [
         "media/states/vopu/02",
         "media/states/vopu/02p2"

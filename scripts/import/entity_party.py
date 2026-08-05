@@ -60,7 +60,6 @@ def build(doc, ctx) -> dict:
         "camp": ctx.camp,
         "title_ru": title_ru,
         "title_en": None,
-        "sort_key_ru": spravka.sort_key(title_ru),
         "title_full_ru": "\n".join(fields.get("title_full", [])) or None,
         "abbr_ru": fields.get("abbr", []),
         "aka_ru": fields.get("title_short", []) + fields.get("aka", []),
@@ -86,7 +85,7 @@ def build(doc, ctx) -> dict:
 
     if en_status == "copy_of_ru":
         flags.append("en-copy")
-    if summary_ru and len(summary_ru) > 3000:
+    if summary_ru and spravka.visible_len(summary_ru) > 3000:
         flags.append("over-tz-limit")
     if data["dates"].get("precision") == "unknown" and dates_lines:
         flags.append("dates-unknown")

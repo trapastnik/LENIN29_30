@@ -30,6 +30,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "oktyabrskiy-perevorot-v-petrograde",
+      "card_pol": "oktyabrskiy-perevorot-v-petrograde",
+      "card_mil": null,
       "refs": {
         "states": [
           "vremennoe-pravitelstvo-rossiyskaya-respu"
@@ -60,6 +62,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vtoroy-sezd-sovetov",
+      "card_pol": "vtoroy-sezd-sovetov",
+      "card_mil": null,
       "refs": {},
       "weight": 3
     },
@@ -83,6 +87,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "committee-salvation"
@@ -110,6 +116,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "oktyabrskoe-vosstanie-v-moskve",
+      "card_pol": "oktyabrskoe-vosstanie-v-moskve",
+      "card_mil": null,
       "refs": {},
       "weight": 3
     },
@@ -133,6 +141,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -156,6 +166,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "dutov"
@@ -189,6 +201,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "pokhod-kerenskogo-krasnova",
+      "card_pol": null,
+      "card_mil": "pokhod-kerenskogo-krasnova",
       "refs": {
         "persons": [
           "kerenskiy",
@@ -223,6 +237,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -250,6 +266,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "committee-salvation"
@@ -277,6 +295,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Ноябрь"
@@ -301,6 +321,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "alekseev"
@@ -332,6 +354,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kaledin"
@@ -362,6 +386,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unr"
@@ -389,6 +415,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "vybory-v-us",
+      "card_pol": "vybory-v-us",
+      "card_mil": null,
       "refs": {},
       "weight": 3
     },
@@ -412,6 +440,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -435,6 +465,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "bolsheviks"
@@ -462,6 +494,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -485,6 +519,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "left-srs"
@@ -512,6 +548,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": "brest-litovskie-peregovory",
+      "card_pol": "brest-litovskie-peregovory",
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -542,6 +580,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "union-constituent"
@@ -574,6 +614,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -597,6 +639,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -620,6 +664,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "cadets"
@@ -647,6 +693,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1,
       "month_label_ru": "Декабрь"
@@ -671,6 +719,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "left-srs"
@@ -698,6 +748,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "rsfsr"
@@ -729,6 +781,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -752,6 +806,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unr"
@@ -779,6 +835,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "alash"
@@ -806,6 +864,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "dzerzhinskiy"
@@ -833,6 +893,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "states": [
           "unrs"
@@ -860,6 +922,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -888,6 +952,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {},
       "weight": 1
     },
@@ -911,6 +977,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "persons": [
           "kaledin",
@@ -943,6 +1011,8 @@
       "pol_en": null,
       "mil_en": null,
       "card": null,
+      "card_pol": null,
+      "card_mil": null,
       "refs": {
         "parties": [
           "alekseev-org"

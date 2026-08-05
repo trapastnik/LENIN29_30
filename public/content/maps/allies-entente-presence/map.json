@@ -1,0 +1,26 @@
+{
+  "id": "allies-entente-presence",
+  "kind": "map",
+  "title_ru": "Союзники · Антанта",
+  "title_en": "",
+  "viewBox": "0 0 1200.7 367.9",
+  "svg": "layers.svg",
+  "layers": [
+    {
+      "id": "sites",
+      "label_ru": "sites",
+      "kind": "vector",
+      "default": true,
+      "color": "map-intervention"
+    },
+    {
+      "id": "labels_sites",
+      "label_ru": "labels_sites",
+      "kind": "vector",
+      "default": true,
+      "color": "map-intervention"
+    }
+  ],
+  "source_ru": "Геометрия из реестра, geometry_kind presence.",
+  "notes_ru": "Своя система координат, не координаты base: сложить с базовой картой нельзя, поэтому отдельная карта."
+}

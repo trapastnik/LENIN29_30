@@ -5,7 +5,6 @@
   "camp": "national",
   "title_ru": "Украинская держава",
   "title_en": null,
-  "sort_key_ru": "украинская держава",
   "abbr_ru": [],
   "aka_ru": [],
   "aka_raw_ru": null,
@@ -95,6 +94,7 @@
         "41 Укр держава 03 1.TIF",
         "41 Укр держава 03 2.TIF"
       ],
+      "sides": "unverified",
       "files": [
         "media/states/ukrainskaya-derzhava/03",
         "media/states/ukrainskaya-derzhava/03p2"

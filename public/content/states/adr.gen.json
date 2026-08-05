@@ -5,7 +5,6 @@
   "camp": "national",
   "title_ru": "Азербайджанская Демократическая Республика",
   "title_en": null,
-  "sort_key_ru": "азербайджанская демократическая республика",
   "abbr_ru": [
     "АДР"
   ],
@@ -97,6 +96,7 @@
         "47 АДР 03 1.tif",
         "47 АДР 03 2.tif"
       ],
+      "sides": "unverified",
       "directives": [
         "trim",
         "spread"
@@ -127,7 +127,5 @@
     "sha256": "bb5be30612af04ae462b590a70c131d1783bcb18283d96da78db3c241fa86074",
     "parser": "1.0.0"
   },
-  "flags": [
-    "over-tz-limit"
-  ]
+  "flags": []
 }

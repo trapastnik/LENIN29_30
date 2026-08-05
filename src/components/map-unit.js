@@ -16,7 +16,7 @@ const TEMPLATE = `
     position: relative;
     width: 100%;
     height: 100%;
-    background: repeating-conic-gradient(#333 0% 25%, #2a2a2a 0% 50%) 0 0 / 20px 20px;
+    background: repeating-conic-gradient(#333 0% 25%, #2a2a2a 0% 50%) 0 0 / calc(20px * var(--ui-scale, 1)) calc(20px * var(--ui-scale, 1));
     color: var(--ink);
     font-family: var(--font-body);
   }
@@ -29,55 +29,86 @@ const TEMPLATE = `
   #viewport.dragging { cursor: grabbing; }
   #container { transform-origin: 0 0; position: absolute; left: 0; top: 0; }
   #panel {
-    position: absolute; bottom: 16px; left: 50%;
+    position: absolute; bottom: var(--sp-2, 16px); left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
-    padding: 12px 18px;
+    display: flex; gap: calc(14px * var(--ui-scale, 1)); flex-wrap: wrap; align-items: center;
+    padding: calc(12px * var(--ui-scale, 1)) calc(18px * var(--ui-scale, 1));
     background: rgba(30, 20, 10, 0.88);
     color: var(--paper-light);
     border: 1px solid var(--brass);
-    border-radius: 10px;
-    font-size: 14px;
+    border-radius: var(--r-md, 8px);
+    /* Кегль 14: у шкалы --fs-* нет ступени ниже 16, а панель плотная —
+       двадцать строк при ширине 280. Заявка в design на ступень ниже 16
+       передана; до неё значение через --ui-scale, как остальные метрики. */
+    font-size: calc(14px * var(--ui-scale, 1));
     user-select: none;
     max-width: 90%;
   }
   #panel.hidden { display: none; }
   /* Боковая панель справа — опт-ин через атрибут panel-side="right" на хосте. */
   :host([panel-side="right"]) #panel {
-    top: 16px; right: 16px; bottom: 16px; left: auto;
+    top: var(--sp-2, 16px); right: var(--sp-2, 16px); bottom: var(--sp-2, 16px); left: auto;
     transform: none;
     flex-direction: column;
     align-items: stretch;
     flex-wrap: nowrap;
-    gap: 6px;
-    padding: 12px 14px;
-    max-width: 280px;
-    max-height: calc(100% - 32px);
+    gap: calc(6px * var(--ui-scale, 1));
+    padding: calc(12px * var(--ui-scale, 1)) calc(14px * var(--ui-scale, 1));
+    max-width: calc(280px * var(--ui-scale, 1));
+    max-height: calc(100% - var(--sp-4, 32px));
     overflow-y: auto;
-    font-size: 13px;
+    font-size: calc(13px * var(--ui-scale, 1));
   }
-  :host([panel-side="right"]) #panel .layer-row { min-height: 26px; }
+  /* Тач-цель управляющего элемента. 64 — порог из §1 для элементов
+     ВНУТРИ разделов (основная навигация ≥120). Пишется через --ui-scale,
+     как во всём проекте: states.html:33 задаёт ровно так же.
+     Замерено на киоске при ×2: было 26 CSS = 52 физических px, пальцем
+     не берётся. Двадцать строк по 64 требуют 1280 при видимых 887,
+     то есть панель прокручивается — прокрутка здесь была и раньше
+     (overflow-y: auto). Обмен согласован: ненажимаемая цель бесполезна,
+     а прокрутка — известное действие. */
+  :host([panel-side="right"]) #panel .layer-row {
+    min-height: calc(64px * var(--ui-scale, 1));
+  }
   :host([panel-side="right"]) #panel > div {
     /* «btns»-контейнер из _buildPanel: возвращаем его в нормальный поток
        (там стоит margin-left:auto для центральной раскладки). */
     margin-left: 0 !important;
-    margin-top: 10px;
+    margin-top: calc(10px * var(--ui-scale, 1));
     border-top: 1px solid rgba(255,255,255,0.15);
-    padding-top: 10px;
+    padding-top: calc(10px * var(--ui-scale, 1));
     justify-content: flex-start;
     flex-wrap: wrap;
+    /* ЛИПКИЙ ПОДВАЛ. Побочный эффект собственного же подъёма тач-целей:
+       двадцать строк по 64 требуют 1280 при видимых 853, и кнопки
+       «Все вкл / Все выкл / Сброс» уехали на 579 px ниже границы панели.
+       Замерено попаданием: до прокрутки все три давали «нет», после —
+       «своё». То есть цель стала нажимаемой и невидимой одновременно,
+       а невидимая хуже мелкой: мелкую видно и в неё целятся.
+       До подъёма строк они помещались (20×26 + кнопки ≈ 600 из 853),
+       поэтому дефект внесла именно моя правка.
+       background: inherit, а не своё значение — фон панели уже задан,
+       и новой константы тут не появляется. */
+    position: sticky;
+    bottom: 0;
+    background: inherit;
+    z-index: 1;
   }
   .layer-row {
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: calc(6px * var(--ui-scale, 1));
     cursor: pointer; white-space: nowrap;
-    min-height: 32px;
+    min-height: calc(64px * var(--ui-scale, 1));
   }
   .layer-row input[type="checkbox"] {
     appearance: none; -webkit-appearance: none;
-    width: 18px; height: 18px;
+    /* Сам квадратик — не тач-цель: строка это <label>, и попадание идёт
+       по всей её высоте. Размер поднят с 18 до 24 только для видимости
+       на 4K, порог держит строка. */
+    width: calc(24px * var(--ui-scale, 1));
+    height: calc(24px * var(--ui-scale, 1));
     border: 1.5px solid var(--paper-warm);
-    border-radius: 4px;
+    border-radius: var(--r-sm, 4px);
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
@@ -92,10 +123,10 @@ const TEMPLATE = `
     font-weight: bold;
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 12px;
+    font-size: calc(12px * var(--ui-scale, 1));
   }
   .swatch {
-    width: 14px; height: 14px; border-radius: 3px;
+    width: calc(14px * var(--ui-scale, 1)); height: calc(14px * var(--ui-scale, 1)); border-radius: var(--r-sm, 4px);
     border: 1px solid rgba(255,255,255,0.2);
     flex-shrink: 0;
   }
@@ -103,7 +134,7 @@ const TEMPLATE = `
      Косая штриховка читается как «это подложка», а не как цвет. */
   .swatch-raster {
     background: repeating-linear-gradient(
-      45deg, transparent 0 3px, var(--paper-warm) 3px 6px);
+      45deg, transparent 0 calc(3px * var(--ui-scale, 1)), var(--paper-warm) calc(3px * var(--ui-scale, 1)) calc(6px * var(--ui-scale, 1)));
   }
   /* Цвет не задан. Пустая плашка честнее серой: серая читается как
      «слой серого цвета», пустая — как «цвет неизвестен». */
@@ -112,14 +143,16 @@ const TEMPLATE = `
     border-style: dashed;
   }
   button.ctrl {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: calc(6px * var(--ui-scale, 1)) calc(12px * var(--ui-scale, 1));
+    font-size: calc(12px * var(--ui-scale, 1));
     background: rgba(250, 240, 210, 0.12);
     color: var(--paper-light);
     border: 1px solid var(--paper-warm);
-    border-radius: 5px;
+    border-radius: var(--r-sm, 4px);
     cursor: pointer;
-    min-width: auto; min-height: auto;
+    /* Было min-height: auto, то есть 28 CSS = 56 физических при ×2. */
+    min-height: calc(64px * var(--ui-scale, 1));
+    min-width: calc(64px * var(--ui-scale, 1));
   }
   button.ctrl:active { background: rgba(250, 240, 210, 0.28); }
   /* Прозрачность всего векторного слоя поверх растра. Управляется
@@ -264,9 +297,19 @@ export class MapUnit extends HTMLElement {
     }
 
     // Установим visibility по initial-layers или по default
+    // initial-layers ЗАМЕНЯЕТ набор умолчаний — но растр это ХОЛСТ,
+    // а не слой содержания. Первая сборка карты территорий показала цену
+    // прежнего поведения: карточка передаёт initial-layers="rsfsr", и вместе
+    // с прочими слоями гаснет подложка, поверх которой контур и рисуется.
+    // На экране остаётся силуэт на шахматке «карта не загружена».
+    // Замер этого не ловил: слой честно «visible», bbox на месте.
+    // Поэтому растровые слои сохраняют свой default всегда.
     const initialAttr = this.getAttribute('initial-layers');
+    const rasterDefaults = meta.layers
+      .filter(l => l.kind === 'raster' && l.default).map(l => l.id);
     const initial = initialAttr
-      ? new Set(initialAttr.split(',').map(s => s.trim()).filter(Boolean))
+      ? new Set([...initialAttr.split(',').map(s => s.trim()).filter(Boolean),
+                 ...rasterDefaults])
       : new Set(meta.layers.filter(l => l.default).map(l => l.id));
 
     for (const l of meta.layers) {
@@ -362,7 +405,7 @@ export class MapUnit extends HTMLElement {
 
     const btns = document.createElement('div');
     btns.style.display = 'flex';
-    btns.style.gap = '6px';
+    btns.style.gap = 'calc(6px * var(--ui-scale, 1))';
     btns.style.marginLeft = 'auto';
     for (const [label, fn] of [
       ['Все вкл',  () => this._toggleAll(true)],
