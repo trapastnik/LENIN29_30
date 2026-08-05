@@ -212,6 +212,20 @@ TAIL_RE = re.compile(r"\s*\(([^()]*)\)\s*[.,;]?\s*$")
 # завершённого предложения, — либо прямо себя называет одной из формулировок
 # ниже. Список согласован с EDITORIAL_NOTE зоны content и дополнен оборотами
 # этого источника.
+# ── операционные карты в слотах иллюстраций ────────────────────────────────
+#
+# Две карты-схемы заказчик не поставил файлами: в источнике они помечены
+# «см. литература» — то есть их надо рисовать. Зона maps их нарисовала
+# и собрала в public/content/maps/. Связь ставится здесь, потому что
+# в docx её нет и быть не может.
+#
+# Ключ — (номер раздела, номер медиа), а не подпись: подпись заказчик
+# перепишет, номер нет. Тот же довод, что у ключа слияния n в §9.
+MAP_SLOTS = {
+    (4, 1): "simbirsk-july-1918",
+    (8, 1): "simbirsk-september-1918",
+}
+
 EDITORIAL_RE = re.compile(
     r"отметить[^.]{0,60}цифр|см\.\s*литератур|последний лист|нужно подобрать|"
     r"уместно использовать|подрезать (?:поля|бел)|обрезать поля|дизайнерам\s*:",
@@ -417,6 +431,47 @@ def attach_placeholders(sections: list[dict]) -> int:
             m["gk_no"] = p.get("gk_no")
             m["kp_no"] = p.get("kp_no")
             n += 1
+    return n
+
+
+def attach_maps(sections: list[dict]) -> int:
+    """Проставить операционные карты в слоты иллюстраций.
+
+    Каждый id проверяется по диску: карта, на которую ссылаются и которой нет,
+    даёт пустой слот БЕЗ ошибки в консоли — ровно тот тихий отказ, на котором
+    зона ui однажды потеряла карту Комуча (docs/map-unit-api.md). Промах здесь
+    роняет импорт.
+
+    Обратная проверка — что на каждую собранную схему кто-то ссылается —
+    в конце: односторонняя проверка и позволила обеим зонам считать себя
+    правыми по своей половине контракта.
+    """
+    maps_dir = ROOT / "public" / "content" / "maps"
+    used = set()
+    n = 0
+    for sec in sections:
+        for m in sec["media"]:
+            map_id = MAP_SLOTS.get((sec["n"], m["n"]))
+            if not map_id:
+                continue
+            if not (maps_dir / map_id / "map.json").exists():
+                raise SystemExit(
+                    f"MAP_SLOTS: карты «{map_id}» нет в public/content/maps/. "
+                    "Слот вышел бы пустым без ошибки в консоли — так уже "
+                    "терялась карта Комуча. Спроси зону maps."
+                )
+            m["map_id"] = map_id
+            used.add(map_id)
+            n += 1
+
+    # Схема собрана, но ни один слот на неё не ссылается — она не покажется
+    # нигде и об этом никто не узнает. Предупреждаем: схемы Симбирска могут
+    # прибавляться, а слотов под них в источнике всего два.
+    if maps_dir.exists():
+        for d in sorted(maps_dir.iterdir()):
+            if d.is_dir() and d.name.startswith("simbirsk-") and d.name not in used:
+                print(f"  ⚠ схема {d.name} собрана, но ни один слот на неё "
+                      "не ссылается — на экран она не попадёт", file=sys.stderr)
     return n
 
 
@@ -628,6 +683,7 @@ def build(doc: Document) -> dict:
     labels = attach_refs(sections, indexes)
 
     check_no_editorial(sections)
+    attach_maps(sections)
     attach_placeholders(sections)
 
     n_media = sum(len(s["media"]) for s in sections)
