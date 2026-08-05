@@ -149,5 +149,6 @@
     "sha256": "f46988092971016c97a6cf6fffdcffcf6d682b584c34b8f6f239915326f18a30",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "map_id": "komuch"
 }

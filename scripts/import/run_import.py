@@ -892,7 +892,7 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
         # не напоминает: три из них я завела и не протащила в тот же день,
         # когда закрывала ровно этот класс. Ловится гейтом сверки
         # (scripts/validate-content.mjs), а не памятью автора.
-        for f in ("territory_id", "map_status", "open_question_ru"):
+        for f in ("territory_id", "map_id", "map_status", "open_question_ru"):
             if ent.get(f) is not None:
                 rec[f] = ent[f]
             else:
