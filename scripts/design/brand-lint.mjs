@@ -36,7 +36,13 @@ const MODE = {
   json:   argv.includes('--json'),
   list:   argv.includes('--list'),
   update: argv.includes('--update-baseline'),
+  report: argv.includes('--report'),
 };
+
+// Отчёт для каталога кладётся JS-файлом, а не json на fetch: brand.html
+// уже грузит brand-tokens.js тем же способом, файл работает офлайн
+// и не зависит от путей. Каталог в public/decor/** — зона design (§4).
+const REPORT_FILE = resolve(ROOT, 'public/decor/brand-lint-report.js');
 
 // ── что сканируем ──────────────────────────────────────────────────────────
 // Не сканируем: чужие зоны на заморозке, приёмники импорта, генерируемое.
@@ -511,6 +517,39 @@ for (const rule of new Set([...Object.keys(counts), ...Object.keys(debt)])) {
     if (n > w) regressions.push({ rule, file, now: n, was: w });
     else if (n < w) improvements.push({ rule, file, now: n, was: w });
   }
+}
+
+if (MODE.report) {
+  // Отчёт СТАРЕЕТ — он снят на конкретном коммите, а долг меняется.
+  // Поэтому вместе с числами едет коммит: увидев чужой хеш, читатель
+  // понимает, что смотрит вчерашнее, а не сегодняшнее. Артефакт,
+  // умалчивающий о своей давности, — та же затычка, выглядящая готовой.
+  let commit = 'не определён';
+  try {
+    commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'],
+      { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {}
+
+  const body = {
+    commit,
+    total: kept.length,
+    rules: Object.fromEntries(Object.entries(RULES).map(([id, m]) => [id, {
+      title: m.title,
+      level: m.level,
+      count: Object.values(counts[id] ?? {}).reduce((a, b) => a + b, 0),
+      files: counts[id] ?? {},
+    }])),
+    allow: baseline.allow.length,
+  };
+
+  writeFileSync(REPORT_FILE,
+    '// ФАЙЛ СГЕНЕРИРОВАН: node scripts/design/brand-lint.mjs --report\n' +
+    '// Читает brand.html, раздел «Состояние дизайн-кода».\n' +
+    '// Снят на коммите ' + commit + ' — если в каталоге чужой хеш,\n' +
+    '// значит отчёт не пересобирали, и числа старые.\n' +
+    'window.MTK_LINT = ' + JSON.stringify(body, null, 2) + ';\n', 'utf8');
+
+  console.log(`  отчёт записан: ${rel(REPORT_FILE)}  (${kept.length} в долге, коммит ${commit})`);
 }
 
 if (MODE.json) {

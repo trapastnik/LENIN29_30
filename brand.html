@@ -15,6 +15,9 @@
        правилам, источником правды быть не может. -->
   <script src="/expo/brand-tokens.js?v=20260802"></script>
   <script src="/expo/pin-gate.js?v=20260427"></script>
+  <!-- Отчёт линтера. Генерируется `brand-lint --report`, читается разделом 25.
+       Файлом, а не fetch: каталог обязан работать офлайн, как и киоск. -->
+  <script src="/decor/brand-lint-report.js?v=20260804"></script>
   <!-- escapeHref идёт через MTK_URL: это строка внутри JS, её vite не переписывает,
        и ведущий слэш уехал бы в сборку. Под file:// он резолвится в корень ФС. -->
   <script>if (window.MTK_PIN) window.MTK_PIN.guardPage({ escapeHref: MTK_URL('expo/people.html') });</script>
@@ -805,6 +808,27 @@
       font-family: var(--font-mono); font-size: 11px; color: var(--brass);
       font-style: normal;
     }
+
+    /* — Раздел «Состояние» (25). Отчёт линтера — */
+    .lint-table {
+      background: var(--page-bg-deep);
+      border-radius: var(--r-md, 8px);
+      padding: var(--sp-3, 24px);
+    }
+    .lint-row {
+      display: grid;
+      grid-template-columns: 5ch 1fr 6ch 2fr;
+      gap: var(--sp-2, 16px);
+      align-items: baseline;
+      padding: var(--sp-1, 8px) 0;
+      border-top: var(--bd-hair, 1px) solid var(--rule);
+      font-size: var(--fs-4, 16px);
+    }
+    .lint-row b { font-family: var(--font-mono); color: var(--brass); font-weight: 400; }
+    .lint-row .lint-count { font-family: var(--font-mono); text-align: right; }
+    .lint-row .lint-files { font-family: var(--font-mono); font-size: 0.8em; opacity: 0.6; }
+    .lint-clean { opacity: 0.45; }
+    .lint-clean .lint-count { color: var(--camp-green-ink); }
 
     /* Метка читаемости на свотче. Заливкой, а не цветным текстом —
        по тому же правилу, которое она сама и объясняет. */
@@ -2715,6 +2739,15 @@
       </p>
     </section>
 
+    <!-- ── 25. Состояние дизайн-кода ───────────────────────────────
+         Отчёт линтера прямо в каталоге. Каталог, который показывает
+         правила и молчит о том, соблюдаются ли они, — половина работы. -->
+    <section class="cat-section" id="c-lint">
+      <p class="lede">25 · Состояние</p>
+      <h2>Что говорит линтер</h2>
+      <div id="lint-report"></div>
+    </section>
+
     <p class="source">Источник: docs/brand.md · docs/brand/Lenin-guideline-2026.pdf · src/styles/tokens.css · TESTS/fabric canvas/html-in-canvas-brief.md</p>
   </main>
 
@@ -3016,6 +3049,54 @@
       if (L.onLarge !== 'none') return `<i class="leg leg-mid">только крупным ${RU[L.onLarge]}</i>`;
       return `<i class="leg leg-no">только заливка</i>`;
     }
+
+    // 25 · Состояние дизайн-кода ────────────────────────────────────────────
+    //
+    // Каталог показывает правила — он обязан показывать и то, соблюдаются ли
+    // они. Иначе «Запрещено» читается как пожелание.
+    //
+    // Отчёт СТАРЕЕТ: он снят на конкретном коммите, а долг меняется каждый
+    // день. Поэтому коммит печатается рядом с числами — артефакт, умалчивающий
+    // о своей давности, это затычка, выглядящая готовой (§2).
+    (function renderLint() {
+      const host = document.getElementById('lint-report');
+      if (!host) return;
+      const R = window.MTK_LINT;
+      if (!R) {
+        host.innerHTML = `<p class="lede-note">Отчёт не сгенерирован.
+          Прогоните <code>node scripts/design/brand-lint.mjs --report</code>
+          — иначе этот раздел молчит, и молчание легко принять за «нарушений нет».</p>`;
+        return;
+      }
+      const rows = Object.entries(R.rules).map(([id, r]) => {
+        const files = Object.entries(r.files).sort((a, b) => b[1] - a[1]);
+        return `
+          <div class="lint-row${r.count ? '' : ' lint-clean'}">
+            <b>${id}</b>
+            <span class="lint-title">${r.title}</span>
+            <span class="lint-count">${r.count || '—'}</span>
+            <span class="lint-files">${files.length
+              ? files.map(([f, n]) => `${f.split('/').pop()}&nbsp;${n}`).join(' · ')
+              : 'чисто'}</span>
+          </div>`;
+      }).join('');
+      host.innerHTML = `
+        <p class="lede-note">
+          Долг в цифрах — это <b>принятые</b> нарушения, зафиксированные
+          пофайловыми счётчиками. Прогон падает не на их наличии, а на
+          <b>приросте</b>: стало больше — красное. Так долг может только
+          уменьшаться, а «сделать зелено» разом нельзя.
+        </p>
+        <div class="lint-table">${rows}</div>
+        <p class="token-strip">
+          Всего в долге <b>${R.total}</b>, постоянных исключений
+          <b>${R.allow}</b>. Снято на коммите <code>${R.commit}</code> —
+          если сейчас в репозитории другой, числа старые: отчёт
+          пересобирается вручную, <code>brand-lint --report</code>.
+          Правила проверяются на себе: <code>lint-selftest.mjs</code>
+          подкладывает каждому нарушение в код и в комментарий.
+        </p>`;
+    })();
 
     // 01 · Палитра — плитки со значением и пояснением из tokens.json
     document.querySelectorAll('[data-palette-group]').forEach((host) => {
