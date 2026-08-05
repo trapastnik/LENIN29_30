@@ -1,0 +1,44 @@
+/* СНИМОК ВЕРХНЕГО colors_and_type.css НА 2026-08-05, ДО ПРАВОК.
+   Лежит рядом, чтобы сверка «что было / что стало» не требовала сети.
+   Не редактировать: это слепок чужого состояния, а не наш исходник. */
+
+:root {
+  /* ── Brand palette (RAL → digital HEX) ─────────────── */
+  --ink-black:    #000000;   /* RAL 9005 — text on light */
+  --paper-white:  #F7F9EF;   /* RAL 9010 — warm white, cards */
+  --paper-pure:   #FFFFFF;   /* pure white — multimedia */
+  --brass:        #D2B773;   /* RAL 1002 — primary accent */
+  --signal-red:   #A02128;   /* RAL 3001 — secondary accent */
+  --slate-blue:   #5D6970;   /* RAL 7031 — 2nd floor bg */
+  --slate-window: #9DA3A6;   /* RAL 7040 — secondary bg */
+  --iron-grey:    #555D61;   /* RAL 7011 — 3rd floor / MTK 29 bg */
+  --graphite:     #435059;   /* dark multimedia panel */
+  --telegrey-4:   #CFD0CF;   /* RAL 7047 — projection */
+
+  /* Camp colors (used inside MTK 29) */
+  --camp-red:          var(--signal-red);
+  --camp-red-deep:     #6A0F14;
+  --camp-white:        var(--telegrey-4);
+  --camp-rev-dem:      #8C4A99;
+  --camp-green:        #5A8E55;
+  --camp-national:     var(--brass);
+  --camp-intervention: #2F4A6B;
+
+  /* ── Semantic tokens ───────────────────────────────── */
+  --page-bg:       var(--iron-grey);
+  --page-bg-deep:  var(--graphite);
+  --paper:         var(--paper-white);
+  --accent:        var(--brass);
+  --accent-alt:    var(--signal-red);
+  --ink:           var(--ink-black);
+  --ink-on-dark:   var(--paper-white);
+  --ink-soft:      #2A2F33;
+  --ink-faint:     #6C737A;
+  --rule:          rgba(255,255,255,0.12);
+  --rule-brass:    rgba(210,183,115,0.40);
+
+  /* ── Touch / type scale ────────────────────────────── */
+  --touch-hit:    120px;
+  --touch-min:    48px;       /* secondary controls */
+  --fs-body:      32px;       /* kiosk body */
+}

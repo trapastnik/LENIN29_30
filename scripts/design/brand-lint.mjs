@@ -214,12 +214,25 @@ const METRIC_TOKENS = new Set(
 let baseline = { allow: [], debt: {} };
 try { baseline = { allow: [], debt: {}, ...JSON.parse(readFileSync(BASELINE_FILE, 'utf8')) }; } catch {}
 
-/** Постоянное исключение: {rule, file, match?, why}. `file` — префикс пути. */
+/** Постоянное исключение: {rule, file, match?, context?, why}.
+ *  `file` — префикс пути.
+ *
+ *  `context` добавлен 2026-08-05 и он обязателен там, где `match` не
+ *  различает случаи. У R3 текст нарушения всегда «font-style: italic»:
+ *  запись без `context` разрешила бы В ФАЙЛЕ ВЕСЬ курсив, включая
+ *  будущий настоящий курсив Nolde. Это не исключение, а выданное
+ *  разрешение — тот же класс, что завышенная база.
+ *
+ *  Сопоставляется с отрезком исходника вокруг нарушения, поэтому
+ *  адресует конструкцию, а не строку: номера строк плывут от любой
+ *  правки, селектор — нет. */
 function isAllowed(v) {
   return baseline.allow.some(a =>
     (!a.rule || a.rule === v.rule) &&
     (!a.file || v.file === a.file || v.file.startsWith(a.file.replace(/\*$/, ''))) &&
-    (!a.match || (v.match ?? '').toLowerCase().includes(a.match.toLowerCase())));
+    (!a.match || (v.match ?? '').toLowerCase().includes(a.match.toLowerCase())) &&
+    (!a.context || `${v.selector ?? ''} ${v.snippet ?? ''}`.toLowerCase()
+                     .includes(a.context.toLowerCase())));
 }
 
 // ── правила ────────────────────────────────────────────────────────────────
@@ -249,9 +262,28 @@ const RULES = {
 };
 
 const violations = [];
+/** Селектор правила, внутри которого сидит нарушение.
+ *
+ *  Нужен для точных исключений: у R3 текст нарушения всегда
+ *  «font-style: italic», и адресовать конкретный случай больше нечем.
+ *  Номер строки не годится — плывёт от любой правки выше; селектор
+ *  переживает и правку, и переезд блока. В отчёте он тоже полезнее
+ *  номера: сразу видно, ЧТО нарушает. */
+function enclosingSelector(text, index, maxBack = 4000) {
+  const open = text.lastIndexOf('{', index);
+  if (open < 0) return '';
+  const from = Math.max(0, open - maxBack);
+  const head = text.slice(from, open);
+  // селектор — хвост после предыдущего } или ; или комментария
+  const cut = Math.max(head.lastIndexOf('}'), head.lastIndexOf(';'), head.lastIndexOf('*/'));
+  return head.slice(cut + 1).replace(/\s+/g, ' ').trim().slice(-120);
+}
+
 const add = (rule, file, index, text, match, extra) => violations.push({
   rule, file: rel(file), line: index == null ? 0 : lineOf(text, index),
-  match, snippet: index == null ? (extra ?? '') : lineText(text, index), extra,
+  match, snippet: index == null ? (extra ?? '') : lineText(text, index),
+  selector: index == null ? '' : enclosingSelector(text, index),
+  extra,
 });
 
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;

@@ -40,6 +40,7 @@ CONTENT = ROOT / "public" / "content"
 SRC = ROOT / "content-src"
 
 import aliases_manual  # noqa: E402
+import backlinks  # noqa: E402
 import camps  # noqa: E402
 import docxlib  # noqa: E402
 import entity_chronicle  # noqa: E402
@@ -205,6 +206,13 @@ WRITE_ZONES = (
     CONTENT / "events", CONTENT / "chronicle", CONTENT / "media",
 )
 
+# Отдельные файлы в корне `public/content/`. Каталог целиком сюда НЕ идёт:
+# рядом лежат `longreads/`, `maps/`, `geo/` — чужие зоны, и разрешение
+# на корень отменило бы сторожа ровно там, где он нужен.
+WRITE_FILES = (
+    CONTENT / "_backlinks.json",   # обратный индекс, кроссекционный по смыслу
+)
+
 
 def _assert_own_zone(path: Path) -> None:
     """Сторож на границе зоны.
@@ -215,6 +223,8 @@ def _assert_own_zone(path: Path) -> None:
     падать сразу и с именем файла.
     """
     p = path.resolve()
+    if any(p == f.resolve() for f in WRITE_FILES):
+        return
     for zone in WRITE_ZONES:
         try:
             p.relative_to(zone.resolve())
@@ -316,6 +326,14 @@ class Stats:
         self.new = 0
         self.changed = 0
         self.same = 0
+        # Слитых файлов переписано. Считается ОТДЕЛЬНО от `changed`, потому
+        # что вопросы разные: `changed` отвечает «изменился ли машинный
+        # слепок» (docx или парсер), `merged` — «изменилось ли то, что легло
+        # на диск». Правка `.patch.json` меняет только второе, и без этого
+        # счётчика прогон печатал «изменённых 0 · без изменений 204» ровно
+        # тогда, когда шесть справок получили карту. Читается как «патч
+        # не применился», и это тот же класс, что «person 0» с кодом 0.
+        self.merged = 0
         self.conflicts: List[str] = []
         self.legacy: List[str] = []
 
@@ -424,7 +442,8 @@ def import_unit(kind: str, path: Path, ctx: Ctx, stats: Stats,
         if "open-question" not in fl:
             fl.append("open-question")
             merged["flags"] = fl
-    wrote = write_json(merged_path, merged)
+    if write_json(merged_path, merged):
+        stats.merged += 1
 
     if old_gen is None:
         stats.new += 1
@@ -1159,6 +1178,7 @@ def write_import_report(stats: Stats, reports: List[str], counts: Dict[str, int]
     lines.append("| новых | %d |" % stats.new)
     lines.append("| изменённых | %d |" % stats.changed)
     lines.append("| без изменений | %d |" % stats.same)
+    lines.append("| слитых файлов переписано | %d |" % stats.merged)
     lines.append("| конфликтов с патчем | %d |" % len(stats.conflicts))
     for kind, n in sorted(counts.items()):
         lines.append("| %s | %s |" % (kind, n))
@@ -1432,12 +1452,26 @@ def main(argv=None) -> int:
     reports.extend(registry.notes)
     if aliases.misses:
         write_pending_report(aliases.misses, reports)
+
+    # Обратный индекс — последним: он читает СЛИТЫЕ справки с диска, а не
+    # то, что в памяти, поэтому обязан идти после записи всех разделов.
+    # Прогон импорта без пересборки оставил бы файл несвежим, а несвежий
+    # обратный индекс молча показывает связи, которых уже нет.
+    try:
+        payload, cards = backlinks.build()
+        write_json(backlinks.OUT, payload)
+        counts["backlinks"] = "%d/%d справок" % (len(payload["items"]), len(cards))
+    except SystemExit as exc:          # пустой вход — не «связей нет», а сбой
+        failures.append("обратный индекс: %s" % exc)
+
     registry.save()
     write_json(SRC / "_manifest.json", manifest)
     write_import_report(stats, reports, counts)
 
     print("новых %d · изменённых %d · без изменений %d · конфликтов с патчем %d"
           % (stats.new, stats.changed, stats.same, len(stats.conflicts)))
+    print("  слитых файлов переписано: %d  (машинный слепок и патч — "
+          "разные вопросы, см. Stats.merged)" % stats.merged)
     for kind, n in sorted(counts.items()):
         print("  %-16s %s" % (kind, n))
     if reports:

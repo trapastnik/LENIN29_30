@@ -195,5 +195,10 @@
   },
   "flags": [
     "over-tz-limit"
+  ],
+  "map_id": "territories",
+  "initial_layers": [
+    "background",
+    "ussr"
   ]
 }

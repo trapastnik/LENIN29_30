@@ -64,3 +64,4 @@ public/content/media/
 
 # Оставляем: содержимое public/content/, public/expo/, public/decor/, public/fonts/
 # Это корневые ресурсы проекта, без них не собирается.
+content-src/_media-build.json

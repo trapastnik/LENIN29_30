@@ -37,7 +37,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "rsfsr"
+      "territory_id": "rsfsr",
+      "map_id": "territories"
     },
     {
       "id": "ussr",
@@ -58,7 +59,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "ussr"
+      "territory_id": "ussr",
+      "map_id": "territories"
     },
     {
       "id": "ukrainian-ssr",
@@ -355,7 +357,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "russian-state-kolchak"
+      "territory_id": "russian-state-kolchak",
+      "map_id": "territories"
     },
     {
       "id": "northern-region",
@@ -436,7 +439,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "allies-entente"
+      "territory_id": "allies-entente",
+      "map_id": "allies-entente-presence"
     },
     {
       "id": "czechoslovak-corps",
@@ -453,7 +457,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "czechoslovak-corps"
+      "territory_id": "czechoslovak-corps",
+      "map_id": "czechoslovak-corps-corridor"
     },
     {
       "id": "central-powers",
@@ -990,7 +995,8 @@
         "sm",
         "xs"
       ],
-      "territory_id": "vremennoe-pravitelstvo-rossiyskaya-respu"
+      "territory_id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+      "map_id": "territories"
     },
     {
       "id": "zakaspiyskoe-vremennoe-pravitelstvo",

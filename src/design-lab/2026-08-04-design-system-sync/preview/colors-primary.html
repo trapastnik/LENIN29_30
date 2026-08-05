@@ -1,0 +1,187 @@
+<!-- @dsCard group="Colors" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Основная палитра</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#555D61;color:#F7F9EF;font-family:var(--font-mono,monospace);}
+  .wrap{padding:18px 20px;}
+  h1{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass,#D2B773);margin:0 0 4px;}
+  .lede{font-size:11px;line-height:1.6;opacity:.8;margin:0 0 16px;max-width:70ch;}
+  .lede b{color:var(--brass,#D2B773);}
+  .row{display:flex;align-items:flex-start;gap:16px;padding:10px 0;border-top:1px solid rgba(255,255,255,.10);}
+  .id{width:210px;flex:none;}
+  .id code{font-size:12px;color:var(--brass,#D2B773);}
+  .hex{display:block;font-size:10px;opacity:.55;letter-spacing:.10em;margin-top:3px;}
+  .tiles{display:flex;gap:8px;flex:none;}
+  .tile{width:104px;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px;}
+  .tile.wide{width:216px;}
+  .spec{font-size:15px;font-family:var(--font-body,Georgia,serif);line-height:1;}
+  .mark{width:11px;height:11px;border-radius:50%;border-width:1px;border-style:solid;flex:none;}
+  .num{margin-left:auto;font-size:10px;letter-spacing:.04em;}
+  .num.ok{color:#1E5B2A;}
+  .tile[style*="#435059"] .num.ok{color:#8FD79E;}
+  .num.no{color:#8C1B21;}
+  .tile[style*="#435059"] .num.no{color:#F0A0A4;}
+  .say{font-size:11px;line-height:1.55;flex:1;min-width:190px;}
+  .pair{margin-top:4px;opacity:.75;}
+  .pair code{color:var(--brass,#D2B773);}
+  .pn{opacity:.7;}
+  .note{margin-top:5px;opacity:.5;font-size:10px;line-height:1.5;}
+  .warn{margin-top:16px;border-left:3px solid var(--signal-red,#A02128);padding:2px 0 2px 11px;
+        font-size:11px;line-height:1.6;max-width:74ch;}
+  .warn b{color:var(--brass,#D2B773);}
+</style></head><body><div class="wrap">
+  <h1>Основная палитра</h1>
+  <p class="lede">Бренд-палитра по RAL из <b>Lenin-guideline-2026</b>. Единственный
+     источник — <code>src/design/tokens.json</code>, всё остальное
+     генерируется. «Своих» цветов не бывает: нужен новый — заявка в зону
+     <code>design</code>, а не локальная константа.</p>
+  <div class="row">
+      <div class="id"><code>--ink-black</code><span class="hex">#000000</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#000000">Аа</span>
+        <span class="mark" style="background:#000000;border-color:#6c737a"></span>
+        <span class="num ok">19.75&nbsp;✓</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#000000">Аа</span>
+        <span class="mark" style="background:#000000;border-color:#CFD0CF"></span>
+        <span class="num no">2.53&nbsp;✗</span>
+      </div></div>
+      <div class="say">текстом только на светлом
+        <div class="note">RAL 9005 «Чёрный янтарь»</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--paper-white</code><span class="hex">#F7F9EF</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#F7F9EF">Аа</span>
+        <span class="mark" style="background:#F7F9EF;border-color:#6c737a"></span>
+        <span class="num no">1.00&nbsp;✗</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#F7F9EF">Аа</span>
+        <span class="mark" style="background:#F7F9EF;border-color:#CFD0CF"></span>
+        <span class="num ok">7.81&nbsp;✓</span>
+      </div></div>
+      <div class="say">текстом только на тёмном
+        <div class="note">RAL 9010 «Чистый белый» (тёплый)</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--paper-pure</code><span class="hex">#FFFFFF</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#FFFFFF">Аа</span>
+        <span class="mark" style="background:#FFFFFF;border-color:#6c737a"></span>
+        <span class="num no">1.06&nbsp;✗</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#FFFFFF">Аа</span>
+        <span class="mark" style="background:#FFFFFF;border-color:#CFD0CF"></span>
+        <span class="num ok">8.30&nbsp;✓</span>
+      </div></div>
+      <div class="say">текстом только на тёмном
+        <div class="note">чистый белый для мультимедиа</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--brass</code><span class="hex">#D2B773</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#D2B773">Аа</span>
+        <span class="mark" style="background:#D2B773;border-color:#6c737a"></span>
+        <span class="num no">1.84&nbsp;✗</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#D2B773">Аа</span>
+        <span class="mark" style="background:#D2B773;border-color:#CFD0CF"></span>
+        <span class="num no">4.25&nbsp;✗</span>
+      </div></div>
+      <div class="say">только крупным кеглем, на тёмном
+        <div class="note">RAL 1002 «Латунь» — акцент, заголовки</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--signal-red</code><span class="hex">#A02128</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#A02128">Аа</span>
+        <span class="mark" style="background:#A02128;border-color:#6c737a"></span>
+        <span class="num ok">7.20&nbsp;✓</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#A02128">Аа</span>
+        <span class="mark" style="background:#A02128;border-color:#CFD0CF"></span>
+        <span class="num no">1.08&nbsp;✗</span>
+      </div></div>
+      <div class="say">текстом только на светлом
+        <div class="note">RAL 3001 «Сигнальный красный»</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--slate-blue</code><span class="hex">#5D6970</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#5D6970">Аа</span>
+        <span class="mark" style="background:#5D6970;border-color:#6c737a"></span>
+        <span class="num ok">5.31&nbsp;✓</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#5D6970">Аа</span>
+        <span class="mark" style="background:#5D6970;border-color:#CFD0CF"></span>
+        <span class="num no">1.47&nbsp;✗</span>
+      </div></div>
+      <div class="say">текстом только на светлом
+        <div class="note">RAL 7031 «Сине-серый» — 2 этаж</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--slate-window</code><span class="hex">#9DA3A6</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#9DA3A6">Аа</span>
+        <span class="mark" style="background:#9DA3A6;border-color:#6c737a"></span>
+        <span class="num no">2.40&nbsp;✗</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#9DA3A6">Аа</span>
+        <span class="mark" style="background:#9DA3A6;border-color:#CFD0CF"></span>
+        <span class="num no">3.25&nbsp;✗</span>
+      </div></div>
+      <div class="say">только крупным кеглем, на тёмном
+        <div class="note">RAL 7040 «Серое окно» — вторичный фон</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--iron-grey</code><span class="hex">#555D61</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#555D61">Аа</span>
+        <span class="mark" style="background:#555D61;border-color:#6c737a"></span>
+        <span class="num ok">6.32&nbsp;✓</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#555D61">Аа</span>
+        <span class="mark" style="background:#555D61;border-color:#CFD0CF"></span>
+        <span class="num no">1.23&nbsp;✗</span>
+      </div></div>
+      <div class="say">текстом только на светлом
+        <div class="note">RAL 7011 «Железо-серый» — 3 этаж (наш)</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--graphite</code><span class="hex">#435059</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#435059">Аа</span>
+        <span class="mark" style="background:#435059;border-color:#6c737a"></span>
+        <span class="num ok">7.81&nbsp;✓</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#435059">Аа</span>
+        <span class="mark" style="background:#435059;border-color:#CFD0CF"></span>
+        <span class="num no">1.00&nbsp;✗</span>
+      </div></div>
+      <div class="say">текстом только на светлом
+        <div class="note">«Графитовый» для тёмных мультимедиа-полей</div></div>
+    </div>
+  <div class="row">
+      <div class="id"><code>--telegrey-4</code><span class="hex">#CFD0CF</span></div>
+      <div class="tiles"><div class="tile" style="background:#F7F9EF">
+        <span class="spec" style="color:#CFD0CF">Аа</span>
+        <span class="mark" style="background:#CFD0CF;border-color:#6c737a"></span>
+        <span class="num no">1.45&nbsp;✗</span>
+      </div><div class="tile" style="background:#435059">
+        <span class="spec" style="color:#CFD0CF">Аа</span>
+        <span class="mark" style="background:#CFD0CF;border-color:#CFD0CF"></span>
+        <span class="num ok">5.37&nbsp;✓</span>
+      </div></div>
+      <div class="say">текстом только на тёмном
+        <div class="note">RAL 7047 «Телегрей 4»</div></div>
+    </div>
+  <p class="warn"><b>Числа отвечают про ТЕКСТ, а не про заливку.</b>
+  Цветная метка, точка, полоска, граница живут по другому порогу —
+  <b>3.0</b> вместо 4.5 (WCAG 1.4.11), и меряются против своего фона,
+  а не против этих двух. Перенести цвет с текста на заливку —
+  не решение: точка «Белых» на светлой пилюле дала <b>1.39</b> при
+  исправном бейдже. Метке нужна обводка, и обводка ставится
+  <b>всем</b> меткам, а не только светлым: выборочное правило
+  вёрстка не воспроизведёт.</p>
+</div></body></html>

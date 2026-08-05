@@ -1,0 +1,285 @@
+/* Lenin Centre Design System — base type + color tokens.
+   Source: docs/brand.md (Lenin-guideline-2026.pdf) + styles/tokens.css.
+   Touch-only kiosk; no hover.
+
+   ⚠️ ПОРОГОВ ТАЧ-ЦЕЛИ ДВА, А НЕ ОДИН (правка 2026-08-05):
+     120px — основная навигация (--touch-hit);
+      64px — управляющие элементы внутри разделов (--touch-min).
+   Раньше здесь стояло 48. Это не было опиской: число списали отсюда
+   в линтер проекта, и оно прожило там три месяца. Карточка
+   preview/touch-target.html разбирает оба порога и исключение Венна.
+
+   Значения цветов сверены с src/design/tokens.json 2026-08-05:
+   расхождений НЕ НАЙДЕНО ни одного. Разошлось покрытие — здесь
+   не хватало 19 токенов, они добавлены ниже. Сверка механизирована:
+   node scripts/design/build-ds-cards.mjs --check роняет прогон,
+   если значение здесь разойдётся с tokens.json. */
+
+/* ── Fonts ───────────────────────────────────────────────── */
+
+/* Nolde Regular — display only. ITALIC DOES NOT EXIST; never synthesize. */
+@font-face {
+  font-family: 'Nolde';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/nolde/nolde.otf') format('opentype');
+}
+
+/* 20 Kopeek — short labels, accents, buttons, stamps. */
+@font-face { font-family: '20 Kopeek'; font-weight: 400; font-style: normal;
+  src: url('fonts/kopeek/20-kopeek-book.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: '20 Kopeek'; font-weight: 400; font-style: italic;
+  src: url('fonts/kopeek/20-kopeek-book-italic.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: '20 Kopeek'; font-weight: 600; font-style: normal;
+  src: url('fonts/kopeek/20-kopeek-demibold.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: '20 Kopeek'; font-weight: 600; font-style: italic;
+  src: url('fonts/kopeek/20-kopeek-demibold-italic.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: '20 Kopeek'; font-weight: 700; font-style: normal;
+  src: url('fonts/kopeek/20-kopeek-bold.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: '20 Kopeek'; font-weight: 700; font-style: italic;
+  src: url('fonts/kopeek/20-kopeek-bold-italic.otf') format('opentype'); font-display: swap; }
+
+/* 21 Cent — long body text. */
+@font-face { font-family: '21 Cent'; font-weight: 400; font-style: normal;
+  src: url('fonts/cent/21Cent.woff') format('woff'), url('fonts/cent/21Cent.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '21 Cent'; font-weight: 400; font-style: italic;
+  src: url('fonts/cent/21Cent-Italic.woff') format('woff'), url('fonts/cent/21Cent-Italic.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '21 Cent'; font-weight: 700; font-style: normal;
+  src: url('fonts/cent/21Cent-Bold.woff') format('woff'), url('fonts/cent/21Cent-Bold.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '21 Cent'; font-weight: 700; font-style: italic;
+  src: url('fonts/cent/21Cent-BoldItalic.woff') format('woff'), url('fonts/cent/21Cent-BoldItalic.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '21 Cent'; font-weight: 900; font-style: normal;
+  src: url('fonts/cent/21Cent-Black.woff') format('woff'), url('fonts/cent/21Cent-Black.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '21 Cent'; font-weight: 200; font-style: normal;
+  src: url('fonts/cent/21Cent-Thin.woff') format('woff'), url('fonts/cent/21Cent-Thin.ttf') format('truetype'); font-display: swap; }
+
+:root {
+  /* ── Brand palette (RAL → digital HEX) ─────────────── */
+  --ink-black:    #000000;   /* RAL 9005 — text on light */
+  --paper-white:  #F7F9EF;   /* RAL 9010 — warm white, cards */
+  --paper-pure:   #FFFFFF;   /* pure white — multimedia */
+  --brass:        #D2B773;   /* RAL 1002 — primary accent */
+  --signal-red:   #A02128;   /* RAL 3001 — secondary accent */
+  --slate-blue:   #5D6970;   /* RAL 7031 — 2nd floor bg */
+  --slate-window: #9DA3A6;   /* RAL 7040 — secondary bg */
+  --iron-grey:    #555D61;   /* RAL 7011 — 3rd floor / MTK 29 bg */
+  --graphite:     #435059;   /* dark multimedia panel */
+  --telegrey-4:   #CFD0CF;   /* RAL 7047 — projection */
+
+  /* ── Camp colors (used inside MTK 29) ───────────────
+     ЗАЛИВКА, а не цвет текста. Четыре из семи как текст на светлой
+     карточке не читаются — для этого рядом лежат парные чернила
+     --camp-*-ink той же семьи. Разбор с числами и плашками —
+     preview/colors-camps.html. */
+  --camp-red:          var(--signal-red);
+  --camp-red-deep:     #6A0F14;
+  --camp-white:        var(--telegrey-4);
+  --camp-rev-dem:      #8C4A99;
+  --camp-green:        #5A8E55;
+  --camp-national:     var(--brass);
+  --camp-intervention: #2F4A6B;
+  --camp-uprising:     #2A8079;   /* восстания: 22 записи в данных, токена не было */
+
+  /* Парные чернила: тот же лагерь, но пригодные ТЕКСТОМ на светлом. */
+  --camp-red-ink:          var(--signal-red);    /* 7.20 — исходный годится */
+  --camp-white-ink:        #555D61;              /* 1.45 → 6.32 */
+  --camp-rev-dem-ink:      #8C4A99;              /* 5.56 — исходный годится */
+  --camp-green-ink:        #4D7948;              /* 3.63 → 4.77 */
+  --camp-national-ink:     #7E6E45;              /* 1.84 → 4.70 */
+  --camp-intervention-ink: #2F4A6B;              /* 8.54 — исходный годится */
+  --camp-uprising-ink:     #287A73;              /* 4.43 → 4.79 */
+
+  /* ── Semantic tokens ───────────────────────────────── */
+  --page-bg:       var(--iron-grey);
+  --page-bg-deep:  var(--graphite);
+  --paper:         var(--paper-white);
+  --accent:        var(--brass);
+  --accent-alt:    var(--signal-red);
+  --ink:           var(--ink-black);
+  --ink-on-dark:   var(--paper-white);
+  --ink-soft:      #2A2F33;
+  --ink-faint:     #6C737A;
+  --rule:          rgba(255,255,255,0.12);
+  --rule-brass:    rgba(210,183,115,0.40);
+
+  /* ── Halftones ──────────────────────────────────────
+     Не «свои» цвета, а производные по формуле от бренд-цвета —
+     mix(paper-white, brass, 8%) и т.п., считает генератор проекта.
+     ⚠️ Имя не говорит о фоне: --ink-3 читается как «цвет текста»,
+     а это цвет текста ДЛЯ СВЕТЛОГО — на тёмной панели даёт 1.29. */
+  --paper-2:     #F4F4E5;
+  --paper-3:     #F1EEDB;
+  --paper-4:     #EDE7CC;
+  --paper-5:     #E6DBB7;
+  --paper-6:     #DFCD9D;
+  --ink-2:       #212527;
+  --ink-3:       #383F43;
+  --scene-bg:    #060503;
+  --scene-ink:   #E2D3A7;
+  --paper-light: #EDE7CC;
+  --paper-warm:  #DFCD9D;
+
+  /* ── Font stacks ───────────────────────────────────── */
+  --font-display: 'Nolde', 'Playfair Display', Georgia, serif;            /* H1, big numerals */
+  --font-body:    '21 Cent', 'PT Serif', Georgia, serif;                  /* paragraphs */
+  --font-accent:  '20 Kopeek', '21 Cent', Georgia, serif;                 /* short labels */
+  --font-mono:    '20 Kopeek', 'JetBrains Mono', 'Courier New', monospace;/* metas, kickers */
+  --font-stamp:   '20 Kopeek', 'Special Elite', monospace;                /* telegrams */
+
+  /* ── Touch / type scale ────────────────────────────────
+     ⚠️ В проекте эти два значения домножены на --ui-scale ради 4K:
+     calc(120px * var(--ui-scale, 1)). Здесь множителя нет намеренно —
+     карточки рисуются в один масштаб. Запас у метрики в проекте
+     обязателен: невалидный var() гасит правило целиком, а не
+     откатывает значение. */
+  --touch-hit:    120px;      /* основная навигация */
+  --touch-min:    64px;       /* управляющие элементы внутри разделов */
+  --fs-body:      32px;       /* kiosk body */
+  --fs-mono:      14px;
+  --fs-h1:        96px;
+  --fs-h2:        64px;
+  --fs-h3:        44px;
+  --fs-h4:        28px;
+  --fs-numeral:   220px;      /* "1918" / "02" watermark numerals */
+  --fs-numeral-xl: 320px;     /* chapter cover numerals */
+
+  --tracking-mono: 0.22em;
+  --tracking-kicker: 0.30em;
+  --line-body: 1.45;
+  --line-tight: 1.05;
+
+  /* ── Brand motif ───────────────────────────────────── */
+  --brand-skew:   -15deg;     /* parallelogram / 75° from vertical */
+  --skew-deg:     105deg;     /* matches brand-skew direction in linear-gradient */
+
+  /* ── Spacing scale (4 / 8 grid, kiosk-sized) ───────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 120px;
+
+  /* ── Radii (museum-conservative; nothing too rounded) */
+  --r-0: 0;
+  --r-sm: 4px;     /* small chips, tags */
+  --r-md: 6px;     /* cards, panels — DEFAULT */
+  --r-lg: 8px;
+  --r-pill: 30px;  /* buttons */
+  --r-circle: 50%;
+
+  /* ── Shadows ──────────────────────────────────────── */
+  --shadow-card:    0 4px 14px rgba(0,0,0,0.35);
+  --shadow-paper:   0 6px 18px rgba(0,0,0,0.40);
+  --shadow-modal:   0 20px 80px rgba(0,0,0,0.80);
+  --shadow-press:   0 2px 8px  rgba(0,0,0,0.50);
+  --shadow-glow-brass: 0 0 16px rgba(210,183,115,0.35);
+
+  /* ── Border treatments ────────────────────────────── */
+  --border-brass-thin:   1px solid var(--rule-brass);
+  --border-brass-bold:   1.5px solid var(--brass);
+  --border-rule:         1px solid var(--rule);
+
+  /* ── Scrollbar (visible on kiosk so users see scrollable) */
+  --scroll-thumb:        var(--brass);
+  --scroll-thumb-active: #B88E3A;
+  --scroll-track:        rgba(0,0,0,0.45);
+  --scroll-width:        14px;
+
+  /* ── Transitions (no hover, only press) ───────────── */
+  --t-press:  120ms ease-out;
+  --t-fade:   180ms ease-out;
+  --t-modal:  280ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* ──────────────────────────────────────────────────────
+   Semantic typographic primitives
+   ────────────────────────────────────────────────────── */
+
+.lc-h1, h1.lc {
+  font-family: var(--font-display);
+  font-weight: 400;            /* Nolde is regular-only */
+  font-size: var(--fs-h1);
+  line-height: var(--line-tight);
+  letter-spacing: -0.01em;
+  color: var(--brass);
+  margin: 0;
+}
+.lc-h2, h2.lc {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  line-height: var(--line-tight);
+  letter-spacing: -0.005em;
+  color: var(--brass);
+  margin: 0;
+}
+.lc-h3, h3.lc {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  color: var(--brass);
+  margin: 0;
+}
+.lc-h4, h4.lc {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  color: var(--ink-on-dark);
+  margin: 0;
+}
+.lc-numeral {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-numeral);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: var(--brass);
+}
+.lc-body, p.lc {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: var(--line-body);
+  color: var(--ink-on-dark);
+  margin: 0 0 1em;
+}
+.lc-body--small {
+  font-size: 22px;
+  line-height: 1.5;
+}
+.lc-kicker {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--paper-white);
+  opacity: 0.7;
+}
+.lc-meta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.lc-slash {
+  display: inline-flex; align-items: baseline; gap: 12px;
+  font-family: var(--font-display);
+  color: var(--paper-white);
+}
+.lc-slash::before {
+  content: '/';
+  color: var(--brass);
+  font-weight: 400;
+  transform: skewX(var(--brand-skew));
+  display: inline-block;
+}
