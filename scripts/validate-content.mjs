@@ -278,16 +278,23 @@ function crossCheckParser(where, data) {
 /** A. Обязаны совпадать значением. Расхождение — ошибка. */
 const AGREE_FIELDS = [
   'camp', 'venn_groups', 'x', 'y', 'title_chip_ru', 'abbr_ru',
-  'territory_id', 'map_status', 'open_question_ru',
+  'territory_id', 'map_id', 'map_status', 'open_question_ru',
+  // Только у личностей: индекс берёт ключ из справки, где он считан
+  // от фамилии. У остальных видов ключ выводится из подписи плитки —
+  // «ЗСФСР» по полному названию уехало бы на «Ф», а посетитель ищет
+  // глазами то, что написано.
+  { field: 'sort_key_ru', kinds: ['person'] },
 ];
+
+const agreeField = (f) => (typeof f === 'string' ? f : f.field);
+const agreeApplies = (f, kind) => (typeof f === 'string' || !f.kinds
+  || f.kinds.includes(kind));
 
 /** C. Исключено намеренно. Печатается каждый прогон — исключение, о котором
  *  знает только комментарий в генераторе, однажды «починят по правилу». */
 const EXCLUDED_FIELDS = [
   { field: 'title_ru',
     why: 'подпись плитки против полного имени, решение M0' },
-  { field: 'sort_key_ru',
-    why: 'правило сортировки живёт в импортёре, здесь его не воспроизвести' },
 ];
 
 /** Пусто — это `undefined`, `null`, пустая строка и пустой массив.
@@ -309,12 +316,14 @@ const eq = (a, b) => {
 const shown = (v) => Array.isArray(v) ? `[${v.join(', ')}]`
   : (v === undefined ? '(поля нет)' : (v === null ? 'null' : `«${v}»`));
 
-const agreeStats = Object.fromEntries(AGREE_FIELDS.map((f) => [f, [0, 0]]));
+const agreeStats = Object.fromEntries(AGREE_FIELDS.map((f) => [agreeField(f), [0, 0]]));
 const excludedStats = Object.fromEntries(EXCLUDED_FIELDS.map((e) => [e.field, 0]));
 let derivedChecked = 0;
 
-function crossCheckIndexCard(where, card, item) {
-  for (const f of AGREE_FIELDS) {
+function crossCheckIndexCard(where, card, item, kind) {
+  for (const spec of AGREE_FIELDS) {
+    if (!agreeApplies(spec, kind)) continue;
+    const f = agreeField(spec);
     const a = card[f];
     const b = item[f];
     if (isEmpty(a) && isEmpty(b)) continue;
@@ -390,7 +399,7 @@ for (const { kind, dir } of KINDS) {
     if (!indexRecords.has(id)) {
       err(where, `нет записи в ${dir}/_index.json`);
     } else {
-      crossCheckIndexCard(where, data, indexRecords.get(id).item);
+      crossCheckIndexCard(where, data, indexRecords.get(id).item, kind);
     }
 
     // ── английский: копия русского под флагом EN — это баг движка на приёмке
@@ -813,7 +822,7 @@ if (!quiet) {
     err('сверка индекса и справок', 'не сверено ни одной записи — '
       + 'проверять нечего, и это ошибка, а не «всё хорошо»');
   }
-  const line = AGREE_FIELDS
+  const line = AGREE_FIELDS.map(agreeField)
     .filter((f) => agreeStats[f][1])
     .map((f) => `${f} ${agreeStats[f][0]}/${agreeStats[f][1]}`)
     .join(' · ');

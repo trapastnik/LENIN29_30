@@ -93,6 +93,60 @@ function resolve_(name, tokens, seen = []) {
   return v;
 }
 
+// ── читаемость: на каком фоне цвет работает КАК ТЕКСТ ──────────────────────
+//
+// Палитра работает заливкой, а как текст — только на своём фоне, и в имени
+// токена это ничем не выражено. «--ink-3» читается как «цвет текста», а он
+// цвет текста ДЛЯ СВЕТЛОГО: на тёмной панели даёт контраст 1.29.
+// За одни сутки я ошиблась так трижды — 1.45, 1.08, 1.29, — и ни одну
+// из трёх линтер поймать не мог: фон везде стоял на предке через разметку,
+// а не в том же правиле.
+//
+// Поэтому ответ считается ЗДЕСЬ и едет в каталог, к свотчу: выбирая цвет,
+// видишь сразу, где им можно писать. Это дешевле любого правила, потому что
+// работает в момент выбора, а не в момент прогона.
+const SURFACES = { light: 'paper-white', dark: 'page-bg-deep' };
+
+function srgbLum(hex) {
+  const [r, g, b] = hexToRgb(hex).map((v) => {
+    v /= 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a, b) {
+  const [x, y] = [srgbLum(a), srgbLum(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+}
+
+/** Два порога, а не один — иначе инструмент врёт про главный цвет проекта.
+ *
+ *  WCAG: обычный текст 4.5, крупный (≥24px, либо ≥19px полужирный) — 3.0.
+ *  Без второго порога --brass попадает в «не читается ни на чём»: на
+ *  графите он даёт 4.2. Но заголовки набраны именно брассом и именно
+ *  крупно, и там 4.2 законно. Правило, объявляющее ведущий акцент
+ *  негодным, перестают слушать целиком — а вместе с ним и верную часть.
+ *
+ *  Возвращает {light, dark, on, onLarge} либо null, если это не цвет. */
+const TH = { text: 4.5, large: 3.0 };
+
+function legibility(name, tokens) {
+  const v = resolve_(name, tokens);
+  if (!HEX_RE.test(v)) return null;
+  const out = {};
+  for (const [k, surf] of Object.entries(SURFACES)) {
+    out[k] = Math.round(contrast(v, resolve_(surf, tokens)) * 100) / 100;
+  }
+  const pick = (min) => {
+    const ok = Object.keys(SURFACES).filter((k) => out[k] >= min);
+    return ok.length === 2 ? 'both' : (ok[0] ?? 'none');
+  };
+  out.on = pick(TH.text);
+  out.onLarge = pick(TH.large);
+  return out;
+}
+
 /** Значение для CSS: ссылка остаётся var(--x), чтобы связь была видна в devtools. */
 function cssValue(name, tokens) {
   const v = String(tokens[name].value);
@@ -269,6 +323,8 @@ function buildJs() {
     const m = { group: t.group, css: g.css !== false };
     if (t.note) m.note = t.note;
     if (g.deprecated || t.deprecated) m.deprecated = true;
+    const leg = legibility(name, tokens);
+    if (leg) m.legible = leg;
     L.push(`    ${j(name)}: ${j(m)},`);
   }
   L.push('  };');

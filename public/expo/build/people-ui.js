@@ -249,6 +249,7 @@ function bgForVariant(variant) {
   const v = BG_VARIANTS[variant] || BG_VARIANTS.iron;
   return v.style;
 }
+const STYLE_PANEL_ON = new URLSearchParams(location.search).has("style");
 function SettingsPanel({
   lang,
   headerVariant,
@@ -1400,7 +1401,7 @@ function PersonalitiesApp() {
       textInkCfg,
       frameCfg
     }
-  ), /* @__PURE__ */ React.createElement(
+  ), STYLE_PANEL_ON && /* @__PURE__ */ React.createElement(
     SettingsPanel,
     {
       lang,
