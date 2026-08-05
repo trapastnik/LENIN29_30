@@ -90,6 +90,44 @@
   }
   .body p:last-child { margin-bottom: 0; }
 
+  /* ── ожидаемые иллюстрации ─────────────────────────────────────────────
+     Заказчик не поставил 21 иллюстрацию, и в источнике они перечислены
+     строками «Нужно подобрать: …». До сих пор эти строки лежали в данных
+     и не рисовались — раздел про город без единого вида города выглядел
+     ЗАКОНЧЕННЫМ, то есть замыслом, а не дыркой.
+
+     §2: затычка не должна выглядеть готовой, приёмка обязана отличать
+     недоделку от поставки. Отсюда пунктир и явный счёт: посетителю это
+     читается спокойно («подбирается»), приёмке — однозначно.
+
+     Пунктир, а не рамка: сплошная рамка выглядит как оформленный блок,
+     то есть как решение. Пунктир читается как незаполненное место. */
+  .wanted {
+    margin: calc(34px * var(--ui-scale, 1)) 0 0;
+    padding: calc(24px * var(--ui-scale, 1)) calc(28px * var(--ui-scale, 1));
+    border: calc(2px * var(--ui-scale, 1)) dashed var(--ink-faint);
+  }
+  .wanted-title {
+    font-family: var(--font-mono);
+    font-size: calc(15px * var(--ui-scale, 1));
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: calc(14px * var(--ui-scale, 1));
+  }
+  .wanted ul {
+    margin: 0;
+    padding-left: calc(22px * var(--ui-scale, 1));
+  }
+  .wanted li {
+    font-family: var(--font-body);
+    font-size: calc(21px * var(--ui-scale, 1));
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: calc(6px * var(--ui-scale, 1));
+  }
+  .wanted li:last-child { margin-bottom: 0; }
+
   /* ── связи ─────────────────────────────────────────────────────────── */
   .refs { margin-top: calc(44px * var(--ui-scale, 1)); padding-top: calc(28px * var(--ui-scale, 1)); border-top: calc(1px * var(--ui-scale, 1)) solid var(--rule); }
   .refs-title {
@@ -148,6 +186,10 @@
   </header>
   <div class="body"></div>
   <div class="media"></div>
+  <div class="wanted" hidden>
+    <div class="wanted-title"></div>
+    <ul></ul>
+  </div>
   <div class="refs">
     <div class="refs-title">Смотрите также</div>
     <div class="chips"></div>
@@ -192,6 +234,7 @@
       });
 
       this._renderMedia($('.media'), s.media || []);
+      this._renderWanted($('.wanted'), s.media_wanted_ru || []);
       this._renderRefs($('.refs'), $('.chips'), s.refs || {});
     }
 
@@ -204,6 +247,33 @@
         var el = document.createElement('longread-media');
         el.data = m;
         host.appendChild(el);
+      });
+    }
+
+    /**
+     * Заявки «нужно подобрать» — место под иллюстрацию, которой ещё нет.
+     *
+     * Рисуется ИМЕННО ПОТОМУ, что иллюстрации нет: пустая секция читалась бы
+     * как задуманная, и приёмка не отличила бы недоделку от поставки (§2).
+     * Пропадёт сама, когда заказчик поставит изображения и строки уйдут
+     * из источника, — отдельной уборки не потребует.
+     */
+    _renderWanted(block, list) {
+      if (!list.length) { block.hidden = true; return; }
+      block.hidden = false;
+
+      var n = list.length;
+      var word = (n % 10 === 1 && n % 100 !== 11) ? 'иллюстрация'
+        : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 'иллюстрации'
+        : 'иллюстраций';
+      block.querySelector('.wanted-title').textContent =
+        'Подбирается ' + n + ' ' + word;
+
+      var ul = block.querySelector('ul');
+      list.forEach(function (text) {
+        var li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
       });
     }
 

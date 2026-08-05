@@ -195,7 +195,8 @@ window.MTK_LONGREADS["simbirsk"] = {
           "source_note_ru": "см. литература в конце",
           "w": null,
           "h": null,
-          "tiers": []
+          "tiers": [],
+          "map_id": "simbirsk-july-1918"
         }
       ],
       "media_wanted_ru": [
@@ -342,7 +343,8 @@ window.MTK_LONGREADS["simbirsk"] = {
           "source_note_ru": "см. литература последний лист",
           "w": null,
           "h": null,
-          "tiers": []
+          "tiers": [],
+          "map_id": "simbirsk-september-1918"
         },
         {
           "n": 2,
