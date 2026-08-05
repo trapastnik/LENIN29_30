@@ -809,6 +809,74 @@
       font-style: normal;
     }
 
+    /* — Раздел «Связанные справки» (26) ————————————————————————— */
+    .rel-pair {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(calc(420px * var(--ui-scale, 1)), 1fr));
+      gap: var(--sp-4, 32px);
+      margin-bottom: var(--sp-3, 24px);
+    }
+    .tag-rec, .tag-alt {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 2px var(--sp-1, 8px);
+      border-radius: var(--r-sm, 4px);
+      margin-bottom: var(--sp-2, 16px);
+    }
+    .tag-rec { background: var(--camp-green); color: var(--ink-black); }
+    .tag-alt { background: var(--slate-window); color: var(--ink-black); }
+
+    .rel-head {
+      font-family: var(--font-mono);
+      font-size: calc(11px * var(--ui-scale, 1));
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      padding-bottom: var(--sp-2, 16px);
+      border-bottom: var(--bd-hair, 1px) solid var(--paper-5);
+      margin-bottom: var(--sp-2, 16px);
+    }
+    .rel-group { margin-bottom: var(--sp-3, 24px); }
+    .rel-cap {
+      display: flex; align-items: center; gap: var(--sp-1, 8px);
+      font-family: var(--font-mono);
+      font-size: calc(11px * var(--ui-scale, 1));
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: var(--sp-1, 8px);
+    }
+    /* Кольцо обязательно и обязательно у ВСЕХ точек. Без него заливка
+       светлого лагеря пропадает на светлой бумаге: --camp-white даёт
+       1.39 на --paper-2, --camp-national 1.76. Обводка --ink-faint —
+       4.33, выше порога 3.0 для графики. Ставится всем, а не только
+       светлым: иначе это правило, о котором вёрстка не узнает. */
+    .rel-cap i, .rel-item i {
+      width: 10px; height: 10px; border-radius: 50%; flex: none;
+      border: var(--bd-hair, 1px) solid var(--ink-faint);
+    }
+    .rel-list { display: flex; flex-wrap: wrap; gap: var(--sp-1, 8px); }
+    /* Порог 64 — управляющий элемент внутри раздела (§1), не навигация.
+       Держится min-height, а не padding: padding уедет от кегля. */
+    .rel-item {
+      display: inline-flex; align-items: center; gap: var(--sp-1, 8px);
+      min-height: 64px;
+      padding: 0 var(--sp-3, 24px);
+      border: var(--bd-1, 1.5px) solid var(--paper-5);
+      border-radius: var(--r-pill, 999px);
+      /* Имя — обычными чернилами. Цвет лагеря несёт ТОЧКА: четыре цвета
+         из семи как текст на карточке не читаются (--camp-white 1.45,
+         --camp-national 1.84, --camp-green 3.63, --camp-uprising 4.43). */
+      color: var(--ink-2);
+      font-size: var(--fs-3, 20px);
+      text-decoration: none;
+      background: var(--paper-2);
+    }
+    .rel-item:active { background: var(--paper-4); }
+    .rel-more { color: var(--ink-3); border-style: dashed; }
+
     /* — Раздел «Состояние» (25). Отчёт линтера — */
     .lint-table {
       background: var(--page-bg-deep);
@@ -2739,11 +2807,143 @@
       </p>
     </section>
 
-    <!-- ── 25. Состояние дизайн-кода ───────────────────────────────
+    <!-- ── 25. Связанные справки ───────────────────────────────────
+         Расширение сверх ТЗ, решение dvn 2026-08-04.
+
+         Зачем. В текстах 3020 разрешённых перекрёстных связей, и ни одна
+         никуда не ведёт. Это не дефект: rich-text.js:50 намеренно рисует
+         ссылку подсвеченным термином, потому что строчная ссылка даёт
+         тач-цель ВЫСОТОЙ СТРОКИ — около 20px при пороге 64. Палец попал
+         бы по соседнему слову и открыл не ту справку: перехваченная цель
+         хуже мелкой.
+
+         Но на киоске нет ни поиска, ни соседней вкладки. Связность
+         существует только в базе. Ответ — не кликабельное слово,
+         а честный блок с нормальными целями. -->
+    <section class="cat-section" id="c-related">
+      <p class="lede">25 · Связанные справки</p>
+      <h2>Окружение сущности внизу карточки</h2>
+
+      <p class="lede-note">
+        Цели <b>≥ 64 px</b> — это управляющие элементы внутри раздела,
+        не основная навигация. Блок переживает и две связи, и сорок:
+        группировка по лагерю, внутри группы не больше пяти, дальше «ещё N».
+      </p>
+
+      <div class="rel-pair">
+        <figure class="block-demo">
+          <span class="tag-rec">рекомендую</span>
+          <div class="d-card">
+            <div class="d-pad">
+              <div class="rel-head">Связанные справки · 12</div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-red);"></i>Красные · 4</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>Ленин</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>Троцкий</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСДРП(б)</a>
+                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСФСР</a>
+                </div>
+              </div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-white);"></i>Белые · 5</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Колчакъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Деникинъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Добровольческая армия</a>
+                  <a class="rel-item rel-more">ещё 2</a>
+                </div>
+              </div>
+
+              <div class="rel-group">
+                <div class="rel-cap"><i style="background: var(--camp-national);"></i>Национальные · 3</div>
+                <div class="rel-list">
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Алашъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Мусаватъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Дашнакцутюнъ</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            <b>#c-related</b> — <b>вариант с меткой лагеря.</b>
+            Цвет несёт <b>точка</b>, имя набрано обычными чернилами.
+            Так блок читается картой окружения: видно, что у «Комуча»
+            половина связей белые, а у «Левых эсеров» — красные.
+          </figcaption>
+        </figure>
+
+        <figure class="block-demo">
+          <span class="tag-alt">без цвета</span>
+          <div class="d-card">
+            <div class="d-pad">
+              <div class="rel-head">Связанные справки · 12</div>
+              <div class="rel-list">
+                <a class="rel-item">Ленин</a>
+                <a class="rel-item">Троцкий</a>
+                <a class="rel-item">РСДРП(б)</a>
+                <a class="rel-item">Колчакъ</a>
+                <a class="rel-item">Деникинъ</a>
+                <a class="rel-item">Алашъ</a>
+                <a class="rel-item rel-more">ещё 6</a>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            Простой список, без лагерей. Честнее при малом числе связей
+            и когда лагерь у части сущностей не проставлен. Но на сорока
+            связях превращается в стену одинаковых кнопок — теряется
+            единственное, что помогает выбрать.
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="token-strip">
+        <b>Цвет лагеря берётся ЗАЛИВКОЙ ТОЧКИ, а не цветом имени</b> —
+        и это не вкус. Четыре цвета из семи как текст на карточке
+        не читаются: <code>--camp-white</code> даёт 1.45,
+        <code>--camp-national</code> 1.84, <code>--camp-green</code> 3.63,
+        <code>--camp-uprising</code> 4.43 при пороге 4.5.
+        Набрать имена в <code>--camp-*-ink</code> можно — там все ≥ 4.7, —
+        но список из семи разных чернил перестаёт сканироваться:
+        цвет начинает спорить с текстом за внимание.
+      </p>
+
+      <p class="token-strip">
+        <b>У точки обязательно кольцо <code>--ink-faint</code></b> — и это
+        не украшение. Перенос цвета с текста на заливку сам по себе проблему
+        не решает: светлое на светлом остаётся светлым на светлом.
+        Точка «Белых» даёт <b>1.39</b> на пилюле, «Национальных» — <b>1.76</b>,
+        то есть у двух лагерей из семи метка просто исчезает, а блок при этом
+        выглядит исправным. Кольцо даёт 4.33 при пороге 3.0 для графики.
+        Ставится <b>всем</b> точкам, а не только светлым: правило, которое
+        срабатывает выборочно, вёрстка не воспроизведёт.
+      </p>
+
+      <p class="token-strip">
+        <b>Пустое состояние: блока просто нет.</b> Не «Связанные справки: —»
+        и не пустая рамка. Здесь ничего не пропало — у сущности
+        действительно нет связей, и отсутствие однозначно. Это НЕ противоречит
+        §2 про затычки: затычка обязана выглядеть недоделанной, когда что-то
+        <b>ждут</b>; тут не ждут ничего. Записано здесь, чтобы решение
+        не принималось заново в вёрстке.
+      </p>
+
+      <p class="token-strip">
+        ⚠️ Число связей ещё не известно: <code>content</code> считает
+        распределение. Вид рассчитан на диапазон — пять на группу и «ещё N», —
+        но если у «Большевиков» окажется три сотни, порог на группу
+        придётся пересмотреть, и это будет правка каталога, а не вёрстки.
+      </p>
+    </section>
+
+    <!-- ── 26. Состояние дизайн-кода ───────────────────────────────
          Отчёт линтера прямо в каталоге. Каталог, который показывает
          правила и молчит о том, соблюдаются ли они, — половина работы. -->
     <section class="cat-section" id="c-lint">
-      <p class="lede">25 · Состояние</p>
+      <p class="lede">26 · Состояние</p>
       <h2>Что говорит линтер</h2>
       <div id="lint-report"></div>
     </section>
