@@ -195,7 +195,8 @@ window.MTK_LONGREADS["simbirsk"] = {
           "source_note_ru": "см. литература в конце",
           "w": null,
           "h": null,
-          "tiers": []
+          "tiers": [],
+          "map_id": "simbirsk-july-1918"
         }
       ],
       "media_wanted_ru": [
@@ -335,14 +336,15 @@ window.MTK_LONGREADS["simbirsk"] = {
           "slot": "gallery",
           "file": null,
           "src_file": null,
-          "caption_ru": "Карта-схема Симбирской операции, сентябрь 1918 г. (см. литература последний лист).",
+          "caption_ru": "Карта-схема Симбирской операции, сентябрь 1918 г.",
           "caption_en": null,
           "inv_ru": null,
           "source_url": null,
-          "source_note_ru": null,
+          "source_note_ru": "см. литература последний лист",
           "w": null,
           "h": null,
-          "tiers": []
+          "tiers": [],
+          "map_id": "simbirsk-september-1918"
         },
         {
           "n": 2,

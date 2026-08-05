@@ -5,7 +5,6 @@
   "camp": "white",
   "title_ru": "Правый центр",
   "title_en": null,
-  "sort_key_ru": "правый центр",
   "title_full_ru": null,
   "abbr_ru": [],
   "aka_ru": [],
@@ -115,6 +114,6 @@
     "parser": "1.0.0"
   },
   "flags": [],
-  "x": 88.91,
-  "y": 41.3
+  "x": 86.979,
+  "y": 48.148
 }

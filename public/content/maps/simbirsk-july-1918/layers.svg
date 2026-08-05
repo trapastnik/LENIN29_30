@@ -76,20 +76,20 @@
   <path class="cls-4" d="m27.5 53.3c-1.8 2.1 0.4 3.9 1.6 5.9l3.2 2.5 1.8 1.8 0.4 4.1 2.1 2.3 1.3 2.5 1.9 2.2 1.8 1.9 3.8 0.9 1.2 2.5 1.8 2.9 1.1 1.8 2.1-0.2 1.6 2.1 3.4-1.6"/>
   </g>
 <g id="city_dots">
-  <circle class="cls-33" cx="42.71" cy="137.13" r="0.082"/>
-  <circle class="cls-33" cx="53.60" cy="130.48" r="0.082"/>
-  <circle class="cls-33" cx="55.67" cy="117.45" r="0.082"/>
-  <circle class="cls-33" cx="46.74" cy="122.64" r="0.082"/>
-  <circle class="cls-33" cx="42.63" cy="116.20" r="0.113"/>
-  <circle class="cls-33" cx="61.54" cy="136.13" r="0.082"/>
+  <circle class="cls-33" cx="42.71" cy="137.13" r="0.139"/>
+  <circle class="cls-33" cx="53.60" cy="130.48" r="0.139"/>
+  <circle class="cls-33" cx="55.67" cy="117.45" r="0.139"/>
+  <circle class="cls-33" cx="46.74" cy="122.64" r="0.139"/>
+  <circle class="cls-33" cx="42.63" cy="116.20" r="0.191"/>
+  <circle class="cls-33" cx="61.54" cy="136.13" r="0.139"/>
 </g>
 <g id="labels_cities">
-  <text class="cls-33" x="42.87" y="137.01" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Сызрань</text>
-  <text class="cls-33" x="53.76" y="130.35" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Ставрополь-на-Волге</text>
-  <text class="cls-33" x="55.83" y="117.33" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Мелекесс</text>
-  <text class="cls-33" x="46.90" y="122.51" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Сенгилей</text>
-  <text class="cls-33" x="42.79" y="116.08" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Симбирск</text>
-  <text class="cls-33" x="61.70" y="136.01" font-family="'TimesNewRomanPSMT'" font-size="0.341px">Самара</text>
+  <text class="cls-33" x="42.99" y="136.92" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Сызрань</text>
+  <text class="cls-33" x="53.87" y="130.27" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Ставрополь-на-Волге</text>
+  <text class="cls-33" x="55.95" y="117.24" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Мелекесс</text>
+  <text class="cls-33" x="47.02" y="122.43" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Сенгилей</text>
+  <text class="cls-33" x="42.91" y="115.99" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Симбирск</text>
+  <text class="cls-33" x="61.82" y="135.93" font-family="'TimesNewRomanPSMT'" font-size="0.580px">Самара</text>
 </g>
 <g id="arrows_kappel">
   <path class="cls-12" d="M42.71,137.13 Q46.44,126.65 42.63,116.20" marker-end="url(#head-cls-12)"/>

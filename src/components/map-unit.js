@@ -297,9 +297,19 @@ export class MapUnit extends HTMLElement {
     }
 
     // Установим visibility по initial-layers или по default
+    // initial-layers ЗАМЕНЯЕТ набор умолчаний — но растр это ХОЛСТ,
+    // а не слой содержания. Первая сборка карты территорий показала цену
+    // прежнего поведения: карточка передаёт initial-layers="rsfsr", и вместе
+    // с прочими слоями гаснет подложка, поверх которой контур и рисуется.
+    // На экране остаётся силуэт на шахматке «карта не загружена».
+    // Замер этого не ловил: слой честно «visible», bbox на месте.
+    // Поэтому растровые слои сохраняют свой default всегда.
     const initialAttr = this.getAttribute('initial-layers');
+    const rasterDefaults = meta.layers
+      .filter(l => l.kind === 'raster' && l.default).map(l => l.id);
     const initial = initialAttr
-      ? new Set(initialAttr.split(',').map(s => s.trim()).filter(Boolean))
+      ? new Set([...initialAttr.split(',').map(s => s.trim()).filter(Boolean),
+                 ...rasterDefaults])
       : new Set(meta.layers.filter(l => l.default).map(l => l.id));
 
     for (const l of meta.layers) {

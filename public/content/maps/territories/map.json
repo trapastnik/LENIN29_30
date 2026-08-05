@@ -1,0 +1,105 @@
+{
+  "id": "territories",
+  "kind": "map",
+  "title_ru": "Территории гособразований на базовой карте",
+  "title_en": "",
+  "viewBox": "0 0 1820 1180",
+  "background_raster": "background.jpg",
+  "preserve_aspect": "none",
+  "notice_ru": "Временная основа: клиентский ОБРАЗЕЦ базовой карты, растр. На 4K заметно мягче вектора. Ждём подробный источник от музея — подложка заменится, контуры территорий останутся теми же.",
+  "layers": [
+    {
+      "id": "background",
+      "label_ru": "Временная основа (растр, ждём подробный источник)",
+      "kind": "raster",
+      "default": true
+    },
+    {
+      "id": "rsfsr",
+      "label_ru": "РСФСР",
+      "kind": "vector",
+      "default": true,
+      "color": "map-red"
+    },
+    {
+      "id": "rsfsr-1",
+      "label_ru": "РСФСР — Август 1918 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-red"
+    },
+    {
+      "id": "rsfsr-2",
+      "label_ru": "РСФСР — Июль 1919 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-red"
+    },
+    {
+      "id": "rsfsr-3",
+      "label_ru": "РСФСР — Август 1920 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-red"
+    },
+    {
+      "id": "rsfsr-4",
+      "label_ru": "РСФСР — Декабрь 1922 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-red"
+    },
+    {
+      "id": "russian-state-kolchak",
+      "label_ru": "Российское Государство · А.В. Колчак",
+      "kind": "vector",
+      "default": true,
+      "color": "map-white"
+    },
+    {
+      "id": "russian-state-kolchak-1",
+      "label_ru": "Российское Государство · А.В. Колчак — Конец апреля 1919 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-white"
+    },
+    {
+      "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+      "label_ru": "Временное правительство (Российская республика)",
+      "kind": "vector",
+      "default": true,
+      "color": "map-rev-dem"
+    },
+    {
+      "id": "vremennoe-pravitelstvo-rossiyskaya-respu-1",
+      "label_ru": "Временное правительство (Российская республика) — Сентябрь—октябрь 1917 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-rev-dem"
+    },
+    {
+      "id": "ussr",
+      "label_ru": "СССР",
+      "kind": "vector",
+      "default": true,
+      "color": "map-red"
+    },
+    {
+      "id": "ussr-1",
+      "label_ru": "СССР — 30 декабря 1922 г.",
+      "kind": "vector",
+      "default": false,
+      "anim": "fade",
+      "color": "map-red"
+    }
+  ],
+  "svg": "layers.svg",
+  "source_ru": "Контуры — обводка листов заказчика, привязка подобием к ОБРАЗЦУ базовой карты. Основа — сам ОБРАЗЕЦ, пережатый под показ.",
+  "notes_ru": "Основа ВРЕМЕННАЯ и обязана так выглядеть (§2): растр 1820×1180 апскейлится на 4K в 1.88 раза. Подпись слоя и notice_ru про это говорят прямо. Приедет подробный источник — меняется подложка, layers.svg не трогается."
+}

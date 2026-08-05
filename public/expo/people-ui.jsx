@@ -246,122 +246,22 @@ function bgForVariant(variant) {
   return v.style;
 }
 
-// Плавающая панель настроек внешнего вида — всегда видна справа.
-// Содержит 3 группы переключателей: ШАПКА / ФОН СПИСКА / БОЛЬШАЯ КАРТОЧКА.
-// Свёртывается в узкую полосу-«вкладку» по тапу на шеврон.
-function SettingsPanel({ lang,
-  headerVariant, setHeaderVariant,
-  bgVariant, setBgVariant,
-  cardVariant, setCardVariant,
-  textBgVariant, setTextBgVariant,
-  textInkVariant, setTextInkVariant,
-  frameVariant, setFrameVariant,
-}) {
-  // По умолчанию свёрнута. Это панель подбора стиля из design-pass, а не
-  // элемент экспозиции: раскрытой она перекрывает правую колонку справки —
-  // ровно то место, где текст биографии. Посетителю киоска она не нужна,
-  // разработчику — открывается тем же чевроном и состояние помнится.
-  const [open, setOpen] = React.useState(() => {
-    try { return localStorage.getItem('expo:settingsOpen') === '1'; } catch { return false; }
-  });
-  React.useEffect(() => { try { localStorage.setItem('expo:settingsOpen', open ? '1' : '0'); } catch {} }, [open]);
-
-  const groups = [
-    { ru: 'Шапка',         en: 'Header',     variants: HEADER_VARIANTS,   value: headerVariant,   set: setHeaderVariant },
-    { ru: 'Фон',           en: 'Bg',         variants: BG_VARIANTS,       value: bgVariant,       set: setBgVariant },
-    { ru: 'Фрейм карточки', en: 'Card frame', variants: FRAME_VARIANTS,   value: frameVariant,    set: setFrameVariant },
-    { ru: 'Карточка',      en: 'Card',       variants: CARD_VARIANTS,     value: cardVariant,     set: setCardVariant },
-    { ru: 'Подложка текста', en: 'Text bg',  variants: TEXT_BG_VARIANTS,  value: textBgVariant,   set: setTextBgVariant },
-    { ru: 'Цвет текста',   en: 'Text ink',   variants: TEXT_INK_VARIANTS, value: textInkVariant,  set: setTextInkVariant },
-  ];
-
-  // pill-кнопка варианта
-  const pill = (id, label, active, onClick, swatch) => (
-    <button key={id} onClick={onClick} style={{
-      display: 'flex', alignItems: 'center', gap: S(8),
-      width: '100%', textAlign: 'left',
-      padding: S('7px 10px'),
-      background: active ? '#D2B773' : 'transparent',
-      color: active ? '#000' : '#F7F9EF',
-      border: `1px solid ${active ? '#D2B773' : 'rgba(210,183,115,0.45)'}`,
-      borderRadius: 30,
-      fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.18em',
-      textTransform: 'uppercase', cursor: 'pointer',
-    }}>
-      {swatch && <span style={{
-        width: S(10), height: S(10), borderRadius: 2, flexShrink: 0,
-        background: swatch === 'transparent'
-          ? 'linear-gradient(135deg, transparent 0 45%, #A02128 45% 55%, transparent 55% 100%), #F7F9EF'
-          : swatch,
-        border: '1px solid rgba(0,0,0,0.35)',
-      }}/>}
-      <span style={{ flex: 1, lineHeight: 1.15 }}>{label}</span>
-    </button>
-  );
-
-  return (
-    <div style={{
-      // z-index выше overlay модалки персоналии (100) и лайтбокса (200),
-      // чтобы панель оставалась видна и работала во всех слоях.
-      position: 'fixed', top: S(96), right: open ? 12 : 0, zIndex: 250,
-      transition: 'right 220ms ease',
-      pointerEvents: 'auto',
-    }}>
-      {/* Tab to collapse/expand */}
-      <button onClick={() => setOpen(o => !o)} title={lang === 'ru' ? 'Настройки' : 'Settings'} style={{
-        position: 'absolute', top: 0, right: open ? 'auto' : 0,
-        left: open ? -32 : 'auto',
-        width: S(32), height: S(56),
-        background: '#000', color: '#D2B773',
-        border: '1px solid #D2B773',
-        borderRight: open ? 'none' : '1px solid #D2B773',
-        borderTopLeftRadius: 6, borderBottomLeftRadius: 6,
-        fontFamily: fonts.mono, fontSize: S(18), lineHeight: 1,
-        cursor: 'pointer',
-      }}>{open ? '›' : '‹'}</button>
-
-      {open && (
-        <div style={{
-          width: S(230),
-          background: 'rgba(0,0,0,0.92)',
-          backdropFilter: 'blur(6px)',
-          WebkitBackdropFilter: 'blur(6px)',
-          border: '1px solid #D2B773',
-          borderRadius: 6,
-          padding: S('14px 12px'),
-          boxShadow: '0 20px 50px rgba(0,0,0,0.65)',
-          maxHeight: S('calc(100vh - 120px)'),
-          overflowY: 'auto',
-        }} className="brand-scroll">
-          <div style={{
-            fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.32em',
-            color: '#D2B773', textTransform: 'uppercase',
-            marginBottom: S(10), paddingBottom: S(8),
-            borderBottom: '1px solid rgba(210,183,115,0.35)',
-          }}>
-            {lang === 'ru' ? '◇ Стиль' : '◇ Style'}
-          </div>
-          {groups.map((g, gi) => (
-            <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 14 : 0 }}>
-              <div style={{
-                fontFamily: fonts.mono, fontSize: S(9), letterSpacing: '0.28em',
-                color: 'rgba(247,249,239,0.55)', textTransform: 'uppercase',
-                marginBottom: S(6),
-              }}>{g[lang]}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: S(5) }}>
-                {Object.entries(g.variants).map(([id, v]) =>
-                  pill(id, v[lang], g.value === id, () => g.set(id),
-                    // swatch — bg цвет варианта (для card / header это hex)
-                    v.swatch || v.bg || (v.style && (typeof v.style.background === 'string' ? v.style.background : null)) || null)
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+// Панель «◇ Стиль» удалена 2026-08-04. Была инструментом дизайн-пасса:
+// переключала варианты шапки, фона списка и большой карточки прямо на
+// странице. На стенде это дефект, а не удобство — position fixed,
+// zIndex 250 выше модалки и лайтбокса, то есть специально недостижима
+// для перекрытия. Киоск живёт ОДНИМ непрерывным сеансом (§1): посетитель,
+// случайно перекрасивший раздел, ломает его всем следующим до перезапуска,
+// а сброса в панели не было.
+//
+// Исходник цел и лежит НЕ в этом репозитории — в дизайн-системе проекта
+// на claude.ai, `variants/tweaks-panel.jsx`. Оттуда же родом соседние
+// direction-a/b/c.jsx (там они variant-A…E.jsx), так что пустоты рядом
+// с ними — не следы удаления половины чего-то.
+//
+// Зона design вернёт панель, когда та будет показывать замеренный контраст
+// рядом со свотчем: выбор «на глаз» дал три ошибки за день — 1.45, 1.08,
+// 1.29 при норме 4.5. Варианты ниже остаются, панель выбора — нет.
 
 // Бренд-варианты цвета большой карточки (PersonDetail) — только из RAL
 const CARD_VARIANTS = {
@@ -1353,16 +1253,6 @@ function PersonalitiesApp() {
         textBgCfg={textBgCfg} textInkCfg={textInkCfg}
         frameCfg={frameCfg}/>}
 
-      {/* Плавающая панель стилей — справа, всегда видна */}
-      <SettingsPanel
-        lang={lang}
-        headerVariant={headerVariant} setHeaderVariant={setHeaderVariant}
-        bgVariant={bgVariant} setBgVariant={setBgVariant}
-        cardVariant={cardVariant} setCardVariant={setCardVariant}
-        textBgVariant={textBgVariant} setTextBgVariant={setTextBgVariant}
-        textInkVariant={textInkVariant} setTextInkVariant={setTextInkVariant}
-        frameVariant={frameVariant} setFrameVariant={setFrameVariant}
-      />
     </div>
   );
 }

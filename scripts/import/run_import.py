@@ -547,6 +547,132 @@ def geo_links(reports: List[str], failures: List[str]) -> dict:
     return _GEO_CACHE
 
 
+def write_pending_report(misses: dict, reports: List[str]) -> None:
+    """Развести «ждём музея» и «не доделали сами».
+
+    В одном числе «не разрезолвлено 597» смешаны две разные вещи: упоминания,
+    которые нельзя связать без ответа заказчика, и наша недоработка словаря.
+    Пока они слиты, непонятно ни сколько связности заблокировано снаружи,
+    ни что чинить после ответа.
+
+    Ключ таблицы — номер пункта письма, чтобы счётчик и письмо читались вместе.
+    """
+    import re as _re
+
+    rules = [(title,
+              [_re.compile(p, _re.I) for p in spec["include"]],
+              [_re.compile(p, _re.I) for p in spec.get("exclude", [])])
+             for title, spec in aliases_manual.PENDING_MUSEUM.items()]
+    pending = {r[0]: [] for r in rules}
+    ours = []
+    for phrase, n in misses.items():
+        for title, inc, exc in rules:
+            if any(p.search(phrase) for p in inc) \
+                    and not any(p.search(phrase) for p in exc):
+                pending[title].append((n, phrase))
+                break
+        else:
+            ours.append((n, phrase))
+
+    p_uniq = sum(len(v) for v in pending.values())
+    p_hits = sum(n for v in pending.values() for n, _ in v)
+    o_hits = sum(n for n, _ in ours)
+
+    # `misses` считает НЕУДАЧНЫЕ ОБРАЩЕНИЯ к словарю, а одно упоминание
+    # опрашивается дважды — при отрисовке текста и при сборе `related`.
+    # Для доли это неважно, а как абсолютное число оно вдвое завышено.
+    # Поэтому рядом печатаем то, что реально видит посетитель: сколько
+    # упоминаний осталось жирным курсивом в готовых файлах.
+    visible = 0
+    for folder in ("persons", "parties", "states", "events"):
+        d = CONTENT / folder
+        if not d.is_dir():
+            continue
+        for f in d.glob("*.json"):
+            if f.name.startswith("_") or ".gen." in f.name or ".patch." in f.name:
+                continue
+            txt = f.read_text(encoding="utf-8")
+            visible += len(re.findall(r"\*\*\*[^*]+\*\*\*", txt))
+    for year_file in (CONTENT / "chronicle").glob("19*.json"):
+        visible += len(re.findall(r"\*\*\*[^*]+\*\*\*",
+                                  year_file.read_text(encoding="utf-8")))
+
+    lines = ["# Чего ждём от музея — в упоминаниях", "",
+             "Считается прогоном импорта. Разделено, потому что в общем счётчике",
+             "«не разрезолвлено» смешаны две разные вещи: заблокированное",
+             "заказчиком и наша недоработка словаря алиасов.", "",
+             "| | фраз | упоминаний |", "|---|---:|---:|",
+             "| **ждёт музея** | %d | %d |" % (p_uniq, p_hits),
+             "| наша недоработка | %d | %d |" % (len(ours), o_hits), "",
+             "На экране остаётся жирным курсивом **%d** упоминаний: одно"
+             % visible,
+             "упоминание опрашивается словарём дважды — при отрисовке текста",
+             "и при сборе `related`, поэтому счётчик обращений выше вдвое.", ""]
+    for title, rows in sorted(pending.items()):
+        if not rows:
+            continue
+        rows.sort(reverse=True)
+        lines.append("## %s — %d упоминаний" % (title, sum(n for n, _ in rows)))
+        lines.append("")
+        lines += ["- %s — %d" % (ph, n) for n, ph in rows[:12]]
+        if len(rows) > 12:
+            lines.append("- …ещё %d фраз" % (len(rows) - 12))
+        lines.append("")
+    lines += ["## Наша недоработка — верх очереди", ""]
+    ours.sort(reverse=True)
+    lines += ["- %s — %d" % (ph, n) for n, ph in ours[:15]]
+    (SRC / "_pending-museum.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    reports.append("не разрезолвлено: на экране %d упоминаний курсивом; "
+                   "по обращениям к словарю ждут музея %d %% (%d из %d). "
+                   "Разбор → content-src/_pending-museum.md"
+                   % (visible, round(100 * p_hits / max(p_hits + o_hits, 1)),
+                      p_hits, p_hits + o_hits))
+
+
+def check_source_trace(reports: List[str]) -> None:
+    """Свежесть снимков, снятых с файлов ЧУЖИХ зон.
+
+    Часть данных мы не вычисляем, а забираем: координаты чипов Венна
+    считает зона `design` у себя в лаборатории, мы держим снимок.
+    Снимок незаметно устаревает — соседняя зона вправе пересчитать в любой
+    момент и не обязана нам сообщать.
+
+    Это НЕ гейт. Расхождение половину времени означает не дефект,
+    а «источник ушёл вперёд, мы ещё не забрали»: вечно красная проверка
+    не отличается от выключенной. Поэтому строка в отчёте — она отвечает
+    на вопрос «мои данные свежие?» в момент, когда он возникает.
+
+    До этого механизмом оповещения был оркестратор: за один день координаты
+    применялись дважды, и оба раза о новой версии узнавали из переписки,
+    а не из прогона.
+    """
+    import hashlib
+
+    data = read_json(SRC / "_source-trace.json") or {}
+    for rel_path, rec in sorted((data.get("sources") or {}).items()):
+        path = ROOT / rel_path
+        if not path.exists():
+            # Две причины, и вторая вероятнее: своя ветка отстала от main.
+            # Первый же прогон дал именно её, а сообщение винило соседа —
+            # мелочь, но ровно та, из-за которой правило начинают
+            # игнорировать.
+            reports.append("след источника: %s не найден. Либо ветка отстала "
+                           "от main (проверить: git log origin/<ветка>..origin/main), "
+                           "либо зона %s убрала лабораторию. Снимок в %s "
+                           "остаётся рабочим в обоих случаях"
+                           % (rel_path, rec.get("zone", "?"), rec.get("used_by", "?")))
+            continue
+        live = hashlib.sha256(path.read_bytes()).hexdigest()
+        if live == rec.get("sha256"):
+            continue
+        reports.append(
+            "⚠ след источника: %s ИЗМЕНИЛСЯ у зоны %s — снимок от %s (%s…), "
+            "живой файл (%s…). Забрать новую версию: %s"
+            % (rel_path, rec.get("zone", "?"), rec.get("taken", "?"),
+               (rec.get("sha256") or "")[:8], live[:8], rec.get("used_by", "?")))
+
+
 CAMP_ROWS: List[dict] = []
 
 
@@ -835,8 +961,25 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
             rec["title_full_ru"] = ent["title_ru"]
         if ent.get("abbr_ru"):
             rec["abbr_ru"] = ent["abbr_ru"]
-        if ent.get("camp") and not rec.get("camp"):
+        # Лагерь ПЕРЕЗАПИСЫВАЕТСЯ из справки, а не сохраняется от M0.
+        # Раньше стояло «поставить, если в индексе пусто», и кураторское
+        # значение переживало пересчёт: у Авксентьева в справке `rev-dem`
+        # по регалиям, а в индексе оставался `green` из подборки design-pass,
+        # где всё небелое и некрасное свалено в один лагерь. Плитка красилась
+        # зелёным, карточка называла революционную демократию — и ни одна
+        # сторона не жаловалась. Нашёл гейт сверки, а не глаз.
+        if ent.get("camp"):
             rec["camp"] = ent["camp"]
+        # Поля, которые ведёт человек или соседняя зона, а плитка обязана
+        # знать. Протаскивание в индекс — ОТДЕЛЬНЫЙ шаг, о котором ничто
+        # не напоминает: три из них я завела и не протащила в тот же день,
+        # когда закрывала ровно этот класс. Ловится гейтом сверки
+        # (scripts/validate-content.mjs), а не памятью автора.
+        for f in ("territory_id", "map_id", "map_status", "open_question_ru"):
+            if ent.get(f) is not None:
+                rec[f] = ent[f]
+            else:
+                rec.pop(f, None)
         if ent.get("title_chip_ru"):
             # Короткая подпись чипа. Полное название остаётся в `title_ru`
             # и в карточке — на диаграмме оно физически не помещается.
@@ -889,7 +1032,18 @@ def rebuild_index(kind: str, entities: List[dict], registry: IdRegistry,
                 rec.pop(k, None)
         # Сортировка — по тому, что написано на плитке. Иначе «РСФСР» едет
         # в списке на «российская социалистическая…», а глазом это не сходится.
-        rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
+        # Ключ сортировки списка. У ЛИЧНОСТЕЙ берём ключ справки: он считан
+        # от фамилии, а подпись плитки у трёх записей досталась от M0
+        # с инициалами («В. И. ЛЕНИН»), и по ней Колчак встаёт перед
+        # Авксентьевым — список перестаёт быть алфавитным. Зона `ui` уже
+        # обходила это регуляркой, срезающей инициалы; обход теперь не нужен.
+        # У остальных видов сортируем по подписи плитки: посетитель ищет
+        # глазами то, что написано, а «ЗСФСР» по полному названию уехало бы
+        # на «Ф».
+        if kind == "person" and ent.get("sort_key_ru"):
+            rec["sort_key_ru"] = ent["sort_key_ru"]
+        else:
+            rec["sort_key_ru"] = _sort_key(rec.get("title_ru")) or ent.get("sort_key_ru")
         rec["has_card"] = True
         rec.pop("stub", None)
         by_id[eid] = rec
@@ -1208,6 +1362,7 @@ def main(argv=None) -> int:
             rebuild_index(kind, built, registry, reports)
 
     reserve_event_index(ctx.events_by_no, reports)
+    check_source_trace(reports)
     write_tz_report(by_kind)
 
     date_rows: List[dict] = []
@@ -1276,10 +1431,7 @@ def main(argv=None) -> int:
 
     reports.extend(registry.notes)
     if aliases.misses:
-        top = sorted(aliases.misses.items(), key=lambda kv: -kv[1])[:12]
-        reports.append("не разрезолвлено упоминаний: %d уникальных; чаще всего — %s"
-                       % (len(aliases.misses),
-                          ", ".join("%s (%d)" % (p, n) for p, n in top)))
+        write_pending_report(aliases.misses, reports)
     registry.save()
     write_json(SRC / "_manifest.json", manifest)
     write_import_report(stats, reports, counts)

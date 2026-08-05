@@ -207,6 +207,20 @@
     font-size: calc(34px * var(--ui-scale, 1));
     line-height: 1;
   }
+  /* Зона нажатия добирается до нормы §1, видимый кружок остаётся 72:
+     кнопка закрытия в 120 px выглядела бы плашкой рядом с заголовком панели.
+     Тот же приём, что у .back-link в pages.css и у кнопки «Разделы».
+     Замерено попаданием: до этого зона была 72 при норме 120 — в стилях
+     этого не видно, промах виден только пальцем. */
+  .toc-close { position: relative; }
+  .toc-close::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: var(--touch-hit, 120px);
+    height: var(--touch-hit, 120px);
+    transform: translate(-50%, -50%);
+  }
   .toc-close:active { transform: scale(0.96); }
 
   .toc-list { overflow-y: auto; -webkit-overflow-scrolling: touch; }

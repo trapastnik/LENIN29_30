@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200.7 367.9">
+  <!-- Союзники · Антанта. Сгенерировано
+       scripts/maps/build_territory_maps.py.
+       geometry_kind presence: своя проекция,
+       с базой не складывается. -->
+<!-- Союзная интервенция: точки присутствия. -->
+  <!-- Сгенерировано scripts/maps/build_presence.py из полей
+       sites в public/content/geo/_index.json — руками не править.
+       Источник правды — реестр, координаты там в градусах.
+       Проекция равнопромежуточная (x = долгота, y = минус
+       широта), 10 единиц на градус. Это схема
+       высадок, а не карта: точность проекции смысла не несёт,
+       обратимость несёт. Появится подробная база с Дальним
+       Востоком — файл перегенерируется в её координаты без
+       правки данных.
+       Цвет по участнику не задан: шесть стран это
+       переиспользуемая роль, то есть токены зоны design. -->
+<g id="sites">
+  <circle id="site-murmansk" cx="63.4" cy="40.0" r="4" data-actors="gb"/>
+  <circle id="site-arkhangelsk" cx="138.1" cy="84.3" r="4" data-actors="gb,fr,us"/>
+  <circle id="site-vladivostok" cx="1051.6" cy="298.5" r="4" data-actors="jp,gb,us"/>
+  <circle id="site-sevastopol" cx="68.0" cy="283.5" r="4" data-actors="gb,fr"/>
+  <circle id="site-odessa" cx="40.0" cy="264.9" r="4" data-actors="fr"/>
+  <circle id="site-kherson" cx="58.9" cy="263.3" r="4" data-actors="fr"/>
+  <circle id="site-baku" cx="231.4" cy="325.6" r="4" data-actors="gb"/>
+  <circle id="site-erivan" cx="177.8" cy="327.9" r="4" data-actors="gb"/>
+  <circle id="site-batum" cx="149.1" cy="313.3" r="4" data-actors="gb"/>
+  <circle id="site-severny-sakhalin" cx="1160.7" cy="209.7" r="4" data-actors="jp"/>
+</g>
+<g id="labels_sites">
+  <text x="69.4" y="35.0" font-size="12">Мурманск</text>
+  <text x="144.1" y="79.3" font-size="12">Архангельск</text>
+  <text x="1057.6" y="293.5" font-size="12">Владивосток</text>
+  <text x="74.0" y="278.5" font-size="12">Севастополь</text>
+  <text x="46.0" y="259.9" font-size="12">Одесса</text>
+  <text x="64.9" y="258.3" font-size="12">Херсон</text>
+  <text x="237.4" y="320.6" font-size="12">Баку</text>
+  <text x="183.8" y="322.9" font-size="12">Эривань</text>
+  <text x="155.1" y="308.3" font-size="12">Батум</text>
+  <text x="1166.7" y="204.7" font-size="12">Северный Сахалин</text>
+</g>
+</svg>

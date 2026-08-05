@@ -5,7 +5,6 @@
   "camp": "green",
   "title_ru": "Зелёные",
   "title_en": null,
-  "sort_key_ru": "зеленые",
   "title_full_ru": null,
   "abbr_ru": [],
   "aka_ru": [],
@@ -52,6 +51,6 @@
     "over-tz-limit"
   ],
   "_is_general": true,
-  "x": 14.56,
-  "y": 92.04
+  "x": 10.938,
+  "y": 92.963
 }
