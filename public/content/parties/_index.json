@@ -70,15 +70,15 @@
       "venn_groups": [
         "red"
       ],
-      "x": 8.49,
-      "y": 54.4
+      "x": 6.979,
+      "y": 54.074
     },
     {
       "id": "bolsheviks",
       "title_ru": "Большевики",
       "camp": "red",
-      "x": 8.49,
-      "y": 46.99,
+      "x": 6.979,
+      "y": 47.963,
       "abbr_ru": [
         "РСДРП(б)",
         "РКП(б)"
@@ -102,8 +102,8 @@
       "id": "left-srs",
       "title_ru": "Левые эсеры",
       "camp": "red",
-      "x": 24.48,
-      "y": 31.76,
+      "x": 24.479,
+      "y": 29.074,
       "has_card": true,
       "abbr_ru": [
         "ПЛСР, левые с.-р."
@@ -133,15 +133,15 @@
       "venn_groups": [
         "rev-dem"
       ],
-      "x": 36.16,
-      "y": 16.44
+      "x": 34.479,
+      "y": 16.852
     },
     {
       "id": "srs",
       "title_ru": "Социалисты-революционеры",
       "camp": "rev-dem",
-      "x": 36.16,
-      "y": 38.66,
+      "x": 50.052,
+      "y": 29.074,
       "abbr_ru": [
         "ПСР"
       ],
@@ -163,8 +163,8 @@
       "id": "mensheviks",
       "title_ru": "Меньшевики",
       "camp": "rev-dem",
-      "x": 36.16,
-      "y": 31.25,
+      "x": 50.052,
+      "y": 22.963,
       "has_card": true,
       "abbr_ru": [
         "РСДРП",
@@ -188,8 +188,8 @@
       "id": "narodnie-socialists",
       "title_ru": "Трудовая народно-социалистическая партия",
       "camp": "rev-dem",
-      "x": 42.49,
-      "y": 31.25,
+      "x": 50.052,
+      "y": 16.852,
       "has_card": true,
       "abbr_ru": [
         "ТНСП"
@@ -213,8 +213,8 @@
       "id": "committee-salvation",
       "title_ru": "Комитет спасения Родины и революции",
       "camp": "rev-dem",
-      "x": 42.49,
-      "y": 23.84,
+      "x": 34.479,
+      "y": 35.185,
       "has_card": true,
       "dates_display_ru": "Октябрь–ноябрь 1917",
       "lead_media": "media/parties/committee-salvation/01",
@@ -235,8 +235,8 @@
       "id": "union-constituent",
       "title_ru": "Союз защиты Учредительного собрания",
       "camp": "rev-dem",
-      "x": 36.16,
-      "y": 23.84,
+      "x": 34.479,
+      "y": 29.074,
       "has_card": true,
       "abbr_ru": [
         "ПСЗУС, СЗУС"
@@ -266,15 +266,15 @@
       "venn_groups": [
         "white"
       ],
-      "x": 88.91,
-      "y": 19.07
+      "x": 86.979,
+      "y": 29.815
     },
     {
       "id": "cadets",
       "title_ru": "Конституционно-демократическая партия",
       "camp": "white",
-      "x": 88.91,
-      "y": 26.48,
+      "x": 86.979,
+      "y": 35.926,
       "has_card": true,
       "abbr_ru": [
         "КДП",
@@ -299,8 +299,8 @@
       "id": "alekseev-org",
       "title_ru": "Алексеевская организация · Добровольческая армия",
       "camp": "white",
-      "x": 88.91,
-      "y": 33.89,
+      "x": 86.979,
+      "y": 42.037,
       "has_card": true,
       "title_full_ru": "Алексеевская организация (Добровольческая армия)",
       "dates_display_ru": "Октябрь–декабрь 1917 г.",
@@ -322,8 +322,8 @@
       "id": "right-center",
       "title_ru": "Правый центр",
       "camp": "white",
-      "x": 88.91,
-      "y": 41.3,
+      "x": 86.979,
+      "y": 48.148,
       "has_card": true,
       "dates_display_ru": "1918",
       "lead_media": "media/parties/right-center/01",
@@ -342,8 +342,8 @@
       "id": "national-center",
       "title_ru": "Национальный центр",
       "camp": "white",
-      "x": 88.91,
-      "y": 48.7,
+      "x": 86.979,
+      "y": 54.259,
       "has_card": true,
       "abbr_ru": [
         "ВНЦ",
@@ -366,8 +366,8 @@
       "id": "union-defence",
       "title_ru": "Союз защиты Родины и свободы",
       "camp": "rev-dem",
-      "x": 74.48,
-      "y": 36.25,
+      "x": 76.562,
+      "y": 23.704,
       "has_card": true,
       "abbr_ru": [
         "СЗРиС"
@@ -391,8 +391,8 @@
       "id": "union-renewal",
       "title_ru": "Союз возрождения России",
       "camp": "rev-dem",
-      "x": 74.48,
-      "y": 28.84,
+      "x": 76.562,
+      "y": 17.593,
       "has_card": true,
       "abbr_ru": [
         "СВР"
@@ -420,15 +420,15 @@
       "venn_groups": [
         "green"
       ],
-      "x": 14.56,
-      "y": 92.04
+      "x": 10.938,
+      "y": 92.963
     },
     {
       "id": "anarchists",
       "title_ru": "Анархисты",
       "camp": "green",
-      "x": 14.56,
-      "y": 84.63,
+      "x": 10.938,
+      "y": 86.852,
       "has_card": true,
       "dates_display_ru": "Первая треть ХХ в.",
       "lead_media": "media/parties/anarchists/01",
@@ -454,15 +454,15 @@
       "venn_groups": [
         "national"
       ],
-      "x": 50.41,
-      "y": 64.81
+      "x": 62.187,
+      "y": 57.222
     },
     {
       "id": "muslim-socialists",
       "title_ru": "Мусульманские социалистические комитеты",
       "camp": "national",
-      "x": 19.77,
-      "y": 67.04,
+      "x": 18.021,
+      "y": 65.556,
       "has_card": true,
       "abbr_ru": [
         "МСК"
@@ -501,8 +501,8 @@
         "national",
         "white"
       ],
-      "x": 70.1,
-      "y": 54.35
+      "x": 73.021,
+      "y": 63.519
     },
     {
       "id": "basmachestvo",
@@ -523,8 +523,8 @@
         "green",
         "national"
       ],
-      "x": 26.35,
-      "y": 79.26
+      "x": 26.354,
+      "y": 78.704
     },
     {
       "id": "belorusskaya-sotsialisticheskaya-gromada",
@@ -547,8 +547,8 @@
         "national",
         "rev-dem"
       ],
-      "x": 40.86,
-      "y": 46.11,
+      "x": 40.312,
+      "y": 53.333,
       "title_chip_ru": "Белорусская громада"
     },
     {
@@ -575,8 +575,8 @@
         "national",
         "red"
       ],
-      "x": 13.44,
-      "y": 67.04,
+      "x": 18.021,
+      "y": 71.667,
       "open_question_ru": "Лагерь `national`, но в 1920 году партия влилась в КП(б)У — довод за `red`."
     },
     {
@@ -598,8 +598,8 @@
         "national",
         "rev-dem"
       ],
-      "x": 40.86,
-      "y": 53.52
+      "x": 53.698,
+      "y": 53.333
     },
     {
       "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
@@ -620,8 +620,8 @@
         "national",
         "rev-dem"
       ],
-      "x": 47.2,
-      "y": 46.11,
+      "x": 40.312,
+      "y": 47.222,
       "title_chip_ru": "Грузинские меньшевики",
       "open_question_ru": "Лагерь `national` по разделу витрины (правящая партия ГДР), но по идеологии меньшевики — `rev-dem`."
     },
@@ -642,8 +642,8 @@
       "venn_groups": [
         "national"
       ],
-      "x": 50.41,
-      "y": 72.22
+      "x": 62.187,
+      "y": 75.556
     },
     {
       "id": "latyshskiy-krestyanskiy-soyuz",
@@ -666,8 +666,8 @@
       "venn_groups": [
         "national"
       ],
-      "x": 50.41,
-      "y": 79.63
+      "x": 62.187,
+      "y": 81.667
     },
     {
       "id": "musavat",
@@ -686,8 +686,8 @@
       "venn_groups": [
         "national"
       ],
-      "x": 56.74,
-      "y": 64.81
+      "x": 62.187,
+      "y": 63.333
     },
     {
       "id": "poaley-tsion",
@@ -712,8 +712,8 @@
         "national",
         "rev-dem"
       ],
-      "x": 47.2,
-      "y": 53.52
+      "x": 53.698,
+      "y": 47.222
     },
     {
       "id": "sibirskoe-oblastnichestvo",
@@ -733,8 +733,8 @@
       "venn_groups": [
         "rev-dem"
       ],
-      "x": 42.49,
-      "y": 16.44
+      "x": 34.479,
+      "y": 22.963
     },
     {
       "id": "sotsial-demokraticheskaya-partiya-finlya",
@@ -758,8 +758,8 @@
         "national",
         "red"
       ],
-      "x": 19.77,
-      "y": 59.63,
+      "x": 18.021,
+      "y": 59.444,
       "title_chip_ru": "СДП Финляндии",
       "open_question_ru": "Лагерь `national`, но в 1918 году партия возглавила Финляндскую Социалистическую Рабочую Республику — довод за `red`."
     },
@@ -784,8 +784,8 @@
       "venn_groups": [
         "national"
       ],
-      "x": 56.74,
-      "y": 72.22,
+      "x": 62.187,
+      "y": 69.444,
       "title_chip_ru": "Украинская СДРП"
     }
   ],
