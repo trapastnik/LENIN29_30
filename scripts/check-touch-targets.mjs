@@ -33,7 +33,14 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BASELINE = path.join(ROOT, 'scripts', 'check-touch-targets.baseline.json');
 const CHROME = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const BASE = process.env.MTK_BASE_URL || 'http://127.0.0.1:8080';
+// Свой статик-сервер на своём порту — по умолчанию. Полагаться на чужой,
+// поднятый заранее, нельзя: он может умереть посреди прогона, и тогда часть
+// сцен померится, а часть отдаст chrome-error. Один раз так и вышло: две
+// сцены прошли, пять получили страницу ошибки. MTK_BASE_URL переопределяет —
+// для отладки на уже запущенном сервере.
+const ВНЕШНИЙ = process.env.MTK_BASE_URL || null;
+const ПОРТ_СТАТИКИ = 8100 + (process.pid % 600);
+const BASE = ВНЕШНИЙ || `http://127.0.0.1:${ПОРТ_СТАТИКИ}`;
 const PORT = 9222 + (process.pid % 700);
 
 // Сцены. Раздел показывает не всё сразу: у states.html карточки живут
@@ -217,6 +224,14 @@ const PROBE = (подготовка) => `(async () => {
 
   return JSON.stringify({
     цели: [...итог.values()],
+    // Адрес и признак служебной страницы Chrome. Без этого гейт мерит
+    // экран «не удалось открыть» как обычную сцену: там есть кнопки
+    // Reload и Details, целей больше нуля, и проверка на пустой вход
+    // молчит. Один раз так и вышло — три кнопки страницы ошибки уехали
+    // в baseline как известные дефекты «главной».
+    адрес: location.href,
+    страницаОшибки: !!document.querySelector('#main-frame-error, .error-code')
+                    || /chrome-error/.test(location.protocol),
     режим: {
       css: [innerWidth, innerHeight], dpr: devicePixelRatio,
       физически: [innerWidth * devicePixelRatio, innerHeight * devicePixelRatio],
@@ -273,6 +288,15 @@ async function мерить(сцена) {
   const ws = new WebSocket(tab.webSocketDebuggerUrl);
   await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
   await cdp(ws, 'Page.enable');
+  // ⚠️ --window-size задаёт ОКНО, а не холст. В headless это молча съедает
+  // 87 px высоты: при --window-size=1920,1080 вьюпорт выходит 1920×993.
+  // Восемь процентов высоты — не мелочь: у диаграммы Венна на них меняется
+  // весь кадр (1425×801 против 1580×888), а с ним и расстояния между целями.
+  // Точный холст задаём эмуляцией, флаг окна оставляем — он влияет на то,
+  // каким Chrome считает экран.
+  await cdp(ws, 'Emulation.setDeviceMetricsOverride', {
+    width: 1920, height: 1080, deviceScaleFactor: 2, mobile: false,
+  });
   // Ждём отрисовку и — обязательно — шрифты: до fonts.ready строка нарисована
   // запасным начертанием и уже настоящей, а от ширины подписи зависят размеры.
   await sleep(3400);
@@ -291,13 +315,29 @@ async function main() {
   const обновить = process.argv.includes('--update-baseline');
   const всё = process.argv.includes('--all');
 
-  try {
-    const r = await fetch(BASE + '/expo/index.html');
-    if (!r.ok) throw new Error(String(r.status));
-  } catch (e) {
-    console.error(`✗ ${BASE} не отвечает (${e.message}). Подними сервер: npm run kiosk:serve`);
-    process.exit(1);
+  // Статику поднимаем сами, если её нет. Гейт, требующий заранее запущенного
+  // сервера, в `npm run check` не поставишь, а именно там он и нужен.
+  let свой = null;
+  const живой = async () => {
+    try { return (await fetch(BASE + '/expo/index.html')).ok; } catch { return false; }
+  };
+
+  if (!await живой()) {
+    if (ВНЕШНИЙ) {
+      console.error(`✗ ${ВНЕШНИЙ} не отвечает. Подними сервер или убери MTK_BASE_URL — тогда подниму свой.`);
+      process.exit(1);
+    }
+    свой = spawn('python3', ['-m', 'http.server', String(ПОРТ_СТАТИКИ), '--bind', '127.0.0.1',
+                             '--directory', path.join(ROOT, 'dist')], { stdio: 'ignore' });
+    for (let i = 0; i < 40; i++) { if (await живой()) break; await sleep(250); }
+    if (!await живой()) {
+      console.error(`✗ не удалось поднять статику на ${BASE}. Проверь, что dist/ собран: npm run build`);
+      try { свой.kill(); } catch {}
+      process.exit(1);
+    }
   }
+  const стопСервер = () => { if (свой) { try { свой.kill(); } catch {} свой = null; } };
+  process.on('exit', стопСервер);
 
   const chrome = spawn(CHROME, [
     '--headless=new', `--remote-debugging-port=${PORT}`,
@@ -313,7 +353,7 @@ async function main() {
     try { await fetch(`http://127.0.0.1:${PORT}/json/version`); поднялся = true; break; }
     catch { await sleep(250); }
   }
-  if (!поднялся) { console.error(`✗ Chrome не поднялся. Проверь путь: ${CHROME}`); убить(); process.exit(1); }
+  if (!поднялся) { console.error(`✗ Chrome не поднялся. Проверь путь: ${CHROME}`); убить(); стопСервер(); process.exit(1); }
 
   // База хранит ЧИСЛО по каждому ключу, а не просто наличие. Три кнопки
   // «Справка» в групповых блоках Венна неотличимы по подписи и роли, и без
@@ -344,7 +384,13 @@ async function main() {
     целейВсего += n;
 
     // Пустой вход — ошибка, а не отсутствие ошибок (§13). Ноль целей значит,
-    // что сцена не отрисовалась, а не что на ней всё хорошо.
+    // что сцена не отрисовалась, а не что на ней всё хорошо. И отдельно —
+    // страница ошибки Chrome: она НЕ пустая, кнопки на ней есть, поэтому
+    // проверка по числу целей её пропускает.
+    if (res.страницаОшибки || !String(res.адрес).startsWith(BASE)) {
+      пустые.push(`${сцена.имя}: страница не открылась, адрес ${res.адрес}`);
+      continue;
+    }
     if (n === 0 || /НЕ УДАЛАСЬ/.test(m.подготовка)) {
       пустые.push(`${сцена.имя} (целей ${n}, подготовка: ${m.подготовка})`);
       continue;
@@ -363,6 +409,7 @@ async function main() {
     }
   }
   убить();
+  стопСервер();
 
   console.log(`\nпроверено: ${целейВсего}/${целейВсего} целей на ${сценОК}/${SCENES.length} сценах`);
 
