@@ -250,8 +250,11 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 14px 24px;
-      min-height: 48px;
-      border-radius: 30px;
+      /* 48 было третьим местом с устаревшим числом: контракт перешёл
+         на два порога 120/64 третьего августа, а 48 осталось здесь,
+         в линтере и в дизайн-системе. «Назад» — основная навигация. */
+      min-height: var(--touch-hit, 120px);
+      border-radius: var(--r-pill, 999px);
       cursor: pointer;
       transition: background .12s, color .12s, transform .08s;
       border: 1.5px solid var(--brass);
