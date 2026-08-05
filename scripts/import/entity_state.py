@@ -79,7 +79,6 @@ def build(doc, ctx) -> dict:
         "camp": ctx.camp,
         "title_ru": title_ru,
         "title_en": None,
-        "sort_key_ru": spravka.sort_key(title_ru),
         "abbr_ru": fields.get("abbr", []),
         "aka_ru": fields.get("aka", []) + fields.get("title_short", []),
         "aka_raw_ru": "\n".join(raw_fields.get("aka", [])) or None,

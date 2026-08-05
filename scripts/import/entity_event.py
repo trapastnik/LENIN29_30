@@ -63,7 +63,6 @@ def build(doc, ctx) -> dict:
         "camp": None,
         "title_ru": title_ru,
         "title_en": None,
-        "sort_key_ru": spravka.sort_key(title_ru),
         "dates": date,
         "date": date,
         "summary_ru": summary_ru or None,
