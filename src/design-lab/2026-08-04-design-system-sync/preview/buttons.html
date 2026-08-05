@@ -1,0 +1,42 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:var(--graphite);color:var(--paper-white);}
+  .wrap{padding:24px 28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  /* Порог управляющего элемента — 64 (--touch-min), не 48.
+     Здесь стояло 48 с апреля: то же число, что уехало в линтер проекта
+     и прожило там три месяца. */
+  .btn{font-family:var(--font-mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+       padding:14px 24px;min-height:var(--touch-min,64px);border-radius:var(--r-pill);
+       border:1.5px solid var(--brass);background:transparent;color:var(--brass);cursor:pointer;
+       display:inline-flex;align-items:center;}
+  .btn:active{background:var(--brass);color:var(--iron-grey);transform:scale(.98);}
+  .btn-solid{background:var(--brass);color:var(--iron-grey);}
+  .btn-red{border-color:var(--signal-red);color:var(--signal-red);}
+  .btn-square{width:64px;height:64px;border-radius:32px;padding:0;font-family:var(--font-display);
+              font-size:32px;background:rgba(10,6,3,.85);color:var(--paper-white);
+              border:1.5px solid var(--brass);min-height:var(--touch-min,64px);}
+  /* Основная навигация — 120 (--touch-hit). Плитки разделов, годы ленты,
+     «к экспозиции», переключатель языка. */
+  .btn-primary{min-height:var(--touch-hit,120px);padding:0 48px;font-size:15px;
+               background:var(--brass);color:var(--iron-grey);border-color:var(--brass);}
+  .note{flex-basis:100%;font-family:var(--font-mono);font-size:11px;line-height:1.65;
+        opacity:.8;max-width:72ch;margin-top:6px;}
+  .note b{color:var(--brass);}
+</style></head><body><div class="wrap">
+  <button class="btn btn-primary">← К экспозиции</button>
+  <button class="btn">Outline · brass</button>
+  <button class="btn btn-solid">Solid · brass</button>
+  <button class="btn btn-red">Outline · red</button>
+  <button class="btn btn-square">×</button>
+  <p class="note">
+    Порогов два: <b>120px</b> (<code>--touch-hit</code>) для основной навигации —
+    первая кнопка; <b>64px</b> (<code>--touch-min</code>) для управляющих элементов
+    внутри разделов — остальные. Пять чипов по 120 съедают треть экрана.
+    Раньше здесь стояло 48 — разбор в карточке <b>Touch target</b>.
+    Мерить попаданием, а не стилями: <code>elementFromPoint</code> по верху,
+    центру и низу.
+  </p>
+</div></body></html>
