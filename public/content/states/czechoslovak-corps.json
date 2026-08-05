@@ -159,5 +159,6 @@
     "sha256": "9340d013c75be2cc04b7dfa630d3db816f4e273f9965cc3f6541c59d3b6836c8",
     "parser": "1.0.0"
   },
-  "flags": []
+  "flags": [],
+  "map_id": "czechoslovak-corps-corridor"
 }

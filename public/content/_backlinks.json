@@ -1,0 +1,5326 @@
+{
+  "schema": 1,
+  "_note": "Обратный индекс: кто ссылается на справку. Генерируется `scripts/import/backlinks.py`, руками не правится. Ключа нет — блок не рисуется. `kind` — сегмент маршрута (`#/person/lenin`), не каталог.",
+  "cap": 8,
+  "items": {
+    "adr": {
+      "refs": [
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 3
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 2
+        },
+        {
+          "id": "bakinskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Бакинская операция РККА",
+          "n": 2
+        },
+        {
+          "id": "musavat",
+          "kind": "party",
+          "title_ru": "Мусават",
+          "n": 1
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 1
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 1
+        },
+        {
+          "id": "respublika-armeniya",
+          "kind": "state",
+          "title_ru": "Республика Армения",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "alash": {
+      "chronicle_mentions": 1
+    },
+    "alekseev": {
+      "refs": [
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 3
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 2
+        },
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 1
+        },
+        {
+          "id": "kaledin",
+          "kind": "person",
+          "title_ru": "А. М. КАЛЕДИН",
+          "n": 1
+        },
+        {
+          "id": "grishin",
+          "kind": "person",
+          "title_ru": "А. Н. ГРИШИН (АЛМАЗОВ)",
+          "n": 1
+        },
+        {
+          "id": "shulgin",
+          "kind": "person",
+          "title_ru": "В. В. ШУЛЬГИН",
+          "n": 1
+        },
+        {
+          "id": "milyukov",
+          "kind": "person",
+          "title_ru": "П. Н. МИЛЮКОВ",
+          "n": 1
+        },
+        {
+          "id": "union-defence",
+          "kind": "party",
+          "title_ru": "Союз защиты Родины и свободы",
+          "n": 1
+        }
+      ],
+      "more": 1,
+      "chronicle_mentions": 5
+    },
+    "alekseev-org": {
+      "refs": [
+        {
+          "id": "grishin",
+          "kind": "person",
+          "title_ru": "А. Н. ГРИШИН (АЛМАЗОВ)",
+          "n": 3
+        },
+        {
+          "id": "kornilov",
+          "kind": "person",
+          "title_ru": "Л. Г. КОРНИЛОВ",
+          "n": 3
+        },
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 2
+        },
+        {
+          "id": "shulgin",
+          "kind": "person",
+          "title_ru": "В. В. ШУЛЬГИН",
+          "n": 2
+        },
+        {
+          "id": "bych",
+          "kind": "person",
+          "title_ru": "Л. Л. БЫЧ",
+          "n": 2
+        },
+        {
+          "id": "poluyan",
+          "kind": "person",
+          "title_ru": "Я. В. ПОЛУЯН",
+          "n": 2
+        },
+        {
+          "id": "great-don-host",
+          "kind": "state",
+          "title_ru": "Всевеликое Войско Донское",
+          "n": 2
+        },
+        {
+          "id": "sksr",
+          "kind": "state",
+          "title_ru": "Северо-Кавказская Советская Республика",
+          "n": 2
+        }
+      ],
+      "more": 10,
+      "chronicle_mentions": 7
+    },
+    "allies-entente": {
+      "refs": [
+        {
+          "id": "litovskaya-respublika",
+          "kind": "state",
+          "title_ru": "Литовская Республика",
+          "n": 3
+        },
+        {
+          "id": "right-center",
+          "kind": "party",
+          "title_ru": "Правый центр",
+          "n": 2
+        },
+        {
+          "id": "union-defence",
+          "kind": "party",
+          "title_ru": "Союз защиты Родины и свободы",
+          "n": 2
+        },
+        {
+          "id": "estonskaya-respublika",
+          "kind": "state",
+          "title_ru": "Эстонская Республика",
+          "n": 2
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 1
+        },
+        {
+          "id": "national-center",
+          "kind": "party",
+          "title_ru": "Национальный центр",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 1
+        }
+      ],
+      "more": 5
+    },
+    "anarchists": {
+      "refs": [
+        {
+          "id": "makhno",
+          "kind": "person",
+          "title_ru": "Н. И. МАХНО",
+          "n": 1
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 1
+        },
+        {
+          "id": "union-defence",
+          "kind": "party",
+          "title_ru": "Союз защиты Родины и свободы",
+          "n": 1
+        },
+        {
+          "id": "kronshtadtskoe-vosstanie-kronshtadtskiy",
+          "kind": "state",
+          "title_ru": "Кронштадтское восстание («Кронштадтский мятеж»)",
+          "n": 1
+        },
+        {
+          "id": "osr",
+          "kind": "state",
+          "title_ru": "Одесская Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 1
+        },
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "anvelt": {
+      "refs": [
+        {
+          "id": "etk",
+          "kind": "state",
+          "title_ru": "Эстляндская Трудовая Коммуна",
+          "n": 2
+        }
+      ]
+    },
+    "armenian-ssr": {
+      "refs": [
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 2
+        },
+        {
+          "id": "myasnikov",
+          "kind": "person",
+          "title_ru": "МЯСНИКОВ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "respublika-armeniya",
+          "kind": "state",
+          "title_ru": "Республика Армения",
+          "n": 1
+        },
+        {
+          "id": "georgian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Грузия",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "avksentiev": {
+      "refs": [
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 2
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 2
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 2
+        },
+        {
+          "id": "zenzinov",
+          "kind": "person",
+          "title_ru": "В. М. ЗЕНЗИНОВ",
+          "n": 1
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        }
+      ]
+    },
+    "azerbaijani-ssr": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "adr",
+          "kind": "state",
+          "title_ru": "Азербайджанская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 1
+        },
+        {
+          "id": "georgian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Грузия",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "bakinskaya-operatsiya-rkka": {
+      "chronicle_jumps": 1
+    },
+    "bashkir-assr": {
+      "chronicle_mentions": 1
+    },
+    "basmachestvo": {
+      "refs": [
+        {
+          "id": "ibragim-bek",
+          "kind": "person",
+          "title_ru": "ИБРАГИМ-БЕК ИБРАГИМ-БЕК (ЧАКАБАЙ, ЧАКАБАЕВ)",
+          "n": 6
+        },
+        {
+          "id": "bnsr",
+          "kind": "state",
+          "title_ru": "Бухарская Народная Советская Республика",
+          "n": 3
+        },
+        {
+          "id": "turkestan-sfr",
+          "kind": "state",
+          "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+          "n": 2
+        },
+        {
+          "id": "turkestanskiy-front",
+          "kind": "event",
+          "title_ru": "Туркестанский фронт",
+          "n": 2
+        },
+        {
+          "id": "khodzhaev",
+          "kind": "person",
+          "title_ru": "Ф. Г. ХОДЖАЕВ",
+          "n": 1
+        },
+        {
+          "id": "bukharskiy-emirat",
+          "kind": "state",
+          "title_ru": "Бухарский эмират",
+          "n": 1
+        },
+        {
+          "id": "khnsr",
+          "kind": "state",
+          "title_ru": "Хорезмская Народная Советская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "belorussian-ssr": {
+      "refs": [
+        {
+          "id": "ussr",
+          "kind": "state",
+          "title_ru": "Союз Советских Социалистических Республик",
+          "n": 3
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 2
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "litovsko-belorusskaya-sotsialisticheskay",
+          "kind": "state",
+          "title_ru": "Литовско-Белорусская Социалистическая Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "zsfsr",
+          "kind": "state",
+          "title_ru": "Федеративный Союз Социалистических Советских Республик Закавказья (с декабря 1922 г. – Закавказская Социалистическая Федеративная Советская Республика)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 4
+    },
+    "belorusskaya-sotsialisticheskaya-gromada": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 1
+        }
+      ]
+    },
+    "blyukher": {
+      "refs": [
+        {
+          "id": "pokhod-uralskoy-armii-blyukhera",
+          "kind": "event",
+          "title_ru": "Поход Уральской армии В. К. Блюхера",
+          "n": 3
+        },
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 2
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 1
+        },
+        {
+          "id": "kakhovka",
+          "kind": "event",
+          "title_ru": "Бои на Каховском плацдарме",
+          "n": 1
+        },
+        {
+          "id": "volochaevskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Волочаевская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "bnsr": {
+      "refs": [
+        {
+          "id": "khodzhaev",
+          "kind": "person",
+          "title_ru": "Ф. Г. ХОДЖАЕВ",
+          "n": 2
+        },
+        {
+          "id": "ibragim-bek",
+          "kind": "person",
+          "title_ru": "ИБРАГИМ-БЕК ИБРАГИМ-БЕК (ЧАКАБАЙ, ЧАКАБАЕВ)",
+          "n": 1
+        },
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "bukharskiy-emirat",
+          "kind": "state",
+          "title_ru": "Бухарский эмират",
+          "n": 1
+        },
+        {
+          "id": "bukharskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Бухарская операция Туркестанского фронта РККА",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "bogaevskiy": {
+      "refs": [
+        {
+          "id": "great-don-host",
+          "kind": "state",
+          "title_ru": "Всевеликое Войско Донское",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "boldyrev": {
+      "refs": [
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 2
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 2
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "orenburg-cossack-host",
+          "kind": "state",
+          "title_ru": "Оренбургское казачье войско",
+          "n": 1
+        },
+        {
+          "id": "permskaya-operatsiya-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Пермская операция Русской армии («Пермская катастрофа» РККА)",
+          "n": 1
+        }
+      ]
+    },
+    "bolsheviks": {
+      "refs": [
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 10
+        },
+        {
+          "id": "myasnikov",
+          "kind": "person",
+          "title_ru": "МЯСНИКОВ",
+          "n": 8
+        },
+        {
+          "id": "bund",
+          "kind": "party",
+          "title_ru": "Бунд",
+          "n": 8
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 7
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 7
+        },
+        {
+          "id": "petrovskiy",
+          "kind": "person",
+          "title_ru": "Г. И. ПЕТРОВСКИЙ",
+          "n": 6
+        },
+        {
+          "id": "stalin",
+          "kind": "person",
+          "title_ru": "И. В. СТАЛИН",
+          "n": 6
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 6
+        }
+      ],
+      "more": 126,
+      "chronicle_mentions": 34
+    },
+    "brest-litovskie-peregovory": {
+      "chronicle_jumps": 2
+    },
+    "brest-litovskiy-mir": {
+      "chronicle_jumps": 3
+    },
+    "budyonny": {
+      "refs": [
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "basmachestvo",
+          "kind": "party",
+          "title_ru": "Басмачество",
+          "n": 1
+        },
+        {
+          "id": "kontrnastuplenie-yuzhnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Южного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 1
+        },
+        {
+          "id": "pervaya-konnaya-armiya",
+          "kind": "event",
+          "title_ru": "Первая Конная армия",
+          "n": 1
+        },
+        {
+          "id": "rostovo-novocherkasskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Ростово-Новочеркасская операция РККА",
+          "n": 1
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 1
+        },
+        {
+          "id": "kharkovskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Харьковская операция РККА",
+          "n": 1
+        }
+      ]
+    },
+    "bukharskaya-operatsiya": {
+      "chronicle_jumps": 1
+    },
+    "bukharskiy-emirat": {
+      "refs": [
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 1
+        },
+        {
+          "id": "bnsr",
+          "kind": "state",
+          "title_ru": "Бухарская Народная Советская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "bund": {
+      "refs": [
+        {
+          "id": "belorusskaya-sotsialisticheskaya-gromada",
+          "kind": "party",
+          "title_ru": "Белорусская социалистическая громада",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "cadets": {
+      "refs": [
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 6
+        },
+        {
+          "id": "vybory-v-us",
+          "kind": "event",
+          "title_ru": "Выборы в Учредительное собрание",
+          "n": 6
+        },
+        {
+          "id": "right-center",
+          "kind": "party",
+          "title_ru": "Правый центр",
+          "n": 4
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 3
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 2
+        },
+        {
+          "id": "vopu",
+          "kind": "state",
+          "title_ru": "Временное областное правительство Урала",
+          "n": 2
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 2
+        },
+        {
+          "id": "bukeykhanov",
+          "kind": "person",
+          "title_ru": "А. Н. БУКЕЙХАНОВ",
+          "n": 1
+        }
+      ],
+      "more": 10,
+      "chronicle_mentions": 5
+    },
+    "central-powers": {
+      "refs": [
+        {
+          "id": "allies-entente",
+          "kind": "state",
+          "title_ru": "Союзная интервенция (Антанта)",
+          "n": 3
+        },
+        {
+          "id": "brest-litovskie-peregovory",
+          "kind": "event",
+          "title_ru": "Брест-Литовские мирные переговоры",
+          "n": 3
+        },
+        {
+          "id": "ukrainskaya-derzhava",
+          "kind": "state",
+          "title_ru": "Украинская держава",
+          "n": 2
+        },
+        {
+          "id": "dksr",
+          "kind": "state",
+          "title_ru": "Донецко-Криворожская Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 1
+        },
+        {
+          "id": "unrs",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика Советов",
+          "n": 1
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 1
+        }
+      ],
+      "more": 1
+    },
+    "chapannaya-voyna": {
+      "chronicle_mentions": 1
+    },
+    "chaykovskiy": {
+      "refs": [
+        {
+          "id": "northern-region",
+          "kind": "state",
+          "title_ru": "Северная область",
+          "n": 3
+        },
+        {
+          "id": "committee-salvation",
+          "kind": "party",
+          "title_ru": "Комитет спасения Родины и революции",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        },
+        {
+          "id": "narodnie-socialists",
+          "kind": "party",
+          "title_ru": "Трудовая народно-социалистическая партия",
+          "n": 1
+        },
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 1
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "chernov": {
+      "refs": [
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 2
+        },
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 2
+        },
+        {
+          "id": "spiridonova",
+          "kind": "person",
+          "title_ru": "М. А. СПИРИДОНОВА",
+          "n": 1
+        },
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 1
+        }
+      ]
+    },
+    "chkheidze": {
+      "refs": [
+        {
+          "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+          "kind": "party",
+          "title_ru": "Грузинская социал-демократическая партия",
+          "n": 3
+        },
+        {
+          "id": "mensheviks",
+          "kind": "party",
+          "title_ru": "Меньшевики",
+          "n": 1
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 1
+        }
+      ]
+    },
+    "committee-salvation": {
+      "refs": [
+        {
+          "id": "nabokov",
+          "kind": "person",
+          "title_ru": "В. Д. НАБОКОВ",
+          "n": 1
+        },
+        {
+          "id": "chaykovskiy",
+          "kind": "person",
+          "title_ru": "Н. В. ЧАЙКОВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "avksentiev",
+          "kind": "person",
+          "title_ru": "Н. Д. АВКСЕНТЬЕВ",
+          "n": 1
+        },
+        {
+          "id": "bund",
+          "kind": "party",
+          "title_ru": "Бунд",
+          "n": 1
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 1
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 1
+        },
+        {
+          "id": "pokhod-kerenskogo-krasnova",
+          "kind": "event",
+          "title_ru": "Поход А. Ф. Керенского – П. Н. Краснова на Петроград",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "czechoslovak-corps": {
+      "refs": [
+        {
+          "id": "vystuplenie-chekhoslovatskogo-korpusa",
+          "kind": "event",
+          "title_ru": "Выступление Чехословацкого корпуса",
+          "n": 13
+        },
+        {
+          "id": "vzyatie-kazani-chastyami-narodnoy-armii",
+          "kind": "event",
+          "title_ru": "Взятие Казани частями Народной армии Комуча",
+          "n": 3
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 3
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 2
+        },
+        {
+          "id": "vsp",
+          "kind": "state",
+          "title_ru": "Временное Сибирское правительство",
+          "n": 2
+        },
+        {
+          "id": "komuch",
+          "kind": "state",
+          "title_ru": "Комитет членов Всероссийского учредительного собрания",
+          "n": 2
+        },
+        {
+          "id": "politcenter",
+          "kind": "state",
+          "title_ru": "Политический центр",
+          "n": 2
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 2
+        }
+      ],
+      "more": 15,
+      "chronicle_mentions": 7
+    },
+    "dashnaktsutyun": {
+      "refs": [
+        {
+          "id": "respublika-armeniya",
+          "kind": "state",
+          "title_ru": "Республика Армения",
+          "n": 5
+        },
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 4
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 3
+        },
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 2
+        },
+        {
+          "id": "musavat",
+          "kind": "party",
+          "title_ru": "Мусават",
+          "n": 1
+        },
+        {
+          "id": "zakaspiyskoe-vremennoe-pravitelstvo",
+          "kind": "state",
+          "title_ru": "Закаспийское временное правительство",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "denikin": {
+      "refs": [
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 7
+        },
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 3
+        },
+        {
+          "id": "krivoshein",
+          "kind": "person",
+          "title_ru": "А. В. КРИВОШЕИН",
+          "n": 2
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 2
+        },
+        {
+          "id": "wrangel",
+          "kind": "person",
+          "title_ru": "П. Н. ВРАНГЕЛЬ",
+          "n": 2
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 2
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "egorov",
+          "kind": "person",
+          "title_ru": "А. И. ЕГОРОВ",
+          "n": 1
+        }
+      ],
+      "more": 30,
+      "chronicle_mentions": 14
+    },
+    "derber": {
+      "refs": [
+        {
+          "id": "vologodskiy",
+          "kind": "person",
+          "title_ru": "П. В. ВОЛОГОДСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "diterikhs": {
+      "refs": [
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 4
+        },
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 2
+        },
+        {
+          "id": "uborevich",
+          "kind": "person",
+          "title_ru": "И. П. УБОРЕВИЧ",
+          "n": 1
+        },
+        {
+          "id": "gayda",
+          "kind": "person",
+          "title_ru": "Р. ГАЙДА (Р. ГАЙДЛЬ)",
+          "n": 1
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "primorskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "dksr": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "dutov": {
+      "refs": [
+        {
+          "id": "orenburg-cossack-host",
+          "kind": "state",
+          "title_ru": "Оренбургское казачье войско",
+          "n": 6
+        },
+        {
+          "id": "turkestan-sfr",
+          "kind": "state",
+          "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+          "n": 2
+        },
+        {
+          "id": "blyukher",
+          "kind": "person",
+          "title_ru": "В. К. БЛЮХЕР",
+          "n": 1
+        },
+        {
+          "id": "alash",
+          "kind": "party",
+          "title_ru": "Алаш",
+          "n": 1
+        },
+        {
+          "id": "vesennee-nastuplenie-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Весеннее наступление Русской армии А. В. Колчака",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "pokhod-uralskoy-armii-blyukhera",
+          "kind": "event",
+          "title_ru": "Поход Уральской армии В. К. Блюхера",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "dzerzhinskiy": {
+      "refs": [
+        {
+          "id": "uritskiy",
+          "kind": "person",
+          "title_ru": "М. С. УРИЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "brest-litovskie-peregovory",
+          "kind": "event",
+          "title_ru": "Брест-Литовские мирные переговоры",
+          "n": 1
+        },
+        {
+          "id": "vystuplenie-levykh-eserov",
+          "kind": "event",
+          "title_ru": "Выступление левых эсеров",
+          "n": 1
+        },
+        {
+          "id": "krasnyy-terror",
+          "kind": "event",
+          "title_ru": "Принятие СНК РСФСР «Постановления о красном терроре»",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "egorov": {
+      "refs": [
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 1
+        },
+        {
+          "id": "stalin",
+          "kind": "person",
+          "title_ru": "И. В. СТАЛИН",
+          "n": 1
+        },
+        {
+          "id": "tukhachevsky",
+          "kind": "person",
+          "title_ru": "М. Н. Тухачевский",
+          "n": 1
+        },
+        {
+          "id": "kamenev",
+          "kind": "person",
+          "title_ru": "С. С. КАМЕНЕВ",
+          "n": 1
+        },
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 1
+        },
+        {
+          "id": "kontrnastuplenie-yuzhnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Южного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 1
+        },
+        {
+          "id": "pervaya-konnaya-armiya",
+          "kind": "event",
+          "title_ru": "Первая Конная армия",
+          "n": 1
+        }
+      ],
+      "more": 3,
+      "chronicle_mentions": 2
+    },
+    "estonskaya-respublika": {
+      "refs": [
+        {
+          "id": "pyats",
+          "kind": "person",
+          "title_ru": "К. Я. ПЯТС",
+          "n": 7
+        },
+        {
+          "id": "voennye-deystviya-na-severo-zapade",
+          "kind": "event",
+          "title_ru": "Военные действия на Северо-Западе России",
+          "n": 6
+        },
+        {
+          "id": "yudenich",
+          "kind": "person",
+          "title_ru": "Н. Н. ЮДЕНИЧ",
+          "n": 3
+        },
+        {
+          "id": "latviyskaya-respublika",
+          "kind": "state",
+          "title_ru": "Латвийская Республика",
+          "n": 2
+        },
+        {
+          "id": "etk",
+          "kind": "state",
+          "title_ru": "Эстляндская Трудовая Коммуна",
+          "n": 2
+        },
+        {
+          "id": "krasnov",
+          "kind": "person",
+          "title_ru": "П. Н. КРАСНОВ",
+          "n": 1
+        },
+        {
+          "id": "latvssr",
+          "kind": "state",
+          "title_ru": "Латвийская Социалистическая Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "allies-entente",
+          "kind": "state",
+          "title_ru": "Союзная интервенция (Антанта)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 6
+    },
+    "etk": {
+      "refs": [
+        {
+          "id": "pyats",
+          "kind": "person",
+          "title_ru": "К. Я. ПЯТС",
+          "n": 1
+        },
+        {
+          "id": "anvelt",
+          "kind": "person",
+          "title_ru": "Я. Я. АНВЕЛЬТ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "estonskaya-respublika",
+          "kind": "state",
+          "title_ru": "Эстонская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "fer": {
+      "refs": [
+        {
+          "id": "blyukher",
+          "kind": "person",
+          "title_ru": "В. К. БЛЮХЕР",
+          "n": 3
+        },
+        {
+          "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+          "kind": "state",
+          "title_ru": "Красное партизанское движение в Сибири и на Дальнем Востоке",
+          "n": 3
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 3
+        },
+        {
+          "id": "rossiyskaya-vostochnaya-okraina",
+          "kind": "state",
+          "title_ru": "Российская Восточная окраина",
+          "n": 2
+        },
+        {
+          "id": "primorskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 2
+        },
+        {
+          "id": "boldyrev",
+          "kind": "person",
+          "title_ru": "В. Г. БОЛДЫРЕВ",
+          "n": 1
+        },
+        {
+          "id": "semyonov",
+          "kind": "person",
+          "title_ru": "Г. М. СЕМЁНОВ",
+          "n": 1
+        },
+        {
+          "id": "uborevich",
+          "kind": "person",
+          "title_ru": "И. П. УБОРЕВИЧ",
+          "n": 1
+        }
+      ],
+      "more": 5,
+      "chronicle_mentions": 9
+    },
+    "finlyandskaya-sotsialisticheskaya-raboch": {
+      "refs": [
+        {
+          "id": "karl-gustav-emil",
+          "kind": "person",
+          "title_ru": "Г. К. МАННЕРГЕЙМ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "frunze": {
+      "refs": [
+        {
+          "id": "kontrnastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Восточного фронта РККА",
+          "n": 2
+        },
+        {
+          "id": "perekopsko-chongarskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Перекопско-Чонгарская операция",
+          "n": 2
+        },
+        {
+          "id": "uborevich",
+          "kind": "person",
+          "title_ru": "И. П. УБОРЕВИЧ",
+          "n": 1
+        },
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "khodzhaev",
+          "kind": "person",
+          "title_ru": "Ф. Г. ХОДЖАЕВ",
+          "n": 1
+        },
+        {
+          "id": "chapannaya-voyna",
+          "kind": "state",
+          "title_ru": "«Чапанная война»",
+          "n": 1
+        },
+        {
+          "id": "bnsr",
+          "kind": "state",
+          "title_ru": "Бухарская Народная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "bukharskiy-emirat",
+          "kind": "state",
+          "title_ru": "Бухарский эмират",
+          "n": 1
+        }
+      ],
+      "more": 5,
+      "chronicle_mentions": 4
+    },
+    "gayda": {
+      "refs": [
+        {
+          "id": "czechoslovak-corps",
+          "kind": "state",
+          "title_ru": "Чехословацкий корпус",
+          "n": 2
+        },
+        {
+          "id": "vystuplenie-chekhoslovatskogo-korpusa",
+          "kind": "event",
+          "title_ru": "Выступление Чехословацкого корпуса",
+          "n": 2
+        },
+        {
+          "id": "vesennee-nastuplenie-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Весеннее наступление Русской армии А. В. Колчака",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "permskaya-operatsiya-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Пермская операция Русской армии («Пермская катастрофа» РККА)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 4
+    },
+    "gegechkori": {
+      "refs": [
+        {
+          "id": "zhordaniya",
+          "kind": "person",
+          "title_ru": "Н. Н. ЖОРДАНИЯ",
+          "n": 1
+        },
+        {
+          "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+          "kind": "party",
+          "title_ru": "Грузинская социал-демократическая партия",
+          "n": 1
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "georgian-ssr": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 1
+        },
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 1
+        },
+        {
+          "id": "ussr",
+          "kind": "state",
+          "title_ru": "Союз Советских Социалистических Республик",
+          "n": 1
+        }
+      ]
+    },
+    "great-don-host": {
+      "refs": [
+        {
+          "id": "bogaevskiy",
+          "kind": "person",
+          "title_ru": "А. П. БОГАЕВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "krasnov",
+          "kind": "person",
+          "title_ru": "П. Н. КРАСНОВ",
+          "n": 1
+        },
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 1
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 1
+        },
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "greens-general": {
+      "refs": [
+        {
+          "id": "kochg",
+          "kind": "state",
+          "title_ru": "Комитет освобождения Черноморской губернии",
+          "n": 2
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "zapadno-sibirskoe-vosstanie",
+          "kind": "state",
+          "title_ru": "Западно-Сибирское восстание",
+          "n": 1
+        }
+      ]
+    },
+    "grigorev": {
+      "refs": [
+        {
+          "id": "makhno",
+          "kind": "person",
+          "title_ru": "Н. И. МАХНО",
+          "n": 2
+        },
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 2
+        },
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "greens-general",
+          "kind": "party",
+          "title_ru": "Зелёные",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 5
+    },
+    "grishin": {
+      "refs": [
+        {
+          "id": "vsp",
+          "kind": "state",
+          "title_ru": "Временное Сибирское правительство",
+          "n": 1
+        }
+      ]
+    },
+    "gruzinskaya-demokraticheskaya-respublika": {
+      "refs": [
+        {
+          "id": "zhordaniya",
+          "kind": "person",
+          "title_ru": "Н. Н. ЖОРДАНИЯ",
+          "n": 2
+        },
+        {
+          "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+          "kind": "party",
+          "title_ru": "Грузинская социал-демократическая партия",
+          "n": 2
+        },
+        {
+          "id": "kochg",
+          "kind": "state",
+          "title_ru": "Комитет освобождения Черноморской губернии",
+          "n": 2
+        },
+        {
+          "id": "gegechkori",
+          "kind": "person",
+          "title_ru": "Е. П. ГЕГЕЧКОРИ",
+          "n": 1
+        },
+        {
+          "id": "chkheidze",
+          "kind": "person",
+          "title_ru": "Н. С. ЧХЕИДЗЕ",
+          "n": 1
+        },
+        {
+          "id": "dashnaktsutyun",
+          "kind": "party",
+          "title_ru": "Дашнакцутюн",
+          "n": 1
+        },
+        {
+          "id": "adr",
+          "kind": "state",
+          "title_ru": "Азербайджанская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 1
+        }
+      ],
+      "more": 6,
+      "chronicle_mentions": 2
+    },
+    "gruzinskaya-sotsial-demokraticheskaya-pa": {
+      "refs": [
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 3
+        },
+        {
+          "id": "gegechkori",
+          "kind": "person",
+          "title_ru": "Е. П. ГЕГЕЧКОРИ",
+          "n": 2
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 2
+        },
+        {
+          "id": "zhordaniya",
+          "kind": "person",
+          "title_ru": "Н. Н. ЖОРДАНИЯ",
+          "n": 1
+        },
+        {
+          "id": "chkheidze",
+          "kind": "person",
+          "title_ru": "Н. С. ЧХЕИДЗЕ",
+          "n": 1
+        },
+        {
+          "id": "mensheviks",
+          "kind": "party",
+          "title_ru": "Меньшевики",
+          "n": 1
+        },
+        {
+          "id": "georgian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Грузия",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "kakhovka": {
+      "chronicle_jumps": 2
+    },
+    "kaledin": {
+      "refs": [
+        {
+          "id": "great-don-host",
+          "kind": "state",
+          "title_ru": "Всевеликое Войско Донское",
+          "n": 2
+        },
+        {
+          "id": "bogaevskiy",
+          "kind": "person",
+          "title_ru": "А. П. БОГАЕВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "alash",
+          "kind": "party",
+          "title_ru": "Алаш",
+          "n": 1
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 1
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 4
+    },
+    "kamenev": {
+      "refs": [
+        {
+          "id": "czechoslovak-corps",
+          "kind": "state",
+          "title_ru": "Чехословацкий корпус",
+          "n": 1
+        },
+        {
+          "id": "vesennee-nastuplenie-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Весеннее наступление Русской армии А. В. Колчака",
+          "n": 1
+        },
+        {
+          "id": "vystuplenie-chekhoslovatskogo-korpusa",
+          "kind": "event",
+          "title_ru": "Выступление Чехословацкого корпуса",
+          "n": 1
+        },
+        {
+          "id": "kontrnastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "turkestanskiy-front",
+          "kind": "event",
+          "title_ru": "Туркестанский фронт",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "kappel": {
+      "refs": [
+        {
+          "id": "vzyatie-kazani-chastyami-narodnoy-armii",
+          "kind": "event",
+          "title_ru": "Взятие Казани частями Народной армии Комуча",
+          "n": 4
+        },
+        {
+          "id": "komuch",
+          "kind": "state",
+          "title_ru": "Комитет членов Всероссийского учредительного собрания",
+          "n": 1
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 1
+        },
+        {
+          "id": "kontrnastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "kerenskiy": {
+      "refs": [
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 5
+        },
+        {
+          "id": "pokhod-kerenskogo-krasnova",
+          "kind": "event",
+          "title_ru": "Поход А. Ф. Керенского – П. Н. Краснова на Петроград",
+          "n": 3
+        },
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 2
+        },
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 1
+        },
+        {
+          "id": "dutov",
+          "kind": "person",
+          "title_ru": "А. И. ДУТОВ",
+          "n": 1
+        },
+        {
+          "id": "kaledin",
+          "kind": "person",
+          "title_ru": "А. М. КАЛЕДИН",
+          "n": 1
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "chernov",
+          "kind": "person",
+          "title_ru": "В. М. ЧЕРНОВ",
+          "n": 1
+        }
+      ],
+      "more": 11,
+      "chronicle_mentions": 1
+    },
+    "kharkovskaya-operatsiya-rkka": {
+      "chronicle_jumps": 1
+    },
+    "khivinskoe-khanstvo": {
+      "refs": [
+        {
+          "id": "khnsr",
+          "kind": "state",
+          "title_ru": "Хорезмская Народная Советская Республика",
+          "n": 2
+        },
+        {
+          "id": "bukharskiy-emirat",
+          "kind": "state",
+          "title_ru": "Бухарский эмират",
+          "n": 1
+        }
+      ]
+    },
+    "khnsr": {
+      "refs": [
+        {
+          "id": "basmachestvo",
+          "kind": "party",
+          "title_ru": "Басмачество",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "khivinskoe-khanstvo",
+          "kind": "state",
+          "title_ru": "Хивинское ханство",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "khodzhaev": {
+      "refs": [
+        {
+          "id": "bnsr",
+          "kind": "state",
+          "title_ru": "Бухарская Народная Советская Республика",
+          "n": 1
+        }
+      ]
+    },
+    "kochg": {
+      "chronicle_mentions": 1
+    },
+    "kolchak": {
+      "refs": [
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 11
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 5
+        },
+        {
+          "id": "politcenter",
+          "kind": "state",
+          "title_ru": "Политический центр",
+          "n": 4
+        },
+        {
+          "id": "northern-region",
+          "kind": "state",
+          "title_ru": "Северная область",
+          "n": 4
+        },
+        {
+          "id": "permskaya-operatsiya-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Пермская операция Русской армии («Пермская катастрофа» РККА)",
+          "n": 4
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 4
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 3
+        },
+        {
+          "id": "bashkir-assr",
+          "kind": "state",
+          "title_ru": "Башкирская Автономная Социалистическая Советская Республика",
+          "n": 3
+        }
+      ],
+      "more": 46,
+      "chronicle_mentions": 17
+    },
+    "komuch": {
+      "refs": [
+        {
+          "id": "vzyatie-kazani-chastyami-narodnoy-armii",
+          "kind": "event",
+          "title_ru": "Взятие Казани частями Народной армии Комуча",
+          "n": 5
+        },
+        {
+          "id": "orenburg-cossack-host",
+          "kind": "state",
+          "title_ru": "Оренбургское казачье войско",
+          "n": 3
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 3
+        },
+        {
+          "id": "vopu",
+          "kind": "state",
+          "title_ru": "Временное областное правительство Урала",
+          "n": 2
+        },
+        {
+          "id": "dutov",
+          "kind": "person",
+          "title_ru": "А. И. ДУТОВ",
+          "n": 1
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "volskiy",
+          "kind": "person",
+          "title_ru": "В. К. ВОЛЬСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "zenzinov",
+          "kind": "person",
+          "title_ru": "В. М. ЗЕНЗИНОВ",
+          "n": 1
+        }
+      ],
+      "more": 12,
+      "chronicle_mentions": 4
+    },
+    "kontrnastuplenie-vostochnogo-fronta-rkka": {
+      "chronicle_jumps": 2
+    },
+    "kontrnastuplenie-yuzhnogo-fronta-rkka": {
+      "chronicle_jumps": 2
+    },
+    "kornilov": {
+      "refs": [
+        {
+          "id": "kerenskiy",
+          "kind": "person",
+          "title_ru": "А. Ф. КЕРЕНСКИЙ",
+          "n": 3
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 3
+        },
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 2
+        },
+        {
+          "id": "kaledin",
+          "kind": "person",
+          "title_ru": "А. М. КАЛЕДИН",
+          "n": 2
+        },
+        {
+          "id": "alekseev",
+          "kind": "person",
+          "title_ru": "М. В. АЛЕКСЕЕВ",
+          "n": 2
+        },
+        {
+          "id": "krasnov",
+          "kind": "person",
+          "title_ru": "П. Н. КРАСНОВ",
+          "n": 2
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 2
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        }
+      ],
+      "more": 14,
+      "chronicle_mentions": 3
+    },
+    "krasnaya-gorka-i-seraya-loshad": {
+      "chronicle_jumps": 1
+    },
+    "krasnov": {
+      "refs": [
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 5
+        },
+        {
+          "id": "pokhod-kerenskogo-krasnova",
+          "kind": "event",
+          "title_ru": "Поход А. Ф. Керенского – П. Н. Краснова на Петроград",
+          "n": 5
+        },
+        {
+          "id": "egorov",
+          "kind": "person",
+          "title_ru": "А. И. ЕГОРОВ",
+          "n": 1
+        },
+        {
+          "id": "bogaevskiy",
+          "kind": "person",
+          "title_ru": "А. П. БОГАЕВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "trotsky",
+          "kind": "person",
+          "title_ru": "Л. Д. ТРОЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "budyonny",
+          "kind": "person",
+          "title_ru": "С. М. БУДЁННЫЙ",
+          "n": 1
+        },
+        {
+          "id": "dzerzhinskiy",
+          "kind": "person",
+          "title_ru": "Ф. Э. ДЗЕРЖИНСКИЙ",
+          "n": 1
+        }
+      ],
+      "more": 5,
+      "chronicle_mentions": 11
+    },
+    "krasnyy-terror": {
+      "chronicle_jumps": 2
+    },
+    "krivoshein": {
+      "refs": [
+        {
+          "id": "south-russia-gov",
+          "kind": "state",
+          "title_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
+          "n": 1
+        }
+      ]
+    },
+    "latviyskaya-respublika": {
+      "refs": [
+        {
+          "id": "latyshskiy-krestyanskiy-soyuz",
+          "kind": "party",
+          "title_ru": "Латышский крестьянский союз",
+          "n": 2
+        },
+        {
+          "id": "latvssr",
+          "kind": "state",
+          "title_ru": "Латвийская Социалистическая Советская Республика",
+          "n": 2
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 7
+    },
+    "latvssr": {
+      "refs": [
+        {
+          "id": "latviyskaya-respublika",
+          "kind": "state",
+          "title_ru": "Латвийская Республика",
+          "n": 2
+        },
+        {
+          "id": "stuchka",
+          "kind": "person",
+          "title_ru": "П. И. СТУЧКА",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "estonskaya-respublika",
+          "kind": "state",
+          "title_ru": "Эстонская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "latyshskiy-krestyanskiy-soyuz": {
+      "refs": [
+        {
+          "id": "ulmanis",
+          "kind": "person",
+          "title_ru": "К. И. УЛМАНИС",
+          "n": 1
+        }
+      ]
+    },
+    "left-srs": {
+      "refs": [
+        {
+          "id": "spiridonova",
+          "kind": "person",
+          "title_ru": "М. А. СПИРИДОНОВА",
+          "n": 6
+        },
+        {
+          "id": "vystuplenie-levykh-eserov",
+          "kind": "event",
+          "title_ru": "Выступление левых эсеров",
+          "n": 6
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 3
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 3
+        },
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 3
+        },
+        {
+          "id": "osr",
+          "kind": "state",
+          "title_ru": "Одесская Советская Республика",
+          "n": 2
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 2
+        },
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 2
+        }
+      ],
+      "more": 10,
+      "chronicle_mentions": 5
+    },
+    "lenin": {
+      "refs": [
+        {
+          "id": "zinovev",
+          "kind": "person",
+          "title_ru": "Г. Е. ЗИНОВЬЕВ",
+          "n": 6
+        },
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 6
+        },
+        {
+          "id": "brest-litovskie-peregovory",
+          "kind": "event",
+          "title_ru": "Брест-Литовские мирные переговоры",
+          "n": 5
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 3
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 3
+        },
+        {
+          "id": "trotsky",
+          "kind": "person",
+          "title_ru": "Л. Д. ТРОЦКИЙ",
+          "n": 2
+        },
+        {
+          "id": "uritskiy",
+          "kind": "person",
+          "title_ru": "М. С. УРИЦКИЙ",
+          "n": 2
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 2
+        }
+      ],
+      "more": 14,
+      "chronicle_mentions": 6
+    },
+    "litovskaya-respublika": {
+      "refs": [
+        {
+          "id": "litovsko-belorusskaya-sotsialisticheskay",
+          "kind": "state",
+          "title_ru": "Литовско-Белорусская Социалистическая Советская Республика",
+          "n": 2
+        },
+        {
+          "id": "polskaya-respublika",
+          "kind": "state",
+          "title_ru": "Польская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "litovsko-belorusskaya-sotsialisticheskay": {
+      "refs": [
+        {
+          "id": "litovskaya-respublika",
+          "kind": "state",
+          "title_ru": "Литовская Республика",
+          "n": 2
+        },
+        {
+          "id": "myasnikov",
+          "kind": "person",
+          "title_ru": "МЯСНИКОВ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 1
+        }
+      ]
+    },
+    "makhno": {
+      "refs": [
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 17
+        },
+        {
+          "id": "pervaya-konnaya-armiya",
+          "kind": "event",
+          "title_ru": "Первая Конная армия",
+          "n": 2
+        },
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 1
+        },
+        {
+          "id": "grigorev",
+          "kind": "person",
+          "title_ru": "Н. А. ГРИГОРЬЕВ (СЕРВЕТНИКОВ)",
+          "n": 1
+        },
+        {
+          "id": "budyonny",
+          "kind": "person",
+          "title_ru": "С. М. БУДЁННЫЙ",
+          "n": 1
+        },
+        {
+          "id": "greens-general",
+          "kind": "party",
+          "title_ru": "Зелёные",
+          "n": 1
+        },
+        {
+          "id": "moskovskiy-pokhod-vsyur",
+          "kind": "event",
+          "title_ru": "Московский поход Вооруженных сил Юга России",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 5
+    },
+    "mensheviks": {
+      "refs": [
+        {
+          "id": "chkheidze",
+          "kind": "person",
+          "title_ru": "Н. С. ЧХЕИДЗЕ",
+          "n": 4
+        },
+        {
+          "id": "bund",
+          "kind": "party",
+          "title_ru": "Бунд",
+          "n": 4
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 4
+        },
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 3
+        },
+        {
+          "id": "zhordaniya",
+          "kind": "person",
+          "title_ru": "Н. Н. ЖОРДАНИЯ",
+          "n": 2
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 2
+        },
+        {
+          "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+          "kind": "party",
+          "title_ru": "Грузинская социал-демократическая партия",
+          "n": 2
+        },
+        {
+          "id": "politcenter",
+          "kind": "state",
+          "title_ru": "Политический центр",
+          "n": 2
+        }
+      ],
+      "more": 23,
+      "chronicle_mentions": 4
+    },
+    "miller": {
+      "refs": [
+        {
+          "id": "northern-region",
+          "kind": "state",
+          "title_ru": "Северная область",
+          "n": 2
+        },
+        {
+          "id": "karl-gustav-emil",
+          "kind": "person",
+          "title_ru": "Г. К. МАННЕРГЕЙМ",
+          "n": 1
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 1
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "milyukov": {
+      "refs": [
+        {
+          "id": "nabokov",
+          "kind": "person",
+          "title_ru": "В. Д. НАБОКОВ",
+          "n": 4
+        },
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 2
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 1
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 1
+        },
+        {
+          "id": "cadets",
+          "kind": "party",
+          "title_ru": "Конституционно-демократическая партия",
+          "n": 1
+        }
+      ]
+    },
+    "moskovskiy-pokhod-vsyur": {
+      "chronicle_jumps": 3
+    },
+    "musavat": {
+      "refs": [
+        {
+          "id": "adr",
+          "kind": "state",
+          "title_ru": "Азербайджанская Демократическая Республика",
+          "n": 5
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 3
+        },
+        {
+          "id": "bakinskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Бакинская операция РККА",
+          "n": 2
+        },
+        {
+          "id": "dashnaktsutyun",
+          "kind": "party",
+          "title_ru": "Дашнакцутюн",
+          "n": 1
+        },
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "muslim-socialists": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        }
+      ]
+    },
+    "myasnikov": {
+      "refs": [
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 1
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "nabokov": {
+      "refs": [
+        {
+          "id": "milyukov",
+          "kind": "person",
+          "title_ru": "П. Н. МИЛЮКОВ",
+          "n": 1
+        }
+      ]
+    },
+    "narodnie-socialists": {
+      "refs": [
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 3
+        },
+        {
+          "id": "vybory-v-us",
+          "kind": "event",
+          "title_ru": "Выборы в Учредительное собрание",
+          "n": 2
+        },
+        {
+          "id": "uritskiy",
+          "kind": "person",
+          "title_ru": "М. С. УРИЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "chaykovskiy",
+          "kind": "person",
+          "title_ru": "Н. В. ЧАЙКОВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 1
+        },
+        {
+          "id": "committee-salvation",
+          "kind": "party",
+          "title_ru": "Комитет спасения Родины и революции",
+          "n": 1
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 1
+        },
+        {
+          "id": "union-defence",
+          "kind": "party",
+          "title_ru": "Союз защиты Родины и свободы",
+          "n": 1
+        }
+      ],
+      "more": 3
+    },
+    "nastuplenie-vostochnogo-fronta-1919-1920": {
+      "chronicle_jumps": 7
+    },
+    "nastuplenie-vostochnogo-fronta-rkka": {
+      "chronicle_jumps": 1
+    },
+    "national-center": {
+      "refs": [
+        {
+          "id": "shulgin",
+          "kind": "person",
+          "title_ru": "В. В. ШУЛЬГИН",
+          "n": 1
+        },
+        {
+          "id": "boldyrev",
+          "kind": "person",
+          "title_ru": "В. Г. БОЛДЫРЕВ",
+          "n": 1
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 1
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 1
+        },
+        {
+          "id": "right-center",
+          "kind": "party",
+          "title_ru": "Правый центр",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        },
+        {
+          "id": "krasnaya-gorka-i-seraya-loshad",
+          "kind": "event",
+          "title_ru": "Восстание гарнизонов форта «Красная Горка» и батареи «Серая Лошадь»",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "northern-region": {
+      "refs": [
+        {
+          "id": "miller",
+          "kind": "person",
+          "title_ru": "Е. К. МИЛЛЕР",
+          "n": 4
+        },
+        {
+          "id": "chaykovskiy",
+          "kind": "person",
+          "title_ru": "Н. В. ЧАЙКОВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 1
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 1
+        },
+        {
+          "id": "allies-entente",
+          "kind": "state",
+          "title_ru": "Союзная интервенция (Антанта)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 8
+    },
+    "oborona-tsaritsyna": {
+      "chronicle_jumps": 4
+    },
+    "oktyabrskiy-perevorot-v-petrograde": {
+      "chronicle_jumps": 1
+    },
+    "oktyabrskoe-vosstanie-v-moskve": {
+      "chronicle_jumps": 1
+    },
+    "ordzhonikidze": {
+      "refs": [
+        {
+          "id": "poluyan",
+          "kind": "person",
+          "title_ru": "Я. В. ПОЛУЯН",
+          "n": 1
+        },
+        {
+          "id": "sksr",
+          "kind": "state",
+          "title_ru": "Северо-Кавказская Советская Республика",
+          "n": 1
+        }
+      ]
+    },
+    "orenburg-cossack-host": {
+      "refs": [
+        {
+          "id": "dutov",
+          "kind": "person",
+          "title_ru": "А. И. ДУТОВ",
+          "n": 3
+        },
+        {
+          "id": "bashkir-assr",
+          "kind": "state",
+          "title_ru": "Башкирская Автономная Социалистическая Советская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "osr": {
+      "refs": [
+        {
+          "id": "unrs",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика Советов",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "otkrytie-i-razgon-us": {
+      "chronicle_jumps": 1
+    },
+    "perekopsko-chongarskaya-operatsiya": {
+      "chronicle_jumps": 1
+    },
+    "perevorot-v-omske": {
+      "chronicle_jumps": 1
+    },
+    "permskaya-operatsiya-russkoy-armii": {
+      "chronicle_jumps": 4
+    },
+    "pervaya-konnaya-armiya": {
+      "chronicle_jumps": 1
+    },
+    "petlyura": {
+      "refs": [
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 4
+        },
+        {
+          "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+          "kind": "party",
+          "title_ru": "Украинская социал-демократическая рабочая партия",
+          "n": 3
+        },
+        {
+          "id": "skoropadskiy",
+          "kind": "person",
+          "title_ru": "П. П. СКОРОПАДСКИЙ",
+          "n": 2
+        },
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 2
+        },
+        {
+          "id": "grishin",
+          "kind": "person",
+          "title_ru": "А. Н. ГРИШИН (АЛМАЗОВ)",
+          "n": 1
+        },
+        {
+          "id": "makhno",
+          "kind": "person",
+          "title_ru": "Н. И. МАХНО",
+          "n": 1
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "ukrainskaya-derzhava",
+          "kind": "state",
+          "title_ru": "Украинская держава",
+          "n": 1
+        }
+      ],
+      "more": 1,
+      "chronicle_mentions": 4
+    },
+    "petrovskiy": {
+      "refs": [
+        {
+          "id": "ussr",
+          "kind": "state",
+          "title_ru": "Союз Советских Социалистических Республик",
+          "n": 1
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 1
+        }
+      ]
+    },
+    "pilsudski": {
+      "refs": [
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "tukhachevsky",
+          "kind": "person",
+          "title_ru": "М. Н. Тухачевский",
+          "n": 1
+        },
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 1
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 1
+        }
+      ]
+    },
+    "poaley-tsion": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "pokhod-kerenskogo-krasnova": {
+      "chronicle_jumps": 1
+    },
+    "pokhod-uralskoy-armii-blyukhera": {
+      "chronicle_jumps": 2
+    },
+    "politcenter": {
+      "refs": [
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 1
+        },
+        {
+          "id": "sibirskoe-oblastnichestvo",
+          "kind": "party",
+          "title_ru": "Сибирское областничество",
+          "n": 1
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 4
+    },
+    "polskaya-respublika": {
+      "refs": [
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 8
+        },
+        {
+          "id": "litovsko-belorusskaya-sotsialisticheskay",
+          "kind": "state",
+          "title_ru": "Литовско-Белорусская Социалистическая Советская Республика",
+          "n": 4
+        },
+        {
+          "id": "pilsudski",
+          "kind": "person",
+          "title_ru": "Ю. ПИЛСУДСКИЙ",
+          "n": 3
+        },
+        {
+          "id": "litovskaya-respublika",
+          "kind": "state",
+          "title_ru": "Литовская Республика",
+          "n": 3
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 3
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 2
+        },
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 1
+        },
+        {
+          "id": "kamenev",
+          "kind": "person",
+          "title_ru": "С. С. КАМЕНЕВ",
+          "n": 1
+        }
+      ],
+      "more": 7,
+      "chronicle_mentions": 4
+    },
+    "poluyan": {
+      "refs": [
+        {
+          "id": "sksr",
+          "kind": "state",
+          "title_ru": "Северо-Кавказская Советская Республика",
+          "n": 3
+        }
+      ]
+    },
+    "priamur-state": {
+      "refs": [
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 3
+        },
+        {
+          "id": "semyonov",
+          "kind": "person",
+          "title_ru": "Г. М. СЕМЁНОВ",
+          "n": 1
+        },
+        {
+          "id": "diterikhs",
+          "kind": "person",
+          "title_ru": "М. К. ДИТЕРИХС",
+          "n": 1
+        },
+        {
+          "id": "primorskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 5
+    },
+    "primorskaya-operatsiya": {
+      "chronicle_jumps": 1
+    },
+    "pyats": {
+      "refs": [
+        {
+          "id": "estonskaya-respublika",
+          "kind": "state",
+          "title_ru": "Эстонская Республика",
+          "n": 2
+        }
+      ]
+    },
+    "reds-general": {
+      "refs": [
+        {
+          "id": "vzyatie-kazani-chastyami-narodnoy-armii",
+          "kind": "event",
+          "title_ru": "Взятие Казани частями Народной армии Комуча",
+          "n": 4
+        },
+        {
+          "id": "voennye-deystviya-na-severo-zapade",
+          "kind": "event",
+          "title_ru": "Военные действия на Северо-Западе России",
+          "n": 4
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 4
+        },
+        {
+          "id": "finlyandskaya-sotsialisticheskaya-raboch",
+          "kind": "state",
+          "title_ru": "Финляндская Социалистическая Рабочая Республика",
+          "n": 3
+        },
+        {
+          "id": "estonskaya-respublika",
+          "kind": "state",
+          "title_ru": "Эстонская Республика",
+          "n": 3
+        },
+        {
+          "id": "kakhovka",
+          "kind": "event",
+          "title_ru": "Бои на Каховском плацдарме",
+          "n": 3
+        },
+        {
+          "id": "kontrnastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Восточного фронта РККА",
+          "n": 3
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 3
+        }
+      ],
+      "more": 54,
+      "chronicle_mentions": 52
+    },
+    "respublika-armeniya": {
+      "refs": [
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 3
+        },
+        {
+          "id": "dashnaktsutyun",
+          "kind": "party",
+          "title_ru": "Дашнакцутюн",
+          "n": 2
+        },
+        {
+          "id": "adr",
+          "kind": "state",
+          "title_ru": "Азербайджанская Демократическая Республика",
+          "n": 2
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "zdfr",
+          "kind": "state",
+          "title_ru": "Закавказская Демократическая Федеративная Республика",
+          "n": 1
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "revdem-general": {
+      "refs": [
+        {
+          "id": "vybory-v-us",
+          "kind": "event",
+          "title_ru": "Выборы в Учредительное собрание",
+          "n": 2
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "vsp",
+          "kind": "state",
+          "title_ru": "Временное Сибирское правительство",
+          "n": 1
+        },
+        {
+          "id": "vopu",
+          "kind": "state",
+          "title_ru": "Временное областное правительство Урала",
+          "n": 1
+        },
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 1
+        },
+        {
+          "id": "komuch",
+          "kind": "state",
+          "title_ru": "Комитет членов Всероссийского учредительного собрания",
+          "n": 1
+        },
+        {
+          "id": "politcenter",
+          "kind": "state",
+          "title_ru": "Политический центр",
+          "n": 1
+        },
+        {
+          "id": "rossiyskaya-vostochnaya-okraina",
+          "kind": "state",
+          "title_ru": "Российская Восточная окраина",
+          "n": 1
+        }
+      ],
+      "more": 3,
+      "chronicle_mentions": 1
+    },
+    "right-center": {
+      "refs": [
+        {
+          "id": "krivoshein",
+          "kind": "person",
+          "title_ru": "А. В. КРИВОШЕИН",
+          "n": 1
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 1
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "rossiyskaya-vostochnaya-okraina": {
+      "refs": [
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "rostovo-novocherkasskaya-operatsiya": {
+      "chronicle_jumps": 1
+    },
+    "rsfsr": {
+      "refs": [
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 7
+        },
+        {
+          "id": "turkestan-sfr",
+          "kind": "state",
+          "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+          "n": 6
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 6
+        },
+        {
+          "id": "bashkir-assr",
+          "kind": "state",
+          "title_ru": "Башкирская Автономная Социалистическая Советская Республика",
+          "n": 5
+        },
+        {
+          "id": "latvssr",
+          "kind": "state",
+          "title_ru": "Латвийская Социалистическая Советская Республика",
+          "n": 5
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 5
+        },
+        {
+          "id": "stuchka",
+          "kind": "person",
+          "title_ru": "П. И. СТУЧКА",
+          "n": 4
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 4
+        }
+      ],
+      "more": 58,
+      "chronicle_mentions": 58
+    },
+    "russian-state-kolchak": {
+      "refs": [
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "dutov",
+          "kind": "person",
+          "title_ru": "А. И. ДУТОВ",
+          "n": 1
+        },
+        {
+          "id": "bukeykhanov",
+          "kind": "person",
+          "title_ru": "А. Н. БУКЕЙХАНОВ",
+          "n": 1
+        },
+        {
+          "id": "orenburg-cossack-host",
+          "kind": "state",
+          "title_ru": "Оренбургское казачье войско",
+          "n": 1
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "savinkov": {
+      "refs": [
+        {
+          "id": "union-defence",
+          "kind": "party",
+          "title_ru": "Союз защиты Родины и свободы",
+          "n": 7
+        },
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 1
+        },
+        {
+          "id": "uritskiy",
+          "kind": "person",
+          "title_ru": "М. С. УРИЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 1
+        },
+        {
+          "id": "yaroslavskoe-vosstanie",
+          "kind": "event",
+          "title_ru": "Ярославское восстание («Ярославский мятеж»)",
+          "n": 1
+        }
+      ]
+    },
+    "schetinkin": {
+      "refs": [
+        {
+          "id": "greens-general",
+          "kind": "party",
+          "title_ru": "Зелёные",
+          "n": 1
+        },
+        {
+          "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+          "kind": "state",
+          "title_ru": "Красное партизанское движение в Сибири и на Дальнем Востоке",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "semyonov": {
+      "refs": [
+        {
+          "id": "rossiyskaya-vostochnaya-okraina",
+          "kind": "state",
+          "title_ru": "Российская Восточная окраина",
+          "n": 7
+        },
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 2
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "vologodskiy",
+          "kind": "person",
+          "title_ru": "П. В. ВОЛОГОДСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 1
+        },
+        {
+          "id": "krasnoe-partizanskoe-dvizhenie-v-sibiri",
+          "kind": "state",
+          "title_ru": "Красное партизанское движение в Сибири и на Дальнем Востоке",
+          "n": 1
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 1
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 1
+        }
+      ],
+      "more": 1,
+      "chronicle_mentions": 6
+    },
+    "shulgin": {
+      "refs": [
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 1
+        }
+      ]
+    },
+    "sibirskoe-oblastnichestvo": {
+      "refs": [
+        {
+          "id": "vologodskiy",
+          "kind": "person",
+          "title_ru": "П. В. ВОЛОГОДСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "derber",
+          "kind": "person",
+          "title_ru": "П. Я. ДЕРБЕР",
+          "n": 1
+        },
+        {
+          "id": "vsp",
+          "kind": "state",
+          "title_ru": "Временное Сибирское правительство",
+          "n": 1
+        }
+      ]
+    },
+    "skoropadskiy": {
+      "refs": [
+        {
+          "id": "ukrainskaya-derzhava",
+          "kind": "state",
+          "title_ru": "Украинская держава",
+          "n": 4
+        },
+        {
+          "id": "grigorev",
+          "kind": "person",
+          "title_ru": "Н. А. ГРИГОРЬЕВ (СЕРВЕТНИКОВ)",
+          "n": 2
+        },
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 2
+        },
+        {
+          "id": "borotbisty",
+          "kind": "party",
+          "title_ru": "Боротьбисты",
+          "n": 1
+        },
+        {
+          "id": "cadets",
+          "kind": "party",
+          "title_ru": "Конституционно-демократическая партия",
+          "n": 1
+        },
+        {
+          "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+          "kind": "party",
+          "title_ru": "Украинская социал-демократическая рабочая партия",
+          "n": 1
+        },
+        {
+          "id": "great-don-host",
+          "kind": "state",
+          "title_ru": "Всевеликое Войско Донское",
+          "n": 1
+        },
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 1
+        }
+      ],
+      "more": 1,
+      "chronicle_mentions": 3
+    },
+    "sksr": {
+      "refs": [
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 1
+        },
+        {
+          "id": "ordzhonikidze",
+          "kind": "person",
+          "title_ru": "Г. К. ОРДЖОНИКИДЗЕ",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "sotsial-demokraticheskaya-partiya-finlya": {
+      "refs": [
+        {
+          "id": "finlyandskaya-sotsialisticheskaya-raboch",
+          "kind": "state",
+          "title_ru": "Финляндская Социалистическая Рабочая Республика",
+          "n": 2
+        },
+        {
+          "id": "finlyandskaya-respublika-s-10-avgusta-19",
+          "kind": "state",
+          "title_ru": "Финляндская Республика (с 10 августа 1918 по 17 июля 1919 г. – Королевство Финляндия)",
+          "n": 1
+        }
+      ]
+    },
+    "south-russia-gov": {
+      "refs": [
+        {
+          "id": "krivoshein",
+          "kind": "person",
+          "title_ru": "А. В. КРИВОШЕИН",
+          "n": 1
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "sovetsko-polskaya-voyna": {
+      "chronicle_jumps": 11
+    },
+    "spiridonova": {
+      "refs": [
+        {
+          "id": "left-srs",
+          "kind": "party",
+          "title_ru": "Левые эсеры",
+          "n": 1
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 1
+        },
+        {
+          "id": "vystuplenie-levykh-eserov",
+          "kind": "event",
+          "title_ru": "Выступление левых эсеров",
+          "n": 1
+        },
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 1
+        }
+      ]
+    },
+    "srs": {
+      "refs": [
+        {
+          "id": "volskiy",
+          "kind": "person",
+          "title_ru": "В. К. ВОЛЬСКИЙ",
+          "n": 8
+        },
+        {
+          "id": "zenzinov",
+          "kind": "person",
+          "title_ru": "В. М. ЗЕНЗИНОВ",
+          "n": 6
+        },
+        {
+          "id": "chernov",
+          "kind": "person",
+          "title_ru": "В. М. ЧЕРНОВ",
+          "n": 4
+        },
+        {
+          "id": "avksentiev",
+          "kind": "person",
+          "title_ru": "Н. Д. АВКСЕНТЬЕВ",
+          "n": 4
+        },
+        {
+          "id": "belorusskaya-sotsialisticheskaya-gromada",
+          "kind": "party",
+          "title_ru": "Белорусская социалистическая громада",
+          "n": 4
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 4
+        },
+        {
+          "id": "union-constituent",
+          "kind": "party",
+          "title_ru": "Союз защиты Учредительного собрания",
+          "n": 4
+        },
+        {
+          "id": "vremennoe-pravitelstvo-rossiyskaya-respu",
+          "kind": "state",
+          "title_ru": "Временное правительство (Российская республика)",
+          "n": 4
+        }
+      ],
+      "more": 39,
+      "chronicle_mentions": 7
+    },
+    "stalin": {
+      "refs": [
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "trotsky",
+          "kind": "person",
+          "title_ru": "Л. Д. ТРОЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "tukhachevsky",
+          "kind": "person",
+          "title_ru": "М. Н. Тухачевский",
+          "n": 1
+        },
+        {
+          "id": "kamenev",
+          "kind": "person",
+          "title_ru": "С. С. КАМЕНЕВ",
+          "n": 1
+        },
+        {
+          "id": "dzerzhinskiy",
+          "kind": "person",
+          "title_ru": "Ф. Э. ДЗЕРЖИНСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "sverdlov",
+          "kind": "person",
+          "title_ru": "Я. М. СВЕРДЛОВ",
+          "n": 1
+        },
+        {
+          "id": "krasnaya-gorka-i-seraya-loshad",
+          "kind": "event",
+          "title_ru": "Восстание гарнизонов форта «Красная Горка» и батареи «Серая Лошадь»",
+          "n": 1
+        },
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 1
+        }
+      ],
+      "more": 3,
+      "chronicle_mentions": 1
+    },
+    "struve": {
+      "refs": [
+        {
+          "id": "alekseev-org",
+          "kind": "party",
+          "title_ru": "Алексеевская организация (Добровольческая армия)",
+          "n": 2
+        },
+        {
+          "id": "nabokov",
+          "kind": "person",
+          "title_ru": "В. Д. НАБОКОВ",
+          "n": 1
+        },
+        {
+          "id": "milyukov",
+          "kind": "person",
+          "title_ru": "П. Н. МИЛЮКОВ",
+          "n": 1
+        },
+        {
+          "id": "national-center",
+          "kind": "party",
+          "title_ru": "Национальный центр",
+          "n": 1
+        },
+        {
+          "id": "south-russia-gov",
+          "kind": "state",
+          "title_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
+          "n": 1
+        }
+      ]
+    },
+    "stuchka": {
+      "refs": [
+        {
+          "id": "latvssr",
+          "kind": "state",
+          "title_ru": "Латвийская Социалистическая Советская Республика",
+          "n": 2
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "sverdlov": {
+      "refs": [
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 2
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 1
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "trotsky": {
+      "refs": [
+        {
+          "id": "brest-litovskie-peregovory",
+          "kind": "event",
+          "title_ru": "Брест-Литовские мирные переговоры",
+          "n": 3
+        },
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 2
+        },
+        {
+          "id": "stalin",
+          "kind": "person",
+          "title_ru": "И. В. СТАЛИН",
+          "n": 1
+        },
+        {
+          "id": "vatsetis",
+          "kind": "person",
+          "title_ru": "И. И. ВАЦЕТИС",
+          "n": 1
+        },
+        {
+          "id": "uritskiy",
+          "kind": "person",
+          "title_ru": "М. С. УРИЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "makhno",
+          "kind": "person",
+          "title_ru": "Н. И. МАХНО",
+          "n": 1
+        },
+        {
+          "id": "yudenich",
+          "kind": "person",
+          "title_ru": "Н. Н. ЮДЕНИЧ",
+          "n": 1
+        },
+        {
+          "id": "chkheidze",
+          "kind": "person",
+          "title_ru": "Н. С. ЧХЕИДЗЕ",
+          "n": 1
+        }
+      ],
+      "more": 6,
+      "chronicle_mentions": 1
+    },
+    "tukhachevsky": {
+      "refs": [
+        {
+          "id": "uborevich",
+          "kind": "person",
+          "title_ru": "И. П. УБОРЕВИЧ",
+          "n": 3
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 3
+        },
+        {
+          "id": "kappel",
+          "kind": "person",
+          "title_ru": "В. О. КАППЕЛЬ",
+          "n": 1
+        },
+        {
+          "id": "pilsudski",
+          "kind": "person",
+          "title_ru": "Ю. ПИЛСУДСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
+          "kind": "state",
+          "title_ru": "Тамбовское восстание под руководством А. С. Антонова",
+          "n": 1
+        },
+        {
+          "id": "bakinskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Бакинская операция РККА",
+          "n": 1
+        },
+        {
+          "id": "vesennee-nastuplenie-russkoy-armii",
+          "kind": "event",
+          "title_ru": "Весеннее наступление Русской армии А. В. Колчака",
+          "n": 1
+        },
+        {
+          "id": "kontrnastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Восточного фронта РККА",
+          "n": 1
+        }
+      ],
+      "more": 2,
+      "chronicle_mentions": 4
+    },
+    "turkestan-sfr": {
+      "refs": [
+        {
+          "id": "bukharskiy-emirat",
+          "kind": "state",
+          "title_ru": "Бухарский эмират",
+          "n": 3
+        },
+        {
+          "id": "khivinskoe-khanstvo",
+          "kind": "state",
+          "title_ru": "Хивинское ханство",
+          "n": 3
+        },
+        {
+          "id": "khodzhaev",
+          "kind": "person",
+          "title_ru": "Ф. Г. ХОДЖАЕВ",
+          "n": 1
+        },
+        {
+          "id": "basmachestvo",
+          "kind": "party",
+          "title_ru": "Басмачество",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        },
+        {
+          "id": "turkestanskiy-front",
+          "kind": "event",
+          "title_ru": "Туркестанский фронт",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "turkestanskiy-front": {
+      "chronicle_jumps": 5
+    },
+    "uborevich": {
+      "refs": [
+        {
+          "id": "fer",
+          "kind": "state",
+          "title_ru": "Дальневосточная Республика",
+          "n": 2
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 1
+        },
+        {
+          "id": "tambovskoe-vosstanie-pod-rukovodstvom-a",
+          "kind": "state",
+          "title_ru": "Тамбовское восстание под руководством А. С. Антонова",
+          "n": 1
+        },
+        {
+          "id": "primorskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 1
+        },
+        {
+          "id": "kharkovskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Харьковская операция РККА",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "ufa-directory": {
+      "refs": [
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 2
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 2
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "kerenskiy",
+          "kind": "person",
+          "title_ru": "А. Ф. КЕРЕНСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "boldyrev",
+          "kind": "person",
+          "title_ru": "В. Г. БОЛДЫРЕВ",
+          "n": 1
+        },
+        {
+          "id": "zenzinov",
+          "kind": "person",
+          "title_ru": "В. М. ЗЕНЗИНОВ",
+          "n": 1
+        },
+        {
+          "id": "chernov",
+          "kind": "person",
+          "title_ru": "В. М. ЧЕРНОВ",
+          "n": 1
+        }
+      ],
+      "more": 12,
+      "chronicle_mentions": 5
+    },
+    "ukrainian-ssr": {
+      "refs": [
+        {
+          "id": "petrovskiy",
+          "kind": "person",
+          "title_ru": "Г. И. ПЕТРОВСКИЙ",
+          "n": 4
+        },
+        {
+          "id": "ussr",
+          "kind": "state",
+          "title_ru": "Союз Советских Социалистических Республик",
+          "n": 3
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 3
+        },
+        {
+          "id": "voroshilov",
+          "kind": "person",
+          "title_ru": "К. Е. ВОРОШИЛОВ",
+          "n": 1
+        },
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 1
+        },
+        {
+          "id": "borotbisty",
+          "kind": "party",
+          "title_ru": "Боротьбисты",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        }
+      ],
+      "more": 3,
+      "chronicle_mentions": 5
+    },
+    "ukrainskaya-derzhava": {
+      "refs": [
+        {
+          "id": "skoropadskiy",
+          "kind": "person",
+          "title_ru": "П. П. СКОРОПАДСКИЙ",
+          "n": 2
+        },
+        {
+          "id": "grigorev",
+          "kind": "person",
+          "title_ru": "Н. А. ГРИГОРЬЕВ (СЕРВЕТНИКОВ)",
+          "n": 1
+        },
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 1
+        },
+        {
+          "id": "ukrainskaya-sotsial-demokraticheskaya-ra",
+          "kind": "party",
+          "title_ru": "Украинская социал-демократическая рабочая партия",
+          "n": 1
+        },
+        {
+          "id": "great-don-host",
+          "kind": "state",
+          "title_ru": "Всевеликое Войско Донское",
+          "n": 1
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 1
+        },
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "ukrainskaya-sotsial-demokraticheskaya-ra": {
+      "refs": [
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 2
+        },
+        {
+          "id": "borotbisty",
+          "kind": "party",
+          "title_ru": "Боротьбисты",
+          "n": 1
+        },
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "ulmanis": {
+      "refs": [
+        {
+          "id": "latviyskaya-respublika",
+          "kind": "state",
+          "title_ru": "Латвийская Республика",
+          "n": 4
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "union-constituent": {
+      "refs": [
+        {
+          "id": "chaykovskiy",
+          "kind": "person",
+          "title_ru": "Н. В. ЧАЙКОВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "revdem-general",
+          "kind": "party",
+          "title_ru": "Революционная демократия",
+          "n": 1
+        },
+        {
+          "id": "vybory-v-us",
+          "kind": "event",
+          "title_ru": "Выборы в Учредительное собрание",
+          "n": 1
+        },
+        {
+          "id": "otkrytie-i-razgon-us",
+          "kind": "event",
+          "title_ru": "Открытие и разгон Учредительного собрания",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "union-defence": {
+      "refs": [
+        {
+          "id": "yaroslavskoe-vosstanie",
+          "kind": "event",
+          "title_ru": "Ярославское восстание («Ярославский мятеж»)",
+          "n": 2
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "union-renewal",
+          "kind": "party",
+          "title_ru": "Союз возрождения России",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "union-renewal": {
+      "refs": [
+        {
+          "id": "kerenskiy",
+          "kind": "person",
+          "title_ru": "А. Ф. КЕРЕНСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "boldyrev",
+          "kind": "person",
+          "title_ru": "В. Г. БОЛДЫРЕВ",
+          "n": 1
+        },
+        {
+          "id": "chaykovskiy",
+          "kind": "person",
+          "title_ru": "Н. В. ЧАЙКОВСКИЙ",
+          "n": 1
+        },
+        {
+          "id": "avksentiev",
+          "kind": "person",
+          "title_ru": "Н. Д. АВКСЕНТЬЕВ",
+          "n": 1
+        },
+        {
+          "id": "cadets",
+          "kind": "party",
+          "title_ru": "Конституционно-демократическая партия",
+          "n": 1
+        },
+        {
+          "id": "mensheviks",
+          "kind": "party",
+          "title_ru": "Меньшевики",
+          "n": 1
+        },
+        {
+          "id": "national-center",
+          "kind": "party",
+          "title_ru": "Национальный центр",
+          "n": 1
+        },
+        {
+          "id": "northern-region",
+          "kind": "state",
+          "title_ru": "Северная область",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "unr": {
+      "refs": [
+        {
+          "id": "petlyura",
+          "kind": "person",
+          "title_ru": "С. В. ПЕТЛЮРА",
+          "n": 6
+        },
+        {
+          "id": "sovetsko-polskaya-voyna",
+          "kind": "event",
+          "title_ru": "Советско-польская война",
+          "n": 4
+        },
+        {
+          "id": "grigorev",
+          "kind": "person",
+          "title_ru": "Н. А. ГРИГОРЬЕВ (СЕРВЕТНИКОВ)",
+          "n": 3
+        },
+        {
+          "id": "dksr",
+          "kind": "state",
+          "title_ru": "Донецко-Криворожская Советская Республика",
+          "n": 3
+        },
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 3
+        },
+        {
+          "id": "skoropadskiy",
+          "kind": "person",
+          "title_ru": "П. П. СКОРОПАДСКИЙ",
+          "n": 2
+        },
+        {
+          "id": "borotbisty",
+          "kind": "party",
+          "title_ru": "Боротьбисты",
+          "n": 2
+        },
+        {
+          "id": "osr",
+          "kind": "state",
+          "title_ru": "Одесская Советская Республика",
+          "n": 2
+        }
+      ],
+      "more": 13,
+      "chronicle_mentions": 12
+    },
+    "unrs": {
+      "refs": [
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 1
+        },
+        {
+          "id": "ukrainian-ssr",
+          "kind": "state",
+          "title_ru": "Украинская Социалистическая Советская Республика",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "uritskiy": {
+      "refs": [
+        {
+          "id": "narodnie-socialists",
+          "kind": "party",
+          "title_ru": "Трудовая народно-социалистическая партия",
+          "n": 1
+        },
+        {
+          "id": "vybory-v-us",
+          "kind": "event",
+          "title_ru": "Выборы в Учредительное собрание",
+          "n": 1
+        },
+        {
+          "id": "krasnyy-terror",
+          "kind": "event",
+          "title_ru": "Принятие СНК РСФСР «Постановления о красном терроре»",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "ussr": {
+      "refs": [
+        {
+          "id": "petrovskiy",
+          "kind": "person",
+          "title_ru": "Г. И. ПЕТРОВСКИЙ",
+          "n": 3
+        },
+        {
+          "id": "uborevich",
+          "kind": "person",
+          "title_ru": "И. П. УБОРЕВИЧ",
+          "n": 3
+        },
+        {
+          "id": "frunze",
+          "kind": "person",
+          "title_ru": "М. В. ФРУНЗЕ",
+          "n": 3
+        },
+        {
+          "id": "lenin",
+          "kind": "person",
+          "title_ru": "В. И. ЛЕНИН (УЛЬЯНОВ)",
+          "n": 2
+        },
+        {
+          "id": "trotsky",
+          "kind": "person",
+          "title_ru": "Л. Д. ТРОЦКИЙ",
+          "n": 2
+        },
+        {
+          "id": "budyonny",
+          "kind": "person",
+          "title_ru": "С. М. БУДЁННЫЙ",
+          "n": 2
+        },
+        {
+          "id": "savinkov",
+          "kind": "person",
+          "title_ru": "Б. В. САВИНКОВ",
+          "n": 1
+        },
+        {
+          "id": "stalin",
+          "kind": "person",
+          "title_ru": "И. В. СТАЛИН",
+          "n": 1
+        }
+      ],
+      "more": 22,
+      "chronicle_mentions": 2
+    },
+    "vatsetis": {
+      "refs": [
+        {
+          "id": "czechoslovak-corps",
+          "kind": "state",
+          "title_ru": "Чехословацкий корпус",
+          "n": 1
+        },
+        {
+          "id": "vystuplenie-chekhoslovatskogo-korpusa",
+          "kind": "event",
+          "title_ru": "Выступление Чехословацкого корпуса",
+          "n": 1
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "vesennee-nastuplenie-russkoy-armii": {
+      "chronicle_jumps": 1
+    },
+    "voennye-deystviya-na-severo-zapade": {
+      "chronicle_jumps": 4
+    },
+    "volochaevskaya-operatsiya": {
+      "chronicle_jumps": 1
+    },
+    "vologodskiy": {
+      "refs": [
+        {
+          "id": "vsp",
+          "kind": "state",
+          "title_ru": "Временное Сибирское правительство",
+          "n": 4
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 3
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 3
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 2
+        },
+        {
+          "id": "kolchak",
+          "kind": "person",
+          "title_ru": "А. В. КОЛЧАК",
+          "n": 1
+        },
+        {
+          "id": "derber",
+          "kind": "person",
+          "title_ru": "П. Я. ДЕРБЕР",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 3
+    },
+    "volskiy": {
+      "refs": [
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 3
+        }
+      ]
+    },
+    "vopu": {
+      "refs": [
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "voroshilov": {
+      "refs": [
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 1
+        }
+      ]
+    },
+    "vremennoe-pravitelstvo-rossiyskaya-respu": {
+      "refs": [
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 7
+        },
+        {
+          "id": "kaledin",
+          "kind": "person",
+          "title_ru": "А. М. КАЛЕДИН",
+          "n": 3
+        },
+        {
+          "id": "kerenskiy",
+          "kind": "person",
+          "title_ru": "А. Ф. КЕРЕНСКИЙ",
+          "n": 3
+        },
+        {
+          "id": "kornilov",
+          "kind": "person",
+          "title_ru": "Л. Г. КОРНИЛОВ",
+          "n": 3
+        },
+        {
+          "id": "oktyabrskoe-vosstanie-v-moskve",
+          "kind": "event",
+          "title_ru": "Октябрьское вооруженное восстание в Москве",
+          "n": 3
+        },
+        {
+          "id": "lenin",
+          "kind": "person",
+          "title_ru": "В. И. ЛЕНИН (УЛЬЯНОВ)",
+          "n": 2
+        },
+        {
+          "id": "milyukov",
+          "kind": "person",
+          "title_ru": "П. Н. МИЛЮКОВ",
+          "n": 2
+        },
+        {
+          "id": "vtoroy-sezd-sovetov",
+          "kind": "event",
+          "title_ru": "II Всероссийский съезд Советов рабочих и солдатских депутатов",
+          "n": 2
+        }
+      ],
+      "more": 28,
+      "chronicle_mentions": 3
+    },
+    "vsp": {
+      "refs": [
+        {
+          "id": "vopu",
+          "kind": "state",
+          "title_ru": "Временное областное правительство Урала",
+          "n": 5
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 3
+        },
+        {
+          "id": "vologodskiy",
+          "kind": "person",
+          "title_ru": "П. В. ВОЛОГОДСКИЙ",
+          "n": 2
+        },
+        {
+          "id": "derber",
+          "kind": "person",
+          "title_ru": "П. Я. ДЕРБЕР",
+          "n": 2
+        },
+        {
+          "id": "grishin",
+          "kind": "person",
+          "title_ru": "А. Н. ГРИШИН (АЛМАЗОВ)",
+          "n": 1
+        },
+        {
+          "id": "gayda",
+          "kind": "person",
+          "title_ru": "Р. ГАЙДА (Р. ГАЙДЛЬ)",
+          "n": 1
+        },
+        {
+          "id": "alash",
+          "kind": "party",
+          "title_ru": "Алаш",
+          "n": 1
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 1
+        }
+      ],
+      "more": 7,
+      "chronicle_mentions": 5
+    },
+    "vsyur": {
+      "refs": [
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 5
+        },
+        {
+          "id": "kharkovskaya-operatsiya-rkka",
+          "kind": "event",
+          "title_ru": "Харьковская операция РККА",
+          "n": 5
+        },
+        {
+          "id": "unr",
+          "kind": "state",
+          "title_ru": "Украинская Народная Республика",
+          "n": 4
+        },
+        {
+          "id": "kontrnastuplenie-yuzhnogo-fronta-rkka",
+          "kind": "event",
+          "title_ru": "Контрнаступление Южного фронта РККА",
+          "n": 4
+        },
+        {
+          "id": "moskovskiy-pokhod-vsyur",
+          "kind": "event",
+          "title_ru": "Московский поход Вооруженных сил Юга России",
+          "n": 4
+        },
+        {
+          "id": "rostovo-novocherkasskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Ростово-Новочеркасская операция РККА",
+          "n": 3
+        },
+        {
+          "id": "krivoshein",
+          "kind": "person",
+          "title_ru": "А. В. КРИВОШЕИН",
+          "n": 2
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 2
+        }
+      ],
+      "more": 21,
+      "chronicle_mentions": 21
+    },
+    "vtoroy-sezd-sovetov": {
+      "chronicle_jumps": 1
+    },
+    "vybory-v-us": {
+      "chronicle_jumps": 1
+    },
+    "vystuplenie-chekhoslovatskogo-korpusa": {
+      "chronicle_jumps": 3
+    },
+    "vystuplenie-levykh-eserov": {
+      "chronicle_jumps": 1
+    },
+    "vzyatie-kazani-chastyami-narodnoy-armii": {
+      "chronicle_jumps": 1
+    },
+    "whites-general": {
+      "refs": [
+        {
+          "id": "voennye-deystviya-na-severo-zapade",
+          "kind": "event",
+          "title_ru": "Военные действия на Северо-Западе России",
+          "n": 7
+        },
+        {
+          "id": "primorskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Приморская операция Народно-революционной армии Дальневосточной Республики",
+          "n": 7
+        },
+        {
+          "id": "moskovskiy-pokhod-vsyur",
+          "kind": "event",
+          "title_ru": "Московский поход Вооруженных сил Юга России",
+          "n": 6
+        },
+        {
+          "id": "oborona-tsaritsyna",
+          "kind": "event",
+          "title_ru": "Оборона Царицына красными",
+          "n": 6
+        },
+        {
+          "id": "dvizhenie-pod-rukovodstvom-n-i-makhno",
+          "kind": "state",
+          "title_ru": "Движение под руководством Н. И. Махно",
+          "n": 5
+        },
+        {
+          "id": "nastuplenie-vostochnogo-fronta-1919-1920",
+          "kind": "event",
+          "title_ru": "Наступление Восточного фронта РККА",
+          "n": 5
+        },
+        {
+          "id": "priamur-state",
+          "kind": "state",
+          "title_ru": "Приамурское государственное образование (с 8 августа 1922 г. – Приамурский Земский Край)",
+          "n": 4
+        },
+        {
+          "id": "perekopsko-chongarskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Перекопско-Чонгарская операция",
+          "n": 4
+        }
+      ],
+      "more": 52,
+      "chronicle_mentions": 42
+    },
+    "wrangel": {
+      "refs": [
+        {
+          "id": "kakhovka",
+          "kind": "event",
+          "title_ru": "Бои на Каховском плацдарме",
+          "n": 3
+        },
+        {
+          "id": "whites-general",
+          "kind": "party",
+          "title_ru": "Белые",
+          "n": 2
+        },
+        {
+          "id": "vsyur",
+          "kind": "state",
+          "title_ru": "Вооруженные силы Юга России",
+          "n": 2
+        },
+        {
+          "id": "south-russia-gov",
+          "kind": "state",
+          "title_ru": "Правительство Юга России (до 6 августа 1920 г. – Совет при главнокомандующем Вооруженными силами Юга России)",
+          "n": 2
+        },
+        {
+          "id": "perekopsko-chongarskaya-operatsiya",
+          "kind": "event",
+          "title_ru": "Перекопско-Чонгарская операция",
+          "n": 2
+        },
+        {
+          "id": "krivoshein",
+          "kind": "person",
+          "title_ru": "А. В. КРИВОШЕИН",
+          "n": 1
+        },
+        {
+          "id": "denikin",
+          "kind": "person",
+          "title_ru": "А. И. ДЕНИКИН",
+          "n": 1
+        },
+        {
+          "id": "bogaevskiy",
+          "kind": "person",
+          "title_ru": "А. П. БОГАЕВСКИЙ",
+          "n": 1
+        }
+      ],
+      "more": 14,
+      "chronicle_mentions": 10
+    },
+    "yaroslavskoe-vosstanie": {
+      "chronicle_jumps": 1
+    },
+    "yudenich": {
+      "refs": [
+        {
+          "id": "voennye-deystviya-na-severo-zapade",
+          "kind": "event",
+          "title_ru": "Военные действия на Северо-Западе России",
+          "n": 3
+        },
+        {
+          "id": "latviyskaya-respublika",
+          "kind": "state",
+          "title_ru": "Латвийская Республика",
+          "n": 2
+        },
+        {
+          "id": "russian-state-kolchak",
+          "kind": "state",
+          "title_ru": "Российское Государство (А. В. Колчак)",
+          "n": 2
+        },
+        {
+          "id": "zinovev",
+          "kind": "person",
+          "title_ru": "Г. Е. ЗИНОВЬЕВ",
+          "n": 1
+        },
+        {
+          "id": "karl-gustav-emil",
+          "kind": "person",
+          "title_ru": "Г. К. МАННЕРГЕЙМ",
+          "n": 1
+        },
+        {
+          "id": "trotsky",
+          "kind": "person",
+          "title_ru": "Л. Д. ТРОЦКИЙ",
+          "n": 1
+        },
+        {
+          "id": "struve",
+          "kind": "person",
+          "title_ru": "П. Б. СТРУВЕ",
+          "n": 1
+        },
+        {
+          "id": "krasnov",
+          "kind": "person",
+          "title_ru": "П. Н. КРАСНОВ",
+          "n": 1
+        }
+      ],
+      "more": 5,
+      "chronicle_mentions": 4
+    },
+    "zakaspiyskoe-vremennoe-pravitelstvo": {
+      "refs": [
+        {
+          "id": "allies-entente",
+          "kind": "state",
+          "title_ru": "Союзная интервенция (Антанта)",
+          "n": 1
+        },
+        {
+          "id": "turkestan-sfr",
+          "kind": "state",
+          "title_ru": "Туркестанская Советская Федеративная Республика (с сентября 1920 г. – Туркестанская (автономная) Социалистическая Советская Республика)",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "zapadno-sibirskoe-vosstanie": {
+      "chronicle_mentions": 1
+    },
+    "zdfr": {
+      "refs": [
+        {
+          "id": "central-powers",
+          "kind": "state",
+          "title_ru": "Интервенция Центральных держав",
+          "n": 2
+        },
+        {
+          "id": "zhordaniya",
+          "kind": "person",
+          "title_ru": "Н. Н. ЖОРДАНИЯ",
+          "n": 1
+        },
+        {
+          "id": "chkheidze",
+          "kind": "person",
+          "title_ru": "Н. С. ЧХЕИДЗЕ",
+          "n": 1
+        },
+        {
+          "id": "musavat",
+          "kind": "party",
+          "title_ru": "Мусават",
+          "n": 1
+        },
+        {
+          "id": "adr",
+          "kind": "state",
+          "title_ru": "Азербайджанская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 1
+        },
+        {
+          "id": "respublika-armeniya",
+          "kind": "state",
+          "title_ru": "Республика Армения",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "zenzinov": {
+      "refs": [
+        {
+          "id": "avksentiev",
+          "kind": "person",
+          "title_ru": "Н. Д. АВКСЕНТЬЕВ",
+          "n": 1
+        },
+        {
+          "id": "srs",
+          "kind": "party",
+          "title_ru": "Социалисты-революционеры",
+          "n": 1
+        },
+        {
+          "id": "ufa-directory",
+          "kind": "state",
+          "title_ru": "Российское Государство (Временное Всероссийское правительство – Уфимская директория)",
+          "n": 1
+        },
+        {
+          "id": "perevorot-v-omske",
+          "kind": "event",
+          "title_ru": "Приход к власти адмирала А. В. Колчака в Омске",
+          "n": 1
+        }
+      ]
+    },
+    "zhordaniya": {
+      "refs": [
+        {
+          "id": "gruzinskaya-sotsial-demokraticheskaya-pa",
+          "kind": "party",
+          "title_ru": "Грузинская социал-демократическая партия",
+          "n": 2
+        },
+        {
+          "id": "gruzinskaya-demokraticheskaya-respublika",
+          "kind": "state",
+          "title_ru": "Грузинская Демократическая Республика",
+          "n": 2
+        },
+        {
+          "id": "georgian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Грузия",
+          "n": 2
+        },
+        {
+          "id": "stalin",
+          "kind": "person",
+          "title_ru": "И. В. СТАЛИН",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 2
+    },
+    "zinovev": {
+      "refs": [
+        {
+          "id": "oktyabrskiy-perevorot-v-petrograde",
+          "kind": "event",
+          "title_ru": "Октябрьский переворот в Петрограде",
+          "n": 2
+        },
+        {
+          "id": "lenin",
+          "kind": "person",
+          "title_ru": "В. И. ЛЕНИН (УЛЬЯНОВ)",
+          "n": 1
+        },
+        {
+          "id": "bolsheviks",
+          "kind": "party",
+          "title_ru": "Большевики",
+          "n": 1
+        },
+        {
+          "id": "borotbisty",
+          "kind": "party",
+          "title_ru": "Боротьбисты",
+          "n": 1
+        }
+      ],
+      "chronicle_mentions": 1
+    },
+    "zsfsr": {
+      "refs": [
+        {
+          "id": "georgian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Грузия",
+          "n": 3
+        },
+        {
+          "id": "azerbaijani-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Азербайджан",
+          "n": 2
+        },
+        {
+          "id": "armenian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Армения",
+          "n": 2
+        },
+        {
+          "id": "ussr",
+          "kind": "state",
+          "title_ru": "Союз Советских Социалистических Республик",
+          "n": 2
+        },
+        {
+          "id": "myasnikov",
+          "kind": "person",
+          "title_ru": "МЯСНИКОВ",
+          "n": 1
+        },
+        {
+          "id": "reds-general",
+          "kind": "party",
+          "title_ru": "Красные",
+          "n": 1
+        },
+        {
+          "id": "rsfsr",
+          "kind": "state",
+          "title_ru": "Российская Социалистическая Федеративная Советская Республика",
+          "n": 1
+        },
+        {
+          "id": "belorussian-ssr",
+          "kind": "state",
+          "title_ru": "Социалистическая Советская Республика Белоруссия",
+          "n": 1
+        }
+      ],
+      "more": 1,
+      "chronicle_mentions": 1
+    }
+  }
+}
