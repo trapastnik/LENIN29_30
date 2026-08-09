@@ -107,7 +107,8 @@
   </script>
   <script type="module">
     import { fetchJSON } from '/src/data/loader.js';
-    import { applyStaticLabels, wireLangToggle, onLangChange } from '/src/data/i18n.js';
+    import { applyStaticLabels, wireLangToggle, onLangChange, getLang } from '/src/data/i18n.js';
+    import { openFromHash } from '/src/data/deep-link.js';
     import '/src/components/party-card.js';
     import '/src/components/venn-selector.js';
     import '/src/components/camp-filter.js';
@@ -203,6 +204,11 @@
     modal.querySelector('.modal-close').addEventListener('click', closeModal);
     modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Глубокая ссылка: parties.html#card=<id>. Открываем ТОЙ ЖЕ модалкой,
+    // что и тап по карточке, — отдельный путь отрисовки был бы второй
+    // правдой о том, как выглядит справка. Разбор формы — в deep-link.js.
+    openFromHash(idx.items, openModal, getLang());
   </script>
 </body>
 </html>
