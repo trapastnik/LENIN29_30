@@ -65,7 +65,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "budyonny",
@@ -82,11 +83,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "denikin",
-      "title_ru": "Деникинъ",
+      "title_ru": "Деникин",
       "has_card": true,
       "title_full_ru": "А. И. ДЕНИКИН",
       "camp": "white",
@@ -99,7 +101,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "frunze",
@@ -116,11 +119,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "kornilov",
-      "title_ru": "Корниловъ",
+      "title_ru": "Корнилов",
       "has_card": true,
       "title_full_ru": "Л. Г. КОРНИЛОВ",
       "camp": "white",
@@ -133,7 +137,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "makhno",
@@ -150,11 +155,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "pilsudski",
-      "title_ru": "Пилсудскій",
+      "title_ru": "Пилсудский",
       "has_card": true,
       "title_full_ru": "Ю. ПИЛСУДСКИЙ",
       "camp": "national",
@@ -167,11 +173,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "semyonov",
-      "title_ru": "Семёновъ",
+      "title_ru": "Семёнов",
       "has_card": true,
       "title_full_ru": "Г. М. СЕМЁНОВ",
       "camp": "white",
@@ -183,11 +190,12 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "trotsky",
-      "title_ru": "Троцкій",
+      "title_ru": "Троцкий",
       "has_card": true,
       "title_full_ru": "Л. Д. ТРОЦКИЙ",
       "camp": "red",
@@ -200,11 +208,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "tukhachevsky",
-      "title_ru": "Тухачевскій",
+      "title_ru": "Тухачевский",
       "has_card": true,
       "title_full_ru": "М. Н. Тухачевский",
       "camp": "red",
@@ -217,7 +226,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "wrangel",
@@ -234,11 +244,12 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "yudenich",
-      "title_ru": "Юденичъ",
+      "title_ru": "Юденич",
       "has_card": true,
       "title_full_ru": "Н. Н. ЮДЕНИЧ",
       "camp": "white",
@@ -251,7 +262,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "alekseev",
@@ -268,7 +280,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "anvelt",
@@ -285,7 +298,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "blyukher",
@@ -302,7 +316,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "bogaevskiy",
@@ -319,7 +334,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "boldyrev",
@@ -336,7 +352,8 @@
         "sm",
         "xs"
       ],
-      "open_question_ru": "Лагерь не определён: Уфимская директория и антибольшевистские правительства Сибири. Зависит от того, считается ли директория революционной демократией."
+      "open_question_ru": "Лагерь не определён: Уфимская директория и антибольшевистские правительства Сибири. Зависит от того, считается ли директория революционной демократией.",
+      "title_locked": true
     },
     {
       "id": "bukeykhanov",
@@ -353,7 +370,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "bych",
@@ -369,7 +387,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "vatsetis",
@@ -386,7 +405,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "vologodskiy",
@@ -402,7 +422,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "volskiy",
@@ -417,7 +438,8 @@
       "camp": "rev-dem",
       "lead_tiers": [
         "lg"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "voroshilov",
@@ -434,7 +456,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "gayda",
@@ -450,7 +473,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "gegechkori",
@@ -467,7 +491,8 @@
         "sm",
         "xs"
       ],
-      "open_question_ru": "Лагерь не определён: меньшевик по идеологии, деятель Грузинской Демократической Республики по должности."
+      "open_question_ru": "Лагерь не определён: меньшевик по идеологии, деятель Грузинской Демократической Республики по должности.",
+      "title_locked": true
     },
     {
       "id": "grishin",
@@ -484,7 +509,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "derber",
@@ -500,7 +526,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "dzerzhinskiy",
@@ -517,7 +544,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "diterikhs",
@@ -534,7 +562,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "dutov",
@@ -551,7 +580,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "egorov",
@@ -568,7 +598,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "zhordaniya",
@@ -585,7 +616,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "zenzinov",
@@ -602,7 +634,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "zinovev",
@@ -619,7 +652,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "ibragim-bek",
@@ -636,7 +670,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "kaledin",
@@ -653,7 +688,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "kamenev",
@@ -670,7 +706,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "kappel",
@@ -687,7 +724,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "kerenskiy",
@@ -704,7 +742,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "krasnov",
@@ -721,7 +760,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "krivoshein",
@@ -737,7 +777,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "karl-gustav-emil",
@@ -753,7 +794,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "miller",
@@ -770,7 +812,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "milyukov",
@@ -788,7 +831,8 @@
         "sm",
         "xs"
       ],
-      "open_question_ru": "Лагерь `rev-dem` по Временному правительству, но партия кадетов в разделе отнесена к белым. Требует сверки с музеем."
+      "open_question_ru": "Лагерь `rev-dem` по Временному правительству, но партия кадетов в разделе отнесена к белым. Требует сверки с музеем.",
+      "title_locked": true
     },
     {
       "id": "myasnikov",
@@ -805,7 +849,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "nabokov",
@@ -823,7 +868,8 @@
         "sm",
         "xs"
       ],
-      "open_question_ru": "То же, что у Милюкова: `rev-dem` по должности, кадеты в разделе — белые."
+      "open_question_ru": "То же, что у Милюкова: `rev-dem` по должности, кадеты в разделе — белые.",
+      "title_locked": true
     },
     {
       "id": "ordzhonikidze",
@@ -840,7 +886,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "petlyura",
@@ -856,7 +903,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "petrovskiy",
@@ -873,7 +921,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "poluyan",
@@ -890,7 +939,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "pyats",
@@ -907,7 +957,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "savinkov",
@@ -924,7 +975,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "sverdlov",
@@ -941,7 +993,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "skoropadskiy",
@@ -958,7 +1011,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "spiridonova",
@@ -975,7 +1029,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "stalin",
@@ -991,7 +1046,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "struve",
@@ -1008,7 +1064,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "stuchka",
@@ -1025,7 +1082,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "uborevich",
@@ -1042,7 +1100,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "ulmanis",
@@ -1058,7 +1117,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "uritskiy",
@@ -1075,7 +1135,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "khodzhaev",
@@ -1092,7 +1153,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "chaykovskiy",
@@ -1109,7 +1171,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "chernov",
@@ -1125,7 +1188,8 @@
       "lead_tiers": [
         "lg",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "chkheidze",
@@ -1142,7 +1206,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "shulgin",
@@ -1159,7 +1224,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "schetinkin",
@@ -1176,7 +1242,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     }
   ],
   "camps": [

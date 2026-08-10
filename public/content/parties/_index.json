@@ -316,7 +316,8 @@
       "venn_groups": [
         "white"
       ],
-      "title_chip_ru": "Добровольческая армия"
+      "title_chip_ru": "Добровольческая армия",
+      "title_locked": true
     },
     {
       "id": "right-center",
