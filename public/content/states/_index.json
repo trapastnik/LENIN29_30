@@ -38,7 +38,8 @@
         "xs"
       ],
       "territory_id": "rsfsr",
-      "map_id": "territories"
+      "map_id": "territories",
+      "title_locked": true
     },
     {
       "id": "ussr",
@@ -60,7 +61,8 @@
         "xs"
       ],
       "territory_id": "ussr",
-      "map_id": "territories"
+      "map_id": "territories",
+      "title_locked": true
     },
     {
       "id": "ukrainian-ssr",
@@ -81,7 +83,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "belorussian-ssr",
@@ -102,7 +105,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "zsfsr",
@@ -123,7 +127,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "azerbaijani-ssr",
@@ -146,7 +151,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "armenian-ssr",
@@ -167,7 +173,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "georgian-ssr",
@@ -187,7 +194,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "bashkir-assr",
@@ -210,7 +218,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "fer",
@@ -253,7 +262,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "vsyur",
@@ -273,7 +283,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "great-don-host",
@@ -322,7 +333,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "priamur-state",
@@ -339,7 +351,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "russian-state-kolchak",
@@ -358,7 +371,8 @@
         "xs"
       ],
       "territory_id": "russian-state-kolchak",
-      "map_id": "territories"
+      "map_id": "territories",
+      "title_locked": true
     },
     {
       "id": "northern-region",
@@ -395,7 +409,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "politcenter",
@@ -404,7 +419,8 @@
       "has_card": true,
       "title_full_ru": "Политический центр",
       "dates_display_ru": "12 ноября 1919 – 23 января 1920 г.",
-      "sort_key_ru": "политцентр"
+      "sort_key_ru": "политцентр",
+      "title_locked": true
     },
     {
       "id": "ufa-directory",
@@ -421,7 +437,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "allies-entente",
@@ -440,7 +457,8 @@
         "xs"
       ],
       "territory_id": "allies-entente",
-      "map_id": "allies-entente-presence"
+      "map_id": "allies-entente-presence",
+      "title_locked": true
     },
     {
       "id": "czechoslovak-corps",
@@ -475,7 +493,8 @@
         "lg",
         "sm",
         "xs"
-      ]
+      ],
+      "title_locked": true
     },
     {
       "id": "rossiyskaya-vostochnaya-okraina",
