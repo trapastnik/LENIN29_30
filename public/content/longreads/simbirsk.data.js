@@ -798,13 +798,13 @@ window.MTK_LONGREADS["simbirsk"] = {
     },
     "trotsky": {
       "kind": "person",
-      "title_ru": "Троцкій",
+      "title_ru": "Троцкий",
       "camp": "red",
       "href": "expo/people.html#/person/trotsky"
     },
     "tukhachevsky": {
       "kind": "person",
-      "title_ru": "Тухачевскій",
+      "title_ru": "Тухачевский",
       "camp": "red",
       "href": "expo/people.html#/person/tukhachevsky"
     },
