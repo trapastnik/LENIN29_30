@@ -34,21 +34,34 @@ const ПОРТ_СТАТИКИ = 8700 + (process.pid % 400);
 const BASE = process.env.MTK_BASE_URL || `http://127.0.0.1:${ПОРТ_СТАТИКИ}`;
 const PORT = 9600 + (process.pid % 300);
 
-// Страницы, где глубокая ссылка заявлена. states.html здесь НЕТ намеренно:
-// там вызов отрабатывает, а модалка остаётся закрытой, причина не найдена,
-// и ссылка убрана до выяснения. Появится — вернуть строку сюда.
 const СТРАНИЦЫ = [
   { url: '/parties.html', индекс: 'parties/_index.json' },
+  { url: '/states.html',  индекс: 'states/_index.json' },
 ];
 
 const ПРОБА = `(() => {
-  const modal = document.getElementById('modal');
+  // Модалок в документе может быть НЕ ОДНА: states.html держит свою
+  // (#state-modal), а CollectionPage вставляет ещё одну со своим id внутрь
+  // скрытой сетки. Берём ту, где реально лежит карточка, — иначе меряем
+  // не тот узел. Это тот же двойной id, что чинится в самой странице,
+  // но проверка обязана быть устойчивой к нему независимо.
+  const модалки = [...document.querySelectorAll('.modal')];
+  const modal = модалки.find((m) => m.querySelector('party-card, state-card')) || модалки[0] || null;
+  // ВНИМАНИЕ: видимость — по ФАКТИЧЕСКОМУ display, а не по классу.
+  // На states.html модалка несёт класс hidden и при этом показана:
+  // правило .hidden с display none important там проигрывает более
+  // специфичному правилу на id. Проверяя класс, я объявил рабочую ссылку
+  // сломанной и убрал её из раздела — та же ошибка, что до этого
+  // с «модалка открылась» вместо «карточка отрисована», только уровнем
+  // ниже. Класс говорит о намерении, computed — о том, что видит посетитель.
+  const видна = !!modal && getComputedStyle(modal).display !== 'none';
   const карточка = modal && modal.querySelector('party-card, state-card');
   const sr = карточка && карточка.shadowRoot;
   const плашка = document.getElementById('deep-link-missing');
   return JSON.stringify({
     хэш: location.hash || '',
-    открыта: !!(modal && !modal.classList.contains('hidden')),
+    открыта: видна,
+    классМодалки: modal ? modal.className : null,
     id: карточка ? (карточка.getAttribute('party-id') || карточка.getAttribute('state-id')) : null,
     апгрейд: карточка ? !/^HTML(Unknown)?Element$/.test(карточка.constructor.name) : false,
     абзацев: sr ? sr.querySelectorAll('p').length : 0,

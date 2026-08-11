@@ -245,7 +245,14 @@
     </div>
     <div id="grid-mode" class="hidden brand-scroll"></div>
 
-    <div id="modal" class="modal hidden" aria-hidden="true">
+    <!-- id=state-modal, а НЕ modal: CollectionPage вставляет внутрь #grid-mode
+         свою разметку с таким же id="modal", и она идёт в документе раньше.
+         getElementById('modal') возвращал ЕЁ — внутри скрытого grid-mode, —
+         поэтому openModal раскрывал невидимую чужую модалку, а карточка по
+         глубокой ссылке уходила в неё же. Снаружи выглядело как «ссылка
+         не работает», хотя работала не та модалка. Два id в одном документе —
+         дефект сам по себе; развожу их. -->
+    <div id="state-modal" class="modal hidden" aria-hidden="true">
       <div class="modal-backdrop"></div>
       <div class="modal-sheet">
         <button class="modal-close" aria-label="Закрыть" data-ru="Закрыть" data-en="Close" data-attr="aria-label">×</button>
@@ -268,7 +275,8 @@
   <script type="module">
     import { CollectionPage } from '/src/pages/collection-page.js';
     import { fetchJSON } from '/src/data/loader.js';
-    import { applyStaticLabels, wireLangToggle, onLangChange, t } from '/src/data/i18n.js';
+    import { applyStaticLabels, wireLangToggle, onLangChange, t, getLang } from '/src/data/i18n.js';
+    import { openFromHash } from '/src/data/deep-link.js';
         import '/src/components/state-card.js';
 
     // Интерфейс двуязычен, содержание справок — нет: перевода 198 справок
@@ -416,8 +424,10 @@
     });
 
     // ───── Модалка ─────
-    const modal = document.getElementById('modal');
-    const modalBody = document.getElementById('modal-body');
+    const modal = document.getElementById('state-modal');
+    // От своей модалки, не getElementById: #modal-body тоже задвоён
+    // разметкой CollectionPage, и глобальный поиск вернул бы чужой.
+    const modalBody = modal.querySelector('#modal-body');
     function openModal(item) {
       modalBody.innerHTML = '';
       const card = document.createElement('state-card');
@@ -441,13 +451,11 @@
     document.body.classList.add('scrollable');
     renderPicker();
 
-    // ⚠️ Глубокой ссылки здесь ПОКА НЕТ, и это не забывчивость.
-    // openFromHash отрабатывает — хэш стирается, запись в индексе находится,
-    // плашки «не найдена» нет, — но модалка остаётся закрытой, и причину
-    // я не нашёл. На parties.html тот же вызов работает и проверен.
-    // Полурабочая ссылка это ровно мёртвая кнопка, от которой мы уходим:
-    // посетитель жмёт, ничего не происходит. Пусть лучше её не будет,
-    // пока не разберусь. Долг, а не решение.
+    // Глубокая ссылка: states.html#card=<id>. Той же модалкой, что и тап.
+    // Карточка создаётся с нуля, а не ищется в дереве, поэтому раскрывать
+    // группу для неё не требуется — раздел остаётся на экране групп,
+    // и посетитель, закрыв карточку, окажется в разделе, а не в пустоте.
+    openFromHash(idx.items, openModal, getLang());
     wireLangToggle(document.getElementById('btn-lang'), () => {
       applyStaticLabels();
       // Перерисовываем то, что собрано из строк: плитки групп и, если
