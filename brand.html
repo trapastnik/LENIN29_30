@@ -881,6 +881,33 @@
     .rel-item:active { background: var(--paper-4); }
     .rel-more { color: var(--ink-3); border-style: dashed; }
 
+    /* — Направления связи. Их ДВА, и они разные отношения — */
+    .rel-dir { margin-bottom: var(--sp-3, 24px); }
+    .rel-dir:last-child { margin-bottom: 0; }
+    /* Подпись направления — заголовок отношения, а не кнопка.
+       Поэтому она не пилюля, не имеет рамки и набрана моно: спутать
+       её с целью нажатия нельзя даже на бегу. */
+    .rel-dir-cap {
+      display: flex; align-items: baseline; gap: var(--sp-1, 8px);
+      font-family: var(--font-mono);
+      font-size: calc(11px * var(--ui-scale, 1));
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: var(--sp-2, 16px);
+    }
+    /* Стрелка несёт направление и разведена по сторонам подписи:
+       наружу — после текста, внутрь — перед ним. Слово и знак говорят
+       одно и то же, и знак работает, даже если подпись не прочитали. */
+    .rel-dir-cap b { color: var(--brass); font-weight: 400; }
+    .rel-dir-cap .n { margin-left: auto; opacity: 0.7; }
+    /* Разделитель между направлениями: без него две строки читаются
+       как одна с промежутком. */
+    .rel-dir + .rel-dir { border-top: var(--bd-hair, 1px) solid var(--paper-5);
+                          padding-top: var(--sp-3, 24px); }
+    /* Слитный вариант: направление становится свойством КНОПКИ, а не
+       строки. Показан рядом, чтобы разница была видна, а не описана. */
+    .rel-item .dir { color: var(--ink-3); font-size: calc(13px * var(--ui-scale, 1)); }
+
     /* — Раздел «Состояние» (25). Отчёт линтера — */
     .lint-table {
       background: var(--page-bg-deep);
@@ -2827,8 +2854,10 @@
 
       <p class="lede-note">
         Цели <b>≥ 64 px</b> — это управляющие элементы внутри раздела,
-        не основная навигация. Блок переживает и две связи, и сорок:
-        группировка по лагерю, внутри группы не больше пяти, дальше «ещё N».
+        не основная навигация. Направлений <b>два</b>, и это разные
+        отношения: кого называет эта справка и кто называет её.
+        Строчное слово в тексте остаётся некликабельным — его цель
+        появляется здесь, кнопкой.
       </p>
 
       <div class="rel-pair">
@@ -2836,67 +2865,78 @@
           <span class="tag-rec">рекомендую</span>
           <div class="d-card">
             <div class="d-pad">
-              <div class="rel-head">Связанные справки · 12</div>
+              <div class="rel-head">Связи · 19</div>
 
-              <div class="rel-group">
-                <div class="rel-cap"><i style="background: var(--camp-red);"></i>Красные · 4</div>
+              <div class="rel-dir">
+                <div class="rel-dir-cap"><b>Упоминаются здесь&nbsp;→</b><span class="n">7</span></div>
                 <div class="rel-list">
                   <a class="rel-item"><i style="background: var(--camp-red);"></i>Ленин</a>
                   <a class="rel-item"><i style="background: var(--camp-red);"></i>Троцкий</a>
-                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСДРП(б)</a>
-                  <a class="rel-item"><i style="background: var(--camp-red);"></i>РСФСР</a>
+                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Корниловъ</a>
+                  <a class="rel-item"><i style="background: var(--camp-rev-dem);"></i>меньшевики</a>
+                  <a class="rel-item rel-more">ещё 3</a>
                 </div>
               </div>
 
-              <div class="rel-group">
-                <div class="rel-cap"><i style="background: var(--camp-white);"></i>Белые · 5</div>
-                <div class="rel-list">
-                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Колчакъ</a>
-                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Деникинъ</a>
-                  <a class="rel-item"><i style="background: var(--camp-white);"></i>Добровольческая армия</a>
-                  <a class="rel-item rel-more">ещё 2</a>
-                </div>
-              </div>
+              <!-- Направление переросло восьмёрку — включается группировка
+                   по лагерю. Показано прямо здесь, рядом с плоским: обе
+                   раскладки живые, ни одна не остаётся непроверенной. -->
+              <div class="rel-dir">
+                <div class="rel-dir-cap"><b>←&nbsp;Ссылаются сюда</b><span class="n">12</span></div>
 
-              <div class="rel-group">
-                <div class="rel-cap"><i style="background: var(--camp-national);"></i>Национальные · 3</div>
-                <div class="rel-list">
-                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Алашъ</a>
-                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Мусаватъ</a>
-                  <a class="rel-item"><i style="background: var(--camp-national);"></i>Дашнакцутюнъ</a>
+                <div class="rel-group">
+                  <div class="rel-cap"><i style="background: var(--camp-red);"></i>Красные · 7</div>
+                  <div class="rel-list">
+                    <a class="rel-item"><i style="background: var(--camp-red);"></i>Зиновьевъ</a>
+                    <a class="rel-item"><i style="background: var(--camp-red);"></i>Окт. переворотъ</a>
+                    <a class="rel-item"><i style="background: var(--camp-red);"></i>II съѣздъ Совѣтовъ</a>
+                    <a class="rel-item rel-more">ещё 4</a>
+                  </div>
+                </div>
+
+                <div class="rel-group">
+                  <div class="rel-cap"><i style="background: var(--camp-national);"></i>Национальные · 5</div>
+                  <div class="rel-list">
+                    <a class="rel-item"><i style="background: var(--camp-national);"></i>Алашъ</a>
+                    <a class="rel-item"><i style="background: var(--camp-national);"></i>Мусаватъ</a>
+                    <a class="rel-item rel-more">ещё 3</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <figcaption>
-            <b>#c-related</b> — <b>вариант с меткой лагеря.</b>
-            Цвет несёт <b>точка</b>, имя набрано обычными чернилами.
-            Так блок читается картой окружения: видно, что у «Комуча»
-            половина связей белые, а у «Левых эсеров» — красные.
+            <b>#c-related</b> — <b>две подписанные строки.</b>
+            Отношения разные, и подпись — самый дешёвый способ это сказать:
+            одна строка на направление. Цвет лагеря несёт <b>точка</b>,
+            имя набрано обычными чернилами. Стрелка разведена по сторонам
+            подписи и повторяет её смысл — знак работает, даже если
+            подпись не прочитали.
           </figcaption>
         </figure>
 
         <figure class="block-demo">
-          <span class="tag-alt">без цвета</span>
+          <span class="tag-alt">слитно</span>
           <div class="d-card">
             <div class="d-pad">
-              <div class="rel-head">Связанные справки · 12</div>
+              <div class="rel-head">Связи · 19</div>
               <div class="rel-list">
-                <a class="rel-item">Ленин</a>
-                <a class="rel-item">Троцкий</a>
-                <a class="rel-item">РСДРП(б)</a>
-                <a class="rel-item">Колчакъ</a>
-                <a class="rel-item">Деникинъ</a>
-                <a class="rel-item">Алашъ</a>
-                <a class="rel-item rel-more">ещё 6</a>
+                <a class="rel-item"><i style="background: var(--camp-red);"></i>Ленин<span class="dir">→</span></a>
+                <a class="rel-item"><i style="background: var(--camp-white);"></i>Корниловъ<span class="dir">→</span></a>
+                <a class="rel-item"><i style="background: var(--camp-red);"></i>Зиновьевъ<span class="dir">←</span></a>
+                <a class="rel-item"><i style="background: var(--camp-red);"></i>Окт. переворотъ<span class="dir">←</span></a>
+                <a class="rel-item"><i style="background: var(--camp-national);"></i>Алашъ<span class="dir">←</span></a>
+                <a class="rel-item rel-more">ещё 14</a>
               </div>
             </div>
           </div>
           <figcaption>
-            Простой список, без лагерей. Честнее при малом числе связей
-            и когда лагерь у части сущностей не проставлен. Но на сорока
-            связях превращается в стену одинаковых кнопок — теряется
-            единственное, что помогает выбрать.
+            Слитно, направление — свойство кнопки. Компактнее на треть,
+            и на этом достоинства кончаются: чтобы понять, откуда связь,
+            надо прочитать <b>каждую</b> кнопку, а стрелка в 13 px рядом
+            с именем — не то, что замечают пальцем на бегу.
+            <b>Хуже пустого:</b> нажав «Ленин», посетитель решит, что тот
+            упомянут в прочитанном тексте, — а его упомянула третья справка.
           </figcaption>
         </figure>
       </div>
@@ -2920,23 +2960,38 @@
         то есть у двух лагерей из семи метка просто исчезает, а блок при этом
         выглядит исправным. Кольцо даёт 4.33 при пороге 3.0 для графики.
         Ставится <b>всем</b> точкам, а не только светлым: правило, которое
-        срабатывает выборочно, вёрстка не воспроизведёт.
+        срабатывает выборочно, вёрстка не воспроизведёт. Оба направления
+        подчиняются ему одинаково — метка не знает, в какую сторону связь.
       </p>
 
       <p class="token-strip">
-        <b>Пустое состояние: блока просто нет.</b> Не «Связанные справки: —»
-        и не пустая рамка. Здесь ничего не пропало — у сущности
-        действительно нет связей, и отсутствие однозначно. Это НЕ противоречит
-        §2 про затычки: затычка обязана выглядеть недоделанной, когда что-то
-        <b>ждут</b>; тут не ждут ничего. Записано здесь, чтобы решение
-        не принималось заново в вёрстке.
+        <b>Плоско до восьми, дальше группировка по лагерю.</b> Порог —
+        не вкус: подпись группы стоит строки, и в направлении из четырёх
+        связей три подписи занимают больше места, чем сами кнопки.
+        А на сорока подпись — единственное, что помогает выбрать.
+        В образце выше оба состояния живые: «упоминаются» плоское,
+        «ссылаются» сгруппировано. Внутри группы — пять, дальше «ещё N».
       </p>
 
       <p class="token-strip">
-        ⚠️ Число связей ещё не известно: <code>content</code> считает
-        распределение. Вид рассчитан на диапазон — пять на группу и «ещё N», —
-        но если у «Большевиков» окажется три сотни, порог на группу
-        придётся пересмотреть, и это будет правка каталога, а не вёрстки.
+        <b>Пустое направление — строки нет.</b> Не «Упоминаются здесь: —»
+        и не пустая рамка. Пусто бывает штатно: у короткой справки нет
+        прямых упоминаний, а обратных нет у 47 сущностей.
+        <b>Пусты оба — нет всего блока.</b> Здесь ничего не пропало,
+        и отсутствие однозначно. Это НЕ противоречит §2 про затычки:
+        затычка обязана выглядеть недоделанной, когда что-то <b>ждут</b>;
+        тут не ждут ничего. Записано здесь, чтобы решение не принималось
+        заново в вёрстке — и чтобы одно пустое направление не утащило
+        за собой второе, непустое.
+      </p>
+
+      <p class="token-strip">
+        ⚠️ Потолки ещё не известны: <code>content</code> считает
+        распределение и пришлёт <code>out</code> (прямые) рядом
+        с <code>refs</code> (обратные). Вид рассчитан на диапазон —
+        восемь на направление, пять на группу, дальше «ещё N», — но если
+        у «Большевиков» окажется три сотни обратных, пороги придётся
+        пересмотреть, и это будет правка каталога, а не вёрстки.
       </p>
     </section>
 

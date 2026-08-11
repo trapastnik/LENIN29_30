@@ -1,0 +1,100 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Чип диаграммы Венна</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#555D61;color:#F7F9EF;font-family:var(--font-body,Georgia,serif);}
+  .wrap{padding:20px 22px;}
+  h1{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+     color:var(--brass);margin:0 0 14px;}
+  .cap{font-family:var(--font-mono);font-size:11px;line-height:1.65;opacity:.85;
+       max-width:74ch;margin:16px 0 0;}
+  .cap b{color:var(--brass);}
+  .cap code{color:var(--brass);}
+  .src{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+       opacity:.45;margin-top:12px;}
+  /* Значения киоска МТК 29. Шкала здесь ВДВОЕ крупнее базовой
+     шкалы дизайн-системы — см. карточку Spacing scale. */
+  :root {
+    --bd-1: calc(1.5px * var(--ui-scale, 1));
+    --bd-2: calc(3px * var(--ui-scale, 1));
+    --bd-hair: calc(1px * var(--ui-scale, 1));
+    --brass: #D2B773;
+    --camp-red: #A02128;
+    --camp-red-ink: #A02128;
+    --ds-3: calc(150px * var(--ui-scale, 1));
+    --ds-6: calc(44px * var(--ui-scale, 1));
+    --font-display: "Nolde", "Playfair Display", Georgia, serif;
+    --font-mono: "20 Kopeek", "JetBrains Mono", "Courier New", monospace;
+    --fs-3: calc(20px * var(--ui-scale, 1));
+    --fs-4: calc(16px * var(--ui-scale, 1));
+    --ink-2: #212527;
+    --ink-3: #383F43;
+    --paper-4: #EDE7CC;
+    --paper-white: #F7F9EF;
+    --r-md: calc(8px * var(--ui-scale, 1));
+    --r-sm: calc(4px * var(--ui-scale, 1));
+    --rule: rgba(255,255,255,0.12);
+    --sh-1: 0 calc(2px * var(--ui-scale, 1)) calc(8px * var(--ui-scale, 1)) rgba(0,0,0,0.18);
+    --sp-1: calc(8px * var(--ui-scale, 1));
+    --sp-2: calc(16px * var(--ui-scale, 1));
+    --sp-3: calc(24px * var(--ui-scale, 1));
+    --telegrey-4: #CFD0CF;
+    --ui-scale: 1;
+  }
+  .d-card { background: var(--paper-white); border-radius: var(--r-md, 8px); overflow: hidden; box-shadow: var(--sh-1); }
+  .d-stripe { height: calc(10px * var(--ui-scale, 1)); }
+  .d-pad { padding: var(--sp-3, 24px); }
+  .d-kicker { font-family: var(--font-mono); font-size: calc(11px * var(--ui-scale, 1)); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+  .d-title { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-display); font-size: var(--ds-6, 44px); color: var(--camp-red-ink); line-height: 1.1; }
+  .d-meta { margin: var(--sp-1, 8px) 0 0; font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+  .d-body { margin: var(--sp-2, 16px) 0 0; font-size: var(--fs-3, 20px); line-height: 1.45; color: var(--ink-2); }
+  .d-chips { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+  .d-chip { display: inline-flex; align-items: center; gap: var(--sp-1, 8px); font-size: var(--fs-4, 16px); color: var(--paper-white); }
+  .d-chip i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .d-cells { display: flex; flex-wrap: wrap; gap: var(--sp-2, 16px); }
+  .d-cell {
+    padding: var(--sp-2, 16px) var(--sp-3, 24px);
+    min-height: 64px; display: inline-flex; align-items: center;
+    border: var(--bd-1, 1.5px) solid var(--brass);
+    border-radius: var(--r-sm, 4px);
+    font-size: var(--fs-4, 16px); color: var(--paper-white);
+    }
+  .d-cell-off { border-style: dashed; border-color: var(--telegrey-4); color: var(--telegrey-4); opacity: 0.7; }
+  .d-rows { display: flex; flex-direction: column; gap: var(--sp-1, 8px); }
+  .d-row { display: flex; align-items: center; gap: var(--sp-2, 16px); min-height: 64px; border-bottom: var(--bd-hair, 1px) solid var(--rule); }
+  .d-date { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; width: 11ch; }
+  .d-txt { flex: 1; font-size: var(--fs-3, 20px); }
+  .d-ref { font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--brass); flex: none; }
+  .d-long { background: var(--paper-4); border-radius: var(--r-md, 8px); padding: var(--sp-3, 24px); }
+  .d-drop { margin: 0; font-size: var(--fs-3, 20px); line-height: 1.5; color: var(--ink-2); max-width: 78ch; }
+  .d-drop span { float: left; font-family: var(--font-display); font-size: var(--ds-3, 150px); line-height: 0.8; color: var(--camp-red); margin: 0 var(--sp-2, 16px) 0 0; }
+  .d-quote { margin: var(--sp-3, 24px) 0 0; padding-left: var(--sp-2, 16px); border-left: var(--bd-2, 3px) solid var(--brass); font-size: var(--fs-3, 20px); color: var(--ink-2); }
+  .d-quote span { display: block; margin-top: var(--sp-1, 8px); font-family: var(--font-mono); font-size: var(--fs-4, 16px); color: var(--ink-3); }
+  .d-legend { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+  .d-legend span { display: flex; align-items: center; gap: var(--sp-2, 16px); font-size: var(--fs-4, 16px); }
+  .d-legend i { width: calc(28px * var(--ui-scale, 1)); height: calc(6px * var(--ui-scale, 1)); border-radius: var(--r-sm, 4px); flex: none; }
+  .d-states { display: flex; flex-direction: column; gap: var(--sp-2, 16px); }
+  .d-state {
+    padding: var(--sp-3, 24px); text-align: center;
+    border: var(--bd-1, 1.5px) dashed var(--telegrey-4);
+    border-radius: var(--r-sm, 4px);
+    font-family: var(--font-mono); font-size: var(--fs-4, 16px);
+    letter-spacing: 0.08em; color: var(--telegrey-4);
+    opacity: 0.75;
+    background: rgba(0,0,0,0.18);
+    }
+</style></head><body><div class="wrap">
+  <h1>Чип диаграммы Венна</h1>
+  <div class="d-chips">
+            <span class="d-chip"><i style="background: var(--camp-red);"></i>Большевики</span>
+            <span class="d-chip"><i style="background: var(--camp-rev-dem);"></i>Меньшевики</span>
+            <span class="d-chip"><i style="background: var(--camp-national);"></i>Дашнакцутюн</span>
+          </div>
+  <p class="cap"><b>#c-venn-chip</b> — чип диаграммы Венна.
+            Якорь — <b>левый край</b>, подпись растёт вправо и не
+            переносится. Цвет точки — <code>--camp-*</code> по
+            <code>venn_groups[0]</code>, он же <code>camp</code>.
+            Хит-зона 64 добирается <code>::before</code>, видимый чип 28.</p>
+  <p class="src">Извлечено из brand.html · c-venn-chip — не править руками</p>
+</div></body></html>
