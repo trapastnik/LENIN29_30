@@ -194,7 +194,10 @@
       font-size: calc(12px * var(--ui-scale, 1));
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--ink-faint);
+      /* --ink-3, а не --ink-faint: замер контраста дал faint 3.87 при норме
+         4.5 (аббревиатура мелкая, 12px). --ink-3 на этой бумаге ~5.5 —
+         читается и остаётся вторичной относительно тёмного названия. */
+      color: var(--ink-3);
     }
     .state-plate.has-map .abbr::after {
       content: '  ·  карта';
