@@ -101,6 +101,7 @@ def load_cards() -> Dict[str, dict]:
 
 def collect(cards: Dict[str, dict]) -> Dict[str, dict]:
     """Входящие связи: справка → справка, плюс два счётчика хроники."""
+    out: Dict[str, Dict[str, int]] = {}
     refs: Dict[str, List[tuple]] = {}
     mentions: Dict[str, int] = {}
     jumps: Dict[str, int] = {}
@@ -109,6 +110,12 @@ def collect(cards: Dict[str, dict]) -> Dict[str, dict]:
         # Сила связи — сколько раз источник упомянул цель в тексте.
         # `related` добавляет цель с силой 1, если в тексте её не было:
         # это кураторское «связано», и оно слабее упоминания.
+        #
+        # ⚠️ `related` учитывается в ОБЕ стороны намеренно, хотя даёт всего
+        # 11 связей сверх текста на все 198 справок. Учти его только
+        # во входящих — получим пару, где на карточке B видно «A ссылается
+        # на нас», а на карточке A этого нет. Асимметрия в самих данных,
+        # чинить её потребителю нечем.
         strength: Dict[str, int] = {}
         for match in LINK.finditer(card.get("summary_ru") or ""):
             target = match.group(2)
@@ -118,9 +125,9 @@ def collect(cards: Dict[str, dict]) -> Dict[str, dict]:
             for target in (group or []):
                 if target in cards:
                     strength.setdefault(target, 1)
+        strength.pop(src_id, None)
+        out[src_id] = strength
         for target, n in strength.items():
-            if target == src_id:
-                continue
             refs.setdefault(target, []).append((n, src_id))
 
     for year in YEARS:
@@ -141,24 +148,49 @@ def collect(cards: Dict[str, dict]) -> Dict[str, dict]:
                 if tid and tid in cards:
                     jumps[tid] = jumps.get(tid, 0) + 1
 
+    def entry(other: str, **extra) -> dict:
+        rec = {"id": other,
+               "kind": cards[other]["_kind"],
+               "title_ru": cards[other].get("title_ru") or other}
+        rec.update(extra)
+        return rec
+
+    def order_key(other: str, weight: int):
+        # Сила ↓, затем вид (персоны → партии → гособразования → события),
+        # затем заголовок. Стабилен между прогонами.
+        return (-weight, ORDER[cards[other]["_kind"]],
+                cards[other].get("title_ru") or "", other)
+
     items: Dict[str, dict] = {}
     for target in sorted(cards):
         rec: Dict[str, object] = {}
-        incoming = refs.get(target) or []
-        if incoming:
-            # Порядок: сила ↓, затем вид (персоны → партии → гособразования
-            # → события), затем заголовок. Стабилен между прогонами.
-            incoming.sort(key=lambda t: (-t[0],
-                                         ORDER[cards[t[1]]["_kind"]],
-                                         cards[t[1]].get("title_ru") or "",
-                                         t[1]))
-            shown = incoming[:CAP]
-            rec["refs"] = [{"id": sid,
-                            "kind": cards[sid]["_kind"],
-                            "title_ru": cards[sid].get("title_ru") or sid,
-                            "n": n} for n, sid in shown]
-            if len(incoming) > CAP:
-                rec["more"] = len(incoming) - CAP
+        outgoing = out.get(target) or {}
+        incoming = {sid: n for n, sid in (refs.get(target) or [])}
+        # Взаимные — отдельной группой, а не в обеих сразу. Иначе 119
+        # карточек из 198 показали бы одну и ту же кнопку дважды подряд
+        # (максимум 7 повторов на карточке): отношение и правда разное,
+        # но кнопка выглядит одинаково, и это читается как поломка.
+        both = sorted(set(outgoing) & set(incoming),
+                      key=lambda o: order_key(o, outgoing[o] + incoming[o]))
+        if both:
+            rec["mutual"] = [entry(o, n_out=outgoing[o], n_in=incoming[o])
+                             for o in both]
+        # ⚠️ У исходящих потолка НЕТ, и это не забывчивость. У них есть
+        # видимый эталон — сам текст справки: посетитель видит подсвеченные
+        # термины и обязан найти их внизу. Урежь до восьми — десять подсветок
+        # останутся без кнопки, и это заметно. У входящих эталона нет вовсе,
+        # там потолок незаметен. Замер: потолок на `out` экономит 6 КБ
+        # из 129 — то есть решает вид, а не вес.
+        only_out = sorted((o for o in outgoing if o not in incoming),
+                          key=lambda o: order_key(o, outgoing[o]))
+        if only_out:
+            rec["out"] = [entry(o, n=outgoing[o]) for o in only_out]
+        only_in = sorted((s for s in incoming if s not in outgoing),
+                         key=lambda s: order_key(s, incoming[s]))
+        if only_in:
+            rec["refs"] = [entry(s, n=incoming[s]) for s in only_in[:CAP]]
+            if len(only_in) > CAP:
+                rec["more"] = len(only_in) - CAP
         if mentions.get(target):
             rec["chronicle_mentions"] = mentions[target]
         if jumps.get(target):
@@ -179,10 +211,16 @@ def build() -> dict:
     items = collect(cards)
     return {
         "schema": 1,
-        "_note": ("Обратный индекс: кто ссылается на справку. Генерируется "
+        "_note": ("Связи справки в обе стороны. Генерируется "
                   "`scripts/import/backlinks.py`, руками не правится. "
-                  "Ключа нет — блок не рисуется. `kind` — сегмент маршрута "
-                  "(`#/person/lenin`), не каталог."),
+                  "Ключа нет — строки не рисуется. `kind` — сегмент маршрута "
+                  "(`#/person/lenin`), не каталог. Группы не пересекаются: "
+                  "`out` — только исходящие, `refs` — только входящие, "
+                  "`mutual` — взаимные, с силой в обе стороны "
+                  "(`n_out` отсюда, `n_in` сюда). Потолок `cap` действует "
+                  "ТОЛЬКО на `refs`: у исходящих есть видимый эталон — "
+                  "подсвеченные термины в тексте справки, и урезать их "
+                  "значит оставить подсветку без кнопки."),
         "cap": CAP,
         "items": items,
     }, cards
@@ -195,8 +233,11 @@ def main(argv=None) -> int:
 
     items = payload["items"]
     with_refs = sum(1 for v in items.values() if v.get("refs"))
+    with_out = sum(1 for v in items.values() if v.get("out"))
+    with_mutual = sum(1 for v in items.values() if v.get("mutual"))
     capped = sum(1 for v in items.values() if v.get("more"))
-    only_chron = len(items) - with_refs
+    only_chron = sum(1 for v in items.values()
+                     if not (v.get("refs") or v.get("out") or v.get("mutual")))
 
     if "--check" in argv:
         current = OUT.read_text(encoding="utf-8") if OUT.exists() else None
@@ -218,8 +259,9 @@ def main(argv=None) -> int:
     print("backlinks → %s" % OUT.relative_to(ROOT))
     print("  блок будет у %d справок из %d, без блока %d"
           % (len(items), len(cards), len(cards) - len(items)))
-    print("  из них с кнопками %d, только строка хроники %d, "
-          "потолок %d сработал у %d" % (with_refs, only_chron, CAP, capped))
+    print("  строки: исходящих %d · входящих %d · взаимных %d · "
+          "только хроника %d" % (with_out, with_refs, with_mutual, only_chron))
+    print("  потолок %d сработал у %d (только на входящих)" % (CAP, capped))
     return 0
 
 

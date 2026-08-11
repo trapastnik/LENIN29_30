@@ -1004,6 +1004,60 @@ if (placeholders.length) {
   }
 }
 
+// ── Обратный индекс: партиция не потеряла связь ──────────────────────────
+// Свежесть проверяет `backlinks.py --check`, но она отвечает только
+// «файл пересчитан». Здесь второй вопрос: три группы (`out`, `refs`,
+// `mutual`) разрезали один и тот же граф, и разрез обязан быть чистым —
+// без пересечений и без пропаж. Если `A` числит `B` в исходящих, то `B`
+// обязан числить `A` во входящих либо оба во взаимных.
+//
+// Это «проверяй ссылку в обе стороны», применённое к собственным данным:
+// каждая группа по отдельности выглядит осмысленной при любой ошибке
+// разреза, и увидеть потерю можно только сверкой пары.
+{
+  const BL = join(CONTENT, '_backlinks.json');
+  if (existsSync(BL)) {
+    const bl = readJSON(BL) || {};
+    const items = bl.items || {};
+    const ids = (rec, key) => new Set(((rec || {})[key] || []).map((r) => r.id));
+    let pairs = 0;
+    const broken = [];
+    const overlap = [];
+    for (const [a, rec] of Object.entries(items)) {
+      const out = ids(rec, 'out');
+      const refs = ids(rec, 'refs');
+      const mutual = ids(rec, 'mutual');
+      for (const set of [[out, refs], [out, mutual], [refs, mutual]]) {
+        for (const x of set[0]) if (set[1].has(x)) overlap.push(`${a} ↔ ${x}`);
+      }
+      for (const b of out) {
+        pairs += 1;
+        const other = items[b] || {};
+        // Срезанное потолком отсутствие во входящих законно: `more` говорит,
+        // что хвост есть и он не показан.
+        if (ids(other, 'refs').has(a) || other.more) continue;
+        broken.push(`${a} числит ${b} в out, а ${b} не числит ${a} в refs`);
+      }
+      for (const b of mutual) {
+        pairs += 1;
+        if (!ids(items[b], 'mutual').has(a)) {
+          broken.push(`${a} числит ${b} взаимным, а ${b} его — нет`);
+        }
+      }
+    }
+    for (const o of overlap.slice(0, 5)) {
+      err(rel(BL), `группы пересекаются (${o}) — посетитель увидит одну `
+        + 'кнопку дважды в одном блоке');
+    }
+    for (const b of broken.slice(0, 5)) {
+      err(rel(BL), `связь потеряна при разрезе: ${b}`);
+    }
+    if (!quiet && !broken.length && !overlap.length) {
+      console.log(`  разрез связей чистый — сверено пар: ${pairs}`);
+    }
+  }
+}
+
 const byReason = {};
 for (const w of warnings) {
   const k = reasonOf(w);
