@@ -23,6 +23,7 @@
 //   node scripts/check-deep-links.mjs
 
 import { spawn } from 'node:child_process';
+import { rmSync } from 'node:fs';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -32,6 +33,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHROME = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const ПОРТ_СТАТИКИ = 8700 + (process.pid % 400);
 const BASE = process.env.MTK_BASE_URL || `http://127.0.0.1:${ПОРТ_СТАТИКИ}`;
+const ПРОФИЛЬ = (process.env.TMPDIR || '/tmp') + 'mtk29-deeplinks-' + process.pid;
 const PORT = 9600 + (process.pid % 300);
 
 const СТРАНИЦЫ = [
@@ -116,9 +118,10 @@ async function main() {
 
   const chrome = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${PORT}`,
     '--window-size=1920,1080', '--force-device-scale-factor=2', '--no-first-run',
-    '--user-data-dir=' + (process.env.TMPDIR || '/tmp') + 'mtk29-deeplinks'], { stdio: 'ignore' });
+    '--user-data-dir=' + ПРОФИЛЬ], { stdio: 'ignore' });
   const убить = () => { try { chrome.kill(); } catch {} };
   process.on('exit', убить);
+  process.on('exit', () => { try { rmSync(ПРОФИЛЬ, { recursive: true, force: true }); } catch {} });
   for (let i = 0; i < 80; i++) { try { await fetch(`http://127.0.0.1:${PORT}/json/version`); break; } catch { await sleep(250); } }
 
   console.log('режим: Chrome --headless=new через Bash, окно 1920×1080 + --force-device-scale-factor=2,');

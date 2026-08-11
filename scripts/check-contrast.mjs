@@ -27,6 +27,7 @@
 // Падает НА ПРИРОСТЕ к baseline (CLAUDE.md §13).
 
 import { spawn } from 'node:child_process';
+import { rmSync } from 'node:fs';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -38,6 +39,7 @@ const CHROME = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Conten
 const ВНЕШНИЙ = process.env.MTK_BASE_URL || null;
 const ПОРТ_СТАТИКИ = 8200 + (process.pid % 500);
 const BASE = ВНЕШНИЙ || `http://127.0.0.1:${ПОРТ_СТАТИКИ}`;
+const ПРОФИЛЬ = (process.env.TMPDIR || '/tmp') + 'mtk29-contrast-' + process.pid;
 const PORT = 9200 + (process.pid % 700);
 const САМОПРОВЕРКА = process.argv.includes('--self-test');
 
@@ -287,9 +289,10 @@ async function main() {
 
   const chrome = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${PORT}`,
     '--window-size=1920,1080', '--force-device-scale-factor=2', '--hide-scrollbars',
-    '--no-first-run', '--user-data-dir=' + (process.env.TMPDIR || '/tmp') + 'mtk29-contrast'], { stdio: 'ignore' });
+    '--no-first-run', '--user-data-dir=' + ПРОФИЛЬ], { stdio: 'ignore' });
   const убить = () => { try { chrome.kill(); } catch {} };
   process.on('exit', убить);
+  process.on('exit', () => { try { rmSync(ПРОФИЛЬ, { recursive: true, force: true }); } catch {} });
   for (let i=0;i<80;i++){ try { await fetch(`http://127.0.0.1:${PORT}/json/version`); break; } catch { await sleep(250); } }
 
   console.log('режим: Chrome --headless=new через Bash, окно 1920×1080 + --force-device-scale-factor=2,');
