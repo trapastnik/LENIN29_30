@@ -23,7 +23,8 @@
     "css:order": "node scripts/check-css-order.mjs",
     "lint:selftest": "node scripts/design/lint-selftest.mjs",
     "touch:check": "node scripts/check-touch-targets.mjs",
-    "design:ds-cards": "node scripts/design/build-ds-cards.mjs"
+    "design:ds-cards": "node scripts/design/build-ds-cards.mjs",
+    "contrast:check": "node scripts/check-contrast.mjs"
   },
   "devDependencies": {
     "vite": "^5.4.0"
