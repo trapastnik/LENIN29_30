@@ -431,11 +431,21 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
             position: 'absolute', inset: 0, pointerEvents: 'none',
             background: 'repeating-linear-gradient(91deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px)',
           }}/>
-          {/* годы */}
+          {/* Годы — плашкой, а не текстом поверх фото. Замер контраста нашёл
+              1.27 при норме 4.5: светло-бежевые годы на светлой кромке
+              фото-заглушки, textShadow не спасал. Фон под текстом
+              непредсказуем — там будет реальное фото, — поэтому не подбираем
+              цвет текста, а даём равномерную тёмную подложку: светлый текст
+              на ней читается на любом фоне.
+              Фон именно у контейнера текста, а не соседней виньеткой: так
+              и глазом плашка, и замер контраста видит настоящий фон
+              (сосед-виньетку он бы не учёл — смотрит цепочку предков).
+              rgba, не «свой цвет» в обход §8 — как грейн и textShadow выше. */}
           <div style={{
             position: 'absolute', bottom: S(6), left: S(8),
-            fontFamily: fonts.mono, fontSize: S(10), color: '#f0dcae', letterSpacing: '0.15em',
-            textShadow: '0 1px 2px #000',
+            padding: S('2px 6px'), borderRadius: S(3),
+            background: 'rgba(0,0,0,.72)',
+            fontFamily: fonts.mono, fontSize: S(10), color: '#f6ead0', letterSpacing: '0.15em',
           }}>{person.years}</div>
         </div>
 

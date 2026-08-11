@@ -403,11 +403,13 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
       position: "absolute",
       bottom: S(6),
       left: S(8),
+      padding: S("2px 6px"),
+      borderRadius: S(3),
+      background: "rgba(0,0,0,.72)",
       fontFamily: fonts.mono,
       fontSize: S(10),
-      color: "#f0dcae",
-      letterSpacing: "0.15em",
-      textShadow: "0 1px 2px #000"
+      color: "#f6ead0",
+      letterSpacing: "0.15em"
     } }, person.years)), /* @__PURE__ */ React.createElement("div", { style: {
       fontFamily: fonts.display,
       fontSize: S(22),
