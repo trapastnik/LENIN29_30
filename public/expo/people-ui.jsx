@@ -456,10 +456,26 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
           fontFamily: fonts.display,
           fontSize: S(22), lineHeight: 1.05, color: theme.ink, marginTop: S(2),
         }}>{person.title}</div>
+        {/* Лагерь — точкой цвета, а не цветным текстом. Замер контраста:
+            мелкая (10px) цветная подпись на бумаге даёт 1.1–3.2 при норме
+            4.5, и camp-*-ink не спасают — они рассчитаны под крупный
+            заголовок (порог 3.0), здесь порог 4.5. Поэтому цвет уходит
+            на маркер, текст становится нейтральным inkSoft (7.6 на бумаге).
+            То же правило, что design применила в brand.html#c-related.
+            Кольцо inkFade на ВСЕХ точках, не только светлых: у «Белых»
+            и «Национальных» флаг светлый и на бумаге теряется без обводки,
+            а выборочное кольцо вёрстка не воспроизведёт. */}
         <div style={{
-          marginTop: S(8), fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.2em',
-          color: meta.color, textTransform: 'uppercase',
-        }}>{meta[lang]}</div>
+          marginTop: S(8), display: 'flex', alignItems: 'center', gap: S(6),
+          fontFamily: fonts.mono, fontSize: S(10), letterSpacing: '0.2em',
+          color: theme.inkSoft, textTransform: 'uppercase',
+        }}>
+          <span style={{
+            width: S(9), height: S(9), borderRadius: '50%', flexShrink: 0,
+            background: meta.flag, border: `1px solid ${theme.inkFade}`,
+          }}/>
+          {meta[lang]}
+        </div>
         {person.stub && (
           <div style={{
             marginTop: S(6), fontFamily: fonts.mono, fontSize: S(10),

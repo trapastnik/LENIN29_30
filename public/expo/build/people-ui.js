@@ -418,12 +418,22 @@ function PersonCard({ person, lang, onOpen, delay, flash }) {
       marginTop: S(2)
     } }, person.title), /* @__PURE__ */ React.createElement("div", { style: {
       marginTop: S(8),
+      display: "flex",
+      alignItems: "center",
+      gap: S(6),
       fontFamily: fonts.mono,
       fontSize: S(10),
       letterSpacing: "0.2em",
-      color: meta.color,
+      color: theme.inkSoft,
       textTransform: "uppercase"
-    } }, meta[lang]), person.stub && /* @__PURE__ */ React.createElement("div", { style: {
+    } }, /* @__PURE__ */ React.createElement("span", { style: {
+      width: S(9),
+      height: S(9),
+      borderRadius: "50%",
+      flexShrink: 0,
+      background: meta.flag,
+      border: `1px solid ${theme.inkFade}`
+    } }), meta[lang]), person.stub && /* @__PURE__ */ React.createElement("div", { style: {
       marginTop: S(6),
       fontFamily: fonts.mono,
       fontSize: S(10),
