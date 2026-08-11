@@ -38,7 +38,12 @@ const TEMPLATE = `
   button:active { background: rgba(210, 183, 115, 0.18); }
   button.active {
     background: var(--brass, #D2B773);
-    color: var(--iron-grey, #555D61);
+    /* --ink-soft, а не --iron-grey: замер контраста дал iron-grey 3.44
+       на золоте при норме 4.5. Тёмный ink даёт 6.9 — активная кнопка
+       читается. Фон-запас #D2B773 у brass оставляем (метрика/цвет фона),
+       у текста запаса нет намеренно: неизвестный токен должен падать
+       заметно, а не подставлять вторую палитру (§8). */
+    color: var(--ink-soft);
   }
   button .swatch {
     display: inline-block;
