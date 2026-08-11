@@ -87,7 +87,7 @@
     }
     .dark-pane {
       background: rgba(8,12,15,0.55);
-      border: 1px solid rgba(210,183,115,0.18);
+      border: 1px solid rgba(var(--brass-rgb), 0.18);
       padding: 24px;
       border-radius: 6px;
     }
@@ -115,7 +115,7 @@
     .swatch .meta span { opacity: 0.65; }
 
     /* — Шрифт-карточки — */
-    .type-card { background: rgba(8,12,15,0.55); border: 1px solid rgba(210,183,115,0.18); padding: 20px 22px; border-radius: 6px; }
+    .type-card { background: rgba(8,12,15,0.55); border: 1px solid rgba(var(--brass-rgb), 0.18); padding: 20px 22px; border-radius: 6px; }
     .type-card .label {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -185,9 +185,9 @@
       position: absolute; inset: 0;
       background-image:
         linear-gradient(105deg, transparent 0, transparent 72%, var(--signal-red) 72%, var(--signal-red) 86%, transparent 86.2%),
-        linear-gradient(105deg, transparent 0, transparent 2%, rgba(157,163,166,0.18) 2%, rgba(157,163,166,0.18) 14%, transparent 14.2%),
+        linear-gradient(105deg, transparent 0, transparent 2%, rgba(var(--slate-window-rgb), 0.18) 2%, rgba(var(--slate-window-rgb), 0.18) 14%, transparent 14.2%),
         linear-gradient(105deg, transparent 0, transparent 62%, var(--brass) 62%, var(--brass) 62.2%, transparent 62.4%),
-        linear-gradient(105deg, transparent 0, transparent 89%, rgba(210,183,115,0.55) 89%, rgba(210,183,115,0.55) 89.15%, transparent 89.35%);
+        linear-gradient(105deg, transparent 0, transparent 89%, rgba(var(--brass-rgb), 0.55) 89%, rgba(var(--brass-rgb), 0.55) 89.15%, transparent 89.35%);
     }
     .stripes-label {
       position: absolute; left: 24px; bottom: 16px;
@@ -205,7 +205,7 @@
       position: relative;
       padding: 22px 32px;
       background: linear-gradient(180deg, rgba(15,20,24,0.96), rgba(15,20,24,0.88));
-      border: 1px solid rgba(210,183,115,0.4);
+      border: 1px solid rgba(var(--brass-rgb), 0.4);
       border-radius: 6px;
       overflow: hidden;
       display: flex; align-items: center; gap: 22px;
@@ -646,7 +646,7 @@
     .ruler {
       position: relative;
       background: rgba(8,12,15,0.55);
-      border: 1px dashed rgba(210,183,115,0.4);
+      border: 1px dashed rgba(var(--brass-rgb), 0.4);
       border-radius: 6px;
       padding: 16px;
       font-family: var(--font-mono);
@@ -1111,7 +1111,7 @@
     /* — Typography Lab — */
     .font-lab {
       background: rgba(8, 12, 15, 0.55);
-      border: 1px solid rgba(210, 183, 115, 0.18);
+      border: 1px solid rgba(var(--brass-rgb), 0.18);
       border-radius: 6px;
       overflow: hidden;
       display: grid;
@@ -1119,7 +1119,7 @@
     }
     .font-lab .lab-head {
       padding: 14px 22px;
-      border-bottom: 1px solid rgba(210, 183, 115, 0.18);
+      border-bottom: 1px solid rgba(var(--brass-rgb), 0.18);
       display: flex; align-items: baseline; gap: 16px;
     }
     .font-lab .lab-label {
@@ -1149,18 +1149,18 @@
       outline: none;
     }
     .font-lab .lab-sample:focus {
-      box-shadow: inset 0 0 0 2px rgba(210,183,115,0.4);
+      box-shadow: inset 0 0 0 2px rgba(var(--brass-rgb), 0.4);
     }
     .font-lab .lab-controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
-      border-top: 1px solid rgba(210, 183, 115, 0.18);
+      border-top: 1px solid rgba(var(--brass-rgb), 0.18);
     }
     .font-lab .ctrl {
       padding: 14px 22px;
-      border-right: 1px solid rgba(210, 183, 115, 0.10);
-      border-bottom: 1px solid rgba(210, 183, 115, 0.10);
+      border-right: 1px solid rgba(var(--brass-rgb), 0.10);
+      border-bottom: 1px solid rgba(var(--brass-rgb), 0.10);
     }
     .font-lab .ctrl:nth-child(2n) { border-right: 0; }
     .font-lab .ctrl > label {
@@ -1187,7 +1187,7 @@
       appearance: none;
       width: 100%;
       height: 4px;
-      background: rgba(210,183,115,0.25);
+      background: rgba(var(--brass-rgb), 0.25);
       border-radius: 2px;
       outline: none;
     }
@@ -1216,7 +1216,7 @@
       min-height: 34px; min-width: auto;
       padding: 6px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(210,183,115,0.45);
+      border: 1px solid rgba(var(--brass-rgb), 0.45);
       background: transparent;
       color: var(--paper-white);
       font-family: var(--font-mono);
@@ -1241,7 +1241,7 @@
       width: 28px; height: 28px;
       min-height: 28px;
       border-radius: 50%;
-      border: 1.5px solid rgba(210,183,115,0.4);
+      border: 1.5px solid rgba(var(--brass-rgb), 0.4);
       cursor: pointer;
       padding: 0;
       min-width: auto;
@@ -1263,7 +1263,7 @@
     .font-lab .bg-swatches button.active {
       border-color: var(--brass);
       transform: scale(1.15);
-      box-shadow: 0 0 0 2px rgba(210,183,115,0.4);
+      box-shadow: 0 0 0 2px rgba(var(--brass-rgb), 0.4);
     }
 
     /* ════════════════════════════════════════════════════════════════
@@ -1586,7 +1586,7 @@
     }
     .xr-card {
       background: #0a0d10;
-      border: 1px solid rgba(210, 183, 115, 0.18);
+      border: 1px solid rgba(var(--brass-rgb), 0.18);
       border-radius: 6px;
       overflow: hidden;
       position: relative;
@@ -1594,7 +1594,7 @@
     .xr-card .xr-meta {
       padding: 12px 18px;
       display: flex; align-items: baseline; justify-content: space-between;
-      border-bottom: 1px solid rgba(210, 183, 115, 0.18);
+      border-bottom: 1px solid rgba(var(--brass-rgb), 0.18);
     }
     .xr-card .xr-meta .label {
       font-family: var(--font-mono);
@@ -2261,7 +2261,7 @@
 
       <p style="font-family: var(--font-body); color: var(--paper-white); opacity: 0.85; max-width: 720px; margin: 0 0 12px;">Многослойный SVG из map_v6 (HSV-классификация + potrace). Поддерживает pan/zoom, переключение слоёв, fade/wipe-анимации. Используется в state-card и в Direction A/B.</p>
 
-      <div style="height: 360px; border: 1px solid rgba(210,183,115,0.3); border-radius: 6px; overflow: hidden; background: var(--graphite);">
+      <div style="height: 360px; border: 1px solid rgba(var(--brass-rgb), 0.3); border-radius: 6px; overflow: hidden; background: var(--graphite);">
         <map-unit map-id="komuch" show-panel="true" style="display: block; width: 100%; height: 100%;"></map-unit>
       </div>
       <p class="token-strip">Источник: <code>src/components/map-unit.js</code>. Контент в <code>public/content/maps/&lt;id&gt;/</code> (background.jpg, layers, sequence.json).</p>
@@ -2439,8 +2439,8 @@
              отсюда вела бы в 404 в собранном киоске. -->
         <div style="display: flex; flex-direction: column; gap: 8px;
                   padding: 22px 26px;
-                  background: linear-gradient(120deg, rgba(160,33,40,0.18), rgba(210,183,115,0.08));
-                  border: 1px solid rgba(210,183,115,0.45);
+                  background: linear-gradient(120deg, rgba(var(--signal-red-rgb), 0.18), rgba(var(--brass-rgb), 0.08));
+                  border: 1px solid rgba(var(--brass-rgb), 0.45);
                   border-radius: 6px;
                   color: inherit; opacity: 0.55;">
           <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.32em;
@@ -2466,8 +2466,8 @@
         <a href="prototypes/calendar-3d-paper-realistic/"
            style="display: flex; flex-direction: column; gap: 8px;
                   padding: 22px 26px;
-                  background: linear-gradient(120deg, rgba(67,80,89,0.35), rgba(210,183,115,0.05));
-                  border: 1px solid rgba(210,183,115,0.45);
+                  background: linear-gradient(120deg, rgba(var(--graphite-rgb), 0.35), rgba(var(--brass-rgb), 0.05));
+                  border: 1px solid rgba(var(--brass-rgb), 0.45);
                   border-radius: 6px;
                   text-decoration: none; color: inherit;">
           <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.32em;

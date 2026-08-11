@@ -122,6 +122,18 @@ function buildCss() {
       const decl = `  --${name}:`.padEnd(pad + 5) + ` ${out};`;
       const comment = [tokens[name].note, note && `= ${note}`].filter(Boolean).join(' · ');
       L.push(comment ? `${decl.padEnd(58)} /* ${comment} */` : decl);
+
+      // Парный RGB-канал для токенов с "rgb": true — чтобы rgba() брал каналы
+      // из токена, а не из зашитых чисел. Зашитый rgba(210,183,115,…) молча
+      // разъезжается с hex при правке палитры; сосед 38-42 так поймал серое
+      // «окно» (166 против 168). Переопределяешь --brass — канал следует сам.
+      if (tokens[name].rgb) {
+        const hex = resolve_(name, tokens);
+        if (HEX_RE.test(hex)) {
+          const [r, g, b] = hexToRgb(hex);
+          L.push(`  --${name}-rgb:`.padEnd(pad + 5) + ` ${r}, ${g}, ${b};`);
+        }
+      }
     }
     L.push('');
   }

@@ -29,7 +29,7 @@ body::before {
     /* Левая серая полоса (вторичная) */
     linear-gradient(105deg,
       transparent 0, transparent 2%,
-      rgba(157, 163, 166, 0.18) 2%, rgba(157, 163, 166, 0.18) 14%,
+      rgba(var(--slate-window-rgb), 0.18) 2%, rgba(var(--slate-window-rgb), 0.18) 14%,
       transparent 14.2%),
     /* Тонкая латунная диагональ — один из ключевых мотивов */
     linear-gradient(105deg,
@@ -39,10 +39,10 @@ body::before {
     /* Вторая тонкая латунная линия */
     linear-gradient(105deg,
       transparent 0, transparent 89%,
-      rgba(210, 183, 115, 0.55) 89%, rgba(210, 183, 115, 0.55) 89.15%,
+      rgba(var(--brass-rgb), 0.55) 89%, rgba(var(--brass-rgb), 0.55) 89.15%,
       transparent 89.35%),
     /* Лёгкая виньетка */
-    radial-gradient(ellipse 120% 85% at 50% 40%, rgba(67, 80, 89, 0.35) 0%, rgba(30, 40, 46, 0.9) 100%);
+    radial-gradient(ellipse 120% 85% at 50% 40%, rgba(var(--graphite-rgb), 0.35) 0%, rgba(30, 40, 46, 0.9) 100%);
 }
 body > * { position: relative; z-index: 1; }
 /* На страницах/режимах с прокруткой — body класс "scrollable".
