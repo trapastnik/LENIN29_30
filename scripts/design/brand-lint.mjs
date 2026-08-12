@@ -171,6 +171,11 @@ const CSS_TOKENS = new Set(
     .filter(([, t]) => groupCss.get(t.group))
     .map(([name]) => name),
 );
+// Токены с "rgb": true генерируют парный канал --<name>-rgb (см. build-tokens).
+// Он реально в tokens.css, но отдельным токеном в источнике не объявлен —
+// без этой строки R4 счёл бы rgba(var(--brass-rgb), …) ссылкой в никуда.
+for (const [name, t] of Object.entries(tokensJson.tokens))
+  if (t.rgb && groupCss.get(t.group)) CSS_TOKENS.add(`${name}-rgb`);
 /** Все значения из tokens.json — hex отсюда легален где угодно (это и есть бренд). */
 const TOKEN_VALUES = new Set(
   Object.values(tokensJson.tokens).map(t => String(t.value).toLowerCase()),
