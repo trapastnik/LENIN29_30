@@ -4,6 +4,7 @@
 import { fetchJSON } from '../data/loader.js';
 import { t, onLangChange } from '../data/i18n.js';
 import { richParagraphs, escapeHtml } from '../data/rich-text.js';
+import { railHTML, wireRail } from '../data/related-rail.js';
 
 const TEMPLATE = `
 <style>
@@ -92,6 +93,68 @@ const TEMPLATE = `
   }
   .rt-unresolved { color: var(--camp-ink, var(--camp-color, currentColor)); font-weight: 700; }
   .rt-em { font-weight: 600; }
+
+  /* ── Рельс связанных справок (только в раскрытой карточке) ──────────────
+     Двухколоночный layout: чтение слева, связи справа. Экран горизонтальный,
+     справка до 5500 знаков — нижний блок ушёл бы под сгиб, поэтому рельс
+     сбоку и на виду. Каркас: вид чипа (точка/кольцо/метка) отдаёт design
+     примитивом brand.html#c-related. */
+  :host([expanded]) #root:has(.related-rail) {
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 380px);
+    grid-template-areas: "stripe stripe" "reading rail";
+  }
+  :host([expanded]) #root:has(.related-rail) .camp-stripe { grid-area: stripe; }
+  :host([expanded]) #root:has(.related-rail) > .reading { grid-area: reading; min-width: 0; }
+  .related-rail {
+    grid-area: rail;
+    border-left: 1px solid rgba(168, 135, 90, 0.4);
+    padding: 20px 20px 24px;
+    /* Свой скролл: у reds-general 37 связей, рельс сам не влезет по высоте. */
+    max-height: 78vh;
+    overflow-y: auto;
+    align-self: stretch;
+  }
+  .rail-section { margin-bottom: 22px; }
+  .rail-section:last-child { margin-bottom: 0; }
+  .rail-section__title {
+    margin: 0 0 12px;
+    display: flex; align-items: baseline; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .rail-section__count {
+    font-size: 11px; color: var(--ink-faint);
+    border: 1px solid rgba(168, 135, 90, 0.5); border-radius: 999px;
+    padding: 1px 8px;
+  }
+  .rail-chips { display: flex; flex-direction: column; gap: 8px; }
+  .rail-chip {
+    /* Управляющий элемент раздела — ≥64px (§1). Тач-цель честная. */
+    min-height: 64px;
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; text-align: left;
+    padding: 8px 14px;
+    background: var(--paper-light);
+    border: 1px solid rgba(168, 135, 90, 0.5);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    color: var(--ink-soft);
+    transition: background .14s;
+  }
+  .rail-chip:active { background: var(--paper); }
+  /* Точка-заглушка серая. Цвет лагеря и кольцо придут примитивом design. */
+  .rail-chip__dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    background: var(--ink-faint);
+  }
+  .rail-chip__name { font-size: 15px; line-height: 1.2; }
+  .rail-chip--dead {
+    min-height: 64px; display: flex; align-items: center;
+    padding: 8px 14px; color: var(--ink-faint); font-size: 15px;
+  }
 </style>
 <div id="root" class="loading"></div>
 `;
@@ -169,6 +232,14 @@ export class PartyCard extends HTMLElement {
         _placeholder: true,
       };
     }
+    // Связи — только в раскрытой карточке. Один файл на весь раздел,
+    // loader кэширует; провал связей не должен ронять саму справку.
+    if (this.hasAttribute('expanded')) {
+      try {
+        const bl = await fetchJSON(MTK_URL('content/_backlinks.json'));
+        this._backlinks = (bl.items && bl.items[id]) || null;
+      } catch { this._backlinks = null; }
+    }
     this._render();
   }
 
@@ -197,9 +268,14 @@ export class PartyCard extends HTMLElement {
     // справки уходил в innerHTML сырым.
     const paras = richParagraphs(d.summary_ru);
 
-    this._root.classList.remove('loading');
-    this._root.innerHTML = `
-      <div class="camp-stripe"></div>
+    // Рельс связей — только раскрытая карточка с данными. В плитке
+    // (не expanded) его нет: там и места нет, и грузить незачем.
+    const expanded = this.hasAttribute('expanded');
+    const рельс = (expanded && full && this._backlinks)
+      ? railHTML(this._backlinks, t('ru', 'en') === 'en' ? 'en' : 'ru', 'parties.html')
+      : '';
+
+    const чтение = `
       <header>
         <h2>${escapeHtml(d.title_ru)}</h2>
         <div class="meta">${dates ? escapeHtml(dates) : '&nbsp;'}</div>
@@ -207,6 +283,25 @@ export class PartyCard extends HTMLElement {
       <div class="body">${paras}</div>
       ${d.leaders_ru && d.leaders_ru.length ? `<div class="leaders"><b>${t('Лидеры:', 'Leaders:')}</b>${escapeHtml(d.leaders_ru.join(' · '))}</div>` : ''}
     `;
+
+    this._root.classList.remove('loading');
+    // Обёртка .reading нужна только когда есть рельс (двухколоночный grid);
+    // без него оставляем плоскую разметку — плитка не должна менять вид.
+    this._root.innerHTML = рельс
+      ? `<div class="camp-stripe"></div><div class="reading">${чтение}</div>${рельс}`
+      : `<div class="camp-stripe"></div>${чтение}`;
+
+    if (рельс) {
+      const nav = this._root.querySelector('.related-rail');
+      // onOwn: связь на этой же странице — открыть той же модалкой.
+      // Просим родителя (parties.html) через событие: карточка не знает
+      // про индекс и openModal, а страница знает.
+      wireRail(nav, (id) => {
+        this.dispatchEvent(new CustomEvent('rail-open', {
+          detail: { id }, bubbles: true, composed: true,
+        }));
+      });
+    }
   }
 }
 

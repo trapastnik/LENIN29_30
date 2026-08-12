@@ -205,6 +205,15 @@
     modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+    // Рельс связей внутри карточки просит открыть партию с этой же страницы
+    // (chip data-own=1). Карточка не знает про индекс — находим item здесь
+    // и открываем той же модалкой. Чужие страницы рельс открывает сам
+    // переходом (deep-link.js на той стороне).
+    modal.addEventListener('rail-open', e => {
+      const item = idx.items.find(i => i.id === e.detail.id);
+      if (item) openModal(item);
+    });
+
     // Глубокая ссылка: parties.html#card=<id>. Открываем ТОЙ ЖЕ модалкой,
     // что и тап по карточке, — отдельный путь отрисовки был бы второй
     // правдой о том, как выглядит справка. Разбор формы — в deep-link.js.
